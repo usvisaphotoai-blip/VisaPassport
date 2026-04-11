@@ -1,0 +1,192 @@
+"use client";
+
+import { useSession } from "next-auth/react";
+import { useState, useEffect } from "react";
+import { getClientTimezoneCurrency } from "@/lib/currency";
+
+import { CheckMark, DOC_LABELS } from "./components/SharedUI";
+import PhotoCard from "./components/PhotoCard";
+import ComplianceReport from "./components/ComplianceReport";
+import UnpaidExtras from "./components/UnpaidExtras";
+import OrderSummary from "./components/OrderSummary";
+import ZoomDialog from "./components/ZoomDialog";
+import MobileStickyCTA from "./components/MobileStickyCTA";
+import FeedbackButton from "./components/FeedbackButton";
+
+import { useFaceVerification } from "./hooks/useFaceVerification";
+import { usePayment, LocalPrice } from "./hooks/usePayment";
+
+export default function PreviewClient({
+  photoId,
+  previewUrl,
+  documentType,
+  metrics,
+  localPrice: initialLocalPrice,
+  initialIsPaid,
+}: {
+  photoId: string;
+  previewUrl: string;
+  documentType: string;
+  metrics: any;
+  localPrice: LocalPrice;
+  initialIsPaid?: boolean;
+}) {
+  const { data: session, status } = useSession();
+  const [hasPaid, setHasPaid] = useState(initialIsPaid || false);
+  const [guestEmail, setGuestEmail] = useState("");
+  const [timeLeft, setTimeLeft] = useState(20 * 60);
+  const [localPrice, setLocalPrice] = useState<LocalPrice>(initialLocalPrice);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  // Custom Hooks
+  const { verifying, checks, overallPass, canvasRef, overlayRef } =
+    useFaceVerification(previewUrl);
+
+  const { loading, handlePayment } = usePayment({
+    photoId,
+    localPrice,
+    guestEmail,
+    status: status === "authenticated" ? "authenticated" : status === "loading" ? "loading" : "unauthenticated",
+    session,
+    setHasPaid,
+  });
+
+  // Effects
+  useEffect(() => {
+    const tzCurrency = getClientTimezoneCurrency();
+    if (
+      !initialLocalPrice ||
+      (tzCurrency !== initialLocalPrice.currency && tzCurrency !== "USD")
+    ) {
+      fetch(`/api/currency?currency=${tzCurrency}`)
+        .then((r) => r.json())
+        .then((d) => {
+          if (d?.formatted) setLocalPrice(d);
+        })
+        .catch(console.error);
+    }
+  }, [initialLocalPrice]);
+
+  useEffect(() => {
+    const interval = setInterval(
+      () => setTimeLeft((p) => (p > 0 ? p - 1 : 0)),
+      1000,
+    );
+    return () => clearInterval(interval);
+  }, []);
+
+  const formatTime = (s: number) =>
+    `${Math.floor(s / 60)
+      .toString()
+      .padStart(2, "0")}:${(s % 60).toString().padStart(2, "0")}`;
+
+  const handleEmailPhoto = async () => {
+    const emailTo = window.prompt(
+      "Enter your email address to receive the photo:",
+    );
+    if (!emailTo) return;
+    try {
+      const res = await fetch("/api/send-photo", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: emailTo,
+          photoUrl: previewUrl,
+          documentType,
+          photoId,
+        }),
+      });
+      alert(
+        res.ok
+          ? "Photo sent successfully! Check your inbox."
+          : "Failed to send email. Please try again.",
+      );
+    } catch {
+      alert("Error sending email.");
+    }
+  };
+
+  const passCount = checks?.filter((c) => c.status === "PASS").length || 0;
+  const showExtras = !hasPaid && !verifying;
+  const productName = (documentType && DOC_LABELS[documentType]) || "Visa Photo";
+
+  return (
+    <div className="min-h-screen bg-slate-50 flex flex-col">
+      {/* Header */}
+      <div className="bg-slate-900 px-4 py-3 text-center">
+        <p className="text-white text-sm font-bold tracking-wide flex items-center justify-center gap-2">
+
+          Your photo is ready After download, your photo will be reviewed by a human. If anything is incorrect, we will contact you immediately via email so please make sure you provide a valid email address.
+        </p>
+      </div>
+
+
+
+      <div className="flex-1 flex items-start justify-center px-4 py-6 sm:py-8">
+        <div className="w-full max-w-6xl">
+          <div className="flex flex-col lg:flex-row gap-5">
+            {/* LEFT SIDE */}
+            <div className="w-full lg:w-[55%] space-y-4">
+              <PhotoCard
+                canvasRef={canvasRef}
+                overlayRef={overlayRef}
+                setIsDialogOpen={setIsDialogOpen}
+                verifying={verifying}
+                hasPaid={hasPaid}
+                overallPass={overallPass}
+                passCount={passCount}
+                checks={checks}
+              />
+              <ComplianceReport
+                verifying={verifying}
+                checks={checks}
+                passCount={passCount}
+              />
+              <UnpaidExtras
+                showExtras={showExtras}
+                checks={checks}
+                documentType={documentType}
+              />
+            </div>
+
+            {/* RIGHT SIDE: Order Summary */}
+            <OrderSummary
+              productName={productName}
+              localPrice={localPrice}
+              hasPaid={hasPaid}
+              timeLeft={timeLeft}
+              formatTime={formatTime}
+              loading={loading}
+              verifying={verifying}
+              handlePayment={handlePayment}
+              documentType={documentType}
+              photoId={photoId}
+              status={status === "authenticated" ? "authenticated" : status === "loading" ? "loading" : "unauthenticated"}
+              guestEmail={guestEmail}
+              setGuestEmail={setGuestEmail}
+              handleEmailPhoto={handleEmailPhoto}
+            />
+          </div>
+        </div>
+      </div>
+
+      <ZoomDialog
+        isDialogOpen={isDialogOpen}
+        setIsDialogOpen={setIsDialogOpen}
+        previewUrl={previewUrl}
+        hasPaid={hasPaid}
+      />
+
+      <MobileStickyCTA
+        showExtras={showExtras}
+        localPrice={localPrice}
+        loading={loading}
+        handlePayment={handlePayment}
+        status={status === "authenticated" ? "authenticated" : status === "loading" ? "loading" : "unauthenticated"}
+        guestEmail={guestEmail}
+        setGuestEmail={setGuestEmail}
+      />
+      <FeedbackButton photoId={photoId} />
+    </div>
+  );
+}

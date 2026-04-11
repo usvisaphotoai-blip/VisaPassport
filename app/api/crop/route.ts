@@ -1,0 +1,495 @@
+import { NextRequest, NextResponse } from "next/server";
+import sharp from "sharp";
+import { uploadBufferToCloudinary } from "@/lib/cloudinary";
+import { HEAD_TOP_MULTIPLIER } from "@/lib/mediapipe";
+
+// ------------------------------------------------------------------
+// CROP ENDPOINT — Uses client-provided face landmarks + Sharp
+// to crop the image to US Department of State passport guidelines.
+//
+// US Guidelines (2x2 inch / 600×600 px):
+//  • Head height: 1–1 3/8 inches (50–69% of image height)
+//  • Eye line: 1 1/8 – 1 3/8 inches from bottom (56–69%)
+//  • Centered horizontally
+// ------------------------------------------------------------------
+
+export async function POST(req: NextRequest) {
+  try {
+    const formData = await req.formData();
+    const file = formData.get("image") as File;
+    const faceDataRaw = formData.get("faceData") as string | null;
+
+    if (!file) {
+      return NextResponse.json({ error: "No image provided" }, { status: 400 });
+    }
+
+    if (!faceDataRaw) {
+      return NextResponse.json(
+        { error: "Face detection data is required for cropping" },
+        { status: 400 }
+      );
+    }
+
+    let faceData: {
+      faceBox: { x: number; y: number; width: number; height: number };
+      eyeCenter: { x: number; y: number };
+      chinY: number;
+      topOfHeadY: number;
+      imageDimensions: { width: number; height: number };
+    };
+
+    try {
+      faceData = JSON.parse(faceDataRaw);
+    } catch {
+      return NextResponse.json(
+        { error: "Invalid face data format" },
+        { status: 400 }
+      );
+    }
+
+    const buffer = Buffer.from(await file.arrayBuffer());
+    const imagePipeline = sharp(buffer).rotate();
+    const metadata = await imagePipeline.metadata();
+
+    // Check image compliance (dullness / lighting) at the beginning of the pipeline
+    const stats = await sharp(buffer).stats();
+    let totalStdDev = 0;
+    let totalMean = 0;
+    // channels might contain an alpha channel, we only care about RGB.
+    const colorChannels = Math.min(3, stats.channels.length);
+    for (let i = 0; i < colorChannels; i++) {
+      totalStdDev += stats.channels[i].stdev;
+      totalMean += stats.channels[i].mean;
+    }
+    const avgStdDev = totalStdDev / colorChannels;
+    const avgMean = totalMean / colorChannels;
+
+    // Low contrast/dull image check (greyish image)
+    if (avgStdDev < 10) {
+      return NextResponse.json(
+        { error: "Image is too dull or lacks contrast. Please retake the photo in better lighting." },
+        { status: 400 }
+      );
+    }
+    // Extreme lighting check (too dark or too washed out/bright)
+    if (avgMean < 30) {
+      return NextResponse.json(
+        { error: "Image is too dark. Please retake the photo in a well-lit area without shadows." },
+        { status: 400 }
+      );
+    }
+    if (avgMean > 245) {
+      return NextResponse.json(
+        { error: "Image is too bright or washed out. Please retake the photo with even lighting." },
+        { status: 400 }
+      );
+    }
+
+    let imgW = metadata.width || faceData.imageDimensions.width;
+    let imgH = metadata.height || faceData.imageDimensions.height;
+
+    // sharp.metadata() returns unrotated dimensions. If .rotate() was called,
+    // EXIF orientations >= 5 mean the image is rotated 90 or 270 degrees.
+    if (metadata.orientation && metadata.orientation >= 5) {
+      imgW = metadata.height || faceData.imageDimensions.width;
+      imgH = metadata.width || faceData.imageDimensions.height;
+    }
+
+    // ---------------------------------------------------------------
+    // BUG FIX B7 — EXIF rotation scale mismatch
+    // The client runs MediaPipe on the visually-correct (rotated) image
+    // and sends imageDimensions matching that visual frame.
+    // After EXIF auto-rotate above, imgW/imgH already reflect the
+    // display orientation, so we must NOT swap faceData dimensions
+    // before computing scaleX/scaleY. Use imgW/imgH as-is.
+    // ---------------------------------------------------------------
+    const scaleX = imgW / faceData.imageDimensions.width;
+    const scaleY = imgH / faceData.imageDimensions.height;
+
+    if (Math.abs(scaleX - 1) > 0.01 || Math.abs(scaleY - 1) > 0.01) {
+      console.log(`[crop] Scaling face coordinates: image ${imgW}x${imgH} vs faceData ${faceData.imageDimensions.width}x${faceData.imageDimensions.height} (scale: ${scaleX.toFixed(3)}, ${scaleY.toFixed(3)})`);
+      faceData.faceBox.x *= scaleX;
+      faceData.faceBox.y *= scaleY;
+      faceData.faceBox.width *= scaleX;
+      faceData.faceBox.height *= scaleY;
+      faceData.eyeCenter.x *= scaleX;
+      faceData.eyeCenter.y *= scaleY;
+      faceData.chinY *= scaleY;
+      faceData.topOfHeadY *= scaleY;
+      faceData.imageDimensions.width = imgW;
+      faceData.imageDimensions.height = imgH;
+    }
+
+    // Background removal is done client-side before this endpoint is called
+    const targetBgRaw = formData.get("targetBackground") as string || "white";
+    const filenameExt = targetBgRaw === "transparent" ? "png" : "jpg";
+
+    // ---- VALIDATE face data fields ----
+    if (
+      !faceData.faceBox || !faceData.eyeCenter ||
+      faceData.chinY == null || faceData.topOfHeadY == null ||
+      !faceData.imageDimensions?.width || !faceData.imageDimensions?.height
+    ) {
+      return NextResponse.json(
+        { error: "Incomplete face data — faceBox, eyeCenter, chinY, topOfHeadY, and imageDimensions are required" },
+        { status: 400 }
+      );
+    }
+
+    // ---- FACE VALIDATION (server-side guards) ----
+    const faceAreaPct = (faceData.faceBox.width * faceData.faceBox.height) / (imgW * imgH) * 100;
+    if (faceAreaPct < 3) {
+      return NextResponse.json(
+        { error: "Face is too small in the image. Please take a closer photo where your face fills more of the frame." },
+        { status: 400 }
+      );
+    }
+
+    // ---- Calculate crop region per US passport guidelines ----
+    const headHeight = faceData.chinY - faceData.topOfHeadY;
+
+    if (headHeight <= 0 || headHeight < imgH * 0.05) {
+      return NextResponse.json(
+        { error: "Face landmarks appear invalid — chin is above forehead, or face is too small. Please try a clearer photo." },
+        { status: 400 }
+      );
+    }
+
+    // HEAD_TOP_MULTIPLIER = 1.20 — intentionally kept as-is (not changed per requirement)
+    const fullHeadHeight = headHeight * HEAD_TOP_MULTIPLIER;
+    const trueTopOfHead = faceData.chinY - fullHeadHeight;
+
+    const TARGET_HEAD_PCT = 0.59;
+    const TARGET_EYE_PCT = 0.43;
+    const MIN_HEAD_PCT = 0.50;
+    const MAX_HEAD_PCT = 0.69;
+    const MIN_EYE_PCT = 0.31;
+    const MAX_EYE_PCT = 0.44;
+
+    let cropSize = fullHeadHeight / TARGET_HEAD_PCT;
+    let cropTop = faceData.eyeCenter.y - (cropSize * TARGET_EYE_PCT);
+
+    // 1. DYNAMIC HAIR SOLVER
+    const CAUTION_MARGIN = cropSize * 0.02;
+    if (cropTop > trueTopOfHead - CAUTION_MARGIN) {
+      cropTop = trueTopOfHead - CAUTION_MARGIN;
+
+      const eyeOffset = faceData.eyeCenter.y - cropTop;
+      if ((eyeOffset / cropSize) > MAX_EYE_PCT) {
+        cropSize = eyeOffset / MAX_EYE_PCT;
+        cropTop = faceData.eyeCenter.y - (cropSize * MAX_EYE_PCT);
+      }
+    }
+
+    // 2. BOUNDARY CLAMPING: Legal head sizes (50-69%)
+    const maxCropSizeAllowed = fullHeadHeight / MIN_HEAD_PCT;
+    const minCropSizeAllowed = fullHeadHeight / MAX_HEAD_PCT;
+
+    if (cropSize < minCropSizeAllowed) cropSize = minCropSizeAllowed;
+    if (cropSize > maxCropSizeAllowed) cropSize = maxCropSizeAllowed;
+
+    let revalidatedEyePct = (faceData.eyeCenter.y - cropTop) / cropSize;
+    if (revalidatedEyePct > MAX_EYE_PCT) {
+      cropTop = faceData.eyeCenter.y - (cropSize * MAX_EYE_PCT);
+    } else if (revalidatedEyePct < MIN_EYE_PCT) {
+      cropTop = faceData.eyeCenter.y - (cropSize * MIN_EYE_PCT);
+    }
+
+    // 3. IMAGE BOUND CLAMPING
+    // ---------------------------------------------------------------
+    // BUG FIX B2 + B3 — Bottom/top boundary shrink breaks head %
+    // Old code silently shrank cropSize when the crop extended beyond
+    // image edges, which pushed head% above 69% causing rejections.
+    // Fix: add padding instead of shrinking. We track how much the
+    // crop box extends outside the image and pad later via sharp's
+    // .extend() — the same way left/right overflow is already handled.
+    // After all adjustments, we hard-validate final head% and reject
+    // photos that mathematically cannot be made compliant.
+    // ---------------------------------------------------------------
+
+    // Do NOT shrink cropSize here — use padding instead (handled below in extend())
+    // Only clamp cropTop so it doesn't go infinitely negative
+    if (cropTop + cropSize > imgH) {
+      // Bottom overflows — will be padded below, do not shrink cropSize
+      console.log(`[crop] Bottom overflow: cropTop=${cropTop.toFixed(0)} + cropSize=${cropSize.toFixed(0)} > imgH=${imgH}, will pad bottom`);
+    }
+    if (cropTop < 0) {
+      // Top overflows — will be padded above, do not shrink cropSize
+      console.log(`[crop] Top overflow: cropTop=${cropTop.toFixed(0)}, will pad top`);
+    }
+
+    // Absolute minimum cropSize safety
+    if (cropSize < minCropSizeAllowed) cropSize = minCropSizeAllowed;
+
+    cropSize = Math.round(cropSize);
+    cropTop = Math.round(cropTop);
+
+    const maxAllowedCropSize = Math.max(imgW, imgH) * 2;
+    if (cropSize > maxAllowedCropSize) {
+      console.warn(`[crop] cropSize ${cropSize} exceeded 2× image bounds (${maxAllowedCropSize}), clamping`);
+      cropSize = Math.round(maxAllowedCropSize);
+    }
+
+    if (cropSize < 200) {
+      cropSize = 200;
+    }
+
+    // ---------------------------------------------------------------
+    // BUG FIX B2+B3 (continued) — Post-clamp compliance validation
+    // Validate head% AFTER all cropSize decisions are final.
+    // If the photo geometry makes compliance impossible, reject early
+    // with a clear message rather than silently uploading a bad photo.
+    // ---------------------------------------------------------------
+    const postClampHeadPct = (fullHeadHeight / cropSize) * 100;
+    if (postClampHeadPct < MIN_HEAD_PCT * 100 || postClampHeadPct > MAX_HEAD_PCT * 100) {
+      console.warn(`[crop] Non-compliant head%: ${postClampHeadPct.toFixed(1)}% (allowed 50–69%)`);
+      return NextResponse.json(
+        { error: `Head size (${postClampHeadPct.toFixed(0)}%) is outside the allowed 50–69% range. Please retake the photo with your face closer to or further from the camera.` },
+        { status: 400 }
+      );
+    }
+
+    const faceCenterX = faceData.faceBox.x + (faceData.faceBox.width / 2);
+    let cropLeft = Math.round(faceCenterX - cropSize / 2);
+
+    console.log(`[crop] headHeight=${headHeight.toFixed(0)}, fullHeadHeight=${fullHeadHeight.toFixed(0)}, cropSize=${cropSize}, cropTop=${cropTop}, cropLeft=${cropLeft}, imgW=${imgW}, imgH=${imgH}, headPct=${postClampHeadPct.toFixed(1)}%`);
+
+    const extractLeft = Math.round(Math.max(0, cropLeft));
+    const extractTop = Math.round(Math.max(0, cropTop));
+    const extractRight = Math.round(Math.min(imgW, cropLeft + cropSize));
+    const extractBottom = Math.round(Math.min(imgH, cropTop + cropSize));
+
+    const extractW = Math.round(Math.max(1, extractRight - extractLeft));
+    const extractH = Math.round(Math.max(1, extractBottom - extractTop));
+
+    const paddingTop = Math.round(Math.max(0, -cropTop));
+    const paddingLeft = Math.round(Math.max(0, -cropLeft));
+    const paddingBottom = Math.round(Math.max(0, (cropTop + cropSize) - imgH));
+    const paddingRight = Math.round(Math.max(0, (cropLeft + cropSize) - imgW));
+
+    const intermediateW = extractW + paddingLeft + paddingRight;
+    const intermediateH = extractH + paddingTop + paddingBottom;
+    console.log(`[crop] extract=${extractW}x${extractH}, padding T=${paddingTop} B=${paddingBottom} L=${paddingLeft} R=${paddingRight}, intermediate=${intermediateW}x${intermediateH}`);
+
+    // ---- Final Sharp Crop ----
+    let bgRgb = { r: 255, g: 255, b: 255, alpha: 1 };
+    switch (targetBgRaw.toLowerCase()) {
+      case "transparent":
+        bgRgb = { r: 255, g: 255, b: 255, alpha: 0 };
+        break;
+      case "light-gray":
+        bgRgb = { r: 243, g: 244, b: 246, alpha: 1 };
+        break;
+      case "light-blue":
+        bgRgb = { r: 239, g: 246, b: 255, alpha: 1 };
+        break;
+      case "white":
+      default:
+        bgRgb = { r: 255, g: 255, b: 255, alpha: 1 };
+        break;
+    }
+
+    let cropChain = imagePipeline
+      .extract({
+        left: extractLeft,
+        top: extractTop,
+        width: extractW,
+        height: extractH,
+      })
+      .extend({
+        top: paddingTop,
+        bottom: paddingBottom,
+        left: paddingLeft,
+        right: paddingRight,
+        background: bgRgb
+      });
+
+    // ---------------------------------------------------------------
+    // BUG FIX B4 — flatten() unconditionally destroyed PNG transparency
+    // Old code called .flatten() for ALL formats including PNG, which
+    // white-filled all transparent pixels and made transparent output
+    // impossible. Now flatten is only applied for JPEG output.
+    // ---------------------------------------------------------------
+    if (filenameExt !== "png") {
+      cropChain = cropChain.flatten({ background: { r: 255, g: 255, b: 255 } });
+    }
+
+    cropChain = cropChain
+      .toColorspace("srgb")
+      .resize(600, 600, { fit: "fill" })
+      .withMetadata({ density: 300 });
+
+    if (filenameExt === "png") {
+      cropChain = cropChain.png();
+    } else {
+      cropChain = cropChain.jpeg({ quality: 100, chromaSubsampling: '4:4:4' });
+    }
+
+    let processedBuffer = await cropChain.toBuffer();
+
+    // ---- SAFETY: Guarantee output is exactly 600×600 ----
+    const finalMeta = await sharp(processedBuffer).metadata();
+    if (finalMeta.width !== 600 || finalMeta.height !== 600) {
+      console.warn(`[crop] Output was ${finalMeta.width}x${finalMeta.height}, forcing to 600x600`);
+      processedBuffer = await sharp(processedBuffer)
+        .resize(600, 600, { fit: "fill" })
+        .toBuffer();
+    }
+
+    // ---------------------------------------------------------------
+    // BUG FIX B6 — Binary search compression could start too high
+    // Old code: low = 60, meaning if quality=60 still > 240KB (possible
+    // for detailed photos), bestBuffer stayed at quality=100 and the
+    // 240KB DS-160 limit was violated silently.
+    // Fix: start low=1 so the search covers the full quality range.
+    // Add a hard rejection if even q=1 cannot satisfy the 240KB limit.
+    // ---------------------------------------------------------------
+    if (filenameExt === "jpg") {
+      const MAX_SIZE_BYTES = 240 * 1024; // 240 KB
+      const referenceBuffer = processedBuffer;
+
+      if (processedBuffer.length > MAX_SIZE_BYTES) {
+        let low = 1; // FIX: was 60, now covers full quality range
+        let high = 100;
+        let bestBuffer: Buffer | null = null;
+        let bestQuality = -1;
+
+        while (low <= high) {
+          const mid = Math.floor((low + high) / 2);
+          const testBuffer = await sharp(referenceBuffer)
+            .jpeg({ quality: mid, chromaSubsampling: '4:4:4' })
+            .toBuffer();
+
+          if (testBuffer.length <= MAX_SIZE_BYTES) {
+            bestBuffer = testBuffer;
+            bestQuality = mid;
+            low = mid + 1;
+          } else {
+            high = mid - 1;
+          }
+        }
+
+        // Hard rejection if no quality level achieves 240KB
+        if (!bestBuffer) {
+          console.error(`[crop] Cannot compress 600×600 image below 240KB even at quality=1`);
+          return NextResponse.json(
+            { error: "Image cannot be compressed to meet the 240KB DS-160 limit. Please try a photo with a simpler background." },
+            { status: 400 }
+          );
+        }
+
+        processedBuffer = bestBuffer;
+        console.log(`[crop] Compressed to quality=${bestQuality}, size=${Math.round(processedBuffer.length / 1024)}KB`);
+      }
+    }
+
+    const watermarkedBuffer = processedBuffer;
+
+    // ---------------------------------------------------------------
+    // BUG FIX B8 — A4 print sheet had 0px gap between photo columns
+    // Old xOffsets: [40, 640, 1240, 1840] — difference = 600px = exact
+    // photo width, meaning photos were touching with no cut margin.
+    // Fix: add 8px gap between columns and rows for clean cutting.
+    // A4 @ 300 DPI = 2480×3508 px, photo = 600×600 px
+    // 4 cols: 4×600 = 2400 + 3×8 gaps = 2424, margin = (2480-2424)/2 = 28
+    // 5 rows: 5×600 = 3000 + 4×8 gaps = 3032, margin = (3508-3032)/2 = 238
+    // ---------------------------------------------------------------
+    const svgBorder = '<svg width="600" height="600"><rect x="1" y="1" width="598" height="598" fill="none" stroke="black" stroke-width="2"/></svg>';
+    const borderedBuffer = await sharp(processedBuffer)
+      .composite([{ input: Buffer.from(svgBorder), blend: 'over' }])
+      .toBuffer();
+
+    const PHOTO_GAP = 8; // px gap between photos for cut margin
+    const COL_STEP = 600 + PHOTO_GAP; // 608
+    const ROW_STEP = 600 + PHOTO_GAP; // 608
+    const MARGIN_X = Math.floor((2480 - (4 * 600 + 3 * PHOTO_GAP)) / 2); // 28px
+    const MARGIN_Y = Math.floor((3508 - (5 * 600 + 4 * PHOTO_GAP)) / 2); // 238px
+
+    const xOffsets = [MARGIN_X, MARGIN_X + COL_STEP, MARGIN_X + COL_STEP * 2, MARGIN_X + COL_STEP * 3];
+    const yOffsets = [MARGIN_Y, MARGIN_Y + ROW_STEP, MARGIN_Y + ROW_STEP * 2, MARGIN_Y + ROW_STEP * 3, MARGIN_Y + ROW_STEP * 4];
+
+    const a4Composites = [];
+    for (const y of yOffsets) {
+      for (const x of xOffsets) {
+        a4Composites.push({ input: borderedBuffer, top: y, left: x });
+      }
+    }
+
+    const printSheetBuffer = await sharp({
+      create: {
+        width: 2480,
+        height: 3508,
+        channels: 4,
+        background: { r: 255, g: 255, b: 255, alpha: 1 }
+      }
+    })
+      .composite(a4Composites)
+      .jpeg({ quality: 100 })
+      .toBuffer();
+
+    const [secureUrl, previewUrl, printSheetUrl] = await Promise.all([
+      uploadBufferToCloudinary(processedBuffer, 'visa-photos', ['secure']),
+      uploadBufferToCloudinary(watermarkedBuffer, 'visa-photos', ['preview']),
+      uploadBufferToCloudinary(printSheetBuffer, 'visa-photos', ['print-sheet']),
+    ]);
+
+    // ---------------------------------------------------------------
+    // BUG FIX B5 — Wrong metrics saved to MongoDB
+    // Old code used fullHeadHeight (original image space) divided by
+    // cropSize (also original image space) — that part was fine.
+    // But effectiveEyeY mixed coordinate spaces: faceData coords
+    // (original image) minus extractTop (original image) plus paddingTop
+    // (original image) is correct for the intermediate crop canvas.
+    // However eyeLevelPct was computed as (cropSize - eyeY) / cropSize
+    // which gives "% from top", not "% from bottom" as the US guideline
+    // specifies (eye must be 56–69% from bottom = 31–44% from top).
+    // Fix: scale all values to the 600×600 output space for accuracy,
+    // and clarify that eyeLevelPct is stored as "% from bottom".
+    // ---------------------------------------------------------------
+    const outputScale = 600 / cropSize;
+    const scaledFullHeadHeight = fullHeadHeight * outputScale;
+
+    // effectiveEyeY in the intermediate crop canvas (before resize to 600)
+    const effectiveEyeY = faceData.eyeCenter.y - extractTop + paddingTop;
+    // Scale to 600px output space
+    const scaledEyeY = effectiveEyeY * outputScale;
+
+    const finalHeadPct = (scaledFullHeadHeight / 600) * 100;
+    const finalEyeFromBottomPct = ((600 - scaledEyeY) / 600) * 100; // % from bottom, matches US spec
+
+    console.log(`[crop] Final metrics — headPct=${finalHeadPct.toFixed(1)}% (target 50–69%), eyeFromBottom=${finalEyeFromBottomPct.toFixed(1)}% (target 56–69%)`);
+
+    const dbConnect = (await import("@/lib/mongodb")).default;
+    const Photo = (await import("@/models/Photo")).default;
+
+    await dbConnect();
+
+    const photoRecord = await Photo.create({
+      documentType: formData.get("type") as string || "general",
+      secureUrl: secureUrl,
+      previewUrl: previewUrl,
+      printSheetUrl: printSheetUrl,
+      metrics: {
+        headSizePct: finalHeadPct.toFixed(1),
+        eyeLevelPct: finalEyeFromBottomPct.toFixed(1), // % from bottom, matches US DoS spec
+      }
+    });
+
+    console.log("Saved photoRecord:", photoRecord._id);
+
+    return NextResponse.json({
+      success: true,
+      photoId: photoRecord._id.toString(),
+      processedImageUrl: previewUrl,
+      dimensions: "600×600",
+      format: filenameExt.toUpperCase(),
+      sizeKb: Math.round(processedBuffer.length / 1024),
+    });
+  } catch (error: any) {
+    console.error("Crop Error:", error);
+    return NextResponse.json(
+      { error: "Crop failed", details: error.message },
+      { status: 500 }
+    );
+  }
+}
