@@ -4,7 +4,7 @@
  * Preserves quality as much as possible while ensuring the upload won't fail.
  */
 
-const MAX_FILE_SIZE = 800 * 1024; // 800 KB target (safe margin below 1 MB Nginx default limit)
+const MAX_FILE_SIZE = 3.5 * 1024 * 1024; // 3.5 MB — preserve detail for biometric crop quality
 
 /**
  * Compress an image File to stay under the Vercel payload size limit.
@@ -90,7 +90,7 @@ export async function compressImage(file: File): Promise<File> {
       };
 
       // Start: max 2048px dimension, 0.85 JPEG quality
-      tryWithDimension(2048, 0.85);
+      tryWithDimension(3072, 0.92);
     };
 
     img.onerror = () => {

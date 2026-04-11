@@ -275,7 +275,7 @@ function ToolForm() {
           cx.drawImage(bgImg, 0, 0);
 
           finalFile = await new Promise<Blob>(
-            r => c.toBlob(b => r(b!), "image/jpeg", 0.95)
+            r => c.toBlob(b => r(b!), "image/jpeg", 0.98)
           );
         }
       } else {
@@ -284,7 +284,10 @@ function ToolForm() {
 
       setCropMsg("Applying guidelines & cropping...");
       const formData = new FormData();
-      formData.append("image", finalFile instanceof File ? finalFile : new File([finalFile], "photo.jpg", { type: "image/jpeg" }));
+      const isTransparent = selectedBg === "transparent";
+      const fileName = isTransparent ? "photo.png" : "photo.jpg";
+      const mimeType = isTransparent ? "image/png" : "image/jpeg";
+      formData.append("image", finalFile instanceof File ? finalFile : new File([finalFile], fileName, { type: mimeType }));
       formData.append("targetBackground", selectedBg);
       formData.append("type", selectedDoc);
       formData.append("faceData", JSON.stringify({

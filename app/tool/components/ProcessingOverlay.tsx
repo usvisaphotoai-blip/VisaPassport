@@ -21,10 +21,10 @@ const ProcessingOverlay: React.FC<ProcessingOverlayProps> = ({
   if (!isCropping) return null;
 
   const steps = [
-    { label: "Cropping", key: "crop" },
-    { label: "Background removing", key: "background" },
-    { label: "Resizing", key: "Applying" },
-    { label: "Analyzing", key: "preview" },
+    { label: "Preparing Image", key: "crop" },
+    { label: "Removing Background", key: "background" },
+    { label: "Biometric Alignment", key: "Applying" },
+    { label: "ICAO Compliance Check", key: "preview" },
   ];
 
   let activeIdx = 0;
@@ -113,9 +113,9 @@ const ProcessingOverlay: React.FC<ProcessingOverlayProps> = ({
         {/* ─── Title (always on top on mobile) ─── */}
         <div className="w-full text-center lg:text-left lg:hidden">
           <h2 className="text-xl font-black text-slate-900 leading-tight">
-            Preparing your photo
+            Processing your photo
           </h2>
-          <p className="text-slate-400 text-xs mt-1 font-medium">AI magic in progress</p>
+          <p className="text-slate-400 text-xs mt-1 font-medium">Optimizing for government standards</p>
         </div>
 
         {/* ─── Photo Card (top on mobile, right on desktop) ─── */}
@@ -196,9 +196,9 @@ const ProcessingOverlay: React.FC<ProcessingOverlayProps> = ({
           {/* Desktop-only title */}
           <div className="hidden lg:block mb-8">
             <h2 className="text-3xl xl:text-4xl font-black text-slate-900 leading-tight">
-              Preparing your photo
+              Processing your photo
             </h2>
-            <p className="text-slate-400 text-sm mt-2 font-medium">Sit tight — AI magic in progress</p>
+            <p className="text-slate-400 text-sm mt-2 font-medium">Optimizing for government standards</p>
           </div>
 
           {/* Horizontal steps on mobile, vertical on desktop */}
