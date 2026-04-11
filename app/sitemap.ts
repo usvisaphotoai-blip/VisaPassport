@@ -1,7 +1,7 @@
 import { MetadataRoute } from "next";
 import path from "path";
 import fs from "fs/promises";
-import { getAllSlugs } from "../lib/slug-utils";
+import { getAllSlugs, getAllVisaSlugs } from "../lib/slug-utils";
 
 const APP_URL = "https://www.pixpassport.com";
 

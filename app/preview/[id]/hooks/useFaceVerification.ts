@@ -18,7 +18,7 @@ import {
   TILT_FAIL_THRESHOLD,
   type NormalizedLandmark,
 } from "@/lib/mediapipe";
-import { getSpecById } from "@/lib/specs";
+import { getSpecById, type CountrySpec } from "@/lib/specs";
 
 export interface ComplianceCheck {
   name: string;

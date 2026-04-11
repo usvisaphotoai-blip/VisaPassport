@@ -53,7 +53,7 @@ export function getDocumentTypes(): DocumentType[] {
     id: s.id,
     label: s.name,
     size: `${s.width_mm}×${s.height_mm} mm (${s.width_px}×${s.height_px} px)`,
-    bg: s.bg_color,
+    bg_color: s.bg_color,
     country: s.country,
     flag: s.flag,
     price: s.price,

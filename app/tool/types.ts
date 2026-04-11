@@ -7,7 +7,7 @@ export type DocumentType = {
   id: string;
   label: string;
   size: string;
-  bg: string;
+  bg_color: string;
   country?: string;
   flag?: string;
   price?: number;

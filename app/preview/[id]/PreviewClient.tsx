@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 import { getClientTimezoneCurrency } from "@/lib/currency";
 
-import { CheckMark, DOC_LABELS } from "./components/SharedUI";
+import { CheckMark } from "./components/SharedUI";
 import PhotoCard from "./components/PhotoCard";
 import ComplianceReport from "./components/ComplianceReport";
 import UnpaidExtras from "./components/UnpaidExtras";

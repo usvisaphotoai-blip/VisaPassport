@@ -85,7 +85,7 @@ const DocumentSelector: React.FC<DocumentSelectorProps> = ({
                 )}
               </div>
               <p className="text-[10px] text-slate-400 mt-1 font-medium ml-6">
-                {doc.size} · {doc.bg} bg
+                {doc.size} · {doc.bg_color} bg
               </p>
               {selectedDoc === doc.id && (
                 <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-lime-500 rounded-r-full" />
