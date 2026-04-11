@@ -19,21 +19,21 @@ export const metadata: Metadata = {
     "DS-160 photo validator free",
   ],
   alternates: {
-    canonical: "https://www.usvisaphotoai.pro/tool",
+    canonical: "https://www.pixpassport.com/tool",
   },
   openGraph: {
     title: "US Visa Photo Tool — Free Validator & Maker",
     description:
       "Free AI-powered US visa photo tool. Validate and create compliant 2x2 photos for DS-160, DV lottery, green card, and passport applications.",
-    url: "https://www.usvisaphotoai.pro/tool",
-    siteName: "USVisaPhotoAI",
+    url: "https://www.pixpassport.com/tool",
+    siteName: "PixPassport",
     type: "website",
     images: [
       {
-        url: "https://www.usvisaphotoai.pro/og-image.jpg",
+        url: "https://www.pixpassport.com/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "USVisaPhotoAI - Free US Visa Photo Tool",
+        alt: "PixPassport - Free US Visa Photo Tool",
       },
     ],
   },
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     title: "US Visa Photo Tool — Free Validator & Maker",
     description:
       "Free AI-powered US visa photo tool for DS-160, green card, passport, and DV lottery applications.",
-    images: ["https://www.usvisaphotoai.pro/og-image.jpg"],
+    images: ["https://www.pixpassport.com/og-image.jpg"],
   },
   robots: {
     index: true,

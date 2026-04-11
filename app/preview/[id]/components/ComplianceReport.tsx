@@ -1,17 +1,20 @@
 import React from "react";
 import { cx, CHECK_COLORS, CHECK_ICONS, SvgIcon } from "./SharedUI";
 import { ComplianceCheck } from "../hooks/useFaceVerification";
+import { CountrySpec } from "@/lib/specs";
 
 interface ComplianceReportProps {
   verifying: boolean;
   checks: ComplianceCheck[];
   passCount: number;
+  spec?: CountrySpec | undefined;
 }
 
 export default function ComplianceReport({
   verifying,
   checks,
   passCount,
+  spec,
 }: ComplianceReportProps) {
   if (verifying || !checks || checks.length === 0) return null;
 
@@ -19,10 +22,10 @@ export default function ComplianceReport({
     <div className="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm">
       {passCount === checks.length && (
         <div className="bg-lime-50 border border-lime-200 rounded-xl p-3 mb-4 flex items-start gap-3">
-          <span className="text-xl">✅</span>
+          <span className="text-xl">{spec?.flag || "✅"}</span>
           <div>
             <p className="text-sm font-bold text-lime-800">
-              Your photo PASSES all US visa requirements
+              Your photo PASSES all {spec?.name || "official"} requirements
             </p>
             <p className="text-xs text-lime-700 mt-0.5 font-medium">
               Download the official version now to avoid rejection or delays.

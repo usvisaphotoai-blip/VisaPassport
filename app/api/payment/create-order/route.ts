@@ -40,9 +40,13 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Photo is already paid for" }, { status: 400 });
     }
 
-    // Get localized price (Defaults to 5.99 USD, allows client override)
+    const { getSpecById } = await import("@/lib/specs");
+    const spec = getSpecById(photo.documentType);
+    const basePrice = spec?.price || 5.99;
+
+    // Get localized price (Allows client override for currency)
     const { getLocalPrice } = await import("@/lib/currency");
-    const localPrice = await getLocalPrice(5.99, currencyOverride);
+    const localPrice = await getLocalPrice(basePrice, currencyOverride);
 
     // Razorpay expects amount in smallest currency unit (e.g. cents, paise)
     // Most currencies use 2 decimal places, but some like JPY don't.

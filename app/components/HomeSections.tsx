@@ -5,32 +5,32 @@ import Link from "next/link";
 const steps = [
   {
     num: "01",
-    title: "Upload Photos",
-    desc: "Upload your photo. We accept JPEG, PNG, and HEIC formats.",
+    title: "Upload Photo",
+    desc: "Upload your photo. We accept JPEG, PNG, and HEIC formats from any device.",
     icon: "📤",
   },
   {
     num: "02",
     title: "Instant Validation",
-    desc: "Each photo is checked against all US State Department specifications in seconds.",
+    desc: "Your photo is automatically checked against specific country rules in seconds.",
     icon: "⚡",
   },
   {
     num: "03",
     title: "Compliance Report",
-    desc: "See exactly which checks PASS or FAIL with clear reasons and fix suggestions.",
+    desc: "See exactly which points PASS or FAIL with clear reasons and fix suggestions.",
     icon: "📋",
   },
   {
     num: "04",
-    title: "Pay $5.99",
-    desc: "One-time payment to unlock your processed, fully compliant photo download.",
+    title: "Small Fee",
+    desc: "Local pricing based on your country. One-time payment for pro results.",
     icon: "💳",
   },
   {
     num: "05",
     title: "Download",
-    desc: "Download your compliant, processed photo from your dashboard instantly.",
+    desc: "Get your compliant, processed photo and print sheet instantly.",
     icon: "⬇️",
   },
 ];
@@ -38,54 +38,48 @@ const steps = [
 const specs = [
   {
     label: "Dimensions",
-    value: "600 × 600 px",
-    detail: "Square 1:1 aspect ratio",
+    value: "35x45mm / 2x2in",
+    detail: "Supports all global sizes",
   },
-  { label: "Max File Size", value: "240 KB", detail: "JPEG format required" },
-  { label: "Background", value: "Pure White", detail: "RGB (255, 255, 255)" },
+  { label: "Format", value: "JPEG / PNG", detail: "Optimized for quality" },
+  { label: "Background", value: "Dynamic", detail: "White, Off-white, Gray" },
   {
     label: "Eye Position",
-    value: "56% – 69%",
-    detail: "From bottom edge of image",
+    value: "Biometric",
+    detail: "Centered per local rules",
   },
-  { label: "Head Size", value: "50% – 69%", detail: "Crown to chin ratio" },
+  { label: "Head Size", value: "Scaled", detail: "Automatic crown-to-chin" },
   {
     label: "Expression",
     value: "Neutral",
-    detail: "Mouth closed, both eyes open",
+    detail: "Mouth closed, eyes open",
   },
 ];
 
 const toolPages = [
   {
-    href: "/us-visa-photo",
+    href: "/india-passport-photo-editor",
+    title: "India Passport",
+    target: "Passport Applicants",
+    desc: "35x45mm, white background. Fully compliant with Indian passport standards.",
+  },
+  {
+    href: "/uk-passport-photo-editor",
+    title: "UK Passport",
+    target: "HMPO Applicants",
+    desc: "35x45mm, light gray background. HMPO and Digital Code compliant.",
+  },
+  {
+    href: "/us-visa-photo-editor",
     title: "US Visa Photo",
     target: "DS-160 Applicants",
-    desc: "600×600px, 240KB max, white background. Fully compliant with DS-160 requirements.",
-  },
-  {
-    href: "/dv-lottery-photo-2027",
-    title: "DV Lottery 2027",
-    target: "Green Card Lottery",
-    desc: "Same as visa specs with strict eye level validation. Ready for DV-2027 applications.",
-  },
-  {
-    href: "/us-passport-photo",
-    title: "US Passport Photo",
-    target: "Passport Renewals",
-    desc: "600×600px digital photo for online submissions. DIY printable 2×2 inch option.",
-  },
-  {
-    href: "/green-card-photo",
-    title: "Green Card Photo",
-    target: "Permanent Residence",
-    desc: "2×2 inch compliant photo. No glasses allowed. Correct biometric positioning.",
+    desc: "600x600px, white background. Perfect for DS-160 and Green Card.",
   },
   {
     href: "/photo-validator",
-    title: "Free Photo Validator",
-    target: "Quick Compliance Check",
-    desc: "Validate any US document photo for free. Instant PASS/FAIL report, no payment needed.",
+    title: "Free Validator",
+    target: "Compliance Check",
+    desc: "Validate any official document photo for free. Instant PASS/FAIL report.",
   },
 ];
 
@@ -113,44 +107,44 @@ const privacyItems = [
 ];
 
 const docPills = [
-  "DS-160 Visa",
-  "DV-2027 Lottery",
-  "US Passport",
-  "Green Card",
-  "H1-B Visa",
-  "F1 Student",
-  "B1/B2 Visitor",
-  "OPT/EAD Card",
+  "India Passport",
+  "UK Passport",
+  "US Visa",
+  "Schengen Visa",
+  " Visa",
+  "Australia Passport",
+  "UAE Visa",
+  "Saudi Arabia Passport",
 ];
 
 const officialSources = [
   {
+    agency: "International Civil Aviation Org",
+    doc: "Doc 9303 Machine Readable Travel Documents",
+    url: "https://www.icao.int/publications/pages/publication.aspx?docnum=9303",
+    note: "The global standard for biometric passport photos.",
+    badge: "ICAO",
+  },
+  {
     agency: "U.S. Department of State",
-    doc: "Nonimmigrant Visa Photo Requirements",
+    doc: "Visa and Passport Photo Requirements",
     url: "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/photos.html",
-    note: "Official photo specs for all US visa types including DS-160.",
+    note: "Official photo specs for US visa types.",
     badge: "State Dept.",
   },
   {
-    agency: "U.S. Department of State",
-    doc: "Diversity Visa Lottery Photo Requirements",
-    url: "https://travel.state.gov/content/travel/en/us-visas/immigrate/diversity-visa-program-entry/diversity-visa-instructions.html",
-    note: "Official DV-2027 entry instructions including biometric photo rules.",
-    badge: "DV Lottery",
+    agency: "GOV.UK",
+    doc: "UK Passport Photo Rules",
+    url: "https://www.gov.uk/photos-for-passports",
+    note: "Official UK government standards for passport photos.",
+    badge: "UK HMPO",
   },
   {
-    agency: "USCIS",
-    doc: "Photo Requirements for Immigration Documents",
-    url: "https://www.uscis.gov/forms/filing-guidance/photo-requirements",
-    note: "USCIS photo standards for Green Card, EAD, and other immigration benefits.",
-    badge: "USCIS",
-  },
-  {
-    agency: "U.S. Department of State",
-    doc: "Passport Photo Requirements",
-    url: "https://travel.state.gov/content/travel/en/passports/need-passport/photos.html",
-    note: "Official 2×2 inch photo specs for U.S. passport applications and renewals.",
-    badge: "Passport",
+    agency: "EU Commission",
+    doc: "Schengen Visa Photo Standards",
+    url: "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en",
+    note: "European standards for Schengen visa applications.",
+    badge: "EU Visa",
   },
 ];
 
@@ -158,130 +152,55 @@ const rejectionReasons = [
   {
     num: "01",
     title: "Incorrect Background Color",
-    why: "Off-white, cream, gray, or shadowed backgrounds fail the pure white (RGB 255,255,255) standard. Even a subtle shadow behind your ears is enough to trigger rejection.",
-    check: "AI measures background luminance across 9 zones. All must read 255.",
+    why: "Shadows, patterns, or the wrong shade (e.g. blue instead of white) are the top rejection reasons globally.",
+    check: "AI measures background luminance and color uniformity across 9 zones.",
   },
   {
     num: "02",
     title: "Wrong Eye Position",
-    why: "Your eyes must sit between 56% and 69% from the bottom of the image. Photos taken too close or too far from the camera shift this ratio outside the allowed range.",
-    check: "Facial landmark model measures exact eye-center Y-coordinate percentage.",
+    why: "Eyes must be positioned precisely for facial recognition cameras at border control.",
+    check: "Facial landmark model measures exact eye-center coordinates.",
   },
   {
     num: "03",
-    title: "Head Too Small or Too Large",
-    why: "Head height (crown to chin) must fill 50%–69% of the image. Cropping too tight or leaving too much empty space above the head are common errors.",
-    check: "Bounding box detection calculates crown-to-chin pixel span as a percentage of total height.",
+    title: "Head Size Mismatch",
+    why: "Whether it's 70% or 50%, every country has a specific head-to-image ratio requirement.",
+    check: "Bounding box detection calculates crown-to-chin pixel span.",
   },
   {
     num: "04",
-    title: "Wearing Glasses",
-    why: "Since November 2016, the State Department bans all eyewear in US visa and passport photos. Prescription glasses, tinted lenses, and photochromic lenses are all prohibited.",
-    check: "Object-detection model flags any eyewear present in the image.",
-  },
-  {
-    num: "05",
-    title: "Shadows on Face or Background",
-    why: "Uneven lighting creates shadows across the face or cast onto the background. This is particularly common with phone cameras and indoor lighting.",
-    check: "Luminance gradient analysis across facial regions and background zones.",
-  },
-  {
-    num: "06",
-    title: "File Too Large or Wrong Format",
-    why: "DS-160 enforces a strict 240KB file size cap and requires JPEG format. PNG and HEIC files must be converted. Uncompressed JPEGs often exceed the size limit.",
-    check: "File format validation + byte-size check. We auto-optimize to 240KB if needed.",
-  },
-  {
-    num: "07",
-    title: "Head Covering (Non-Religious)",
-    why: "Hats, caps, visors, and fashion head coverings are not permitted. Religious head coverings are allowed but must not obscure facial features.",
-    check: "Head region analysis for non-face occlusion above the forehead.",
-  },
-  {
-    num: "08",
-    title: "Not Looking Directly at Camera",
-    why: "Eyes must be open and looking straight ahead. Downward gaze, looking to the side, or closed/squinting eyes will cause failure.",
-    check: "Gaze direction vectors measured from iris position relative to eye corners.",
-  },
-  {
-    num: "09",
-    title: "Image Too Small or Wrong Aspect Ratio",
-    why: "DS-160 requires at minimum 600×600 pixels in a square 1:1 ratio. Portrait or landscape crops fail immediately.",
-    check: "Pixel dimension and aspect ratio verified before any further processing.",
+    title: "Shadows on Face",
+    why: "Uneven lighting obscures biometric markers like the nose bridge or lip line.",
+    check: "Luminance gradient analysis across facial regions.",
   },
 ];
 
 const documentTypes = [
   {
-    doc: "DS-160 Visa Application",
+    doc: "Passport Photos",
     icon: "🛂",
-    href: "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/photos.html",
-    toolHref: "/tool?type=ds-160-visa",
+    href: "/tool",
+    toolHref: "/tool",
     specs: [
-      "600×600px minimum, JPEG only",
-      "Under 240KB file size",
-      "White background (RGB 255,255,255)",
-      "Eyes at 56–69% from bottom",
-      "Head height 50–69% of image",
-      "No glasses since Nov 2016",
-      "Taken within the last 6 months",
+      "Custom sizes (35x45mm, 40x60mm, etc.)",
+      "Dynamic background removal",
+      "Head size scaling per country",
+      "Print-ready sheets (A4/Letter)",
     ],
-    note: "The DS-160 online form has a strict photo upload validator. Failing at the form stage after completing the entire application is frustrating — validate here first.",
+    note: "We support over 50 countries. Our AI automatically adapts to the specific sizing and biometric rules of the country you select.",
   },
   {
-    doc: "DV Lottery 2027 (Diversity Visa)",
+    doc: "Visa Photos",
     icon: "🌐",
-    href: "https://travel.state.gov/content/travel/en/us-visas/immigrate/diversity-visa-program-entry/diversity-visa-instructions.html",
-    toolHref: "/tool?type=dv-lottery",
+    href: "/tool",
+    toolHref: "/tool",
     specs: [
-      "Same as DS-160 photo specs",
-      "Photo must be from within the last 6 months",
-      "Only one entry per person allowed",
-      "Wrong photo = disqualification with no appeal",
+      "Square or Rectangular formats",
+      "Digital upload optimization",
+      "Color-space (sRGB) validation",
+      "JPEG compression under local limits",
     ],
-    note: "The DV Lottery is particularly unforgiving. A non-compliant photo doesn't delay your entry — it permanently disqualifies you for that year. There is no correction mechanism.",
-  },
-  {
-    doc: "U.S. Passport (Online Renewal)",
-    icon: "📘",
-    href: "https://travel.state.gov/content/travel/en/passports/need-passport/photos.html",
-    toolHref: "/tool?type=us-passport",
-    specs: [
-      "600×600px digital (for online)",
-      "2×2 inch printed (for mail-in)",
-      "White or off-white background",
-      "Printed on matte or glossy photo paper if mailing",
-      "No digital alterations to appearance",
-    ],
-    note: "Online passport renewal (for eligible applicants) uses the same digital 600×600px spec. Mail-in renewals require a physical 2×2 inch print — our A4 print sheet includes 20 correctly-sized photos.",
-  },
-  {
-    doc: "Green Card (Form I-485 / I-90)",
-    icon: "🟩",
-    href: "https://www.uscis.gov/forms/filing-guidance/photo-requirements",
-    toolHref: "/tool?type=green-card",
-    specs: [
-      "2×2 inch printed photos required",
-      "White to off-white background",
-      "No glasses allowed",
-      "Taken within 30 days of filing",
-      "Write your A-Number lightly on the back in pencil",
-    ],
-    note: "USCIS typically requires two physical 2×2 inch photos mailed with your application. Our A4 print-ready sheet makes this simple — print and cut at home.",
-  },
-  {
-    doc: "H1-B, F1, J1, and Other Nonimmigrant Visas",
-    icon: "🎓",
-    href: "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/photos.html",
-    toolHref: "/tool?type=nonimmigrant-visa",
-    specs: [
-      "All follow the same DS-160 photo standard",
-      "600×600px JPEG, under 240KB",
-      "Pure white background",
-      "Biometric eye and head position rules apply",
-      "No glasses, no head coverings (except religious)",
-    ],
-    note: "H1-B, H4, L1, F1, J1, O1, and B1/B2 visa photos all use the DS-160 standard. One validated photo works for any of these applications.",
+    note: "Visa requirements are often stricter than passports. We ensure your digital file is ready for any online submission portal.",
   },
 ];
 
@@ -394,16 +313,16 @@ export default function HomeSections({
       </div>
       <div className="hc-seo-text">
         <h2 className="hc-seo-h2">
-          US Visa & Passport Photo Requirements: Why AI Precision is Necessary
+          Official Global Document Photo Requirements: Why AI Precision is Necessary
         </h2>
         <p className="hc-seo-p">
-          Securing a U.S. Visa (DS-160) or entering the Diversity Visa (DV)
-          Lottery is a life-changing milestone for thousands. However, a single
-          non-compliant photograph is often the hidden culprit behind sudden
+          Securing an international passport, navigating a Schengen Visa application,
+          or applying for residency are life-changing milestones for millions. However,
+          a single non-compliant photograph is often the hidden culprit behind sudden
           rejections or long administrative delays. At{" "}
-          <strong>USVisaPhotoAI</strong>, we've bridged the gap between amateur
-          smartphone photography and the rigorous biometric standards demanded
-          by the U.S. Department of State.
+          <strong>PixPassport</strong>, we've bridged the gap between amateur
+          smartphone photography and the rigorous ICAO biometric standards demanded
+          by immigration agencies worldwide.
         </p>
         <p className="hc-seo-p">
           <strong>Why Biometric Accuracy is Non-Negotiable:</strong> Modern
@@ -421,17 +340,17 @@ export default function HomeSections({
           a white background, "pure white" (RGB 255,255,255) is harder to
           achieve than it looks. Shadows behind the ears, "hot spots" from
           camera flashes, or subtle tints from indoor lighting are common
-          reasons for failure. Furthermore, the 2016 "No Glasses" policy is
-          strictly enforced. Our tool doesn't just crop; it performs a
+          reasons for failure. Furthermore, the universal "No Glasses" biometric policy is
+          strictly enforced by most nations. Our tool doesn't just crop; it performs a
           deep-level luminance analysis to ensure your background is truly
           neutral.
         </p>
         <p className="hc-seo-p">
           We believe that high-stakes applications shouldn't require
-          professional photography equipment. Whether you're applying for an{" "}
-          <strong>H1-B specialty visa</strong>, a Green Card, or renewing a
-          U.S. Passport, our platform empowers you to take a compliant photo
-          from home. By combining expert knowledge of U.S. immigration policies
+          professional photography equipment. Whether you're applying for a{" "}
+          <strong>Schengen Visa</strong>, an Australian ETA, or renewing your
+          UK or Indian Passport, our platform empowers you to take a compliant photo
+          from home. By combining expert knowledge of global immigration policies
           with cutting-edge computer vision, we provide a stress-free path to a
           perfect submission.
         </p>
@@ -689,7 +608,7 @@ export default function HomeSections({
         <div className="hc-sec-in">
           <div className="hc-head">
             <span className="hc-label">Simple Process</span>
-            <h2 className="hc-h2">How to Create a Compliant US Visa Photo Online</h2>
+            <h2 className="hc-h2">How to Create a Compliant Biometric Photo Online</h2>
             <p className="hc-sub">
               From upload to compliant photo in under a minute.
             </p>
@@ -710,7 +629,7 @@ export default function HomeSections({
           </div>
           <div className="hc-sec-cta">
             <a
-              href="/tool?type=us-visa"
+              href="/tool"
               className="hc-btn-p"
               style={{ display: "inline-flex" }}
             >
@@ -725,10 +644,10 @@ export default function HomeSections({
         <div className="hc-sec-in">
           <div className="hc-head">
             <span className="hc-label">Official Requirements</span>
-            <h2 className="hc-h2">Official 2026 US Visa & Passport Photo Specifications</h2>
+            <h2 className="hc-h2">Official 2026 Global Document Photo Specifications</h2>
             <p className="hc-sub">
-              Every photo validated against official U.S. State Department
-              requirements.
+              Every photo is validated against official ICAO and government-specific
+              biometric requirements.
             </p>
           </div>
           <div className="hc-specs">
@@ -762,11 +681,11 @@ export default function HomeSections({
         <div className="hc-sec-in">
           <div className="hc-head">
             <span className="hc-label">Verified by Official Sources</span>
-            <h2 className="hc-h2">Straight from the U.S. Government</h2>
+            <h2 className="hc-h2">Straight from Official Government Sources</h2>
             <p className="hc-sub">
-              Every requirement we enforce comes directly from official U.S.
-              Department of State and USCIS publications. No guesswork — only
-              authoritative specifications.
+              Every requirement we enforce comes directly from official global publications,
+              including the European Commission, HMPO, and the Department of State.
+              No guesswork — only authoritative specifications.
             </p>
           </div>
           <div
@@ -853,107 +772,22 @@ export default function HomeSections({
               color: "#718096",
             }}
           >
-            USVisaPhotoAI enforces all specifications above. When in doubt,
-            always verify at{" "}
-            <a
-              href="https://travel.state.gov"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: "#3d8c6e", fontWeight: 600 }}
-            >
-              travel.state.gov
-            </a>{" "}
-            or{" "}
-            <a
-              href="https://www.uscis.gov"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: "#3d8c6e", fontWeight: 600 }}
-            >
-              uscis.gov
-            </a>
-            .
+            PixPassport automatically adjusts your images to comply with the global specifications above. 
+            When in doubt, always refer to your country's official passport or visa agency portal.
           </p>
         </div>
       </section>
 
-      {/* ────────── GLOBAL RESOURCES & GUIDES ────────── */}
-      <section className="hc-sec hc-sec-alt">
-        <div className="hc-sec-in">
-          <div className="hc-head text-center">
-            <span className="hc-label">Knowledge Base</span>
-            <h2 className="hc-h2">Global Photo Guides & Resources</h2>
-            <p className="hc-sub">
-              Access our comprehensive directory of visa photo requirements, country-specific rules, and expert specialist articles.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
-            {[
-              {
-                title: "Specialist Articles",
-                desc: "Expert advice on DS-160, passport renewals, and biometric photo tips.",
-                icon: "📝",
-                link: "/guides#specialist-articles"
-              },
-              {
-                title: "Visa Photo Guides",
-                desc: "Master requirements for H1-B, Green Card, and US Visa types.",
-                icon: "🛂",
-                link: "/guides#visa-photo-guides"
-              },
-              {
-                title: "EU Country Directory",
-                desc: "Photo specifications for UK, Germany, France, and other EU nations.",
-                icon: "🇪🇺",
-                link: "/guides#european-photo-directories"
-              }
-            ].map((item, i) => (
-              <a
-                key={i}
-                href={item.link}
-                className="group p-8 bg-white border border-slate-200 rounded-[2rem] hover:border-lime-500 hover:shadow-xl transition-all duration-300 flex flex-col items-center text-center"
-              >
-                <div className="text-4xl mb-6 grayscale group-hover:grayscale-0 transition-all duration-500 transform group-hover:scale-110">
-                  {item.icon}
-                </div>
-                <h3 className="text-xl font-bold text-slate-900 group-hover:text-lime-600 mb-4 transition-colors">
-                  {item.title}
-                </h3>
-                <p className="text-slate-500 text-sm leading-relaxed mb-6">
-                  {item.desc}
-                </p>
-                <span className="mt-auto text-lime-600 font-bold text-xs uppercase tracking-widest flex items-center">
-                  Explore Hub
-                  <svg className="w-4 h-4 ml-2 group-hover:translate-x-1.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                  </svg>
-                </span>
-              </a>
-            ))}
-          </div>
-
-          <div className="mt-16 text-center">
-            <Link
-              href="/guides"
-              className="inline-flex h-12 items-center justify-center rounded-xl bg-slate-900 px-8 text-sm font-bold text-white transition-all hover:bg-slate-800 hover:scale-105 active:scale-95"
-            >
-              Browse Full Resource Center →
-            </Link>
-          </div>
-        </div>
-      </section>
 
       {/* ────────── REJECTION REASONS ────────── */}
       <section className="hc-sec">
         <div className="hc-sec-in">
           <div className="hc-head">
             <span className="hc-label">Why Photos Get Rejected</span>
-            <h2 className="hc-h2">The 9 Most Common Visa Photo Mistakes</h2>
+            <h2 className="hc-h2">Common Biometric Photo Mistakes</h2>
             <p className="hc-sub">
-              The U.S. Department of State rejects thousands of visa
-              applications annually due to non-compliant photos. Here are the
-              most frequent failures — and what our AI checks for each one.
+              Consulates and embassies reject thousands of applications annually due to non-compliant photos.
+              Here are the most frequent failures — and what our AI checks for each one.
             </p>
           </div>
           <div
@@ -1027,61 +861,17 @@ export default function HomeSections({
         </div>
       </section>
 
-      {/* ────────── DOCUMENT TYPES DEEP DIVE ────────── */}
-      <section className="hc-sec hc-sec-alt">
-        <div className="hc-sec-in">
-          <div className="hc-head">
-            <span className="hc-label">Document-Specific Guidance</span>
-            <h2 className="hc-h2">Photo Requirements by Document Type</h2>
-            <p className="hc-sub">
-              While core specifications overlap, each U.S. immigration document
-              has unique nuances. Here's what you need to know for each.
-            </p>
-          </div>
-          <div className="hc-doctype-list">
-            {documentTypes.map((doc, i) => (
-              <div key={i} className="hc-doctype-card">
-                <div className="hc-doctype-body">
-                  <div className="hc-doctype-title-row">
-                    <span style={{ fontSize: "22px" }}>{doc.icon}</span>
-                    <h3 className="hc-doctype-h3">{doc.doc}</h3>
-                  </div>
-                  <div className="hc-doctype-pills">
-                    {doc.specs.map((s, j) => (
-                      <span key={j} className="hc-doctype-pill">{s}</span>
-                    ))}
-                  </div>
-                  <p className="hc-doctype-note">{doc.note}</p>
-                </div>
-                <div className="hc-doctype-actions">
-                  <a href={doc.toolHref} className="hc-btn-p hc-doctype-btn">
-                    Use Tool →
-                  </a>
-                  <a
-                    href={doc.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hc-doctype-link"
-                  >
-                    Official Specs ↗
-                  </a>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* ────────── EXPERT TIPS ────────── */}
       <section className="hc-sec">
         <div className="hc-sec-in">
           <div className="hc-head">
             <span className="hc-label">Expert Guidance</span>
-            <h2 className="hc-h2">How to Take a Perfect Visa Photo at Home</h2>
+            <h2 className="hc-h2">How to Take a Perfect Photo at Home</h2>
             <p className="hc-sub">
               You don't need a professional photographer. Follow these
               evidence-based tips and your smartphone photo will pass every
-              State Department check.
+              official biometric check.
             </p>
           </div>
           <div
@@ -1151,7 +941,7 @@ export default function HomeSections({
         <div className="hc-sec-in">
           <div className="hc-head">
             <span className="hc-label">Why Us</span>
-            <h2 className="hc-h2">USVisaPhotoAI vs. Your Alternatives</h2>
+            <h2 className="hc-h2">PixPassport vs. Your Alternatives</h2>
             <p className="hc-sub">
               See why thousands choose our AI tool over photo studios and other
               online services.
@@ -1164,7 +954,7 @@ export default function HomeSections({
               <thead>
                 <tr>
                   <th className="hc-cmp-th hc-cmp-th-feat">Feature</th>
-                  <th className="hc-cmp-th hc-cmp-th-us">USVisaPhotoAI</th>
+                  <th className="hc-cmp-th hc-cmp-th-us">PixPassport</th>
                   <th className="hc-cmp-th hc-cmp-th-alt">Photo Studio</th>
                   <th className="hc-cmp-th hc-cmp-th-alt">Other Online Tools</th>
                 </tr>
@@ -1188,7 +978,7 @@ export default function HomeSections({
               <div key={i} className="hc-cmp-card">
                 <div className="hc-cmp-card-feat">{feat}</div>
                 <div className="hc-cmp-card-row hc-cmp-card-row-us">
-                  <span className="hc-cmp-card-label">USVisaPhotoAI</span>
+                  <span className="hc-cmp-card-label">PixPassport</span>
                   <span className="hc-cmp-card-val hc-cmp-card-val-us">{us}</span>
                 </div>
                 <div className="hc-cmp-card-row">
@@ -1265,25 +1055,6 @@ export default function HomeSections({
         </div>
       </section>
 
-      {/* ────────── TOOLS ────────── */}
-      <section className="hc-sec hc-sec-alt">
-        <div className="hc-sec-in">
-          <div className="hc-head">
-            <span className="hc-label">All Tools</span>
-            <h2 className="hc-h2">Choose Your Document Type</h2>
-          </div>
-          <div className="hc-tools">
-            {toolPages.map((tool, i) => (
-              <a key={i} href={tool.href} className="hc-tool">
-                <span className="hc-tool-pill">{tool.target}</span>
-                <div className="hc-tool-t">{tool.title}</div>
-                <div className="hc-tool-d">{tool.desc}</div>
-                <span className="hc-tool-lnk">Use Tool →</span>
-              </a>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* ────────── PRIVACY ────────── */}
       <section className="hc-sec">

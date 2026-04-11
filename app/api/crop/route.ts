@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import sharp from "sharp";
 import { uploadBufferToCloudinary } from "@/lib/cloudinary";
 import { HEAD_TOP_MULTIPLIER } from "@/lib/mediapipe";
+import { getSpecById } from "@/lib/specs";
 
 // ------------------------------------------------------------------
 // CROP ENDPOINT — Uses client-provided face landmarks + Sharp
@@ -121,7 +122,9 @@ export async function POST(req: NextRequest) {
     }
 
     // Background removal is done client-side before this endpoint is called
-    const targetBgRaw = formData.get("targetBackground") as string || "white";
+    const documentType = formData.get("type") as string || "general";
+    const spec = getSpecById(documentType);
+    const targetBgRaw = formData.get("targetBackground") as string || spec?.bg_color || "white";
     const filenameExt = targetBgRaw === "transparent" ? "png" : "jpg";
 
     // ---- VALIDATE face data fields ----
@@ -155,44 +158,62 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // HEAD_TOP_MULTIPLIER = 1.20 — intentionally kept as-is (not changed per requirement)
+    // HEAD_TOP_MULTIPLIER = 1.25 — increased to protect crown/hair in tight crops
     const fullHeadHeight = headHeight * HEAD_TOP_MULTIPLIER;
     const trueTopOfHead = faceData.chinY - fullHeadHeight;
 
-    const TARGET_HEAD_PCT = 0.59;
-    const TARGET_EYE_PCT = 0.43;
-    const MIN_HEAD_PCT = 0.50;
-    const MAX_HEAD_PCT = 0.69;
-    const MIN_EYE_PCT = 0.31;
-    const MAX_EYE_PCT = 0.44;
+    const TARGET_HEAD_PCT = (spec ? (spec.head_min_pct + spec.head_max_pct) / 2 : 59) / 100;
+    const TARGET_EYE_PCT = (spec ? (spec.eye_min_pct + spec.eye_max_pct) / 2 : 62) / 100; // % from bottom
+    const MIN_HEAD_PCT = (spec?.head_min_pct || 50) / 100;
+    const MAX_HEAD_PCT = (spec?.head_max_pct || 69) / 100;
+    const MIN_EYE_PCT = (spec?.eye_min_pct || 56) / 100; // % from bottom
+    const MAX_EYE_PCT = (spec?.eye_max_pct || 69) / 100; // % from bottom
 
-    let cropSize = fullHeadHeight / TARGET_HEAD_PCT;
-    let cropTop = faceData.eyeCenter.y - (cropSize * TARGET_EYE_PCT);
+    // The eye position in target coordinates usually means "distance from top" 
+    // for the crop calculation logic. US guideline 56-69% from bottom = 31-44% from top.
+    const TARGET_EYE_TOP_PCT = 1 - TARGET_EYE_PCT; 
+    const MIN_EYE_TOP_PCT = 1 - MAX_EYE_PCT; // Min from top = 1 - Max from bottom
+    const MAX_EYE_TOP_PCT = 1 - MIN_EYE_PCT; // Max from top = 1 - Min from bottom
 
-    // 1. DYNAMIC HAIR SOLVER
-    const CAUTION_MARGIN = cropSize * 0.02;
+    const targetW = spec?.width_px || 600;
+    const targetH = spec?.height_px || 600;
+    const targetAspectRatio = targetW / targetH;
+
+    let cropHeight = fullHeadHeight / TARGET_HEAD_PCT;
+    let cropWidth = cropHeight * targetAspectRatio;
+    let cropTop = faceData.eyeCenter.y - (cropHeight * TARGET_EYE_TOP_PCT);
+
+    // 1. DYNAMIC HAIR SOLVER (Crown Protection)
+    const CAUTION_MARGIN = cropHeight * 0.04; // 4% safety buffer at the top
     if (cropTop > trueTopOfHead - CAUTION_MARGIN) {
       cropTop = trueTopOfHead - CAUTION_MARGIN;
 
       const eyeOffset = faceData.eyeCenter.y - cropTop;
-      if ((eyeOffset / cropSize) > MAX_EYE_PCT) {
-        cropSize = eyeOffset / MAX_EYE_PCT;
-        cropTop = faceData.eyeCenter.y - (cropSize * MAX_EYE_PCT);
+      if ((eyeOffset / cropHeight) > MAX_EYE_TOP_PCT) {
+        cropHeight = eyeOffset / MAX_EYE_TOP_PCT;
+        cropWidth = cropHeight * targetAspectRatio;
+        cropTop = faceData.eyeCenter.y - (cropHeight * MAX_EYE_TOP_PCT);
       }
     }
 
     // 2. BOUNDARY CLAMPING: Legal head sizes (50-69%)
-    const maxCropSizeAllowed = fullHeadHeight / MIN_HEAD_PCT;
-    const minCropSizeAllowed = fullHeadHeight / MAX_HEAD_PCT;
+    const maxCropHeightAllowed = fullHeadHeight / MIN_HEAD_PCT;
+    const minCropHeightAllowed = fullHeadHeight / MAX_HEAD_PCT;
 
-    if (cropSize < minCropSizeAllowed) cropSize = minCropSizeAllowed;
-    if (cropSize > maxCropSizeAllowed) cropSize = maxCropSizeAllowed;
+    if (cropHeight < minCropHeightAllowed) {
+      cropHeight = minCropHeightAllowed;
+      cropWidth = cropHeight * targetAspectRatio;
+    }
+    if (cropHeight > maxCropHeightAllowed) {
+      cropHeight = maxCropHeightAllowed;
+      cropWidth = cropHeight * targetAspectRatio;
+    }
 
-    let revalidatedEyePct = (faceData.eyeCenter.y - cropTop) / cropSize;
-    if (revalidatedEyePct > MAX_EYE_PCT) {
-      cropTop = faceData.eyeCenter.y - (cropSize * MAX_EYE_PCT);
-    } else if (revalidatedEyePct < MIN_EYE_PCT) {
-      cropTop = faceData.eyeCenter.y - (cropSize * MIN_EYE_PCT);
+    let revalidatedEyeTopPct = (faceData.eyeCenter.y - cropTop) / cropHeight;
+    if (revalidatedEyeTopPct > MAX_EYE_TOP_PCT) {
+      cropTop = faceData.eyeCenter.y - (cropHeight * MAX_EYE_TOP_PCT);
+    } else if (revalidatedEyeTopPct < MIN_EYE_TOP_PCT) {
+      cropTop = faceData.eyeCenter.y - (cropHeight * MIN_EYE_TOP_PCT);
     }
 
     // 3. IMAGE BOUND CLAMPING
@@ -209,29 +230,35 @@ export async function POST(req: NextRequest) {
 
     // Do NOT shrink cropSize here — use padding instead (handled below in extend())
     // Only clamp cropTop so it doesn't go infinitely negative
-    if (cropTop + cropSize > imgH) {
-      // Bottom overflows — will be padded below, do not shrink cropSize
-      console.log(`[crop] Bottom overflow: cropTop=${cropTop.toFixed(0)} + cropSize=${cropSize.toFixed(0)} > imgH=${imgH}, will pad bottom`);
+    if (cropTop + cropHeight > imgH) {
+      // Bottom overflows — will be padded below, do not shrink cropHeight
+      console.log(`[crop] Bottom overflow: cropTop=${cropTop.toFixed(0)} + cropHeight=${cropHeight.toFixed(0)} > imgH=${imgH}, will pad bottom`);
     }
     if (cropTop < 0) {
-      // Top overflows — will be padded above, do not shrink cropSize
+      // Top overflows — will be padded above, do not shrink cropHeight
       console.log(`[crop] Top overflow: cropTop=${cropTop.toFixed(0)}, will pad top`);
     }
 
-    // Absolute minimum cropSize safety
-    if (cropSize < minCropSizeAllowed) cropSize = minCropSizeAllowed;
-
-    cropSize = Math.round(cropSize);
-    cropTop = Math.round(cropTop);
-
-    const maxAllowedCropSize = Math.max(imgW, imgH) * 2;
-    if (cropSize > maxAllowedCropSize) {
-      console.warn(`[crop] cropSize ${cropSize} exceeded 2× image bounds (${maxAllowedCropSize}), clamping`);
-      cropSize = Math.round(maxAllowedCropSize);
+    // Absolute minimum cropHeight safety
+    if (cropHeight < minCropHeightAllowed) {
+      cropHeight = minCropHeightAllowed;
+      cropWidth = cropHeight * targetAspectRatio;
     }
 
-    if (cropSize < 200) {
-      cropSize = 200;
+    const roundedCropHeight = Math.round(cropHeight);
+    const roundedCropWidth = Math.round(cropWidth);
+    const roundedCropTop = Math.round(cropTop);
+
+    const maxAllowedCropHeight = Math.max(imgW, imgH) * 2;
+    if (roundedCropHeight > maxAllowedCropHeight) {
+      console.warn(`[crop] cropHeight ${roundedCropHeight} exceeded 2× image bounds, clamping`);
+      cropHeight = maxAllowedCropHeight;
+      cropWidth = cropHeight * targetAspectRatio;
+    }
+
+    if (cropHeight < 200) {
+      cropHeight = 200;
+      cropWidth = cropHeight * targetAspectRatio;
     }
 
     // ---------------------------------------------------------------
@@ -240,32 +267,32 @@ export async function POST(req: NextRequest) {
     // If the photo geometry makes compliance impossible, reject early
     // with a clear message rather than silently uploading a bad photo.
     // ---------------------------------------------------------------
-    const postClampHeadPct = (fullHeadHeight / cropSize) * 100;
+    const postClampHeadPct = (fullHeadHeight / cropHeight) * 100;
     if (postClampHeadPct < MIN_HEAD_PCT * 100 || postClampHeadPct > MAX_HEAD_PCT * 100) {
       console.warn(`[crop] Non-compliant head%: ${postClampHeadPct.toFixed(1)}% (allowed 50–69%)`);
       return NextResponse.json(
-        { error: `Head size (${postClampHeadPct.toFixed(0)}%) is outside the allowed 50–69% range. Please retake the photo with your face closer to or further from the camera.` },
+        { error: `Head size (${postClampHeadPct.toFixed(0)}%) is outside the allowed ${Math.round(MIN_HEAD_PCT * 100)}–${Math.round(MAX_HEAD_PCT * 100)}% range. Please retake the photo with your face closer to or further from the camera.` },
         { status: 400 }
       );
     }
 
     const faceCenterX = faceData.faceBox.x + (faceData.faceBox.width / 2);
-    let cropLeft = Math.round(faceCenterX - cropSize / 2);
+    let cropLeft = Math.round(faceCenterX - cropWidth / 2);
 
-    console.log(`[crop] headHeight=${headHeight.toFixed(0)}, fullHeadHeight=${fullHeadHeight.toFixed(0)}, cropSize=${cropSize}, cropTop=${cropTop}, cropLeft=${cropLeft}, imgW=${imgW}, imgH=${imgH}, headPct=${postClampHeadPct.toFixed(1)}%`);
+    console.log(`[crop] headHeight=${headHeight.toFixed(0)}, fullHeadHeight=${fullHeadHeight.toFixed(0)}, cropHeight=${cropHeight.toFixed(0)}, cropWidth=${cropWidth.toFixed(0)}, cropTop=${cropTop.toFixed(0)}, cropLeft=${cropLeft}, imgW=${imgW}, imgH=${imgH}, headPct=${postClampHeadPct.toFixed(1)}%`);
 
     const extractLeft = Math.round(Math.max(0, cropLeft));
     const extractTop = Math.round(Math.max(0, cropTop));
-    const extractRight = Math.round(Math.min(imgW, cropLeft + cropSize));
-    const extractBottom = Math.round(Math.min(imgH, cropTop + cropSize));
+    const extractRight = Math.round(Math.min(imgW, cropLeft + cropWidth));
+    const extractBottom = Math.round(Math.min(imgH, cropTop + cropHeight));
 
     const extractW = Math.round(Math.max(1, extractRight - extractLeft));
     const extractH = Math.round(Math.max(1, extractBottom - extractTop));
 
     const paddingTop = Math.round(Math.max(0, -cropTop));
     const paddingLeft = Math.round(Math.max(0, -cropLeft));
-    const paddingBottom = Math.round(Math.max(0, (cropTop + cropSize) - imgH));
-    const paddingRight = Math.round(Math.max(0, (cropLeft + cropSize) - imgW));
+    const paddingBottom = Math.round(Math.max(0, (cropTop + cropHeight) - imgH));
+    const paddingRight = Math.round(Math.max(0, (cropLeft + cropWidth) - imgW));
 
     const intermediateW = extractW + paddingLeft + paddingRight;
     const intermediateH = extractH + paddingTop + paddingBottom;
@@ -282,6 +309,9 @@ export async function POST(req: NextRequest) {
         break;
       case "light-blue":
         bgRgb = { r: 239, g: 246, b: 255, alpha: 1 };
+        break;
+      case "blue":
+        bgRgb = { r: 0, g: 71, b: 171, alpha: 1 }; // Cobalt Blue (standard for many visas)
         break;
       case "white":
       default:
@@ -316,7 +346,7 @@ export async function POST(req: NextRequest) {
 
     cropChain = cropChain
       .toColorspace("srgb")
-      .resize(600, 600, { fit: "fill" })
+      .resize(targetW, targetH, { fit: "fill" })
       .withMetadata({ density: 300 });
 
     if (filenameExt === "png") {
@@ -327,12 +357,12 @@ export async function POST(req: NextRequest) {
 
     let processedBuffer = await cropChain.toBuffer();
 
-    // ---- SAFETY: Guarantee output is exactly 600×600 ----
+    // ---- SAFETY: Guarantee output is exactly targetW×targetH ----
     const finalMeta = await sharp(processedBuffer).metadata();
-    if (finalMeta.width !== 600 || finalMeta.height !== 600) {
-      console.warn(`[crop] Output was ${finalMeta.width}x${finalMeta.height}, forcing to 600x600`);
+    if (finalMeta.width !== targetW || finalMeta.height !== targetH) {
+      console.warn(`[crop] Output was ${finalMeta.width}x${finalMeta.height}, forcing to ${targetW}x${targetH}`);
       processedBuffer = await sharp(processedBuffer)
-        .resize(600, 600, { fit: "fill" })
+        .resize(targetW, targetH, { fit: "fill" })
         .toBuffer();
     }
 
@@ -386,44 +416,49 @@ export async function POST(req: NextRequest) {
     const watermarkedBuffer = processedBuffer;
 
     // ---------------------------------------------------------------
-    // BUG FIX B8 — A4 print sheet had 0px gap between photo columns
-    // Old xOffsets: [40, 640, 1240, 1840] — difference = 600px = exact
-    // photo width, meaning photos were touching with no cut margin.
-    // Fix: add 8px gap between columns and rows for clean cutting.
-    // A4 @ 300 DPI = 2480×3508 px, photo = 600×600 px
-    // 4 cols: 4×600 = 2400 + 3×8 gaps = 2424, margin = (2480-2424)/2 = 28
-    // 5 rows: 5×600 = 3000 + 4×8 gaps = 3032, margin = (3508-3032)/2 = 238
+    // DYNAMIC PRINT SHEET GENERATOR
+    // Supports A4 (2480x3508) and Letter (2550x3300)
     // ---------------------------------------------------------------
-    const svgBorder = '<svg width="600" height="600"><rect x="1" y="1" width="598" height="598" fill="none" stroke="black" stroke-width="2"/></svg>';
+    const svgBorder = `<svg width="${targetW}" height="${targetH}"><rect x="1" y="1" width="${targetW-2}" height="${targetH-2}" fill="none" stroke="black" stroke-width="2"/></svg>`;
     const borderedBuffer = await sharp(processedBuffer)
       .composite([{ input: Buffer.from(svgBorder), blend: 'over' }])
       .toBuffer();
 
-    const PHOTO_GAP = 8; // px gap between photos for cut margin
-    const COL_STEP = 600 + PHOTO_GAP; // 608
-    const ROW_STEP = 600 + PHOTO_GAP; // 608
-    const MARGIN_X = Math.floor((2480 - (4 * 600 + 3 * PHOTO_GAP)) / 2); // 28px
-    const MARGIN_Y = Math.floor((3508 - (5 * 600 + 4 * PHOTO_GAP)) / 2); // 238px
+    const isA4 = spec?.print_size !== "Letter";
+    const sheetW = isA4 ? 2480 : 2550;
+    const sheetH = isA4 ? 3508 : 3300;
+    
+    const PHOTO_GAP = 12; // px gap between photos 
+    const COL_STEP = targetW + PHOTO_GAP;
+    const ROW_STEP = targetH + PHOTO_GAP;
 
-    const xOffsets = [MARGIN_X, MARGIN_X + COL_STEP, MARGIN_X + COL_STEP * 2, MARGIN_X + COL_STEP * 3];
-    const yOffsets = [MARGIN_Y, MARGIN_Y + ROW_STEP, MARGIN_Y + ROW_STEP * 2, MARGIN_Y + ROW_STEP * 3, MARGIN_Y + ROW_STEP * 4];
+    // Calculate how many fit
+    const cols = Math.floor((sheetW - 40) / COL_STEP);
+    const rows = Math.floor((sheetH - 40) / ROW_STEP);
+    
+    const marginX = Math.floor((sheetW - (cols * targetW + (cols - 1) * PHOTO_GAP)) / 2);
+    const marginY = Math.floor((sheetH - (rows * targetH + (rows - 1) * PHOTO_GAP)) / 2);
 
-    const a4Composites = [];
-    for (const y of yOffsets) {
-      for (const x of xOffsets) {
-        a4Composites.push({ input: borderedBuffer, top: y, left: x });
+    const composites = [];
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        composites.push({ 
+          input: borderedBuffer, 
+          top: marginY + r * ROW_STEP, 
+          left: marginX + c * COL_STEP 
+        });
       }
     }
 
     const printSheetBuffer = await sharp({
       create: {
-        width: 2480,
-        height: 3508,
+        width: sheetW,
+        height: sheetH,
         channels: 4,
         background: { r: 255, g: 255, b: 255, alpha: 1 }
       }
     })
-      .composite(a4Composites)
+      .composite(composites)
       .jpeg({ quality: 100 })
       .toBuffer();
 
@@ -446,16 +481,17 @@ export async function POST(req: NextRequest) {
     // Fix: scale all values to the 600×600 output space for accuracy,
     // and clarify that eyeLevelPct is stored as "% from bottom".
     // ---------------------------------------------------------------
-    const outputScale = 600 / cropSize;
+    const outputScale = targetH / cropHeight;
     const scaledFullHeadHeight = fullHeadHeight * outputScale;
 
-    // effectiveEyeY in the intermediate crop canvas (before resize to 600)
+    // effectiveEyeY in the intermediate crop canvas (before resize to targetH)
     const effectiveEyeY = faceData.eyeCenter.y - extractTop + paddingTop;
-    // Scale to 600px output space
-    const scaledEyeY = effectiveEyeY * outputScale;
+    // Scale to output space
+    const scaledEyeH = targetH;
+    const scaledEyeY = effectiveEyeY * (targetH / cropHeight);
 
-    const finalHeadPct = (scaledFullHeadHeight / 600) * 100;
-    const finalEyeFromBottomPct = ((600 - scaledEyeY) / 600) * 100; // % from bottom, matches US spec
+    const finalHeadPct = (scaledFullHeadHeight / targetH) * 100;
+    const finalEyeFromBottomPct = ((targetH - scaledEyeY) / targetH) * 100; // % from bottom
 
     console.log(`[crop] Final metrics — headPct=${finalHeadPct.toFixed(1)}% (target 50–69%), eyeFromBottom=${finalEyeFromBottomPct.toFixed(1)}% (target 56–69%)`);
 
@@ -481,7 +517,7 @@ export async function POST(req: NextRequest) {
       success: true,
       photoId: photoRecord._id.toString(),
       processedImageUrl: previewUrl,
-      dimensions: "600×600",
+      dimensions: `${targetW}×${targetH}`,
       format: filenameExt.toUpperCase(),
       sizeKb: Math.round(processedBuffer.length / 1024),
     });

@@ -4,18 +4,18 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 
 const visaTypes = [
-  "DS-160 Photo",
-  "DV-2027 Lottery",
   "US Visa Photo",
-  "H1-B Visa Photo",
-  "Passport Photo",
-  "Green Card Photo",
+  "India Passport",
+  "UK Passport",
+  "Schengen Visa",
+  
+  "Australia Passport",
 ];
 
 const trustBadges = [
-  { icon: "🔒", text: "100% Secure" },
+  { icon: "🔒", text: "Secure & Private" },
   { icon: "⚡", text: "Results in 30s" },
-  { icon: "✅", text: "State Dept. Compliant" },
+  { icon: "🌍", text: "Global Compliance" },
   { icon: "🆓", text: "Free Validation" },
 ];
 
@@ -88,10 +88,6 @@ export default function HomeHero() {
   }, [isDragging, calcPos]);
 
   // ── Touch — attach directly to container element ───────────
-  // Attaching to the element (not window) with passive:false is the key
-  // fix for mobile. window-level touchmove listeners are passive by default
-  // in modern browsers and cannot call preventDefault(), which causes the
-  // page to scroll instead of moving the slider.
   const onTouchStart = useCallback(
     (e: React.TouchEvent) => {
       setIsDragging(true);
@@ -135,7 +131,7 @@ export default function HomeHero() {
           <div className="hc-tp">
             <span className="hc-tp-stars">
               {[1, 2, 3, 4, 5].map((i) => (
-                <svg key={i} width="18" height="18" viewBox="0 0 24 24" fill="#00B67A">
+                <svg key={i} width="18" height="18" viewBox="0 0 24 24" fill="#10b981">
                   <path d="M12 2l2.9 8.9H23l-7.4 5.4 2.8 8.7L12 19.6l-6.4 5.4 2.8-8.7L2 10.9h8.1z" />
                 </svg>
               ))}
@@ -144,21 +140,21 @@ export default function HomeHero() {
             <span className="hc-tp-cnt">Trusted by 17,000+ users</span>
           </div>
 
-          <h1 className="hc-h1">Create a US Visa Photo That Gets Accepted</h1>
+          <h1 className="hc-h1">Instant AI Passport & Visa Photo Creator</h1>
 
           
             <div className="hc-anim-txt">
-              DS-160 • DV Lottery • Green Card • Passport
+              Passport • Visa • ID Card • Driver's License
             </div>
        
 
           <p className="hc-desc">
-            100% compliant with U.S. State Department rules — or your money back.
-            Avoid rejection, delays, and resubmission.
+            100% compliant with international biometric standards (ICAO) — or your money back.
+            Avoid rejection, delays, and resubmission globally.
           </p>
 
           <div className="hc-btns">
-            <a href="/tool?type=us-visa" className="hc-btn-p" data-cta="hero-upload">
+            <a href="/tool" className="hc-btn-p" data-cta="hero-upload">
               Upload Photo (Free Preview) →
             </a>
           </div>
@@ -242,7 +238,7 @@ export default function HomeHero() {
           >
             <Image
               src="/us_non_imigrant.png"
-              alt="After – US State Dept. compliant 2×2 in visa photo"
+              alt="After – 100% compliant international biometric photo"
               fill
               style={{
                 objectFit: "cover",
@@ -332,7 +328,7 @@ export default function HomeHero() {
             position: "absolute",
             bottom: "14px",
             right: "14px",
-            background: "rgba(0,182,122,0.92)",
+            background: "rgba(16,185,129,0.92)",
             color: "white",
             padding: "4px 12px",
             borderRadius: "20px",

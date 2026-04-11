@@ -26,13 +26,13 @@ export async function POST(req: Request) {
     }
 
     const docName = documentType ? documentType.split('-').join(' ').toUpperCase() : 'Photo';
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://usvisaphotoai.pro';
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://pixpassport.com';
 
     const htmlContent = `
       <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; color: #1e293b; background: #f8fafc; padding: 32px; border-radius: 16px;">
         <div style="text-align: center; margin-bottom: 24px;">
           <h1 style="font-size: 22px; color: #0f172a; margin: 0 0 8px;">Your ${docName} is Ready! ✅</h1>
-          <p style="color: #64748b; font-size: 14px; margin: 0;">Processed by USVisaPhotoAI</p>
+          <p style="color: #64748b; font-size: 14px; margin: 0;">Processed by PixPassport</p>
         </div>
 
         <div style="background: white; border-radius: 12px; padding: 24px; border: 1px solid #e2e8f0; margin-bottom: 20px;">
@@ -69,14 +69,14 @@ export async function POST(req: Request) {
         </div>
 
         <div style="text-align: center; padding: 16px 0; border-top: 1px solid #e2e8f0;">
-          <p style="font-size: 11px; color: #cbd5e1; margin: 0;">USVisaPhotoAI — AI-Powered Visa Photo Processing</p>
+          <p style="font-size: 11px; color: #cbd5e1; margin: 0;">PixPassport — AI-Powered Visa Photo Processing</p>
         </div>
       </div>
     `;
 
     const result = await sendEmail({
       to: email,
-      subject: `Your ${docName} Delivery - USVisaPhotoAI`,
+      subject: `Your ${docName} Delivery - PixPassport`,
       html: htmlContent,
     });
 

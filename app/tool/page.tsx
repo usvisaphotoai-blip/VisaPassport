@@ -33,11 +33,11 @@ const ClientFaceDetector = dynamic(
 );
 
 function ToolForm() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const initialType = searchParams.get("type");
-  const router = useRouter();
-
   const [selectedDoc, setSelectedDoc] = useState("general");
+  const [isLocked, setIsLocked] = useState(false);
   const [selectedBg, setSelectedBg] = useState("white");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const originalFileRef = useRef<File | null>(null);  // Raw file before compression
@@ -53,6 +53,13 @@ function ToolForm() {
   const [showGuide, setShowGuide] = useState(false);
   const [modelPreloaded, setModelPreloaded] = useState(false);
   const [previewUrl, setPreviewUrl] = useState<string>("");
+
+  useEffect(() => {
+    if (initialType && documentTypes.some((d) => d.id === initialType)) {
+      setSelectedDoc(initialType);
+      setIsLocked(true);
+    }
+  }, [initialType]);
 
   useEffect(() => {
     // Check if user has already seen the guide
@@ -85,9 +92,13 @@ function ToolForm() {
     preload().catch(err => console.warn("[Preload] Detector deferred:", err));
   }, []);
 
+  // Sync background color with country requirements
   useEffect(() => {
-    if (initialType && documentTypes.some((d) => d.id === initialType)) setSelectedDoc(initialType);
-  }, [initialType]);
+    const spec = documentTypes.find(d => d.id === selectedDoc);
+    if (spec?.bg_color && bgColors.some(b => b.id === spec.bg_color)) {
+      setSelectedBg(spec.bg_color as string);
+    }
+  }, [selectedDoc]);
 
   // Preload background removal model
   useEffect(() => {
@@ -159,7 +170,8 @@ function ToolForm() {
       setCropMsg("Preparing image...");
       const compressedSource = fileToCrop;
 
-      if (selectedBg !== "transparent") {
+      // Background Removal is always performed unless bypassed explicitly.
+      if (selectedBg !== "original") {
         setCropMsg("Removing background...");
         const isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
         let removed: Blob | null = null;
@@ -236,29 +248,36 @@ function ToolForm() {
           }
         }
 
-        const bgImg = new Image();
-        const blobUrl = URL.createObjectURL(removed);
-        bgImg.src = blobUrl;
-        await bgImg.decode();
-        URL.revokeObjectURL(blobUrl);
+        if (selectedBg === "transparent") {
+          // Keep the removed background (transparent PNG blob)!
+          finalFile = removed;
+        } else {
+          // Composite the subject onto the specified solid background color.
+          const bgImg = new Image();
+          const blobUrl = URL.createObjectURL(removed);
+          bgImg.src = blobUrl;
+          await bgImg.decode();
+          URL.revokeObjectURL(blobUrl);
 
-        const c = document.createElement("canvas");
-        const cx = c.getContext("2d", { willReadFrequently: true })!;
-        c.width = bgImg.width;
-        c.height = bgImg.height;
+          const c = document.createElement("canvas");
+          const cx = c.getContext("2d", { willReadFrequently: true })!;
+          c.width = bgImg.width;
+          c.height = bgImg.height;
 
-        const colors: Record<string, string> = {
-          white: "#ffffff",
-          "light-gray": "#f3f4f6",
-          "light-blue": "#eff6ff",
-        };
-        cx.fillStyle = colors[selectedBg] || "#ffffff";
-        cx.fillRect(0, 0, c.width, c.height);
-        cx.drawImage(bgImg, 0, 0);
+          const colors: Record<string, string> = {
+            white: "#ffffff",
+            "light-gray": "#f3f4f6",
+            "light-blue": "#eff6ff",
+            blue: "#0047ab"
+          };
+          cx.fillStyle = colors[selectedBg] || "#ffffff";
+          cx.fillRect(0, 0, c.width, c.height);
+          cx.drawImage(bgImg, 0, 0);
 
-        finalFile = await new Promise<Blob>(
-          r => c.toBlob(b => r(b!), "image/jpeg", 0.95)
-        );
+          finalFile = await new Promise<Blob>(
+            r => c.toBlob(b => r(b!), "image/jpeg", 0.95)
+          );
+        }
       } else {
         finalFile = compressedSource;
       }
@@ -267,6 +286,7 @@ function ToolForm() {
       const formData = new FormData();
       formData.append("image", finalFile instanceof File ? finalFile : new File([finalFile], "photo.jpg", { type: "image/jpeg" }));
       formData.append("targetBackground", selectedBg);
+      formData.append("type", selectedDoc);
       formData.append("faceData", JSON.stringify({
         faceBox: clientDetection.faceBox, eyeCenter: clientDetection.eyeCenter,
         chinY: clientDetection.chinY, topOfHeadY: clientDetection.topOfHeadY,
@@ -337,6 +357,7 @@ function ToolForm() {
           documentTypes={documentTypes}
           bgColors={bgColors}
           activeDoc={activeDoc}
+          isLocked={isLocked}
         />
 
         {/* Main Workspace Area */}

@@ -71,7 +71,7 @@ export function usePayment({
         key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
         amount: orderData.amount,
         currency: orderData.currency,
-        name: "USVisaPhotoAI",
+        name: "PixPassport",
         description: "Get your US visa photo verified & corrected instantly.",
         image: "https://res.cloudinary.com/ddxu2wqfm/image/upload/v1774782293/logo_evktxq.jpg",
         order_id: orderData.orderId,

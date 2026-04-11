@@ -1,18 +1,20 @@
 import React, { useState } from "react";
 import { cx, SvgIcon, CHECK_ICONS } from "./SharedUI";
-
 import { ComplianceCheck } from "../hooks/useFaceVerification";
+import { CountrySpec } from "@/lib/specs";
 
 interface UnpaidExtrasProps {
   showExtras: boolean;
   checks: ComplianceCheck[];
   documentType: string;
+  spec?: CountrySpec | undefined;
 }
 
 export default function UnpaidExtras({
   showExtras,
   checks,
   documentType,
+  spec,
 }: UnpaidExtrasProps) {
   const [reportEmail, setReportEmail] = useState("");
   const [sendingReport, setSendingReport] = useState(false);
@@ -123,23 +125,7 @@ export default function UnpaidExtras({
         </div>
       </div>
 
-      {/* Trust strip */}
-      <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 py-3 px-4 bg-white rounded-2xl border border-slate-200 shadow-sm mt-4">
-        {[
-          ["🔒", "Secure Payment"],
-          ["✅", "12,000+ Photos Processed"],
-          ["🏛️", "State Dept. Compliant"],
-          ["⭐", "4.8/5 Rating"],
-        ].map(([icon, label]) => (
-          <div
-            key={label}
-            className="flex items-center gap-1.5 text-xs font-bold text-slate-600"
-          >
-            <span className="text-sm">{icon}</span>
-            {label}
-          </div>
-        ))}
-      </div>
+
 
       {/* Free vs Paid */}
       <div className="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm mt-4">
@@ -150,8 +136,8 @@ export default function UnpaidExtras({
           {[
             ["Biometric compliance check", true],
             ["PASS/FAIL report", true],
-            ["Background removal to white", false],
-            ["Auto-crop to 600×600px", false],
+            [`Background removal to ${spec?.bg_color || "white"}`, false],
+            [`Auto-crop to ${spec?.width_px || 600}×${spec?.height_px || 600}px`, false],
             ["File optimization (<240KB)", false],
             ["A4 print sheet (20 photos)", false],
             ["HD download", false],

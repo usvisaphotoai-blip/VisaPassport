@@ -12,6 +12,7 @@ import OrderSummary from "./components/OrderSummary";
 import ZoomDialog from "./components/ZoomDialog";
 import MobileStickyCTA from "./components/MobileStickyCTA";
 import FeedbackButton from "./components/FeedbackButton";
+import { getSpecById } from "@/lib/specs";
 
 import { useFaceVerification } from "./hooks/useFaceVerification";
 import { usePayment, LocalPrice } from "./hooks/usePayment";
@@ -40,7 +41,7 @@ export default function PreviewClient({
 
   // Custom Hooks
   const { verifying, checks, overallPass, canvasRef, overlayRef } =
-    useFaceVerification(previewUrl);
+    useFaceVerification(previewUrl, documentType);
 
   const { loading, handlePayment } = usePayment({
     photoId,
@@ -108,22 +109,16 @@ export default function PreviewClient({
 
   const passCount = checks?.filter((c) => c.status === "PASS").length || 0;
   const showExtras = !hasPaid && !verifying;
-  const productName = (documentType && DOC_LABELS[documentType]) || "Visa Photo";
+  const spec = getSpecById(documentType);
+  const productName = spec?.name || "Visa Photo";
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
-      {/* Header */}
-      <div className="bg-slate-900 px-4 py-3 text-center">
-        <p className="text-white text-sm font-bold tracking-wide flex items-center justify-center gap-2">
-
-          Your photo is ready After download, your photo will be reviewed by a human. If anything is incorrect, we will contact you immediately via email so please make sure you provide a valid email address.
-        </p>
-      </div>
-
-
-
       <div className="flex-1 flex items-start justify-center px-4 py-6 sm:py-8">
         <div className="w-full max-w-6xl">
+          {/* Target Document Identity Header */}
+
+
           <div className="flex flex-col lg:flex-row gap-5">
             {/* LEFT SIDE */}
             <div className="w-full lg:w-[55%] space-y-4">
@@ -141,11 +136,13 @@ export default function PreviewClient({
                 verifying={verifying}
                 checks={checks}
                 passCount={passCount}
+                spec={spec}
               />
               <UnpaidExtras
                 showExtras={showExtras}
                 checks={checks}
                 documentType={documentType}
+                spec={spec}
               />
             </div>
 

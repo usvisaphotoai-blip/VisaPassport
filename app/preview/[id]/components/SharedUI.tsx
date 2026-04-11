@@ -39,13 +39,6 @@ export const CheckMark = ({ className = "w-4 h-4 text-lime-500" }) => (
   <SvgIcon d={CHECK_ICONS.PASS} className={className} sw={2.5} />
 );
 
-export const DOC_LABELS: Record<string, string> = {
-  "us-visa": "US Visa Photo",
-  "dv-lottery": "DV Lottery Photo",
-  "us-passport": "US Passport Photo",
-  "green-card": "Green Card Photo",
-  general: "Visa Photo",
-};
 
 export const DOWNLOAD_ICON =
   "M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3";

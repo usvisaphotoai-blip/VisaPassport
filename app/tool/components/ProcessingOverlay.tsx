@@ -186,10 +186,7 @@ const ProcessingOverlay: React.FC<ProcessingOverlayProps> = ({
               </div>
             )}
 
-            {/* 600×600 badge */}
-            <div className="absolute -bottom-2.5 left-1/2 -translate-x-1/2 bg-white border border-slate-200 rounded-full px-2.5 py-0.5 shadow-md z-30">
-              <span className="text-[10px] sm:text-[11px] font-bold text-indigo-600 tracking-wider">600 × 600</span>
-            </div>
+
           </div>
         </div>
 

@@ -60,7 +60,7 @@ export default function AdminBlogsPage() {
       title: "",
       description: "",
       content: "",
-      author: "USVisaPhotoAI Team",
+      author: "PixPassport Team",
       date: new Date().toISOString().split("T")[0],
       isPublished: true,
     });

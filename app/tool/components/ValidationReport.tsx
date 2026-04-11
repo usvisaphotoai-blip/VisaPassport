@@ -144,8 +144,7 @@ const ValidationReport: React.FC<ValidationReportProps> = ({
               Proceed to Crop & Resize
             </h3>
             <p className="text-xs text-gray-500 leading-snug">
-              We will crop to exactly{" "}
-              {selectedDoc !== "general" ? "US Passport metrics" : "600x600 pixels"} and
+              We will crop to exactly {activeDoc.label} metrics and
               replace the background.
               {report.overallStatus !== "PASS" && (
                 <span className="block mt-1.5 font-semibold text-amber-600">

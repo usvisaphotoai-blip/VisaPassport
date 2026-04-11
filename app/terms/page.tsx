@@ -4,7 +4,7 @@ import { getLocalPrice } from "@/lib/currency";
 
 export const metadata: Metadata = {
   title: "Terms of Service",
-  description: "USVisaPhotoAI terms of service. Terms, conditions, and usage policies for our US visa and passport photo validation service.",
+  description: "PixPassport terms of service. Terms, conditions, and usage policies for our US visa and passport photo validation service.",
 };
 
 export default async function TermsPage() {
@@ -25,14 +25,14 @@ export default async function TermsPage() {
             <div>
               <h2 className="text-xl font-bold text-slate-900 mb-3">1. Acceptance of Terms</h2>
               <p className="text-sm text-gray-600 leading-relaxed">
-                By accessing or using USVisaPhotoAI (&quot;the Service&quot;), you agree to be bound by these Terms of Service. If you do not agree to these terms, you may not use the Service. The Service is available at usvisaphotoai.pro and includes all photo validation, processing, and download features.
+                By accessing or using PixPassport (&quot;the Service&quot;), you agree to be bound by these Terms of Service. If you do not agree to these terms, you may not use the Service. The Service is available at pixpassport.com and includes all photo validation, processing, and download features.
               </p>
             </div>
 
             <div>
               <h2 className="text-xl font-bold text-slate-900 mb-3">2. Description of Service</h2>
               <p className="text-sm text-gray-600 leading-relaxed">
-                USVisaPhotoAI provides an automated photo validation and processing service for US immigration, visa, passport, and green card photos. The Service checks photos against U.S. State Department specifications and, for a fee, processes photos to meet compliance requirements.
+                PixPassport provides an automated photo validation and processing service for US immigration, visa, passport, and green card photos. The Service checks photos against U.S. State Department specifications and, for a fee, processes photos to meet compliance requirements.
               </p>
               <ul className="list-disc pl-5 space-y-1 text-sm text-gray-600 mt-3">
                 <li><strong>Free tier:</strong> Photo validation and compliance reports at no cost</li>
@@ -69,7 +69,7 @@ export default async function TermsPage() {
                 </p>
               </div>
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-600">
-                <li>To request a refund, contact us at <strong>usvisaphotoai@gmail.com</strong> within <strong>30 days</strong> of purchase</li>
+                <li>To request a refund, contact us at <strong>PixPassport@gmail.com</strong> within <strong>30 days</strong> of purchase</li>
                 <li>You must provide your transaction ID and evidence of photo rejection (screenshot of rejection notice)</li>
                 <li>Refunds are limited to <strong>50% of the original purchase price</strong> due to non-recoverable server processing and infrastructure costs incurred during photo generation</li>
                 <li>Refunds are issued to the original payment method within 5–10 business days</li>
@@ -81,7 +81,7 @@ export default async function TermsPage() {
               <h2 className="text-xl font-bold text-slate-900 mb-3">6. Independence and Affiliation Disclaimer</h2>
               <div className="bg-amber-50 border border-amber-200 rounded-xl p-5">
                 <p className="text-sm text-amber-800 leading-relaxed">
-                  <strong>Important:</strong> USVisaPhotoAI is an independent, private service and is <strong>not affiliated with, endorsed by, or connected to the U.S. government, the Department of State, USCIS, or any other government agency.</strong> Final acceptance of your photo is entirely at the discretion of the reviewing government agency. We are not responsible for photo rejections by government agencies.
+                  <strong>Important:</strong> PixPassport is an independent, private service and is <strong>not affiliated with, endorsed by, or connected to the U.S. government, the Department of State, USCIS, or any other government agency.</strong> Final acceptance of your photo is entirely at the discretion of the reviewing government agency. We are not responsible for photo rejections by government agencies.
                 </p>
               </div>
             </div>
@@ -102,7 +102,7 @@ export default async function TermsPage() {
             <div>
               <h2 className="text-xl font-bold text-slate-900 mb-3">8. Limitation of Liability</h2>
               <p className="text-sm text-gray-600 leading-relaxed">
-                To the maximum extent permitted by law, USVisaPhotoAI shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the Service, including but not limited to visa application rejections, delayed applications, or any other immigration-related consequences.
+                To the maximum extent permitted by law, PixPassport shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the Service, including but not limited to visa application rejections, delayed applications, or any other immigration-related consequences.
               </p>
             </div>
 
@@ -137,7 +137,7 @@ export default async function TermsPage() {
             <div>
               <h2 className="text-xl font-bold text-slate-900 mb-3">13. Contact</h2>
               <p className="text-sm text-gray-600 leading-relaxed">
-                For questions about these Terms, contact us at <strong>usvisaphotoai@gmail.com</strong>.
+                For questions about these Terms, contact us at <strong>PixPassport@gmail.com</strong>.
               </p>
             </div>
           </div>

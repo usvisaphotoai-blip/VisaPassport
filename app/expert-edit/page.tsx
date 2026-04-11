@@ -70,7 +70,7 @@ export default function ExpertEditPage() {
         key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
         amount: data.amount,
         currency: data.currency,
-        name: "USVisaPhotoAI",
+        name: "PixPassport",
         description: "Expert manual editing for guaranteed compliance. 100% Guaranteed Approval.",
         image: "https://res.cloudinary.com/ddxu2wqfm/image/upload/v1774782293/logo_evktxq.jpg",
         order_id: data.orderId,

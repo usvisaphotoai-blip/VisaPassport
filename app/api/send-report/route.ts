@@ -53,7 +53,7 @@ export async function POST(req: Request) {
       <div style="font-family: sans-serif; max-w: 600px; margin: 0 auto; color: #333;">
         <h2 style="color: #4f46e5;">Validation Report: ${docName}</h2>
         <p>Hi there,</p>
-        <p>Here is your free validation report from USVisaPhotoAI for the photo you just uploaded.</p>
+        <p>Here is your free validation report from PixPassport for the photo you just uploaded.</p>
         
         <div style="margin: 20px 0;">
           <p><strong>Overall Status:</strong> ${statusBadge}</p>
@@ -63,7 +63,7 @@ export async function POST(req: Request) {
         ${checksHtml}
         
         <p style="margin-top: 30px; font-size: 14px; color: #64748b;">
-          Visit <a href="https://usvisaphotoai.pro">USVisaPhotoAI.pro</a> to process your photo or validate another one.
+          Visit <a href="https://pixpassport.com">pixpassport.com</a> to process your photo or validate another one.
         </p>
       </div>
     `;

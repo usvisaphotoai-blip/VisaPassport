@@ -6,10 +6,7 @@ import { useSession, signOut } from "next-auth/react";
 import LiveActivityChip from "./LiveActivityChip";
 
 const navLinks = [
-  { href: "/us-visa-photo", label: "US Visa Photo" },
-  { href: "/dv-lottery-photo-2027", label: "DV Lottery 2027" },
-  { href: "/us-passport-photo", label: "Passport Photo" },
-  { href: "/green-card-photo", label: "Green Card" },
+  { href: "/tool", label: "Create Photo" },
   { href: "/photo-validator", label: "Free Validator" },
   { href: "/blog", label: "Blog & Guides" },
 ];
@@ -41,7 +38,7 @@ export default function Navbar() {
                 />
               </svg>
             </div>
-            <span className="text-xl font-bold text-lime-700">USVisaPhotoAI</span>
+            <span className="text-xl font-bold text-lime-700">PixPassport</span>
           </Link>
 
           {/* Desktop nav */}

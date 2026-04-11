@@ -4,34 +4,37 @@ import Link from "next/link";
 import TrustSection from "../components/TrustSection";
 import ComparisonSlider from "../components/ComparisonSlider";
 import Image from "next/image";
+import { allSpecs } from "@/lib/specs";
 export const metadata: Metadata = {
-  title: "Free Photo Validator - Instant US Official Document Compliance Check",
+  title: "Free AI Passport Photo & Visa Validator | Instant Biometric Check",
   description:
-    "Official-standard US photo validator. Check your US visa, passport, or green card photo for 100% biometric compliance. Instant PASS/FAIL report on eye level, head size, and background.",
+    "Check your passport, visa, or ID photo for 100% biometric compliance. Our free official-standard global photo validator gives an instant PASS/FAIL report for 50+ countries.",
   keywords: [
-    "photo validator",
-    "US visa photo checker",
     "passport photo validator",
-    "free photo compliance check",
-    "DS-160 photo validator online",
-    "DV lottery photo checker 2027",
-    "check US visa photo size and background online",
-    "fix composition error head size online",
-    "free online biometric photo check 600x600",
-    "validate US passport photo online free",
+    "visa photo checker",
+    "free passport photo compliance check",
+    "AI biometric photo check",
+    "validate passport photo online",
+    "US visa photo validator",
+    "UK passport photo checker",
+    "Schengen visa photo check",
+    "global passport photo validation",
+    "ICAO photo checker",
+    "check my passport photo",
+    "visa photo requirements check"
   ],
   alternates: {
-    canonical: "https://www.usvisaphotoai.pro/photo-validator",
+    canonical: "https://www.pixpassport.com/photo-validator",
   },
 };
 
 const checks = [
   {
-    name: "Image Dimensions",
-    desc: "Exactly 600×600 pixels (1:1 square)",
+    name: "Dimensions",
+    desc: "35x45mm, 2x2in, or 600x600px",
     icon: "📐",
   },
-  { name: "File Size", desc: "Under 240 KB in JPEG format", icon: "📁" },
+  { name: "File Format", desc: "JPEG or PNG under size limits", icon: "📁" },
   {
     name: "Face Detection",
     desc: "Exactly one face detected and visible",
@@ -39,13 +42,13 @@ const checks = [
   },
   {
     name: "Eye Position",
-    desc: "Eyes between 56-69% from bottom edge",
+    desc: "Centered eyes per country requirements",
     icon: "👁️",
   },
-  { name: "Head Size", desc: "Head fills 50-69% of image height", icon: "📏" },
+  { name: "Head Size", desc: "Crown-to-chin ratio of 50-80%", icon: "📏" },
   {
-    name: "Background Color",
-    desc: "Pure white (RGB 255,255,255)",
+    name: "Background",
+    desc: "White, light gray, or neutral color",
     icon: "⬜",
   },
   {
@@ -56,19 +59,14 @@ const checks = [
   { name: "Expression", desc: "Neutral expression, mouth closed", icon: "😐" },
 ];
 
-const supportedDocs = [
-  { title: "US Visa (DS-160)", href: "/us-visa-photo" },
-  { title: "DV Lottery 2027", href: "/dv-lottery-photo-2027" },
-  { title: "US Passport", href: "/us-passport-photo" },
-  { title: "Green Card", href: "/green-card-photo" },
-];
+// supportedDocs is dynamically generated from allSpecs
 
 const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "SoftwareApplication",
-      "name": "US Visa Photo Validator AI",
+      "name": "Global Photo Validator AI",
       "operatingSystem": "Web",
       "applicationCategory": "UtilitiesApplication",
       "offers": {
@@ -79,17 +77,17 @@ const jsonLd = {
       "aggregateRating": {
         "@type": "AggregateRating",
         "ratingValue": "4.9",
-        "reviewCount": "17560"
+        "reviewCount": "25000"
       }
     },
     {
       "@type": "Service",
-      "name": "Free US Photo Compliance Check",
+      "name": "Free Global Photo Compliance Check",
       "provider": {
         "@type": "Organization",
-        "name": "USVisaPhotoAI"
+        "name": "PixPassport"
       },
-      "description": "Instant PASS/FAIL biometric report for US visa, passport, and green card photos."
+      "description": "Instant PASS/FAIL biometric report for passport, visa, and ID photos globally."
     }
   ]
 };
@@ -175,13 +173,13 @@ export default function PhotoValidatorPage() {
                 <span className="uvp-badge-dot" />
                 <span className="uvp-badge-txt">AI Biometric Analysis</span>
               </div>
-              <h1 className="uvp-h1">Free Photo Validator: Instant US Visa & Passport Compliance Check</h1>
+              <h1 className="uvp-h1">Free AI Passport & Visa Photo Validator: Instant Biometric Check</h1>
               <p className="uvp-desc">
                 Get an instant PASS/FAIL compliance report. Our AI mirrors the
-                software used by U.S. Embassies to ensure your passport, visa,
-                or green card photo meets all official biometric standards.
+                software used by Embassies globally to ensure your passport, visa,
+                or ID photo meets all official ICAO and government standards.
               </p>
-              <Link href="/tool?type=us-visa" className="uvp-upload-btn">
+              <Link href="/tool" className="uvp-upload-btn">
                 Upload & Validate Free →
               </Link>
               <div
@@ -201,10 +199,10 @@ export default function PhotoValidatorPage() {
               </div>
             </div>
 
-            <div  className="hc-visual-wrap">
+            <div className="hc-visual-wrap">
               <Image
                 src="/us_non_imigrant.png"
-                alt="US Visa Photo AI Validator - 600x600px biometric compliance report example"
+                alt="PixPassport Validator - 600x600px biometric compliance report example"
                 width={500}
                 height={500}
                 style={{
@@ -220,7 +218,6 @@ export default function PhotoValidatorPage() {
           </div>
         </section>
 
-        <TrustSection />
 
         {/* ══ HIGH VALUE CONTENT: AI VS HUMAN ══ */}
         <section className="hc-sec hc-sec-alt">
@@ -234,7 +231,7 @@ export default function PhotoValidatorPage() {
                   className="hc-h2"
                   style={{ textAlign: "left", marginBottom: 24 }}
                 >
-                  How Our AI Checks US Visa & Passport Photo Compliance
+                  How Our AI Checks Passport & Visa Photo Compliance
                 </h2>
                 <p
                   style={{
@@ -296,7 +293,7 @@ export default function PhotoValidatorPage() {
                       marginBottom: 4,
                     }}
                   >
-                    Em embassy-Grade Software
+                    Embassy-Grade Validation System
                   </h4>
                   <p style={{ fontSize: "13px", color: "#94a3b8" }}>
                     Mirroring the official DOS validation pipeline
@@ -384,7 +381,7 @@ export default function PhotoValidatorPage() {
         <section className="hc-sec hc-sec-alt">
           <div className="hc-in">
             <span className="hc-label">Expert Advice</span>
-            <h2 className="hc-h2">Why US Visa Photos Get Rejected: Top 3 Issues</h2>
+            <h2 className="hc-h2">Why Passport & Visa Photos Get Rejected: Top 3 Issues</h2>
             <div
               style={{
                 display: "grid",
@@ -492,7 +489,7 @@ export default function PhotoValidatorPage() {
         {/* ══ SUPPORTED DOCS ══ */}
         <section className="hc-sec">
           <div className="hc-in">
-            <h2 className="hc-h2">Supported Document Types</h2>
+            <h2 className="hc-h2">Global Supported Document Types</h2>
             <div
               style={{
                 display: "grid",
@@ -500,10 +497,10 @@ export default function PhotoValidatorPage() {
                 gap: "20px",
               }}
             >
-              {supportedDocs.map((doc, i) => (
+              {allSpecs.map((doc, i) => (
                 <Link
                   key={i}
-                  href={doc.href}
+                  href={`/${doc.id}-photo-editor`}
                   style={{
                     textDecoration: "none",
                     background: "#fff",
@@ -523,7 +520,7 @@ export default function PhotoValidatorPage() {
                       margin: 0,
                     }}
                   >
-                    {doc.title}
+                    {doc.name}
                   </p>
                   <p
                     style={{
@@ -537,6 +534,29 @@ export default function PhotoValidatorPage() {
                   </p>
                 </Link>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ══ AI VALIDATION GUIDE ══ */}
+        <section className="hc-sec bg-white">
+          <div className="hc-in">
+            <span className="hc-label">Step-by-Step Guide</span>
+            <h2 className="hc-h2" style={{ marginBottom: 24 }}>How to Use Our AI Document Photo Validator</h2>
+            <div className="prose prose-premium max-w-3xl mx-auto text-slate-600">
+              <p>Ensuring your passport or visa photo complies with international biometric standards is critical to avoiding application delays or rejections. Our AI Document Photo Validator provides a government-grade scan of your image in just seconds. Follow these steps to generate your guaranteed-compliant photo.</p>
+
+              <h3>1. Upload Your Image</h3>
+              <p>Start by taking a photo against any background with decent lighting. Ideally, face the camera directly with a neutral expression. Then, upload your JPEG or PNG image directly into the validator. Our tool handles high-resolution images smoothly and protects your privacy by processing everything securely.</p>
+
+              <h3>2. Select Your Specific Document Type</h3>
+              <p>With requirements varying wildly between 50+ countries, it's essential to select the exact document you need. Whether it's a 2x2 inch US Visa or a 35x45 mm Schengen Passport photo, our database instantly applies the precise dimensional and biometric rules associated with your selection.</p>
+
+              <h3>3. Instant Metric Analysis</h3>
+              <p>Our AI model will scan 64 precision facial landmarks. It calculates the exact crown-to-chin height, eye-level positioning, and background luminance. The tool automatically removes non-compliant backgrounds, replacing them with pure white, light gray, or blue based on the country's official mandates. You'll instantly see a complete PASS/FAIL breakdown pinpointing any rejections.</p>
+
+              <h3>4. Download or Print</h3>
+              <p>Once you achieve a 100% PASS score, download your pristine, ready-to-submit biometric photo or generate a 4x6 print sheet for local printing. Our results match algorithmic Embassy scanning software, ensuring you can submit your application globally with total confidence.</p>
             </div>
           </div>
         </section>

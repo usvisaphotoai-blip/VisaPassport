@@ -28,29 +28,32 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.usvisaphotoai.pro/"),
+  metadataBase: new URL("https://www.pixpassport.com/"),
   title: {
-    default: "USVisaPhotoAI | Instant Check for US Visa & Passport Photos",
-    template: "%s | USVisaPhotoAI",
+    default: "PixPassport | Instant Global Passport & Visa Photo Tool",
+    template: "%s | PixPassport",
   },
   description:
-    "Free DS-160 visa, passport & green card photo validator. Instantly verify 600x600px, 240KB, and full biometric compliance.",
+    "Official-standard global passport, visa, and ID photo tool. Get 100% compliant biometric photos for 50+ countries including US, UK, India, and Australia. AI-powered background removal and cropping.",
   keywords: [
-    "US visa photo",
-    "us passport photo maker",
-    "DS-160 photo",
-    "DS-160 photo checker",
-    "DS-160 photo tool",
-    "DV lottery photo 2027",
-    "green card photo",
-    "photo compliance checker",
-    "2x2 photo tool",
-    'Us passport photo maker'
+    "PixPassport",
+    "online passport photo maker",
+    "visa photo editor",
+    "official biometric photo",
+    "India passport photo online",
+    "UK passport photo generator",
+    "US visa photo DS-160",
+    "Schengen visa photo check",
+    "Australia passport photo online",
+    "Canadian passport photo size",
+    "background remover for passport",
+    "biometric compliance checker",
+    "passport photo creator",
   ],
-  authors: [{ name: "USVisaPhotoAI" }],
-  creator: "USVisaPhotoAI",
-  applicationName: "USVisaPhotoAI",
-  publisher: "USVisaPhotoAI",
+  authors: [{ name: "PixPassport Team" }],
+  creator: "PixPassport",
+  applicationName: "PixPassport",
+  publisher: "PixPassport",
   alternates: {
     canonical: "/",
   },
@@ -66,17 +69,17 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "USVisaPhotoAI | Instant Check for US Visa & Passport Photos",
+    title: "PixPassport | Official Global Passport & Visa Photo Tool",
     description:
-      "Free online US visa, passport & green card photo validator. Instantly verify full biometric compliance.",
-    url: "https://www.usvisaphotoai.pro/",
-    siteName: "USVisaPhotoAI",
+      "Create 100% compliant biometric photos for 50+ countries. Official standards for US, UK, India, and more. Instant AI check.",
+    url: "https://www.pixpassport.com/",
+    siteName: "PixPassport",
     images: [
       {
-        url: "https://www.usvisaphotoai.pro/og-image.jpg",
+        url: "https://www.pixpassport.com/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "USVisaPhotoAI - Instant Visa & Passport Photo Tool",
+        alt: "PixPassport - Official Global Biometric Photo Tool",
       },
     ],
     locale: "en_US",
@@ -84,10 +87,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "USVisaPhotoAI | Instant Check for US Visa & Passport Photos",
+    title: "PixPassport | Official Global Passport & Visa Photo Tool",
     description:
-      "Free online US visa, passport & green card photo validator. Instantly verify full biometric compliance.",
-    images: ["https://www.usvisaphotoai.pro/og-image.jpg"],
+      "AI-powered official passport and visa photos for 50+ countries. 100% biometric compliance guaranteed.",
+    images: ["https://www.pixpassport.com/og-image.jpg"],
   },
 };
 
@@ -108,9 +111,9 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "WebApplication",
-              name: "USVisaPhotoAI",
-              url: "https://www.usvisaphotoai.pro/",
-              description: "Free US visa ds160 photo tool, passport & green card photo validator. Check 600x600px, 240KB, biometric compliance instantly.",
+              name: "PixPassport",
+              url: "https://www.pixpassport.com/",
+              description: "Free global passport, visa, and ID photo validator. Instantly verify biometric compliance for any country's requirements.",
               applicationCategory: "UtilitiesApplication",
               operatingSystem: "All",
               offers: {

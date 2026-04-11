@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Contact Us",
-  description: "Contact USVisaPhotoAI support team.",
+  description: "Contact PixPassport support team.",
 };
 
 export default function ContactPage() {
@@ -26,7 +26,7 @@ export default function ContactPage() {
                 <div>
                   <h3 className="text-sm font-semibold text-slate-900 mb-2 uppercase tracking-wide">Business Information</h3>
                   <div className="text-gray-600 leading-relaxed bg-gray-50 p-6 rounded-xl border border-gray-100">
-                    <p className="font-bold text-slate-900 text-lg mb-1">USVisaPhotoAI</p>
+                    <p className="font-bold text-slate-900 text-lg mb-1">PixPassport</p>
                     <p>khadda kushinagar,</p>
                     <p>Uttar Pradesh, India 274802</p>
                   </div>
@@ -36,8 +36,8 @@ export default function ContactPage() {
                   <h3 className="text-sm font-semibold text-slate-900 mb-2 uppercase tracking-wide">Email Support</h3>
                   <div className="text-gray-600 leading-relaxed bg-gray-50 p-6 rounded-xl border border-gray-100">
                     <p className="mb-2">For support, questions, or refund requests, please email us directly at:</p>
-                    <a href="mailto:usvisaphotoai@gmail.com" className="font-bold text-lime-600 hover:text-lime-700 text-lg transition-colors">
-                      usvisaphotoai@gmail.com
+                    <a href="mailto:PixPassport@gmail.com" className="font-bold text-lime-600 hover:text-lime-700 text-lg transition-colors">
+                      PixPassport@gmail.com
                     </a>
                   </div>
                 </div>

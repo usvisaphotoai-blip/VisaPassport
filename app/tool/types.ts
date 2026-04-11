@@ -8,6 +8,10 @@ export type DocumentType = {
   label: string;
   size: string;
   bg: string;
+  country?: string;
+  flag?: string;
+  price?: number;
+  printSize?: "A4" | "Letter";
 };
 
 export type BgColor = {

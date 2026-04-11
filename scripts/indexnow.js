@@ -2,9 +2,9 @@
  * Pings IndexNow (Bing/Yandex) with a list of URLs.
  * @param {string[]} urls - List of absolute URLs to index.
  * @param {string} key - IndexNow API key.
- * @param {string} host - Site hostname (e.g., 'www.usvisaphotoai.pro').
+ * @param {string} host - Site hostname (e.g., 'www.pixpassport.com').
  */
-async function pingIndexNow(urls, key = "5f8e91023c4a4e1ebda2f2709eab758d", host = "www.usvisaphotoai.pro") {
+async function pingIndexNow(urls, key = "5f8e91023c4a4e1ebda2f2709eab758d", host = "www.pixpassport.com") {
     const endpoint = "https://api.indexnow.org/IndexNow";
     const payload = {
         host: host,

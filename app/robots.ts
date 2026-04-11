@@ -23,6 +23,6 @@ export default function robots(): MetadataRoute.Robots {
         allow: "/",
       },
     ],
-    sitemap: "https://www.usvisaphotoai.pro/sitemap.xml",
+    sitemap: "https://www.pixpassport.com/sitemap.xml",
   };
 }

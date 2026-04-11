@@ -1,4 +1,4 @@
-# 🎯 USVisaPhotoAI.pro — Growth Strategy to $1,000+/Month
+# 🎯 PixPassport.pro — Growth Strategy to $1,000+/Month
 
 > **Current State Audit**: Next.js app · 5 tools (US Visa, DV Lottery 2027, Passport, Green Card, Free Validator) · $5.99 download · $10 Expert Edit · 12 blog posts · 6 SEO landing pages · Razorpay payments
 
@@ -158,11 +158,11 @@ Share this tool and process additional photos at the same low price.
 ### 2.1 Existing SEO Assets (What You Have)
 
 - ✅ 12 blog posts (good quality, long-form)
-- ✅ 6 SEO tool landing pages via [seo-targets.json](file:///c:/Users/navni/OneDrive/Desktop/usvisaphotoai/data/seo-targets.json)
+- ✅ 6 SEO tool landing pages via [seo-targets.json](file:///c:/Users/navni/OneDrive/Desktop/PixPassport/data/seo-targets.json)
 - ✅ Sitemap covering all pages
 - ✅ Document-specific tool pages (us-visa, passport, dv-lottery, green-card)
 - ⚠️ Blog dates show 2025-2026 — **update to current**
-- ⚠️ All blog author = "PhotoStudio Expert Team" — **rebrand to "USVisaPhotoAI Team"**
+- ⚠️ All blog author = "PhotoStudio Expert Team" — **rebrand to "PixPassport Team"**
 
 ### 2.2 — 20 New SEO Article Ideas (Low Competition, High Intent)
 
@@ -359,7 +359,7 @@ Users who validate but don't pay still have value:
 | Mechanism | Implementation |
 |---|---|
 | **Share discount**: After download, show "Share with a friend: they get 20% off" | Referral code system (simple URL param) |
-| **"Made with USVisaPhotoAI" badge** on print sheet | Brand awareness on physical prints |
+| **"Made with PixPassport" badge** on print sheet | Brand awareness on physical prints |
 | **Social proof popup**: "Someone in Lagos just processed their DV Lottery photo" | Creates urgency + social proof (use Toastify) |
 | **WhatsApp share button**: "I just validated my visa photo for free!" | Most visa applicants are in WhatsApp-heavy regions |
 

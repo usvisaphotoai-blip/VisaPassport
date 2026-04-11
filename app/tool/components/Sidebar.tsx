@@ -14,6 +14,7 @@ interface SidebarProps {
   documentTypes: DocumentType[];
   bgColors: BgColor[];
   activeDoc: DocumentType;
+  isLocked?: boolean;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({
@@ -25,15 +26,32 @@ const Sidebar: React.FC<SidebarProps> = ({
   documentTypes,
   bgColors,
   activeDoc,
+  isLocked = false,
 }) => {
   return (
     <div className="lg:w-64 shrink-0 flex flex-col space-y-6">
-      <DocumentSelector
-        selectedDoc={selectedDoc}
-        setSelectedDoc={(id) => setSelectedDoc(id)}
-        handleReset={handleReset}
-        documentTypes={documentTypes}
-      />
+      {isLocked ? (
+        <div className="bg-white rounded-2xl border border-blue-200 p-4 shadow-sm border-b-4 border-b-blue-600">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-[10px] font-bold text-blue-600 uppercase tracking-widest">Pinned Requirement</span>
+            <Link href="/tool" className="text-[10px] font-bold text-slate-400 hover:text-slate-600 underline">Change</Link>
+          </div>
+          <div className="flex items-center gap-3">
+            <span className="text-2xl leading-none">{activeDoc.flag}</span>
+            <div className="min-w-0">
+               <p className="text-sm font-bold text-slate-900 truncate">{activeDoc.label}</p>
+               <p className="text-[10px] text-slate-500 font-medium">{activeDoc.size}</p>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <DocumentSelector
+          selectedDoc={selectedDoc}
+          setSelectedDoc={(id) => setSelectedDoc(id)}
+          handleReset={handleReset}
+          documentTypes={documentTypes}
+        />
+      )}
 
       <div className="h-px bg-slate-200" />
 

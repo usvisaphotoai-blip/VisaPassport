@@ -37,7 +37,7 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
   }
 }
 
-const APP_URL = 'https://www.usvisaphotoai.pro';
+const APP_URL = 'https://www.pixpassport.com';
 
 export const metadata = {
   title: 'US Passport & Visa Photo Requirements Blog | Expert Guides 2026',
@@ -47,7 +47,7 @@ export const metadata = {
     canonical: `${APP_URL}/blog`,
   },
   openGraph: {
-    title: 'US Passport & Visa Photo Guides | USVisaPhotoAI Blog',
+    title: 'US Passport & Visa Photo Guides | PixPassport Blog',
     description: 'Expert advice on US passport, visa, and green card photo requirements. 2026 compliance guidelines and step-by-step guides.',
     url: `${APP_URL}/blog`,
     type: 'website',
@@ -68,7 +68,7 @@ export default async function BlogIndex() {
     url: `${APP_URL}/blog`,
     publisher: {
       '@type': 'Organization',
-      name: 'USVisaPhotoAI',
+      name: 'PixPassport',
       url: APP_URL,
       logo: {
         '@type': 'ImageObject',

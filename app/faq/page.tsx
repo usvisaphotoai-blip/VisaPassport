@@ -8,7 +8,7 @@ const getCategories = (price: string) => [
   {
     name: "General",
     faqs: [
-      { q: "What is USVisaPhotoAI?", a: `USVisaPhotoAI is a free online photo validation tool that checks your photos against U.S. State Department requirements for visas, passports, green cards, and the DV lottery. You get an instant PASS/FAIL report, and can pay ${price} to download a processed, compliant photo.` },
+      { q: "What is PixPassport?", a: `PixPassport is a free online photo validation tool that checks your photos against U.S. State Department requirements for visas, passports, green cards, and the DV lottery. You get an instant PASS/FAIL report, and can pay ${price} to download a processed, compliant photo.` },
       { q: "Is the photo validation really free?", a: `Yes! Photo validation is 100% free with no account required. You only pay ${price} if you choose to download a processed, fully compliant photo. You can validate unlimited photos at no cost.` },
       { q: "How accurate is the validation?", a: "Our validation is 100% aligned with U.S. State Department specifications. We check dimensions (600×600px), file size (under 240KB), background color (pure white), face detection, eye position (56-69%), head size (50-69%), glasses detection, and expression analysis." },
       { q: "How long does validation take?", a: "Processing takes under 5 seconds per photo. You'll see your full PASS/FAIL compliance report almost instantly after uploading." },
@@ -31,7 +31,7 @@ const getCategories = (price: string) => [
     faqs: [
       { q: "How much does it cost?", a: `Photo processing and download costs a one-time fee of ${price} per photo — including auto-cropping, resizing, background removal, and file optimization.` },
       { q: "What payment methods are accepted?", a: "We accept all major credit cards, debit cards, and PayPal through our secure payment processor." },
-      { q: "Can I get a refund?", a: "If your processed photo is rejected by a government agency, you are eligible for a 50% refund. Contact support@usvisaphotoai.pro with your transaction ID and rejection proof within 30 days. The 50% deduction covers non-recoverable server processing costs." },
+      { q: "Can I get a refund?", a: "If your processed photo is rejected by a government agency, you are eligible for a 50% refund. Contact support@pixpassport.com with your transaction ID and rejection proof within 30 days. The 50% deduction covers non-recoverable server processing costs." },
       { q: "How long are download links valid?", a: "Download links are valid for 1 hour after they are generated. After that, they expire for security. You can generate new links from your dashboard within 24 hours." },
     ],
   },
@@ -64,7 +64,7 @@ export default function FAQPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20 text-center">
           <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900">Frequently Asked Questions</h1>
           <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
-            Everything you need to know about using USVisaPhotoAI for your US document photos.
+            Everything you need to know about using PixPassport for your US document photos.
           </p>
         </div>
       </section>

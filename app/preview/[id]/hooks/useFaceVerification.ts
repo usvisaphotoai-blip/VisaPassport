@@ -14,15 +14,11 @@ import {
   CHIN_TIP,
   FOREHEAD_TOP,
   HEAD_TOP_MULTIPLIER,
-  EYE_LEVEL_MIN,
-  EYE_LEVEL_MAX,
-  HEAD_SIZE_MIN,
-  HEAD_SIZE_MAX,
-  CENTERING_THRESHOLD,
   TILT_WARN_THRESHOLD,
   TILT_FAIL_THRESHOLD,
   type NormalizedLandmark,
 } from "@/lib/mediapipe";
+import { getSpecById } from "@/lib/specs";
 
 export interface ComplianceCheck {
   name: string;
@@ -38,11 +34,12 @@ export function drawOverlay(
   landmarks: NormalizedLandmark[],
   w: number,
   h: number,
+  spec?: CountrySpec | undefined,
 ) {
   const ctx = canvas.getContext("2d", { willReadFrequently: true })!;
   ctx.clearRect(0, 0, w, h);
-  const ELECTRIC_BLUE = "rgba(37, 99, 235, 1)", // Vivid Blue (visible on white)
-    BLUE_LIGHT = "rgba(37, 99, 235, 0.4)"; 
+  const ELECTRIC_BLUE = "rgba(16, 185, 129, 0.9)", // Premium Emerald Green
+    BLUE_LIGHT = "rgba(16, 185, 129, 0.4)"; 
   const SMALL_FONT = "bold 13px system-ui, -apple-system, sans-serif";
 
   // Eye centers from MediaPipe landmarks
@@ -62,9 +59,13 @@ export function drawOverlay(
   const estimatedFullHeadH = faceH * HEAD_TOP_MULTIPLIER;
   const trueTopOfHead = Math.max(0, chinY - estimatedFullHeadH);
   
-  const PPI = h / 2;
-  const eyeLineInch = ((h - eyeY) / PPI).toFixed(2);
-  const faceHeightInch = (estimatedFullHeadH / PPI).toFixed(2);
+  // Dynamic scale (Pixels Per Millimeter)
+  const targetH_mm = spec?.height_mm || 51;
+  const targetW_mm = spec?.width_mm || 51;
+  const PPM = h / targetH_mm;
+  
+  const eyeLineMM = ((h - eyeY) / PPM).toFixed(1);
+  const faceHeightMM = (estimatedFullHeadH / PPM).toFixed(1);
 
   const line = (
     x1: number,
@@ -87,9 +88,9 @@ export function drawOverlay(
   };
 
   ctx.strokeStyle = BLUE_LIGHT;
-  ctx.lineWidth = 1.5;
+  ctx.lineWidth = 0.75;
   ctx.save();
-  ctx.setLineDash([6, 4]);
+  ctx.setLineDash([3, 4]);
   ctx.strokeRect(
     box.x - 4,
     trueTopOfHead,
@@ -99,12 +100,12 @@ export function drawOverlay(
   ctx.restore();
 
   ctx.strokeStyle = ELECTRIC_BLUE;
-  ctx.lineWidth = 1.5; 
-  line(0, eyeY, w, eyeY, [5, 3]);
+  ctx.lineWidth = 0.75; 
+  line(0, eyeY, w, eyeY, [4, 4]);
 
   const measureX = w - 40;
   ctx.strokeStyle = ELECTRIC_BLUE;
-  ctx.lineWidth = 1.5;
+  ctx.lineWidth = 0.75;
   line(measureX, eyeY, measureX, h, [3, 3]);
   tick(measureX, eyeY);
   tick(measureX, h - 1);
@@ -114,11 +115,11 @@ export function drawOverlay(
   ctx.translate(measureX + 16, (eyeY + h) / 2);
   ctx.rotate(-Math.PI / 2);
   ctx.textAlign = "center";
-  ctx.fillText(`Eyeline: ${eyeLineInch} inch`, 0, 0);
+  ctx.fillText(`Eyeline: ${eyeLineMM}mm`, 0, 0);
   ctx.restore();
 
   const faceX = w - 22;
-  ctx.lineWidth = 1.5;
+  ctx.lineWidth = 0.75;
   line(faceX, trueTopOfHead, faceX, chinY, [3, 3]);
   tick(faceX, trueTopOfHead);
   tick(faceX, chinY);
@@ -126,16 +127,16 @@ export function drawOverlay(
   ctx.translate(faceX + 14, (trueTopOfHead + chinY) / 2);
   ctx.rotate(-Math.PI / 2);
   ctx.textAlign = "center";
-  ctx.fillText(`Face: ${faceHeightInch} inch`, 0, 0);
+  ctx.fillText(`Face: ${faceHeightMM}mm`, 0, 0);
   ctx.restore();
 
-  ctx.lineWidth = 1.5;
+  ctx.lineWidth = 0.75;
   ctx.textAlign = "center";
   const bottomY = h - 6;
   line(10, bottomY, w - 10, bottomY, [4, 4]);
   tick(10, bottomY, 4);
   tick(w - 10, bottomY, 4);
-  ctx.fillText("2 inch", w / 2, bottomY - 4);
+  ctx.fillText(`${targetW_mm}mm`, w / 2, bottomY - 4);
   const leftX = 18;
   line(leftX, 10, leftX, h - 10, [4, 4]);
   tick(leftX, 10, 4);
@@ -143,14 +144,44 @@ export function drawOverlay(
   ctx.save();
   ctx.translate(leftX - 2, h / 2);
   ctx.rotate(-Math.PI / 2);
-  ctx.fillText("2 inch", 0, 0);
+  ctx.fillText(`${targetH_mm}mm`, 0, 0);
   ctx.restore();
+
+  // ── Target Ranges Rendering ──
+  const drawTargetZone = (minPct: number, maxPct: number, color: string, label: string) => {
+    ctx.fillStyle = color;
+    const yMin = h * (1 - maxPct / 100);
+    const yMax = h * (1 - minPct / 100);
+    ctx.fillRect(0, yMin, w, yMax - yMin);
+    
+    ctx.fillStyle = color.replace("0.05", "0.6");
+    ctx.font = "bold 9px system-ui";
+    ctx.fillText(label, 80, yMin + 12);
+  };
+
+  // Eye Range
+  const minEye = spec?.eye_min_pct || 55.5;
+  const maxEye = spec?.eye_max_pct || 69.5;
+  drawTargetZone(minEye, maxEye, "rgba(16, 185, 129, 0.05)", "EYE TARGET");
+
+  // Head Range (Simplified as vertical guide on the side)
+  const minHead = spec?.head_min_pct || 50;
+  const maxHead = spec?.head_max_pct || 69;
+  const headRangeY_min = h * 0.1; // offset from top
+  const headRangeH_min = h * (minHead / 100);
+  const headRangeH_max = h * (maxHead / 100);
+  
+  ctx.strokeStyle = "rgba(245, 158, 11, 0.3)";
+  ctx.lineWidth = 3;
+  line(w - 5, h - headRangeH_max, w - 5, h - headRangeH_min);
+  ctx.fillStyle = "rgba(245, 158, 11, 0.8)";
+  ctx.fillText("HEAD", w - 15, h - headRangeH_max - 5);
 
   // Full Face Mesh Tessellation (Dotted)
   ctx.save();
-  ctx.strokeStyle = "rgba(37, 99, 235, 0.4)"; // subtle blue match
-  ctx.lineWidth = 0.5;
-  ctx.setLineDash([1, 2.5]); // elegant dotted effect
+  ctx.strokeStyle = "rgba(16, 185, 129, 0.4)"; // subtle emerald match
+  ctx.lineWidth = 0.35;
+  ctx.setLineDash([1, 4]); // wider elegant dotted effect
   ctx.beginPath();
   for (const conn of FaceLandmarker.FACE_LANDMARKS_TESSELATION) {
     const p1 = landmarks[conn.start];
@@ -195,7 +226,7 @@ export function drawOverlay(
   }
 }
 
-export function useFaceVerification(previewUrl: string) {
+export function useFaceVerification(previewUrl: string, documentType: string) {
   const [verifying, setVerifying] = useState(true);
   const [checks, setChecks] = useState<ComplianceCheck[]>([]);
   const [overallPass, setOverallPass] = useState(false);
@@ -239,14 +270,18 @@ export function useFaceVerification(previewUrl: string) {
         if (status === "FAIL") allPass = false;
       };
 
-      const dimPass = img.width === 600 && img.height === 600;
+      const spec = getSpecById(documentType);
+      const targetW = spec?.width_px || 600;
+      const targetH = spec?.height_px || 600;
+
+      const dimPass = img.width === targetW && img.height === targetH;
       push(
         "Dimensions",
         dimPass ? "PASS" : "FAIL",
         `${img.width}×${img.height}`,
         dimPass
-          ? "Perfect 600×600 pixels"
-          : `Expected 600×600, got ${img.width}×${img.height}`,
+          ? `Perfect ${targetW}×${targetH} pixels`
+          : `Expected ${targetW}×${targetH}, got ${img.width}×${img.height}`,
       );
 
       if (detections.length !== 1) {
@@ -270,13 +305,17 @@ export function useFaceVerification(previewUrl: string) {
         const eyeY = (leftCenter.y + rightCenter.y) / 2;
         const eyePct = ((h - eyeY) / h) * 100;
 
+        const minEye = spec?.eye_min_pct || 55.5;
+        const maxEye = spec?.eye_max_pct || 69.5;
+        const eyePass = eyePct >= minEye && eyePct <= maxEye;
+
         push(
           "Eye Level",
-          eyePct >= EYE_LEVEL_MIN && eyePct <= EYE_LEVEL_MAX ? "PASS" : "WARN",
+          eyePass ? "PASS" : "WARN",
           `${eyePct.toFixed(1)}%`,
-          eyePct >= EYE_LEVEL_MIN && eyePct <= EYE_LEVEL_MAX
-            ? `Within ${EYE_LEVEL_MIN}–${EYE_LEVEL_MAX}% range from bottom`
-            : `Target: ${EYE_LEVEL_MIN}–${EYE_LEVEL_MAX}% — ${eyePct < EYE_LEVEL_MIN ? "too low" : "too high"}`,
+          eyePass
+            ? `Within ${minEye}–${maxEye}% range from bottom`
+            : `Target: ${minEye}–${maxEye}% — ${eyePct < minEye ? "eyes too low" : "eyes too high"}`,
         );
 
         // Head size — chin to forehead landmark
@@ -286,16 +325,19 @@ export function useFaceVerification(previewUrl: string) {
         
         const faceH = chinY - foreheadPt.y;
         const estimatedFullHeadH = faceH * HEAD_TOP_MULTIPLIER;
-        const trueTop = Math.max(0, chinY - estimatedFullHeadH);
         const headPct = (estimatedFullHeadH / h) * 100;
+
+        const minHead = spec?.head_min_pct || 50;
+        const maxHead = spec?.head_max_pct || 69;
+        const headPass = headPct >= minHead && headPct <= maxHead;
 
         push(
           "Head Size",
-          headPct >= HEAD_SIZE_MIN && headPct <= HEAD_SIZE_MAX ? "PASS" : "WARN",
+          headPass ? "PASS" : "WARN",
           `${headPct.toFixed(1)}%`,
-          headPct >= HEAD_SIZE_MIN && headPct <= HEAD_SIZE_MAX
-            ? `Within ${HEAD_SIZE_MIN}–${HEAD_SIZE_MAX}% range`
-            : `Target: ${HEAD_SIZE_MIN}–${HEAD_SIZE_MAX}% — ${headPct < HEAD_SIZE_MIN ? "too small" : "too large"}`,
+          headPass
+            ? `Within ${minHead}–${maxHead}% range`
+            : `Target: ${minHead}–${maxHead}% — ${headPct < minHead ? "too small" : "too large"}`,
         );
 
         // Orientation — left vs right distance ratio
@@ -338,13 +380,14 @@ export function useFaceVerification(previewUrl: string) {
         );
 
         // Centering
+        const centeringThreshold = 8; // Generic threshold for centering
         const offset =
           (Math.abs(box.x + box.width / 2 - img.width / 2) / img.width) * 100;
         push(
           "Centering",
-          offset <= CENTERING_THRESHOLD ? "PASS" : "WARN",
-          offset <= CENTERING_THRESHOLD ? "Centered" : `${offset.toFixed(1)}% off`,
-          offset <= CENTERING_THRESHOLD
+          offset <= centeringThreshold ? "PASS" : "WARN",
+          offset <= centeringThreshold ? "Centered" : `${offset.toFixed(1)}% off`,
+          offset <= centeringThreshold
             ? "Face is horizontally centered"
             : "Face slightly off-center",
         );
@@ -372,7 +415,7 @@ export function useFaceVerification(previewUrl: string) {
               : "Image may be overexposed",
         );
 
-        drawOverlay(overlay, box, landmarks, img.width, img.height);
+        drawOverlay(overlay, box, landmarks, img.width, img.height, spec);
       }
       setChecks(results);
       setOverallPass(allPass && results.every((c) => c.status !== "FAIL"));
@@ -390,7 +433,7 @@ export function useFaceVerification(previewUrl: string) {
     } finally {
       setVerifying(false);
     }
-  }, [previewUrl]);
+  }, [previewUrl, documentType]);
 
   useEffect(() => {
     runVerification();

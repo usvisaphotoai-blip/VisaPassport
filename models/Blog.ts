@@ -22,7 +22,7 @@ const BlogSchema = new Schema(
     },
     author: {
       type: String,
-      default: "USVisaPhotoAI Team",
+      default: "PixPassport Team",
     },
     content: {
       type: String, // HTML Content

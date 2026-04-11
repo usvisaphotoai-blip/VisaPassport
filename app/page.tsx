@@ -1,25 +1,25 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import Head from "next/head";
 
 export const metadata: Metadata = {
-  title: "USVisaPhotoAI | Free US Visa & Passport Photo Tool",
+  title: "Online Passport & Visa Photo Editor | Official Biometric Photo Tool",
   description:
-    "Free online US visa ds160, passport & green card photo validator. Instantly verify 600x600px, 240KB, and full biometric compliance. Fix issues before you apply.",
+    "Free online passport, visa, and ID photo validator. Instantly verify biometric compliance for 50+ countries including US, UK, India, and Canada. Fix background and size issues instantly.",
   keywords: [
-    "US visa photo online",
-    "passport photo maker online",
-    "DS-160 photo maker",
-    "DV lottery photo 2027",
-    "green card photo validation",
-    "AI passport photo",
-    "2x2 biometric photo tool",
-    "how to take US visa photo at home",
-    "fix DS-160 illumination error",
-    "print 2x2 US visa photo at CVS",
-    "fix visa photo online",
+    "passport photo online",
+    "visa photo maker online",
+    "biometric photo tool",
+    "india visa photo editor",
+    "uk passport photo maker",
+    "us visa photo 600x600",
+    "online photo resizer for visa",
+    "background remover for passport photo",
+    "official biometric photo check",
+    "how to take passport photo at home",
   ],
   alternates: {
-    canonical: "https://www.usvisaphotoai.pro",
+    canonical: "https://www.pixpassport.com",
   },
 };
 
@@ -28,18 +28,18 @@ const jsonLd = {
   "@graph": [
     {
       "@type": "SoftwareApplication",
-      "name": "USVisaPhotoAI",
+      "name": "PixPassport",
       "applicationCategory": "UtilitiesApplication",
       "operatingSystem": "All",
       "offers": {
         "@type": "Offer",
-        "price": "5.99",
+        "price": "2.99",
         "priceCurrency": "USD",
       },
       "aggregateRating": {
         "@type": "AggregateRating",
         "ratingValue": "4.9",
-        "ratingCount": "3000"
+        "ratingCount": "17000"
       }
     },
     {
@@ -47,18 +47,18 @@ const jsonLd = {
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "What are the exact US visa photo requirements?",
+          "name": "What are the common passport photo requirements?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "US visa photos must be 600×600 pixels, under 240KB, JPEG format, with a pure white background (RGB 255,255,255). Your eyes must be between 56-69% from the bottom edge, and your head must fill 50-69% of the image height."
+            "text": "Requirements vary by country. Common standards include specific dimensions (e.g., 35x45mm or 2x2in), a plain white or light-colored background, a neutral expression, and specific head-to-image ratios for biometric scanning."
           }
         },
         {
           "@type": "Question",
-          "name": "How does USVisaPhotoAI validate my photo?",
+          "name": "How does this tool validate my photo?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "We run automated checks against all U.S. State Department specifications: dimensions, file size, background color, face detection, eye position, head size, glasses detection, and expression analysis — all in under 5 seconds."
+            "text": "We use AI to run automated checks against official government specifications for over 50 countries: dimensions, file size, background uniformity, face detection, eye position, and sharp focus — all in under 5 seconds."
           }
         },
         {
@@ -66,23 +66,15 @@ const jsonLd = {
           "name": "Is the validation really free?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes! Photo validation is 100% free. You only pay $5.99 if you want to download a processed, fully compliant photo."
+            "text": "Yes! Photo validation is 100% free for all countries. You only pay a small fee (starting at $2.99) if you want to download a processed, fully compliant photo and print sheet."
           }
         },
         {
           "@type": "Question",
-          "name": "Are my photos safe? What about privacy?",
+          "name": "Are my photos safe?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Absolutely. All original photos are auto-deleted after 24 hours. Download links expire in 1 hour. We are fully GDPR and CCPA compliant. We never store or share your photos permanently."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Can I upload multiple photos at once?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "You can validate unlimited photos for free. Each paid download covers 1 processed photo at $5.99."
+            "text": "Absolutely. All original photos are auto-deleted after 24 hours. We are fully GDPR and CCPA compliant. We never store or share your personal photos permanently."
           }
         }
       ]
@@ -109,6 +101,31 @@ export default async function Home() {
       />
       <div className="hcr">
         <HomeHero />
+        
+        {/* Master Directory Entry Points */}
+        <section className="bg-white py-12 border-y border-slate-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid md:grid-cols-2 gap-8 text-center sm:text-left">
+              <div className="bg-gradient-to-br from-blue-50 to-white p-8 rounded-3xl border border-blue-100 group hover:shadow-lg transition-all">
+                <div className="text-3xl mb-4">🛂</div>
+                <h3 className="text-xl font-bold text-slate-900 mb-2">Passport Photo Directory</h3>
+                <p className="text-sm text-slate-600 mb-6">Browse official 2026 passport photo requirements for 50+ countries. Find the exact size for your application.</p>
+                <Link href="/passport-photos" className="inline-flex items-center text-blue-600 font-bold hover:underline">
+                  View All Countries <span className="ml-2">→</span>
+                </Link>
+              </div>
+              <div className="bg-gradient-to-br from-emerald-50 to-white p-8 rounded-3xl border border-emerald-100 group hover:shadow-lg transition-all">
+                <div className="text-3xl mb-4">🌐</div>
+                <h3 className="text-xl font-bold text-slate-900 mb-2">Visa Photo Directory</h3>
+                <p className="text-sm text-slate-600 mb-6">Database of international visa photo specifications. Support for US Visa, UK Visa, Schengen, and more.</p>
+                <Link href="/visa-photo" className="inline-flex items-center text-emerald-600 font-bold hover:underline">
+                  Browse Visa Specs <span className="ml-2">→</span>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <HomeSections price={priceDisplay} />
         <HomeFAQ />
       </div>

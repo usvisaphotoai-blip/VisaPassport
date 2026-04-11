@@ -1,8 +1,8 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import specs from "../../../data/countries-specs.json";
-import { getSpecIdFromSlug, getAllVisaSlugs, SpecEntry } from "../../../lib/slug-utils";
-import ProgrammaticLandingPage from "../../components/ProgrammaticLandingPage";
+import specs from "../../data/countries-specs.json";
+import { getSpecIdFromSlug, getAllSlugs, SpecEntry } from "../../lib/slug-utils";
+import ProgrammaticLandingPage from "../components/ProgrammaticLandingPage";
 import { getLocalPrice } from "@/lib/currency";
 
 interface PageProps {
@@ -10,7 +10,7 @@ interface PageProps {
 }
 
 export async function generateStaticParams() {
-  const slugs = getAllVisaSlugs();
+  const slugs = getAllSlugs();
   return slugs.map((slug) => ({ slug }));
 }
 
@@ -23,25 +23,26 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const localPrice = await getLocalPrice(spec.price);
 
-  const title = `${spec.country} Visa Photo Editor | Official Size & Background`;
-  const description = `Create an official ${spec.country} visa photo online. Automatic ${spec.width_mm}x${spec.height_mm}mm cropping, background removal, and biometric validation for only ${localPrice.formatted}.`;
+  const title = `${spec.country} ${spec.name} Photo Editor | Official Size & Background`;
+  const description = `Create an official ${spec.country} ${spec.name} photo online. Automatic ${spec.width_mm}x${spec.height_mm}mm cropping, background removal, and biometric validation for only ${localPrice.formatted}.`;
 
   return {
     title,
     description,
     keywords: [
-      `${spec.country} visa photo online`,
+      `${spec.country} passport photo online`,
+      `${spec.name} photo editor`,
       `online ${spec.country} visa photo maker`,
-      `${spec.width_mm}x${spec.height_mm}mm visa photo online`,
-      `biometric visa photo for ${spec.country}`,
+      `${spec.width_mm}x${spec.height_mm}mm photo online`,
+      `biometric photo for ${spec.country}`,
     ],
     alternates: {
-      canonical: `https://www.pixpassport.com/visa-photo/${slug}`,
+      canonical: `https://www.pixpassport.com/${slug}`,
     },
     openGraph: {
       title,
       description,
-      url: `https://www.pixpassport.com/visa-photo/${slug}`,
+      url: `https://www.pixpassport.com/${slug}`,
       siteName: "PixPassport",
       images: [{ url: "/og-image.jpg" }],
       locale: "en_US",
@@ -65,10 +66,10 @@ export default async function Page({ params }: PageProps) {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
-    "name": `Official ${spec.country} Visa Photo Maker`,
+    "name": `Official ${spec.country} ${spec.name} Photo Maker`,
     "applicationCategory": "UtilitiesApplication",
     "operatingSystem": "All",
-    "description": `Online biometric tool for ${spec.country} visa photo requirements.`,
+    "description": `Online biometric tool for ${spec.country} ${spec.name} requirements.`,
     "offers": {
       "@type": "Offer",
       "price": localPrice.amount.toString(),

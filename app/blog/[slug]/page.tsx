@@ -42,7 +42,7 @@ const FAQ_MAP: Record<string, { question: string; answer: string }[]> = {
   'how-to-fix-passport-photo-shadows': [
     { question: 'Why do shadows cause passport photo rejections?', answer: 'Shadows disrupt the uniform white background required by the State Department and create uneven lighting on your face, which causes facial recognition algorithms to fail the biometric scan.' },
     { question: 'How do I prevent shadows in passport photos?', answer: 'Stand at least 1.5-2 feet away from the wall, use natural window light (avoid overhead lights and camera flash), and face the light source directly. Use a white reflector to fill in dark areas on your face.' },
-    { question: 'Can I fix passport photo shadows after taking the photo?', answer: 'Yes, AI-powered background removal tools like USVisaPhotoAI can strip away the shadowed background and replace it with a pure white canvas, eliminating both background and some facial shadows digitally.' },
+    { question: 'Can I fix passport photo shadows after taking the photo?', answer: 'Yes, AI-powered background removal tools like PixPassport can strip away the shadowed background and replace it with a pure white canvas, eliminating both background and some facial shadows digitally.' },
   ],
   'can-you-smile-in-passport-photos': [
     { question: 'Is smiling allowed in US passport photos?', answer: 'The official guideline requires a neutral facial expression with both eyes open and mouth closed. A very subtle, natural smile is technically acceptable, but showing teeth or exaggerated smiling will cause rejection.' },
@@ -72,12 +72,12 @@ const FAQ_MAP: Record<string, { question: string; answer: string }[]> = {
   ],
   'passport-photo-background-requirements': [
     { question: 'What background is required for US passport photos?', answer: 'The background must be plain white or off-white with absolute uniformity. No textures, patterns, gradients, or shadows are allowed.' },
-    { question: 'Can I take a passport photo against a colored wall?', answer: 'With AI background removal tools like USVisaPhotoAI, you can take a photo against any background. The AI will strip the background and replace it with a compliant pure white canvas.' },
+    { question: 'Can I take a passport photo against a colored wall?', answer: 'With AI background removal tools like PixPassport, you can take a photo against any background. The AI will strip the background and replace it with a compliant pure white canvas.' },
     { question: 'Why does my white wall look grey in passport photos?', answer: 'Camera sensors interpret colors differently than the human eye. Insufficient lighting, shadows from overhead lights, and camera white balance settings can make a white wall appear grey in photos.' },
   ],
   'green-card-photo-rejection-fix-background-shadows': [
     { question: 'Why was my green card photo rejected?', answer: 'In 90% of cases, green card photo rejections are caused by background issues — shadows, grey tones, textures, or non-uniform lighting behind your head.' },
-    { question: 'How can I fix passport photo shadows online?', answer: 'Use an AI-powered tool like USVisaPhotoAI to automatically remove the background and replace it with a pure white (#FFFFFF) canvas. This eliminates all shadows and guarantees a uniform background.' },
+    { question: 'How can I fix passport photo shadows online?', answer: 'Use an AI-powered tool like PixPassport to automatically remove the background and replace it with a pure white (#FFFFFF) canvas. This eliminates all shadows and guarantees a uniform background.' },
     { question: 'Is a free US visa photo validator reliable?', answer: 'Free validators are good for preliminary checks (head size, basic dimensions), but they rarely tell you how to fix issues. For guaranteed compliance, use a professional tool that both validates and fixes your photo.' },
   ],
   'dv-lottery-2027-guide-photo-requirements-results': [
@@ -92,7 +92,7 @@ const FAQ_MAP: Record<string, { question: string; answer: string }[]> = {
   ],
   'digital-passport-photo-file-size-compression-guide': [
     { question: 'What is the file size limit for DS-160 passport photos?', answer: 'The maximum file size is 240KB (kilobytes). The minimum is 54KB. Files larger or smaller than this range will be rejected by the CEAC website.' },
-    { question: 'How do I reduce passport photo file size without losing quality?', answer: 'Use JPEG compression with a compression ratio around 20:1, maintaining 24-bit sRGB color. The ideal file size range is 150-200KB. Professional tools like USVisaPhotoAI handle this automatically.' },
+    { question: 'How do I reduce passport photo file size without losing quality?', answer: 'Use JPEG compression with a compression ratio around 20:1, maintaining 24-bit sRGB color. The ideal file size range is 150-200KB. Professional tools like PixPassport handle this automatically.' },
     { question: 'Why does my phone photo fail the DS-160 upload?', answer: 'Modern phone cameras take 3-5MB photos at high resolution. These are far too large for the DS-160 system. You need to resize to 600x600 pixels and compress the file to under 240KB.' },
   ],
   'us-visa-denial-reasons-interview-tips-detailed': [
@@ -199,14 +199,14 @@ const FAQ_MAP: Record<string, { question: string; answer: string }[]> = {
 // Default FAQ for articles that don't have a specific mapping
 const DEFAULT_FAQ = [
   { question: 'What are the US passport photo dimensions?', answer: 'US passport photos must be exactly 2x2 inches (51x51 mm) for prints, or 600x600 pixels for digital uploads. The head must occupy 50-69% of the total image height.' },
-  { question: 'Can I take a passport photo with my phone?', answer: 'Yes, you can take a passport photo with your smartphone. Use natural lighting, stand away from the wall to avoid shadows, and use an AI tool like USVisaPhotoAI to crop, remove the background, and verify compliance.' },
-  { question: 'How much does USVisaPhotoAI cost?', answer: 'USVisaPhotoAI processes your photo for just $5.99. You receive a compliant 600x600 digital file and a 4x6 printable sheet with six 2x2 photos, saving you $11+ compared to pharmacy pricing.' },
+  { question: 'Can I take a passport photo with my phone?', answer: 'Yes, you can take a passport photo with your smartphone. Use natural lighting, stand away from the wall to avoid shadows, and use an AI tool like PixPassport to crop, remove the background, and verify compliance.' },
+  { question: 'How much does PixPassport cost?', answer: 'PixPassport processes your photo for just $5.99. You receive a compliant 600x600 digital file and a 4x6 printable sheet with six 2x2 photos, saving you $11+ compared to pharmacy pricing.' },
   { question: 'Can I travel with a slightly damaged passport?', answer: 'It depends on the type of damage. Slight curling of edges or fanned pages are acceptable. Water damage, loose binding, torn pages, or any damage to the RFID chip will cause you to be turned away.' },
   { question: 'Do I need a new photo when renewing a damaged passport?', answer: 'Yes. The US government requires a photo taken within the last 6 months for all passport renewals. You cannot reuse the photo from your old passport.' },
   { question: 'What counts as a "mutilated" passport?', answer: 'A passport is considered mutilated if the data page is unreadable, pages are torn or missing, the cover is detached, or the RFID chip cannot be scanned by machine readers.' },
 ];
 
-const APP_URL = 'https://www.usvisaphotoai.pro';
+const APP_URL = 'https://www.pixpassport.com';
 
 // Helper to get ALL posts
 async function getAllPosts(): Promise<BlogPost[]> {
@@ -243,11 +243,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const post = posts.find((p) => p.slug === slug);
   
   if (!post) {
-    return { title: 'Post Not Found | USVisaPhotoAI' };
+    return { title: 'Post Not Found | PixPassport' };
   }
 
   return {
-    title: `${post.title} | USVisaPhotoAI`,
+    title: `${post.title} | PixPassport`,
     description: post.description,
     alternates: {
       canonical: `${APP_URL}/blog/${post.slug}`,
@@ -260,7 +260,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       publishedTime: post.date,
       modifiedTime: post.date,
       authors: [post.author],
-      siteName: 'USVisaPhotoAI',
+      siteName: 'PixPassport',
     },
     twitter: {
       card: 'summary_large_image',
@@ -301,7 +301,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     },
     publisher: {
       '@type': 'Organization',
-      name: 'USVisaPhotoAI',
+      name: 'PixPassport',
       url: APP_URL,
       logo: {
         '@type': 'ImageObject',
@@ -324,7 +324,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     }),
     isPartOf: {
       '@type': 'Blog',
-      name: 'USVisaPhotoAI Blog',
+      name: 'PixPassport Blog',
       url: `${APP_URL}/blog`,
     },
   };

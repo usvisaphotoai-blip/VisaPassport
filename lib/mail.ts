@@ -20,7 +20,7 @@ export const sendEmail = async (options: SendMailOptions) => {
   });
 
   const mailOptions = {
-    from: `"USVisaPhotoAI" <${process.env.SMTP_FROM || process.env.SMTP_USER}>`,
+    from: `"PixPassport" <${process.env.SMTP_FROM || process.env.SMTP_USER}>`,
     to: options.to,
     subject: options.subject,
     text: options.text,

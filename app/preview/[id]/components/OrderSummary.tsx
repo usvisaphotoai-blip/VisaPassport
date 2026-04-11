@@ -3,6 +3,7 @@ import Link from "next/link";
 import { SvgIcon, CheckMark, DOWNLOAD_ICON, DownloadBtn } from "./SharedUI";
 import { LocalPrice } from "../hooks/usePayment";
 import ReviewModal from "./ReviewModal";
+import { getSpecById } from "@/lib/specs";
 
 interface OrderSummaryProps {
   productName: string;
@@ -38,6 +39,8 @@ export default function OrderSummary({
   handleEmailPhoto,
 }: OrderSummaryProps) {
   const [isReviewOpen, setIsReviewOpen] = useState(false);
+  const spec = getSpecById(documentType);
+  const flag = spec?.flag || "📄";
 
   return (
     <div className="w-full lg:w-[45%]">
@@ -49,11 +52,12 @@ export default function OrderSummary({
 
           <div className="flex items-center justify-between py-3 border-b border-slate-100">
             <div>
-              <p className="text-sm font-bold text-slate-900">
+              <p className="text-sm font-bold text-slate-900 flex items-center gap-2">
+                <span className="text-xl">{flag}</span>
                 {productName} — Digital
               </p>
               <p className="text-xs text-slate-400 mt-0.5">
-                600×600 px · White BG · 300 DPI
+                {spec?.width_px}×{spec?.height_px} px · {spec?.bg_color} BG · 300 DPI
               </p>
             </div>
             <p className="text-2xl font-black text-slate-900">
@@ -84,28 +88,16 @@ export default function OrderSummary({
                   </span>
                 </div>
               </div>
-              <div className="flex items-center gap-2 bg-lime-50 border border-lime-200 rounded-xl px-3 py-2 mt-3">
-                <SvgIcon
-                  d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                  className="w-4 h-4 text-lime-600 shrink-0"
-                />
-                <p className="text-xs text-lime-800">
-                  <span className="font-black">
-                    CVS/Walgreens charges $16.99
-                  </span>{" "}
-                  for the same photo. You save{" "}
-                  <span className="font-black">94%</span>.
-                </p>
-              </div>
+
             </>
           )}
 
           <div className="py-3 space-y-2.5 border-b border-slate-100 mt-3">
             {[
-              "Auto-cropped 600×600 px photo",
-              "White background applied",
-              "Optimized under 240KB (DS-160)",
-              "A4 print sheet (20 photos)",
+              `Auto-cropped ${spec?.width_px}×${spec?.height_px} px photo`,
+              `${spec?.bg_color} background applied`,
+              `Optimized for ${spec?.name || "Official"} requirements`,
+              `${spec?.print_size || "A4"} print sheet available`,
             ].map((item) => (
               <div key={item} className="flex items-center gap-2 text-xs">
                 <CheckMark />{" "}
@@ -158,7 +150,7 @@ export default function OrderSummary({
                 </p>
                 <div className="space-y-1.5">
                   {[
-                    "Download your approved US visa photo",
+                    `Download your approved ${spec?.country || ""} photo`,
                     "Get instant compliance report",
                   ].map((text) => (
                     <div key={text} className="flex items-start gap-2 text-sm">
@@ -192,7 +184,7 @@ export default function OrderSummary({
                 <p className="text-lime-700 font-bold text-lg">
                   🎉 Your photo is ready!
                 </p>
-              
+
               </div>
               <DownloadBtn
                 href={`/api/download/${photoId}`}
@@ -209,7 +201,7 @@ export default function OrderSummary({
                 Download Print Sheet (A4)
               </DownloadBtn>
               <a
-                href={`https://api.whatsapp.com/send?text=I%20just%20created%20my%20US%20visa%20photo%20using%20USVisaPhotoAI.pro!%20Check%20it%20out:%20https://usvisaphotoai.pro`}
+                href={`https://api.whatsapp.com/send?text=I%20just%20created%20my%20${encodeURIComponent(spec?.name || "Official")}%20using%20VisaPassportAI!%20Check%20it%20out:%20${encodeURIComponent(window.location.href)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full bg-[#25D366] hover:bg-[#1ebe57] text-white font-bold py-3 px-4 rounded-xl transition-all text-sm tracking-wide flex items-center justify-center gap-2"

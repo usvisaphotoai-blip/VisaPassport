@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
-  description: "USVisaPhotoAI privacy policy. Learn how we handle your photos, data, and personal information. GDPR and CCPA compliant.",
+  description: "PixPassport privacy policy. Learn how we handle your photos, data, and personal information. GDPR and CCPA compliant.",
 };
 
 export default function PrivacyPolicyPage() {
@@ -23,7 +23,7 @@ export default function PrivacyPolicyPage() {
             <div>
               <h2 className="text-xl font-bold text-slate-900 mb-3">1. Overview</h2>
               <p className="text-sm text-gray-600 leading-relaxed">
-                USVisaPhotoAI (&quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and protect your information when you use our photo validation and processing service at usvisaphotoai.pro.
+                PixPassport (&quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and protect your information when you use our photo validation and processing service at pixpassport.com.
               </p>
             </div>
 
@@ -124,7 +124,7 @@ export default function PrivacyPolicyPage() {
             <div>
               <h2 className="text-xl font-bold text-slate-900 mb-3">10. Contact Us</h2>
               <p className="text-sm text-gray-600 leading-relaxed">
-                For privacy-related questions, data deletion requests, or GDPR/CCPA inquiries, contact us at <strong>usvisaphotoai@gmail.com</strong>.
+                For privacy-related questions, data deletion requests, or GDPR/CCPA inquiries, contact us at <strong>PixPassport@gmail.com</strong>.
               </p>
               <p className="text-sm text-gray-600 leading-relaxed mt-2">
                 Business Address: Varanasi, Uttar Pradesh, India

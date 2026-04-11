@@ -8,15 +8,6 @@
         "heroDescription": "Getting your US visa photo wrong can delay your entire application. Our free online editor takes the guesswork out of DS-160 photo compliance — upload your image and instantly see whether it passes every U.S. Department of State requirement. We check the 2×2 inch print size, minimum 600×600px digital resolution, 240KB file size cap, JPEG and sRGB color profile, white background, head-to-frame ratio, eye-height positioning, and common biometric issues like tilt, glasses, or face obstructions. Every result is explained in plain English so you know exactly what to fix. No downloads, no account, no cost — just upload, review, correct, and download a photo that's ready for your DS-160 application.",
         "documentType": "US Visa",
         "redirectType": "us-visa"
-    },
-    {
-        "slug": "us-passport-photo-maker",
-        "title": "US Passport Photo Maker | Free 2×2 Inch Crop, Resize & Validate Online",
-        "metaDescription": "Make a compliant US passport photo at home for free. Our online passport photo maker crops your image to the exact 2×2 inch (600×600px) format required by the U.S. Department of State, then validates head size, eye position, white background, JPEG format, and file size — all in your browser, with no account required.",
-        "h1": "US Passport Photo Maker",
-        "h1Subtitle": "Free 2×2 Inch Crop, Checker & Compliance Tool",
-        "heroDescription": "Making a US passport photo at home is easy when you know it actually meets the official requirements. Our free passport photo maker does more than just crop — it validates every biometric standard set by the U.S. Department of State before you walk into a passport acceptance facility. Upload your photo and we'll check the 2×2 inch print dimensions, the 600×600px minimum digital resolution, the head-to-frame height ratio (which must fall between 50% and 69%), eye-height positioning, plain white background, JPEG format, sRGB color profile, and the 240KB file size limit. If anything falls outside the accepted range, you'll see a clear explanation and can fix it on the spot using our guided crop tool. Download your finished photo ready to print at any pharmacy or attach to the online passport renewal system — no studio appointment, no overpriced kiosk, no guessing.",
-        "documentType": "US Passport",
-        "redirectType": "us-passport"
     }
+
 ]

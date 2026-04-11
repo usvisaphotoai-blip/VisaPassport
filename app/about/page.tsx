@@ -3,8 +3,8 @@ import Link from "next/link";
 import TrustSection from "../components/TrustSection";
 
 export const metadata: Metadata = {
-  title: "About Us - USVisaPhotoAI",
-  description: "Learn about USVisaPhotoAI's mission, our advanced biometric AI technology, and our strict commitment to your data privacy.",
+  title: "About Us - PixPassport",
+  description: "Learn about PixPassport's mission, our advanced biometric AI technology, and our strict commitment to your data privacy.",
 };
 
 export default function AboutPage() {
@@ -12,7 +12,7 @@ export default function AboutPage() {
     <div className="bg-white min-h-screen pb-16">
       <section className="bg-gray-50 border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900">About USVisaPhotoAI</h1>
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900">About PixPassport</h1>
           <p className="mt-4 text-lg text-gray-600 max-w-3xl leading-relaxed">
             Our mission is to eliminate the stress and uncertainty of government photo compliance.
             We provide a fast, secure, and 100% accurate way to validate and process passport and visa photos from the comfort of your home.
@@ -35,7 +35,7 @@ export default function AboutPage() {
                 photo had a faint shadow, an incorrect head size ratio, or a background that wasn't perfectly white.
               </p>
               <p>
-                Founded by technologists and frequent travelers, <strong>USVisaPhotoAI</strong> was built to solve this exact problem. 
+                Founded by technologists and frequent travelers, <strong>PixPassport</strong> was built to solve this exact problem. 
                 Our platform leverages advanced artificial intelligence and biometric scanning algorithms to check your photos 
                 against the exact same technical standards used by the U.S. State Department.
               </p>
@@ -69,7 +69,7 @@ export default function AboutPage() {
             <div className="prose prose-slate max-w-none text-gray-600 leading-relaxed">
               <p>
                 We understand that handling identity documents and biometric data requires the highest level of security. 
-                We have built USVisaPhotoAI with a privacy-first architecture:
+                We have built PixPassport with a privacy-first architecture:
               </p>
               <ul className="list-disc pl-5 space-y-2 mt-4 marker:text-lime-500">
                 <li><strong>No Permanent Storage:</strong> All uploaded photos are automatically and permanently deleted from our servers within 24 hours.</li>

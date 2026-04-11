@@ -15,7 +15,7 @@ const newPost = {
   description:
     "Complete US visa photo requirements guide 2026. Learn official size (600x600), background rules, dress code, glasses policy, and how to avoid rejection.",
   date: "2026-04-01",
-  author: "USVisaPhotoAI Team",
+  author: "PixPassport Team",
   featuredImage:
     "https://res.cloudinary.com/ddxu2wqfm/image/upload/w_1200,h_630,c_fill,q_auto,f_auto/blog/Gemini_Generated_Image_cpln8ccpln8ccpln_odp73i.png",
 
@@ -190,7 +190,7 @@ const newPost = {
       <li>Correct sizing (600x600)</li>
     </ul>
 
-    <p><strong>👉 Try it here:</strong> <a href="https://www.usvisaphotoai.pro">Create US Visa Photo Online</a></p>
+    <p><strong>👉 Try it here:</strong> <a href="https://www.pixpassport.com">Create US Visa Photo Online</a></p>
 
     <h2>Conclusion</h2>
 
@@ -208,6 +208,6 @@ console.log(
 );
 
 // Trigger IndexNow Ping
-const siteUrl = "https://www.usvisaphotoai.pro";
+const siteUrl = "https://www.pixpassport.com";
 const postUrl = `${siteUrl}/blog/${newPost.slug}`;
 pingIndexNow([postUrl, siteUrl]);

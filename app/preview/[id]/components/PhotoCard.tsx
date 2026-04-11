@@ -1,6 +1,7 @@
 import React, { RefObject, Dispatch, SetStateAction } from "react";
 import { cx, CheckMark, SvgIcon } from "./SharedUI";
 import { ComplianceCheck } from "../hooks/useFaceVerification";
+import { CountrySpec } from "@/lib/specs";
 
 interface PhotoCardProps {
   canvasRef: RefObject<HTMLCanvasElement | null>;
@@ -11,6 +12,7 @@ interface PhotoCardProps {
   overallPass: boolean;
   passCount: number;
   checks: ComplianceCheck[];
+  spec?: CountrySpec | undefined;
 }
 
 export default function PhotoCard({
@@ -22,6 +24,7 @@ export default function PhotoCard({
   overallPass,
   passCount,
   checks,
+  spec,
 }: PhotoCardProps) {
   return (
     <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
@@ -45,7 +48,7 @@ export default function PhotoCard({
 
             {/* Photo container */}
             <div
-              className="relative rounded-xl overflow-hidden bg-white shadow-lg ring-1 ring-black/5 cursor-pointer group transition-transform duration-300 hover:scale-[1.02]"
+              className="relative rounded-2xl overflow-hidden bg-slate-50 shadow-2xl ring-[6px] ring-white cursor-pointer group transition-all duration-500 hover:scale-[1.03] hover:shadow-indigo-500/20"
               onClick={() => setIsDialogOpen(true)}
               onContextMenu={(e) => e.preventDefault()}
               title="Click to enlarge"
@@ -99,8 +102,8 @@ export default function PhotoCard({
                 Unlocked
               </span>
             ) : (
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest text-slate-400 bg-slate-50 border border-slate-150">
-                <SvgIcon d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" className="w-3 h-3" sw={2} />
+              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[11px] font-black uppercase tracking-widest text-slate-700 bg-white shadow-lg border border-slate-200/60 ring-4 ring-slate-50">
+                <SvgIcon d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" className="w-3.5 h-3.5 text-indigo-500" sw={2} />
                 Unlock after purchase
               </span>
             )}
@@ -122,9 +125,9 @@ export default function PhotoCard({
 
           <div className="space-y-0">
             {[
-              ["Size", "600×600 px (2×2 in)", "M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15"],
+
               ["Resolution", "300 DPI", "M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z"],
-              ["Background", "White", "M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42"],
+              ["Background", spec?.bg_color || "White", "M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42"],
               ["Format", "JPEG, sRGB", "M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"],
             ].map(([label, value, icon]) => (
               <div

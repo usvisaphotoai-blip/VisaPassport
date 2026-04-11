@@ -62,7 +62,7 @@ export async function POST(req: Request) {
     console.log(`[PAYMENT VERIFY] Attempting to send email for photo ${photoId} to: ${userEmail}`);
 
     if (userEmail) {
-      const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://usvisaphotoai.pro';
+      const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://pixpassport.com';
       const photoDownloadUrl = photo.secureUrl || '';
       const printSheetDownloadUrl = photo.printSheetUrl || '';
       const previewLink = `${appUrl}/preview/${photoId}`;
@@ -116,7 +116,7 @@ export async function POST(req: Request) {
               </div>
 
               <div style="text-align: center; padding-top: 16px; border-top: 1px solid #e2e8f0;">
-                <p style="font-size: 11px; color: #cbd5e1; margin: 0;">USVisaPhotoAI — AI-Powered Visa Photo Processing</p>
+                <p style="font-size: 11px; color: #cbd5e1; margin: 0;">PixPassport — AI-Powered Visa Photo Processing</p>
               </div>
             </div>
           `

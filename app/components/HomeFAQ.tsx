@@ -4,31 +4,33 @@ import { useState } from "react";
 
 const faqs = [
   {
-    q: "What are the exact US visa photo requirements?",
-    a: "US visa photos must be 600×600 pixels, under 240KB, JPEG format, with a pure white background (RGB 255,255,255). Your eyes must be between 56-69% from the bottom edge, and your head must fill 50-69% of the image height.",
+    q: "What are the common passport photo requirements?",
+    a: "Requirements vary by country. Common standards include specific dimensions (e.g. 35x45mm or 600x600px), a plain background (white, off-white, or light gray), a neutral expression with mouth closed, and eyes positioned within a specific percentage of the photo height.",
   },
   {
-    q: "How does USVisaPhotoAI validate my photo?",
-    a: "We run automated checks against all U.S. State Department specifications: dimensions, file size, background color, face detection, eye position, head size, glasses detection, and expression analysis — all in under 5 seconds.",
+    q: "How does the AI validate my photo for different countries?",
+    a: "Our system contains a database of specifications for over 50 countries. When you select a document, the AI runs automated checks against those specific rules for dimensions, head size, eye level, background color, and lighting uniformity.",
   },
   {
     q: "Is the validation really free?",
-    a: "Yes! Photo validation is 100% free. You only pay $5.99 if you want to download a processed, fully compliant photo.",
+    a: "Yes! Photo validation is 100% free for all supported countries. You only pay a small fee if you want to download the processed, fully compliant photo and home-printable sheet.",
   },
   {
     q: "Are my photos safe? What about privacy?",
-    a: "Absolutely. All original photos are auto-deleted after 24 hours. Download links expire in 1 hour. We are fully GDPR and CCPA compliant. We never store or share your photos permanently.",
+    a: "Absolutely. All original photos are automatically and permanently deleted after 24 hours. Download links expire after 1 hour. We are fully GDPR and CCPA compliant and never share your data.",
   },
   {
-    q: "Can I upload multiple photos at once?",
-    a: "You can validate unlimited photos for free. Each paid download covers 1 processed photo at $5.99.",
+    q: "What if my country is not listed?",
+    a: "We support the top 50+ most requested countries. If yours is missing, you can use our 'Custom' mode to set your own dimensions. We are constantly adding new country specifications to our database.",
   },
-  { q: "What are the exact US visa photo specs?", a: "600×600 pixels, 1:1 aspect ratio, under 240KB, JPEG format, pure white background (RGB 255,255,255), eyes between 56-69% from bottom, head size 50-69% of image height, neutral expression, no glasses." },
-  { q: "Can I wear glasses in my photo?", a: "No. Since November 1, 2016, the U.S. Department of State does not allow glasses in any visa, passport, or immigration photos. This includes prescription glasses, sunglasses, and tinted lenses." },
-  { q: "What background color is required?", a: "A pure white background (RGB 255, 255, 255) is required. No visible patterns, shadows, textures, or other people should be in the background." },
-  { q: "What expression should I have?", a: "A neutral expression with your mouth closed and both eyes open. No smiling, frowning, or exaggerated expressions." },
-  { q: "What does eye position 56-69% mean?", a: "Your eyes must be positioned between 56% and 69% of the total image height, measured from the bottom edge. This ensures proper framing for biometric verification." },
-  { q: "What does head size 50-69% mean?", a: "The distance from the crown of your head (top) to your chin (bottom) must be between 50% and 69% of the total image height. This ensures your face fills enough of the frame." },
+  {
+    q: "Can I wear glasses in my photo?",
+    a: "It depends on the country. For US visas and passports, glasses are strictly prohibited. For many other countries, they are allowed if the frames don't obscure the eyes and there is no glare. We recommend removing them to ensure acceptance.",
+  },
+  {
+    q: "What background color do I need?",
+    a: "Most countries require a pure white or light gray background. Our tool includes an automatic background removal and replacement feature to ensure you meet the exact color requirement for your selected document.",
+  },
 ];
 
 export default function HomeFAQ() {
@@ -39,7 +41,7 @@ export default function HomeFAQ() {
       <div className="hc-sec-sm">
         <div className="hc-head text-center mb-10">
           <span className="hc-label">Common Questions</span>
-          <h2 className="hc-h2">Questions About US Visa & Passport Photo Requirements?</h2>
+          <h2 className="hc-h2">Frequently Asked Questions about Global Passport Photos</h2>
         </div>
         <div>
           {faqs.map((f, i) => (

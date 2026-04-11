@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Refund Policy",
-  description: "USVisaPhotoAI refund policy on photo processing and downloads.",
+  description: "PixPassport refund policy on photo processing and downloads.",
 };
 
 export default function RefundPolicyPage() {
@@ -62,7 +62,7 @@ export default function RefundPolicyPage() {
             <div>
               <h2 className="text-xl font-bold text-slate-900 mb-3">6. How to Request a Refund</h2>
               <p className="text-sm text-gray-600 leading-relaxed">
-                To initiate a refund request, please email our support team at <strong>usvisaphotoai@gmail.com</strong> with your transaction details and proof of photo rejection.
+                To initiate a refund request, please email our support team at <strong>PixPassport@gmail.com</strong> with your transaction details and proof of photo rejection.
               </p>
             </div>
           </div>
