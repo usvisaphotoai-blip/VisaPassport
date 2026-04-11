@@ -4,10 +4,17 @@ export interface SpecEntry {
   id: string;
   country: string;
   name: string;
+  flag?: string;
   width_mm: number;
   height_mm: number;
-  unit: string;
-  paper: string;
+  width_px?: number;
+  height_px?: number;
+  head_min_pct?: number;
+  head_max_pct?: number;
+  eye_min_pct?: number;
+  eye_max_pct?: number;
+  bg_color?: string;
+  print_size?: string;
   price: number;
   local_price?: {
     currency: string;
