@@ -15,18 +15,17 @@ interface Props {
 }
 
 export default function ProgrammaticLandingPage({ spec, slug }: Props) {
-  const pathname = usePathname();
-  const isVisaSilo = pathname?.startsWith("/visa-photo/");
-
+  const isVisaIntent = slug.includes("visa");
+  const docName = isVisaIntent ? "Visa" : "Passport";
   const countryName = spec.country;
-  const docName = isVisaSilo ? "Visa" : (spec.name.includes("Visa") ? spec.name : "Passport");
 
-  // Determine the sibling link for SEO cross-linking
-  const siblingLink = isVisaSilo
-    ? { label: `${countryName} Passport`, href: `/${spec.id.replace("-visa", "-passport")}-photo-editor` }
-    : { label: `${countryName} Visa`, href: `/visa-photo/${countryName.toLowerCase().replace(/\s+/g, "-")}-visa-photo-editor` };
+  // Determine the sibling link for SEO cross-linking (normalized to root)
+  const countrySlug = slug.replace("-passport-photo-editor", "").replace("-visa-photo-editor", "");
+  const siblingLabel = isVisaIntent ? "Passport" : "Visa";
+  const siblingHref = `/${countrySlug}-${isVisaIntent ? "passport" : "visa"}-photo-editor`;
+  const siblingLink = { label: `${spec.country} ${siblingLabel}`, href: siblingHref };
 
-  const longformContent = generateLongformContent(spec, isVisaSilo);
+  const longformContent = generateLongformContent(spec, isVisaIntent);
   
   // Extract headers for Table of Contents
   const tableOfContents = longformContent
@@ -35,7 +34,7 @@ export default function ProgrammaticLandingPage({ spec, slug }: Props) {
 
   return (
     <main className="min-h-screen bg-white hcr">
-      {/* ── HERO SECTION ───────────────────────────────────── */}
+      {/* ... (Hero section remain same, just ensure it uses docName) */}
       <section className="relative overflow-hidden pt-20 pb-16 lg:pt-32 lg:pb-24 bg-gradient-to-b from-[#f8faf9] to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="lg:grid lg:grid-cols-2 lg:gap-12 items-center">
@@ -57,8 +56,9 @@ export default function ProgrammaticLandingPage({ spec, slug }: Props) {
               </div>
 
               <h1 className="text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight mb-6">
-                Official {countryName} {docName} Photo Editor Online
+                Official {spec.country} {docName} Photo Editor Online
               </h1>
+              {/* ... (rest of the component) */}
 
               <p className="text-lg text-slate-600 mb-8 leading-relaxed max-w-xl">
                 Create a 100% compliant {docName} photo in seconds. Our AI ensures the correct {spec.width_mm}x{spec.height_mm}mm size, background color, and biometric alignment for {countryName}.
@@ -196,7 +196,7 @@ export default function ProgrammaticLandingPage({ spec, slug }: Props) {
         price={spec.local_price ? `${spec.local_price.symbol}${spec.local_price.amount}` : `$${spec.price}`}
       />
 
-      <HomeFAQ />
+      <HomeFAQ type={isVisaIntent ? "visa" : "passport"} />
 
       {/* ── STICKY CTA ────────────────────────────────────── */}
       <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-md px-4 pointer-events-none">

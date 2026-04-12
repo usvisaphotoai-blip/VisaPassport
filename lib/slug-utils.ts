@@ -1,4 +1,5 @@
 import specs from "../data/countries-specs.json";
+import moneyPages from "../data/money-pages.json";
 
 export interface SpecEntry {
   id: string;
@@ -24,83 +25,107 @@ export interface SpecEntry {
 }
 
 /**
+ * Normalizes a country ID or name to its SEO-preferred short version.
+ */
+export function getShortId(id: string): string {
+  return id
+    .replace("-passport", "")
+    .replace("-visa", "")
+    .replace("ds-160", "us")
+    .replace("united-states", "us")
+    .replace("united-kingdom", "uk")
+    .replace("united-arab-emirates", "uae");
+}
+
+/**
+ * Generates the single canonical slug for a given spec ID.
+ */
+export function getCanonicalSlug(id: string): string {
+  const base = getShortId(id);
+  if (id.includes("visa")) {
+    return `${base}-visa-photo-editor`;
+  }
+  return `${base}-passport-photo-editor`;
+}
+
+/**
  * Maps a URL slug to a specification ID.
- * Examples:
- * - "india-passport-photo-editor" -> "india-passport"
- * - "us-visa-photo-editor" -> "ds-160-visa"
- * - "uk-passport-photo-editor" -> "uk-passport"
+ * Now handles legacy redirects and canonical normalization.
  */
 export function getSpecIdFromSlug(slug?: string): string | null {
   if (!slug) return null;
+  
+  // Normalize by removing common suffixes
   const base = slug.replace(/-photo-editor$/, "").replace(/-photo$/, "");
+  const isVisaIntent = base.includes("visa");
+  const isPassportIntent = base.includes("passport");
   
-  // Direct match
-  if (specs.find(s => s.id === base)) return base;
+  // 1. Direct match with current IDs
+  const directMatch = specs.find(s => s.id === base);
+  if (directMatch) return directMatch.id;
   
-  // Special cases for US
-  if (base === "us-visa" || base === "united-states-visa") return "ds-160-visa";
+  // 2. Handle known aliases
+  if (base === "us-visa" || base === "united-states-visa" || base === "ds-160-visa") return "us-visa";
   if (base === "us-passport" || base === "united-states-passport") return "us-passport";
+  if (base === "uk-passport" || base === "united-kingdom-passport") return "uk-passport";
   
-  // Try finding by base or country name
-  const match = specs.find(s => 
-    s.id === base || 
-    s.id === `${base}-passport` || 
-    s.id === `${base}-visa` ||
-    s.country.toLowerCase().replace(/\s+/g, "-") === base.replace(/-visa$/, "").replace(/-passport$/, "")
-  );
+  // 3. Match by normalized country name and intent
+  const shortBase = getShortId(base);
+  
+  // Priority 1: Match with specific intent (e.g. searching for a visa spec)
+  const exactIntentMatch = specs.find(s => {
+    const sShortId = getShortId(s.id);
+    if (sShortId !== shortBase) return false;
+    if (isVisaIntent && s.id.includes("visa")) return true;
+    if (isPassportIntent && (s.id.includes("passport") || !s.id.includes("visa"))) return true;
+    return false;
+  });
+  if (exactIntentMatch) return exactIntentMatch.id;
 
-  // If it's a visa slug, try to prefer a visa ID
-  if (base.includes("-visa")) {
-    const countryBase = base.replace(/-visa$/, "");
-    const visaMatch = specs.find(s => s.id.includes("visa") && s.country.toLowerCase().replace(/\s+/g, "-") === countryBase);
-    if (visaMatch) return visaMatch.id;
-  }
-  
-  return match?.id || null;
+  // Priority 2: Fallback to any spec for that country (Passport usually)
+  const countryMatch = specs.find(s => {
+    const sShortId = getShortId(s.id);
+    return sShortId === shortBase;
+  });
+
+  return countryMatch?.id || null;
 }
 
 /**
- * Generates SEO-friendly slugs for a specification.
+ * Returns ONLY the canonical slug for a specification.
  */
 export function getSlugsForSpec(spec: SpecEntry): string[] {
-  const base = spec.id;
-  return [
-    `${base}-photo-editor`,
-    `${base}-photo`,
-    // If it's "ds-160-visa", also allow "us-visa-photo-editor"
-    ...(base === "ds-160-visa" ? ["us-visa-photo-editor", "us-visa-photo"] : []),
-  ];
+  return [getCanonicalSlug(spec.id)];
 }
 
 /**
- * Generates SEO-friendly slugs specifically for Visa photos.
- */
-export function getVisaSlugsForSpec(spec: SpecEntry): string[] {
-  const country = spec.country.toLowerCase().replace(/\s+/g, "-");
-  return [
-    `${country}-visa-photo-editor`,
-    `${country}-visa-photo`,
-  ];
-}
-
-/**
- * Returns all possible slugs for sitemap and static params.
+ * Returns all canonical slugs for root-level pages (Passport, Visa, & Money Pages).
+ * Ensures every country gets BOTH a passport and visa slug for maximum SEO coverage.
  */
 export function getAllSlugs(): string[] {
-  const slugs: string[] = [];
-  (specs as SpecEntry[]).forEach(spec => {
-    slugs.push(...getSlugsForSpec(spec));
+  const slugs = new Set<string>();
+  
+  // 1. Process Country Specs
+  const uniqueCountries = Array.from(new Set(specs.map(s => s.country)));
+  
+  uniqueCountries.forEach(country => {
+    const base = country.toLowerCase().replace(/\s+/g, "-");
+    // Normalize certain country bases to match SEO preferences (e.g. United States -> us)
+    const normalizedBase = getShortId(base);
+    
+    slugs.add(`${normalizedBase}-passport-photo-editor`);
+    slugs.add(`${normalizedBase}-visa-photo-editor`);
   });
-  return slugs;
-}
 
-/**
- * Returns all possible Visa slugs.
- */
-export function getAllVisaSlugs(): string[] {
-  const slugs: string[] = [];
+  // 2. Also ensure existing specific IDs are covered (e.g. us-visa)
   (specs as SpecEntry[]).forEach(spec => {
-    slugs.push(...getVisaSlugsForSpec(spec));
+    slugs.add(getCanonicalSlug(spec.id));
   });
-  return slugs;
+
+  // 3. Money Pages
+  moneyPages.forEach(page => {
+    slugs.add(page.slug);
+  });
+
+  return Array.from(slugs);
 }

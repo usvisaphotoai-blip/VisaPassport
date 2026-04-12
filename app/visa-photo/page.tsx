@@ -3,30 +3,22 @@ import MasterDirectory from "../components/MasterDirectory";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Official Visa Photo Sizes & Biometric Requirements by Country | PixPassport",
-  description: "Worldwide visa photo requirement database. Find official specs for US Visa (DS-160), UK Visa, Schengen Visa, India Visa, and 50+ other countries.",
-  keywords: ["visa photo requirements by country", "visa photo size guide", "ds-160 photo size", "international visa photo database"],
+  title: "Official Visa Photo Requirements & Sizes | International Visa Portal",
+  description: "Explore official visa photo specifications for over 50 countries. Our database includes technical requirements for DS-160, eVisas, and consular submissions.",
+  keywords: ["visa photo requirements", "visa photo size index", "ds-160 photo standards", "eVisa photo database"],
 };
 
 export default function VisaDirectoryPage() {
-  // Filter for specs that at least mention visa in their ID or name
-  // Or handle countries that don't have a specific visa ID by showing their standard spec
-  const visaSpecs = allSpecs.filter(s => 
-    s.id.includes("visa") || 
-    s.name.toLowerCase().includes("visa")
-  );
+  // Show ALL countries, but de-duplicate by country name so we have 1 entry per nation
+  const uniqueSpecs = Array.from(new Map(allSpecs.map(s => [s.country, s])).values());
+  const displaySpecs = uniqueSpecs;
 
-  // If we want a full directory even for countries where we only have 'passport' defined,
-  // we can use the full list but label as visa in the component.
-  // For now, let's use the explicit ones + some fallbacks if needed.
-  // Actually, let's show all countries but filtered for the "Visa" context.
-  
   return (
     <main className="min-h-screen bg-white">
       <MasterDirectory 
         title="Visa Photo Directory"
-        subtitle="Global database of official biometric visa photo specifications. Find your destination country and create a compliant visa photo instantly."
-        specs={allSpecs} // Show all countries, the component will handle the visa-silo linking
+        subtitle="Technical photo specifications for international visas. Select your country to ensure your digital upload or consular photo is 100% compliant."
+        specs={displaySpecs}
         type="visa"
       />
     </main>

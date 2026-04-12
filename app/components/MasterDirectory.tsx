@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import { CountrySpec } from "@/lib/specs";
+import { getCanonicalSlug, getShortId } from "@/lib/slug-utils";
 
 interface MasterDirectoryProps {
   title: string;
@@ -49,15 +50,15 @@ export default function MasterDirectory({ title, subtitle, specs, type }: Master
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {filteredSpecs.map((spec) => {
-          const slug = type === "visa" 
-            ? `${spec.country.toLowerCase().replace(/\s+/g, "-")}-visa-photo-editor`
-            : `${spec.id}-photo-editor`;
+          // Dual-Coverage: Generate the slug based on the directory type (passport or visa)
+          const countryBase = spec.country.toLowerCase().replace(/\s+/g, "-");
+          const normalizedBase = getShortId(countryBase);
           
-          const href = type === "visa" ? `/visa-photo/${slug}` : `/${slug}`;
+          const href = `/${normalizedBase}-${type}-photo-editor`;
 
           return (
             <Link 
-              key={spec.id}
+              key={`${spec.id}-${type}`}
               href={href}
               className="group bg-white rounded-3xl border border-slate-100 p-6 hover:border-blue-200 hover:shadow-xl hover:shadow-blue-500/5 transition-all duration-300"
             >

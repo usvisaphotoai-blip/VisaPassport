@@ -9,11 +9,8 @@ export const metadata: Metadata = {
 };
 
 export default function PassportDirectoryPage() {
-  // Filter for specs that at least mention passport in their ID or name
-  const passportSpecs = allSpecs.filter(s => 
-    s.id.includes("passport") || 
-    s.name.toLowerCase().includes("passport")
-  );
+  // Show 1 unique entry per country for a clean directory
+  const passportSpecs = Array.from(new Map(allSpecs.map(s => [s.country, s])).values());
 
   return (
     <main className="min-h-screen bg-white">

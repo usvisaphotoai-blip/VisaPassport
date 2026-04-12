@@ -19,6 +19,44 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      // Normalize United States -> US
+      {
+        source: "/united-states-passport-photo-editor",
+        destination: "/us-passport-photo-editor",
+        permanent: true,
+      },
+      {
+        source: "/united-states-visa-photo-editor",
+        destination: "/us-visa-photo-editor",
+        permanent: true,
+      },
+      // Visa silo to root consolidation (Catch-all)
+      {
+        source: "/visa-photo/:slug",
+        destination: "/:slug",
+        permanent: true,
+      },
+      // Silo legacy cleanup
+      {
+        source: "/photo/:slug",
+        destination: "/:slug",
+        permanent: true,
+      },
+      // Global pattern cleanup: *-photo -> *-photo-editor
+      {
+        source: "/us-passport-photo",
+        destination: "/us-passport-photo-editor",
+        permanent: true,
+      },
+      {
+        source: "/us-visa-photo",
+        destination: "/us-visa-photo-editor",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
