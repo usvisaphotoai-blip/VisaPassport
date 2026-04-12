@@ -17,6 +17,8 @@ export interface SpecEntry {
   bg_color?: string;
   print_size?: string;
   price: number;
+  passportcontent?: string;
+  visacontent?: string;
   local_price?: {
     currency: string;
     symbol: string;

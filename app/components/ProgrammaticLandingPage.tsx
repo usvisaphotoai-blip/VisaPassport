@@ -25,16 +25,36 @@ export default function ProgrammaticLandingPage({ spec, slug }: Props) {
   const siblingHref = `/${countrySlug}-${isVisaIntent ? "passport" : "visa"}-photo-editor`;
   const siblingLink = { label: `${spec.country} ${siblingLabel}`, href: siblingHref };
 
+  const customContent = isVisaIntent ? spec.visacontent : spec.passportcontent;
   const longformContent = generateLongformContent(spec, isVisaIntent);
-  
+
   // Extract headers for Table of Contents
-  const tableOfContents = longformContent
-    .filter(block => block.type === "h2")
-    .map((block, i) => ({ id: `section-${i}`, text: block.text }));
+  let tableOfContents: { id: string; text: string }[] = [];
+
+  let processedCustomContent = customContent;
+  if (customContent) {
+    let index = 0;
+    // Extract TOC items first
+    const h2Regex = /<h2(.*?)>(.*?)<\/h2>/g;
+    let match;
+    while ((match = h2Regex.exec(customContent)) !== null) {
+      const text = match[2].replace(/<[^>]*>?/gm, "").trim();
+      tableOfContents.push({ id: `custom-section-${index++}`, text });
+    }
+    // Now inject IDs into the HTML for rendering
+    index = 0;
+    processedCustomContent = customContent.replace(/<h2(.*?)>(.*?)<\/h2>/g, (match, attrs, content) => {
+      return `<h2 id="custom-section-${index++}"${attrs}>${content}</h2>`;
+    });
+  } else {
+    tableOfContents = longformContent
+      .filter(block => block.type === "h2")
+      .map((block, i) => ({ id: `section-${i}`, text: block.text || "" }));
+  }
 
   return (
     <main className="min-h-screen bg-white hcr">
-      {/* ... (Hero section remain same, just ensure it uses docName) */}
+      {/* Hero section */}
       <section className="relative overflow-hidden pt-20 pb-16 lg:pt-32 lg:pb-24 bg-gradient-to-b from-[#f8faf9] to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="lg:grid lg:grid-cols-2 lg:gap-12 items-center">
@@ -91,23 +111,16 @@ export default function ProgrammaticLandingPage({ spec, slug }: Props) {
             </div>
 
             <div className="mt-12 lg:mt-0 relative flex justify-center lg:justify-end">
-              <div className="relative group rounded-3xl p-2 bg-gradient-to-br from-indigo-50 to-emerald-50 border border-slate-100 shadow-xl overflow-hidden transform transition-all hover:-translate-y-1 hover:shadow-2xl duration-300 w-full max-w-[280px] sm:max-w-[360px] lg:max-w-[400px]">
-                <Image
-                  src="/us_non_imigrant.png"
-                  alt={`Official ${countryName} ${docName} photo compliance example`}
-                  width={400}
-                  height={400}
-                  className="rounded-2xl w-full h-auto shadow-inner"
-                  priority
-                />
-                <div className="absolute inset-0 border-2 border-white/60 rounded-3xl pointer-events-none mix-blend-overlay"></div>
-                <div className="absolute bottom-5 left-1/2 -translate-x-1/2 bg-white/95 backdrop-blur-md px-5 py-2.5 rounded-full border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.12)] whitespace-nowrap">
-                  <div className="flex items-center gap-2.5">
-                    <span className="flex h-2.5 w-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                    <span className="text-xs sm:text-sm font-black text-slate-800 tracking-wide uppercase">100% {docName} Compliant</span>
-                  </div>
-                </div>
-              </div>
+              <Image
+                src="/us_non_imigrant.png"
+                alt={`Official ${countryName} ${docName} photo compliance example`}
+                width={400}
+                height={400}
+                className="rounded-2xl w-full h-auto shadow-inner"
+                priority
+              />
+              <div className="absolute inset-0 border-2 border-white/60 rounded-3xl pointer-events-none mix-blend-overlay"></div>
+
             </div>
           </div>
         </div>
@@ -144,14 +157,14 @@ export default function ProgrammaticLandingPage({ spec, slug }: Props) {
       <section className="bg-white py-20 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="lg:flex lg:gap-16">
-            
+
             {/* Sidebar / Table of Contents */}
             <aside className="hidden lg:block w-64 flex-shrink-0">
               <div className="sticky top-24 p-8 bg-slate-50 rounded-3xl border border-slate-100">
                 <h4 className="text-sm font-black text-slate-900 uppercase tracking-widest mb-4">In this guide</h4>
                 <nav className="space-y-4">
                   {tableOfContents.map((item) => (
-                    <a 
+                    <a
                       key={item.id}
                       href={`#${item.id}`}
                       className="block text-sm font-semibold text-slate-500 hover:text-blue-600 transition-colors"
@@ -166,26 +179,30 @@ export default function ProgrammaticLandingPage({ spec, slug }: Props) {
             {/* Main Article Content */}
             <article className="flex-1 max-w-3xl">
               <div className="prose prose-slate prose-lg max-w-none">
-                {longformContent.map((block, i) => {
-                  if (block.type === "h2") {
-                    const tocItem = tableOfContents.find(t => t.text === block.text);
-                    return <h2 key={i} id={tocItem?.id} className="text-3xl font-extrabold text-slate-900 mt-16 mb-8 scroll-mt-24">{block.text}</h2>;
-                  }
-                  if (block.type === "h3") return <h3 key={i} className="text-xl font-bold text-slate-900 mt-12 mb-4">{block.text}</h3>;
-                  if (block.type === "h4") return <h4 key={i} className="text-lg font-bold text-slate-900 mt-8 mb-2">{block.text}</h4>;
-                  if (block.type === "p") return <p key={i} className="text-slate-600 leading-relaxed mb-6 text-lg">{block.text}</p>;
-                  if (block.type === "ul") return (
-                    <ul key={i} className="space-y-4 mb-8 list-none p-0">
-                      {block.items?.map((li, j) => (
-                        <li key={j} className="flex items-start space-x-3 text-slate-600">
-                          <span className="text-blue-500 font-bold mt-1">✓</span>
-                          <span className="text-lg leading-relaxed">{li}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  );
-                  return null;
-                })}
+                {processedCustomContent ? (
+                  <div dangerouslySetInnerHTML={{ __html: processedCustomContent }} />
+                ) : (
+                  longformContent.map((block, i) => {
+                    if (block.type === "h2") {
+                      const tocItem = tableOfContents.find(t => t.text === block.text);
+                      return <h2 key={i} id={tocItem?.id} className="text-3xl font-extrabold text-slate-900 mt-16 mb-8 scroll-mt-24">{block.text}</h2>;
+                    }
+                    if (block.type === "h3") return <h3 key={i} className="text-xl font-bold text-slate-900 mt-12 mb-4">{block.text}</h3>;
+                    if (block.type === "h4") return <h4 key={i} className="text-lg font-bold text-slate-900 mt-8 mb-2">{block.text}</h4>;
+                    if (block.type === "p") return <p key={i} className="text-slate-600 leading-relaxed mb-6 text-lg">{block.text}</p>;
+                    if (block.type === "ul") return (
+                      <ul key={i} className="space-y-4 mb-8 list-none p-0">
+                        {block.items?.map((li, j) => (
+                          <li key={j} className="flex items-start space-x-3 text-slate-600">
+                            <span className="text-blue-500 font-bold mt-1">✓</span>
+                            <span className="text-lg leading-relaxed">{li}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    );
+                    return null;
+                  })
+                )}
               </div>
             </article>
           </div>
