@@ -18,7 +18,7 @@ const FIXED_PRICES: Record<string, { amount: number; symbol: string; decimals: n
   USD: { amount: 5.99, symbol: "$", decimals: 2 },
   EUR: { amount: 5.99, symbol: "€", decimals: 2 },
   GBP: { amount: 5.99, symbol: "£", decimals: 2 },
-  INR: { amount: 1, symbol: "₹", decimals: 0 },
+  INR: { amount: 199, symbol: "₹", decimals: 0 },
   JPY: { amount: 799, symbol: "¥", decimals: 0 },
   BRL: { amount: 30, symbol: "R$", decimals: 0 },
   CAD: { amount: 4.99, symbol: "C$", decimals: 2 },
