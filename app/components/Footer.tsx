@@ -23,7 +23,7 @@ export default function Footer() {
       title: "Information",
       items: [
         { label: "About Us", href: "/about" },
-        { label: "Photo Validator", href: "/photo-validator" },
+        { label: "Photo Validator", href: "/visa-photo-validator" },
         { label: "Privacy Policy", href: "/privacy-policy" },
         { label: "Terms of Service", href: "/terms" },
         { label: "Refund Policy", href: "/refund-policy" },

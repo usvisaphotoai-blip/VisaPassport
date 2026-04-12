@@ -76,7 +76,7 @@ const toolPages = [
     desc: "600x600px, white background. Perfect for DS-160 and Green Card.",
   },
   {
-    href: "/photo-validator",
+    href: "/visa-photo-validator",
     title: "Free Validator",
     target: "Compliance Check",
     desc: "Validate any official document photo for free. Instant PASS/FAIL report.",
@@ -772,7 +772,7 @@ export default function HomeSections({
               color: "#718096",
             }}
           >
-            PixPassport automatically adjusts your images to comply with the global specifications above. 
+            PixPassport automatically adjusts your images to comply with the global specifications above.
             When in doubt, always refer to your country's official passport or visa agency portal.
           </p>
         </div>

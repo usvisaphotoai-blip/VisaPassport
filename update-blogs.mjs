@@ -39,14 +39,14 @@ function generateFaqHTML(faqs) {
 data.forEach((post, index) => {
   // Update author
   post.author = "USVisaPhotoAI Team";
-  
+
   // Update date to March 2026
   post.date = `2026-03-${String(15 + (index % 10)).padStart(2, '0')}`;
-  
+
   // Interlink words
   post.content = post.content.replace(/PhotoStudio/g, '<a href="/">USVisaPhotoAI</a>');
-  post.content = post.content.replace(/free validator/gi, '<a href="/photo-validator">free validator</a>');
-  
+  post.content = post.content.replace(/free validator/gi, '<a href="/visa-photo-validator">free validator</a>');
+
   // Only inject FAQ if not already there
   if (!post.content.includes("Frequently Asked Questions")) {
     post.content += generateFaqHTML(commonFaqs);

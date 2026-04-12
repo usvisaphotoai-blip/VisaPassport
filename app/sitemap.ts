@@ -9,7 +9,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const sitemapEntries: MetadataRoute.Sitemap = [
     { url: `${APP_URL}`, lastModified: new Date(), changeFrequency: "weekly", priority: 1 },
     { url: `${APP_URL}/tool`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.9 },
-    { url: `${APP_URL}/photo-validator`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.9 },
+    { url: `${APP_URL}/visa-photo-validator`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.9 },
     { url: `${APP_URL}/about`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
     { url: `${APP_URL}/contact`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
     { url: `${APP_URL}/faq`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.6 },
@@ -55,7 +55,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           priority: 0.6,
         });
       });
-    } catch (e) {}
+    } catch (e) { }
 
     // Blog
     sitemapEntries.push({

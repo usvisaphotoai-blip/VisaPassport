@@ -49,7 +49,7 @@ const getCategories = (price: string) => [
 export default function FAQPage() {
   const [activeCategory, setActiveCategory] = useState(0);
   const [priceStr, setPriceStr] = useState("$5.99");
-  
+
   useEffect(() => {
     // If we passed localPrice in props, use it, else fetch on mount
     getLocalPrice(5.99).then(res => setPriceStr(res.formatted));
@@ -78,11 +78,10 @@ export default function FAQPage() {
               <button
                 key={i}
                 onClick={() => setActiveCategory(i)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                  activeCategory === i
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${activeCategory === i
                     ? "bg-lime-600 text-white"
                     : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                }`}
+                  }`}
               >
                 {cat.name}
               </button>
@@ -111,7 +110,7 @@ export default function FAQPage() {
         <div className="max-w-3xl mx-auto px-4 text-center">
           <h2 className="text-2xl font-bold text-slate-900 mb-3">Still Have Questions?</h2>
           <p className="text-gray-600 mb-6">Can&apos;t find what you&apos;re looking for? Try the photo validator — it&apos;s free.</p>
-          <Link href="/photo-validator" className="inline-block bg-lime-600 text-white hover:bg-lime-700 rounded-lg px-8 py-3 text-sm font-semibold transition-colors">
+          <Link href="/visa-photo-validator" className="inline-block bg-lime-600 text-white hover:bg-lime-700 rounded-lg px-8 py-3 text-sm font-semibold transition-colors">
             Try Photo Validator →
           </Link>
         </div>
