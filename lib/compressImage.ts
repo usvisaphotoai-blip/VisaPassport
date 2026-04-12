@@ -1,102 +1,100 @@
 /**
- * Client-side image compression utility.
- * Resizes and compresses images to stay under the Vercel payload limit (~4.5 MB).
- * Preserves quality as much as possible while ensuring the upload won't fail.
+ * Optimized compression for 1.5MB max size
+ * - Fast (no recursion)
+ * - Predictable output
+ * - Passport/visa quality safe
  */
 
-const MAX_FILE_SIZE = 3.5 * 1024 * 1024; // 3.5 MB — preserve detail for biometric crop quality
+const TARGET_SIZE = 1.5 * 1024 * 1024; // 🎯 1.5 MB
+const MAX_DIMENSION = 1600; // Good balance for face quality
 
-/**
- * Compress an image File to stay under the Vercel payload size limit.
- * Returns the original file if it's already small enough.
- *
- * Strategy:
- *  1. If file is under 3MB, return as-is (no quality loss).
- *  2. Otherwise, scale down to max 2048px and reduce JPEG quality progressively.
- */
 export async function compressImage(file: File): Promise<File> {
-  // If the file is already under the limit, return as-is
-  if (file.size <= MAX_FILE_SIZE) return file;
+  // ✅ Skip if already small
+  if (file.size <= TARGET_SIZE) {
+    console.log("[compressImage] ✅ Already under 1.5MB");
+    return file;
+  }
 
-  console.log(`[compressImage] Original size: ${(file.size / 1024 / 1024).toFixed(2)} MB — compressing...`);
+  console.log(
+    `[compressImage] Original: ${(file.size / 1024 / 1024).toFixed(2)} MB → compressing`
+  );
 
-  return new Promise<File>((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     const img = new Image();
     const url = URL.createObjectURL(file);
 
-    img.onload = () => {
+    img.onload = async () => {
       URL.revokeObjectURL(url);
 
-      const tryWithDimension = (maxDim: number, quality: number) => {
-        let { width, height } = img;
+      let width = img.width;
+      let height = img.height;
 
-        // Scale down proportionally
-        if (width > maxDim || height > maxDim) {
-          const scale = maxDim / Math.max(width, height);
-          width = Math.round(width * scale);
-          height = Math.round(height * scale);
-        }
+      // ✅ Step 1: Resize once
+      if (width > MAX_DIMENSION || height > MAX_DIMENSION) {
+        const scale = MAX_DIMENSION / Math.max(width, height);
+        width = Math.round(width * scale);
+        height = Math.round(height * scale);
+      }
 
-        const canvas = document.createElement("canvas");
-        canvas.width = width;
-        canvas.height = height;
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
 
-        const ctx = canvas.getContext("2d", { willReadFrequently: true });
-        if (!ctx) {
-          reject(new Error("Could not create canvas context"));
-          return;
-        }
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return reject("Canvas error");
 
-        ctx.drawImage(img, 0, 0, width, height);
+      ctx.drawImage(img, 0, 0, width, height);
 
-        canvas.toBlob(
-          (blob) => {
-            if (!blob) {
-              reject(new Error("Canvas compression failed"));
-              return;
-            }
+      // ✅ Step 2: Controlled compression
+      const qualities = [0.9, 0.8, 0.7, 0.6];
 
-            console.log(
-              `[compressImage] dim=${width}x${height}, quality=${quality.toFixed(2)}, size=${(blob.size / 1024 / 1024).toFixed(2)} MB`
-            );
-
-            if (blob.size <= MAX_FILE_SIZE) {
-              // Success — wrap as File and return
-              const compressed = new File([blob], file.name.replace(/\.\w+$/, ".jpg"), {
-                type: "image/jpeg",
-                lastModified: Date.now(),
-              });
-              console.log(`[compressImage] ✅ Compressed to ${(compressed.size / 1024 / 1024).toFixed(2)} MB`);
-              resolve(compressed);
-            } else if (quality > 0.4) {
-              // Reduce quality further
-              tryWithDimension(maxDim, quality - 0.1);
-            } else if (maxDim > 1024) {
-              // Quality alone wasn't enough — reduce dimensions too
-              tryWithDimension(maxDim - 512, 0.8);
-            } else {
-              // Give up — return whatever we have (should be small enough at 1024px)
-              const compressed = new File([blob], file.name.replace(/\.\w+$/, ".jpg"), {
-                type: "image/jpeg",
-                lastModified: Date.now(),
-              });
-              console.warn(`[compressImage] ⚠️ Could not compress below limit, final: ${(compressed.size / 1024 / 1024).toFixed(2)} MB`);
-              resolve(compressed);
-            }
-          },
-          "image/jpeg",
-          quality
+      for (const q of qualities) {
+        const blob: Blob | null = await new Promise((res) =>
+          canvas.toBlob(res, "image/jpeg", q)
         );
-      };
 
-      // Start: max 2048px dimension, 0.85 JPEG quality
-      tryWithDimension(3072, 0.92);
+        if (!blob) continue;
+
+        console.log(
+          `[compressImage] q=${q}, size=${(blob.size / 1024 / 1024).toFixed(2)} MB`
+        );
+
+        if (blob.size <= TARGET_SIZE) {
+          return resolve(
+            new File([blob], file.name.replace(/\.\w+$/, ".jpg"), {
+              type: "image/jpeg",
+              lastModified: Date.now(),
+            })
+          );
+        }
+      }
+
+      // ✅ Final fallback (force under limit)
+      const fallbackBlob: Blob | null = await new Promise((res) =>
+        canvas.toBlob(res, "image/jpeg", 0.5)
+      );
+
+      if (!fallbackBlob) return reject("Compression failed");
+
+      const finalFile = new File(
+        [fallbackBlob],
+        file.name.replace(/\.\w+$/, ".jpg"),
+        {
+          type: "image/jpeg",
+          lastModified: Date.now(),
+        }
+      );
+
+      console.warn(
+        `[compressImage] ⚠️ Fallback used: ${(finalFile.size / 1024 / 1024).toFixed(2)} MB`
+      );
+
+      resolve(finalFile);
     };
 
     img.onerror = () => {
       URL.revokeObjectURL(url);
-      // If we can't load the image (e.g. HEIC), return original and let server handle it
-      console.warn("[compressImage] Could not load image for compression, returning original");
+      console.warn("[compressImage] Image load failed, returning original");
       resolve(file);
     };
 
