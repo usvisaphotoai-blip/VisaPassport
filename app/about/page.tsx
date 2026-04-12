@@ -37,7 +37,7 @@ export default function AboutPage() {
               <p>
                 Founded by technologists and frequent travelers, <strong>PixPassport</strong> was built to solve this exact problem. 
                 Our platform leverages advanced artificial intelligence and biometric scanning algorithms to check your photos 
-                against the exact same technical standards used by the U.S. State Department.
+                against the exact technical standards used by immigration agencies worldwide, including the U.S. State Department, UK HMPO, and ICAO.
               </p>
             </div>
           </div>
@@ -55,8 +55,8 @@ export default function AboutPage() {
                 replacing them with a pure white (RGB 255, 255, 255) canvas.
               </p>
               <p>
-                We maintain an up-to-date database of global photo requirements, specializing in the incredibly strict 
-                guidelines of the US DS-160 Visa form, the DV Lottery, and US Passports.
+                We maintain an up-to-date database of photo requirements for 50+ countries, covering passports,
+                visas, and national ID documents — from US DS-160 and UK HMPO to Indian and Schengen applications.
               </p>
             </div>
           </div>

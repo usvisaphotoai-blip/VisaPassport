@@ -550,7 +550,7 @@ export default function PhotoValidatorPage() {
               <p>Start by taking a photo against any background with decent lighting. Ideally, face the camera directly with a neutral expression. Then, upload your JPEG or PNG image directly into the validator. Our tool handles high-resolution images smoothly and protects your privacy by processing everything securely.</p>
 
               <h3>2. Select Your Specific Document Type</h3>
-              <p>With requirements varying wildly between 50+ countries, it's essential to select the exact document you need. Whether it's a 2x2 inch US Visa or a 35x45 mm Schengen Passport photo, our database instantly applies the precise dimensional and biometric rules associated with your selection.</p>
+              <p>With requirements varying wildly between 50+ countries, it's essential to select the exact document you need. Whether it's a 2x2 inch US Visa, a 35x45 mm Schengen Passport photo, or a 51x51 mm Indian Passport, our database instantly applies the precise dimensional and biometric rules associated with your selection.</p>
 
               <h3>3. Instant Metric Analysis</h3>
               <p>Our AI model will scan 64 precision facial landmarks. It calculates the exact crown-to-chin height, eye-level positioning, and background luminance. The tool automatically removes non-compliant backgrounds, replacing them with pure white, light gray, or blue based on the country's official mandates. You'll instantly see a complete PASS/FAIL breakdown pinpointing any rejections.</p>
@@ -568,8 +568,8 @@ export default function PhotoValidatorPage() {
               Don't Risk an RFE or Rejection
             </h2>
             <p className="uvp-desc" style={{ margin: "0 auto 32px" }}>
-              Our validator provides the same level of scrutiny as an U.S.
-              Consular official. Get your free report in seconds.
+              Our validator provides the same level of scrutiny as an Embassy
+              official. Get your free report in seconds.
             </p>
             <Link
               href="/tool"

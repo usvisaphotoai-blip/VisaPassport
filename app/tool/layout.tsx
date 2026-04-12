@@ -1,30 +1,29 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "US Visa Photo Tool — Free Validator & Maker for DS-160, Green Card, Passport",
+  title: "Passport & Visa Photo Tool — Free Validator & Maker for 50+ Countries",
   description:
-    "Free AI-powered US visa photo tool. Validate and create compliant 2x2 photos for DS-160, DV lottery, green card (I-485/DS-260), and US passport applications.",
+    "Free AI-powered passport & visa photo tool. Validate and create compliant biometric photos for US, UK, India, Schengen, Australia, and 50+ countries instantly.",
   keywords: [
-    "US visa photo tool",
-    "DS-160 photo maker",
-    "green card photo tool",
+    "passport photo tool",
+    "visa photo maker",
+    "biometric photo tool",
     "passport photo validator",
-    "2x2 photo tool",
-    "DV lottery photo tool",
-
-    "US visa photo requirements checker",
-    "600x600 visa photo tool",
-    "US passport photo size validator",
+    "online passport photo",
+    "visa photo editor",
+    "UK passport photo maker",
+    "India passport photo tool",
+    "Schengen visa photo maker",
     "AI visa photo checker",
-    "DS-160 photo validator free",
+    "passport photo size validator",
   ],
   alternates: {
     canonical: "https://www.pixpassport.com/tool",
   },
   openGraph: {
-    title: "US Visa Photo Tool — Free Validator & Maker",
+    title: "Passport & Visa Photo Tool — Free Validator & Maker",
     description:
-      "Free AI-powered US visa photo tool. Validate and create compliant 2x2 photos for DS-160, DV lottery, green card, and passport applications.",
+      "Free AI-powered passport & visa photo tool. Create compliant biometric photos for 50+ countries including US, UK, India, and Schengen.",
     url: "https://www.pixpassport.com/tool",
     siteName: "PixPassport",
     type: "website",
@@ -33,15 +32,15 @@ export const metadata: Metadata = {
         url: "https://www.pixpassport.com/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "PixPassport - Free US Visa Photo Tool",
+        alt: "PixPassport - Free Global Passport & Visa Photo Tool",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "US Visa Photo Tool — Free Validator & Maker",
+    title: "Passport & Visa Photo Tool — Free Validator & Maker",
     description:
-      "Free AI-powered US visa photo tool for DS-160, green card, passport, and DV lottery applications.",
+      "Free AI-powered passport & visa photo tool for 50+ countries. Instant biometric compliance check.",
     images: ["https://www.pixpassport.com/og-image.jpg"],
   },
   robots: {

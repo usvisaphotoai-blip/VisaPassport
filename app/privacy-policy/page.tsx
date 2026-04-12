@@ -33,7 +33,7 @@ export default function PrivacyPolicyPage() {
               <h3 className="text-base font-semibold text-slate-900 mt-4 mb-2">Photos You Upload</h3>
               <ul className="list-disc pl-5 space-y-1 text-sm text-gray-600">
                 <li>Photos are uploaded solely for validation and processing purposes</li>
-                <li>We analyze photos for compliance with US State Department specifications</li>
+                <li>We analyze photos for compliance with official government specifications for over 50 countries (including US, UK, India, and Schengen)</li>
                 <li>Photos are never used for AI training, marketing, or any other purpose</li>
               </ul>
               <h3 className="text-base font-semibold text-slate-900 mt-4 mb-2">Payment Information</h3>
@@ -108,7 +108,7 @@ export default function PrivacyPolicyPage() {
             <div>
               <h2 className="text-xl font-bold text-slate-900 mb-3">8. Children&apos;s Privacy</h2>
               <p className="text-sm text-gray-600 leading-relaxed">
-                Our service is not directed to children under 13. Minors applying for US visas or passports should have a parent or guardian use the service on their behalf.
+                Our service is not directed to children under 13. Minors applying for visas or passports should have a parent or guardian use the service on their behalf.
               </p>
             </div>
 
@@ -124,7 +124,7 @@ export default function PrivacyPolicyPage() {
             <div>
               <h2 className="text-xl font-bold text-slate-900 mb-3">10. Contact Us</h2>
               <p className="text-sm text-gray-600 leading-relaxed">
-                For privacy-related questions, data deletion requests, or GDPR/CCPA inquiries, contact us at <strong>PixPassport@gmail.com</strong>.
+                For privacy-related questions, data deletion requests, or GDPR/CCPA inquiries, contact us at <strong>usvisaphotoai@gmail.com</strong>.
               </p>
               <p className="text-sm text-gray-600 leading-relaxed mt-2">
                 Business Address: Varanasi, Uttar Pradesh, India

@@ -36,8 +36,8 @@ export default function ContactPage() {
                   <h3 className="text-sm font-semibold text-slate-900 mb-2 uppercase tracking-wide">Email Support</h3>
                   <div className="text-gray-600 leading-relaxed bg-gray-50 p-6 rounded-xl border border-gray-100">
                     <p className="mb-2">For support, questions, or refund requests, please email us directly at:</p>
-                    <a href="mailto:PixPassport@gmail.com" className="font-bold text-lime-600 hover:text-lime-700 text-lg transition-colors">
-                      PixPassport@gmail.com
+                    <a href="mailto:usvisaphotoai@gmail.com" className="font-bold text-lime-600 hover:text-lime-700 text-lg transition-colors">
+                      usvisaphotoai@gmail.com
                     </a>
                   </div>
                 </div>

@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     "biometric photo tool",
     "india visa photo editor",
     "uk passport photo maker",
-    "us visa photo 600x600",
+    "passport photo maker online",
     "online photo resizer for visa",
     "background remover for passport photo",
     "official biometric photo check",

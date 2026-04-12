@@ -40,15 +40,15 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
 const APP_URL = 'https://www.pixpassport.com';
 
 export const metadata = {
-  title: 'US Passport & Visa Photo Requirements Blog | Expert Guides 2026',
-  description: 'Expert advice on US passport, visa, and green card photo requirements. Get 2026 compliance guidelines, biometric tips, and step-by-step guides to ensure your photo is accepted.',
-  keywords: ['US passport photo requirements', 'visa photo guide', 'DS-160 photo', 'passport photo tips', 'biometric photo compliance', 'green card photo', 'DV lottery photo'],
+  title: 'Passport & Visa Photo Requirements Blog | Expert Guides 2026',
+  description: 'Expert advice on global passport, visa, and ID photo requirements. Get 2026 compliance guidelines, biometric tips, and step-by-step guides for 50+ countries including US, UK, India, and Schengen.',
+  keywords: ['passport photo requirements', 'visa photo guide', 'biometric photo tips', 'passport photo compliance', 'global visa photo requirements', 'UK passport photo', 'India passport photo', 'Schengen visa photo'],
   alternates: {
     canonical: `${APP_URL}/blog`,
   },
   openGraph: {
-    title: 'US Passport & Visa Photo Guides | PixPassport Blog',
-    description: 'Expert advice on US passport, visa, and green card photo requirements. 2026 compliance guidelines and step-by-step guides.',
+    title: 'Global Passport & Visa Photo Guides | PixPassport Blog',
+    description: 'Expert advice on passport, visa, and ID photo requirements for 50+ countries. 2026 compliance guidelines and step-by-step guides.',
     url: `${APP_URL}/blog`,
     type: 'website',
   },
@@ -63,8 +63,8 @@ export default async function BlogIndex() {
   const collectionPageSchema = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
-    name: 'US Passport & Visa Photo Requirements Blog',
-    description: 'Expert advice on US passport, visa, and green card photo requirements. 2026 compliance guidelines and step-by-step guides.',
+    name: 'Global Passport & Visa Photo Requirements Blog',
+    description: 'Expert advice on passport, visa, and ID photo requirements for 50+ countries. 2026 compliance guidelines and step-by-step guides.',
     url: `${APP_URL}/blog`,
     publisher: {
       '@type': 'Organization',
@@ -134,10 +134,10 @@ export default async function BlogIndex() {
 
             <div className="max-w-3xl">
               <h1 className="text-4xl sm:text-6xl font-black text-slate-900 tracking-tight leading-[1.1] mb-6">
-                US Visa Photo <span className="gradient-text">Specialist Tips</span>
+                Global Photo <span className="gradient-text">Compliance Guides</span>
               </h1>
               <p className="text-xl text-slate-600 leading-relaxed font-medium">
-                Expert tips, official DS-160 requirements, and step-by-step guides for perfect US visa, passport, and DV Lottery photographs.
+                Expert tips, official requirements, and step-by-step guides for perfect passport, visa, and ID photographs for 50+ countries.
               </p>
             </div>
           </div>
@@ -159,7 +159,7 @@ export default async function BlogIndex() {
                       />
                     ) : (
                       <div className="absolute inset-0 bg-slate-900 flex items-center justify-center">
-                        <span className="text-lime-500 font-black text-4xl">USVPAI</span>
+                        <span className="text-lime-500 font-black text-4xl">PixPassport</span>
                       </div>
                     )}
                     <div className="absolute top-6 left-6 z-10">
@@ -220,7 +220,7 @@ export default async function BlogIndex() {
                       />
                     ) : (
                       <div className="absolute inset-0 bg-slate-900 flex items-center justify-center">
-                        <span className="text-lime-500 font-black text-2xl">USVPAI</span>
+                        <span className="text-lime-500 font-black text-2xl">PixPassport</span>
                       </div>
                     )}
                     <div className="absolute bottom-6 left-6 z-10">

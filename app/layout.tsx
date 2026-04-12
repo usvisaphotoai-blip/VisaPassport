@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     "official biometric photo",
     "India passport photo online",
     "UK passport photo generator",
-    "US visa photo DS-160",
+    "global passport photo maker",
     "Schengen visa photo check",
     "Australia passport photo online",
     "Canadian passport photo size",

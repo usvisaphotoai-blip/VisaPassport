@@ -23,7 +23,7 @@ export default function RefundPolicyPage() {
               <h2 className="text-xl font-bold text-slate-900 mb-3">1. Photo Rejection Guarantee</h2>
               <div className="bg-blue-50 border border-blue-200 rounded-xl p-5 mb-4">
                 <p className="text-sm text-blue-800 leading-relaxed">
-                  If your processed photo is rejected by a U.S. government agency (e.g., during DS-160 submission, passport application, or DV Lottery entry), you are eligible for a <strong>50% refund</strong> of your original purchase price.
+                  If your processed photo is rejected by any government agency (e.g., for passport, visa, or ID applications), you are eligible for a <strong>50% refund</strong> of your original purchase price.
                 </p>
               </div>
             </div>
@@ -62,7 +62,7 @@ export default function RefundPolicyPage() {
             <div>
               <h2 className="text-xl font-bold text-slate-900 mb-3">6. How to Request a Refund</h2>
               <p className="text-sm text-gray-600 leading-relaxed">
-                To initiate a refund request, please email our support team at <strong>PixPassport@gmail.com</strong> with your transaction details and proof of photo rejection.
+                To initiate a refund request, please email our support team at <strong>usvisaphotoai@gmail.com</strong> with your transaction details and proof of photo rejection.
               </p>
             </div>
           </div>

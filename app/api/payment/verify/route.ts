@@ -70,7 +70,7 @@ export async function POST(req: Request) {
       try {
         await sendEmail({
           to: userEmail,
-          subject: "Your US Visa Photo is ready — Download now! 🎉",
+          subject: "Your Passport Photo is ready — Download now! 🎉",
           html: `
             <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; color: #1e293b; background: #f8fafc; padding: 32px; border-radius: 16px;">
               <div style="text-align: center; margin-bottom: 24px;">

@@ -129,7 +129,7 @@ const officialSources = [
     agency: "U.S. Department of State",
     doc: "Visa and Passport Photo Requirements",
     url: "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/photos.html",
-    note: "Official photo specs for US visa types.",
+    note: "Official photo specs for all visa types globally.",
     badge: "State Dept.",
   },
   {
@@ -591,7 +591,7 @@ export default function HomeSections({
             { stat: "99.8%", label: "Acceptance Rate" },
             { stat: "120+", label: "Countries Supported" },
             { stat: "30s", label: "Ready in Seconds" },
-            { stat: "Official", label: "State Dept. Compliant" },
+            { stat: "Official", label: "ICAO Compliant" },
           ].map((s, i) => (
             <div key={i} className="hc-strip-item">
               <div className="hc-strip-stat">{s.stat}</div>

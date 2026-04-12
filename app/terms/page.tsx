@@ -32,7 +32,7 @@ export default async function TermsPage() {
             <div>
               <h2 className="text-xl font-bold text-slate-900 mb-3">2. Description of Service</h2>
               <p className="text-sm text-gray-600 leading-relaxed">
-                PixPassport provides an automated photo validation and processing service for US immigration, visa, passport, and green card photos. The Service checks photos against U.S. State Department specifications and, for a fee, processes photos to meet compliance requirements.
+                PixPassport provides an automated photo validation and processing service for global passport, visa, and ID photos. The Service checks photos against official government specifications for 50+ countries including the US, UK, India, and Schengen.
               </p>
               <ul className="list-disc pl-5 space-y-1 text-sm text-gray-600 mt-3">
                 <li><strong>Free tier:</strong> Photo validation and compliance reports at no cost</li>
@@ -65,11 +65,11 @@ export default async function TermsPage() {
               <h2 className="text-xl font-bold text-slate-900 mb-3">5. Refund Policy</h2>
               <div className="bg-blue-50 border border-blue-200 rounded-xl p-5 mb-4">
                 <p className="text-sm text-blue-800 leading-relaxed">
-                  <strong>Photo Rejection Guarantee:</strong> If your processed photo is rejected by a U.S. government agency (e.g., during DS-160 submission, passport application, or DV Lottery entry), you are eligible for a <strong>50% refund</strong> of your purchase price.
+                  <strong>Photo Rejection Guarantee:</strong> If your processed photo is rejected by any government agency (e.g., during passport application, visa submission, or national ID registration), you are eligible for a <strong>50% refund</strong> of your purchase price.
                 </p>
               </div>
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-600">
-                <li>To request a refund, contact us at <strong>PixPassport@gmail.com</strong> within <strong>30 days</strong> of purchase</li>
+                <li>To request a refund, contact us at <strong>usvisaphotoai@gmail.com</strong> within <strong>30 days</strong> of purchase</li>
                 <li>You must provide your transaction ID and evidence of photo rejection (screenshot of rejection notice)</li>
                 <li>Refunds are limited to <strong>50% of the original purchase price</strong> due to non-recoverable server processing and infrastructure costs incurred during photo generation</li>
                 <li>Refunds are issued to the original payment method within 5–10 business days</li>
@@ -137,7 +137,7 @@ export default async function TermsPage() {
             <div>
               <h2 className="text-xl font-bold text-slate-900 mb-3">13. Contact</h2>
               <p className="text-sm text-gray-600 leading-relaxed">
-                For questions about these Terms, contact us at <strong>PixPassport@gmail.com</strong>.
+                For questions about these Terms, contact us at <strong>usvisaphotoai@gmail.com</strong>.
               </p>
             </div>
           </div>

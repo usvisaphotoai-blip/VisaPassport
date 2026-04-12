@@ -198,12 +198,11 @@ const FAQ_MAP: Record<string, { question: string; answer: string }[]> = {
 
 // Default FAQ for articles that don't have a specific mapping
 const DEFAULT_FAQ = [
-  { question: 'What are the US passport photo dimensions?', answer: 'US passport photos must be exactly 2x2 inches (51x51 mm) for prints, or 600x600 pixels for digital uploads. The head must occupy 50-69% of the total image height.' },
-  { question: 'Can I take a passport photo with my phone?', answer: 'Yes, you can take a passport photo with your smartphone. Use natural lighting, stand away from the wall to avoid shadows, and use an AI tool like PixPassport to crop, remove the background, and verify compliance.' },
-  { question: 'How much does PixPassport cost?', answer: 'PixPassport processes your photo for just $5.99. You receive a compliant 600x600 digital file and a 4x6 printable sheet with six 2x2 photos, saving you $11+ compared to pharmacy pricing.' },
-  { question: 'Can I travel with a slightly damaged passport?', answer: 'It depends on the type of damage. Slight curling of edges or fanned pages are acceptable. Water damage, loose binding, torn pages, or any damage to the RFID chip will cause you to be turned away.' },
-  { question: 'Do I need a new photo when renewing a damaged passport?', answer: 'Yes. The US government requires a photo taken within the last 6 months for all passport renewals. You cannot reuse the photo from your old passport.' },
-  { question: 'What counts as a "mutilated" passport?', answer: 'A passport is considered mutilated if the data page is unreadable, pages are torn or missing, the cover is detached, or the RFID chip cannot be scanned by machine readers.' },
+  { question: 'What are the standard passport photo dimensions?', answer: 'Passport photo sizes vary by country. The most common sizes are 2x2 inches (51x51 mm) for the US and India, and 35x45 mm for the UK, Europe, Australia, and many other nations. PixPassport automatically applies the correct rules for your selected country.' },
+  { question: 'Can I take a passport photo with my phone?', answer: 'Yes, modern smartphones are perfect for passport photos. Use natural lighting, avoid shadows on the face, and use an AI tool like PixPassport to automatically crop, remove the background, and verify 100% biometric compliance.' },
+  { question: 'How much does PixPassport cost?', answer: 'PixPassport processes your photo for a small one-time fee (typically around $5.99). You receive a fully compliant digital file and a 4x6 printable sheet, saving you significant money compared to studio or pharmacy pricing.' },
+  { question: 'How do I ensure my photo won\'t be rejected?', answer: 'To avoid rejection, ensure even lighting, a neutral expression, and no glasses (for most countries). Our AI validator performs 64+ biometric checks to ensure your photo matches the exact standards used by immigration agencies.' },
+  { question: 'Is my data safe with PixPassport?', answer: 'Absolutely. All uploaded photos are automatically and permanently deleted from our servers within 24 hours. We never share or sell your personal data, and we are fully GDPR and CCPA compliant.' },
 ];
 
 const APP_URL = 'https://www.pixpassport.com';
