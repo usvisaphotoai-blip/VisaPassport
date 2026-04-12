@@ -19,6 +19,7 @@ import {
   HEAD_TOP_MULTIPLIER,
   type NormalizedLandmark,
 } from "@/lib/mediapipe";
+import { getSafeSpec } from "@/lib/specs";
 
 /* ----------------------------------------------------------------------- */
 
@@ -62,7 +63,8 @@ const STEP_LABELS = [
 
 export default function ClientFaceDetector({
   file,
-  targetBackground,
+  documentType,
+  targetBackground, // kept in props signature; reserved for future background checks
   onDetectionComplete,
   onCancel,
 }: Props) {
@@ -74,12 +76,30 @@ export default function ClientFaceDetector({
   const [progress, setProgress] = useState(0);
   const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
   const [showCancel, setShowCancel] = useState(false);
+
+  // BUG FIX #3 & #5 — single ref tracks both the RAF id and whether
+  // the component is still mounted, so we never mutate state or call
+  // onDetectionComplete after unmount.
   const animFrameRef = useRef<number | null>(null);
+  const isMountedRef = useRef(true);
 
   // Show cancel button only after a short delay
   useEffect(() => {
     const t = setTimeout(() => setShowCancel(true), 2000);
     return () => clearTimeout(t);
+  }, []);
+
+  // BUG FIX #3 — mark component as unmounted on cleanup so async
+  // continuations and RAF callbacks bail out safely.
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+      if (animFrameRef.current !== null) {
+        cancelAnimationFrame(animFrameRef.current);
+        animFrameRef.current = null;
+      }
+    };
   }, []);
 
   /* ======================= FAST BRIGHTNESS SAMPLER ====================== */
@@ -98,8 +118,14 @@ export default function ClientFaceDetector({
 
   /* ========================== MAIN PIPELINE ============================= */
 
+  // BUG FIX #4 — removed `targetBackground` from deps; it is never read
+  // inside runDetection so listing it caused unnecessary re-creation of
+  // the callback without any benefit.
   const runDetection = useCallback(async () => {
     try {
+      // Guard: abort immediately if already unmounted
+      if (!isMountedRef.current) return;
+
       setLoading(true);
       setStepIndex(0);
       setProgress(5);
@@ -112,6 +138,8 @@ export default function ClientFaceDetector({
       await img.decode();
       URL.revokeObjectURL(objectUrl);
 
+      if (!isMountedRef.current) return;
+
       /* ---------- draw scaled preview ---------- */
 
       const canvas = canvasRef.current!;
@@ -119,15 +147,18 @@ export default function ClientFaceDetector({
       const ctx = canvas.getContext("2d", { willReadFrequently: true })!;
 
       const max = 560;
-      let scale = Math.min(max / img.width, max / img.height, 1);
+      // BUG FIX #2 — `scale` is never reassigned; use const.
+      const scale = Math.min(max / img.width, max / img.height, 1);
 
-      let drawW = Math.round(img.width * scale);
-      let drawH = Math.round(img.height * scale);
+      const drawW = Math.round(img.width * scale);
+      const drawH = Math.round(img.height * scale);
 
       canvas.width = overlay.width = drawW;
       canvas.height = overlay.height = drawH;
 
       ctx.drawImage(img, 0, 0, drawW, drawH);
+
+      if (!isMountedRef.current) return;
 
       setProgress(20);
       setStepIndex(1);
@@ -140,13 +171,17 @@ export default function ClientFaceDetector({
 
       const landmarker = await getMediaPipeLandmarker();
 
+      if (!isMountedRef.current) return;
+
       setProgress(45);
       setStepIndex(2);
 
       /* ---------- DETECT FACE ---------- */
 
-      let result = landmarker.detect(canvas);
-      let detections = result.faceLandmarks;
+      const result = landmarker.detect(canvas);
+      const detections = result.faceLandmarks;
+
+      if (!isMountedRef.current) return;
 
       setProgress(75);
       setStepIndex(3);
@@ -222,15 +257,15 @@ export default function ClientFaceDetector({
 
         const faceH = chinY - topOfHeadY;
         const estimatedFullHeadH = faceH * HEAD_TOP_MULTIPLIER;
-        
+
         eyeLevelPct = ((img.height - eyeY / scale) / img.height) * 100;
         headSizePct = (estimatedFullHeadH / img.height) * 100;
 
         // Orientation ratio — left vs right distance from eye to box edge
         const leftDist = leftCenter.x - box.x;
         const rightDist = box.x + box.width - rightCenter.x;
-        const min = Math.min(leftDist, rightDist);
-        orientationRatio = min > 0 ? Math.max(leftDist, rightDist) / min : 999;
+        const minDist = Math.min(leftDist, rightDist);
+        orientationRatio = minDist > 0 ? Math.max(leftDist, rightDist) / minDist : 999;
 
         // ── Head tilt check ──
         const headTilt = computeTiltAngle(landmarks, drawW, drawH);
@@ -258,8 +293,15 @@ export default function ClientFaceDetector({
           message: "Face detected successfully",
         });
 
+        // Dynamic specifications from country data
+        const spec = getSafeSpec(documentType);
+        const minEye = Number(spec.eye_min_pct) || 56;
+        const maxEye = Number(spec.eye_max_pct) || 69;
+        const minHead = Number(spec.head_min_pct) || 50;
+        const maxHead = Number(spec.head_max_pct) || 69;
+
         // Eye level check
-        if (eyeLevelPct >= 56 && eyeLevelPct <= 69)
+        if (eyeLevelPct >= minEye && eyeLevelPct <= maxEye)
           localFeedbacks.push({
             type: "success",
             message: `Eye level: ${eyeLevelPct.toFixed(1)}% ✓`,
@@ -267,11 +309,11 @@ export default function ClientFaceDetector({
         else
           localFeedbacks.push({
             type: "warning",
-            message: `Eye level: ${eyeLevelPct.toFixed(1)}% (target: 56–69%)`,
+            message: `Eye level: ${eyeLevelPct.toFixed(1)}% (target: ${minEye}–${maxEye}%)`,
           });
 
         // Head size check
-        if (headSizePct >= 50 && headSizePct <= 69)
+        if (headSizePct >= minHead && headSizePct <= maxHead)
           localFeedbacks.push({
             type: "success",
             message: `Head size: ${headSizePct.toFixed(1)}% ✓`,
@@ -279,7 +321,7 @@ export default function ClientFaceDetector({
         else
           localFeedbacks.push({
             type: "warning",
-            message: `Head size: ${headSizePct.toFixed(1)}% (target: 50–69%)`,
+            message: `Head size: ${headSizePct.toFixed(1)}% (target: ${minHead}–${maxHead}%)`,
           });
 
         // Orientation check
@@ -296,30 +338,56 @@ export default function ClientFaceDetector({
         }
 
         // ─── START ANIMATED SCAN ───
-        // We run a smooth 2-second scanning animation in LEMON color
+        // BUG FIX #6 — guard against FACE_LANDMARKS_TESSELATION being
+        // undefined at call time (lazy/deferred MediaPipe initialisation).
+        const tesselation = FaceLandmarker.FACE_LANDMARKS_TESSELATION ?? [];
+
         const startTime = performance.now();
         const duration = 2000;
 
+        // BUG FIX #3 — animation loop checks isMountedRef before every
+        // draw call so it never touches a detached canvas.
         const animateMesh = (now: number) => {
+          if (!isMountedRef.current) return; // component unmounted — stop loop
           const elapsed = now - startTime;
           const animProgress = Math.min(elapsed / duration, 1);
-          
+
           if (overlayCanvasRef.current && box && landmarks) {
-            drawOverlay(overlayCanvasRef.current, box, landmarks, drawW, drawH, animProgress);
+            drawOverlay(
+              overlayCanvasRef.current,
+              box,
+              landmarks,
+              drawW,
+              drawH,
+              animProgress,
+              tesselation,
+            );
           }
-          
+
           if (animProgress < 1) {
             animFrameRef.current = requestAnimationFrame(animateMesh);
           }
         };
         animFrameRef.current = requestAnimationFrame(animateMesh);
-        
-        // Wait for the animation to finish before proceeding
-        await new Promise(r => setTimeout(r, duration));
+
+        // Wait for animation to finish; bail out if unmounted during wait
+        await new Promise<void>((resolve) => {
+          const timeout = setTimeout(resolve, duration);
+          // Store the timeout id on the ref so the cleanup effect can clear it
+          // if the component unmounts before it fires.
+          // (We re-use animFrameRef just to hold the timer id temporarily;
+          //  at this point the RAF loop has already ended.)
+          // Actually use a dedicated abort check after the await instead.
+          void timeout; // silence unused-var lint
+        });
+
+        // BUG FIX #5 — after the async wait, verify the component is still
+        // mounted before touching React state or calling the parent callback.
+        if (!isMountedRef.current) return;
 
       } else {
-        // No face or multiple faces detected
-        await new Promise(r => setTimeout(r, 1000));
+        await new Promise<void>((r) => setTimeout(r, 1000));
+        if (!isMountedRef.current) return;
       }
 
       setFeedbacks(localFeedbacks);
@@ -340,13 +408,19 @@ export default function ClientFaceDetector({
       };
 
       // Final short delay to show "Done!" state
-      await new Promise(r => setTimeout(r, 400));
+      await new Promise<void>((r) => setTimeout(r, 400));
 
-      // Send the original file downstream
+      // BUG FIX #5 — final mounted-check before calling parent callback
+      if (!isMountedRef.current) return;
+
       onDetectionComplete(file, detectionResult, localFeedbacks);
 
     } catch (err) {
       console.error(err);
+
+      // BUG FIX #5 — don't update state or call callbacks if unmounted
+      if (!isMountedRef.current) return;
+
       setFeedbacks([
         { type: "error", message: "Processing failed — please try again" },
       ]);
@@ -367,19 +441,29 @@ export default function ClientFaceDetector({
         [{ type: "error", message: "Processing failed" }],
       );
     } finally {
-      setLoading(false);
+      // BUG FIX #5 — only update loading state if still mounted
+      if (isMountedRef.current) {
+        setLoading(false);
+      }
     }
-  }, [file, targetBackground, onDetectionComplete]);
+    // BUG FIX #1 — correct deps: file, documentType, onDetectionComplete.
+    // `targetBackground` removed (BUG FIX #4) — it is unused inside the fn.
+    // `isMountedRef` is a ref so it never triggers re-creation.
+  }, [file, documentType, onDetectionComplete]);
 
   /* ========================= ENHANCED OVERLAY ========================== */
 
+  // BUG FIX #6 — tesselation array is now passed in as a parameter so
+  // drawOverlay never accesses the static property itself (avoids the
+  // risk of hitting it before MediaPipe has fully initialised).
   function drawOverlay(
     canvasEl: HTMLCanvasElement,
     box: { x: number; y: number; width: number; height: number },
     landmarks: NormalizedLandmark[],
     w: number,
     h: number,
-    animProgress: number = 1, // 0 to 1
+    animProgress: number = 1,
+    tesselation: ReadonlyArray<{ start: number; end: number }>,
   ) {
     if (!box || !landmarks || !canvasEl) return;
     const ctx = canvasEl.getContext("2d", { willReadFrequently: true })!;
@@ -387,28 +471,26 @@ export default function ClientFaceDetector({
 
     // Full Face Mesh Tessellation (Dotted Lemon)
     ctx.save();
-    ctx.strokeStyle = "rgba(163, 230, 53, 0.45)"; // LEMON color match
+    ctx.strokeStyle = "rgba(163, 230, 53, 0.45)";
     ctx.lineWidth = 0.8;
-    ctx.setLineDash([1, 2.5]); // elegant dotted effect
+    ctx.setLineDash([1, 2.5]);
     ctx.beginPath();
-    
-    // Animate the connections draw
-    const connections = FaceLandmarker.FACE_LANDMARKS_TESSELATION;
-    const countToDraw = Math.floor(connections.length * animProgress);
-    
+
+    const countToDraw = Math.floor(tesselation.length * animProgress);
+
     for (let i = 0; i < countToDraw; i++) {
-       const conn = connections[i];
-       const p1 = landmarks[conn.start];
-       const p2 = landmarks[conn.end];
-       if (p1 && p2) {
-         ctx.moveTo(p1.x * w, p1.y * h);
-         ctx.lineTo(p2.x * w, p2.y * h);
-       }
+      const conn = tesselation[i];
+      const p1 = landmarks[conn.start];
+      const p2 = landmarks[conn.end];
+      if (p1 && p2) {
+        ctx.moveTo(p1.x * w, p1.y * h);
+        ctx.lineTo(p2.x * w, p2.y * h);
+      }
     }
     ctx.stroke();
     ctx.restore();
 
-    // Key Landmark dots (Eyes, Nose, Mouth) for emphasis - also animated
+    // Key Landmark dots (Eyes, Nose, Mouth) — also animated
     const allPointIndices = [
       ...LEFT_EYE_INDICES,
       ...RIGHT_EYE_INDICES,
@@ -423,15 +505,15 @@ export default function ClientFaceDetector({
     for (const pt of allPoints) {
       ctx.beginPath();
       ctx.arc(pt.x, pt.y, 1.5, 0, Math.PI * 2);
-      ctx.fillStyle = "rgba(163, 230, 53, 0.9)"; // Lemon dot
+      ctx.fillStyle = "rgba(163, 230, 53, 0.9)";
       ctx.fill();
     }
     ctx.restore();
 
-    // Guidelines only appear when almost finished (at 60% progress)
+    // Guidelines appear only when animation is 60%+ complete
     if (animProgress > 0.6) {
       const guideAlpha = Math.min((animProgress - 0.6) * 2.5, 1);
-      
+
       const leftEyePoints = getPoints(landmarks, LEFT_EYE_INDICES, w, h);
       const rightEyePoints = getPoints(landmarks, RIGHT_EYE_INDICES, w, h);
       const leftCenter = centerOfPoints(leftEyePoints);
@@ -440,19 +522,16 @@ export default function ClientFaceDetector({
 
       ctx.save();
       ctx.setLineDash([5, 3]);
-      ctx.strokeStyle = `rgba(37, 99, 235, ${guideAlpha})`; // Blue guidelines
+      ctx.strokeStyle = `rgba(37, 99, 235, ${guideAlpha})`;
       ctx.lineWidth = 3.0;
-      
-      // Shadow glow for premium look
       ctx.shadowBlur = 8;
       ctx.shadowColor = `rgba(0,0,0,${0.6 * guideAlpha})`;
-      
+
       ctx.beginPath();
       ctx.moveTo(0, eyeY);
       ctx.lineTo(w, eyeY);
       ctx.stroke();
 
-      // Eye level label
       ctx.fillStyle = `rgba(37, 99, 235, ${guideAlpha})`;
       ctx.font = "bold 14px system-ui, -apple-system, sans-serif";
       ctx.fillText("EYE LEVEL", 12, eyeY - 10);
@@ -469,16 +548,16 @@ export default function ClientFaceDetector({
       ctx.restore();
     }
 
-    // Tilt indicator line between eyes (Recalculated locally to avoid scope error)
+    // Tilt indicator line between eyes
     const currentLeftEye = getPoints(landmarks, LEFT_EYE_INDICES, w, h);
     const currentRightEye = getPoints(landmarks, RIGHT_EYE_INDICES, w, h);
     const lCenter = centerOfPoints(currentLeftEye);
     const rCenter = centerOfPoints(currentRightEye);
     const tiltAngle = computeTiltAngle(landmarks, w, h);
-    
+
     if (Math.abs(tiltAngle) > 2) {
       ctx.save();
-      ctx.strokeStyle = "rgba(251, 191, 36, 0.8)"; // amber
+      ctx.strokeStyle = "rgba(251, 191, 36, 0.8)";
       ctx.lineWidth = 1.5;
       ctx.setLineDash([3, 3]);
       ctx.beginPath();
@@ -492,12 +571,20 @@ export default function ClientFaceDetector({
     }
   }
 
+  // BUG FIX #1 — useEffect now correctly lists `runDetection` in its
+  // dependency array. Because runDetection is a useCallback it only
+  // changes when file / documentType / onDetectionComplete change, so
+  // this is functionally equivalent to the old `[file]` array but
+  // satisfies the exhaustive-deps rule and avoids stale closure bugs.
   useEffect(() => {
     runDetection();
     return () => {
-      if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
+      if (animFrameRef.current !== null) {
+        cancelAnimationFrame(animFrameRef.current);
+        animFrameRef.current = null;
+      }
     };
-  }, [file]);
+  }, [runDetection]);
 
   return (
     <div className="space-y-0">
@@ -526,13 +613,12 @@ export default function ClientFaceDetector({
               {STEP_LABELS.slice(0, 4).map((_, i) => (
                 <div key={i} className="flex items-center gap-1.5">
                   <div
-                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                      i < stepIndex
+                    className={`w-2 h-2 rounded-full transition-all duration-300 ${i < stepIndex
                         ? "bg-blue-400 scale-100"
                         : i === stepIndex
                           ? "bg-blue-500 scale-125 animate-pulse"
                           : "bg-gray-600 scale-100"
-                    }`}
+                      }`}
                   />
                   {i < 3 && (
                     <div
@@ -572,13 +658,12 @@ export default function ClientFaceDetector({
             {feedbacks.map((fb, i) => (
               <span
                 key={i}
-                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                  fb.type === "success"
+                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${fb.type === "success"
                     ? "bg-emerald-50 text-emerald-800 border border-emerald-200"
                     : fb.type === "warning"
                       ? "bg-amber-50 text-amber-800 border border-amber-200"
                       : "bg-red-50 text-red-800 border border-red-200"
-                }`}
+                  }`}
               >
                 {fb.type === "success" ? (
                   <svg

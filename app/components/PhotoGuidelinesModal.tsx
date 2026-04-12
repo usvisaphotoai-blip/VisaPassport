@@ -31,17 +31,17 @@ export default function PhotoGuidelinesModal({ isOpen, onClose }: Props) {
   );
 
   return (
-    <div 
+    <div
       className="fixed inset-0 z-100 flex items-center justify-center p-4 sm:p-6 bg-black/80 transition-opacity"
       onClick={onClose}
     >
       {/* Modal Container */}
-      <div 
+      <div
         className="w-full max-w-5xl h-[80vh] flex flex-col md:flex-row rounded-lg overflow-hidden shadow-2xl relative animate-in fade-in zoom-in-95 duration-200 bg-[#4A4A4A]"
         onClick={e => e.stopPropagation()}
       >
         {/* Close button absolute top right */}
-        <button 
+        <button
           onClick={onClose}
           className="absolute top-4 right-4 z-50 p-2 bg-black/40 text-white rounded-full hover:bg-black/60 transition-colors"
         >
@@ -61,11 +61,10 @@ export default function PhotoGuidelinesModal({ isOpen, onClose }: Props) {
                   setActiveExampleId(category.examples[0].id);
                 }
               }}
-              className={`text-left p-3 md:p-4 whitespace-nowrap md:whitespace-normal border-r md:border-r-0 md:border-b border-[#666] transition-colors ${
-                activeCategoryId === category.id 
-                  ? "bg-[#6A6A6A] text-white" 
+              className={`text-left p-3 md:p-4 whitespace-nowrap md:whitespace-normal border-r md:border-r-0 md:border-b border-[#666] transition-colors ${activeCategoryId === category.id
+                  ? "bg-[#6A6A6A] text-white"
                   : "text-[#FFCC33] hover:bg-[#606060]"
-              }`}
+                }`}
             >
               <span className="font-medium">{category.title}</span>
             </button>
@@ -74,23 +73,23 @@ export default function PhotoGuidelinesModal({ isOpen, onClose }: Props) {
 
         {/* --- Main Content Area --- */}
         <div className="w-full md:w-2/3 flex flex-col bg-[#3A3A3A] text-white">
-          
+
           {/* Top: Active Image & Details */}
           <div className="flex-1 p-4 sm:p-6 md:p-8 flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-6 overflow-y-auto">
             {/* Image Box */}
             <div className="relative shrink-0 w-44 h-44 sm:w-56 sm:h-56 md:w-64 md:h-64 bg-white rounded-md shadow flex items-center justify-center overflow-hidden">
               <div className="relative w-full h-full flex items-center justify-center">
-                <Image 
-                  src={activeExample.src} 
-                  alt={activeExample.description} 
+                <Image
+                  src={activeExample.src}
+                  alt={activeExample.description}
                   fill
-                  className={`object-cover transition-all duration-300 ${activeExample.imageClassName || ""}`} 
+                  className={`object-cover transition-all duration-300 ${activeExample.imageClassName || ""}`}
                 />
               </div>
               
               {/* Overlay Check/Cross */}
               <div className="absolute -bottom-2 -right-2 w-14 h-14 bg-[#3A3A3A] rounded-full p-2 translate-x-1 translate-y-1">
-                 {activeExample.isAcceptable ? <CheckIcon /> : <CrossIcon />}
+                {activeExample.isAcceptable ? <CheckIcon /> : <CrossIcon />}
               </div>
             </div>
 
@@ -114,20 +113,19 @@ export default function PhotoGuidelinesModal({ isOpen, onClose }: Props) {
               <button
                 key={ex.id}
                 onClick={() => setActiveExampleId(ex.id)}
-                className={`relative shrink-0 w-16 h-16 sm:w-20 sm:h-20 bg-white shadow-sm transition-all ${
-                  activeExampleId === ex.id 
-                    ? "ring-4 ring-[#FFCC33] z-10 scale-105" 
+                className={`relative shrink-0 w-16 h-16 sm:w-20 sm:h-20 bg-white shadow-sm transition-all ${activeExampleId === ex.id
+                    ? "ring-4 ring-[#FFCC33] z-10 scale-105"
                     : "opacity-80 hover:opacity-100"
-                }`}
+                  }`}
               >
-                <Image 
-                  src={ex.src} 
-                  alt="Thumbnail" 
+                <Image
+                  src={ex.src}
+                  alt="Thumbnail"
                   fill
                   sizes="80px"
                   className={`object-cover ${ex.imageClassName || ""}`}
                 />
-                
+
                 {/* Mini overlay Check/Cross */}
                 <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-[#555] rounded-full p-0.5 z-20">
                   {ex.isAcceptable ? <CheckIcon /> : <CrossIcon />}

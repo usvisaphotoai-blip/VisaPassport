@@ -55,11 +55,24 @@ function ToolForm() {
   const [previewUrl, setPreviewUrl] = useState<string>("");
 
   useEffect(() => {
+    const saved = localStorage.getItem("selectedDoc");
+    if (saved && documentTypes.some((d) => d.id === saved)) {
+      setSelectedDoc(saved);
+    }
+  }, []);
+
+  useEffect(() => {
     if (initialType && documentTypes.some((d) => d.id === initialType)) {
       setSelectedDoc(initialType);
       setIsLocked(true);
     }
   }, [initialType]);
+
+  useEffect(() => {
+    if (selectedDoc) {
+      localStorage.setItem("selectedDoc", selectedDoc);
+    }
+  }, [selectedDoc]);
 
   useEffect(() => {
     // Check if user has already seen the guide
@@ -365,6 +378,30 @@ function ToolForm() {
 
         {/* Main Workspace Area */}
         <div className="flex-1 flex flex-col min-w-0 bg-gray-100 border border-white rounded-3xl p-4 lg:p-6 overflow-y-auto">
+          
+          {/* Selected Document Header */}
+          <div className="mb-6 flex items-center justify-between bg-white/60 backdrop-blur-sm px-4 py-3 rounded-2xl border border-white shadow-sm">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 flex items-center justify-center bg-white rounded-xl shadow-inner border border-slate-100 text-2xl">
+                {activeDoc.flag}
+              </div>
+              <div className="flex flex-col">
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1">Active Requirement</span>
+                <h2 className="text-sm font-black text-slate-900 leading-none">{activeDoc.label}</h2>
+              </div>
+            </div>
+            <div className="flex items-center gap-4 text-right">
+              <div className="hidden sm:flex flex-col">
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1">Dimensions</span>
+                <span className="text-xs font-bold text-slate-600 leading-none">{activeDoc.size}</span>
+              </div>
+              <div className="w-px h-8 bg-slate-200 hidden sm:block" />
+              <div className="flex flex-col">
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1">Background</span>
+                <span className="text-xs font-bold text-lime-600 leading-none">{activeDoc.bg_color}</span>
+              </div>
+            </div>
+          </div>
           
           {/* Initial State: Upload Area */}
           {!selectedFile && !report && (

@@ -65,32 +65,7 @@ export default function OrderSummary({
             </p>
           </div>
 
-          {!hasPaid && (
-            <>
-              <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 flex items-center justify-between mt-3">
-                <div>
-                  <p className="text-[10px] font-bold text-amber-700 uppercase tracking-widest">
-                    Limited Time Offer
-                  </p>
-                  <p className="text-sm font-black text-amber-700 mt-0.5">
-                    Introductory price for early users
-                  </p>
-                </div>
-                <div className="text-right">
-                  <span className="text-slate-400 line-through text-xs font-bold mr-2">
-                    {localPrice?.symbol || "$"}
-                    {((localPrice?.amount || 5.99) * 2).toFixed(
-                      (localPrice?.amount || 0) % 1 === 0 ? 0 : 2,
-                    )}
-                  </span>
-                  <span className="text-lg font-black text-amber-600">
-                    {localPrice?.formatted || "..."}
-                  </span>
-                </div>
-              </div>
 
-            </>
-          )}
 
           <div className="py-3 space-y-2.5 border-b border-slate-100 mt-3">
             {[
@@ -125,14 +100,7 @@ export default function OrderSummary({
             </div>
           </div>
 
-          <div className="flex items-center justify-between py-3">
-            <span className="text-sm font-black text-slate-900 uppercase">
-              Total
-            </span>
-            <span className="text-2xl font-black text-slate-900">
-              {localPrice?.formatted || "..."}
-            </span>
-          </div>
+
 
           {!hasPaid && (
             <div className="py-3 mt-2 space-y-4 border-t border-slate-100">

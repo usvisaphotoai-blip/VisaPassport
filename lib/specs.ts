@@ -6,14 +6,14 @@ export interface CountrySpec {
   name: string;
   country: string;
   flag: string;
-  width_mm: number;
-  height_mm: number;
-  width_px: number;
-  height_px: number;
-  head_min_pct: number;
-  head_max_pct: number;
-  eye_min_pct: number;
-  eye_max_pct: number;
+  width_mm: number | string;
+  height_mm: number | string;
+  width_px: number | string;
+  height_px: number | string;
+  head_min_pct: number | string;
+  head_max_pct: number | string;
+  eye_min_pct: number | string;
+  eye_max_pct: number | string;
   bg_color: string;
   price: number;
   print_size: "A4" | "Letter";
@@ -22,42 +22,101 @@ export interface CountrySpec {
 
 export const allSpecs = specsData as CountrySpec[];
 
+// ---------------------------------------------------------------
+// getSpecById — resolves a document-type slug to a CountrySpec.
+//
+// BUG FIX: The old function returned `undefined` for any slug that
+// collapsed to just the country name (e.g. "nigeria" from
+// "nigeria-photo"), causing route.ts to silently fall back to
+// US passport defaults (50–69% head range) for country specs that
+// require 70–80%. This caused hair to be cropped on those photos.
+//
+// Fix strategy:
+//  1. Direct match (unchanged)
+//  2. Strip known suffixes, then try -passport, -visa, exact (unchanged)
+//  3. NEW: Try treating the base as a country name fragment and
+//     searching for any spec whose id starts with that base.
+//     Prefers -passport over -visa over anything else.
+//  4. Special hardcoded overrides (unchanged + extended)
+// ---------------------------------------------------------------
 export function getSpecById(id: string): CountrySpec | undefined {
+  if (!id) return undefined;
+
   // 1. Direct match
   const direct = allSpecs.find((s) => s.id === id);
   if (direct) return direct;
 
-  // 2. Slug-style match (remove common suffixes)
+  // 2. Strip known URL suffixes to get the base slug
   const base = id
+    .replace(/-photo-editor-tool$/, "")
+    .replace(/-editor-tool$/, "")
     .replace(/-photo-editor$/, "")
     .replace(/-photo$/, "")
-    .replace(/-editor-tool$/, "");
-  
-  const byproduct = allSpecs.find((s) => 
-    s.id === base || 
-    s.id === `${base}-visa` || 
-    s.id === `${base}-passport`
-  );
-  if (byproduct) return byproduct;
+    .replace(/-editor$/, "")
+    .toLowerCase()
+    .trim();
 
-  // 3. Special cases
-  if (base === "us-visa") return allSpecs.find(s => s.id === "ds-160-visa");
-  if (base === "general") return allSpecs.find(s => s.id === "us-passport");
-  if (base === "u-s-a") return allSpecs.find(s => s.id === "us-passport");
-  if (base === "belguim" || base === "belgium-visa") return allSpecs.find(s => s.id === "belgium-passport");
+  // 3. Try exact base, then base-passport, then base-visa
+  const byBase =
+    allSpecs.find((s) => s.id === base) ||
+    allSpecs.find((s) => s.id === `${base}-passport`) ||
+    allSpecs.find((s) => s.id === `${base}-visa`);
+  if (byBase) return byBase;
+
+  // 4. Special hardcoded overrides
+  if (base === "us-visa" || base === "ds-160") return allSpecs.find((s) => s.id === "ds-160-visa");
+  if (base === "general") return allSpecs.find((s) => s.id === "us-passport");
+  if (base === "u-s-a" || base === "usa") return allSpecs.find((s) => s.id === "us-passport");
+  if (base === "belguim" || base === "belgium") return allSpecs.find((s) => s.id === "belgium-passport");
+  if (base === "uk" || base === "united-kingdom") return allSpecs.find((s) => s.id === "uk-passport");
+
+  // ---------------------------------------------------------------
+  // BUG FIX — Country-name fragment fallback.
+  // If after stripping all known suffixes we still have no match,
+  // the slug might just be the country name (e.g. "nigeria" from
+  // "nigeria-photo"). Search for any spec whose id STARTS WITH the
+  // base fragment, preferring -passport, then -visa, then first hit.
+  // Without this, route.ts gets `undefined` and uses US defaults,
+  // causing hair to be cut on 70-80% head-range country photos.
+  // ---------------------------------------------------------------
+  const passportFallback = allSpecs.find((s) => s.id.startsWith(`${base}-`) && s.id.endsWith("-passport"));
+  if (passportFallback) return passportFallback;
+
+  const visaFallback = allSpecs.find((s) => s.id.startsWith(`${base}-`) && s.id.endsWith("-visa"));
+  if (visaFallback) return visaFallback;
+
+  const anyFallback = allSpecs.find((s) => s.id.startsWith(`${base}-`));
+  if (anyFallback) return anyFallback;
 
   return undefined;
+}
+
+// ---------------------------------------------------------------
+// getSafeSpec — always returns a spec, never undefined.
+// Use this in route.ts instead of getSpecById() to make the
+// fallback to US passport explicit and logged, not silent.
+// ---------------------------------------------------------------
+export function getSafeSpec(id: string): CountrySpec {
+  const spec = getSpecById(id);
+  if (!spec) {
+    console.warn(`[specs] No spec found for id="${id}", falling back to us-passport`);
+    return allSpecs.find((s) => s.id === "us-passport")!;
+  }
+  return spec;
 }
 
 export function getDocumentTypes(): DocumentType[] {
   return allSpecs.map((s) => ({
     id: s.id,
     label: s.name,
-    size: `${s.width_mm}×${s.height_mm} mm (${s.width_px}×${s.height_px} px)`,
+    size:
+      s.width_mm !== "unspecified" && s.height_mm !== "unspecified"
+        ? `${s.width_mm}×${s.height_mm} mm (${s.width_px}×${s.height_px} px)`
+        : `${s.width_px}×${s.height_px} px`,
     bg_color: s.bg_color,
     country: s.country,
     flag: s.flag,
     price: s.price,
-    printSize: s.print_size
+    printSize: s.print_size,
   }));
 }

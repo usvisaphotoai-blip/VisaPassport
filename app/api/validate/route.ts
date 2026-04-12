@@ -72,8 +72,8 @@ export async function POST(req: NextRequest) {
     
     // Get dynamic specifications
     const spec = getSpecById(documentType);
-    const targetW = spec?.width_px || 600;
-    const targetH = spec?.height_px || 600;
+    const targetW = Number(spec?.width_px) || 600;
+    const targetH = Number(spec?.height_px) || 600;
     const isStrict = true; 
 
     // 1. File Format
@@ -182,8 +182,8 @@ export async function POST(req: NextRequest) {
       // Eye Level
       if (clientData.eyeLevelPct !== null) {
         const pct = clientData.eyeLevelPct;
-        const min = spec?.eye_min_pct || 56;
-        const max = spec?.eye_max_pct || 69;
+        const min = Number(spec?.eye_min_pct) || 56;
+        const max = Number(spec?.eye_max_pct) || 69;
         if (pct >= min && pct <= max) {
           checks.push({
             name: "Eye Level",
@@ -202,8 +202,8 @@ export async function POST(req: NextRequest) {
       // Head Size
       if (clientData.headSizePct !== null) {
         const pct = clientData.headSizePct;
-        const minHead = spec?.head_min_pct || 50;
-        const maxHead = spec?.head_max_pct || 69;
+        const minHead = Number(spec?.head_min_pct) || 50;
+        const maxHead = Number(spec?.head_max_pct) || 69;
         if (pct >= minHead && pct <= maxHead) {
           checks.push({
             name: "Head Size",

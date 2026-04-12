@@ -18,23 +18,23 @@ const UploadArea: React.FC<UploadAreaProps> = ({
   return (
     <div className="flex-1 flex flex-col gap-6">
       {/* Photo Guidelines Button */}
-      <button
+      {/* <button
         onClick={() => setGuidelinesOpen(true)}
         className="w-full flex items-center justify-center gap-2 p-4 bg-white hover:bg-slate-50 border border-slate-200 shadow-sm rounded-2xl text-slate-700 font-semibold transition-all hover:scale-[1.01]"
       >
         <InfoIcon className="w-5 h-5 text-lime-600" />
         View Photo Guidelines & Examples
-      </button>
+      </button> */}
 
       {/* Photo Guidelines Modal */}
-      <PhotoGuidelinesModal
+      {/* <PhotoGuidelinesModal
         isOpen={guidelinesOpen}
         onClose={() => setGuidelinesOpen(false)}
-      />
+      /> */}
 
       {/* Manual Guide Trigger */}
       <div className="flex justify-center -mt-2">
-        <button 
+        <button
           onClick={onShowGuide}
           className="text-[11px] font-bold text-indigo-600 hover:text-indigo-800 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-indigo-50 hover:bg-indigo-100 transition-colors"
         >
