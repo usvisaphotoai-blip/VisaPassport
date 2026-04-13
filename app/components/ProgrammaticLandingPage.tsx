@@ -87,9 +87,20 @@ export default function ProgrammaticLandingPage({ spec, slug }: Props) {
               <div className="flex flex-col sm:flex-row gap-4 mb-8">
                 <Link
                   href={`/tool?type=${spec.id}`}
-                  className="inline-flex items-center justify-center px-8 py-4 border border-transparent text-base font-bold rounded-2xl text-white bg-indigo-600 hover:bg-indigo-700 shadow-xl shadow-indigo-600/20 transition-all transform hover:-translate-y-1 hover:shadow-indigo-600/40"
+                  className="inline-flex items-center justify-center px-8 py-4 border border-transparent text-base font-bold rounded-2xl text-white bg-indigo-600 hover:bg-indigo-700 shadow-xl shadow-indigo-600/20 transition-all transform hover:-translate-y-1 hover:shadow-indigo-600/40 relative group overflow-hidden"
                 >
-                  Upload Your Photo Now →
+                  <span className="relative z-10 flex items-center">
+                    Upload Your Photo Now
+                    <svg className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                  </span>
+                  <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                  {/* Visual "Click" hint pulse */}
+                  <span className="absolute -top-1 -right-1 flex h-4 w-4">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-4 w-4 bg-indigo-500"></span>
+                  </span>
                 </Link>
               </div>
 
@@ -221,8 +232,14 @@ export default function ProgrammaticLandingPage({ spec, slug }: Props) {
           href={`/tool?type=${spec.id}`}
           className="pointer-events-auto flex items-center justify-between w-full bg-slate-900 text-white p-2.5 pl-6 rounded-2xl shadow-2xl hover:bg-slate-800 transition-all border border-slate-700 hover:-translate-y-1 transform group"
         >
-          <span className="font-bold text-sm">Start Your {countryName} Photo</span>
-          <span className="bg-indigo-600 group-hover:bg-indigo-500 transition-colors px-5 py-2.5 rounded-xl text-sm font-black shadow-[0_4px_14px_0_rgb(79,70,229,0.39)]">Free Scan →</span>
+          <div className="flex flex-col">
+            <span className="font-bold text-sm">Start Your {countryName} Photo</span>
+            <span className="text-[10px] text-slate-400 font-medium animate-pulse">Click here to start now ➜</span>
+          </div>
+          <span className="relative bg-indigo-600 group-hover:bg-indigo-500 transition-colors px-5 py-2.5 rounded-xl text-sm font-black shadow-[0_4px_14px_0_rgb(79,70,229,0.39)] overflow-hidden">
+            <span className="relative z-10">Free Scan →</span>
+            <span className="absolute inset-0 bg-white/10 animate-pulse"></span>
+          </span>
         </Link>
       </div>
     </main>

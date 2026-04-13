@@ -31,9 +31,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const canonicalSlug = slug; // If it's valid, it's canonical for this intent
     const baseUrl = `https://www.pixpassport.com/${canonicalSlug}`;
     
-    // SEO Optimized Title & Description based on intent
-    const title = `${spec.country} ${intentLabel} Photo Editor | Official Size & Background`;
-    const description = `Create an official ${spec.country} ${intentLabel} photo online. Automatic ${spec.width_mm}x${spec.height_mm}mm cropping, background removal, and biometric validation for only ${localPrice.formatted}.`;
+    // SEO Optimized Title & Description based on intent (High CTR & 2026 Ready)
+    const title = isVisaUrl 
+      ? `Official ${spec.country} Visa Photo Online (2026) | ${spec.width_mm}x${spec.height_mm}mm`
+      : `Official ${spec.country} Passport Photo Maker (2026) | 100% Approved`;
+    
+    const description = `Get your ${spec.country} ${intentLabel.toLowerCase()} photo in 2 mins. Guaranteed acceptance or money back. AI-powered ${spec.width_mm}x${spec.height_mm}mm cropping & background check. ➜ Click to Start!`;
 
     return {
       title,
