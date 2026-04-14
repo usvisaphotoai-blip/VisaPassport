@@ -8,7 +8,7 @@ const visaTypes = [
   "India Passport",
   "UK Passport",
   "Schengen Visa",
-  
+
   "Australia Passport",
 ];
 
@@ -140,17 +140,18 @@ export default function HomeHero() {
             <span className="hc-tp-cnt">Trusted by 17,000+ users</span>
           </div>
 
-          <h1 className="hc-h1">Instant AI Passport & Visa Photo Creator</h1>
+          <h1 className="hc-h1">
+            Get Your Passport or Visa Photo — In 30 Seconds
+          </h1>
 
-          
-            <div className="hc-anim-txt">
-              Passport • Visa • ID Card • Driver's License
-            </div>
-       
+
+          <div className="hc-anim-txt">
+            Passport • Visa • ID Card • Driver's License
+          </div>
+
 
           <p className="hc-desc">
-            100% compliant with international biometric standards (ICAO) — or your money back.
-            Avoid rejection, delays, and resubmission globally.
+            Avoid rejection, delays, and resubmissions. AI-powered photos biometric check that meet official global standards — instantly.
           </p>
 
           <div className="hc-btns">

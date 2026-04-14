@@ -4,9 +4,9 @@ import Link from "next/link";
 import Image from "next/image";
 import HomeSections from "./HomeSections";
 import HomeFAQ from "./HomeFAQ";
+import LongformSection from "./LongformSection";      // ← NEW
 import { SpecEntry } from "../../lib/slug-utils";
 import "../home.css";
-import { usePathname } from "next/navigation";
 import { generateLongformContent } from "@/lib/content-weaver";
 
 interface Props {
@@ -19,7 +19,6 @@ export default function ProgrammaticLandingPage({ spec, slug }: Props) {
   const docName = isVisaIntent ? "Visa" : "Passport";
   const countryName = spec.country;
 
-  // Determine the sibling link for SEO cross-linking (normalized to root)
   const countrySlug = slug.replace("-passport-photo-editor", "").replace("-visa-photo-editor", "");
   const siblingLabel = isVisaIntent ? "Passport" : "Visa";
   const siblingHref = `/${countrySlug}-${isVisaIntent ? "passport" : "visa"}-photo-editor`;
@@ -28,33 +27,32 @@ export default function ProgrammaticLandingPage({ spec, slug }: Props) {
   const customContent = isVisaIntent ? spec.visacontent : spec.passportcontent;
   const longformContent = generateLongformContent(spec, isVisaIntent);
 
-  // Extract headers for Table of Contents
+  // Extract TOC from custom HTML or generated blocks
   let tableOfContents: { id: string; text: string }[] = [];
-
   let processedCustomContent = customContent;
+
   if (customContent) {
     let index = 0;
-    // Extract TOC items first
     const h2Regex = /<h2(.*?)>(.*?)<\/h2>/g;
     let match;
     while ((match = h2Regex.exec(customContent)) !== null) {
       const text = match[2].replace(/<[^>]*>?/gm, "").trim();
       tableOfContents.push({ id: `custom-section-${index++}`, text });
     }
-    // Now inject IDs into the HTML for rendering
     index = 0;
-    processedCustomContent = customContent.replace(/<h2(.*?)>(.*?)<\/h2>/g, (match, attrs, content) => {
-      return `<h2 id="custom-section-${index++}"${attrs}>${content}</h2>`;
-    });
+    processedCustomContent = customContent.replace(
+      /<h2(.*?)>(.*?)<\/h2>/g,
+      (_, attrs, content) => `<h2 id="custom-section-${index++}"${attrs}>${content}</h2>`
+    );
   } else {
     tableOfContents = longformContent
-      .filter(block => block.type === "h2")
+      .filter((block) => block.type === "h2")
       .map((block, i) => ({ id: `section-${i}`, text: block.text || "" }));
   }
 
   return (
     <main className="min-h-screen bg-white hcr">
-      {/* Hero section */}
+      {/* ── HERO ─────────────────────────────────────────── */}
       <section className="relative overflow-hidden pt-20 pb-16 lg:pt-32 lg:pb-24 bg-gradient-to-b from-[#f8faf9] to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="lg:grid lg:grid-cols-2 lg:gap-12 items-center">
@@ -78,7 +76,6 @@ export default function ProgrammaticLandingPage({ spec, slug }: Props) {
               <h1 className="text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight mb-6">
                 Official {spec.country} {docName} Photo Editor Online
               </h1>
-              {/* ... (rest of the component) */}
 
               <p className="text-lg text-slate-600 mb-8 leading-relaxed max-w-xl">
                 Create a 100% compliant {docName} photo in seconds. Our AI ensures the correct {spec.width_mm}x{spec.height_mm}mm size, background color, and biometric alignment for {countryName}.
@@ -96,7 +93,6 @@ export default function ProgrammaticLandingPage({ spec, slug }: Props) {
                     </svg>
                   </span>
                   <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-                  {/* Visual "Click" hint pulse */}
                   <span className="absolute -top-1 -right-1 flex h-4 w-4">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-4 w-4 bg-indigo-500"></span>
@@ -105,12 +101,7 @@ export default function ProgrammaticLandingPage({ spec, slug }: Props) {
               </div>
 
               <div className="grid grid-cols-2 gap-4">
-                {[
-                  "Biometric Validation",
-                  "Background Removal",
-                  "Instant Download",
-                  "Print-Ready Sheets"
-                ].map((item, i) => (
+                {["Biometric Validation", "Background Removal", "Instant Download", "Print-Ready Sheets"].map((item, i) => (
                   <div key={i} className="flex items-center space-x-2 text-sm text-slate-500 font-medium">
                     <svg className="w-5 h-5 text-emerald-500" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
@@ -131,7 +122,6 @@ export default function ProgrammaticLandingPage({ spec, slug }: Props) {
                 priority
               />
               <div className="absolute inset-0 border-2 border-white/60 rounded-3xl pointer-events-none mix-blend-overlay"></div>
-
             </div>
           </div>
         </div>
@@ -164,67 +154,20 @@ export default function ProgrammaticLandingPage({ spec, slug }: Props) {
         </div>
       </section>
 
-      {/* ── LONGFORM CONTENT SECTION ─────────────────────── */}
-      <section className="bg-white py-20 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="lg:flex lg:gap-16">
-
-            {/* Sidebar / Table of Contents */}
-            <aside className="hidden lg:block w-64 flex-shrink-0">
-              <div className="sticky top-24 p-8 bg-slate-50 rounded-3xl border border-slate-100">
-                <h4 className="text-sm font-black text-slate-900 uppercase tracking-widest mb-4">In this guide</h4>
-                <nav className="space-y-4">
-                  {tableOfContents.map((item) => (
-                    <a
-                      key={item.id}
-                      href={`#${item.id}`}
-                      className="block text-sm font-semibold text-slate-500 hover:text-blue-600 transition-colors"
-                    >
-                      {item.text}
-                    </a>
-                  ))}
-                </nav>
-              </div>
-            </aside>
-
-            {/* Main Article Content */}
-            <article className="flex-1 max-w-3xl">
-              <div className="prose prose-slate prose-lg max-w-none">
-                {processedCustomContent ? (
-                  <div dangerouslySetInnerHTML={{ __html: processedCustomContent }} />
-                ) : (
-                  longformContent.map((block, i) => {
-                    if (block.type === "h2") {
-                      const tocItem = tableOfContents.find(t => t.text === block.text);
-                      return <h2 key={i} id={tocItem?.id} className="text-3xl font-extrabold text-slate-900 mt-16 mb-8 scroll-mt-24">{block.text}</h2>;
-                    }
-                    if (block.type === "h3") return <h3 key={i} className="text-xl font-bold text-slate-900 mt-12 mb-4">{block.text}</h3>;
-                    if (block.type === "h4") return <h4 key={i} className="text-lg font-bold text-slate-900 mt-8 mb-2">{block.text}</h4>;
-                    if (block.type === "p") return <p key={i} className="text-slate-600 leading-relaxed mb-6 text-lg">{block.text}</p>;
-                    if (block.type === "ul") return (
-                      <ul key={i} className="space-y-4 mb-8 list-none p-0">
-                        {block.items?.map((li, j) => (
-                          <li key={j} className="flex items-start space-x-3 text-slate-600">
-                            <span className="text-blue-500 font-bold mt-1">✓</span>
-                            <span className="text-lg leading-relaxed">{li}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    );
-                    return null;
-                  })
-                )}
-              </div>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <HomeSections
-        price={spec.local_price ? `${spec.local_price.symbol}${spec.local_price.amount}` : `$${spec.price}`}
+      {/* ── LONGFORM CONTENT — now uses the new component ── */}
+      <LongformSection
+        tableOfContents={tableOfContents}
+        processedCustomContent={processedCustomContent}
+        longformContent={longformContent as any}
+        countryName={countryName}
+        docName={docName}
       />
 
-      <HomeFAQ type={isVisaIntent ? "visa" : "passport"} />
+      {/* <HomeSections
+        price={spec.local_price ? `${spec.local_price.symbol}${spec.local_price.amount}` : `$${spec.price}`}
+      /> */}
+
+      {/* <HomeFAQ type={isVisaIntent ? "visa" : "passport"} /> */}
 
       {/* ── STICKY CTA ────────────────────────────────────── */}
       <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-md px-4 pointer-events-none">
