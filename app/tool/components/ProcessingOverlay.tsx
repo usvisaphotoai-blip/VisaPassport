@@ -1,5 +1,6 @@
 import React from "react";
 import { CrossIcon, CheckIcon } from "./Icons";
+import type { DocumentType } from "../types";
 
 interface ProcessingOverlayProps {
   isCropping: boolean;
@@ -8,6 +9,7 @@ interface ProcessingOverlayProps {
   setCropMsg: (msg: string) => void;
   selectedFile: File | null;
   previewUrl: string;
+  activeDoc?: DocumentType;
 }
 
 const ProcessingOverlay: React.FC<ProcessingOverlayProps> = ({
@@ -17,14 +19,31 @@ const ProcessingOverlay: React.FC<ProcessingOverlayProps> = ({
   setCropMsg,
   selectedFile,
   previewUrl,
+  activeDoc,
 }) => {
   if (!isCropping) return null;
 
   const steps = [
-    { label: "Preparing Image", key: "crop" },
-    { label: "Removing Background", key: "background" },
-    { label: "Biometric Alignment", key: "Applying" },
-    { label: "ICAO Compliance Check", key: "preview" },
+    {
+      label: "Preparing image",
+      sub: "Decoding your photo and normalizing color space...",
+      key: "crop",
+    },
+    {
+      label: "Removing background",
+      sub: "AI-powered background replacement",
+      key: "background",
+    },
+    {
+      label: "Biometric alignment",
+      sub: "Face centering & head-height calibration",
+      key: "Applying",
+    },
+    {
+      label: "Compliance check",
+      sub: "ICAO / State Dept. standards verified",
+      key: "preview",
+    },
   ];
 
   let activeIdx = 0;
@@ -48,252 +67,290 @@ const ProcessingOverlay: React.FC<ProcessingOverlayProps> = ({
   )
     activeIdx = 3;
 
+  const progressPercents = [14, 38, 65, 90];
+
   return (
-    <div className="fixed inset-0 z-[100] bg-white flex flex-col items-center justify-center overflow-hidden">
+    <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center overflow-hidden"
+      style={{ background: "#111114" }}>
 
-      {/* Close */}
-      <button
-        className="absolute top-3 right-3 sm:top-5 sm:right-5 w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center text-slate-400 hover:text-slate-600 transition-all z-30 bg-white/80 backdrop-blur-sm rounded-full shadow-sm border border-slate-100"
-        onClick={() => { setIsCropping(false); setCropMsg(""); }}
-      >
-        <CrossIcon className="w-4 h-4 sm:w-5 sm:h-5" />
-      </button>
-
-      {/* Keyframes */}
       <style>{`
         @keyframes scanPingPong {
-          0% { top: -1%; opacity: 0; }
-          4% { opacity: 1; }
-          48% { top: 99%; opacity: 1; }
-          52% { top: 99%; opacity: 1; }
-          96% { top: -1%; opacity: 1; }
-          100% { top: -1%; opacity: 0; }
-        }
-        @keyframes borderGlow {
-          0%, 100% { border-color: rgba(99,102,241,0.3); box-shadow: 0 0 0 0 rgba(99,102,241,0), inset 0 0 0 0 rgba(99,102,241,0); }
-          50% { border-color: rgba(99,102,241,1); box-shadow: 0 0 30px 8px rgba(99,102,241,0.3), inset 0 0 8px 2px rgba(99,102,241,0.05); }
+          0% { top: 0%; opacity: 0; }
+          5% { opacity: 1; }
+          48% { top: 98%; opacity: 1; }
+          52% { top: 98%; opacity: 1; }
+          95% { top: 0%; opacity: 1; }
+          100% { top: 0%; opacity: 0; }
         }
         @keyframes cardFloat {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-6px); }
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-5px); }
         }
-        @keyframes cornerPulse {
-          0%, 100% { transform: scale(1); opacity: 0.7; }
-          50% { transform: scale(1.5); opacity: 1; }
+        @keyframes dotBounce {
+          0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+          40% { transform: translateY(-4px); opacity: 1; }
         }
-        @keyframes gridFade {
-          0% { opacity: 0; }
-          30% { opacity: 0.12; }
-          70% { opacity: 0.12; }
-          100% { opacity: 0; }
-        }
-        @keyframes crosshairPulse {
-          0%, 100% { opacity: 0.4; }
+        @keyframes pulseRing {
+          0%, 100% { opacity: 0.3; }
           50% { opacity: 1; }
         }
-        @keyframes overlayIn {
-          from { opacity: 0; transform: scale(0.97); }
-          to { opacity: 1; transform: scale(1); }
+        @keyframes shimmer {
+          0% { left: -100%; }
+          100% { left: 200%; }
         }
-        @keyframes dotBounce { 
-          0%, 80%, 100% { transform: translateY(0); } 
-          40% { transform: translateY(-5px); } 
+        @keyframes overlayIn {
+          from { opacity: 0; transform: translateY(8px); }
+          to { opacity: 1; transform: translateY(0); }
         }
       `}</style>
 
-      {/* 
-        Mobile: stacked vertically — photo on top, steps below
-        Desktop: side-by-side — steps left, photo right
-      */}
+      {/* Subtle radial glow */}
       <div
-        className="flex flex-col lg:flex-row items-center gap-5 sm:gap-6 lg:gap-12 w-full max-w-[420px] sm:max-w-[500px] lg:max-w-[1000px] px-5 sm:px-8 lg:px-12"
-        style={{ animation: "overlayIn 0.35s ease-out" }}
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse at 20% 50%, rgba(99,102,241,0.06) 0%, transparent 60%)",
+        }}
+      />
+
+      {/* Close */}
+      <button
+        className="absolute top-4 right-4 z-30 w-8 h-8 flex items-center justify-center rounded-full"
+        style={{
+          background: "rgba(255,255,255,0.06)",
+          border: "1px solid rgba(255,255,255,0.1)",
+          color: "rgba(255,255,255,0.5)",
+        }}
+        onClick={() => { setIsCropping(false); setCropMsg(""); }}
       >
+        <CrossIcon className="w-4 h-4" />
+      </button>
 
-        {/* ─── Title (always on top on mobile) ─── */}
-        <div className="w-full text-center lg:text-left lg:hidden">
-          <h2 className="text-xl font-black text-slate-900 leading-tight">
-            Processing your photo
-          </h2>
-          <p className="text-slate-400 text-xs mt-1 font-medium">Optimizing for government standards</p>
-        </div>
+      <div
+        className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12 w-full max-w-[420px] lg:max-w-[900px] px-6 lg:px-12"
+        style={{ animation: "overlayIn 0.4s ease-out" }}
+      >
+        {/* ─── Photo Card ─── */}
+        <div className="flex flex-col items-center gap-4 order-1 lg:order-1 flex-shrink-0">
 
-        {/* ─── Photo Card (top on mobile, right on desktop) ─── */}
-        <div className="order-1 lg:order-2 w-full lg:flex-1 flex items-center justify-center">
+          {/* AI badge */}
           <div
-            className="relative"
-            style={{ animation: "cardFloat 4.5s ease-in-out infinite" }}
+            className="flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium"
+            style={{
+              background: "rgba(99,102,241,0.15)",
+              border: "1px solid rgba(99,102,241,0.35)",
+              color: "#a5b4fc",
+            }}
           >
-            {/* Pulsing border frame — BOLD glow */}
-            <div
-              className="absolute -inset-4 sm:-inset-5 border-[3px] border-dashed rounded-xl sm:rounded-2xl pointer-events-none"
-              style={{ animation: "borderGlow 2s infinite ease-in-out" }}
-            >
-              {/* Corner brackets — large and vivid */}
-              {[
-                "-top-1.5 -left-1.5 border-t-[3px] border-l-[3px] rounded-tl-md",
-                "-top-1.5 -right-1.5 border-t-[3px] border-r-[3px] rounded-tr-md",
-                "-bottom-1.5 -left-1.5 border-b-[3px] border-l-[3px] rounded-bl-md",
-                "-bottom-1.5 -right-1.5 border-b-[3px] border-r-[3px] rounded-br-md",
-              ].map((pos, idx) => (
-                <div
-                  key={idx}
-                  className={`absolute ${pos} w-5 h-5 sm:w-6 sm:h-6 border-indigo-500`}
-                  style={{ animation: `cornerPulse 1.8s ease-in-out ${idx * 0.2}s infinite` }}
-                />
-              ))}
-            </div>
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <polygon points="6,1 7.5,4.5 11,5 8.5,7.5 9,11 6,9.5 3,11 3.5,7.5 1,5 4.5,4.5" fill="#a5b4fc" />
+            </svg>
+            AI-Powered Processing
+          </div>
 
-            {/* The photo */}
-            {selectedFile && (
-              <div className="relative overflow-hidden rounded-xl sm:rounded-2xl shadow-xl ring-1 ring-slate-200/40">
-                {/* 
-                  Mobile: compact 200×256 
-                  Tablet: 240×308
-                  Desktop: 280×360+
-                */}
+          {/* Floating card */}
+          <div className="relative" style={{ animation: "cardFloat 4s ease-in-out infinite" }}>
+            {/* Corner brackets */}
+            {[
+              "top-[-10px] left-[-10px] border-t-[2.5px] border-l-[2.5px] rounded-tl",
+              "top-[-10px] right-[-10px] border-t-[2.5px] border-r-[2.5px] rounded-tr",
+              "bottom-[-10px] left-[-10px] border-b-[2.5px] border-l-[2.5px] rounded-bl",
+              "bottom-[-10px] right-[-10px] border-b-[2.5px] border-r-[2.5px] rounded-br",
+            ].map((pos, i) => (
+              <div
+                key={i}
+                className={`absolute ${pos} w-5 h-5 border-indigo-500`}
+                style={{ animation: `pulseRing 2s ease-in-out ${i * 0.4}s infinite` }}
+              />
+            ))}
+
+            {/* Image area */}
+            <div
+              className="relative overflow-hidden"
+              style={{
+                width: 220,
+                height: 280,
+                borderRadius: 12,
+                background: "linear-gradient(145deg, #1e1e2e, #1a1a2a)",
+                border: "1px solid rgba(99,102,241,0.2)",
+              }}
+            >
+              {selectedFile ? (
                 <img
                   src={previewUrl}
                   alt="Processing"
-                  className="w-[200px] h-[256px] sm:w-[240px] sm:h-[308px] md:w-[260px] md:h-[336px] lg:w-[280px] lg:h-[360px] object-cover"
+                  className="w-full h-full object-cover"
                 />
+              ) : (
+                <div className="absolute inset-0 flex items-center justify-center opacity-20">
+                  <svg width="80" height="100" viewBox="0 0 80 100" fill="none">
+                    <circle cx="40" cy="28" r="18" fill="#6366f1" />
+                    <path d="M10 90 Q10 62 40 62 Q70 62 70 90" fill="#6366f1" />
+                  </svg>
+                </div>
+              )}
 
-                {/* Scan line — ping-pong */}
-                <div
-                  className="absolute left-0 w-full h-[2px] sm:h-[3px] pointer-events-none z-20"
-                  style={{
-                    background: "linear-gradient(90deg, transparent 0%, rgba(99,102,241,0.7) 20%, rgba(255,255,255,0.9) 50%, rgba(99,102,241,0.7) 80%, transparent 100%)",
-                    boxShadow: "0 0 24px 6px rgba(99,102,241,0.4), 0 0 48px 12px rgba(99,102,241,0.15)",
-                    animation: "scanPingPong 4s ease-in-out infinite",
-                    willChange: "top, opacity",
-                  }}
-                />
+              {/* Scan line */}
+              <div
+                className="absolute left-0 w-full pointer-events-none z-20"
+                style={{
+                  height: 2,
+                  background:
+                    "linear-gradient(90deg, transparent, rgba(99,102,241,0.8) 30%, rgba(255,255,255,0.9) 50%, rgba(99,102,241,0.8) 70%, transparent)",
+                  boxShadow: "0 0 20px 4px rgba(99,102,241,0.3)",
+                  animation: "scanPingPong 3.5s ease-in-out infinite",
+                }}
+              />
 
-                {/* Grid overlay */}
-                <div
-                  className="absolute inset-0 pointer-events-none z-10"
-                  style={{
-                    backgroundImage: "linear-gradient(rgba(99,102,241,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(99,102,241,0.06) 1px, transparent 1px)",
-                    backgroundSize: "20px 20px",
-                    animation: "gridFade 4s ease-in-out infinite",
-                  }}
-                />
+              {/* Grid */}
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  backgroundImage:
+                    "linear-gradient(rgba(99,102,241,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(99,102,241,0.05) 1px, transparent 1px)",
+                  backgroundSize: "18px 18px",
+                }}
+              />
 
-                {/* Crosshair — bold and clearly visible */}
+              {/* Face detection box */}
 
-                {/* Bottom gradient */}
-                <div className="absolute inset-0 bg-gradient-to-t from-indigo-900/8 via-transparent to-transparent pointer-events-none" />
-              </div>
-            )}
+            </div>
+          </div>
 
+          {/* Tags */}
+          <div className="flex flex-wrap gap-1.5 justify-center">
+            {[
+              { label: activeDoc?.size || "600 × 600 px", style: { background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)", color: "rgba(255,255,255,0.5)" } },
+              { label: "ICAO compliant", style: { background: "rgba(99,102,241,0.1)", border: "1px solid rgba(99,102,241,0.25)", color: "#a5b4fc" } },
+              { label: activeDoc ? `${activeDoc.label} ready` : "DS-160 ready", style: { background: "rgba(234,179,8,0.1)", border: "1px solid rgba(234,179,8,0.25)", color: "#fbbf24" } },
+            ].map((tag) => (
+              <span key={tag.label} className="rounded-full px-2.5 py-0.5 text-xs font-medium" style={tag.style}>
+                {tag.label}
+              </span>
+            ))}
+          </div>
 
+          <div className="flex items-center gap-1.5 text-xs" style={{ color: "rgba(255,255,255,0.3)" }}>
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M6 1L1.5 3v4c0 2.2 1.9 4 4.5 4.8C8.6 11 10.5 9.2 10.5 7V3L6 1z" stroke="rgba(255,255,255,0.3)" strokeWidth="1" fill="none" />
+            </svg>
+            Processed securely
           </div>
         </div>
 
-        {/* ─── Steps Timeline (below photo on mobile, left on desktop) ─── */}
-        <div className="order-2 lg:order-1 w-full lg:flex-1">
+        {/* ─── Steps Panel ─── */}
+        <div className="order-2 lg:order-2 flex-1 flex flex-col">
 
-          {/* Desktop-only title */}
-          <div className="hidden lg:block mb-8">
-            <h2 className="text-3xl xl:text-4xl font-black text-slate-900 leading-tight">
-              Processing your photo
+          <div className="mb-2">
+            <h2 className="text-2xl lg:text-3xl font-bold leading-tight" style={{ color: "#ffffff" }}>
+              Analyzing your photo...
             </h2>
-            <p className="text-slate-400 text-sm mt-2 font-medium">Optimizing for government standards</p>
+            <p className="text-sm mt-1.5" style={{ color: "rgba(255,255,255,0.45)" }}>
+              Please wait while we prepare your government-ready Biomatric Id photo
+            </p>
           </div>
 
-          {/* Horizontal steps on mobile, vertical on desktop */}
-          {/* Mobile: compact horizontal row */}
-          <div className="flex lg:hidden items-center justify-center gap-1 w-full">
+          {/* Progress bar */}
+          <div
+            className="rounded-full overflow-hidden relative mt-5 mb-7"
+            style={{ height: 3, background: "rgba(255,255,255,0.08)" }}
+          >
+            <div
+              className="h-full rounded-full relative overflow-hidden transition-all duration-700"
+              style={{
+                width: `${progressPercents[activeIdx]}%`,
+                background: "linear-gradient(90deg, #4f46e5, #818cf8)",
+              }}
+            >
+              <div
+                className="absolute top-0 h-full"
+                style={{
+                  width: "40%",
+                  background: "rgba(255,255,255,0.4)",
+                  filter: "blur(2px)",
+                  animation: "shimmer 1.8s linear infinite",
+                }}
+              />
+            </div>
+          </div>
+
+          {/* Vertical step list */}
+          <div className="flex flex-col">
             {steps.map((step, i) => {
               const isDone = i < activeIdx;
               const isActive = i === activeIdx;
-              return (
-                <React.Fragment key={i}>
-                  <div className="flex flex-col items-center gap-1.5">
-                    <div
-                      className={`
-                        w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 shrink-0
-                        ${isActive
-                          ? "bg-gradient-to-br from-indigo-500 to-indigo-600 text-white shadow-lg shadow-indigo-500/30 scale-110"
-                          : isDone
-                            ? "bg-emerald-50 text-emerald-600 border border-emerald-200"
-                            : "bg-slate-100 text-slate-400 border border-slate-200"
-                        }
-                      `}
-                    >
-                      {isDone ? <CheckIcon className="w-4 h-4" /> : i + 1}
-                    </div>
-                    <span
-                      className={`text-[10px] font-bold leading-tight text-center max-w-[64px] transition-colors duration-300 ${isActive ? "text-indigo-700" : isDone ? "text-emerald-600" : "text-slate-300"
-                        }`}
-                    >
-                      {step.label}
-                    </span>
-                    {isActive && (
-                      <div className="flex items-center gap-1">
-                        <div className="w-1 h-1 rounded-full bg-indigo-500" style={{ animation: "dotBounce 1.2s ease-in-out infinite" }} />
-                        <div className="w-1 h-1 rounded-full bg-indigo-400" style={{ animation: "dotBounce 1.2s ease-in-out 0.2s infinite" }} />
-                        <div className="w-1 h-1 rounded-full bg-indigo-300" style={{ animation: "dotBounce 1.2s ease-in-out 0.4s infinite" }} />
-                      </div>
-                    )}
-                  </div>
-                  {/* Connector line between steps */}
-                  {i < steps.length - 1 && (
-                    <div
-                      className={`h-[2px] w-5 sm:w-8 mt-[-18px] rounded-full transition-colors duration-300 ${isDone ? "bg-gradient-to-r from-emerald-300 to-indigo-300" : "bg-slate-200"
-                        }`}
-                    />
-                  )}
-                </React.Fragment>
-              );
-            })}
-          </div>
+              const isLast = i === steps.length - 1;
 
-          {/* Desktop: vertical timeline */}
-          <div className="hidden lg:inline-flex flex-col items-start">
-            {steps.map((step, i) => {
-              const isDone = i < activeIdx;
-              const isActive = i === activeIdx;
               return (
-                <div
-                  key={i}
-                  className={`flex items-start gap-4 transition-all duration-500 ${isActive ? "translate-x-1" : ""}`}
-                >
-                  <div className="flex flex-col items-center">
+                <div key={i} className="flex gap-4 items-start">
+                  {/* Icon + connector */}
+                  <div className="flex flex-col items-center flex-shrink-0">
                     <div
-                      className={`
-                        w-12 h-12 rounded-full flex items-center justify-center text-base font-bold transition-all duration-500 shrink-0
-                        ${isActive
-                          ? "bg-gradient-to-br from-indigo-500 to-indigo-600 text-white shadow-xl shadow-indigo-500/40 scale-110"
+                      className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0"
+                      style={
+                        isActive
+                          ? {
+                            background: "linear-gradient(135deg, #6366f1, #4f46e5)",
+                            color: "white",
+                            boxShadow: "0 0 0 4px rgba(99,102,241,0.15)",
+                          }
                           : isDone
-                            ? "bg-emerald-50 text-emerald-600 border border-emerald-200"
-                            : "bg-slate-50 text-slate-400 border-2 border-slate-200"
-                        }
-                      `}
+                            ? {
+                              background: "rgba(16,185,129,0.1)",
+                              border: "1.5px solid rgba(16,185,129,0.3)",
+                              color: "#6ee7b7",
+                            }
+                            : {
+                              background: "rgba(255,255,255,0.04)",
+                              border: "1.5px solid rgba(255,255,255,0.1)",
+                              color: "rgba(255,255,255,0.25)",
+                            }
+                      }
                     >
-                      {isDone ? <CheckIcon className="w-6 h-6" /> : i + 1}
+                      {isDone ? <CheckIcon className="w-5 h-5" /> : i + 1}
                     </div>
-                    {i < steps.length - 1 && (
+                    {!isLast && (
                       <div
-                        className={`w-0.5 h-8 my-0.5 rounded-full transition-all duration-500 ${isDone ? "bg-gradient-to-b from-emerald-300 to-indigo-300"
-                          : isActive ? "bg-gradient-to-b from-indigo-300 to-slate-200"
-                            : "bg-slate-200"
-                          }`}
+                        className="w-px my-1"
+                        style={{
+                          height: 32,
+                          background: isDone
+                            ? "linear-gradient(to bottom, rgba(16,185,129,0.5), rgba(99,102,241,0.3))"
+                            : isActive
+                              ? "linear-gradient(to bottom, #4f46e5, rgba(255,255,255,0.06))"
+                              : "rgba(255,255,255,0.06)",
+                        }}
                       />
                     )}
                   </div>
-                  <div className="pt-2.5">
-                    <span
-                      className={`text-lg font-bold transition-all duration-500 ${isActive ? "text-indigo-700" : isDone ? "text-emerald-600" : "text-slate-300"
-                        }`}
+
+                  {/* Text */}
+                  <div className="pt-2 pb-1">
+                    <div
+                      className="text-sm font-semibold mb-0.5"
+                      style={{
+                        color: isActive ? "#818cf8" : isDone ? "#6ee7b7" : "rgba(255,255,255,0.3)",
+                      }}
                     >
                       {step.label}
-                    </span>
+                    </div>
+                    <div className="text-xs" style={{ color: isActive ? "rgba(255,255,255,0.4)" : "rgba(255,255,255,0.18)" }}>
+                      {step.sub}
+                    </div>
                     {isActive && (
-                      <div className="flex items-center gap-1.5 mt-1.5">
-                        <div className="w-1.5 h-1.5 rounded-full bg-indigo-500" style={{ animation: "dotBounce 1.2s ease-in-out infinite" }} />
-                        <div className="w-1.5 h-1.5 rounded-full bg-indigo-400" style={{ animation: "dotBounce 1.2s ease-in-out 0.2s infinite" }} />
-                        <div className="w-1.5 h-1.5 rounded-full bg-indigo-300" style={{ animation: "dotBounce 1.2s ease-in-out 0.4s infinite" }} />
+                      <div className="flex items-center gap-1 mt-2">
+                        {[0, 0.2, 0.4].map((delay, d) => (
+                          <div
+                            key={d}
+                            className="rounded-full"
+                            style={{
+                              width: 5,
+                              height: 5,
+                              background: d === 0 ? "#6366f1" : d === 1 ? "#818cf8" : "#a5b4fc",
+                              animation: `dotBounce 1.2s ease-in-out ${delay}s infinite`,
+                            }}
+                          />
+                        ))}
                       </div>
                     )}
                   </div>
@@ -301,8 +358,10 @@ const ProcessingOverlay: React.FC<ProcessingOverlayProps> = ({
               );
             })}
           </div>
-        </div>
 
+          {/* Info callout */}
+
+        </div>
       </div>
     </div>
   );

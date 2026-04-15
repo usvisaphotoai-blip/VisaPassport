@@ -468,6 +468,7 @@ function ToolForm() {
             setCropMsg={setCropMsg}
             selectedFile={selectedFile}
             previewUrl={previewUrl}
+            activeDoc={activeDoc}
           />
 
           {/* Guide Prompt Modal */}
