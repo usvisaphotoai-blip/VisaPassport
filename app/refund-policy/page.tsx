@@ -69,10 +69,37 @@ export default function RefundPolicyPage() {
         </div>
       </section>
 
+      {/* Related Policies & Links */}
+      <section className="py-12 bg-white">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h3 className="text-lg font-bold text-slate-900 mb-4">Related Policies & Resources</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <Link href="/terms" className="group p-4 bg-gray-50 rounded-xl border border-gray-100 hover:border-lime-200 hover:bg-lime-50 transition-all">
+              <span className="text-sm font-bold text-slate-900 group-hover:text-lime-700">Terms of Service</span>
+              <p className="text-xs text-slate-500 mt-1">Full usage terms and conditions</p>
+            </Link>
+            <Link href="/privacy-policy" className="group p-4 bg-gray-50 rounded-xl border border-gray-100 hover:border-lime-200 hover:bg-lime-50 transition-all">
+              <span className="text-sm font-bold text-slate-900 group-hover:text-lime-700">Privacy Policy</span>
+              <p className="text-xs text-slate-500 mt-1">How we handle your data</p>
+            </Link>
+            <Link href="/faq" className="group p-4 bg-gray-50 rounded-xl border border-gray-100 hover:border-lime-200 hover:bg-lime-50 transition-all">
+              <span className="text-sm font-bold text-slate-900 group-hover:text-lime-700">FAQ</span>
+              <p className="text-xs text-slate-500 mt-1">Common questions and answers</p>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       <section className="py-8 bg-gray-50">
-        <div className="max-w-3xl mx-auto px-4 text-center">
+        <div className="max-w-3xl mx-auto px-4 text-center flex flex-wrap gap-4 justify-center">
           <Link href="/" className="text-sm font-medium text-lime-600 hover:text-lime-700 transition-colors">
             ← Back to Home
+          </Link>
+          <Link href="/contact" className="text-sm font-medium text-lime-600 hover:text-lime-700 transition-colors">
+            Contact Us
+          </Link>
+          <Link href="/tool" className="text-sm font-medium text-lime-600 hover:text-lime-700 transition-colors">
+            Create Photo
           </Link>
         </div>
       </section>

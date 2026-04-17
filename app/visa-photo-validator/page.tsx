@@ -561,6 +561,86 @@ export default function PhotoValidatorPage() {
           </div>
         </section>
 
+        {/* ══ RELATED RESOURCES ══ */}
+        <section className="hc-sec">
+          <div className="hc-in">
+            <span className="hc-label">More Resources</span>
+            <h2 className="hc-h2">Explore Photo Compliance Tools & Guides</h2>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+                gap: "20px",
+              }}
+            >
+              <Link
+                href="/passport-photos"
+                style={{
+                  textDecoration: "none",
+                  background: "#fff",
+                  border: "1px solid #eef2f1",
+                  padding: "28px",
+                  borderRadius: "20px",
+                  transition: "all 0.2s",
+                }}
+                className="card-hover"
+              >
+                <p style={{ fontSize: "28px", marginBottom: "12px" }}>🛂</p>
+                <p style={{ fontSize: "16px", fontWeight: 700, color: "#0f1e2d", marginBottom: "6px" }}>Passport Photo Directory</p>
+                <p style={{ fontSize: "13px", color: "#64748b", lineHeight: 1.6 }}>Browse official 2026 passport photo sizes for 50+ countries</p>
+              </Link>
+              <Link
+                href="/visa-photo"
+                style={{
+                  textDecoration: "none",
+                  background: "#fff",
+                  border: "1px solid #eef2f1",
+                  padding: "28px",
+                  borderRadius: "20px",
+                  transition: "all 0.2s",
+                }}
+                className="card-hover"
+              >
+                <p style={{ fontSize: "28px", marginBottom: "12px" }}>🌐</p>
+                <p style={{ fontSize: "16px", fontWeight: 700, color: "#0f1e2d", marginBottom: "6px" }}>Visa Photo Directory</p>
+                <p style={{ fontSize: "13px", color: "#64748b", lineHeight: 1.6 }}>Technical visa photo specs for DS-160, eVisas & more</p>
+              </Link>
+              <Link
+                href="/blog"
+                style={{
+                  textDecoration: "none",
+                  background: "#fff",
+                  border: "1px solid #eef2f1",
+                  padding: "28px",
+                  borderRadius: "20px",
+                  transition: "all 0.2s",
+                }}
+                className="card-hover"
+              >
+                <p style={{ fontSize: "28px", marginBottom: "12px" }}>📖</p>
+                <p style={{ fontSize: "16px", fontWeight: 700, color: "#0f1e2d", marginBottom: "6px" }}>Blog & Guides</p>
+                <p style={{ fontSize: "13px", color: "#64748b", lineHeight: 1.6 }}>Expert tips and step-by-step compliance guides</p>
+              </Link>
+              <Link
+                href="/faq"
+                style={{
+                  textDecoration: "none",
+                  background: "#fff",
+                  border: "1px solid #eef2f1",
+                  padding: "28px",
+                  borderRadius: "20px",
+                  transition: "all 0.2s",
+                }}
+                className="card-hover"
+              >
+                <p style={{ fontSize: "28px", marginBottom: "12px" }}>❓</p>
+                <p style={{ fontSize: "16px", fontWeight: 700, color: "#0f1e2d", marginBottom: "6px" }}>FAQ</p>
+                <p style={{ fontSize: "13px", color: "#64748b", lineHeight: 1.6 }}>Answers to common photo validation questions</p>
+              </Link>
+            </div>
+          </div>
+        </section>
+
         {/* ════ CTA ════ */}
         <section className="hc-sec hc-sec-alt" style={{ textAlign: "center" }}>
           <div className="hc-in" style={{ maxWidth: 600 }}>

@@ -163,6 +163,35 @@ export default function ProgrammaticLandingPage({ spec, slug }: Props) {
         docName={docName}
       />
 
+      {/* ── RELATED RESOURCES ─────────────────────────────── */}
+      <section className="py-16 bg-[#f8faf9] border-y border-slate-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-bold text-slate-900 text-center mb-10">Explore More Resources</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <Link href="/passport-photos" className="group bg-white p-6 rounded-2xl border border-slate-100 text-center hover:shadow-lg hover:border-blue-200 transition-all">
+              <span className="text-2xl block mb-3">🛂</span>
+              <span className="text-sm font-bold text-slate-900 group-hover:text-blue-600 block">Passport Directory</span>
+              <p className="text-xs text-slate-500 mt-1">50+ country specs</p>
+            </Link>
+            <Link href="/visa-photo" className="group bg-white p-6 rounded-2xl border border-slate-100 text-center hover:shadow-lg hover:border-emerald-200 transition-all">
+              <span className="text-2xl block mb-3">🌐</span>
+              <span className="text-sm font-bold text-slate-900 group-hover:text-emerald-600 block">Visa Directory</span>
+              <p className="text-xs text-slate-500 mt-1">International visa specs</p>
+            </Link>
+            <Link href="/visa-photo-validator" className="group bg-white p-6 rounded-2xl border border-slate-100 text-center hover:shadow-lg hover:border-purple-200 transition-all">
+              <span className="text-2xl block mb-3">✅</span>
+              <span className="text-sm font-bold text-slate-900 group-hover:text-purple-600 block">Free Validator</span>
+              <p className="text-xs text-slate-500 mt-1">Instant PASS/FAIL</p>
+            </Link>
+            <Link href="/blog" className="group bg-white p-6 rounded-2xl border border-slate-100 text-center hover:shadow-lg hover:border-amber-200 transition-all">
+              <span className="text-2xl block mb-3">📖</span>
+              <span className="text-sm font-bold text-slate-900 group-hover:text-amber-600 block">Blog & Guides</span>
+              <p className="text-xs text-slate-500 mt-1">Expert advice</p>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* <HomeSections
         price={spec.local_price ? `${spec.local_price.symbol}${spec.local_price.amount}` : `$${spec.price}`}
       /> */}

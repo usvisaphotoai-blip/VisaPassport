@@ -256,6 +256,33 @@ export default async function BlogIndex() {
               </article>
             ))}
           </div>
+
+          {/* Internal Link Section */}
+          <section className="mt-20 pt-16 border-t border-slate-200">
+            <h3 className="text-2xl font-black text-slate-900 mb-8 text-center">Explore More Tools & Resources</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              <Link href="/tool" className="group bg-white rounded-2xl border border-slate-200 p-6 hover:border-lime-300 hover:shadow-lg transition-all">
+                <span className="text-2xl mb-3 block">📸</span>
+                <span className="text-base font-bold text-slate-900 group-hover:text-lime-600 block mb-2">Create Photo</span>
+                <p className="text-xs text-slate-500">Upload & get a compliant biometric photo instantly</p>
+              </Link>
+              <Link href="/visa-photo-validator" className="group bg-white rounded-2xl border border-slate-200 p-6 hover:border-lime-300 hover:shadow-lg transition-all">
+                <span className="text-2xl mb-3 block">✅</span>
+                <span className="text-base font-bold text-slate-900 group-hover:text-lime-600 block mb-2">Free Validator</span>
+                <p className="text-xs text-slate-500">Check compliance before submitting</p>
+              </Link>
+              <Link href="/passport-photos" className="group bg-white rounded-2xl border border-slate-200 p-6 hover:border-lime-300 hover:shadow-lg transition-all">
+                <span className="text-2xl mb-3 block">🛂</span>
+                <span className="text-base font-bold text-slate-900 group-hover:text-lime-600 block mb-2">Passport Directory</span>
+                <p className="text-xs text-slate-500">Official passport photo sizes for 50+ countries</p>
+              </Link>
+              <Link href="/visa-photo" className="group bg-white rounded-2xl border border-slate-200 p-6 hover:border-lime-300 hover:shadow-lg transition-all">
+                <span className="text-2xl mb-3 block">🌐</span>
+                <span className="text-base font-bold text-slate-900 group-hover:text-lime-600 block mb-2">Visa Photo Directory</span>
+                <p className="text-xs text-slate-500">International visa photo specifications</p>
+              </Link>
+            </div>
+          </section>
         </main>
       </div>
     </>

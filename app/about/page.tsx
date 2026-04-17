@@ -38,6 +38,7 @@ export default function AboutPage() {
                 Founded by technologists and frequent travelers, <strong>PixPassport</strong> was built to solve this exact problem. 
                 Our platform leverages advanced artificial intelligence and biometric scanning algorithms to check your photos 
                 against the exact technical standards used by immigration agencies worldwide, including the U.S. State Department, UK HMPO, and ICAO.
+                You can <Link href="/visa-photo-validator" className="text-lime-600 font-semibold hover:underline">validate your photo for free</Link> or <Link href="/tool" className="text-lime-600 font-semibold hover:underline">create a compliant photo</Link> in seconds.
               </p>
             </div>
           </div>
@@ -52,11 +53,12 @@ export default function AboutPage() {
                 Our proprietary AI engine instantly performs over 15 distinct biometric checks in less than five seconds. 
                 When you upload a photo, our system measures your eye level, calculates your head-to-image ratio, 
                 detects compliance issues like glasses or uneven lighting, and mathematically strips away messy backgrounds, 
-                replacing them with a pure white (RGB 255, 255, 255) canvas.
+                replacing them with a pure white (RGB 255, 255, 255) canvas. Learn more about common rejection reasons in our <Link href="/faq" className="text-lime-600 font-semibold hover:underline">FAQ</Link>.
               </p>
               <p>
                 We maintain an up-to-date database of photo requirements for 50+ countries, covering passports,
-                visas, and national ID documents — from US DS-160 and UK HMPO to Indian and Schengen applications.
+                visas, and national ID documents — from <Link href="/us-visa-photo-editor" className="text-lime-600 font-semibold hover:underline">US DS-160</Link> and <Link href="/uk-passport-photo-editor" className="text-lime-600 font-semibold hover:underline">UK HMPO</Link> to <Link href="/india-passport-photo-editor" className="text-lime-600 font-semibold hover:underline">Indian</Link> and Schengen applications.
+                Browse the full <Link href="/passport-photos" className="text-lime-600 font-semibold hover:underline">passport photo directory</Link> or <Link href="/visa-photo" className="text-lime-600 font-semibold hover:underline">visa photo directory</Link> for specific requirements.
               </p>
             </div>
           </div>
@@ -85,16 +87,44 @@ export default function AboutPage() {
 
       <TrustSection />
 
+      {/* Quick Links */}
+      <section className="py-12 bg-white">
+        <div className="max-w-4xl mx-auto px-4">
+          <h3 className="text-xl font-bold text-slate-900 mb-6 text-center">Explore More</h3>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <Link href="/tool" className="p-4 bg-gray-50 rounded-xl text-center hover:bg-lime-50 hover:border-lime-200 border border-gray-100 transition-all">
+              <span className="text-2xl block mb-2">📸</span>
+              <span className="text-sm font-bold text-slate-900">Create Photo</span>
+            </Link>
+            <Link href="/visa-photo-validator" className="p-4 bg-gray-50 rounded-xl text-center hover:bg-lime-50 hover:border-lime-200 border border-gray-100 transition-all">
+              <span className="text-2xl block mb-2">✅</span>
+              <span className="text-sm font-bold text-slate-900">Free Validator</span>
+            </Link>
+            <Link href="/blog" className="p-4 bg-gray-50 rounded-xl text-center hover:bg-lime-50 hover:border-lime-200 border border-gray-100 transition-all">
+              <span className="text-2xl block mb-2">📖</span>
+              <span className="text-sm font-bold text-slate-900">Blog & Guides</span>
+            </Link>
+            <Link href="/faq" className="p-4 bg-gray-50 rounded-xl text-center hover:bg-lime-50 hover:border-lime-200 border border-gray-100 transition-all">
+              <span className="text-2xl block mb-2">❓</span>
+              <span className="text-sm font-bold text-slate-900">FAQ</span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       <section className="py-12 bg-gray-50 mt-12">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <h3 className="text-xl font-bold text-slate-900 mb-4">Have Questions?</h3>
           <p className="text-gray-600 mb-6 font-medium">Read our Privacy Policy or get in touch with our team.</p>
-          <div className="flex justify-center gap-4">
+          <div className="flex flex-wrap justify-center gap-4">
             <Link href="/contact" className="bg-lime-600 px-6 py-2.5 rounded-lg text-white font-semibold hover:bg-lime-700 transition-colors">
               Contact Us
             </Link>
             <Link href="/privacy-policy" className="bg-white border border-gray-300 px-6 py-2.5 rounded-lg text-slate-700 font-semibold hover:bg-gray-50 transition-colors">
-              Read completely Privacy Policy
+              Privacy Policy
+            </Link>
+            <Link href="/terms" className="bg-white border border-gray-300 px-6 py-2.5 rounded-lg text-slate-700 font-semibold hover:bg-gray-50 transition-colors">
+              Terms of Service
             </Link>
           </div>
         </div>

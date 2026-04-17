@@ -8,6 +8,7 @@ import LiveActivityChip from "./LiveActivityChip";
 const navLinks = [
   { href: "/tool", label: "Create Photo" },
   { href: "/visa-photo-validator", label: "Free Validator" },
+  { href: "/passport-photos", label: "Passport Sizes" },
   { href: "/blog", label: "Blog & Guides" },
 ];
 

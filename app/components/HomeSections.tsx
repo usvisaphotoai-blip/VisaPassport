@@ -322,7 +322,8 @@ export default function HomeSections({
           rejections or long administrative delays. At{" "}
           <strong>PixPassport</strong>, we've bridged the gap between amateur
           smartphone photography and the rigorous ICAO biometric standards demanded
-          by immigration agencies worldwide.
+          by immigration agencies worldwide. Check your photo instantly with our{" "}
+          <a href="/visa-photo-validator" style={{ color: "#3d8c6e", fontWeight: 600 }}>free photo validator</a>.
         </p>
         <p className="hc-seo-p">
           <strong>Why Biometric Accuracy is Non-Negotiable:</strong> Modern
@@ -348,11 +349,17 @@ export default function HomeSections({
         <p className="hc-seo-p">
           We believe that high-stakes applications shouldn't require
           professional photography equipment. Whether you're applying for a{" "}
-          <strong>Schengen Visa</strong>, an Australian ETA, or renewing your
-          UK or Indian Passport, our platform empowers you to take a compliant photo
-          from home. By combining expert knowledge of global immigration policies
-          with cutting-edge computer vision, we provide a stress-free path to a
-          perfect submission.
+          <a href="/france-visa-photo-editor" style={{ color: "#3d8c6e", fontWeight: 600 }}><strong>Schengen Visa</strong></a>, an{" "}
+          <a href="/australia-passport-photo-editor" style={{ color: "#3d8c6e", fontWeight: 600 }}>Australian passport</a>, or renewing your{" "}
+          <a href="/uk-passport-photo-editor" style={{ color: "#3d8c6e", fontWeight: 600 }}>UK</a> or{" "}
+          <a href="/india-passport-photo-editor" style={{ color: "#3d8c6e", fontWeight: 600 }}>Indian Passport</a>, our platform empowers you to take a compliant photo
+          from home. Browse our full{" "}
+          <a href="/passport-photos" style={{ color: "#3d8c6e", fontWeight: 600 }}>passport photo directory</a>{" "}or{" "}
+          <a href="/visa-photo" style={{ color: "#3d8c6e", fontWeight: 600 }}>visa photo directory</a>{" "}
+          for country-specific requirements, or read our{" "}
+          <a href="/blog" style={{ color: "#3d8c6e", fontWeight: 600 }}>expert guides</a>{" "}
+          for step-by-step instructions. Have questions? Visit our{" "}
+          <a href="/faq" style={{ color: "#3d8c6e", fontWeight: 600 }}>FAQ</a>.
         </p>
       </div>
     </div>

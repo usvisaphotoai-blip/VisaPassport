@@ -528,6 +528,41 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                   </span>
                 </div>
               </section>
+
+              {/* Related Resources */}
+              <section className="mt-16">
+                <h3 className="text-lg font-bold text-slate-900 mb-6">Related Resources</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <Link href="/visa-photo-validator" className="group flex items-center gap-4 p-5 bg-gray-50 rounded-2xl border border-gray-100 hover:border-lime-200 hover:bg-lime-50 transition-all">
+                    <span className="text-2xl">✅</span>
+                    <div>
+                      <span className="text-sm font-bold text-slate-900 group-hover:text-lime-700">Free Photo Validator</span>
+                      <p className="text-xs text-slate-500 mt-0.5">Instant PASS/FAIL compliance check</p>
+                    </div>
+                  </Link>
+                  <Link href="/passport-photos" className="group flex items-center gap-4 p-5 bg-gray-50 rounded-2xl border border-gray-100 hover:border-lime-200 hover:bg-lime-50 transition-all">
+                    <span className="text-2xl">🛂</span>
+                    <div>
+                      <span className="text-sm font-bold text-slate-900 group-hover:text-lime-700">Passport Photo Directory</span>
+                      <p className="text-xs text-slate-500 mt-0.5">Official sizes for 50+ countries</p>
+                    </div>
+                  </Link>
+                  <Link href="/visa-photo" className="group flex items-center gap-4 p-5 bg-gray-50 rounded-2xl border border-gray-100 hover:border-lime-200 hover:bg-lime-50 transition-all">
+                    <span className="text-2xl">🌐</span>
+                    <div>
+                      <span className="text-sm font-bold text-slate-900 group-hover:text-lime-700">Visa Photo Directory</span>
+                      <p className="text-xs text-slate-500 mt-0.5">International visa photo specs</p>
+                    </div>
+                  </Link>
+                  <Link href="/faq" className="group flex items-center gap-4 p-5 bg-gray-50 rounded-2xl border border-gray-100 hover:border-lime-200 hover:bg-lime-50 transition-all">
+                    <span className="text-2xl">❓</span>
+                    <div>
+                      <span className="text-sm font-bold text-slate-900 group-hover:text-lime-700">FAQ</span>
+                      <p className="text-xs text-slate-500 mt-0.5">Common questions answered</p>
+                    </div>
+                  </Link>
+                </div>
+              </section>
             </div>
           </div>
         </main>

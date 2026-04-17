@@ -105,14 +105,46 @@ export default function FAQPage() {
         </div>
       </section>
 
+      {/* Related Links */}
+      <section className="py-12 bg-white">
+        <div className="max-w-4xl mx-auto px-4">
+          <h3 className="text-lg font-bold text-slate-900 mb-6 text-center">Helpful Resources</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <Link href="/blog" className="group p-5 bg-gray-50 rounded-2xl border border-gray-100 hover:border-lime-200 hover:bg-lime-50 transition-all">
+              <span className="text-xl mb-2 block">📖</span>
+              <span className="text-sm font-bold text-slate-900 group-hover:text-lime-700">Blog & Guides</span>
+              <p className="text-xs text-slate-500 mt-1">In-depth photo compliance guides for 50+ countries</p>
+            </Link>
+            <Link href="/passport-photos" className="group p-5 bg-gray-50 rounded-2xl border border-gray-100 hover:border-lime-200 hover:bg-lime-50 transition-all">
+              <span className="text-xl mb-2 block">🛂</span>
+              <span className="text-sm font-bold text-slate-900 group-hover:text-lime-700">Passport Photo Directory</span>
+              <p className="text-xs text-slate-500 mt-1">Official sizes by country</p>
+            </Link>
+            <Link href="/visa-photo" className="group p-5 bg-gray-50 rounded-2xl border border-gray-100 hover:border-lime-200 hover:bg-lime-50 transition-all">
+              <span className="text-xl mb-2 block">🌐</span>
+              <span className="text-sm font-bold text-slate-900 group-hover:text-lime-700">Visa Photo Directory</span>
+              <p className="text-xs text-slate-500 mt-1">International visa photo specs</p>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Still have questions? */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <h2 className="text-2xl font-bold text-slate-900 mb-3">Still Have Questions?</h2>
           <p className="text-gray-600 mb-6">Can&apos;t find what you&apos;re looking for? Try the photo validator — it&apos;s free.</p>
-          <Link href="/visa-photo-validator" className="inline-block bg-lime-600 text-white hover:bg-lime-700 rounded-lg px-8 py-3 text-sm font-semibold transition-colors">
-            Try Photo Validator →
-          </Link>
+          <div className="flex flex-wrap gap-4 justify-center">
+            <Link href="/visa-photo-validator" className="inline-block bg-lime-600 text-white hover:bg-lime-700 rounded-lg px-8 py-3 text-sm font-semibold transition-colors">
+              Try Photo Validator →
+            </Link>
+            <Link href="/contact" className="inline-block bg-white text-slate-700 border border-gray-300 hover:bg-gray-50 rounded-lg px-8 py-3 text-sm font-semibold transition-colors">
+              Contact Us
+            </Link>
+            <Link href="/about" className="inline-block bg-white text-slate-700 border border-gray-300 hover:bg-gray-50 rounded-lg px-8 py-3 text-sm font-semibold transition-colors">
+              About Us
+            </Link>
+          </div>
         </div>
       </section>
     </div>

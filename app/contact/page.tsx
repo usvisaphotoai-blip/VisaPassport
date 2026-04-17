@@ -48,10 +48,50 @@ export default function ContactPage() {
         </div>
       </section>
 
+      {/* Related Links */}
+      <section className="py-12">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h3 className="text-lg font-bold text-slate-900 mb-6">You might also find these helpful</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <Link href="/faq" className="group flex items-center gap-4 p-4 bg-gray-50 rounded-xl border border-gray-100 hover:border-lime-200 hover:bg-lime-50 transition-all">
+              <span className="text-xl">❓</span>
+              <div>
+                <span className="text-sm font-bold text-slate-900 group-hover:text-lime-700">FAQ</span>
+                <p className="text-xs text-slate-500 mt-0.5">Answers to common questions about our service</p>
+              </div>
+            </Link>
+            <Link href="/refund-policy" className="group flex items-center gap-4 p-4 bg-gray-50 rounded-xl border border-gray-100 hover:border-lime-200 hover:bg-lime-50 transition-all">
+              <span className="text-xl">💳</span>
+              <div>
+                <span className="text-sm font-bold text-slate-900 group-hover:text-lime-700">Refund Policy</span>
+                <p className="text-xs text-slate-500 mt-0.5">Our photo rejection guarantee details</p>
+              </div>
+            </Link>
+            <Link href="/about" className="group flex items-center gap-4 p-4 bg-gray-50 rounded-xl border border-gray-100 hover:border-lime-200 hover:bg-lime-50 transition-all">
+              <span className="text-xl">🏢</span>
+              <div>
+                <span className="text-sm font-bold text-slate-900 group-hover:text-lime-700">About Us</span>
+                <p className="text-xs text-slate-500 mt-0.5">Learn more about PixPassport and our mission</p>
+              </div>
+            </Link>
+            <Link href="/privacy-policy" className="group flex items-center gap-4 p-4 bg-gray-50 rounded-xl border border-gray-100 hover:border-lime-200 hover:bg-lime-50 transition-all">
+              <span className="text-xl">🔒</span>
+              <div>
+                <span className="text-sm font-bold text-slate-900 group-hover:text-lime-700">Privacy Policy</span>
+                <p className="text-xs text-slate-500 mt-0.5">How we handle your photos and data</p>
+              </div>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       <section className="py-8 bg-gray-50 mt-12">
-        <div className="max-w-3xl mx-auto px-4 text-center">
+        <div className="max-w-3xl mx-auto px-4 text-center flex flex-wrap gap-4 justify-center">
           <Link href="/" className="text-sm font-medium text-lime-600 hover:text-lime-700 transition-colors">
             ← Back to Home
+          </Link>
+          <Link href="/tool" className="text-sm font-medium text-lime-600 hover:text-lime-700 transition-colors">
+            Create Photo →
           </Link>
         </div>
       </section>
