@@ -29,8 +29,6 @@
     "height_px": 472,
     "head_min_pct": 70,
     "head_max_pct": 75,
-    "head_min_pct": 70,
-    "head_max_pct": 75,
     "eye_min_pct": 50,
     "eye_max_pct": 65,
     "bg_color": "white",
