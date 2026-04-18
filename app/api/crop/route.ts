@@ -9,6 +9,61 @@ import { getSafeSpec } from "@/lib/specs";
 // to crop the image to the target country's passport/visa guidelines.
 // ------------------------------------------------------------------
 
+// ---------------------------------------------------------------
+// NEW FIX — resolveHeadPct()
+//
+// Root cause: some country specs (e.g. Australia) express head size
+// as physical millimetres (head_min_mm / head_max_mm) instead of
+// percentages (head_min_pct / head_max_pct).
+//
+// Old code called toNum(spec.head_min_pct, 50) which silently fell
+// back to the default 50 / 69 when those fields were undefined —
+// a drastically wrong range that made the crop frame far too large
+// (head appeared too small in the output photo).
+//
+// For Australia:
+//   head_min_mm=32, head_max_mm=36, height_mm=45
+//   → correct MIN_HEAD_PCT = 32/45*100 = 71.1%
+//   → correct MAX_HEAD_PCT = 36/45*100 = 80.0%
+//   → old default gave         50% / 69%  ← completely wrong
+//
+// Fix: resolveHeadPct() checks all three possible formats in priority
+// order and converts whichever is present, so any spec works correctly:
+//   1. head_min_pct / head_max_pct  (already a percentage)
+//   2. head_min_mm  / head_max_mm   (convert via height_mm)
+//   3. fallback 50 / 69             (only when spec has neither)
+// ---------------------------------------------------------------
+function resolveHeadPct(
+  spec: any
+): { minPct: number; maxPct: number } {
+  const toN = (v: any) =>
+    v != null && v !== "unspecified" && !isNaN(Number(v)) ? Number(v) : null;
+
+  // Priority 1 — explicit percentage fields
+  const minPct = toN(spec.head_min_pct);
+  const maxPct = toN(spec.head_max_pct);
+  if (minPct !== null && maxPct !== null) {
+    return { minPct, maxPct };
+  }
+
+  // Priority 2 — millimetre fields; require height_mm to convert
+  const minMm = toN(spec.head_min_mm);
+  const maxMm = toN(spec.head_max_mm);
+  const heightMm = toN(spec.height_mm);
+  if (minMm !== null && maxMm !== null && heightMm !== null && heightMm > 0) {
+    return {
+      minPct: (minMm / heightMm) * 100,
+      maxPct: (maxMm / heightMm) * 100,
+    };
+  }
+
+  // Priority 3 — neither present; log a warning and use safe defaults
+  console.warn(
+    `[crop] spec "${spec.id}" has no head size constraints — falling back to 50–69%`
+  );
+  return { minPct: 50, maxPct: 69 };
+}
+
 export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
@@ -47,7 +102,7 @@ export async function POST(req: NextRequest) {
     const imagePipeline = sharp(buffer).rotate();
     const metadata = await imagePipeline.metadata();
 
-    // Check image compliance (dullness / lighting)
+    // ---- Image quality checks ----
     const stats = await sharp(buffer).stats();
     let totalStdDev = 0;
     let totalMean = 0;
@@ -78,13 +133,14 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    let imgW = metadata.width || faceData.imageDimensions.width;
-    let imgH = metadata.height || faceData.imageDimensions.height;
+    // ---------------------------------------------------------------
+    // FIX 1 — EXIF orientation swap BEFORE scale computation.
+    // ---------------------------------------------------------------
+    let imgW = metadata.width ?? faceData.imageDimensions.width;
+    let imgH = metadata.height ?? faceData.imageDimensions.height;
 
-    // BUG FIX B7 — EXIF rotation scale mismatch (preserved)
     if (metadata.orientation && metadata.orientation >= 5) {
-      imgW = metadata.height || faceData.imageDimensions.width;
-      imgH = metadata.width || faceData.imageDimensions.height;
+      [imgW, imgH] = [imgH, imgW];
     }
 
     const scaleX = imgW / faceData.imageDimensions.width;
@@ -105,25 +161,12 @@ export async function POST(req: NextRequest) {
     }
 
     const documentType = formData.get("type") as string || "general";
-
-    // ---------------------------------------------------------------
-    // BUG FIX — HAIR CUT ROOT CAUSE #1
-    // Old: getSpecById() could return undefined for slugs like
-    // "nigeria-photo" (collapses to "nigeria", no direct match).
-    // Result: route.ts silently used US fallbacks (50–69% head range)
-    // for country specs requiring 70–80%, causing the crop to zoom out
-    // and leave the crown above the safety margin → hair was cut.
-    //
-    // Fix: getSafeSpec() always returns a valid spec (falls back to
-    // us-passport and logs a warning). getSpecById() in specs.ts is
-    // also fixed with a country-name prefix-search fallback.
-    // ---------------------------------------------------------------
     const spec = getSafeSpec(documentType);
 
     const targetBgRaw = formData.get("targetBackground") as string || spec.bg_color || "white";
     const filenameExt = targetBgRaw === "transparent" ? "png" : "jpg";
 
-    // ---- VALIDATE face data fields ----
+    // ---- Validate face data ----
     if (
       !faceData.faceBox || !faceData.eyeCenter ||
       faceData.chinY == null || faceData.topOfHeadY == null ||
@@ -135,7 +178,6 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // ---- FACE VALIDATION ----
     const faceAreaPct = (faceData.faceBox.width * faceData.faceBox.height) / (imgW * imgH) * 100;
     if (faceAreaPct < 3) {
       return NextResponse.json(
@@ -145,7 +187,6 @@ export async function POST(req: NextRequest) {
     }
 
     const headHeight = faceData.chinY - faceData.topOfHeadY;
-
     if (headHeight <= 0 || headHeight < imgH * 0.05) {
       return NextResponse.json(
         { error: "Face landmarks appear invalid — chin is above forehead, or face is too small. Please try a clearer photo." },
@@ -153,24 +194,41 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // BUG FIX #5 — Allow spec-level override of HEAD_TOP_MULTIPLIER
     const headTopMultiplier = (spec as any)?.head_top_multiplier ?? HEAD_TOP_MULTIPLIER;
     const fullHeadHeight = headHeight * headTopMultiplier;
-    const trueTopOfHead = faceData.chinY - fullHeadHeight;
 
-    // BUG FIX #2 — != null guards handle 0-valued and "unspecified" fields
+    // ---------------------------------------------------------------
+    // FIX 2 — Use client-detected topOfHeadY (MediaPipe crown landmark).
+    // Take the higher of formula estimate vs actual landmark so curly/
+    // tall hair is always protected.
+    // ---------------------------------------------------------------
+    const formulaTopOfHead = faceData.chinY - fullHeadHeight;
+    const trueTopOfHead = Math.min(formulaTopOfHead, faceData.topOfHeadY);
+
     const toNum = (v: number | string, def: number) =>
       v != null && v !== "unspecified" ? Number(v) : def;
 
-    const MIN_HEAD_PCT = toNum(spec.head_min_pct, 50) / 100;
-    const MAX_HEAD_PCT = toNum(spec.head_max_pct, 69) / 100;
-    const MIN_EYE_PCT = toNum(spec.eye_min_pct, 56) / 100;
-    const MAX_EYE_PCT = toNum(spec.eye_max_pct, 69) / 100;
+    // ---------------------------------------------------------------
+    // NEW FIX — resolve head bounds from whichever format the spec uses
+    // (head_min_pct / head_max_pct  OR  head_min_mm / head_max_mm).
+    // This is the primary bug causing wrong crop for Australia and any
+    // other spec that stores head size in mm instead of percent.
+    // ---------------------------------------------------------------
+    const { minPct: MIN_HEAD_PCT_RAW, maxPct: MAX_HEAD_PCT_RAW } = resolveHeadPct(spec);
+    const MIN_HEAD_PCT = MIN_HEAD_PCT_RAW / 100;
+    const MAX_HEAD_PCT = MAX_HEAD_PCT_RAW / 100;
+
+    console.log(`[crop] head bounds: min=${MIN_HEAD_PCT_RAW.toFixed(1)}% max=${MAX_HEAD_PCT_RAW.toFixed(1)}% (spec="${spec.id}")`);
 
     const TARGET_HEAD_PCT = (MIN_HEAD_PCT + MAX_HEAD_PCT) / 2;
 
-    // BUG FIX #3 — Bias eye target toward lower third for crown headroom
-    const TARGET_EYE_PCT = (MIN_EYE_PCT * 2 + MAX_EYE_PCT) / 3;
+    // ---------------------------------------------------------------
+    // FIX 3 — True arithmetic midpoint for eye target (unbiased).
+    // ---------------------------------------------------------------
+    const MIN_EYE_PCT = toNum(spec.eye_min_pct, 56) / 100;
+    const MAX_EYE_PCT = toNum(spec.eye_max_pct, 69) / 100;
+
+    const TARGET_EYE_PCT = (MIN_EYE_PCT + MAX_EYE_PCT) / 2;
     const TARGET_EYE_TOP_PCT = 1 - TARGET_EYE_PCT;
     const MIN_EYE_TOP_PCT = 1 - MAX_EYE_PCT;
     const MAX_EYE_TOP_PCT = 1 - MIN_EYE_PCT;
@@ -179,23 +237,23 @@ export async function POST(req: NextRequest) {
     const targetH = toNum(spec.height_px, 600);
     const targetAspectRatio = targetW / targetH;
 
-    let cropHeight = fullHeadHeight / TARGET_HEAD_PCT;
-    let cropWidth = cropHeight * targetAspectRatio;
-    let cropTop = faceData.eyeCenter.y - (cropHeight * TARGET_EYE_TOP_PCT);
+    // ---------------------------------------------------------------
+    // FIX A — Adaptive caution margin that scales with how low the
+    // eye spec pushes cropTop, so specs like Australia always protect
+    // the crown even when the eye range sits low in the frame.
+    // ---------------------------------------------------------------
+    const initialCropHeight = fullHeadHeight / TARGET_HEAD_PCT;
+    const initialCropTop = faceData.eyeCenter.y - (initialCropHeight * TARGET_EYE_TOP_PCT);
+    const crownGap = initialCropTop - trueTopOfHead;
+    const adaptivePad = fullHeadHeight * 0.05;
+    const CAUTION_MARGIN = Math.max(
+      fullHeadHeight * 0.08,
+      crownGap > 0 ? crownGap + adaptivePad : fullHeadHeight * 0.08
+    );
 
-    // ---------------------------------------------------------------
-    // BUG FIX — HAIR CUT ROOT CAUSE #2
-    // Old: CAUTION_MARGIN = cropHeight * 0.04
-    //   cropHeight is the full frame, not the head. When the wrong
-    //   spec loaded (US, larger frame), this 4% was a bigger pixel
-    //   value but still didn't reach the crown of smaller-headed
-    //   subjects. The solver never fired → hair cut.
-    //
-    // Fix: anchor to fullHeadHeight (actual head size in pixels).
-    //   8% of the head is a consistent crown buffer regardless of
-    //   which spec is loaded or how large the source image is.
-    // ---------------------------------------------------------------
-    const CAUTION_MARGIN = fullHeadHeight * 0.08;
+    let cropHeight = initialCropHeight;
+    let cropWidth = cropHeight * targetAspectRatio;
+    let cropTop = initialCropTop;
 
     // 1. DYNAMIC HAIR SOLVER (Crown Protection)
     if (cropTop > trueTopOfHead - CAUTION_MARGIN) {
@@ -222,24 +280,32 @@ export async function POST(req: NextRequest) {
       cropWidth = cropHeight * targetAspectRatio;
     }
 
-    let revalidatedEyeTopPct = (faceData.eyeCenter.y - cropTop) / cropHeight;
+    // ---------------------------------------------------------------
+    // FIX 5 — Eye revalidation must NOT undo the crown solver.
+    // Re-enforce crown margin immediately after eye revalidation.
+    // ---------------------------------------------------------------
+    const revalidatedEyeTopPct = (faceData.eyeCenter.y - cropTop) / cropHeight;
     if (revalidatedEyeTopPct > MAX_EYE_TOP_PCT) {
       cropTop = faceData.eyeCenter.y - (cropHeight * MAX_EYE_TOP_PCT);
     } else if (revalidatedEyeTopPct < MIN_EYE_TOP_PCT) {
       cropTop = faceData.eyeCenter.y - (cropHeight * MIN_EYE_TOP_PCT);
     }
 
-    // 3. IMAGE BOUND CLAMPING (padding, not shrinking)
+    // Re-enforce crown margin after eye revalidation (FIX 5 continued)
+    if (cropTop > trueTopOfHead - CAUTION_MARGIN) {
+      cropTop = trueTopOfHead - CAUTION_MARGIN;
+    }
+
+    // FIX 6: Removed duplicate minCropHeightAllowed check that sat
+    // after eye revalidation and silently re-inflated cropHeight
+    // without adjusting cropTop.
+
+    // 3. Overflow logging
     if (cropTop + cropHeight > imgH) {
       console.log(`[crop] Bottom overflow: cropTop=${cropTop.toFixed(0)} + cropHeight=${cropHeight.toFixed(0)} > imgH=${imgH}, will pad bottom`);
     }
     if (cropTop < 0) {
       console.log(`[crop] Top overflow: cropTop=${cropTop.toFixed(0)}, will pad top`);
-    }
-
-    if (cropHeight < minCropHeightAllowed) {
-      cropHeight = minCropHeightAllowed;
-      cropWidth = cropHeight * targetAspectRatio;
     }
 
     const maxAllowedCropHeight = Math.max(imgW, imgH) * 2;
@@ -257,32 +323,43 @@ export async function POST(req: NextRequest) {
     // Post-clamp compliance validation
     const postClampHeadPct = (fullHeadHeight / cropHeight) * 100;
     if (postClampHeadPct < MIN_HEAD_PCT * 100 || postClampHeadPct > MAX_HEAD_PCT * 100) {
-      console.warn(`[crop] Non-compliant head%: ${postClampHeadPct.toFixed(1)}% (allowed ${Math.round(MIN_HEAD_PCT * 100)}–${Math.round(MAX_HEAD_PCT * 100)}%)`);
+      console.warn(`[crop] Non-compliant head%: ${postClampHeadPct.toFixed(1)}% (allowed ${MIN_HEAD_PCT_RAW.toFixed(1)}–${MAX_HEAD_PCT_RAW.toFixed(1)}%)`);
       return NextResponse.json(
-        { error: `Head size (${postClampHeadPct.toFixed(0)}%) is outside the allowed ${Math.round(MIN_HEAD_PCT * 100)}–${Math.round(MAX_HEAD_PCT * 100)}% range. Please retake the photo with your face closer to or further from the camera.` },
+        { error: `Head size (${postClampHeadPct.toFixed(0)}%) is outside the allowed ${MIN_HEAD_PCT_RAW.toFixed(0)}–${MAX_HEAD_PCT_RAW.toFixed(0)}% range. Please retake the photo with your face closer to or further from the camera.` },
         { status: 400 }
       );
     }
 
-    // BUG FIX #1 — cropLeft computed AFTER all cropWidth mutations are final
-    const faceCenterX = faceData.faceBox.x + (faceData.faceBox.width / 2);
-    let cropLeft = faceCenterX - cropWidth / 2;
-
-    // BUG FIX #6 — Single rounding point; all downstream values use integers
+    // ---------------------------------------------------------------
+    // FIX 4 — cropLeft computed LAST from the final rounded cropWidth.
+    // ---------------------------------------------------------------
     cropHeight = Math.round(cropHeight);
     cropWidth = Math.round(cropWidth);
     cropTop = Math.round(cropTop);
-    cropLeft = Math.round(cropLeft);
 
-    console.log(`[crop] spec="${spec.id}" headPct=${postClampHeadPct.toFixed(1)}% (allowed ${Math.round(MIN_HEAD_PCT * 100)}–${Math.round(MAX_HEAD_PCT * 100)}%), cropH=${cropHeight}, cropW=${cropWidth}, cropTop=${cropTop}, cropLeft=${cropLeft}, imgW=${imgW}, imgH=${imgH}`);
+    const faceCenterX = faceData.faceBox.x + (faceData.faceBox.width / 2);
+    const cropLeft = Math.round(faceCenterX - cropWidth / 2); // always last
+
+    console.log(`[crop] spec="${spec.id}" headPct=${postClampHeadPct.toFixed(1)}% (${MIN_HEAD_PCT_RAW.toFixed(1)}–${MAX_HEAD_PCT_RAW.toFixed(1)}%), cropH=${cropHeight}, cropW=${cropWidth}, cropTop=${cropTop}, cropLeft=${cropLeft}, trueTopOfHead=${trueTopOfHead.toFixed(0)}, CAUTION_MARGIN=${CAUTION_MARGIN.toFixed(0)}, imgW=${imgW}, imgH=${imgH}`);
 
     const extractLeft = Math.max(0, cropLeft);
     const extractTop = Math.max(0, cropTop);
     const extractRight = Math.min(imgW, cropLeft + cropWidth);
     const extractBottom = Math.min(imgH, cropTop + cropHeight);
 
-    const extractW = Math.max(1, extractRight - extractLeft);
-    const extractH = Math.max(1, extractBottom - extractTop);
+    const extractW = extractRight - extractLeft;
+    const extractH = extractBottom - extractTop;
+
+    // ---------------------------------------------------------------
+    // FIX 7 — Hard error if extraction region is too small.
+    // ---------------------------------------------------------------
+    const MIN_EXTRACT_PX = 50;
+    if (extractW < MIN_EXTRACT_PX || extractH < MIN_EXTRACT_PX) {
+      return NextResponse.json(
+        { error: "Face is too close to the image edge or out of frame. Please retake the photo with your face centred." },
+        { status: 400 }
+      );
+    }
 
     const paddingTop = Math.max(0, -cropTop);
     const paddingLeft = Math.max(0, -cropLeft);
@@ -307,7 +384,6 @@ export async function POST(req: NextRequest) {
       .extract({ left: extractLeft, top: extractTop, width: extractW, height: extractH })
       .extend({ top: paddingTop, bottom: paddingBottom, left: paddingLeft, right: paddingRight, background: bgRgb });
 
-    // BUG FIX B4 — flatten only for JPEG, not PNG
     if (filenameExt !== "png") {
       cropChain = cropChain.flatten({ background: { r: 255, g: 255, b: 255 } });
     }
@@ -325,7 +401,7 @@ export async function POST(req: NextRequest) {
 
     let processedBuffer = await cropChain.toBuffer();
 
-    // ---- SAFETY: Guarantee output is exactly targetW×targetH ----
+    // ---- Safety: guarantee output is exactly targetW×targetH ----
     const finalMeta = await sharp(processedBuffer).metadata();
     if (finalMeta.width !== targetW || finalMeta.height !== targetH) {
       console.warn(`[crop] Output was ${finalMeta.width}x${finalMeta.height}, forcing to ${targetW}x${targetH}`);
@@ -334,7 +410,7 @@ export async function POST(req: NextRequest) {
         .toBuffer();
     }
 
-    // BUG FIX B6 — Binary search compression starts at low=1
+    // ---- Binary-search JPEG compression (DS-160 240 KB limit) ----
     if (filenameExt === "jpg") {
       const MAX_SIZE_BYTES = 240 * 1024;
       if (processedBuffer.length > MAX_SIZE_BYTES) {
@@ -370,6 +446,8 @@ export async function POST(req: NextRequest) {
       }
     }
 
+    // MINOR FIX — watermarkedBuffer and print sheet both built from
+    // final processedBuffer (post-compression) for consistency.
     const watermarkedBuffer = processedBuffer;
 
     // ---- Print sheet ----
@@ -411,7 +489,7 @@ export async function POST(req: NextRequest) {
       uploadBufferToCloudinary(printSheetBuffer, "visa-photos", ["print-sheet"]),
     ]);
 
-    // ---- Metrics (BUG FIX B5 — eye% from bottom) ----
+    // ---- Metrics ----
     const outputScale = targetH / cropHeight;
     const scaledFullHeadHeight = fullHeadHeight * outputScale;
     const effectiveEyeY = faceData.eyeCenter.y - extractTop + paddingTop;
@@ -419,7 +497,7 @@ export async function POST(req: NextRequest) {
     const finalHeadPct = (scaledFullHeadHeight / targetH) * 100;
     const finalEyeFromBottomPct = ((targetH - scaledEyeY) / targetH) * 100;
 
-    console.log(`[crop] Final metrics — headPct=${finalHeadPct.toFixed(1)}% (target ${Math.round(MIN_HEAD_PCT * 100)}–${Math.round(MAX_HEAD_PCT * 100)}%), eyeFromBottom=${finalEyeFromBottomPct.toFixed(1)}%`);
+    console.log(`[crop] Final metrics — headPct=${finalHeadPct.toFixed(1)}% (target ${MIN_HEAD_PCT_RAW.toFixed(1)}–${MAX_HEAD_PCT_RAW.toFixed(1)}%), eyeFromBottom=${finalEyeFromBottomPct.toFixed(1)}%`);
 
     const dbConnect = (await import("@/lib/mongodb")).default;
     const Photo = (await import("@/models/Photo")).default;
@@ -446,6 +524,7 @@ export async function POST(req: NextRequest) {
       format: filenameExt.toUpperCase(),
       sizeKb: Math.round(processedBuffer.length / 1024),
     });
+
   } catch (error: any) {
     console.error("Crop Error:", error);
     return NextResponse.json(
