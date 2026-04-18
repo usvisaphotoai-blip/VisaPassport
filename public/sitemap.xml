@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://www.pixpassport.com</loc>
     <lastmod>2026-04-12</lastmod>
@@ -17,6 +18,9 @@
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+        <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/visa_photo_validator_passport_photo_validator_pixpassport_usvisaphotoai_lcvdyd.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://www.pixpassport.com/blog</loc>
@@ -96,18 +100,39 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+  
+  <!-- AUSTRIA (Schengen) -->
   <url>
     <loc>https://www.pixpassport.com/austria-passport-photo-editor</loc>
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://www.pixpassport.com/austria-visa-photo-editor</loc>
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
   </url>
+  
   <url>
     <loc>https://www.pixpassport.com/bangladesh-passport-photo-editor</loc>
     <lastmod>2026-04-12</lastmod>
@@ -120,6 +145,39 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+  
+  <!-- BELGIUM (Schengen) -->
+  <url>
+    <loc>https://www.pixpassport.com/belgium-passport-photo-editor</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/belgium-visa-photo-editor</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
+  </url>
+
   <url>
     <loc>https://www.pixpassport.com/brazil-passport-photo-editor</loc>
     <lastmod>2026-04-17</lastmod>
@@ -149,13 +207,116 @@
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+     <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1776480157/china_passport_photo_r6afgw.jpg</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://www.pixpassport.com/china-visa-photo-editor</loc>
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+     <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1776480157/china_passport_photo_r6afgw.jpg</image:loc>
+    </image:image>
   </url>
+  
+  <!-- CROATIA (Schengen) -->
+  <url>
+    <loc>https://www.pixpassport.com/croatia-passport-photo-editor</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/croatia-visa-photo-editor</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
+  </url>
+
+  <!-- CZECH REPUBLIC (Schengen) -->
+  <url>
+    <loc>https://www.pixpassport.com/czech-republic-passport-photo-editor</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/czech-republic-visa-photo-editor</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
+  </url>
+
+  <!-- DENMARK (Schengen) -->
+  <url>
+    <loc>https://www.pixpassport.com/denmark-passport-photo-editor</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/denmark-visa-photo-editor</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
+  </url>
+
   <url>
     <loc>https://www.pixpassport.com/egypt-passport-photo-editor</loc>
     <lastmod>2026-04-12</lastmod>
@@ -168,30 +329,135 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+  
+  <!-- ESTONIA (Schengen) -->
+  <url>
+    <loc>https://www.pixpassport.com/estonia-passport-photo-editor</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/estonia-visa-photo-editor</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
+  </url>
+
+  <!-- FINLAND (Schengen) -->
+  <url>
+    <loc>https://www.pixpassport.com/finland-passport-photo-editor</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/finland-visa-photo-editor</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
+  </url>
+
+  <!-- FRANCE (Schengen) -->
   <url>
     <loc>https://www.pixpassport.com/france-passport-photo-editor</loc>
     <lastmod>2026-04-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://www.pixpassport.com/france-visa-photo-editor</loc>
     <lastmod>2026-04-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
   </url>
+
+  <!-- GERMANY (Schengen) -->
   <url>
     <loc>https://www.pixpassport.com/germany-passport-photo-editor</loc>
     <lastmod>2026-04-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://www.pixpassport.com/germany-visa-photo-editor</loc>
     <lastmod>2026-04-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
   </url>
+
   <url>
     <loc>https://www.pixpassport.com/ghana-passport-photo-editor</loc>
     <lastmod>2026-04-12</lastmod>
@@ -204,6 +470,103 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+  
+  <!-- GREECE (Schengen) -->
+  <url>
+    <loc>https://www.pixpassport.com/greece-passport-photo-editor</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/greece-visa-photo-editor</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
+  </url>
+
+  <!-- HUNGARY (Schengen) -->
+  <url>
+    <loc>https://www.pixpassport.com/hungary-passport-photo-editor</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/hungary-visa-photo-editor</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
+  </url>
+
+  <!-- ICELAND (Schengen) -->
+  <url>
+    <loc>https://www.pixpassport.com/iceland-passport-photo-editor</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/iceland-visa-photo-editor</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
+  </url>
+
   <url>
     <loc>https://www.pixpassport.com/india-passport-photo-editor</loc>
     <lastmod>2026-04-12</lastmod>
@@ -264,18 +627,39 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+  
+  <!-- ITALY (Schengen) -->
   <url>
     <loc>https://www.pixpassport.com/italy-passport-photo-editor</loc>
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://www.pixpassport.com/italy-visa-photo-editor</loc>
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
   </url>
+
   <url>
     <loc>https://www.pixpassport.com/japan-passport-photo-editor</loc>
     <lastmod>2026-04-12</lastmod>
@@ -300,6 +684,167 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+  
+  <!-- LATVIA (Schengen) -->
+  <url>
+    <loc>https://www.pixpassport.com/latvia-passport-photo-editor</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/latvia-visa-photo-editor</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
+  </url>
+
+  <!-- LIECHTENSTEIN (Schengen) -->
+  <url>
+    <loc>https://www.pixpassport.com/liechtenstein-passport-photo-editor</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/liechtenstein-visa-photo-editor</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
+  </url>
+
+  <!-- LITHUANIA (Schengen) -->
+  <url>
+    <loc>https://www.pixpassport.com/lithuania-passport-photo-editor</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/lithuania-visa-photo-editor</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
+  </url>
+
+  <!-- LUXEMBOURG (Schengen) -->
+  <url>
+    <loc>https://www.pixpassport.com/luxembourg-passport-photo-editor</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/luxembourg-visa-photo-editor</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
+  </url>
+
+  <!-- MALTA (Schengen) -->
+  <url>
+    <loc>https://www.pixpassport.com/malta-passport-photo-editor</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/malta-visa-photo-editor</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
+  </url>
+
   <url>
     <loc>https://www.pixpassport.com/malaysia-passport-photo-editor</loc>
     <lastmod>2026-04-12</lastmod>
@@ -348,23 +893,53 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+  
+  <!-- NETHERLANDS (Schengen) -->
   <url>
     <loc>https://www.pixpassport.com/netherlands-passport-photo-editor</loc>
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://www.pixpassport.com/netherlands-visa-photo-editor</loc>
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
   </url>
+
   <url>
     <loc>https://www.pixpassport.com/new-zealand-passport-photo-editor</loc>
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+     <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://www.pixpassport.com/new-zealand-visa-photo-editor</loc>
@@ -377,6 +952,15 @@
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+     <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://www.pixpassport.com/nigeria-visa-photo-editor</loc>
@@ -384,6 +968,39 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+  
+  <!-- NORWAY (Schengen) -->
+  <url>
+    <loc>https://www.pixpassport.com/norway-passport-photo-editor</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/norway-visa-photo-editor</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
+  </url>
+
   <url>
     <loc>https://www.pixpassport.com/pakistan-passport-photo-editor</loc>
     <lastmod>2026-04-12</lastmod>
@@ -420,66 +1037,178 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+  
+  <!-- POLAND (Schengen) -->
   <url>
     <loc>https://www.pixpassport.com/poland-passport-photo-editor</loc>
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://www.pixpassport.com/poland-visa-photo-editor</loc>
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
   </url>
+
+  <!-- PORTUGAL (Schengen) -->
   <url>
     <loc>https://www.pixpassport.com/portugal-passport-photo-editor</loc>
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://www.pixpassport.com/portugal-visa-photo-editor</loc>
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
   </url>
+
   <url>
     <loc>https://www.pixpassport.com/romania-passport-photo-editor</loc>
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/romania-visa-photo-editor</loc>
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/russia-passport-photo-editor</loc>
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/russia-visa-photo-editor</loc>
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/saudi-arabia-passport-photo-editor</loc>
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+     <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_90eama90eama90ea_eh0hq2.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://www.pixpassport.com/saudi-arabia-visa-photo-editor</loc>
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_90eama90eama90ea_eh0hq2.png</image:loc>
+    </image:image>
   </url>
+  
+  <!-- SLOVAKIA (Schengen) -->
+  <url>
+    <loc>https://www.pixpassport.com/slovakia-passport-photo-editor</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/slovakia-visa-photo-editor</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
+  </url>
+
+  <!-- SLOVENIA (Schengen) -->
+  <url>
+    <loc>https://www.pixpassport.com/slovenia-passport-photo-editor</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/slovenia-visa-photo-editor</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
+  </url>
+
   <url>
     <loc>https://www.pixpassport.com/south-africa-passport-photo-editor</loc>
     <lastmod>2026-04-12</lastmod>
@@ -504,42 +1233,103 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+  
+  <!-- SPAIN (Schengen) -->
   <url>
     <loc>https://www.pixpassport.com/spain-passport-photo-editor</loc>
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://www.pixpassport.com/spain-visa-photo-editor</loc>
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
   </url>
+
+  <!-- SWEDEN (Schengen) -->
   <url>
     <loc>https://www.pixpassport.com/sweden-passport-photo-editor</loc>
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://www.pixpassport.com/sweden-visa-photo-editor</loc>
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
   </url>
+
+  <!-- SWITZERLAND (Schengen) -->
   <url>
     <loc>https://www.pixpassport.com/switzerland-passport-photo-editor</loc>
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://www.pixpassport.com/switzerland-visa-photo-editor</loc>
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
   </url>
+
   <url>
     <loc>https://www.pixpassport.com/thailand-passport-photo-editor</loc>
     <lastmod>2026-04-12</lastmod>
@@ -648,6 +1438,71 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+  
+  <!-- BULGARIA (Schengen - full membership as of March 2025) -->
+  <url>
+    <loc>https://www.pixpassport.com/bulgaria-passport-photo-editor</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/bulgaria-visa-photo-editor</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
+  </url>
+
+  <!-- ROMANIA (Schengen - full membership as of March 2025) -->
+  <url>
+    <loc>https://www.pixpassport.com/romania-passport-photo-editor</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/romania-visa-photo-editor</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
+    </image:image>
+  </url>
+
   <url>
     <loc>https://www.pixpassport.com/blog/us-visa-photo-size-background-rules-guide-uk-europe</loc>
     <lastmod>2026-04-12</lastmod>
