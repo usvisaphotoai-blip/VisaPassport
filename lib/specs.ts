@@ -18,6 +18,7 @@ export interface CountrySpec {
   price: number;
   print_size: "A4" | "Letter";
   head_top_multiplier?: number;
+  dpi?: number;
 }
 
 export const allSpecs = specsData as CountrySpec[];

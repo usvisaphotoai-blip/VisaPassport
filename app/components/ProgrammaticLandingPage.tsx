@@ -114,7 +114,7 @@ export default function ProgrammaticLandingPage({ spec, slug }: Props) {
 
             <div className="mt-12 lg:mt-0 relative flex justify-center lg:justify-end">
               <Image
-                src="/us_non_imigrant.png"
+                src={spec.hero_photo || "/us_non_imigrant.png"}
                 alt={`Official ${countryName} ${docName} photo compliance example`}
                 width={400}
                 height={400}

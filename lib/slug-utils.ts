@@ -24,6 +24,7 @@ export interface SpecEntry {
     symbol: string;
     amount: number;
   };
+  hero_photo?: string;
 }
 
 /**

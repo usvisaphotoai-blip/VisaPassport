@@ -312,10 +312,12 @@ export async function POST(req: NextRequest) {
       cropChain = cropChain.flatten({ background: { r: 255, g: 255, b: 255 } });
     }
 
+    const targetDPI = toNum((spec as any).dpi, 300);
+
     cropChain = cropChain
       .toColorspace("srgb")
       .resize(targetW, targetH, { fit: "fill" })
-      .withMetadata({ density: 300 });
+      .withMetadata({ density: targetDPI });
 
     cropChain = filenameExt === "png"
       ? cropChain.png()
