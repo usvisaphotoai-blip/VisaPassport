@@ -61,11 +61,11 @@ const Sidebar: React.FC<SidebarProps> = ({
         bgColors={bgColors}
       />
 
-      {selectedDoc !== "general" && selectedBg !== "white" && (
+      {selectedBg !== activeDoc.bg_color && (
         <div className="flex items-start gap-2 text-[10px] text-amber-800 bg-amber-50/80 backdrop-blur-sm border border-amber-200/50 rounded-xl px-3 py-2.5">
           <WarnIcon className="w-4 h-4 shrink-0 mt-px text-amber-500" />
           <span className="leading-relaxed font-medium">
-            Standard {activeDoc.label} requirements typically dictate a pure white background.
+            Standard {activeDoc.label} requirements typically dictate a {bgColors.find(b => b.id === activeDoc.bg_color)?.label.toLowerCase() || activeDoc.bg_color} background.
           </span>
         </div>
       )}
