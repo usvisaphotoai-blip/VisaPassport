@@ -245,10 +245,10 @@ export async function POST(req: NextRequest) {
     const initialCropHeight = fullHeadHeight / TARGET_HEAD_PCT;
     const initialCropTop = faceData.eyeCenter.y - (initialCropHeight * TARGET_EYE_TOP_PCT);
     const crownGap = initialCropTop - trueTopOfHead;
-    const adaptivePad = fullHeadHeight * 0.10;
+    const adaptivePad = fullHeadHeight * 0.09;
     const CAUTION_MARGIN = Math.max(
-      fullHeadHeight * 0.12,
-      crownGap > 0 ? crownGap + adaptivePad : fullHeadHeight * 0.12
+      fullHeadHeight * 0.11,
+      crownGap > 0 ? crownGap + adaptivePad : fullHeadHeight * 0.11
     );
 
     let cropHeight = initialCropHeight;
