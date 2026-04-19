@@ -52,7 +52,7 @@
   
         "head_min_pct": 70,
         "head_max_pct": 80,
-        "eye_min_pct": 55,
+        "eye_min_pct": 50,
         "eye_max_pct": 65,
         "bg_color": "white",
         "price": 5.99,

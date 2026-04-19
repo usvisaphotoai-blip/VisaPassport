@@ -171,8 +171,8 @@ export function drawOverlay(
     ctx.fillText(label, 80, yMin + 12);
   };
 
-  const minEye = Number(spec?.eye_min_pct) || 55.5;
-  const maxEye = Number(spec?.eye_max_pct) || 69.5;
+  const minEye = Number(spec?.eye_min_pct) || 56;
+  const maxEye = Number(spec?.eye_max_pct) || 69;
   drawTargetZone(minEye, maxEye, "rgba(16, 185, 129, 0.05)", "EYE TARGET");
 
   const minHead = Number(spec?.head_min_pct) || 50;
@@ -335,9 +335,10 @@ export function useFaceVerification(previewUrl: string, documentType: string) {
         const eyeY = (leftCenter.y + rightCenter.y) / 2;
         const eyePct = ((h - eyeY) / h) * 100;
 
-        const minEye = Number(spec?.eye_min_pct) || 55.5;
-        const maxEye = Number(spec?.eye_max_pct) || 69.5;
-        const eyePass = eyePct >= minEye && eyePct <= maxEye;
+        const minEye = Number(spec?.eye_min_pct) || 56;
+        const maxEye = Number(spec?.eye_max_pct) || 69;
+        // TOLERANCE: Add 0.2% padding to account for rounding and AI landmark variations
+        const eyePass = eyePct >= (minEye - 0.2) && eyePct <= (maxEye + 0.2);
         push(
           "Eye Level",
           eyePass ? "PASS" : "WARN",
@@ -358,7 +359,8 @@ export function useFaceVerification(previewUrl: string, documentType: string) {
 
         const minHead = Number(spec?.head_min_pct) || 50;
         const maxHead = Number(spec?.head_max_pct) || 69;
-        const headPass = headPct >= minHead && headPct <= maxHead;
+        // TOLERANCE: Add 0.2% padding to account for rounding and AI landmark variations
+        const headPass = headPct >= (minHead - 0.2) && headPct <= (maxHead + 0.2);
         push(
           "Head Size",
           headPass ? "PASS" : "WARN",
