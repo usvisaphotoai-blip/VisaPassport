@@ -42,6 +42,12 @@ export default async function AdminLayout({
             ✍️ Manage Blogs
           </Link>
           <Link
+            href="/admin/orders"
+            className="px-4 py-2 hover:bg-slate-800 rounded-lg transition-colors font-medium text-sm flex items-center gap-2"
+          >
+            📦 Paid Photos
+          </Link>
+          <Link
             href="/admin/feedback"
             className="px-4 py-2 hover:bg-slate-800 rounded-lg transition-colors font-medium text-sm flex items-center gap-2"
           >
