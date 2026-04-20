@@ -484,9 +484,9 @@ export async function POST(req: NextRequest) {
       .toBuffer();
 
     const [secureUrl, previewUrl, printSheetUrl] = await Promise.all([
-      uploadBufferToCloudinary(processedBuffer, "visa-photos", ["secure"]),
-      uploadBufferToCloudinary(watermarkedBuffer, "visa-photos", ["preview"]),
-      uploadBufferToCloudinary(printSheetBuffer, "visa-photos", ["print-sheet"]),
+      uploadBufferToCloudinary(processedBuffer, "visa-photos-pixpassport", ["secure"]),
+      uploadBufferToCloudinary(watermarkedBuffer, "visa-photos-pixpassport", ["preview"]),
+      uploadBufferToCloudinary(printSheetBuffer, "visa-photos-pixpassport", ["print-sheet"]),
     ]);
 
     // ---- Metrics ----
