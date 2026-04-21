@@ -92,7 +92,7 @@ export default function OrderSummary({
                 Money-back Guarantee
               </p>
               <p className="text-[10px] text-slate-400 leading-snug">
-                50% refund if photo is rejected.{" "}
+                Refund if photo is rejected.{" "}
                 <a href="/terms" className="underline hover:text-slate-600">
                   Terms
                 </a>
@@ -199,27 +199,7 @@ export default function OrderSummary({
             </div>
           ) : (
             <div className="mt-4">
-              {status !== "authenticated" && (
-                <div className="mb-4">
-                  <label
-                    htmlFor="guestEmail"
-                    className="block text-xs font-bold text-slate-700 mb-1"
-                  >
-                    Get your report emailed
-                  </label>
-                  <input
-                    type="email"
-                    id="guestEmail"
-                    value={guestEmail || ""}
-                    onChange={(e) => setGuestEmail(e.target.value)}
-                    placeholder="Enter your email to receive your report"
-                    className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#3b5bdb] focus:border-transparent"
-                  />
-                  <p className="text-[10px] text-slate-400 mt-1.5 leading-snug">
-                    Enter your email to receive your compliance report and access it anytime.
-                  </p>
-                </div>
-              )}
+             
               <button
                 onClick={handlePayment}
                 disabled={loading || verifying}
