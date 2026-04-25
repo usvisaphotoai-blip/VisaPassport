@@ -114,7 +114,7 @@ export default function PhotoCard({
                       verifying
                         ? "linear-gradient(145deg, rgba(96,165,250,0.50) 0%, rgba(96,165,250,0.10) 100%)"
                         : overallPass
-                          ? "linear-gradient(145deg, rgba(74,222,128,0.55) 0%, rgba(74,222,128,0.10) 100%)"
+                          ? ""
                           : "linear-gradient(145deg, rgba(251,191,36,0.50) 0%, rgba(251,191,36,0.10) 100%)",
                   }}
                 >

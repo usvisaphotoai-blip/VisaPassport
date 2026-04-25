@@ -2,8 +2,10 @@ import { Metadata } from "next";
 import { notFound, permanentRedirect } from "next/navigation";
 import specs from "../../data/countries-specs.json";
 import moneyPages from "../../data/money-pages.json";
+import toolPages from "../../data/tool-seo-pages.json";
 import { getSpecIdFromSlug, getAllSlugs, SpecEntry, getCanonicalSlug } from "../../lib/slug-utils";
 import ProgrammaticLandingPage from "../components/ProgrammaticLandingPage";
+import PassportMakerApp from "../passport-size-photo-maker/PassportMakerApp";
 import { getLocalPrice } from "@/lib/currency";
 
 interface PageProps {
@@ -63,41 +65,86 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
+  // 3. Check for Tool SEO Pages
+  const toolPage = toolPages.find((p) => p.slug === slug);
+  if (toolPage) {
+    return {
+      title: toolPage.title,
+      description: toolPage.metaDescription,
+      alternates: { canonical: `https://www.pixpassport.com/${slug}` },
+      openGraph: { title: toolPage.title, description: toolPage.metaDescription, url: `https://www.pixpassport.com/${slug}`, type: "website" },
+    };
+  }
+
   return {};
 }
 
 export default async function Page({ params }: PageProps) {
   const { slug } = await params;
+
+  // 1. Check for Tool SEO Pages (Highest Priority for specific keywords)
+  const toolPage = toolPages.find((p) => p.slug === slug);
+  if (toolPage) {
+    return (
+      <div className="bg-slate-50 min-h-screen">
+        {/* ── Hero header ── */}
+        <div className="bg-white border-b border-slate-200">
+          <div className="max-w-4xl mx-auto px-4 py-12 text-center">
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-xs font-semibold mb-5">
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
+              AI-Powered · Free to try
+            </div>
+
+            <h1 className="text-2xl md:text-3xl font-black text-slate-900 mb-4 tracking-tight leading-tight">
+              {toolPage.h1}
+            </h1>
+            <p className="text-slate-600 max-w-xl mx-auto text-base md:text-lg leading-relaxed">
+              {toolPage.metaDescription}
+            </p>
+
+            {/* Quick stats */}
+            <div className="flex flex-wrap items-center justify-center gap-6 mt-8">
+              {[
+                { value: "100+", label: "Countries" },
+                { value: "30+", label: "Compliance checks" },
+                { value: "< 2 min", label: "Processing time" },
+                { value: "100%", label: "AI-powered" },
+              ].map(({ value, label }) => (
+                <div key={label} className="text-center">
+                  <p className="text-2xl font-black text-blue-600">{value}</p>
+                  <p className="text-xs text-slate-500 font-medium">{label}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* ── Tool ── */}
+        <PassportMakerApp />
+
+        {/* ── SEO content ── */}
+        <div className="bg-white border-t border-slate-100 py-20 mt-8">
+          <div className="max-w-4xl mx-auto px-4">
+            <h2 className="text-3xl font-black text-slate-900 mb-10 tracking-tight text-center">
+              Detailed Guide & Frequently Asked Questions
+            </h2>
+            <div
+              className="prose prose-premium max-w-none text-slate-700"
+              dangerouslySetInnerHTML={{ __html: toolPage.content }}
+            />
+          </div>
+        </div>
+      </div>
+    );
+  }
   
-  // 1. Handle Country Specs
+  // 2. Handle Country Specs
   const specId = getSpecIdFromSlug(slug);
   const spec = (specs as SpecEntry[]).find((s) => s.id === specId);
 
   if (spec) {
-    // Determine the user's intent from the URL
-    const isVisaUrl = slug.includes("visa");
-    const intentSuffix = isVisaUrl ? "visa" : "passport";
-    
-    // Construct the expected canonical slug for this specific country and intent
-    const countryBase = spec.country.toLowerCase().replace(/\s+/g, "-");
-    const expectedPrefix = specs.find(s => s.id === "us-visa" && spec.country === "United States") ? "us" : countryBase;
-    
-    // Actually, let's use a simpler check: 
-    // If the slug is for visa but spec is for passport, that's fine (fallback).
-    // We only redirect if the WHOLE slug doesn't match the canonical pattern.
-    // e.g. /united-states-visa-photo-editor -> /us-visa-photo-editor
-    
-    // Use the short ID normalization to find the "true" base
-    const shortId = slug.replace("-passport-photo-editor", "").replace("-visa-photo-editor", "");
-    const normalizedTarget = slug.includes("visa") ? `${shortId}-visa-photo-editor` : `${shortId}-passport-photo-editor`;
-    
-    // We strictly want to ensure the target uses the most SEO-friendly short ID (e.g. 'us' not 'united-states')
-    // But since getAllSlugs() already generates them correctly, we can just check if slug is one of the valid ones.
-    
-    if (slug !== normalizedTarget) {
-       // Only redirect if something is really weird, but for now let's trust the canonicalSlug logic in metadata.
-    }
-
+    // ... rest of spec logic
     const localPrice = await getLocalPrice(spec.price);
     const enrichedSpec = { ...spec, local_price: localPrice };
     const jsonLd = {
@@ -117,11 +164,9 @@ export default async function Page({ params }: PageProps) {
     );
   }
 
-  // 2. Handle Money Pages
+  // 3. Handle Money Pages
   const moneyPage = moneyPages.find((p) => p.slug === slug);
   if (moneyPage) {
-    // For now use the same landing page logic or a generic view
-    // You can customize this later to show the money page content specifically
     return (
       <div className="bg-white min-h-screen py-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto">

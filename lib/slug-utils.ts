@@ -1,5 +1,6 @@
 import specs from "../data/countries-specs.json";
 import moneyPages from "../data/money-pages.json";
+import toolPages from "../data/tool-seo-pages.json";
 
 export interface SpecEntry {
   id: string;
@@ -127,6 +128,11 @@ export function getAllSlugs(): string[] {
 
   // 3. Money Pages
   moneyPages.forEach(page => {
+    slugs.add(page.slug);
+  });
+
+  // 4. Tool SEO Pages
+  toolPages.forEach(page => {
     slugs.add(page.slug);
   });
 

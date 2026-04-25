@@ -13,6 +13,37 @@
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
+    <url>
+    <loc>https://www.pixpassport.com/passport-photo-maker</loc>
+    <lastmod>2026-04-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1777076552/PixPassport_free_passport_photo_tool_passport_photo_ai_kscj2n.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/passport_photo_requirements_specs_official_guide_2026_c29t35.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_89a6o689a6o689a6_n1b1x0.png</image:loc>
+    </image:image>
+  </url>
+   <url>
+    <loc>https://www.pixpassport.com/passport-size-photo-maker</loc>
+    <lastmod>2026-04-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1777076552/PixPassport_free_passport_photo_tool_passport_photo_ai_kscj2n.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/passport_photo_requirements_specs_official_guide_2026_c29t35.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_89a6o689a6o689a6_n1b1x0.png</image:loc>
+    </image:image>
+  </url>
+
   <url>
     <loc>https://www.pixpassport.com/visa-photo-validator</loc>
     <lastmod>2026-04-12</lastmod>

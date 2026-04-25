@@ -32,190 +32,325 @@ export function drawOverlay(
   canvas: HTMLCanvasElement,
   box: { x: number; y: number; width: number; height: number },
   landmarks: NormalizedLandmark[],
-  w: number,
-  h: number,
+  imgW: number,
+  imgH: number,
   spec?: CountrySpec | undefined,
+  PAD = 60,
 ) {
-  const ctx = canvas.getContext("2d", { willReadFrequently: true })!;
-  ctx.clearRect(0, 0, w, h);
-  const ELECTRIC_BLUE = "rgba(16, 185, 129, 0.9)";
-  const BLUE_LIGHT = "rgba(16, 185, 129, 0.4)";
-  const SMALL_FONT = "bold 13px system-ui, -apple-system, sans-serif";
+  const W = imgW + PAD * 2;
+  const H = imgH + PAD * 2;
+  canvas.width = W;
+  canvas.height = H;
 
-  // Eye centers from MediaPipe landmarks
-  const leftEyePoints = getPoints(landmarks, LEFT_EYE_INDICES, w, h);
-  const rightEyePoints = getPoints(landmarks, RIGHT_EYE_INDICES, w, h);
-  const leftCenter = centerOfPoints(leftEyePoints);
+  const ctx = canvas.getContext("2d", { willReadFrequently: true });
+  if (!ctx) return;
+  const _ctx: CanvasRenderingContext2D = ctx;
+  _ctx.clearRect(0, 0, W, H);
+
+  const PRIMARY = "rgba(20, 184, 166, 0.95)";
+  const PRIMARY_DASH = "rgba(20, 184, 166, 0.5)";
+  const FONT_B = "bold 18px system-ui, -apple-system, sans-serif";
+  const FONT_S = "10px system-ui, -apple-system, sans-serif";
+  const TICK = 6;
+  const ARROW_SZ = 5;
+
+  // ── Translate all landmark coords by PAD offset ──
+  const tx = (x: number) => x + PAD;
+  const ty = (y: number) => y + PAD;
+
+  // ── Landmark positions ──
+  const leftEyePoints  = getPoints(landmarks, LEFT_EYE_INDICES,  imgW, imgH);
+  const rightEyePoints = getPoints(landmarks, RIGHT_EYE_INDICES, imgW, imgH);
+  const leftCenter  = centerOfPoints(leftEyePoints);
   const rightCenter = centerOfPoints(rightEyePoints);
-  const eyeY = (leftCenter.y + rightCenter.y) / 2;
+  const eyeY = ty((leftCenter.y + rightCenter.y) / 2);
 
-  // Chin and forehead
-  const chinPt = toPixel(landmarks[CHIN_TIP], w, h);
-  const foreheadPt = toPixel(landmarks[FOREHEAD_TOP], w, h);
-  const chinY = chinPt.y;
+  const chinPt     = toPixel(landmarks[CHIN_TIP],     imgW, imgH);
+  const foreheadPt = toPixel(landmarks[FOREHEAD_TOP], imgW, imgH);
+  const chinY  = ty(chinPt.y);
+  const faceH  = chinPt.y - foreheadPt.y;
 
-  // Face height and estimated top of head
-  const faceH = chinY - foreheadPt.y;
-  const multiplier = Number(spec?.head_top_multiplier) || HEAD_TOP_MULTIPLIER;
+  // ── CountrySpec-aware multiplier & target ranges ──
+  const multiplier        = Number(spec?.head_top_multiplier) || HEAD_TOP_MULTIPLIER;
   const estimatedFullHeadH = faceH * multiplier;
-  const trueTopOfHead = Math.max(0, chinY - estimatedFullHeadH);
+  const trueTopOfHead     = ty(Math.max(0, chinPt.y - estimatedFullHeadH));
 
-  // BUG FIX #1 — `width_mm` / `height_mm` can be "unspecified" strings.
-  // `Number("unspecified")` → NaN, so `|| fallback` correctly kicks in.
-  // The old code used `spec?.height_mm || 51` which would pass the string
-  // "unspecified" through (truthy), causing `fillText("unspecified mm")`.
   const targetH_mm = Number(spec?.height_mm) || 51;
-  const targetW_mm = Number(spec?.width_mm) || 51;
+  const targetW_mm = Number(spec?.width_mm)  || 51;
 
-  // BUG FIX #3 — use separate PPM per axis so non-square specs render
-  // the width ruler correctly (e.g. 35×45 mm documents).
-  const PPM_H = h / targetH_mm;
-  const PPM_W = w / targetW_mm;
+  // Per-axis pixels-per-mm so non-square specs work correctly
+  const PPM_H = imgH / targetH_mm;
+  const PPM_W = imgW / targetW_mm;
 
-  const eyeLineMM = ((h - eyeY) / PPM_H).toFixed(1);
-  const faceHeightMM = (estimatedFullHeadH / PPM_H).toFixed(1);
+  const faceHeightMm   = estimatedFullHeadH / PPM_H;
+  const headHeightPct  = (estimatedFullHeadH / imgH) * 100;
+  const eyeFromBotPx   = imgH - (eyeY - PAD);
+  const eyeFromBotMm   = eyeFromBotPx / PPM_H;
+  const eyeFromBotPct  = (eyeFromBotPx / imgH) * 100;
+  const frameWidthMm   = imgW / PPM_W;
 
-  const line = (
-    x1: number, y1: number,
-    x2: number, y2: number,
-    dash: number[] = [],
-  ) => {
-    ctx.save();
-    ctx.beginPath();
-    ctx.setLineDash(dash);
-    ctx.moveTo(x1, y1);
-    ctx.lineTo(x2, y2);
-    ctx.stroke();
-    ctx.restore();
-  };
-
-  const tick = (x: number, y: number, size = 6) => {
-    line(x - size, y, x + size, y);
-  };
-
-  // Face bounding box
-  ctx.strokeStyle = BLUE_LIGHT;
-  ctx.lineWidth = 0.75;
-  ctx.save();
-  ctx.setLineDash([3, 4]);
-  ctx.strokeRect(box.x - 4, trueTopOfHead, box.width + 8, chinY - trueTopOfHead);
-  ctx.restore();
-
-  // Eye-level guide line
-  ctx.strokeStyle = ELECTRIC_BLUE;
-  ctx.lineWidth = 0.75;
-  line(0, eyeY, w, eyeY, [4, 4]);
-
-  // Eyeline measurement ruler (right side)
-  const measureX = w - 40;
-  ctx.strokeStyle = ELECTRIC_BLUE;
-  ctx.lineWidth = 0.75;
-  line(measureX, eyeY, measureX, h, [3, 3]);
-  tick(measureX, eyeY);
-  tick(measureX, h - 1);
-  ctx.fillStyle = ELECTRIC_BLUE;
-  ctx.font = SMALL_FONT;
-  ctx.save();
-  ctx.translate(measureX + 16, (eyeY + h) / 2);
-  ctx.rotate(-Math.PI / 2);
-  ctx.textAlign = "center";
-  ctx.fillText(`Eyeline: ${eyeLineMM}mm`, 0, 0);
-  ctx.restore();
-
-  // Face-height measurement ruler (right side, inner)
-  const faceX = w - 22;
-  ctx.lineWidth = 0.75;
-  line(faceX, trueTopOfHead, faceX, chinY, [3, 3]);
-  tick(faceX, trueTopOfHead);
-  tick(faceX, chinY);
-  ctx.save();
-  ctx.translate(faceX + 14, (trueTopOfHead + chinY) / 2);
-  ctx.rotate(-Math.PI / 2);
-  ctx.textAlign = "center";
-  ctx.fillText(`Face: ${faceHeightMM}mm`, 0, 0);
-  ctx.restore();
-
-  // Bottom width ruler
-  ctx.lineWidth = 0.75;
-  ctx.textAlign = "center";
-  const bottomY = h - 6;
-  line(10, bottomY, w - 10, bottomY, [4, 4]);
-  tick(10, bottomY, 4);
-  tick(w - 10, bottomY, 4);
-  ctx.fillText(`${targetW_mm}mm`, w / 2, bottomY - 4);
-
-  // Left height ruler
-  const leftX = 18;
-  line(leftX, 10, leftX, h - 10, [4, 4]);
-  tick(leftX, 10, 4);
-  tick(leftX, h - 10, 4);
-  ctx.save();
-  ctx.translate(leftX - 2, h / 2);
-  ctx.rotate(-Math.PI / 2);
-  ctx.fillText(`${targetH_mm}mm`, 0, 0);
-  ctx.restore();
-
-  // ── Target Ranges ──
-  const drawTargetZone = (
-    minPct: number,
-    maxPct: number,
-    color: string,
-    label: string,
-  ) => {
-    ctx.fillStyle = color;
-    const yMin = h * (1 - maxPct / 100);
-    const yMax = h * (1 - minPct / 100);
-    ctx.fillRect(0, yMin, w, yMax - yMin);
-    ctx.fillStyle = color.replace("0.05", "0.6");
-    ctx.font = "bold 9px system-ui";
-    ctx.fillText(label, 80, yMin + 12);
-  };
-
-  const minEye = Number(spec?.eye_min_pct) || 56;
-  const maxEye = Number(spec?.eye_max_pct) || 69;
-  drawTargetZone(minEye, maxEye, "rgba(16, 185, 129, 0.05)", "EYE TARGET");
-
+  const minEye  = Number(spec?.eye_min_pct)  || 56;
+  const maxEye  = Number(spec?.eye_max_pct)  || 69;
   const minHead = Number(spec?.head_min_pct) || 50;
   const maxHead = Number(spec?.head_max_pct) || 69;
-  // BUG FIX #7 — removed unused `headRangeY_min` variable (was `h * 0.1` but never referenced)
-  const headRangeH_min = h * (minHead / 100);
-  const headRangeH_max = h * (maxHead / 100);
 
-  ctx.strokeStyle = "rgba(245, 158, 11, 0.3)";
-  ctx.lineWidth = 3;
-  line(w - 5, h - headRangeH_max, w - 5, h - headRangeH_min);
-  ctx.fillStyle = "rgba(245, 158, 11, 0.8)";
-  ctx.fillText("HEAD", w - 15, h - headRangeH_max - 5);
+  const boxX = tx(box.x);
 
-  // Head dots (Eyes)
-  ctx.save();
-  for (const pt of [...leftEyePoints, ...rightEyePoints]) {
-    ctx.beginPath();
-    ctx.arc(pt.x, pt.y, 1.2, 0, Math.PI * 2);
-    ctx.fillStyle = ELECTRIC_BLUE;
-    ctx.fill();
+  // ────────────────────────────────────────
+  // Helpers
+  // ────────────────────────────────────────
+  function arrow(x1: number, y1: number, x2: number, y2: number) {
+    const ang = Math.atan2(y2 - y1, x2 - x1);
+    _ctx.beginPath();
+    _ctx.moveTo(x1, y1);
+    _ctx.lineTo(x2, y2);
+    _ctx.stroke();
+    for (const [px, py] of [[x2, y2], [x1, y1]] as [number, number][]) {
+      const a = px === x2 ? ang : ang + Math.PI;
+      _ctx.beginPath();
+      _ctx.moveTo(px, py);
+      _ctx.lineTo(px - ARROW_SZ * Math.cos(a - Math.PI / 6), py - ARROW_SZ * Math.sin(a - Math.PI / 6));
+      _ctx.moveTo(px, py);
+      _ctx.lineTo(px - ARROW_SZ * Math.cos(a + Math.PI / 6), py - ARROW_SZ * Math.sin(a + Math.PI / 6));
+      _ctx.stroke();
+    }
   }
-  ctx.restore();
 
-  // Tilt indicator
-  const tiltAngle = computeTiltAngle(landmarks, w, h);
+  function tick(x: number, y: number, horiz = true) {
+    _ctx.beginPath();
+    if (horiz) { _ctx.moveTo(x - TICK / 2, y); _ctx.lineTo(x + TICK / 2, y); }
+    else       { _ctx.moveTo(x, y - TICK / 2); _ctx.lineTo(x, y + TICK / 2); }
+    _ctx.stroke();
+  }
+
+  function label(
+    cx: number,
+    cy: number,
+    lines: string[],
+    angle = 0,
+    bg = "rgba(255,255,255,0.97)",
+  ) {
+    _ctx.save();
+    _ctx.translate(cx, cy);
+    _ctx.rotate(angle);
+    _ctx.font = FONT_B;
+
+    const LH = 14;
+    const PADx = 5, PADy = 3;
+    const maxW = Math.max(...lines.map((l, i) => {
+      _ctx.font = i === 0 ? FONT_B : FONT_S;
+      return _ctx.measureText(l).width;
+    }));
+    const totalH = lines.length * LH;
+    const bx = -maxW / 2 - PADx;
+    const by = -totalH / 2 - PADy;
+    const bw = maxW + PADx * 2;
+    const bh = totalH + PADy * 2;
+
+    _ctx.fillStyle = bg;
+    _ctx.shadowColor = "rgba(0,0,0,0.12)";
+    _ctx.shadowBlur = 4;
+    _ctx.beginPath();
+    _ctx.roundRect(bx, by, bw, bh, 3);
+    _ctx.fill();
+    _ctx.shadowBlur = 0;
+
+    _ctx.strokeStyle = "rgba(37,99,235,0.25)";
+    _ctx.lineWidth = 1.5;
+    _ctx.setLineDash([]);
+    _ctx.beginPath();
+    _ctx.roundRect(bx, by, bw, bh, 3);
+    _ctx.stroke();
+
+    lines.forEach((line, i) => {
+      _ctx.font = i === 0 ? FONT_B : FONT_S;
+      _ctx.fillStyle = i === 0 ? "#1a1a1a" : "#666";
+      _ctx.textAlign = "center";
+      _ctx.textBaseline = "middle";
+      _ctx.fillText(line, 0, (i - (lines.length - 1) / 2) * LH);
+    });
+    _ctx.restore();
+  }
+
+  function dashed(x1: number, y1: number, x2: number, y2: number) {
+    _ctx.save();
+    _ctx.setLineDash([3, 3]);
+    _ctx.strokeStyle = PRIMARY_DASH;
+    _ctx.lineWidth = 0.8;
+    _ctx.beginPath();
+    _ctx.moveTo(x1, y1);
+    _ctx.lineTo(x2, y2);
+    _ctx.stroke();
+    _ctx.restore();
+  }
+
+  // ────────────────────────────────────────
+  // Target zones (drawn first, behind everything)
+  // ────────────────────────────────────────
+
+  // Eye target zone — shaded band inside photo area
+  const eyeZoneYMin = PAD + imgH * (1 - maxEye / 100);
+  const eyeZoneYMax = PAD + imgH * (1 - minEye / 100);
+  _ctx.fillStyle = "rgba(16, 185, 129, 0.07)";
+  _ctx.fillRect(PAD, eyeZoneYMin, imgW, eyeZoneYMax - eyeZoneYMin);
+  _ctx.fillStyle = "rgba(16, 185, 129, 0.5)";
+  _ctx.font = "bold 9px system-ui";
+  _ctx.textAlign = "left";
+  _ctx.fillText("EYE TARGET", PAD + 6, eyeZoneYMin + 11);
+
+  // Head height target zone — right edge indicator bar
+  const headBarX    = PAD + imgW - 5;
+  const headZoneTop = PAD + imgH - imgH * (maxHead / 100);
+  const headZoneBot = PAD + imgH - imgH * (minHead / 100);
+  _ctx.strokeStyle = "rgba(245, 158, 11, 0.35)";
+  _ctx.lineWidth = 4;
+  _ctx.setLineDash([]);
+  _ctx.beginPath();
+  _ctx.moveTo(headBarX, headZoneTop);
+  _ctx.lineTo(headBarX, headZoneBot);
+  _ctx.stroke();
+  _ctx.fillStyle = "rgba(245, 158, 11, 0.85)";
+  _ctx.font = "bold 9px system-ui";
+  _ctx.textAlign = "right";
+  _ctx.fillText("HEAD", PAD + imgW - 8, headZoneTop - 4);
+
+  // ────────────────────────────────────────
+  // Thin border around photo area
+  // ────────────────────────────────────────
+  _ctx.strokeStyle = "rgba(200,200,200,0.6)";
+  _ctx.lineWidth = 0.5;
+  _ctx.setLineDash([]);
+  _ctx.strokeRect(PAD, PAD, imgW, imgH);
+
+  // ────────────────────────────────────────
+  // 1. TOP — frame width arrow
+  // ────────────────────────────────────────
+  const TOP_Y = PAD / 2;
+  _ctx.strokeStyle = PRIMARY;
+  _ctx.lineWidth = 1.3;
+  _ctx.setLineDash([]);
+
+  tick(PAD, TOP_Y, false);
+  tick(PAD + imgW, TOP_Y, false);
+  arrow(PAD, TOP_Y, PAD + imgW, TOP_Y);
+  label(W / 2, TOP_Y, [
+    `${Math.round(frameWidthMm)} mm (${imgW} px)`,
+    `Target: ${targetW_mm} mm`,
+  ]);
+
+  // ────────────────────────────────────────
+  // 2. RIGHT — face / head height arrow
+  // ────────────────────────────────────────
+  const RIGHT_X = PAD + imgW + PAD / 4;
+  _ctx.strokeStyle = PRIMARY;
+  _ctx.lineWidth = 1.3;
+  _ctx.setLineDash([]);
+
+  dashed(PAD + imgW, trueTopOfHead, RIGHT_X - 4, trueTopOfHead);
+  dashed(PAD + imgW, chinY, RIGHT_X - 4, chinY);
+
+  tick(RIGHT_X, trueTopOfHead);
+  tick(RIGHT_X, chinY);
+  arrow(RIGHT_X, trueTopOfHead, RIGHT_X, chinY);
+  label(
+    RIGHT_X + PAD * 0.45,
+    (trueTopOfHead + chinY) / 2,
+    [
+      `${faceHeightMm.toFixed(1)} mm`,
+      `${Math.round(headHeightPct)}% (${minHead}–${maxHead}%)`,
+    ],
+    -Math.PI / 2,
+  );
+
+  // ────────────────────────────────────────
+  // 3. LEFT — eye-line height arrow
+  // ────────────────────────────────────────
+  const LEFT_X = PAD / 1.2;
+  _ctx.strokeStyle = PRIMARY;
+  _ctx.lineWidth = 1.3;
+  _ctx.setLineDash([]);
+
+  dashed(PAD, eyeY, LEFT_X + 4, eyeY);
+
+  tick(LEFT_X, eyeY);
+  tick(LEFT_X, PAD + imgH);
+  arrow(LEFT_X, eyeY, LEFT_X, PAD + imgH);
+  label(
+    LEFT_X - PAD * 0.45,
+    (eyeY + PAD + imgH) / 2,
+    [
+      `${eyeFromBotMm.toFixed(1)} mm`,
+      `${Math.round(eyeFromBotPct)}% (${minEye}–${maxEye}%)`,
+    ],
+    -Math.PI / 2,
+  );
+
+  // ────────────────────────────────────────
+  // 4. Dashed crosshairs inside photo
+  // ────────────────────────────────────────
+  _ctx.save();
+  _ctx.setLineDash([5, 4]);
+  _ctx.strokeStyle = PRIMARY_DASH;
+  _ctx.lineWidth = 0.9;
+  // Vertical center
+  _ctx.beginPath();
+  _ctx.moveTo(W / 2, PAD);
+  _ctx.lineTo(W / 2, PAD + imgH);
+  _ctx.stroke();
+  // Eye line
+  _ctx.beginPath();
+  _ctx.moveTo(PAD, eyeY);
+  _ctx.lineTo(PAD + imgW, eyeY);
+  _ctx.stroke();
+  // Chin line
+  _ctx.beginPath();
+  _ctx.moveTo(PAD, chinY);
+  _ctx.lineTo(PAD + imgW, chinY);
+  _ctx.stroke();
+  _ctx.restore();
+
+  // ────────────────────────────────────────
+  // 5. Head bounding box
+  // ────────────────────────────────────────
+  _ctx.save();
+  _ctx.setLineDash([5, 4]);
+  _ctx.strokeStyle = PRIMARY_DASH;
+  _ctx.lineWidth = 1;
+  _ctx.strokeRect(boxX - 4, trueTopOfHead, box.width + 8, chinY - trueTopOfHead);
+  _ctx.restore();
+
+  // ────────────────────────────────────────
+  // 6. Eye dots
+  // ────────────────────────────────────────
+  // _ctx.fillStyle = PRIMARY;
+  // for (const pt of [...leftEyePoints, ...rightEyePoints]) {
+  //   _ctx.beginPath();
+  //   _ctx.arc(tx(pt.x), ty(pt.y), 1.8, 0, Math.PI * 2);
+  //   _ctx.fill();
+  // }
+
+  // ────────────────────────────────────────
+  // 7. Tilt warning
+  // ────────────────────────────────────────
+  const tiltAngle = computeTiltAngle(landmarks, imgW, imgH);
   if (Math.abs(tiltAngle) > 2) {
-    ctx.save();
-    ctx.strokeStyle = "rgba(251, 191, 36, 0.9)";
-    ctx.lineWidth = 1.5;
-    ctx.setLineDash([3, 3]);
-    ctx.beginPath();
-    ctx.moveTo(leftCenter.x, leftCenter.y);
-    ctx.lineTo(rightCenter.x, rightCenter.y);
-    ctx.stroke();
-    ctx.fillStyle = "rgba(251, 191, 36, 0.9)";
-    ctx.font = "bold 9px system-ui";
-    ctx.fillText(
+    _ctx.save();
+    _ctx.strokeStyle = "rgba(251,191,36,0.9)";
+    _ctx.lineWidth = 1.5;
+    _ctx.setLineDash([3, 3]);
+    _ctx.beginPath();
+    _ctx.moveTo(tx(leftCenter.x),  ty(leftCenter.y));
+    _ctx.lineTo(tx(rightCenter.x), ty(rightCenter.y));
+    _ctx.stroke();
+    _ctx.fillStyle = "rgba(180,120,0,0.95)";
+    _ctx.font = "bold 9px system-ui";
+    _ctx.setLineDash([]);
+    _ctx.fillText(
       `TILT: ${Math.abs(tiltAngle).toFixed(1)}°`,
-      rightCenter.x + 6,
-      rightCenter.y - 4,
+      tx(rightCenter.x) + 6,
+      ty(rightCenter.y) - 4,
     );
-    ctx.restore();
+    _ctx.restore();
   }
 }
 
