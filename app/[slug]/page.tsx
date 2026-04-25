@@ -7,6 +7,7 @@ import { getSpecIdFromSlug, getAllSlugs, SpecEntry, getCanonicalSlug } from "../
 import ProgrammaticLandingPage from "../components/ProgrammaticLandingPage";
 import PassportMakerApp from "../passport-size-photo-maker/PassportMakerApp";
 import { getLocalPrice } from "@/lib/currency";
+import Breadcrumbs from "../components/Breadcrumbs";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -87,6 +88,7 @@ export default async function Page({ params }: PageProps) {
   if (toolPage) {
     return (
       <div className="bg-slate-50 min-h-screen">
+        <Breadcrumbs />
         {/* ── Hero header ── */}
         <div className="bg-white border-b border-slate-200">
           <div className="max-w-4xl mx-auto px-4 py-12 text-center">

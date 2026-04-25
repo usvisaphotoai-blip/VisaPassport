@@ -85,6 +85,7 @@ const jsonLd = {
 import HomeHero from "./components/HomeHero";
 import HomeSections from "./components/HomeSections";
 import HomeFAQ from "./components/HomeFAQ";
+import toolPages from "../data/tool-seo-pages.json";
 import "./home.css";
 
 import { getLocalPrice } from "@/lib/currency";
@@ -122,6 +123,34 @@ export default async function Home() {
                   Browse Visa Specs <span className="ml-2">→</span>
                 </Link>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Dynamic Tool SEO Pages Section */}
+        <section className="bg-slate-50 py-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-3xl font-black text-slate-900 mb-10 text-center">Popular Photo Tools & Guides</h2>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {toolPages.map((tool) => (
+                <Link 
+                  key={tool.slug}
+                  href={`/${tool.slug}`}
+                  className="group bg-white p-6 rounded-2xl border border-slate-200 hover:border-lime-400 hover:shadow-xl transition-all"
+                >
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="w-10 h-10 bg-lime-100 rounded-lg flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+                      📸
+                    </div>
+                    <h3 className="font-bold text-slate-900 group-hover:text-lime-700 transition-colors">
+                      {tool.h1.split("—")[0].trim()}
+                    </h3>
+                  </div>
+                  <p className="text-sm text-slate-500 line-clamp-2 leading-relaxed">
+                    {tool.metaDescription}
+                  </p>
+                </Link>
+              ))}
             </div>
           </div>
         </section>

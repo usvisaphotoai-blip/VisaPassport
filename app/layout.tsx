@@ -40,23 +40,20 @@ export const metadata: Metadata = {
     "online passport photo maker",
     "visa photo editor",
     "official biometric photo",
-    "India passport photo online",
+ 
     "UK passport photo generator",
     "global passport photo maker",
     "Schengen visa photo check",
     "Australia passport photo online",
-    "Canadian passport photo size",
-    "background remover for passport",
+   
+   
     "biometric compliance checker",
-    "passport photo creator",
+    
   ],
   authors: [{ name: "PixPassport Team" }],
   creator: "PixPassport",
   applicationName: "PixPassport",
   publisher: "PixPassport",
-  alternates: {
-    canonical: "/",
-  },
   robots: {
     index: true,
     follow: true,

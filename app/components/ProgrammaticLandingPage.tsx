@@ -8,6 +8,7 @@ import LongformSection from "./LongformSection";      // ← NEW
 import { SpecEntry } from "../../lib/slug-utils";
 import "../home.css";
 import { generateLongformContent } from "@/lib/content-weaver";
+import Breadcrumbs from "./Breadcrumbs";
 
 interface Props {
   spec: SpecEntry;
@@ -52,6 +53,12 @@ export default function ProgrammaticLandingPage({ spec, slug }: Props) {
 
   return (
     <main className="min-h-screen bg-white hcr">
+      <Breadcrumbs 
+        items={[
+          { label: `${docName} Photos`, href: isVisaIntent ? "/visa-photo" : "/passport-photos" },
+          { label: spec.country, href: `/${slug}` }
+        ]} 
+      />
       {/* ── HERO ─────────────────────────────────────────── */}
       <section className="relative overflow-hidden pt-20 pb-16 lg:pt-32 lg:pb-24 bg-gradient-to-b from-[#f8faf9] to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -1,15 +1,20 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import TrustSection from "../components/TrustSection";
+import Breadcrumbs from "../components/Breadcrumbs";
 
 export const metadata: Metadata = {
   title: "About Us - PixPassport",
   description: "Learn about PixPassport's mission, our advanced biometric AI technology, and our strict commitment to your data privacy.",
+  alternates: {
+    canonical: "https://www.pixpassport.com/about",
+  },
 };
 
 export default function AboutPage() {
   return (
     <div className="bg-white min-h-screen pb-16">
+      <Breadcrumbs />
       <section className="bg-gray-50 border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
           <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900">About PixPassport</h1>

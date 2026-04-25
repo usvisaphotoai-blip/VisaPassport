@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Breadcrumbs from "../components/Breadcrumbs";
 
 import TrustSection from "../components/TrustSection";
 import ComparisonSlider from "../components/ComparisonSlider";
@@ -20,11 +21,10 @@ export const metadata: Metadata = {
     "Schengen visa photo check",
     "global passport photo validation",
     "ICAO photo checker",
-    "check my passport photo",
-    "visa photo requirements check"
+   
   ],
   alternates: {
-    canonical: "https://www.pixpassport.com/photo-validator",
+    canonical: "https://www.pixpassport.com/visa-photo-validator",
   },
 };
 
@@ -165,6 +165,7 @@ export default function PhotoValidatorPage() {
       `}</style>
 
       <div className="hcr">
+        <Breadcrumbs />
         {/* ══ HERO ══ */}
         <section className="uvp-hero">
           <div className="uvp-hero-inner">

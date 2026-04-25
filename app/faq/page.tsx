@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { getLocalPrice } from "@/lib/currency";
+import Breadcrumbs from "../components/Breadcrumbs";
 
 const getCategories = (price: string) => [
   {
@@ -59,6 +60,7 @@ export default function FAQPage() {
 
   return (
     <div className="bg-white">
+      <Breadcrumbs />
       {/* Hero */}
       <section className="bg-gray-50 border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20 text-center">

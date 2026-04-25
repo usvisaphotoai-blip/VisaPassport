@@ -17,6 +17,7 @@ export default function Footer() {
     {
       title: "Tools & Directories",
       items: [
+        { label: "Home", href: "/" },
         { label: "Create Photo", href: "/tool" },
         { label: "Free Photo Validator", href: "/visa-photo-validator" },
         { label: "Passport Photo Directory", href: "/passport-photos" },
