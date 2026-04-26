@@ -32,7 +32,7 @@ export default function ModelPreloader() {
     
     const schedulePreload = () => {
       // Add an extra 2.5s delay after the page fully loads
-      timeoutId = setTimeout(preload, 2500);
+      timeoutId = setTimeout(preload, 4000);
     };
 
     if (document.readyState === "complete") {
