@@ -23,7 +23,7 @@ export async function POST(req: Request) {
 
     const session = await getServerSession(authOptions);
 
-    const { photoId, currencyOverride, guestEmail } = await req.json();
+    const { photoId, currencyOverride, isExpert, guestEmail } = await req.json();
 
     if (!photoId) {
       return NextResponse.json({ error: "Missing photoId" }, { status: 400 });
@@ -42,11 +42,11 @@ export async function POST(req: Request) {
 
     const { getSpecById } = await import("@/lib/specs");
     const spec = getSpecById(photo.documentType);
-    const basePrice = spec?.price || 5.99;
+    const basePrice = isExpert ? 9.99 : (spec?.price || 5.99);
 
     // Get localized price (Allows client override for currency)
     const { getLocalPrice } = await import("@/lib/currency");
-    const localPrice = await getLocalPrice(basePrice, currencyOverride);
+    const localPrice = await getLocalPrice(basePrice, currencyOverride, isExpert);
 
     // Razorpay expects amount in smallest currency unit (e.g. cents, paise)
     // Most currencies use 2 decimal places, but some like JPY don't.
@@ -82,6 +82,7 @@ export async function POST(req: Request) {
     } else if (guestEmail) {
       photo.guestEmail = guestEmail;
     }
+    photo.isExpert = isExpert;
     await photo.save();
 
     return NextResponse.json({

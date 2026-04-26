@@ -11,6 +11,7 @@ export interface LocalPrice {
 interface PaymentOptions {
   photoId: string;
   localPrice: LocalPrice;
+  isExpert?: boolean;
   guestEmail: string;
   status: "authenticated" | "loading" | "unauthenticated";
   session: any;
@@ -20,6 +21,7 @@ interface PaymentOptions {
 export function usePayment({
   photoId,
   localPrice,
+  isExpert,
   guestEmail,
   status,
   session,
@@ -50,6 +52,7 @@ export function usePayment({
         body: JSON.stringify({
           photoId,
           currencyOverride: localPrice.currency,
+          isExpert,
           guestEmail: status === "authenticated" ? undefined : guestEmail,
         }),
       });

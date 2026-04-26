@@ -5,6 +5,8 @@ import { LocalPrice } from "../hooks/usePayment";
 interface MobileStickyCTAProps {
   showExtras: boolean;
   localPrice: LocalPrice;
+  expertPrice: LocalPrice;
+  isExpertPlan: boolean;
   loading: boolean;
   handlePayment: () => void;
   status: string;
@@ -15,6 +17,8 @@ interface MobileStickyCTAProps {
 export default function MobileStickyCTA({
   showExtras,
   localPrice,
+  expertPrice,
+  isExpertPlan,
   loading,
   handlePayment,
   status,
@@ -24,6 +28,7 @@ export default function MobileStickyCTA({
   if (!showExtras) return null;
 
   const emailInvalid = guestEmail && !guestEmail.includes("@");
+  const activePrice = isExpertPlan ? expertPrice : localPrice;
 
   return (
     <>
@@ -57,7 +62,7 @@ export default function MobileStickyCTA({
                 Total
               </p>
               <p className="text-[17px] font-black text-slate-900 leading-tight">
-                {localPrice?.formatted || "..."}
+                {activePrice?.formatted || "..."}
               </p>
             </div>
 
@@ -66,14 +71,14 @@ export default function MobileStickyCTA({
             <button
               onClick={handlePayment}
               disabled={loading}
-              className="flex-1 bg-[#3b5bdb] hover:bg-[#2f4ac7] active:bg-[#203a9e] text-white font-bold py-2.5 px-4 rounded-lg text-sm tracking-wide flex items-center justify-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg shadow-[#3b5bdb]/20"
+              className={`flex-1 ${isExpertPlan ? 'bg-[#3b5bdb]' : 'bg-[#3b5bdb]'} hover:bg-[#2f4ac7] active:bg-[#203a9e] text-white font-bold py-2.5 px-4 rounded-lg text-sm tracking-wide flex items-center justify-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg shadow-[#3b5bdb]/20`}
             >
               {loading ? (
                 <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />
               ) : (
                 <>
                   <SvgIcon d={DOWNLOAD_ICON} className="w-4 h-4 shrink-0" />
-                  Download Photo
+                  {isExpertPlan ? "Expert Review" : "Download Photo"}
                 </>
               )}
             </button>

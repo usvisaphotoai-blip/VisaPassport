@@ -18,7 +18,7 @@ const FIXED_PRICES: Record<string, { amount: number; symbol: string; decimals: n
   USD: { amount: 5.99, symbol: "$", decimals: 2 },
   EUR: { amount: 5.99, symbol: "€", decimals: 2 },
   GBP: { amount: 5.99, symbol: "£", decimals: 2 },
-  INR: { amount: 199, symbol: "₹", decimals: 0 },
+  INR: { amount: 99, symbol: "₹", decimals: 0 },
   JPY: { amount: 799, symbol: "¥", decimals: 0 },
   BRL: { amount: 30, symbol: "R$", decimals: 0 },
   CAD: { amount: 4.99, symbol: "C$", decimals: 2 },
@@ -34,9 +34,23 @@ export interface LocalPrice {
   symbol: string;
 }
 
+const EXPERT_PRICES: Record<string, { amount: number; symbol: string; decimals: number }> = {
+  USD: { amount: 9.99, symbol: "$", decimals: 2 },
+  EUR: { amount: 9.99, symbol: "€", decimals: 2 },
+  GBP: { amount: 9.99, symbol: "£", decimals: 2 },
+  INR: { amount: 199, symbol: "₹", decimals: 0 },
+  JPY: { amount: 1299, symbol: "¥", decimals: 0 },
+  BRL: { amount: 49, symbol: "R$", decimals: 0 },
+  CAD: { amount: 9.99, symbol: "C$", decimals: 2 },
+  AUD: { amount: 9.99, symbol: "A$", decimals: 2 },
+  MXN: { amount: 149, symbol: "$", decimals: 0 },
+  CNY: { amount: 49, symbol: "¥", decimals: 0 },
+};
+
 export async function getLocalPrice(
   baseUsdPrice: number = 5.99,
   forcedCurrency?: string,
+  isExpert: boolean = false,
 ): Promise<LocalPrice> {
   try {
     let currency = "USD";
@@ -59,7 +73,8 @@ export async function getLocalPrice(
     }
 
     // Use fixed price if available, otherwise fallback to baseUsdPrice
-    const fixed = FIXED_PRICES[currency] || FIXED_PRICES["USD"];
+    const priceMap = isExpert ? EXPERT_PRICES : FIXED_PRICES;
+    const fixed = priceMap[currency] || priceMap["USD"];
     const amount = fixed.amount;
     const symbol = fixed.symbol;
     const decimals = fixed.decimals;

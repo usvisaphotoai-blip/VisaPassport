@@ -5,8 +5,9 @@ export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
     const currency = searchParams.get("currency") || "USD";
+    const isExpert = searchParams.get("isExpert") === "true";
     
-    const localPrice = await getLocalPrice(5.99, currency);
+    const localPrice = await getLocalPrice(isExpert ? 9.99 : 5.99, currency, isExpert);
     
     return NextResponse.json(localPrice);
   } catch (error) {

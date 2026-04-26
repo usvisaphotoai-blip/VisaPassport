@@ -23,6 +23,7 @@ export default function PreviewClient({
   documentType,
   metrics,
   localPrice: initialLocalPrice,
+  expertPrice: initialExpertPrice,
   initialIsPaid,
 }: {
   photoId: string;
@@ -30,6 +31,7 @@ export default function PreviewClient({
   documentType: string;
   metrics: any;
   localPrice: LocalPrice;
+  expertPrice: LocalPrice;
   initialIsPaid?: boolean;
 }) {
   const { data: session, status } = useSession();
@@ -37,6 +39,8 @@ export default function PreviewClient({
   const [guestEmail, setGuestEmail] = useState("");
   const [timeLeft, setTimeLeft] = useState(20 * 60);
   const [localPrice, setLocalPrice] = useState<LocalPrice>(initialLocalPrice);
+  const [expertPrice, setExpertPrice] = useState<LocalPrice>(initialExpertPrice);
+  const [isExpertPlan, setIsExpertPlan] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   // Custom Hooks
@@ -45,7 +49,8 @@ export default function PreviewClient({
 
   const { loading, handlePayment } = usePayment({
     photoId,
-    localPrice,
+    localPrice: isExpertPlan ? expertPrice : localPrice,
+    isExpert: isExpertPlan,
     guestEmail,
     status: status === "authenticated" ? "authenticated" : status === "loading" ? "loading" : "unauthenticated",
     session,
@@ -63,6 +68,13 @@ export default function PreviewClient({
         .then((r) => r.json())
         .then((d) => {
           if (d?.formatted) setLocalPrice(d);
+        })
+        .catch(console.error);
+
+      fetch(`/api/currency?currency=${tzCurrency}&isExpert=true`)
+        .then((r) => r.json())
+        .then((d) => {
+          if (d?.formatted) setExpertPrice(d);
         })
         .catch(console.error);
     }
@@ -113,15 +125,15 @@ export default function PreviewClient({
   const productName = spec?.name || "Visa Photo";
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col">
-      <div className="flex-1 flex items-start justify-center px-4 py-6 sm:py-8">
+    <div className="min-h-screen bg-slate-100 flex flex-col">
+      <div className="flex-1 flex items-start justify-center px-4 py-4 sm:py-6">
         <div className="w-full max-w-6xl">
           {/* Target Document Identity Header */}
 
 
-          <div className="flex flex-col lg:flex-row gap-5">
+          <div className="flex flex-col lg:flex-row gap-4">
             {/* LEFT SIDE */}
-            <div className="w-full lg:w-[55%] space-y-4">
+            <div className="w-full lg:w-[55%] space-y-3">
               <PhotoCard
                 canvasRef={canvasRef}
                 overlayRef={overlayRef}
@@ -150,6 +162,9 @@ export default function PreviewClient({
             <OrderSummary
               productName={productName}
               localPrice={localPrice}
+              expertPrice={expertPrice}
+              isExpertPlan={isExpertPlan}
+              setIsExpertPlan={setIsExpertPlan}
               hasPaid={hasPaid}
               timeLeft={timeLeft}
               formatTime={formatTime}
@@ -177,6 +192,8 @@ export default function PreviewClient({
       <MobileStickyCTA
         showExtras={showExtras}
         localPrice={localPrice}
+        expertPrice={expertPrice}
+        isExpertPlan={isExpertPlan}
         loading={loading}
         handlePayment={handlePayment}
         status={status === "authenticated" ? "authenticated" : status === "loading" ? "loading" : "unauthenticated"}

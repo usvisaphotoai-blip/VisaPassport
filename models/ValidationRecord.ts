@@ -9,7 +9,7 @@ const CheckSchema = new mongoose.Schema({
 const ValidationRecordSchema = new mongoose.Schema(
   {
     documentType: { type: String, required: true },
-    overallStatus: { type: String, enum: ["PASS", "FAIL"], required: true },
+    overallStatus: { type: String, enum: ["PASS", "FAIL", "WARN"], required: true },
     checks: [CheckSchema],
     // Store basic extracted metrics for analytics if needed
     metrics: {

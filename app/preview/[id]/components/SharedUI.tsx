@@ -35,8 +35,12 @@ export const SvgIcon = ({
   </svg>
 );
 
-export const CheckMark = ({ className = "w-4 h-4 text-lime-500" }) => (
-  <SvgIcon d={CHECK_ICONS.PASS} className={className} sw={2.5} />
+export const CheckMark = ({ className }: { className?: string }) => (
+  <SvgIcon 
+    d={CHECK_ICONS.PASS} 
+    className={cx("w-4 h-4 shrink-0 text-lime-500", className)} 
+    sw={2.5} 
+  />
 );
 
 

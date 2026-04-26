@@ -76,6 +76,7 @@ export default function PassportMakerApp() {
   // Result State
   const [photoData, setPhotoData] = useState<any>(null);
   const [localPrice, setLocalPrice] = useState<LocalPrice | null>(null);
+  const [expertPrice, setExpertPrice] = useState<LocalPrice | null>(null);
 
   const STAGES = [
     "Compressing image…",
@@ -98,6 +99,11 @@ export default function PassportMakerApp() {
     fetch(`/api/currency?currency=${tzCurrency}`)
       .then((r) => r.json())
       .then((d) => { if (d?.formatted) setLocalPrice(d); })
+      .catch(console.error);
+
+    fetch(`/api/currency?currency=${tzCurrency}&isExpert=true`)
+      .then((r) => r.json())
+      .then((d) => { if (d?.formatted) setExpertPrice(d); })
       .catch(console.error);
   }, []);
 
@@ -220,13 +226,21 @@ export default function PassportMakerApp() {
     [selectedBg, selectedDoc]
   );
 
+  const stableDetectionComplete = useCallback(
+    (f: File, d: ClientDetectionResult) => {
+      setProcessingStage(1);
+      handleDetectionComplete(f, d);
+    },
+    [handleDetectionComplete]
+  );
+
   const activeDoc = documentTypes.find((d) => d.id === selectedDoc) || documentTypes[4];
   const availableBgs = bgColors.filter((b) =>
     ["white", "light-gray", "light-blue", "blue", "transparent", "original"].includes(b.id)
   );
 
   /* ── PREVIEW ── */
-  if (step === "preview" && photoData && localPrice) {
+  if (step === "preview" && photoData && localPrice && expertPrice) {
     return (
       <div className="animate-in fade-in duration-500">
         <div className="max-w-6xl mx-auto px-4 py-4 mb-2">
@@ -246,6 +260,7 @@ export default function PassportMakerApp() {
           documentType={photoData.documentType}
           metrics={photoData.metrics}
           localPrice={localPrice}
+          expertPrice={expertPrice}
           initialIsPaid={photoData.isPaid}
         />
       </div>
@@ -316,10 +331,7 @@ export default function PassportMakerApp() {
               file={selectedFile}
               documentType={selectedDoc}
               targetBackground={selectedBg}
-              onDetectionComplete={(f, d) => {
-                setProcessingStage(1);
-                handleDetectionComplete(f, d);
-              }}
+              onDetectionComplete={stableDetectionComplete}
               onCancel={resetToSetup}
             />
           </div>

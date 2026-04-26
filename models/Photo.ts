@@ -40,6 +40,10 @@ const PhotoSchema = new Schema(
     },
     razorpayPaymentId: {
       type: String,
+    },
+    isExpert: {
+      type: Boolean,
+      default: false,
     }
   },
   { timestamps: true }

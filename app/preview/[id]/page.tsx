@@ -30,6 +30,7 @@ export default async function PreviewPage(props: { params: Promise<{ id: string 
   }
 
   const localPrice = await getLocalPrice(5.99);
+  const expertPrice = await getLocalPrice(9.99, undefined, true);
 
   return (
     <PreviewClient
@@ -38,6 +39,7 @@ export default async function PreviewPage(props: { params: Promise<{ id: string 
       documentType={photoRecord.documentType}
       metrics={photoRecord.metrics ? JSON.parse(JSON.stringify(photoRecord.metrics)) : {}}
       localPrice={localPrice}
+      expertPrice={expertPrice}
       initialIsPaid={isPaid}
     />
   );
