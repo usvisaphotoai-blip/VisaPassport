@@ -14,7 +14,7 @@
     - [USVisaPhotoAI Key Pages](#usvisaphotoai-key-pages)
       - [🔍 US Passport Photo Validator](#-us-passport-photo-validator)
       - [📸 US Visa Photo Requirements Guide \& Tool](#-us-visa-photo-requirements-guide--tool)
-      - [🏠 Homepage — Free US Visa Photo AI Check](#-homepage--free-us-visa-photo-ai-check)
+      - [🏠 Homepage — US Visa Photo AI Check](#-homepage--us-visa-photo-ai-check)
     - [Who It Helps (USVisaPhotoAI)](#who-it-helps-usvisaphotoai)
     - [Tech Stack (USVisaPhotoAI)](#tech-stack-usvisaphotoai)
   - [PixPassport.com](#pixpassportcom)
@@ -25,6 +25,7 @@
       - [🇩🇪 Germany Visa Photo Editor](#-germany-visa-photo-editor)
     - [Who It Helps (PixPassport)](#who-it-helps-pixpassport)
     - [Tech Stack (PixPassport)](#tech-stack-pixpassport)
+  - [Pricing Model](#pricing-model)
   - [How Both Tools Work Together](#how-both-tools-work-together)
   - [Core Features Comparison](#core-features-comparison)
   - [Why These Tools Exist](#why-these-tools-exist)
@@ -40,7 +41,7 @@
 
 This repository documents two complementary AI-powered photo validation and editing platforms built to solve a real-world problem: **visa and passport photo rejections cost people time, money, and stress.**
 
-Both platforms use computer vision, AI background removal, and government-specification databases to ensure user photos meet exact official requirements before submission.
+Both platforms use computer vision, AI background removal, and government-specification databases to ensure user photos meet exact official requirements before submission. Both tools follow a **freemium model** — validation, crop, and full preview are completely free; downloading the final photo file requires a small one-time payment.
 
 | | [USVisaPhotoAI.pro](https://www.usvisaphotoai.pro/) | [PixPassport.com](https://www.pixpassport.com/) |
 |---|---|---|
@@ -48,6 +49,8 @@ Both platforms use computer vision, AI background removal, and government-specif
 | **Core Feature** | AI photo validator & checker | AI photo editor & background tool |
 | **Primary Market** | United States applicants | Global — Schengen, Australia, Germany + more |
 | **Main Use Case** | Check if photo meets USCIS/State Dept rules | Edit & resize photo to country-specific specs |
+| **Free** | Validation + preview | Crop + preview |
+| **Paid** | Download final photo | Download final photo |
 
 ---
 
@@ -57,7 +60,7 @@ Both platforms use computer vision, AI background removal, and government-specif
 
 ### What It Does
 
-[USVisaPhotoAI.pro](https://www.usvisaphotoai.pro/) is a free AI-powered tool that **validates US visa and passport photos against official USCIS and US Department of State requirements** before you submit your application. Instead of discovering your photo is rejected after paying application fees, users can instantly check compliance in seconds.
+[USVisaPhotoAI.pro](https://www.usvisaphotoai.pro/) is an AI-powered tool that **validates US visa and passport photos against official USCIS and US Department of State requirements** before you submit your application. Instead of discovering your photo is rejected after paying application fees, users can instantly check compliance and preview their compliant photo — completely free. Downloading the final corrected photo requires a small one-time fee.
 
 The platform analyzes uploaded photos for:
 
@@ -76,12 +79,16 @@ The platform analyzes uploaded photos for:
 
 #### 🔍 [US Passport Photo Validator](https://www.usvisaphotoai.pro/us-passport-photo-validator)
 
-The flagship tool. Upload your photo and receive an instant AI analysis report showing:
+The flagship tool. Upload your photo and receive an instant AI analysis report — **no account required:**
 
 - Pass/fail status for each official requirement
 - Specific issues flagged with visual indicators
-- Recommendations to fix rejected photos
+- Full preview of your compliant photo — **free**
 - Compliance score out of 100
+- Recommendations to fix any rejected photos
+
+> 🆓 **Free:** Full AI validation + compliance preview
+> 💳 **Paid:** Download the final print-ready photo file
 
 This tool targets the DS-160 form photo requirements, DV Lottery photo standards, and US passport renewal photos — all checked against the same government specification database.
 
@@ -90,14 +97,14 @@ This tool targets the DS-160 form photo requirements, DV Lottery photo standards
 A comprehensive page combining:
 
 - Complete 2025/2026 US visa photo requirements explained in plain English
-- Embedded AI photo checker tool
+- Embedded AI photo checker tool (free to use, preview included)
 - Size, background, and expression requirements with visual examples
 - Common rejection reasons and how to fix them
 - Works for B1/B2 tourist visas, F-1 student visas, H-1B work visas, and all US immigrant visa categories
 
-#### 🏠 [Homepage — Free US Visa Photo AI Check](https://www.usvisaphotoai.pro/)
+#### 🏠 [Homepage — US Visa Photo AI Check](https://www.usvisaphotoai.pro/)
 
-Landing page and tool entry point. Users can upload directly from the homepage and get instant feedback without creating an account. Completely free, no registration required.
+Landing page and tool entry point. Users can upload directly from the homepage and get instant AI feedback without creating an account. Validation and preview are free — download your final photo with a small one-time payment.
 
 ---
 
@@ -108,7 +115,7 @@ Landing page and tool entry point. Users can upload directly from the homepage a
 - **US passport renewers** — First-time and renewal passport applicants
 - **Green card applicants** — I-485 and immigrant visa photo requirements
 - **International students** — F-1, J-1, M-1 visa photo compliance
-- **Immigration attorneys** — Checking client photos before submission
+- **Immigration attorneys** — Checking client photos before submission at no cost
 
 ---
 
@@ -135,7 +142,10 @@ Landing page and tool entry point. Users can upload directly from the homepage a
 - Removes and replaces the background with the correct color
 - Crops and resizes to the exact pixel dimensions required
 - Adjusts head positioning to meet face-size requirements
-- Outputs a print-ready or digital submission file
+- Shows a full preview of your compliant photo — **free**
+
+> 🆓 **Free:** AI crop + background removal + full photo preview
+> 💳 **Paid:** Download the final high-resolution photo file
 
 Unlike generic photo editors, every output is calibrated to **real government specifications** for each specific visa type and country.
 
@@ -154,7 +164,8 @@ Dedicated tool for Schengen Area visa photos covering all 27 EU member states. R
 - Neutral expression, mouth closed
 - No glasses (post-2022 Schengen rules)
 
-Outputs a properly formatted JPEG ready for embassy submission or printing at standard photo sizes.
+> 🆓 **Free:** Upload → AI crop & background removal → full preview of your Schengen-compliant photo
+> 💳 **Paid:** Download the final JPEG ready for embassy submission or printing
 
 #### 🇦🇺 [Australia Visa Photo Editor](https://www.pixpassport.com/australia-visa-photo-editor)
 
@@ -165,6 +176,9 @@ Purpose-built for Australian visa and passport photo requirements as defined by 
 - Face centered, eyes open and clearly visible
 - Taken within the last 6 months
 - Supports subclass 600, 482, 186, student visas, and Australian passport renewals
+
+> 🆓 **Free:** AI auto-crop + background fix + full preview
+> 💳 **Paid:** Download print-ready photo file
 
 The tool auto-detects face position and adjusts crop to ensure compliance with the specific head-size-to-photo-height ratio required by Australian immigration.
 
@@ -178,6 +192,9 @@ Specialized editor for German Schengen visa photos and German national visa (D-v
 - Sharp focus, no red-eye, no shadows on background
 - Supports tourist, work, student, family reunification visa photos
 
+> 🆓 **Free:** Full AI editing + compliant photo preview
+> 💳 **Paid:** Download final high-resolution photo
+
 ---
 
 ### Who It Helps (PixPassport)
@@ -186,7 +203,7 @@ Specialized editor for German Schengen visa photos and German national visa (D-v
 - **Australia visa applicants** — Tourist, student, work, and skilled migration visas
 - **Germany visa applicants** — All German national and Schengen visa categories
 - **Frequent international travelers** — One platform for all visa destinations
-- **Travel agents & immigration consultants** — Batch-process client photos efficiently
+- **Travel agents & immigration consultants** — Preview client photos efficiently before purchase
 - **Students applying abroad** — Who need photos for multiple embassies simultaneously
 
 ---
@@ -203,28 +220,49 @@ Specialized editor for German Schengen visa photos and German national visa (D-v
 
 ---
 
+## Pricing Model
+
+Both platforms follow the same transparent **freemium model** — use the AI tools and see your result completely free, pay only when you want to download the final file.
+
+| Feature | [USVisaPhotoAI.pro](https://www.usvisaphotoai.pro/) | [PixPassport.com](https://www.pixpassport.com/) |
+|---|---|---|
+| Upload photo | 🆓 Free | 🆓 Free |
+| AI validation / compliance check | 🆓 Free | 🆓 Free |
+| AI crop & resize to spec | 🆓 Free | 🆓 Free |
+| AI background removal & replacement | 🆓 Free | 🆓 Free |
+| Full photo preview | 🆓 Free | 🆓 Free |
+| No account required | 🆓 Free | 🆓 Free |
+| **Download final photo file** | 💳 Paid | 💳 Paid |
+
+> You always see exactly what your photo will look like before paying. No surprises, no hidden fees.
+
+---
+
 ## How Both Tools Work Together
 
-While each platform is independent, they serve the **complete visa photo workflow**:
+While each platform is independent, they serve the **complete visa photo workflow:**
 
 ```
 User has a photo
        ↓
-[PixPassport.com] — Edit & resize photo to country specs
+[PixPassport.com] — AI crop + background removal → preview free
        ↓
-Photo is correctly sized and formatted
+Satisfied with result? Download for a small fee 💳
        ↓
-[USVisaPhotoAI.pro] — Validate photo meets all US requirements
+[USVisaPhotoAI.pro] — Validate photo meets all US requirements → preview free
        ↓
-Submit with confidence ✅
+Confirmed compliant? Download for a small fee 💳
+       ↓
+Submit your visa application with full confidence ✅
 ```
 
 **Recommended workflow for US visa applicants:**
 
 1. Take your photo or use an existing one
-2. Use **[PixPassport.com](https://www.pixpassport.com/)** to resize and fix the background
-3. Then run it through the **[US Passport Photo Validator](https://www.usvisaphotoai.pro/us-passport-photo-validator)** to confirm compliance
-4. Submit your application knowing your photo won't be rejected
+2. Use **[PixPassport.com](https://www.pixpassport.com/)** to crop and fix the background — preview free, download if satisfied
+3. Run it through the **[US Passport Photo Validator](https://www.usvisaphotoai.pro/us-passport-photo-validator)** to confirm compliance — preview free
+4. Download your final compliant photo (small one-time fee)
+5. Submit your application knowing your photo won't be rejected
 
 ---
 
@@ -232,18 +270,19 @@ Submit with confidence ✅
 
 | Feature | [USVisaPhotoAI.pro](https://www.usvisaphotoai.pro/) | [PixPassport.com](https://www.pixpassport.com/) |
 |---|---|---|
-| AI Photo Validation | ✅ Full compliance check | ✅ Built into editor |
-| Background Removal | ✅ Detection only | ✅ Full AI removal & replacement |
-| Photo Editing / Resizing | ❌ Validation only | ✅ Full editor |
+| AI Photo Validation | 🆓 Free | 🆓 Free (built into editor) |
+| AI Crop & Resize | 🆓 Free | 🆓 Free |
+| Background Removal | 🆓 Free (detection) | 🆓 Free (full AI removal & replacement) |
+| Full Photo Preview | 🆓 Free | 🆓 Free |
+| **Photo Download** | 💳 Paid | 💳 Paid |
+| No Account Needed | ✅ Yes | ✅ Yes |
 | US Visa Support | ✅ Primary focus | ✅ Supported |
-| Schengen Visa Support | ✅ Info guides | ✅ [Dedicated editor](https://www.pixpassport.com/schengen-visa-photo-editor) |
-| Australia Visa Support | ✅ Info guides | ✅ [Dedicated editor](https://www.pixpassport.com/australia-visa-photo-editor) |
-| Germany Visa Support | ✅ Info guides | ✅ [Dedicated editor](https://www.pixpassport.com/germany-visa-photo-editor) |
-| Free to Use | ✅ Completely free | ✅ Core features free |
-| No Account Required | ✅ Yes | ✅ Yes |
+| Schengen Visa Support | ✅ Info guides | ✅ [Free preview](https://www.pixpassport.com/schengen-visa-photo-editor) |
+| Australia Visa Support | ✅ Info guides | ✅ [Free preview](https://www.pixpassport.com/australia-visa-photo-editor) |
+| Germany Visa Support | ✅ Info guides | ✅ [Free preview](https://www.pixpassport.com/germany-visa-photo-editor) |
 | Instant Results | ✅ Seconds | ✅ Seconds |
 | Mobile Friendly | ✅ Fully responsive | ✅ Fully responsive |
-| Print-Ready Output | ❌ | ✅ 300 DPI JPEG |
+| Print-Ready 300 DPI Output | 💳 On download | 💳 On download |
 
 ---
 
@@ -253,28 +292,28 @@ Visa photo rejections are a widespread, frustrating, and expensive problem:
 
 - The US Department of State rejects thousands of passport photos monthly for technical non-compliance
 - DV Lottery (Diversity Visa) entries are **automatically disqualified** for photo issues — no second chance
-- Most professional photo studios don't guarantee government compliance
+- Most professional photo studios charge $15–25 and still don't guarantee compliance
 - Generic photo editing apps don't know the specific rules for each visa type
 - People discover photo problems **after** paying application fees
 
-Both [USVisaPhotoAI.pro](https://www.usvisaphotoai.pro/) and [PixPassport.com](https://www.pixpassport.com/) were built to solve this by putting AI-powered, specification-aware tools directly in the hands of applicants — for free.
+Both [USVisaPhotoAI.pro](https://www.usvisaphotoai.pro/) and [PixPassport.com](https://www.pixpassport.com/) were built to solve this — giving applicants a free way to check, crop, and preview compliant photos before deciding to download, at a fraction of the cost of a traditional photo studio.
 
 ---
 
 ## Supported Visa Types
 
 ### USVisaPhotoAI.pro supports:
-- 🇺🇸 US Tourist Visa (B1/B2) — [Check your photo](https://www.usvisaphotoai.pro/us-visa-photo)
-- 🇺🇸 US Passport (new & renewal) — [Validate now](https://www.usvisaphotoai.pro/us-passport-photo-validator)
+- 🇺🇸 US Tourist Visa (B1/B2) — [Check your photo free](https://www.usvisaphotoai.pro/us-visa-photo)
+- 🇺🇸 US Passport (new & renewal) — [Validate free → download](https://www.usvisaphotoai.pro/us-passport-photo-validator)
 - 🇺🇸 DS-160 Nonimmigrant Visa Photo
 - 🇺🇸 DV Lottery (Diversity Visa) Photo
 - 🇺🇸 Green Card (I-485) Photo
 - 🇺🇸 F-1 / J-1 / H-1B / L-1 Visa Photos
 
 ### PixPassport.com supports:
-- 🇪🇺 All Schengen Area visas — [Edit Schengen photo](https://www.pixpassport.com/schengen-visa-photo-editor)
-- 🇦🇺 Australia visa & passport — [Edit Australia photo](https://www.pixpassport.com/australia-visa-photo-editor)
-- 🇩🇪 Germany visa (national & Schengen) — [Edit Germany photo](https://www.pixpassport.com/germany-visa-photo-editor)
+- 🇪🇺 All Schengen Area visas — [Preview free](https://www.pixpassport.com/schengen-visa-photo-editor)
+- 🇦🇺 Australia visa & passport — [Preview free](https://www.pixpassport.com/australia-visa-photo-editor)
+- 🇩🇪 Germany visa (national & Schengen) — [Preview free](https://www.pixpassport.com/germany-visa-photo-editor)
 - 🇬🇧 UK visa photos
 - 🇨🇦 Canada visa & passport photos
 - 🇮🇳 India passport & OCI photos
@@ -310,4 +349,4 @@ If you found these tools helpful, please consider:
 
 ---
 
-*Built with ❤️ to make visa applications less stressful. Both platforms are free to use and require no account or registration.*
+*Built to make visa applications less stressful. Validate, crop, and preview your photo free — pay only when you're ready to download.*
