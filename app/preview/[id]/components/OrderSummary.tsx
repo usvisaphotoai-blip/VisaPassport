@@ -142,7 +142,8 @@ export default function OrderSummary({
                       "Everything in Standard Pack",
                       "Human Expert Manual Review",
                       "Manual Correction of Subtle Errors",
-                      "100% Acceptance Guaranteed"
+                      "100% Acceptance Guaranteed",
+                      "Free Expert Review & Email Delivery"
                     ].map((feature) => (
                       <li key={feature} className="flex items-start gap-2 text-[11px] text-slate-600 font-medium">
                         <CheckMark className={isExpertPlan ? "text-[#3b5bdb]" : "text-slate-300"} />
