@@ -231,7 +231,7 @@ export async function POST(req: NextRequest) {
       checks.push({
         name: "Face Detection",
         status: "FAIL",
-        detail: "Biometric analysis failed. Please use a modern browser.",
+        detail: "Biometric analysis data is missing. This usually happens if the browser's face detection engine failed or timed out. Please try refreshing or using a different browser.",
       });
     }
 

@@ -34,28 +34,29 @@ export async function getMediaPipeLandmarker(): Promise<FaceLandmarker> {
   if (!landmarkerPromise) {
     landmarkerPromise = (async () => {
       const vision = await FilesetResolver.forVisionTasks(
-        "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/wasm"
+        "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.34/wasm"
       );
 
-      // Suppress the internal WASM "INFO: Created TensorFlow Lite XNNPACK
-      // delegate for CPU" log — it's emitted by the TFLite binary and cannot
-      // be disabled via any API option.
+      // Console capture handles to ensure they're always restorable
       const _warn = console.warn;
       const _error = console.error;
       const _log = console.log;
       const _info = console.info;
-      const suppress = (...args: unknown[]) => {
-        const msg = String(args[0] ?? "");
-        if (msg.includes("TensorFlow Lite") || msg.includes("XNNPACK")) return;
-        _warn.apply(console, args as Parameters<typeof console.warn>);
-      };
-      console.warn = suppress as typeof console.warn;
-      console.error = suppress as typeof console.error;
-      console.log = suppress as typeof console.log;
-      console.info = suppress as typeof console.info;
-
       try {
-        const landmarker = await FaceLandmarker.createFromOptions(vision, {
+        // Suppress the internal WASM "INFO: Created TensorFlow Lite XNNPACK
+        // delegate for CPU" log — it's emitted by the TFLite binary and cannot
+        // be disabled via any API option.
+        const suppress = (...args: unknown[]) => {
+          const msg = String(args[0] ?? "");
+          if (msg.includes("TensorFlow Lite") || msg.includes("XNNPACK")) return;
+          _warn.apply(console, args as Parameters<typeof console.warn>);
+        };
+        console.warn = suppress as typeof console.warn;
+        console.error = suppress as typeof console.error;
+        console.log = suppress as typeof console.log;
+        console.info = suppress as typeof console.info;
+
+        const landmarkerPromise = FaceLandmarker.createFromOptions(vision, {
           baseOptions: {
             modelAssetPath:
               "https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task",
@@ -66,7 +67,14 @@ export async function getMediaPipeLandmarker(): Promise<FaceLandmarker> {
           outputFaceBlendshapes: false,
           outputFacialTransformationMatrixes: false,
         });
-        return landmarker;
+
+        // 45s timeout for mobile/slow networks
+        const INIT_TIMEOUT_MS = 45000;
+        const timeoutPromise = new Promise<never>((_, reject) =>
+          setTimeout(() => reject(new Error("MediaPipe initialization timed out")), INIT_TIMEOUT_MS)
+        );
+
+        return await Promise.race([landmarkerPromise, timeoutPromise]);
       } finally {
         // Always restore original console methods
         console.warn = _warn;

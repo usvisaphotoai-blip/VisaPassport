@@ -158,6 +158,9 @@ export default function ClientFaceDetector({
 
       ctx.drawImage(img, 0, 0, drawW, drawH);
 
+      // Mobile fix: ensure canvas is flushed before processing
+      await new Promise((r) => setTimeout(r, 100));
+
       if (!isMountedRef.current) return;
 
       setProgress(20);
@@ -177,6 +180,11 @@ export default function ClientFaceDetector({
       setStepIndex(2);
 
       /* ---------- DETECT FACE ---------- */
+
+      // Safety check for canvas dimensions
+      if (canvas.width === 0 || canvas.height === 0) {
+        throw new Error("Canvas preparation failed - zero dimensions");
+      }
 
       const result = landmarker.detect(canvas);
       const detections = result.faceLandmarks;
@@ -415,14 +423,16 @@ export default function ClientFaceDetector({
 
       onDetectionComplete(file, detectionResult, localFeedbacks);
 
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
 
       // BUG FIX #5 — don't update state or call callbacks if unmounted
       if (!isMountedRef.current) return;
 
+      const errorMessage = err?.message || "Processing failed — please try again";
+
       setFeedbacks([
-        { type: "error", message: "Processing failed — please try again" },
+        { type: "error", message: errorMessage },
       ]);
       onDetectionComplete(
         file,
@@ -438,7 +448,7 @@ export default function ClientFaceDetector({
           orientationRatio: null,
           brightness: 0,
         },
-        [{ type: "error", message: "Processing failed" }],
+        [{ type: "error", message: errorMessage }],
       );
     } finally {
       // BUG FIX #5 — only update loading state if still mounted
