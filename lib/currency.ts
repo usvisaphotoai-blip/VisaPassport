@@ -16,13 +16,13 @@ const COUNTRY_TO_CURRENCY: Record<string, string> = {
 // Fixed price mapping for specific currencies
 const FIXED_PRICES: Record<string, { amount: number; symbol: string; decimals: number }> = {
   USD: { amount: 5.99, symbol: "$", decimals: 2 },
-  EUR: { amount: 5.99, symbol: "€", decimals: 2 },
-  GBP: { amount: 5.99, symbol: "£", decimals: 2 },
-  INR: { amount: 99, symbol: "₹", decimals: 0 },
+  EUR: { amount: 5.49, symbol: "€", decimals: 2 },
+  GBP: { amount: 5.49, symbol: "£", decimals: 2 },
+  INR: { amount: 299, symbol: "₹", decimals: 0 },
   JPY: { amount: 799, symbol: "¥", decimals: 0 },
   BRL: { amount: 30, symbol: "R$", decimals: 0 },
-  CAD: { amount: 4.99, symbol: "C$", decimals: 2 },
-  AUD: { amount: 5.99, symbol: "A$", decimals: 2 },
+  CAD: { amount: 6.99, symbol: "C$", decimals: 2 },
+  AUD: { amount: 6.99, symbol: "A$", decimals: 2 },
   MXN: { amount: 99, symbol: "$", decimals: 0 },
   CNY: { amount: 29, symbol: "¥", decimals: 0 }, // Added CNY as a guess if not provided
 };
