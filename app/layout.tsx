@@ -159,7 +159,7 @@ export default function RootLayout({
         {/* Google Analytics */}
         <Script
           async
-          src="https://www.googletagmanager.com/gtag/js?id=G-CKPMYJPSCG"
+          src="https://www.googletagmanager.com/gtag/js?id=G-LG5DGDKK9C"
           strategy="lazyOnload"
         />
 
