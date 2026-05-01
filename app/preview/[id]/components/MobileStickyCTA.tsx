@@ -70,8 +70,8 @@ export default function MobileStickyCTA({
 
             <button
               onClick={handlePayment}
-              disabled={loading || (status !== "authenticated" && (!guestEmail || !guestEmail.includes("@") || !guestEmail.includes(".")))}
-              className={`flex-1 ${isExpertPlan ? 'bg-[#3b5bdb]' : 'bg-[#3b5bdb]'} hover:bg-[#2f4ac7] active:bg-[#203a9e] text-white font-bold py-2.5 px-4 rounded-lg text-sm tracking-wide flex items-center justify-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg shadow-[#3b5bdb]/20`}
+              disabled={loading}
+              className={`flex-1 ${isExpertPlan ? 'bg-[#3b5bdb]' : 'bg-[#3b5bdb]'} hover:bg-[#2f4ac7] active:bg-[#203a9e] text-white font-bold py-2.5 px-4 rounded-lg text-sm tracking-wide flex items-center justify-center gap-1.5 disabled:opacity-50 transition-all shadow-lg shadow-[#3b5bdb]/20`}
             >
               {loading ? (
                 <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />

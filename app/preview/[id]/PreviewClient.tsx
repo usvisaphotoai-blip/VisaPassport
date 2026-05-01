@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 import { getClientTimezoneCurrency } from "@/lib/currency";
 
-import { CheckMark } from "./components/SharedUI";
+import { CheckMark, SvgIcon } from "./components/SharedUI";
 import PhotoCard from "./components/PhotoCard";
 import ComplianceReport from "./components/ComplianceReport";
 import UnpaidExtras from "./components/UnpaidExtras";
@@ -42,6 +42,7 @@ export default function PreviewClient({
   const [expertPrice, setExpertPrice] = useState<LocalPrice>(initialExpertPrice);
   const [isExpertPlan, setIsExpertPlan] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isEmailDialogOpen, setIsEmailDialogOpen] = useState(false);
 
   // Custom Hooks
   const { verifying, checks, overallPass, canvasRef, overlayRef } =
@@ -56,6 +57,15 @@ export default function PreviewClient({
     session,
     setHasPaid,
   });
+
+  const onPaymentClick = () => {
+    const isEmailValid = guestEmail && guestEmail.includes("@") && guestEmail.includes(".");
+    if (status !== "authenticated" && !isEmailValid) {
+      setIsEmailDialogOpen(true);
+      return;
+    }
+    handlePayment();
+  };
 
   // Effects
   useEffect(() => {
@@ -170,7 +180,7 @@ export default function PreviewClient({
               formatTime={formatTime}
               loading={loading}
               verifying={verifying}
-              handlePayment={handlePayment}
+              handlePayment={onPaymentClick}
               documentType={documentType}
               photoId={photoId}
               status={status === "authenticated" ? "authenticated" : status === "loading" ? "loading" : "unauthenticated"}
@@ -195,12 +205,59 @@ export default function PreviewClient({
         expertPrice={expertPrice}
         isExpertPlan={isExpertPlan}
         loading={loading}
-        handlePayment={handlePayment}
+        handlePayment={onPaymentClick}
         status={status === "authenticated" ? "authenticated" : status === "loading" ? "loading" : "unauthenticated"}
         guestEmail={guestEmail}
         setGuestEmail={setGuestEmail}
       />
       <FeedbackButton photoId={photoId} />
+
+      {/* Email Prompt Dialog */}
+      {isEmailDialogOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/40 backdrop-blur-sm px-4">
+          <div className="bg-white rounded-3xl shadow-2xl w-full max-w-sm overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+            <div className="p-6">
+              <div className="w-12 h-12 bg-[#3b5bdb]/10 rounded-full flex items-center justify-center mb-4">
+                <SvgIcon d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" className="w-6 h-6 text-[#3b5bdb]" />
+              </div>
+              <h3 className="text-xl font-bold text-slate-900 mb-2">Where should we send it?</h3>
+              <p className="text-sm text-slate-500 mb-5 leading-relaxed">
+                Please enter your email address so we can send you your final processed photos and receipt.
+              </p>
+              <input
+                type="email"
+                value={guestEmail}
+                onChange={(e) => setGuestEmail(e.target.value)}
+                placeholder="you@example.com"
+                className="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-[#3b5bdb] focus:border-transparent outline-none transition-all mb-4 font-medium"
+                autoFocus
+              />
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setIsEmailDialogOpen(false)}
+                  className="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-3.5 rounded-xl transition-all text-sm"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={() => {
+                    const isEmailValid = guestEmail && guestEmail.includes("@") && guestEmail.includes(".");
+                    if (isEmailValid) {
+                      setIsEmailDialogOpen(false);
+                      handlePayment();
+                    } else {
+                      alert("Please enter a valid email address.");
+                    }
+                  }}
+                  className="flex-1 bg-[#3b5bdb] hover:bg-[#2f4ac7] text-white font-bold py-3.5 rounded-xl transition-all text-sm shadow-lg shadow-[#3b5bdb]/20"
+                >
+                  Continue
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

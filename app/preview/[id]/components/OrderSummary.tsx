@@ -174,8 +174,8 @@ export default function OrderSummary({
               <div className="pt-1">
                 <button
                   onClick={handlePayment}
-                  disabled={loading || verifying || (status !== "authenticated" && (!guestEmail || !guestEmail.includes("@") || !guestEmail.includes(".")))}
-                  className="w-full bg-slate-900 hover:bg-black text-white font-bold py-3.5 rounded-2xl transition-all text-sm tracking-wide flex items-center justify-center gap-2.5 disabled:opacity-50 disabled:cursor-not-allowed"
+                  disabled={loading || verifying}
+                  className="w-full bg-slate-900 hover:bg-black text-white font-bold py-3.5 rounded-2xl transition-all text-sm tracking-wide flex items-center justify-center gap-2.5 disabled:opacity-50"
                 >
                   {loading ? (
                     <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />
