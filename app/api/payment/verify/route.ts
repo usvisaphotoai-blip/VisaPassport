@@ -5,6 +5,7 @@ import dbConnect from "@/lib/mongodb";
 import Photo from "@/models/Photo";
 import crypto from "crypto";
 import { sendEmail } from "@/lib/mail";
+import { getSafeSpec } from "@/lib/specs";
 
 export async function POST(req: Request) {
   try {
@@ -71,6 +72,8 @@ export async function POST(req: Request) {
       const photoDownloadUrl = photo.secureUrl || '';
       const printSheetDownloadUrl = photo.printSheetUrl || '';
       const previewLink = `${appUrl}/preview/${photoId}`;
+      const spec = getSafeSpec(photo.documentType);
+      const documentName = spec.name || "Passport Photo";
 
       try {
         if (photo.isExpert) {
@@ -96,7 +99,7 @@ export async function POST(req: Request) {
           await sendEmail({
             to: userEmail,
             subject: "Your Expert Photo Edit Order is Confirmed - PixPassport",
-            html: `<p>Hi there,</p><p>We have received your payment for the expert photo edit. Our team is working on your photo now and will email it back to you when it is ready.</p><p>Thank you for choosing PixPassport!</p>`,
+            html: `<p>Hi there,</p><p>We have received your payment for the expert photo edit for your <strong>${documentName}</strong>. Our team is working on your photo now and will email it back to you when it is ready.</p><p>Thank you for choosing PixPassport!</p>`,
           });
           console.log(`[PAYMENT VERIFY] Expert emails sent successfully for photo ${photoId}`);
         } else {
@@ -106,7 +109,7 @@ export async function POST(req: Request) {
             html: `
               <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; color: #1e293b; background: #f8fafc; padding: 32px; border-radius: 16px;">
                 <div style="text-align: center; margin-bottom: 24px;">
-                  <h1 style="font-size: 22px; color: #0f172a; margin: 0 0 8px;">Your Photo is Ready! ✅</h1>
+                  <h1 style="font-size: 22px; color: #0f172a; margin: 0 0 8px;">Your ${documentName} is Ready! ✅</h1>
                   <p style="color: #64748b; font-size: 14px; margin: 0;">Thank you for your purchase</p>
                 </div>
 

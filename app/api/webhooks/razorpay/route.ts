@@ -4,6 +4,7 @@ import dbConnect from "@/lib/mongodb";
 import Photo from "@/models/Photo";
 import ExpertOrder from "@/models/ExpertOrder";
 import { sendEmail } from "@/lib/mail";
+import { getSafeSpec } from "@/lib/specs";
 
 export async function POST(req: Request) {
   try {
@@ -53,6 +54,8 @@ export async function POST(req: Request) {
             const photoDownloadUrl = photo.secureUrl || '';
             const printSheetDownloadUrl = photo.printSheetUrl || '';
             const previewLink = `${appUrl}/preview/${photoId}`;
+            const spec = getSafeSpec(photo.documentType);
+            const documentName = spec.name || "Passport Photo";
             
             try {
               if (photo.isExpert) {
@@ -78,7 +81,7 @@ export async function POST(req: Request) {
                 await sendEmail({
                   to: userEmail,
                   subject: "Your Expert Photo Edit Order is Confirmed - PixPassport",
-                  html: `<p>Hi there,</p><p>We have received your payment for the expert photo edit. Our team is working on your photo now and will email it back to you when it is ready.</p><p>Thank you for choosing PixPassport!</p>`,
+                  html: `<p>Hi there,</p><p>We have received your payment for the expert photo edit for your <strong>${documentName}</strong>. Our team is working on your photo now and will email it back to you when it is ready.</p><p>Thank you for choosing PixPassport!</p>`,
                 });
                 console.log(`[WEBHOOK] Expert emails sent successfully for photo ${photoId}`);
               } else {
@@ -88,7 +91,7 @@ export async function POST(req: Request) {
                   html: `
                     <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; color: #1e293b; background: #f8fafc; padding: 32px; border-radius: 16px;">
                       <div style="text-align: center; margin-bottom: 24px;">
-                        <h1 style="font-size: 22px; color: #0f172a; margin: 0 0 8px;">Your Photo is Ready! ✅</h1>
+                        <h1 style="font-size: 22px; color: #0f172a; margin: 0 0 8px;">Your ${documentName} is Ready! ✅</h1>
                         <p style="color: #64748b; font-size: 14px; margin: 0;">Thank you for your purchase</p>
                       </div>
 
@@ -197,6 +200,8 @@ export async function POST(req: Request) {
 
           const userEmail = (photo as any).guestEmail || paymentEntity.email;
           if (userEmail) {
+            const spec = getSafeSpec(photo.documentType);
+            const documentName = spec.name || "Passport Photo";
             try {
               await sendEmail({
                 to: userEmail,
@@ -205,7 +210,7 @@ export async function POST(req: Request) {
                   <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; color: #333;">
                     <h2 style="color: #dc2626;">Payment Failed</h2>
                     <p>Hi there,</p>
-                    <p>We noticed your recent payment attempt for your passport photo failed. Your order has not been completed.</p>
+                    <p>We noticed your recent payment attempt for your <strong>${documentName}</strong> failed. Your order has not been completed.</p>
                     <p>Please try checking out again or contact support if you need assistance.</p>
                   </div>
                 `
