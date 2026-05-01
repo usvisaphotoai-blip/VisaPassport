@@ -37,6 +37,11 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Expert Order not found" }, { status: 404 });
     }
 
+    // Idempotency check: if already paid (e.g., via webhook), skip sending emails again
+    if (order.status === "paid") {
+      return NextResponse.json({ success: true, message: "Payment verified successfully" });
+    }
+
     // Update expert order record
     order.status = "paid";
     order.razorpayPaymentId = razorpay_payment_id;

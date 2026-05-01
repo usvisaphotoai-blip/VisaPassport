@@ -3,7 +3,7 @@ import mongoose, { Schema, Document, Model } from 'mongoose';
 export interface IExpertOrder extends Document {
   email: string;
   photos: string[]; // URLs or base64 strings
-  status: 'pending_payment' | 'paid' | 'completed';
+  status: 'pending_payment' | 'paid' | 'completed' | 'payment_failed';
   razorpayOrderId?: string;
   razorpayPaymentId?: string;
   createdAt: Date;
@@ -16,7 +16,7 @@ const ExpertOrderSchema: Schema = new Schema(
     photos: { type: [String], required: true },
     status: {
       type: String,
-      enum: ['pending_payment', 'paid', 'completed'],
+      enum: ['pending_payment', 'paid', 'completed', 'payment_failed'],
       default: 'pending_payment',
     },
     razorpayOrderId: { type: String },
