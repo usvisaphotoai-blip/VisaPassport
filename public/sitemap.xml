@@ -1587,4 +1587,13 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+    <url>
+    <loc>https://www.pixpassport.com/blog/new-zealand-visa-photo-requirements</loc>
+    <lastmod>2026-05-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+      <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1777701505/ChatGPT_Image_May_2_2026_11_26_59_AM_ylwxub.webp</image:loc>
+    </image:image>
+  </url>
 </urlset>
