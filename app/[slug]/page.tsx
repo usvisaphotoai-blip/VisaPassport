@@ -25,7 +25,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const specId = getSpecIdFromSlug(slug);
   const spec = (specs as SpecEntry[]).find((s) => s.id === specId);
   if (spec) {
-    const localPrice = await getLocalPrice(spec.price);
+    // Use skipHeaders: true for static metadata
+    const localPrice = await getLocalPrice(spec.price, undefined, false, true);
     
     // Determine the user's intent from the URL
     const isVisaUrl = slug.includes("visa");
@@ -146,8 +147,8 @@ export default async function Page({ params }: PageProps) {
   const spec = (specs as SpecEntry[]).find((s) => s.id === specId);
 
   if (spec) {
-    // ... rest of spec logic
-    const localPrice = await getLocalPrice(spec.price);
+    // Use skipHeaders: true to keep the page static
+    const localPrice = await getLocalPrice(spec.price, undefined, false, true);
     const enrichedSpec = { ...spec, local_price: localPrice };
     const jsonLd = {
       "@context": "https://schema.org",

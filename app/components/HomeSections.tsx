@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import PriceDisplay from "./PriceDisplay";
 
 /* ─── Data ─── */
 const steps = [
@@ -252,10 +253,10 @@ const comparisonRows = [
 ];
 
 export default function HomeSections({
-  price,
+  basePrice = 5.99,
   seoContent,
 }: {
-  price: string;
+  basePrice?: number;
   seoContent?: React.ReactNode;
 }) {
   const defaultSeoContent = (
@@ -1009,12 +1010,12 @@ export default function HomeSections({
           <h2 className="hc-h2">Why pay more?</h2>
           <p className="hc-sub" style={{ marginBottom: "32px" }}>
             Photo studios charge $10–$20 + travel time. Get the same compliant
-            photo here in 30 seconds for just {price}.
+            photo here in 30 seconds for just <PriceDisplay basePrice={basePrice} />.
           </p>
 
           <div className="hc-price-card" style={{ marginTop: "8px" }}>
             <div className="hc-price-pop">Most Popular</div>
-            <div className="hc-price-amt">{price}</div>
+            <div className="hc-price-amt"><PriceDisplay basePrice={basePrice} /></div>
             <div className="hc-price-note">
               One-time · 1 digital photo + A4 print sheet
             </div>

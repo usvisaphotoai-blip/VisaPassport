@@ -91,8 +91,10 @@ import "./home.css";
 import { getLocalPrice } from "@/lib/currency";
 
 export default async function Home() {
-  const localPrice = await getLocalPrice(5.99);
-  const priceDisplay = localPrice?.formatted ?? "$5.99";
+  // Use skipHeaders: true to keep the page static
+  // We no longer need the full localPrice object here for display, 
+  // as HomeSections will handle it via PriceDisplay client component.
+  const basePrice = 5.99;
 
   return (
     <>
@@ -155,7 +157,7 @@ export default async function Home() {
           </div>
         </section>
 
-        <HomeSections price={priceDisplay} />
+        <HomeSections basePrice={basePrice} />
         <HomeFAQ />
       </div>
     </>

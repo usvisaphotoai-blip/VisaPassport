@@ -51,13 +51,14 @@ export async function getLocalPrice(
   baseUsdPrice: number = 5.99,
   forcedCurrency?: string,
   isExpert: boolean = false,
+  skipHeaders: boolean = false
 ): Promise<LocalPrice> {
   try {
     let currency = "USD";
 
     if (forcedCurrency) {
       currency = forcedCurrency.toUpperCase();
-    } else {
+    } else if (!skipHeaders) {
       // 1. Try to detect country from Vercel header
       try {
         const { headers } = await import("next/headers");
@@ -70,6 +71,9 @@ export async function getLocalPrice(
         // Fallback to timezone check if header fails or not on Vercel
         currency = getClientTimezoneCurrency();
       }
+    } else {
+      // For static generation, skip headers and default to USD
+      currency = "USD";
     }
 
     // Use fixed price if available, otherwise fallback to baseUsdPrice
@@ -104,6 +108,9 @@ export async function getLocalPrice(
 // Client-side utility to guess currency from timezone (100% free, no rate limits)
 export function getClientTimezoneCurrency(): string {
   try {
+    // Only run on client
+    if (typeof window === 'undefined') return 'USD';
+
     const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
     if (tz.includes('Kolkata') || tz.includes('Calcutta')) return 'INR';
     if (tz.includes('London')) return 'GBP';
