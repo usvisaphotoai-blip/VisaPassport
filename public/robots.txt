@@ -1,0 +1,17 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard/
+Content-Signal: ai-train=no, search=yes, ai-input=yes
+
+User-agent: Googlebot
+Allow: /
+Disallow: /dashboard/
+
+User-agent: Bingbot
+Allow: /
+Disallow: /dashboard/
+
+User-agent: ChatGPT-User
+Allow: /
+
+Sitemap: https://www.pixpassport.com/sitemap.xml

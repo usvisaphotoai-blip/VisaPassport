@@ -20,6 +20,32 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async headers() {
+    return [
+      {
+        source: "/(.*)",
+        headers: [
+          {
+            key: "Vary",
+            value: "Accept",
+          },
+          {
+            key: "Content-Signal",
+            value: "ai-train=no, search=yes, ai-input=yes",
+          },
+        ],
+      },
+      {
+        source: "/",
+        headers: [
+          {
+            key: "Link",
+            value: '</llms.txt>; rel="service-desc"',
+          },
+        ],
+      },
+    ];
+  },
   async redirects() {
     return [
       // Normalize United States -> US
