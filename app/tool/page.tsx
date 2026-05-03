@@ -54,6 +54,37 @@ function ToolForm() {
   const [modelPreloaded, setModelPreloaded] = useState(false);
   const [previewUrl, setPreviewUrl] = useState<string>("");
 
+  // Header inline document selector
+  const [headerSelectorOpen, setHeaderSelectorOpen] = useState(false);
+  const [headerSearchTerm, setHeaderSearchTerm] = useState("");
+  const headerSelectorRef = useRef<HTMLDivElement>(null);
+  const headerSearchRef = useRef<HTMLInputElement>(null);
+
+  const headerFilteredDocs = documentTypes.filter(
+    (doc) =>
+      doc.label.toLowerCase().includes(headerSearchTerm.toLowerCase()) ||
+      doc.country?.toLowerCase().includes(headerSearchTerm.toLowerCase())
+  );
+
+  // Close header selector on outside click
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (headerSelectorRef.current && !headerSelectorRef.current.contains(e.target as Node)) {
+        setHeaderSelectorOpen(false);
+        setHeaderSearchTerm("");
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // Auto-focus search input when header selector opens
+  useEffect(() => {
+    if (headerSelectorOpen && headerSearchRef.current) {
+      headerSearchRef.current.focus();
+    }
+  }, [headerSelectorOpen]);
+
   useEffect(() => {
     const saved = localStorage.getItem("selectedDoc");
     if (saved && documentTypes.some((d) => d.id === saved)) {
@@ -345,8 +376,8 @@ function ToolForm() {
   const canCrop = !!(processedFile || selectedFile) && !!clientDetection?.faceBox && !!clientDetection?.eyeCenter;
 
   return (
-    <div className="flex flex-col gap-8 max-w-7xl mx-auto px-4 lg:px-0 pb-12 relative w-full">
-      <div className="flex flex-col lg:flex-row lg:min-h-[calc(100vh-200px)] gap-6">
+    <div className="flex flex-col gap-4 max-w-7xl mx-auto px-3 lg:px-0 pb-6 relative w-full">
+      <div className="flex flex-col lg:flex-row lg:min-h-[calc(100vh-200px)] gap-4">
         
         {/* Floating Top Crop Button (Mobile) */}
         {canCrop && !isCropping && (
@@ -377,30 +408,107 @@ function ToolForm() {
         />
 
         {/* Main Workspace Area */}
-        <div className="flex-1 flex flex-col min-w-0 bg-gray-100 border border-white rounded-3xl p-4 lg:p-6 overflow-y-auto">
+        <div className="flex-1 flex flex-col min-w-0 bg-gray-100 border border-white rounded-2xl p-3 lg:p-5 overflow-y-auto">
           
-          {/* Selected Document Header */}
-          <div className="mb-6 flex items-center justify-between bg-white/60 backdrop-blur-sm px-4 py-3 rounded-2xl border border-white shadow-sm">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 flex items-center justify-center bg-white rounded-xl shadow-inner border border-slate-100 text-2xl">
-                {activeDoc.flag}
+          {/* Selected Document Header — clickable to change */}
+          <div className="mb-3 relative" ref={headerSelectorRef}>
+            <button
+              type="button"
+              onClick={() => setHeaderSelectorOpen((v) => !v)}
+              className={`w-full flex items-center justify-between bg-white/60 backdrop-blur-sm px-3 py-2.5 rounded-xl border shadow-sm cursor-pointer transition-all duration-200 ${
+                headerSelectorOpen
+                  ? "border-lime-400 ring-1 ring-lime-400/20"
+                  : "border-white hover:border-slate-200"
+              }`}
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 flex items-center justify-center bg-white rounded-lg shadow-inner border border-slate-100 text-lg">
+                  {activeDoc.flag}
+                </div>
+                <div className="flex flex-col text-left">
+                  <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-0.5">Active Requirement</span>
+                  <h2 className="text-xs font-black text-slate-900 leading-none">{activeDoc.label}</h2>
+                </div>
               </div>
-              <div className="flex flex-col">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1">Active Requirement</span>
-                <h2 className="text-sm font-black text-slate-900 leading-none">{activeDoc.label}</h2>
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4 text-right">
+                  <div className="hidden sm:flex flex-col">
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1">Dimensions</span>
+                    <span className="text-xs font-bold text-slate-600 leading-none">{activeDoc.size}</span>
+                  </div>
+                  <div className="w-px h-8 bg-slate-200 hidden sm:block" />
+                  <div className="flex flex-col">
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1">Background</span>
+                    <span className="text-xs font-bold text-lime-600 leading-none">{activeDoc.bg_color}</span>
+                  </div>
+                </div>
+                <svg
+                  className={`w-4 h-4 text-slate-400 shrink-0 transition-transform duration-200 ${headerSelectorOpen ? "rotate-180" : ""}`}
+                  fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
               </div>
-            </div>
-            <div className="flex items-center gap-4 text-right">
-              <div className="hidden sm:flex flex-col">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1">Dimensions</span>
-                <span className="text-xs font-bold text-slate-600 leading-none">{activeDoc.size}</span>
+            </button>
+
+            {headerSelectorOpen && (
+              <div className="absolute left-0 right-0 z-50 mt-1 bg-white border border-slate-200 rounded-xl shadow-xl overflow-hidden">
+                <div className="p-2 border-b border-slate-100">
+                  <div className="relative">
+                    <svg className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                    <input
+                      ref={headerSearchRef}
+                      type="text"
+                      placeholder="Search country or document type…"
+                      value={headerSearchTerm}
+                      onChange={(e) => setHeaderSearchTerm(e.target.value)}
+                      className="w-full pl-8 pr-8 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-lime-500/30 focus:border-lime-500 transition-all placeholder:text-slate-400"
+                    />
+                    {headerSearchTerm && (
+                      <button onClick={() => setHeaderSearchTerm("")} className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1">
+                        <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                      </button>
+                    )}
+                  </div>
+                </div>
+                <nav className="flex flex-col overflow-y-auto max-h-64 custom-scrollbar">
+                  {headerFilteredDocs.length > 0 ? (
+                    headerFilteredDocs.map((doc) => (
+                      <button
+                        key={doc.id}
+                        onClick={() => {
+                          setSelectedDoc(doc.id);
+                          handleReset();
+                          setHeaderSelectorOpen(false);
+                          setHeaderSearchTerm("");
+                        }}
+                        className={`relative group w-full flex flex-col px-3 py-2.5 text-left transition-all duration-150 border-b border-slate-50 last:border-b-0 ${
+                          selectedDoc === doc.id ? "bg-lime-50/60" : "bg-transparent hover:bg-slate-50"
+                        }`}
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            {doc.flag && <span className="text-sm leading-none">{doc.flag}</span>}
+                            <p className={`text-xs font-bold leading-tight ${selectedDoc === doc.id ? "text-slate-900" : "text-slate-600"}`}>{doc.label}</p>
+                          </div>
+                          {selectedDoc === doc.id && (
+                            <svg className="w-3.5 h-3.5 text-lime-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+                          )}
+                        </div>
+                        <p className="text-[10px] text-slate-400 mt-0.5 font-medium ml-6">{doc.size} · {doc.bg_color} bg</p>
+                      </button>
+                    ))
+                  ) : (
+                    <div className="py-6 px-4 text-center">
+                      <p className="text-xs text-slate-400 font-medium">No documents found</p>
+                      <button onClick={() => setHeaderSearchTerm("")} className="text-[10px] text-lime-600 font-bold uppercase tracking-wider mt-2 hover:text-lime-700">Clear Search</button>
+                    </div>
+                  )}
+                </nav>
               </div>
-              <div className="w-px h-8 bg-slate-200 hidden sm:block" />
-              <div className="flex flex-col">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1">Background</span>
-                <span className="text-xs font-bold text-lime-600 leading-none">{activeDoc.bg_color}</span>
-              </div>
-            </div>
+            )}
           </div>
           
           {/* Initial State: Upload Area */}
@@ -492,7 +600,7 @@ export default function ToolPage() {
   return (
     <div className="bg-slate-50 min-h-screen font-sans">
 
-      <div className="py-8">
+      <div className="py-4">
         <Suspense fallback={<div className="flex items-center justify-center h-64"><div className="w-8 h-8 border-4 border-lime-500 border-t-transparent rounded-full animate-spin" /></div>}>
           <ToolForm />
         </Suspense>

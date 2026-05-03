@@ -7,7 +7,7 @@
 
 /* â”€â”€â”€ HERO â”€â”€â”€ */
 .hc-hero {
-  background: linear-gradient(135deg, #eaf4f0 0%, #f0f7f4 50%, #e8f3ef 100%);
+  /* background: linear-gradient(135deg, #eaf4f0 0%, #f0f7f4 50%, #e8f3ef 100%); */
   padding: 32px 16px 24px;
   position: relative;
   overflow: hidden;
@@ -43,13 +43,13 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-  align-items: center;
+  align-items: flex-start;
 }
 
 /* Left text */
 .hc-hero-text {
   width: 100%;
-  text-align: center;
+  text-align: left;
 }
 
 /* Trustpilot */
@@ -57,7 +57,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  justify-content: center;
+  justify-content: flex-start;
   flex-wrap: wrap;
   margin-bottom: 20px;
 }
@@ -88,13 +88,24 @@
 /* Heading */
 .hc-h1 {
   font-size: clamp(26px, 7vw, 50px);
-  font-weight: 750;
+  font-weight: 600;
   line-height: 1.1;
   color: #0f1e2d;
   letter-spacing: -1px;
   margin: 0 0 10px;
 }
-
+.hc-h1-primary {
+  text-align: left;
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+}
+.hc-h1-secondary {
+  text-align: left;
+  font-size: 26px;
+  font-weight: 400;
+  margin-top: 6px;
+}
 .hc-anim-wrap {
   height: 44px;
   overflow: hidden;
@@ -115,7 +126,7 @@
   color: #4a5568;
   line-height: 1.7;
   max-width: 520px;
-  margin: 0 auto 28px;
+  margin: 0 0 28px;
 }
 
 /* Buttons */
@@ -123,9 +134,8 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  margin-bottom: 24px;
-  align-items: stretch;
-  min-height: 120px;
+  margin-bottom: 16px;
+  align-items: flex-start;
 }
 
 .hc-btn-p {
@@ -172,7 +182,7 @@
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .hc-trust-item {
@@ -994,6 +1004,20 @@
     flex: 1;
   }
 
+  .hc-h1 {
+    font-weight: 750;
+  }
+
+  .hc-h1-primary {
+    font-size: 42px;
+    font-weight: 800;
+  }
+
+  .hc-h1-secondary {
+    font-size: 40px;
+    font-weight: 500;
+  }
+
   .hc-tp {
     justify-content: flex-start;
   }
@@ -1092,7 +1116,7 @@
   align-items: center;
   gap: -8px;
   margin-bottom: 8px;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .hc-av {
@@ -1128,7 +1152,7 @@
   align-items: center;
   gap: 8px;
   margin-bottom: 24px;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .hc-av-txt p {

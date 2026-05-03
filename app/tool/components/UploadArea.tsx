@@ -16,7 +16,7 @@ const UploadArea: React.FC<UploadAreaProps> = ({
   onShowGuide,
 }) => {
   return (
-    <div className="flex-1 flex flex-col gap-6">
+    <div className="flex-1 flex flex-col gap-3">
       {/* Photo Guidelines Button */}
       {/* <button
         onClick={() => setGuidelinesOpen(true)}
@@ -44,7 +44,7 @@ const UploadArea: React.FC<UploadAreaProps> = ({
       </div>
 
       {/* Upload area */}
-      <div className="relative flex flex-col items-center justify-center border-2 border-dashed border-slate-200 rounded-2xl bg-white/60 hover:bg-white hover:border-lime-400 transition-all duration-300 group cursor-pointer py-10">
+      <div className="relative flex flex-col items-center justify-center border-2 border-dashed border-slate-200 rounded-2xl bg-white/60 hover:bg-white hover:border-lime-400 transition-all duration-300 group cursor-pointer py-6">
         <input
           id="tool-photo-input"
           type="file"
@@ -53,13 +53,13 @@ const UploadArea: React.FC<UploadAreaProps> = ({
           onClick={(e) => ((e.target as HTMLInputElement).value = "")}
           className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
         />
-        <div className="w-16 h-16 bg-lime-50 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-          <UploadIcon className="w-8 h-8 text-lime-600" />
+        <div className="w-12 h-12 bg-lime-50 rounded-xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300">
+          <UploadIcon className="w-6 h-6 text-lime-600" />
         </div>
-        <h3 className="text-base font-bold text-slate-900 mb-1">
+        <h3 className="text-sm font-bold text-slate-900 mb-0.5">
           Upload Photo for Validation
         </h3>
-        <p className="text-sm text-slate-500 mb-6">
+        <p className="text-xs text-slate-500 mb-4">
           Drag and drop or click to browse files
         </p>
         <div className="flex items-center gap-4">
@@ -67,7 +67,7 @@ const UploadArea: React.FC<UploadAreaProps> = ({
             Select Image
           </span>
         </div>
-        <p className="text-[10px] text-slate-400 mt-8 flex items-center gap-2 font-medium">
+        <p className="text-[10px] text-slate-400 mt-5 flex items-center gap-2 font-medium">
           <LockIcon className="w-3.5 h-3.5" />
           Privacy Secure: Images are processed locally and never stored.
         </p>

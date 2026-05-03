@@ -64,7 +64,7 @@ const STEP_LABELS = [
 export default function ClientFaceDetector({
   file,
   documentType,
-  targetBackground, // kept in props signature; reserved for future background checks
+  targetBackground,
   onDetectionComplete,
   onCancel,
 }: Props) {
@@ -77,20 +77,14 @@ export default function ClientFaceDetector({
   const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
   const [showCancel, setShowCancel] = useState(false);
 
-  // BUG FIX #3 & #5 — single ref tracks both the RAF id and whether
-  // the component is still mounted, so we never mutate state or call
-  // onDetectionComplete after unmount.
   const animFrameRef = useRef<number | null>(null);
   const isMountedRef = useRef(true);
 
-  // Show cancel button only after a short delay
   useEffect(() => {
     const t = setTimeout(() => setShowCancel(true), 2000);
     return () => clearTimeout(t);
   }, []);
 
-  // BUG FIX #3 — mark component as unmounted on cleanup so async
-  // continuations and RAF callbacks bail out safely.
   useEffect(() => {
     isMountedRef.current = true;
     return () => {
@@ -108,7 +102,6 @@ export default function ClientFaceDetector({
     const data = ctx.getImageData(0, 0, w, h).data;
     let sum = 0;
     let count = 0;
-    // sample every 10th pixel
     for (let i = 0; i < data.length; i += 40) {
       sum += (data[i] + data[i + 1] + data[i + 2]) / 3;
       count++;
@@ -118,19 +111,13 @@ export default function ClientFaceDetector({
 
   /* ========================== MAIN PIPELINE ============================= */
 
-  // BUG FIX #4 — removed `targetBackground` from deps; it is never read
-  // inside runDetection so listing it caused unnecessary re-creation of
-  // the callback without any benefit.
   const runDetection = useCallback(async () => {
     try {
-      // Guard: abort immediately if already unmounted
       if (!isMountedRef.current) return;
 
       setLoading(true);
       setStepIndex(0);
       setProgress(5);
-
-      /* ---------- load image ---------- */
 
       const img = new Image();
       const objectUrl = URL.createObjectURL(file);
@@ -140,14 +127,11 @@ export default function ClientFaceDetector({
 
       if (!isMountedRef.current) return;
 
-      /* ---------- draw scaled preview ---------- */
-
       const canvas = canvasRef.current!;
       const overlay = overlayCanvasRef.current!;
       const ctx = canvas.getContext("2d", { willReadFrequently: true })!;
 
       const max = 560;
-      // BUG FIX #2 — `scale` is never reassigned; use const.
       const scale = Math.min(max / img.width, max / img.height, 1);
 
       const drawW = Math.round(img.width * scale);
@@ -158,7 +142,6 @@ export default function ClientFaceDetector({
 
       ctx.drawImage(img, 0, 0, drawW, drawH);
 
-      // Mobile fix: ensure canvas is flushed before processing
       await new Promise((r) => setTimeout(r, 100));
 
       if (!isMountedRef.current) return;
@@ -166,11 +149,7 @@ export default function ClientFaceDetector({
       setProgress(20);
       setStepIndex(1);
 
-      /* ---------- brightness FAST ---------- */
-
       const avgBrightness = fastBrightness(ctx, drawW, drawH);
-
-      /* ---------- LOAD MEDIAPIPE (CACHED) ---------- */
 
       const landmarker = await getMediaPipeLandmarker();
 
@@ -179,9 +158,6 @@ export default function ClientFaceDetector({
       setProgress(45);
       setStepIndex(2);
 
-      /* ---------- DETECT FACE ---------- */
-
-      // Safety check for canvas dimensions
       if (canvas.width === 0 || canvas.height === 0) {
         throw new Error("Canvas preparation failed - zero dimensions");
       }
@@ -194,25 +170,14 @@ export default function ClientFaceDetector({
       setProgress(75);
       setStepIndex(3);
 
-      /* ---------- ANALYSIS ---------- */
-
       const localFeedbacks: Feedback[] = [];
 
       if (avgBrightness < 80)
-        localFeedbacks.push({
-          type: "warning",
-          message: "Image appears too dark",
-        });
+        localFeedbacks.push({ type: "warning", message: "Image appears too dark" });
       else if (avgBrightness > 230)
-        localFeedbacks.push({
-          type: "warning",
-          message: "Image appears overexposed",
-        });
+        localFeedbacks.push({ type: "warning", message: "Image appears overexposed" });
       else
-        localFeedbacks.push({
-          type: "success",
-          message: "Good lighting detected",
-        });
+        localFeedbacks.push({ type: "success", message: "Good lighting detected" });
 
       let faceBox = null,
         eyeCenter = null,
@@ -223,15 +188,9 @@ export default function ClientFaceDetector({
         orientationRatio = null;
 
       if (detections.length === 0) {
-        localFeedbacks.push({
-          type: "error",
-          message: "No face detected — try a clearer photo",
-        });
+        localFeedbacks.push({ type: "error", message: "No face detected — try a clearer photo" });
       } else if (detections.length > 1) {
-        localFeedbacks.push({
-          type: "error",
-          message: `${detections.length} faces detected — only 1 allowed`,
-        });
+        localFeedbacks.push({ type: "error", message: `${detections.length} faces detected — only 1 allowed` });
       }
 
       if (detections.length === 1) {
@@ -245,7 +204,6 @@ export default function ClientFaceDetector({
           height: box.height / scale,
         };
 
-        // Eye centers — average of contour points
         const leftEyePoints = getPoints(landmarks, LEFT_EYE_INDICES, drawW, drawH);
         const rightEyePoints = getPoints(landmarks, RIGHT_EYE_INDICES, drawW, drawH);
         const leftCenter = centerOfPoints(leftEyePoints);
@@ -256,7 +214,6 @@ export default function ClientFaceDetector({
 
         eyeCenter = { x: eyeX / scale, y: eyeY / scale };
 
-        // Chin and top of head from specific landmarks
         const chinPt = toPixel(landmarks[CHIN_TIP], drawW, drawH);
         const foreheadPt = toPixel(landmarks[FOREHEAD_TOP], drawW, drawH);
 
@@ -269,13 +226,11 @@ export default function ClientFaceDetector({
         eyeLevelPct = ((img.height - eyeY / scale) / img.height) * 100;
         headSizePct = (estimatedFullHeadH / img.height) * 100;
 
-        // Orientation ratio — left vs right distance from eye to box edge
         const leftDist = leftCenter.x - box.x;
         const rightDist = box.x + box.width - rightCenter.x;
         const minDist = Math.min(leftDist, rightDist);
         orientationRatio = minDist > 0 ? Math.max(leftDist, rightDist) / minDist : 999;
 
-        // ── Head tilt check ──
         const headTilt = computeTiltAngle(landmarks, drawW, drawH);
         const absHeadTilt = Math.abs(headTilt);
 
@@ -286,90 +241,48 @@ export default function ClientFaceDetector({
           });
         }
 
-        // ── Body / orientation tilt check (Jawline based) ──
         const bodyTilt = detectBodyTilt(landmarks, drawW, drawH);
         if (bodyTilt.isTilted) {
-          localFeedbacks.push({
-            type: "warning",
-            message: bodyTilt.description,
-          });
+          localFeedbacks.push({ type: "warning", message: bodyTilt.description });
         }
 
-        // Face detected successfully feedback
-        localFeedbacks.push({
-          type: "success",
-          message: "Face detected successfully",
-        });
+        localFeedbacks.push({ type: "success", message: "Face detected successfully" });
 
-        // Dynamic specifications from country data
         const spec = getSafeSpec(documentType);
         const minEye = Number(spec.eye_min_pct) || 56;
         const maxEye = Number(spec.eye_max_pct) || 69;
         const minHead = Number(spec.head_min_pct) || 50;
         const maxHead = Number(spec.head_max_pct) || 69;
 
-        // Eye level check
         if (eyeLevelPct >= minEye && eyeLevelPct <= maxEye)
-          localFeedbacks.push({
-            type: "success",
-            message: `Eye level: ${eyeLevelPct.toFixed(1)}% ✓`,
-          });
+          localFeedbacks.push({ type: "success", message: `Eye level: ${eyeLevelPct.toFixed(1)}% ✓` });
         else
-          localFeedbacks.push({
-            type: "warning",
-            message: `Eye level: ${eyeLevelPct.toFixed(1)}% (target: ${minEye}–${maxEye}%)`,
-          });
+          localFeedbacks.push({ type: "warning", message: `Eye level: ${eyeLevelPct.toFixed(1)}% (target: ${minEye}–${maxEye}%)` });
 
-        // Head size check
         if (headSizePct >= minHead && headSizePct <= maxHead)
-          localFeedbacks.push({
-            type: "success",
-            message: `Head size: ${headSizePct.toFixed(1)}% ✓`,
-          });
+          localFeedbacks.push({ type: "success", message: `Head size: ${headSizePct.toFixed(1)}% ✓` });
         else
-          localFeedbacks.push({
-            type: "warning",
-            message: `Head size: ${headSizePct.toFixed(1)}% (target: ${minHead}–${maxHead}%)`,
-          });
+          localFeedbacks.push({ type: "warning", message: `Head size: ${headSizePct.toFixed(1)}% (target: ${minHead}–${maxHead}%)` });
 
-        // Orientation check
-        if (orientationRatio <= 2.0) {
-          localFeedbacks.push({
-            type: "success",
-            message: "Frontal orientation ✓",
-          });
-        } else {
-          localFeedbacks.push({
-            type: "warning",
-            message: "Face may not be facing camera directly",
-          });
-        }
+        if (orientationRatio <= 2.0)
+          localFeedbacks.push({ type: "success", message: "Frontal orientation ✓" });
+        else
+          localFeedbacks.push({ type: "warning", message: "Face may not be facing camera directly" });
 
-        // ─── START ANIMATED SCAN ───
-        // BUG FIX #6 — guard against FACE_LANDMARKS_TESSELATION being
-        // undefined at call time (lazy/deferred MediaPipe initialisation).
+        setFeedbacks(localFeedbacks);
+        setProgress(90);
+
         const tesselation = FaceLandmarker.FACE_LANDMARKS_TESSELATION ?? [];
-
         const startTime = performance.now();
-        const duration = 2000;
+        const duration = 3000;
 
-        // BUG FIX #3 — animation loop checks isMountedRef before every
-        // draw call so it never touches a detached canvas.
         const animateMesh = (now: number) => {
-          if (!isMountedRef.current) return; // component unmounted — stop loop
+          if (!isMountedRef.current) return;
           const elapsed = now - startTime;
           const animProgress = Math.min(elapsed / duration, 1);
 
           if (overlayCanvasRef.current && box && landmarks) {
-            drawOverlay(
-              overlayCanvasRef.current,
-              box,
-              landmarks,
-              drawW,
-              drawH,
-              animProgress,
-              tesselation,
-            );
+            drawOverlay(overlayCanvasRef.current, box, landmarks, drawW, drawH, animProgress, tesselation);
           }
 
           if (animProgress < 1) {
@@ -378,21 +291,12 @@ export default function ClientFaceDetector({
         };
         animFrameRef.current = requestAnimationFrame(animateMesh);
 
-        // Wait for animation to finish; bail out if unmounted during wait
         await new Promise<void>((resolve) => {
           const timeout = setTimeout(resolve, duration);
-          // Store the timeout id on the ref so the cleanup effect can clear it
-          // if the component unmounts before it fires.
-          // (We re-use animFrameRef just to hold the timer id temporarily;
-          //  at this point the RAF loop has already ended.)
-          // Actually use a dedicated abort check after the await instead.
-          void timeout; // silence unused-var lint
+          void timeout;
         });
 
-        // BUG FIX #5 — after the async wait, verify the component is still
-        // mounted before touching React state or calling the parent callback.
         if (!isMountedRef.current) return;
-
       } else {
         await new Promise<void>((r) => setTimeout(r, 1000));
         if (!isMountedRef.current) return;
@@ -401,6 +305,7 @@ export default function ClientFaceDetector({
       setFeedbacks(localFeedbacks);
       setProgress(100);
       setStepIndex(4);
+      setLoading(false);
 
       const detectionResult: ClientDetectionResult = {
         faceBox,
@@ -415,25 +320,17 @@ export default function ClientFaceDetector({
         brightness: avgBrightness,
       };
 
-      // Final short delay to show "Done!" state
-      await new Promise<void>((r) => setTimeout(r, 400));
-
-      // BUG FIX #5 — final mounted-check before calling parent callback
+      await new Promise<void>((r) => setTimeout(r, 500));
       if (!isMountedRef.current) return;
 
       onDetectionComplete(file, detectionResult, localFeedbacks);
-
     } catch (err: any) {
       console.error(err);
-
-      // BUG FIX #5 — don't update state or call callbacks if unmounted
       if (!isMountedRef.current) return;
 
       const errorMessage = err?.message || "Processing failed — please try again";
 
-      setFeedbacks([
-        { type: "error", message: errorMessage },
-      ]);
+      setFeedbacks([{ type: "error", message: errorMessage }]);
       onDetectionComplete(
         file,
         {
@@ -451,21 +348,14 @@ export default function ClientFaceDetector({
         [{ type: "error", message: errorMessage }],
       );
     } finally {
-      // BUG FIX #5 — only update loading state if still mounted
       if (isMountedRef.current) {
         setLoading(false);
       }
     }
-    // BUG FIX #1 — correct deps: file, documentType, onDetectionComplete.
-    // `targetBackground` removed (BUG FIX #4) — it is unused inside the fn.
-    // `isMountedRef` is a ref so it never triggers re-creation.
   }, [file, documentType, onDetectionComplete]);
 
-  /* ========================= ENHANCED OVERLAY ========================== */
+  /* ========================= OVERLAY DRAWING =========================== */
 
-  // BUG FIX #6 — tesselation array is now passed in as a parameter so
-  // drawOverlay never accesses the static property itself (avoids the
-  // risk of hitting it before MediaPipe has fully initialised).
   function drawOverlay(
     canvasEl: HTMLCanvasElement,
     box: { x: number; y: number; width: number; height: number },
@@ -479,7 +369,6 @@ export default function ClientFaceDetector({
     const ctx = canvasEl.getContext("2d", { willReadFrequently: true })!;
     ctx.clearRect(0, 0, w, h);
 
-    // Full Face Mesh Tessellation (Dotted Lemon)
     ctx.save();
     ctx.strokeStyle = "rgba(163, 230, 53, 0.45)";
     ctx.lineWidth = 0.8;
@@ -487,7 +376,6 @@ export default function ClientFaceDetector({
     ctx.beginPath();
 
     const countToDraw = Math.floor(tesselation.length * animProgress);
-
     for (let i = 0; i < countToDraw; i++) {
       const conn = tesselation[i];
       const p1 = landmarks[conn.start];
@@ -500,7 +388,6 @@ export default function ClientFaceDetector({
     ctx.stroke();
     ctx.restore();
 
-    // Key Landmark dots (Eyes, Nose, Mouth) — also animated
     const allPointIndices = [
       ...LEFT_EYE_INDICES,
       ...RIGHT_EYE_INDICES,
@@ -520,7 +407,6 @@ export default function ClientFaceDetector({
     }
     ctx.restore();
 
-    // Guidelines appear only when animation is 60%+ complete
     if (animProgress > 0.6) {
       const guideAlpha = Math.min((animProgress - 0.6) * 2.5, 1);
 
@@ -536,7 +422,6 @@ export default function ClientFaceDetector({
       ctx.lineWidth = 3.0;
       ctx.shadowBlur = 8;
       ctx.shadowColor = `rgba(0,0,0,${0.6 * guideAlpha})`;
-
       ctx.beginPath();
       ctx.moveTo(0, eyeY);
       ctx.lineTo(w, eyeY);
@@ -547,7 +432,6 @@ export default function ClientFaceDetector({
       ctx.fillText("EYE LEVEL", 12, eyeY - 10);
       ctx.restore();
 
-      // Face bounding box
       ctx.save();
       ctx.setLineDash([4, 4]);
       ctx.strokeStyle = `rgba(37, 99, 235, ${0.8 * guideAlpha})`;
@@ -558,7 +442,6 @@ export default function ClientFaceDetector({
       ctx.restore();
     }
 
-    // Tilt indicator line between eyes
     const currentLeftEye = getPoints(landmarks, LEFT_EYE_INDICES, w, h);
     const currentRightEye = getPoints(landmarks, RIGHT_EYE_INDICES, w, h);
     const lCenter = centerOfPoints(currentLeftEye);
@@ -581,11 +464,6 @@ export default function ClientFaceDetector({
     }
   }
 
-  // BUG FIX #1 — useEffect now correctly lists `runDetection` in its
-  // dependency array. Because runDetection is a useCallback it only
-  // changes when file / documentType / onDetectionComplete change, so
-  // this is functionally equivalent to the old `[file]` array but
-  // satisfies the exhaustive-deps rule and avoids stale closure bugs.
   useEffect(() => {
     runDetection();
     return () => {
@@ -596,43 +474,51 @@ export default function ClientFaceDetector({
     };
   }, [runDetection]);
 
+  /* ============================== RENDER =============================== */
+
   return (
-    <div className="space-y-0">
-      {/* Image Canvas Area */}
-      <div className="relative bg-gray-900 rounded-t-2xl overflow-hidden flex items-center justify-center min-h-[300px]">
+    <div className="flex flex-col md:flex-row gap-3 items-stretch">
+
+      {/* ── Canvas (image + overlay) ── */}
+      <div className="relative bg-gray-900 rounded-2xl overflow-hidden flex items-center justify-center min-h-[260px] md:min-h-[300px] flex-1">
+
+        {/* Loading overlay */}
         {loading && (
-          <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-gray-900/80 backdrop-blur-sm">
-            <div className="relative w-16 h-16 mb-5">
-              <div className="absolute inset-0 border-4 border-white/10 rounded-full" />
-              <div className="absolute inset-0 border-4 border-transparent border-t-blue-500 rounded-full animate-spin" />
+          <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-gray-900/85 backdrop-blur-sm">
+
+            {/* Spinner */}
+            <div className="relative w-12 h-12 mb-4">
+              <div className="absolute inset-0 border-[3px] border-white/10 rounded-full" />
+              <div className="absolute inset-0 border-[3px] border-transparent border-t-blue-500 rounded-full animate-spin" />
               <div
-                className="absolute inset-2 border-4 border-transparent border-b-indigo-400 rounded-full animate-spin"
-                style={{
-                  animationDirection: "reverse",
-                  animationDuration: "0.8s",
-                }}
+                className="absolute inset-2 border-[3px] border-transparent border-b-indigo-400 rounded-full animate-spin"
+                style={{ animationDirection: "reverse", animationDuration: "0.8s" }}
               />
             </div>
 
-            <p className="text-white text-sm font-semibold tracking-wide">
+            {/* Step label */}
+            <p className="text-white text-[13px] font-semibold tracking-wide mb-3">
               {STEP_LABELS[stepIndex]}
             </p>
 
-            {/* Step indicators */}
-            <div className="flex items-center gap-2 mt-4">
+            {/* Step dots */}
+            <div className="flex items-center gap-1.5 mb-3">
               {STEP_LABELS.slice(0, 4).map((_, i) => (
                 <div key={i} className="flex items-center gap-1.5">
                   <div
-                    className={`w-2 h-2 rounded-full transition-all duration-300 ${i < stepIndex
-                        ? "bg-blue-400 scale-100"
+                    className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
+                      i < stepIndex
+                        ? "bg-blue-400"
                         : i === stepIndex
                           ? "bg-blue-500 scale-125 animate-pulse"
-                          : "bg-gray-600 scale-100"
-                      }`}
+                          : "bg-gray-600"
+                    }`}
                   />
                   {i < 3 && (
                     <div
-                      className={`w-4 h-0.5 transition-colors duration-300 ${i < stepIndex ? "bg-blue-400/50" : "bg-gray-700"}`}
+                      className={`w-4 h-px transition-colors duration-300 ${
+                        i < stepIndex ? "bg-blue-400/50" : "bg-gray-700"
+                      }`}
                     />
                   )}
                 </div>
@@ -640,19 +526,20 @@ export default function ClientFaceDetector({
             </div>
 
             {/* Progress bar */}
-            <div className="w-56 h-1.5 bg-gray-800 rounded-full mt-4 overflow-hidden">
+            <div className="w-48 h-1 bg-gray-800 rounded-full overflow-hidden">
               <div
-                className="h-full bg-linear-to-r from-blue-600 to-indigo-500 rounded-full transition-all duration-500 ease-out"
+                className="h-full bg-gradient-to-r from-blue-600 to-indigo-500 rounded-full transition-all duration-500 ease-out"
                 style={{ width: `${progress}%` }}
               />
             </div>
           </div>
         )}
 
+        {/* Canvases */}
         <div className="relative inline-block">
           <canvas
             ref={canvasRef}
-            className="max-width-full h-auto object-contain shadow-2xl"
+            className="max-w-full h-auto object-contain shadow-2xl"
           />
           <canvas
             ref={overlayCanvasRef}
@@ -661,81 +548,87 @@ export default function ClientFaceDetector({
         </div>
       </div>
 
-      {/* Inline Feedback Cards */}
-      {feedbacks.length > 0 && (
-        <div className="bg-white border-x border-b border-slate-100 rounded-b-2xl px-4 py-3">
-          <div className="flex flex-wrap gap-2">
-            {feedbacks.map((fb, i) => (
-              <span
-                key={i}
-                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${fb.type === "success"
-                    ? "bg-emerald-50 text-emerald-800 border border-emerald-200"
-                    : fb.type === "warning"
-                      ? "bg-amber-50 text-amber-800 border border-amber-200"
-                      : "bg-red-50 text-red-800 border border-red-200"
-                  }`}
-              >
-                {fb.type === "success" ? (
-                  <svg
-                    className="w-3.5 h-3.5 text-emerald-600"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2.5}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M4.5 12.75l6 6 9-13.5"
-                    />
-                  </svg>
-                ) : fb.type === "warning" ? (
-                  <svg
-                    className="w-3.5 h-3.5 text-amber-600"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                    />
-                  </svg>
-                ) : (
-                  <svg
-                    className="w-3.5 h-3.5 text-red-600"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2.5}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
-                )}
-                {fb.message}
-              </span>
-            ))}
-          </div>
-        </div>
-      )}
+      {/* ── Feedback panel ── */}
+      <div className="flex flex-col md:w-60 lg:w-64 shrink-0 bg-white/90 backdrop-blur-xl border border-slate-200/80 rounded-2xl overflow-hidden shadow-md">
 
-      {/* Cancel button — only after loading, with delay */}
-      {loading && showCancel && (
-        <div className="pt-3 px-4">
-          <button
-            onClick={onCancel}
-            className="w-full px-4 py-2.5 text-sm font-medium text-gray-400 hover:text-slate-900 bg-gray-50 hover:bg-gray-100 rounded-xl transition-all"
-          >
-            Cancel
-          </button>
+        {/* Panel header */}
+        <div className="flex items-center justify-between px-4 py-2.5 border-b border-slate-100">
+          <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest">
+            Analysis
+          </span>
+          {loading ? (
+            <span className="flex items-center gap-1.5 text-[10px] font-semibold px-2.5 py-1 bg-blue-50 text-blue-600 rounded-full">
+              <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse inline-block" />
+              Scanning
+            </span>
+          ) : (
+            <span className="flex items-center gap-1.5 text-[10px] font-semibold px-2.5 py-1 bg-emerald-50 text-emerald-600 rounded-full">
+              <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+              Complete
+            </span>
+          )}
         </div>
-      )}
+
+        {/* Feedback rows — compact, no heavy per-item cards */}
+        <div className="flex flex-col p-2.5 gap-0.5 flex-1 overflow-y-auto">
+          {feedbacks.length > 0 ? (
+            feedbacks.map((fb, i) => (
+              <div
+                key={i}
+                className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-[12px] font-medium leading-snug ${
+                  fb.type === "success"
+                    ? "bg-emerald-50 text-emerald-800"
+                    : fb.type === "warning"
+                      ? "bg-amber-50 text-amber-800"
+                      : "bg-red-50 text-red-800"
+                }`}
+                style={{
+                  animationFillMode: "both",
+                  animationDelay: `${i * 80}ms`,
+                }}
+              >
+                {/* Status icon */}
+                <div className="shrink-0">
+                  {fb.type === "success" ? (
+                    <svg className="w-3.5 h-3.5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  ) : fb.type === "warning" ? (
+                    <svg className="w-3.5 h-3.5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                  ) : (
+                    <svg className="w-3.5 h-3.5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                  )}
+                </div>
+                <span>{fb.message}</span>
+              </div>
+            ))
+          ) : (
+            /* Empty / waiting state */
+            <div className="flex flex-col items-center justify-center flex-1 min-h-[100px] opacity-50">
+              <div className="w-6 h-6 border-2 border-slate-200 border-t-slate-400 rounded-full animate-spin mb-2" />
+              <p className="text-[11px] text-slate-400 font-medium">Waiting for AI...</p>
+            </div>
+          )}
+        </div>
+
+        {/* Cancel button — only while loading and after delay */}
+        {loading && showCancel && (
+          <div className="px-3 pb-3 pt-1">
+            <button
+              onClick={onCancel}
+              className="w-full px-4 py-2 text-[12px] font-semibold text-slate-400 hover:text-slate-700 bg-slate-50 hover:bg-slate-100 rounded-xl transition-all"
+            >
+              Cancel
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

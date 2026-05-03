@@ -128,20 +128,11 @@ export default function HomeHero() {
 
         {/* ── TEXT ─────────────────────────────────────────────── */}
         <div className="hc-hero-text">
-          <div className="hc-tp">
-            <span className="hc-tp-stars">
-              {[1, 2, 3, 4, 5].map((i) => (
-                <svg key={i} width="18" height="18" viewBox="0 0 24 24" fill="#10b981">
-                  <path d="M12 2l2.9 8.9H23l-7.4 5.4 2.8 8.7L12 19.6l-6.4 5.4 2.8-8.7L2 10.9h8.1z" />
-                </svg>
-              ))}
-            </span>
-            <span className="hc-tp-ex">Excellent</span>
-            <span className="hc-tp-cnt">Trusted by 17,000+ users</span>
-          </div>
+
 
           <h1 className="hc-h1">
-            Get Your Passport or Visa Photo — In 30 Seconds
+            <span className="hc-h1-primary">Passport Photo Maker - </span>
+            <span className="hc-h1-secondary">Get a Compliant ID Picture in 30 Seconds</span>
           </h1>
 
 
@@ -156,13 +147,23 @@ export default function HomeHero() {
 
           <div className="hc-btns">
             <a href="/tool" className="hc-btn-p" data-cta="hero-upload">
-              Upload Photo (Free Preview) →
+              Get your ID Photo Now →
             </a>
           </div>
 
-          <p className="hc-micro">No signup required • Takes 30 seconds</p>
+          <div className="hc-tp">
+            <span className="hc-tp-stars">
+              {[1, 2, 3, 4, 5].map((i) => (
+                <svg key={i} width="18" height="18" viewBox="0 0 24 24" fill="#10b981">
+                  <path d="M12 2l2.9 8.9H23l-7.4 5.4 2.8 8.7L12 19.6l-6.4 5.4 2.8-8.7L2 10.9h8.1z" />
+                </svg>
+              ))}
+            </span>
+            
+            <span className="hc-tp-cnt">Trusted by 17,000+ users</span>
+          </div>
 
-          <div className="hc-trust" style={{ marginTop: "32px" }}>
+          <div className="hc-trust">
             {trustBadges.map((t, i) => (
               <div key={i} className="hc-trust-item">
                 <span>{t.icon}</span>

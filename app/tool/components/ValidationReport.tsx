@@ -27,7 +27,7 @@ const ValidationReport: React.FC<ValidationReportProps> = ({
     <div className="animate-scale-in">
       {/* Header */}
       <div
-        className={`p-4 rounded-xl flex items-center gap-4 mb-4 border relative overflow-hidden shadow-md ${
+        className={`p-3 rounded-xl flex items-center gap-3 mb-3 border relative overflow-hidden shadow-md ${
           report.overallStatus === "PASS"
             ? "bg-white border-lime-300 shadow-lime-500/20"
             : report.overallStatus === "WARN"
@@ -89,11 +89,11 @@ const ValidationReport: React.FC<ValidationReportProps> = ({
       </div>
 
       {/* Checks list */}
-      <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-2 gap-2 mb-4">
+      <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-2 gap-1.5 mb-3">
         {report.checks.map((check: any, idx: number) => (
           <div
             key={idx}
-            className={`p-2.5 rounded-lg border flex items-start gap-2 shadow-sm transition-all hover:shadow-md bg-white ${
+            className={`p-2 rounded-lg border flex items-start gap-2 shadow-sm transition-all hover:shadow-md bg-white ${
               check.status === "PASS"
                 ? "border-slate-200"
                 : check.status === "WARN"
@@ -131,7 +131,7 @@ const ValidationReport: React.FC<ValidationReportProps> = ({
       {/* Crop & Resize Section */}
       <div className="mt-2">
         <div
-          className={`bg-white shadow-lg shadow-slate-200/50 p-4 sm:p-5 rounded-2xl border ${
+          className={`bg-white shadow-lg shadow-slate-200/50 p-3 sm:p-4 rounded-xl border ${
             report.overallStatus === "PASS" ? "border-lime-200" : "border-slate-200"
           } relative overflow-hidden flex flex-col md:flex-row items-center gap-4 justify-between`}
         >
@@ -140,7 +140,7 @@ const ValidationReport: React.FC<ValidationReportProps> = ({
           )}
 
           <div className="flex-1 text-center md:text-left min-w-0">
-            <h3 className="font-black text-base md:text-lg text-slate-900 mb-1">
+            <h3 className="font-black text-sm md:text-base text-slate-900 mb-0.5">
               Proceed to Crop & Resize
             </h3>
             <p className="text-xs text-gray-500 leading-snug">
@@ -166,7 +166,7 @@ const ValidationReport: React.FC<ValidationReportProps> = ({
               <button
                 onClick={handleCrop}
                 disabled={isCropping}
-                className="w-full md:w-auto px-6 py-3.5 bg-[#3b5bdb] hover:bg-[#2f4ac7] text-white font-bold tracking-wide rounded-xl shadow-[0_3px_0_0_rgb(47,74,199)] hover:shadow-[0_1px_0_0_rgb(47,74,199)] hover:translate-y-[2px] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none text-sm md:text-base"
+                className="w-full md:w-auto px-5 py-3 bg-[#3b5bdb] hover:bg-[#2f4ac7] text-white font-bold tracking-wide rounded-xl shadow-[0_3px_0_0_rgb(47,74,199)] hover:shadow-[0_1px_0_0_rgb(47,74,199)] hover:translate-y-[2px] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none text-sm"
               >
                 {isCropping ? (
                   <span className="flex items-center justify-center gap-2">
