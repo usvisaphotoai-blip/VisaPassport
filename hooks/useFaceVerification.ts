@@ -2,9 +2,6 @@ import { useState, useCallback } from "react";
 import { getMediaPipeLandmarker, NormalizedLandmark } from "@/lib/mediapipe";
 import { validateBiometrics, ValidationReport } from "@/lib/validation-engine";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_PASSPORT_API_URL;
-const API_KEY = process.env.NEXT_PUBLIC_PASSPORT_API_KEY;
-
 export function useFaceVerification() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [report, setReport] = useState<ValidationReport | null>(null);
@@ -20,14 +17,9 @@ export function useFaceVerification() {
     setReport(null);
 
     try {
-      if (!API_BASE_URL) throw new Error("API URL is not configured in .env");
-
-      // 1. Fetch specifications from the external API
-      const specRes = await fetch(`${API_BASE_URL}/countries/${countryCode}?document_type=${docType}`, {
-        headers: { 
-          "accept": "application/json",
-          ...(API_KEY && { "X-API-Key": API_KEY })
-        }
+      // 1. Fetch specifications from our internal secure proxy
+      const specRes = await fetch(`/api/proxy/countries/${countryCode}?document_type=${docType}`, {
+        headers: { "accept": "application/json" }
       });
       if (!specRes.ok) throw new Error("Failed to fetch country specifications");
       const spec = await specRes.json();
