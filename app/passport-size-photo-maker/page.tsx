@@ -31,7 +31,7 @@ export default function PassportSizePhotoMakerPage() {
             AI-Powered · Free to try
           </div>
 
-          <h1 className="text-4xl md:text-5xl font-black text-slate-900 mb-4 tracking-tight leading-tight">
+          <h1 className="text-3xl md:text-5xl font-black text-slate-900 mb-4 tracking-tight leading-tight">
             {toolPage?.h1 || "Passport Photo Maker"}
           </h1>
           <p className="text-slate-600 max-w-xl mx-auto text-base md:text-lg leading-relaxed">

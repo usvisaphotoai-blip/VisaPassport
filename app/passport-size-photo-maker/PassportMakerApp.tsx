@@ -30,8 +30,8 @@ function StepIndicator({ current }: { current: 1 | 2 }) {
         <div key={n} className="flex items-center gap-2">
           <div
             className={`flex items-center justify-center w-8 h-8 rounded-full text-xs font-bold transition-all duration-300 ${n <= current
-                ? "bg-indigo-600 text-white shadow-lg shadow-indigo-200"
-                : "bg-slate-100 text-slate-400"
+              ? "bg-indigo-600 text-white shadow-lg shadow-indigo-200"
+              : "bg-slate-100 text-slate-400"
               }`}
           >
             {n < current ? (
@@ -316,10 +316,10 @@ export default function PassportMakerApp() {
                 <div key={i} className="flex items-center gap-3">
                   {/* Status dot */}
                   <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm shrink-0 transition-all duration-300 ${isDone
-                      ? "bg-emerald-100 text-emerald-600"
-                      : isActive
-                        ? "bg-indigo-100 text-indigo-600 animate-pulse"
-                        : "bg-white text-slate-300 border border-slate-200"
+                    ? "bg-emerald-100 text-emerald-600"
+                    : isActive
+                      ? "bg-indigo-100 text-indigo-600 animate-pulse"
+                      : "bg-white text-slate-300 border border-slate-200"
                     }`}>
                     {isDone ? (
                       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
@@ -330,8 +330,8 @@ export default function PassportMakerApp() {
 
                   {/* Label */}
                   <span className={`text-sm font-medium flex-1 text-left transition-colors duration-300 ${isDone ? "text-emerald-600 line-through decoration-emerald-300"
-                      : isActive ? "text-indigo-700 font-semibold"
-                        : "text-slate-400"
+                    : isActive ? "text-indigo-700 font-semibold"
+                      : "text-slate-400"
                     }`}>
                     {label}
                   </span>
@@ -486,8 +486,8 @@ export default function PassportMakerApp() {
               onDragLeave={() => setDragOver(false)}
               onDrop={handleDrop}
               className={`relative cursor-pointer rounded-xl border-2 border-dashed transition-all duration-200 select-none ${dragOver
-                  ? "border-indigo-400 bg-indigo-50 scale-[1.01]"
-                  : "border-slate-200 bg-slate-50/50 hover:border-indigo-300 hover:bg-indigo-50/30"
+                ? "border-indigo-400 bg-indigo-50 scale-[1.01]"
+                : "border-slate-200 bg-slate-50/50 hover:border-indigo-300 hover:bg-indigo-50/30"
                 }`}
             >
               <div className="flex flex-col items-center justify-center py-10 px-6 text-center">

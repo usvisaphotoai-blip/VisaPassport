@@ -16,7 +16,7 @@ import {
 } from "@mediapipe/tasks-vision";
 
 /* ─── Biometric Constants ─── */
-export const HEAD_TOP_MULTIPLIER = 1.33;
+export const HEAD_TOP_MULTIPLIER = 1.34;
 export const CENTERING_THRESHOLD = 8;
 export const TILT_WARN_THRESHOLD = 3;
 export const TILT_FAIL_THRESHOLD = 8;

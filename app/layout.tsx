@@ -159,7 +159,7 @@ export default function RootLayout({
         {/* Google Analytics */}
         <Script
           async
-          src="https://www.googletagmanager.com/gtag/js?id=G-LG5DGDKK9C"
+          src="https://www.googletagmanager.com/gtag/js?id=G-RJFKP2ZXNX"
           strategy="lazyOnload"
         />
 
@@ -168,7 +168,7 @@ export default function RootLayout({
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'G-CKPMYJPSCG');
+            gtag('config', 'G-RJFKP2ZXNX');
           `}
         </Script>
       </body>

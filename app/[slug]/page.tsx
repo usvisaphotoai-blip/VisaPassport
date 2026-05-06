@@ -20,26 +20,26 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  
+
   // 1. Check for Country Specs
   const specId = getSpecIdFromSlug(slug);
   const spec = (specs as SpecEntry[]).find((s) => s.id === specId);
   if (spec) {
     // Use skipHeaders: true for static metadata
     const localPrice = await getLocalPrice(spec.price, undefined, false, true);
-    
+
     // Determine the user's intent from the URL
     const isVisaUrl = slug.includes("visa");
     const intentLabel = isVisaUrl ? "Visa" : "Passport";
-    
+
     const canonicalSlug = slug; // If it's valid, it's canonical for this intent
     const baseUrl = `https://www.pixpassport.com/${canonicalSlug}`;
-    
+
     // SEO Optimized Title & Description based on intent (High CTR & 2026 Ready)
-    const title = isVisaUrl 
+    const title = isVisaUrl
       ? `Official ${spec.country} Visa Photo Online (2026) | ${spec.width_mm}x${spec.height_mm}mm`
       : `Official ${spec.country} Passport Photo Maker (2026) | 100% Approved`;
-    
+
     const description = `Get your ${spec.country} ${intentLabel.toLowerCase()} photo in 2 mins. Guaranteed acceptance or money back. AI-powered ${spec.width_mm}x${spec.height_mm}mm cropping & background check. ➜ Click to Start!`;
 
     return {
@@ -141,7 +141,7 @@ export default async function Page({ params }: PageProps) {
       </div>
     );
   }
-  
+
   // 2. Handle Country Specs
   const specId = getSpecIdFromSlug(slug);
   const spec = (specs as SpecEntry[]).find((s) => s.id === specId);
