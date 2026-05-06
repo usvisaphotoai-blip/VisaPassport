@@ -16,7 +16,8 @@ export async function GET(
   }
 
   try {
-    const targetUrl = `${API_URL}/countries/${code}?document_type=${docType}`;
+    const baseUrl = API_URL.endsWith('/') ? API_URL.slice(0, -1) : API_URL;
+    const targetUrl = `${baseUrl}/countries/${code}?document_type=${docType}`;
     
     const response = await fetch(targetUrl, {
       headers: {
@@ -27,8 +28,10 @@ export async function GET(
     });
 
     if (!response.ok) {
+      const errorText = await response.text().catch(() => "Unknown error");
+      console.error(`Upstream API Error [${response.status}]:`, errorText);
       return NextResponse.json(
-        { error: `Upstream error: ${response.statusText}` }, 
+        { error: `Upstream error: ${response.status}`, details: errorText }, 
         { status: response.status }
       );
     }

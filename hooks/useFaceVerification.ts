@@ -21,7 +21,10 @@ export function useFaceVerification() {
       const specRes = await fetch(`/api/proxy/countries/${countryCode}?document_type=${docType}`, {
         headers: { "accept": "application/json" }
       });
-      if (!specRes.ok) throw new Error("Failed to fetch country specifications");
+      if (!specRes.ok) {
+        const errorData = await specRes.json().catch(() => ({}));
+        throw new Error(errorData.error || errorData.details || "Failed to fetch country specifications");
+      }
       const spec = await specRes.json();
 
       // 2. Initialize MediaPipe
