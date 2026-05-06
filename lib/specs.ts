@@ -1,5 +1,14 @@
 import specsData from "@/data/countries-specs.json";
 import { DocumentType } from "@/app/tool/types";
+import { countryMapping } from "./external-api";
+
+export const SUPPORTED_COUNTRIES = [
+  "DZ", "AU", "AT", "BE", "BG", "CN", "HR", "CZ", "DK", "EE",
+  "FI", "FR", "DE", "GR", "HU", "IN", "ID", "IR", "IQ", "IT",
+  "JP", "KZ", "LV", "LT", "LU", "MT", "NL", "NZ", "NO", "PL",
+  "PT", "RO", "EU", "SG", "SK", "SI", "KR", "ES", "SE", "CHE",
+  "TH", "TR", "AE", "GB", "US"
+];
 
 export interface CountrySpec {
   id: string;
@@ -120,4 +129,21 @@ export function getDocumentTypes(): DocumentType[] {
     price: s.price,
     printSize: s.print_size,
   }));
+}
+
+export function getFilteredDocumentTypes(): DocumentType[] {
+  const all = getDocumentTypes();
+  return all.filter((d) => {
+    const slug = d.id.replace(/-passport$/, "").replace(/-visa$/, "");
+    const code = countryMapping[slug] || d.id.split("-")[0].toUpperCase();
+    return SUPPORTED_COUNTRIES.includes(code);
+  });
+}
+
+export function getFilteredSpecs(): CountrySpec[] {
+  return allSpecs.filter((s) => {
+    const slug = s.id.replace(/-passport$/, "").replace(/-visa$/, "");
+    const code = countryMapping[slug] || s.id.split("-")[0].toUpperCase();
+    return SUPPORTED_COUNTRIES.includes(code);
+  });
 }

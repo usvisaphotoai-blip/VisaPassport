@@ -1,7 +1,7 @@
 import { DocumentType, BgColor } from "./types";
-import { getDocumentTypes } from "@/lib/specs";
+import { getFilteredDocumentTypes } from "@/lib/specs";
 
-export const documentTypes: DocumentType[] = getDocumentTypes();
+export const documentTypes: DocumentType[] = getFilteredDocumentTypes();
 
 export const bgColors: BgColor[] = [
   { id: "white", label: "Pure White", swatch: "bg-white border-gray-300" },

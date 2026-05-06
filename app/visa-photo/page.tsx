@@ -1,4 +1,4 @@
-import { allSpecs } from "@/lib/specs";
+import { getFilteredSpecs } from "@/lib/specs";
 import MasterDirectory from "../components/MasterDirectory";
 import { Metadata } from "next";
 import Link from "next/link";
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 export default function VisaDirectoryPage() {
   // Show ALL countries, but de-duplicate by country name so we have 1 entry per nation
-  const uniqueSpecs = Array.from(new Map(allSpecs.map(s => [s.country, s])).values());
+  const uniqueSpecs = Array.from(new Map(getFilteredSpecs().map(s => [s.country, s])).values());
   const displaySpecs = uniqueSpecs;
 
   return (

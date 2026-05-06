@@ -112,10 +112,10 @@ const docPills = [
   "UK Passport",
   "US Visa",
   "Schengen Visa",
-  " Visa",
   "Australia Passport",
   "UAE Visa",
-  "Saudi Arabia Passport",
+  "China Visa",
+  "France Passport",
 ];
 
 const officialSources = [

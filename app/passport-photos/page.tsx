@@ -1,4 +1,4 @@
-import { allSpecs } from "@/lib/specs";
+import { getFilteredSpecs } from "@/lib/specs";
 import MasterDirectory from "../components/MasterDirectory";
 import { Metadata } from "next";
 import Link from "next/link";
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 export default function PassportDirectoryPage() {
   // Show 1 unique entry per country for a clean directory
-  const passportSpecs = Array.from(new Map(allSpecs.map(s => [s.country, s])).values());
+  const passportSpecs = Array.from(new Map(getFilteredSpecs().map(s => [s.country, s])).values());
 
   return (
     <div className="min-h-screen bg-white">

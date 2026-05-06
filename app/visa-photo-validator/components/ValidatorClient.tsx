@@ -4,18 +4,12 @@ import React, { useState, useRef, useCallback, useEffect } from "react";
 import { motion, AnimatePresence, useInView, useScroll, useTransform, Variants } from "framer-motion";
 import { useFaceVerification } from "@/hooks/useFaceVerification";
 import ValidationReportView from "@/app/visa-photo-validator/components/ValidationReport";
-import { getDocumentTypes } from "@/lib/specs";
+import { getFilteredDocumentTypes, SUPPORTED_COUNTRIES } from "@/lib/specs";
 import { countryMapping } from "@/lib/external-api";
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
-const SUPPORTED_COUNTRIES = [
-  "DZ", "AU", "AT", "BE", "BG", "CN", "HR", "CZ", "DK", "EE",
-  "FI", "FR", "DE", "GR", "HU", "IN", "ID", "IR", "IQ", "IT",
-  "JP", "KZ", "LV", "LT", "LU", "MT", "NL", "NZ", "NO", "PL",
-  "PT", "RO", "EU", "SG", "SK", "SI", "KR", "ES", "SE", "CHE",
-  "TH", "TR", "AE", "GB", "US"
-];
+
 
 // ─── Animation Variants ────────────────────────────────────────────────────────
 
@@ -119,7 +113,7 @@ function CountrySelector({
   selectedCountry,
   onSelect,
 }: {
-  documentTypes: ReturnType<typeof getDocumentTypes>;
+  documentTypes: ReturnType<typeof getFilteredDocumentTypes>;
   selectedCountry: string;
   onSelect: (code: string) => void;
 }) {
@@ -419,7 +413,7 @@ export default function ValidatorClient() {
     setPreviewUrl(null);
     setError(null);
   }, [setReport, setError]);
-  const documentTypes = getDocumentTypes();
+  const documentTypes = getFilteredDocumentTypes();
 
   const heroRef = useRef(null);
   const howRef = useRef(null);
