@@ -1,5 +1,5 @@
 const EXTERNAL_API_BASE_URL = process.env.PASSPORT_API_URL;
-const EXTERNAL_API_KEY = process.env.NEXT_PUBLIC_PASSPORT_API_KEY;
+const EXTERNAL_API_KEY = process.env.PASSPORT_API_KEY;
 
 export interface ExternalCountry {
   country_code: string;

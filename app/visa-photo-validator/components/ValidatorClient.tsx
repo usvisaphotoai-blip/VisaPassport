@@ -7,6 +7,16 @@ import ValidationReportView from "@/app/visa-photo-validator/components/Validati
 import { getDocumentTypes } from "@/lib/specs";
 import { countryMapping } from "@/lib/external-api";
 
+// ─── Constants ────────────────────────────────────────────────────────────────
+
+const SUPPORTED_COUNTRIES = [
+  "DZ", "AU", "AT", "BE", "BG", "CN", "HR", "CZ", "DK", "EE",
+  "FI", "FR", "DE", "GR", "HU", "IN", "ID", "IR", "IQ", "IT",
+  "JP", "KZ", "LV", "LT", "LU", "MT", "NL", "NZ", "NO", "PL",
+  "PT", "RO", "EU", "SG", "SK", "SI", "KR", "ES", "SE", "CHE",
+  "TH", "TR", "AE", "GB", "US"
+];
+
 // ─── Animation Variants ────────────────────────────────────────────────────────
 
 const fadeUp: Variants = {
@@ -127,11 +137,14 @@ function CountrySelector({
 
   const countryMap = Array.from(
     new Map(
-      documentTypes.map((d) => {
-        const slug = d.id.replace(/-passport$/, "").replace(/-visa$/, "");
-        const code = countryMapping[slug] || slug.split("-")[0].toUpperCase();
-        return [d.country, { code, flag: d.flag }];
-      })
+      documentTypes
+        .map((d) => {
+          const slug = d.id.replace(/-passport$/, "").replace(/-visa$/, "");
+          const code = countryMapping[slug] || slug.split("-")[0].toUpperCase();
+          return { ...d, code };
+        })
+        .filter((d) => SUPPORTED_COUNTRIES.includes(d.code))
+        .map((d) => [d.country, { code: d.code, flag: d.flag }])
     ).entries()
   )
     .filter(([name]) => name && name.toLowerCase().includes(search.toLowerCase()))
