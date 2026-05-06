@@ -2,35 +2,40 @@
 
 import { useSearchParams, useRouter } from "next/navigation";
 import { Suspense, useState, useEffect, useCallback, useRef } from "react";
-import dynamic from "next/dynamic";
-
-import type { ClientDetectionResult } from "../components/ClientFaceDetector";
 import { compressImage } from "@/lib/compressImage";
 
 // New specialized components
-import Sidebar from "./components/Sidebar";
+
 import UploadArea from "./components/UploadArea";
-import ValidationReport from "./components/ValidationReport";
-import ProcessingOverlay from "./components/ProcessingOverlay";
 import GuidePrompt from "./components/GuidePrompt";
 import { WarnIcon } from "./components/Icons";
 
 // Constants and Types
 import { documentTypes, bgColors } from "./constants";
 import { Feedback } from "./types";
+import { countryMapping } from "@/lib/external-api";
 
-const ClientFaceDetector = dynamic(
-  () => import("../components/ClientFaceDetector"),
-  { 
-    ssr: false,
-    loading: () => (
-      <div className="flex flex-col items-center justify-center p-12 bg-slate-50 rounded-2xl border border-dashed border-slate-200 min-h-[400px]">
-        <div className="w-12 h-12 border-4 border-slate-200 border-t-blue-600 rounded-full animate-spin mb-4" />
-        <p className="text-sm font-semibold text-slate-600 font-sans tracking-tight">Initializing AI analysis...</p>
-      </div>
-    )
-  }
-);
+function ProcessingText() {
+  const [index, setIndex] = useState(0);
+  const messages = [
+    "Fixing lighting & exposure...",
+    "Removing background color...",
+    "Calibrating head size to spec...",
+    "Aligning eye level height...",
+    "Checking ICAO biometric standards...",
+    "Verifying facial landmarks...",
+    "Finalizing high-res output..."
+  ];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setIndex((i) => (i + 1) % messages.length);
+    }, 2000);
+    return () => clearInterval(timer);
+  }, []);
+
+  return <span>{messages[index]}</span>;
+}
 
 function ToolForm() {
   const router = useRouter();
@@ -40,18 +45,11 @@ function ToolForm() {
   const [isLocked, setIsLocked] = useState(false);
   const [selectedBg, setSelectedBg] = useState("white");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const originalFileRef = useRef<File | null>(null);  // Raw file before compression
-  const [processedFile, setProcessedFile] = useState<File | null>(null);
-  const [clientDetection, setClientDetection] = useState<ClientDetectionResult | null>(null);
-  const [clientFeedbacks, setClientFeedbacks] = useState<Feedback[]>([]);
   const [isUploading, setIsUploading] = useState(false);
-  const [report, setReport] = useState<any>(null);
   const [errorMsg, setErrorMsg] = useState("");
-  const [isCropping, setIsCropping] = useState(false);
   const [cropMsg, setCropMsg] = useState("");
   const [guidelinesOpen, setGuidelinesOpen] = useState(false);
   const [showGuide, setShowGuide] = useState(false);
-  const [modelPreloaded, setModelPreloaded] = useState(false);
   const [previewUrl, setPreviewUrl] = useState<string>("");
 
   // Header inline document selector
@@ -112,13 +110,13 @@ function ToolForm() {
 
     // Show guide modal after 6 seconds if no file is selected
     const timer = setTimeout(() => {
-      if (!selectedFile && !report && !isCropping) {
+      if (!selectedFile) {
         setShowGuide(true);
         localStorage.setItem("hasSeenGuide", "true");
       }
     }, 6000);
     return () => clearTimeout(timer);
-  }, [selectedFile, report, isCropping]);
+  }, [selectedFile]);
 
   useEffect(() => {
     if (!selectedFile) {
@@ -130,12 +128,6 @@ function ToolForm() {
     return () => URL.revokeObjectURL(url);
   }, [selectedFile]);
 
-  // Preload detector
-  useEffect(() => {
-    const preload = () => import("../components/ClientFaceDetector");
-    preload().catch(err => console.warn("[Preload] Detector deferred:", err));
-  }, []);
-
   // Sync background color with country requirements
   useEffect(() => {
     const spec = documentTypes.find(d => d.id === selectedDoc);
@@ -144,268 +136,70 @@ function ToolForm() {
     }
   }, [selectedDoc]);
 
-  // Preload background removal model
-  useEffect(() => {
-    const isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    if (!isMobileDevice && !modelPreloaded) {
-      const timer = setTimeout(async () => {
-        try {
-          console.log("[Preload] Starting background removal model download...");
-          const imgly = await import("@imgly/background-removal");
-          await imgly.preload({ device: "gpu", model: "isnet_fp16" });
-          setModelPreloaded(true);
-          console.log("[Preload] Background removal model ready.");
-        } catch (err) {
-          console.warn("[Preload] Failed to preload model. Will retry on crop.", err);
-        }
-      }, 2000); 
-      return () => clearTimeout(timer);
-    }
-  }, [modelPreloaded]);
-
   const activeDoc = documentTypes.find((d) => d.id === selectedDoc) || documentTypes[4];
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    setErrorMsg(""); setReport(null); setClientDetection(null);
-    setClientFeedbacks([]); setProcessedFile(null);
-    originalFileRef.current = file;
+    setErrorMsg("");
     const compressed = await compressImage(file);
     setSelectedFile(compressed);
+
+    // Automatically trigger external process
+    await handleExternalProcess(compressed);
   };
 
-  const handleDetectionComplete = useCallback(
-    async (detectedFile: File, detection: ClientDetectionResult, feedbacks: Feedback[]) => {
-      setProcessedFile(detectedFile); setClientDetection(detection); setClientFeedbacks(feedbacks);
-      setIsUploading(true); setErrorMsg("");
-
-      const fileToValidate = selectedFile || detectedFile;
-      const formData = new FormData();
-      formData.append("image", fileToValidate);
-      formData.append("type", selectedDoc);
-      formData.append("clientData", JSON.stringify({
-        faceCount: detection.faceCount, eyeLevelPct: detection.eyeLevelPct,
-        headSizePct: detection.headSizePct, brightness: detection.brightness,
-        orientationRatio: detection.orientationRatio, faceBox: detection.faceBox,
-      }));
-      try {
-        const res = await fetch("/api/validate", { method: "POST", body: formData });
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.details || data.error || "Validation failed");
-        setReport(data);
-      } catch (err: any) {
-        setErrorMsg(err.message || "Server validation failed. Please try again.");
-      } finally { setIsUploading(false); }
-    },
-    [selectedDoc, selectedFile]
-  );
-
-  const handleCrop = async () => {
-    const fileToCrop = processedFile || selectedFile;
-    if (!fileToCrop || !clientDetection?.faceBox || !clientDetection.eyeCenter) return;
-    setIsCropping(true);
+  const handleExternalProcess = async (file: File) => {
+    setIsUploading(true);
     setErrorMsg("");
-    const cropStartTime = Date.now();
-    const MIN_OVERLAY_MS = 5000; // User must see the overlay for at least 5 seconds
+    setCropMsg("Processing Y AI...");
+
+    // Better country/doc type extraction
+    const countrySlug = activeDoc.id.split('-')[0].toLowerCase();
+    let countryCode = countryMapping[countrySlug] || "US";
+    
+    // Handle special cases for country mapping
+    if (activeDoc.id.includes("ds-160")) countryCode = "US";
+    if (activeDoc.id.includes("schengen")) countryCode = "EU";
+
+    const documentType = activeDoc.id.includes("visa") ? "visa" : "passport";
+
+    const formData = new FormData();
+    formData.append("image", file);
+    formData.append("country_code", countryCode);
+    formData.append("document_type", documentType);
+    formData.append("full_doc_id", activeDoc.id);
+    formData.append("source", "pixpassport_tool"); // Add extra key
 
     try {
-      let finalFile: File | Blob = fileToCrop;
-      setCropMsg("Preparing image...");
-      const compressedSource = fileToCrop;
-
-      // Background Removal is always performed unless bypassed explicitly.
-      if (selectedBg !== "original") {
-        setCropMsg("Removing background...");
-        const isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-        let removed: Blob | null = null;
-
-        const callApiRemoveBg = async () => {
-          const formData = new FormData();
-          formData.append("image", compressedSource instanceof File ? compressedSource : new File([compressedSource], "photo.jpg", { type: "image/jpeg" }));
-          const res = await fetch("/api/remove-bg", { method: "POST", body: formData });
-          if (!res.ok) {
-            const data = await res.json().catch(() => ({}));
-            throw new Error(`API error: ${res.status} ${data.error || ""}`);
-          }
-          return await res.blob();
-        };
-
-        if (isMobileDevice) {
-          setCropMsg("Removing background (Cloud API)...");
-          let mobileApiError: string | null = null;
-          try {
-            removed = await callApiRemoveBg();
-          } catch (err: any) {
-            mobileApiError = err.message;
-            console.warn("[handleCrop] Mobile API removal failed (attempt 1):", err.message);
-          }
-
-          if (!removed && originalFileRef.current) {
-            setCropMsg("Retrying with original photo...");
-            try {
-              const retryFormData = new FormData();
-              retryFormData.append("image", originalFileRef.current);
-              const retryRes = await fetch("/api/remove-bg", { method: "POST", body: retryFormData });
-              if (!retryRes.ok) {
-                const data = await retryRes.json().catch(() => ({}));
-                throw new Error(`API error: ${retryRes.status} ${data.error || ""}`);
-              }
-              removed = await retryRes.blob();
-              mobileApiError = null;
-            } catch (retryErr: any) {
-              console.warn("[handleCrop] Mobile API removal failed (attempt 2):", retryErr.message);
-              mobileApiError = retryErr.message;
-            }
-          }
-
-          if (!removed) {
-            throw new Error(
-              `Background removal API failed: ${mobileApiError || "Unknown error"}. Please try selecting 'Transparent' background or use a desktop browser.`
-            );
-          }
-        } else {
-          setCropMsg("Removing background (Local)...");
-          const imgly = await import("@imgly/background-removal");
-          const BG_TIMEOUT_MS = 15000;
-          
-          try {
-            const result = await Promise.race([
-              imgly.removeBackground(compressedSource, { device: "gpu", model: "isnet_fp16" }),
-              new Promise<never>((_, reject) => setTimeout(() => reject(new Error("Timeout")), BG_TIMEOUT_MS))
-            ]);
-            if (result && result.size > 1000) {
-              removed = result;
-            }
-          } catch (err: any) {
-            console.warn(`[handleCrop] Local BG removal failed or timed out (${err.message}). Falling back to API...`);
-            setCropMsg("Local model taking too long, using Cloud API...");
-            try {
-              removed = await callApiRemoveBg();
-            } catch (apiErr: any) {
-              console.warn("[handleCrop] API fallback failed:", apiErr.message);
-            }
-          }
-
-          if (!removed) {
-            throw new Error("Background removal failed. Please try again.");
-          }
-        }
-
-        if (selectedBg === "transparent") {
-          // Keep the removed background (transparent PNG blob)!
-          finalFile = removed;
-        } else {
-          // Composite the subject onto the specified solid background color.
-          const bgImg = new Image();
-          const blobUrl = URL.createObjectURL(removed);
-          bgImg.src = blobUrl;
-          await bgImg.decode();
-          URL.revokeObjectURL(blobUrl);
-
-          const c = document.createElement("canvas");
-          const cx = c.getContext("2d", { willReadFrequently: true })!;
-          c.width = bgImg.width;
-          c.height = bgImg.height;
-
-          const colors: Record<string, string> = {
-            white: "#ffffff",
-            "light-gray": "#f3f4f6",
-            "light-blue": "#eff6ff",
-            blue: "#0047ab"
-          };
-          cx.fillStyle = colors[selectedBg] || "#ffffff";
-          cx.fillRect(0, 0, c.width, c.height);
-          cx.drawImage(bgImg, 0, 0);
-
-          finalFile = await new Promise<Blob>(
-            r => c.toBlob(b => r(b!), "image/jpeg", 0.98)
-          );
-        }
-      } else {
-        finalFile = compressedSource;
-      }
-
-      setCropMsg("Applying guidelines & cropping...");
-      const formData = new FormData();
-      const isTransparent = selectedBg === "transparent";
-      const fileName = isTransparent ? "photo.png" : "photo.jpg";
-      const mimeType = isTransparent ? "image/png" : "image/jpeg";
-      formData.append("image", finalFile instanceof File ? finalFile : new File([finalFile], fileName, { type: mimeType }));
-      formData.append("targetBackground", selectedBg);
-      formData.append("type", selectedDoc);
-      formData.append("faceData", JSON.stringify({
-        faceBox: clientDetection.faceBox, eyeCenter: clientDetection.eyeCenter,
-        chinY: clientDetection.chinY, topOfHeadY: clientDetection.topOfHeadY,
-        imageDimensions: clientDetection.imageDimensions,
-      }));
-
-      const res = await fetch("/api/crop", { method: "POST", body: formData });
+      const res = await fetch("/api/external-process", { method: "POST", body: formData });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Crop failed");
+      if (!res.ok) throw new Error(data.details || data.error || "Processing failed");
       
-      setCropMsg("Generating secure preview...");
-
-      // Ensure user sees the processing overlay for at least 5 seconds total
-      const elapsed = Date.now() - cropStartTime;
-      const remaining = Math.max(0, MIN_OVERLAY_MS - elapsed);
-      if (remaining > 0) {
-        await new Promise(r => setTimeout(r, remaining));
-      }
-
       setCropMsg("Redirecting to your photo...");
-      await new Promise(r => setTimeout(r, 600));
+      await new Promise(r => setTimeout(r, 800));
       router.push(`/preview/${data.photoId}`);
     } catch (err: any) {
-      const msg = err.message || "Crop failed.";
-      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-      const friendlyMsg = isMobile && (msg.includes("WebGPU") || msg.includes("GPU") || msg.includes("memory") || msg.includes("alloc"))
-        ? "Background removal failed on this device. Try selecting 'Transparent' background or use a smaller photo."
-        : msg;
-      setErrorMsg(friendlyMsg);
-      setIsCropping(false);
-      setCropMsg("");
-    } 
+      setErrorMsg(err.message || "Processing failed. Please try again.");
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   const handleReset = () => {
-    setSelectedFile(null); setProcessedFile(null); setReport(null);
-    setClientDetection(null); setClientFeedbacks([]); setErrorMsg(""); 
+    setSelectedFile(null);
+    setErrorMsg(""); 
   };
 
-  const canCrop = !!(processedFile || selectedFile) && !!clientDetection?.faceBox && !!clientDetection?.eyeCenter;
+
 
   return (
     <div className="flex flex-col gap-4 max-w-7xl mx-auto px-3 lg:px-0 pb-6 relative w-full">
-      <div className="flex flex-col lg:flex-row lg:min-h-[calc(100vh-200px)] gap-4">
+      <div className="flex flex-col lg:min-h-[calc(100vh-200px)] gap-4">
         
-        {/* Floating Top Crop Button (Mobile) */}
-        {canCrop && !isCropping && (
-          <div className="sticky top-4 z-40 w-full flex justify-center lg:hidden -mb-4">
-            <button
-              onClick={handleCrop}
-              className="flex items-center gap-2 bg-[#3b5bdb] text-white font-bold px-6 py-3 rounded-full shadow-lg shadow-[#3b5bdb]/30 border border-[#3b5bdb]/40 hover:bg-[#2f4ac7] active:scale-95 transition-all w-max"
-            >
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
-              </svg>
-              Crop & Finalize
-            </button>
-          </div>
-        )}
 
-        {/* Sidebar Configuration */}
-        <Sidebar 
-          selectedDoc={selectedDoc}
-          setSelectedDoc={setSelectedDoc}
-          selectedBg={selectedBg}
-          setSelectedBg={setSelectedBg}
-          handleReset={handleReset}
-          documentTypes={documentTypes}
-          bgColors={bgColors}
-          activeDoc={activeDoc}
-          isLocked={isLocked}
-        />
+
+
 
         {/* Main Workspace Area */}
         <div className="flex-1 flex flex-col min-w-0 bg-gray-100 border border-white rounded-2xl p-3 lg:p-5 overflow-y-auto">
@@ -452,67 +246,76 @@ function ToolForm() {
             </button>
 
             {headerSelectorOpen && (
-              <div className="absolute left-0 right-0 z-50 mt-1 bg-white border border-slate-200 rounded-xl shadow-xl overflow-hidden">
-                <div className="p-2 border-b border-slate-100">
-                  <div className="relative">
-                    <svg className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
-                    <input
-                      ref={headerSearchRef}
-                      type="text"
-                      placeholder="Search country or document type…"
-                      value={headerSearchTerm}
-                      onChange={(e) => setHeaderSearchTerm(e.target.value)}
-                      className="w-full pl-8 pr-8 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-lime-500/30 focus:border-lime-500 transition-all placeholder:text-slate-400"
-                    />
-                    {headerSearchTerm && (
-                      <button onClick={() => setHeaderSearchTerm("")} className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1">
-                        <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
-                      </button>
-                    )}
-                  </div>
-                </div>
-                <nav className="flex flex-col overflow-y-auto max-h-64 custom-scrollbar">
-                  {headerFilteredDocs.length > 0 ? (
-                    headerFilteredDocs.map((doc) => (
-                      <button
-                        key={doc.id}
-                        onClick={() => {
-                          setSelectedDoc(doc.id);
-                          handleReset();
-                          setHeaderSelectorOpen(false);
-                          setHeaderSearchTerm("");
-                        }}
-                        className={`relative group w-full flex flex-col px-3 py-2.5 text-left transition-all duration-150 border-b border-slate-50 last:border-b-0 ${
-                          selectedDoc === doc.id ? "bg-lime-50/60" : "bg-transparent hover:bg-slate-50"
-                        }`}
-                      >
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-2">
-                            {doc.flag && <span className="text-sm leading-none">{doc.flag}</span>}
-                            <p className={`text-xs font-bold leading-tight ${selectedDoc === doc.id ? "text-slate-900" : "text-slate-600"}`}>{doc.label}</p>
-                          </div>
-                          {selectedDoc === doc.id && (
-                            <svg className="w-3.5 h-3.5 text-lime-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
-                          )}
-                        </div>
-                        <p className="text-[10px] text-slate-400 mt-0.5 font-medium ml-6">{doc.size} · {doc.bg_color} bg</p>
-                      </button>
-                    ))
-                  ) : (
-                    <div className="py-6 px-4 text-center">
-                      <p className="text-xs text-slate-400 font-medium">No documents found</p>
-                      <button onClick={() => setHeaderSearchTerm("")} className="text-[10px] text-lime-600 font-bold uppercase tracking-wider mt-2 hover:text-lime-700">Clear Search</button>
+              <>
+                {/* Mobile Backdrop */}
+                <div 
+                  className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[60] lg:hidden"
+                  onClick={() => setHeaderSelectorOpen(false)}
+                />
+                
+                {/* Dropdown Container */}
+                <div className="fixed inset-x-4 top-20 bottom-4 lg:absolute lg:inset-x-0 lg:top-full lg:bottom-auto z-[70] lg:z-50 lg:mt-1 bg-white border border-slate-200 rounded-2xl lg:rounded-xl shadow-2xl overflow-hidden flex flex-col animate-in fade-in zoom-in-95 duration-200">
+                  <div className="p-3 lg:p-2 border-b border-slate-100 bg-slate-50/50">
+                    <div className="relative">
+                      <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                      </svg>
+                      <input
+                        ref={headerSearchRef}
+                        type="text"
+                        placeholder="Search country or document type…"
+                        value={headerSearchTerm}
+                        onChange={(e) => setHeaderSearchTerm(e.target.value)}
+                        className="w-full pl-10 pr-10 py-3 lg:py-2 text-sm lg:text-xs bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all placeholder:text-slate-400"
+                      />
+                      {headerSearchTerm && (
+                        <button onClick={() => setHeaderSearchTerm("")} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1">
+                          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                        </button>
+                      )}
                     </div>
-                  )}
-                </nav>
-              </div>
+                  </div>
+                  <nav className="flex-1 overflow-y-auto custom-scrollbar lg:max-h-64">
+                    {headerFilteredDocs.length > 0 ? (
+                      headerFilteredDocs.map((doc) => (
+                        <button
+                          key={doc.id}
+                          onClick={() => {
+                            setSelectedDoc(doc.id);
+                            handleReset();
+                            setHeaderSelectorOpen(false);
+                            setHeaderSearchTerm("");
+                          }}
+                          className={`relative group w-full flex flex-col px-4 py-4 lg:px-3 lg:py-2.5 text-left transition-all duration-150 border-b border-slate-50 last:border-b-0 ${
+                            selectedDoc === doc.id ? "bg-blue-50" : "bg-transparent hover:bg-slate-50"
+                          }`}
+                        >
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                              {doc.flag && <span className="text-xl lg:text-sm leading-none">{doc.flag}</span>}
+                              <p className={`text-sm lg:text-xs font-bold leading-tight ${selectedDoc === doc.id ? "text-blue-900" : "text-slate-600"}`}>{doc.label}</p>
+                            </div>
+                            {selectedDoc === doc.id && (
+                              <svg className="w-4 h-4 text-blue-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+                            )}
+                          </div>
+                          <p className="text-[11px] lg:text-[10px] text-slate-400 mt-1 font-medium ml-8 lg:ml-6">{doc.size} · {doc.bg_color} bg</p>
+                        </button>
+                      ))
+                    ) : (
+                      <div className="py-12 px-6 text-center">
+                        <p className="text-sm lg:text-xs text-slate-400 font-medium">No documents found</p>
+                        <button onClick={() => setHeaderSearchTerm("")} className="text-xs lg:text-[10px] text-blue-600 font-bold uppercase tracking-wider mt-3 hover:text-blue-700">Clear Search</button>
+                      </div>
+                    )}
+                  </nav>
+                </div>
+              </>
             )}
           </div>
           
           {/* Initial State: Upload Area */}
-          {!selectedFile && !report && (
+          {!selectedFile && (
             <UploadArea 
               onFileChange={handleFileChange}
               guidelinesOpen={guidelinesOpen}
@@ -521,40 +324,78 @@ function ToolForm() {
             />
           )}
 
-          {/* AI Processing State: Face Detector */}
-          {selectedFile && !report && (
-            <div className="flex-1 bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
-              <ClientFaceDetector
-                file={selectedFile}
-                documentType={selectedDoc}
-                targetBackground={selectedBg}
-                onDetectionComplete={handleDetectionComplete}
-                onCancel={() => setSelectedFile(null)}
-              />
-            </div>
-          )}
-
-          {/* Server Validation State */}
+          {/* Advanced Inline Processing State */}
           {isUploading && (
-            <div className="flex items-center gap-3 p-4 bg-blue-50 border border-blue-200 rounded-xl animate-pulse mt-4">
-              <div className="w-5 h-5 border-2 border-blue-300 border-t-blue-600 rounded-full animate-spin shrink-0" />
-              <p className="text-sm text-blue-700 font-medium">Running final server quality checks...</p>
+            <div className="mt-4 bg-slate-900 rounded-2xl overflow-hidden border border-slate-800 shadow-2xl animate-in fade-in slide-in-from-bottom-4 duration-500">
+              <div className="flex flex-col sm:flex-row items-center p-6 gap-6">
+                {/* Photo with Scanning Animation */}
+                <div className="relative shrink-0 w-32 h-40 bg-slate-800 rounded-xl overflow-hidden border border-slate-700 shadow-inner">
+                  {previewUrl ? (
+                    <img src={previewUrl} alt="Processing" className="w-full h-full object-cover opacity-60" />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center opacity-20">
+                      <svg width="40" height="50" viewBox="0 0 80 100" fill="none">
+                        <circle cx="40" cy="28" r="18" fill="#6366f1" />
+                        <path d="M10 90 Q10 62 40 62 Q70 62 70 90" fill="#6366f1" />
+                      </svg>
+                    </div>
+                  )}
+                  {/* Scan line */}
+                  <div 
+                    className="absolute left-0 w-full h-0.5 bg-blue-400 shadow-[0_0_15px_rgba(96,165,250,0.8)] z-10"
+                    style={{ animation: 'scanPingPong 2s ease-in-out infinite' }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 to-transparent pointer-events-none" />
+                </div>
+
+                {/* Status Messages */}
+                <div className="flex-1 text-center sm:text-left">
+                  <div className="inline-flex items-center gap-2 px-2.5 py-1 bg-blue-500/10 border border-blue-500/20 rounded-full mb-3">
+                    <div className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
+                    <span className="text-[10px] font-bold text-blue-400 uppercase tracking-widest">Official AI Engine</span>
+                  </div>
+                  
+                  <h3 className="text-lg font-black text-white mb-2">
+                    <span className="inline-block" style={{ minWidth: '200px' }}>
+                      {cropMsg === "Processing Your Photo..." ? (
+                        <ProcessingText />
+                      ) : (
+                        cropMsg
+                      )}
+                    </span>
+                  </h3>
+                  
+                  <p className="text-xs text-slate-400 leading-relaxed max-w-xs mx-auto sm:mx-0">
+                    Calibrating head size, fixing background lighting, and verifying ICAO biometric standards.
+                  </p>
+
+                  {/* Tiny progress bar */}
+                  <div className="mt-4 w-full h-1 bg-slate-800 rounded-full overflow-hidden">
+                    <div className="h-full bg-blue-500 rounded-full animate-shimmer" style={{ width: '60%' }} />
+                  </div>
+                </div>
+              </div>
+
+              <style>{`
+                @keyframes scanPingPong {
+                  0%, 100% { top: 0%; opacity: 0; }
+                  10%, 90% { opacity: 1; }
+                  50% { top: 100%; }
+                }
+                @keyframes shimmer {
+                  0% { transform: translateX(-100%); }
+                  100% { transform: translateX(200%); }
+                }
+                .animate-shimmer {
+                  animation: shimmer 2s infinite linear;
+                  background: linear-gradient(90deg, #3b82f6 0%, #60a5fa 50%, #3b82f6 100%);
+                  background-size: 200% 100%;
+                }
+              `}</style>
             </div>
           )}
 
-          {/* Validation Results State */}
-          {report && (
-            <ValidationReport 
-              report={report}
-              activeDoc={activeDoc}
-              selectedDoc={selectedDoc}
-              canCrop={canCrop}
-              isCropping={isCropping}
-              cropMsg={cropMsg}
-              handleCrop={handleCrop}
-              handleReset={handleReset}
-            />
-          )}
+
 
           {/* error messaging */}
           {errorMsg && (
@@ -567,17 +408,6 @@ function ToolForm() {
               </div>
             </div>
           )}
-
-          {/* Full-Screen Processing Overlay */}
-          <ProcessingOverlay 
-            isCropping={isCropping}
-            setIsCropping={setIsCropping}
-            cropMsg={cropMsg}
-            setCropMsg={setCropMsg}
-            selectedFile={selectedFile}
-            previewUrl={previewUrl}
-            activeDoc={activeDoc}
-          />
 
           {/* Guide Prompt Modal */}
           <GuidePrompt 

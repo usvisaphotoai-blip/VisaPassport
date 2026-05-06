@@ -32,8 +32,15 @@ const PhotoSchema = new Schema(
       required: false,
     },
     metrics: {
-      headSizePct: String,
-      eyeLevelPct: String,
+      headSizePct: Schema.Types.Mixed,
+      eyeLevelPct: Schema.Types.Mixed,
+      topMarginPct: Schema.Types.Mixed,
+      backgroundValid: Boolean,
+      backgroundCorrected: Boolean,
+    },
+    externalResultId: {
+      type: String,
+      required: false,
     },
     razorpayOrderId: {
       type: String,

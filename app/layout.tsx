@@ -5,7 +5,6 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import AuthProvider from "./components/AuthProvider";
 import AnalyticsTracker from "./components/AnalyticsTracker";
-import ModelPreloader from "./components/ModelPreloader";
 import Script from "next/script";
 import { Suspense } from "react";
 
@@ -137,7 +136,6 @@ export default function RootLayout({
           <Suspense fallback={null}>
             <AnalyticsTracker />
           </Suspense>
-          <ModelPreloader />
           <Navbar />
           <main id="main-content" className="grow">
             {children}

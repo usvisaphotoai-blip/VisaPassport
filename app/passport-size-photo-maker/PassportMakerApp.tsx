@@ -1,26 +1,12 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
-import dynamic from "next/dynamic";
 import { documentTypes, bgColors } from "@/app/tool/constants";
 import { compressImage } from "@/lib/compressImage";
-import type { ClientDetectionResult } from "@/app/components/ClientFaceDetector";
 import PreviewClient from "@/app/preview/[id]/PreviewClient";
 import { getClientTimezoneCurrency } from "@/lib/currency";
 import { LocalPrice } from "@/app/preview/[id]/hooks/usePayment";
-
-const ClientFaceDetector = dynamic(
-  () => import("@/app/components/ClientFaceDetector"),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="flex flex-col items-center justify-center p-8">
-        <div className="w-10 h-10 border-4 border-slate-200 border-t-indigo-500 rounded-full animate-spin mb-4" />
-        <p className="text-sm font-semibold text-slate-500">Initializing AI…</p>
-      </div>
-    ),
-  }
-);
+import { countryMapping } from "@/lib/external-api";
 
 /* ─── Step indicator ─── */
 function StepIndicator({ current }: { current: 1 | 2 }) {
@@ -114,9 +100,8 @@ export default function PassportMakerApp() {
 
   const STAGES = [
     { label: "Compressing image", icon: "🗜️" },
-    { label: "Detecting face", icon: "👤" },
-    { label: "Removing background", icon: "✂️" },
-    { label: "Generating photo", icon: "✨" },
+    { label: "Processing with AI", icon: "👤" },
+    { label: "Generating results", icon: "✨" },
   ];
 
   // Sync bg with doc default
@@ -155,6 +140,43 @@ export default function PassportMakerApp() {
     setStep("processing");
     const compressed = await compressImage(file);
     setSelectedFile(compressed);
+    
+    // Automatically start external processing
+    await handleExternalProcess(compressed);
+  };
+
+  const handleExternalProcess = async (file: File) => {
+    setProcessingStage(1);
+    const countrySlug = selectedDoc.split('-')[0].toLowerCase();
+    let countryCode = countryMapping[countrySlug] || "US";
+    if (selectedDoc.includes("ds-160")) countryCode = "US";
+    if (selectedDoc.includes("schengen")) countryCode = "EU";
+
+    const documentType = selectedDoc.includes("visa") ? "visa" : "passport";
+
+    const formData = new FormData();
+    formData.append("image", file);
+    formData.append("country_code", countryCode);
+    formData.append("document_type", documentType);
+    formData.append("source", "pixpassport_maker");
+
+    try {
+      const res = await fetch("/api/external-process", { method: "POST", body: formData });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.details || data.error || "Processing failed");
+      
+      setProcessingStage(2);
+      const photoRes = await fetch(`/api/photo/${data.photoId}`);
+      const photoResult = await photoRes.json();
+      if (!photoRes.ok || !photoResult.success)
+        throw new Error("Failed to load generated photo details.");
+
+      setPhotoData(photoResult.data);
+      setStep("preview");
+    } catch (err: any) {
+      setErrorMsg(err.message || "Something went wrong. Please try again.");
+      resetToSetup();
+    }
   };
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -169,101 +191,7 @@ export default function PassportMakerApp() {
     if (file && file.type.startsWith("image/")) await processFile(file);
   };
 
-  const handleDetectionComplete = useCallback(
-    async (detectedFile: File, detection: ClientDetectionResult) => {
-      try {
-        let finalFile: File | Blob = detectedFile;
-
-        if (selectedBg !== "original") {
-          setProcessingStage(2);
-          const formData = new FormData();
-          formData.append("image", detectedFile);
-
-          const bgRes = await fetch("/api/remove-bg", { method: "POST", body: formData });
-          if (!bgRes.ok) {
-            finalFile = detectedFile;
-          } else {
-            const removedBlob = await bgRes.blob();
-            if (selectedBg === "transparent") {
-              finalFile = removedBlob;
-            } else {
-              const bgImg = new Image();
-              const blobUrl = URL.createObjectURL(removedBlob);
-              bgImg.src = blobUrl;
-              await bgImg.decode();
-              URL.revokeObjectURL(blobUrl);
-
-              const c = document.createElement("canvas");
-              const cx = c.getContext("2d")!;
-              c.width = bgImg.width;
-              c.height = bgImg.height;
-
-              const colors: Record<string, string> = {
-                white: "#ffffff",
-                "light-gray": "#f3f4f6",
-                "light-blue": "#eff6ff",
-                blue: "#0047ab",
-              };
-              cx.fillStyle = colors[selectedBg] || "#ffffff";
-              cx.fillRect(0, 0, c.width, c.height);
-              cx.drawImage(bgImg, 0, 0);
-              finalFile = await new Promise<Blob>((r) =>
-                c.toBlob((b) => r(b!), "image/jpeg", 0.98)
-              );
-            }
-          }
-        }
-
-        setProcessingStage(3);
-        const cropFormData = new FormData();
-        const isTransparent = selectedBg === "transparent";
-        cropFormData.append(
-          "image",
-          finalFile instanceof File
-            ? finalFile
-            : new File([finalFile], isTransparent ? "photo.png" : "photo.jpg", {
-              type: isTransparent ? "image/png" : "image/jpeg",
-            })
-        );
-        cropFormData.append("targetBackground", selectedBg);
-        cropFormData.append("type", selectedDoc);
-        cropFormData.append(
-          "faceData",
-          JSON.stringify({
-            faceBox: detection.faceBox,
-            eyeCenter: detection.eyeCenter,
-            chinY: detection.chinY,
-            topOfHeadY: detection.topOfHeadY,
-            imageDimensions: detection.imageDimensions,
-          })
-        );
-
-        const cropRes = await fetch("/api/crop", { method: "POST", body: cropFormData });
-        const cropData = await cropRes.json();
-        if (!cropRes.ok) throw new Error(cropData.error || "Crop failed");
-
-        const photoRes = await fetch(`/api/photo/${cropData.photoId}`);
-        const photoResult = await photoRes.json();
-        if (!photoRes.ok || !photoResult.success)
-          throw new Error("Failed to load generated photo details.");
-
-        setPhotoData(photoResult.data);
-        setStep("preview");
-      } catch (err: any) {
-        setErrorMsg(err.message || "Something went wrong. Please try again.");
-        resetToSetup();
-      }
-    },
-    [selectedBg, selectedDoc]
-  );
-
-  const stableDetectionComplete = useCallback(
-    (f: File, d: ClientDetectionResult) => {
-      setProcessingStage(1);
-      handleDetectionComplete(f, d);
-    },
-    [handleDetectionComplete]
-  );
+  // handleDetectionComplete removed as we use external API
 
   /* ── PREVIEW ── */
   if (step === "preview" && photoData && localPrice && expertPrice) {
@@ -348,18 +276,7 @@ export default function PassportMakerApp() {
             })}
           </div>
 
-          {/* Hidden face detector */}
-          {selectedFile && (
-            <div className="opacity-0 absolute pointer-events-none w-px h-px overflow-hidden">
-              <ClientFaceDetector
-                file={selectedFile}
-                documentType={selectedDoc}
-                targetBackground={selectedBg}
-                onDetectionComplete={stableDetectionComplete}
-                onCancel={resetToSetup}
-              />
-            </div>
-          )}
+
         </div>
       </div>
     );

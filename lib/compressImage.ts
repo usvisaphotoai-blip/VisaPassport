@@ -1,17 +1,17 @@
 /**
- * Optimized compression for 1.5MB max size
+ * Optimized compression for 3MB max size
  * - Fast (no recursion)
  * - Predictable output
  * - Passport/visa quality safe
  */
 
-const TARGET_SIZE = 1.5 * 1024 * 1024; // 🎯 1.5 MB
+const TARGET_SIZE = 3.0 * 1024 * 1024; // 🎯 3.0 MB
 const MAX_DIMENSION = 1600; // Good balance for face quality
 
 export async function compressImage(file: File): Promise<File> {
   // ✅ Skip if already small
   if (file.size <= TARGET_SIZE) {
-    console.log("[compressImage] ✅ Already under 1.5MB");
+    console.log("[compressImage] ✅ Already under 3MB");
     return file;
   }
 
