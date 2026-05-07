@@ -48,15 +48,14 @@ const METRIC_FIXES = [
 
   // Face & positioning fixes
   { key: "face_centered", label: "Face centered in frame", icon: "✓" },
-  { key: "frontal_pose_fixed", label: "Frontal head alignment verified", icon: "✓" },
+ 
   { key: "eye_alignment_fixed", label: "Eye level balanced horizontally", icon: "✓" },
   { key: "chin_spacing_fixed", label: "Chin spacing adjusted to specification", icon: "✓" },
-  { key: "hair_clearance_fixed", label: "Hair clearance adjusted to avoid cropping", icon: "✓" },
+
 
   // Image enhancement fixes
   { key: "lighting_balanced", label: "Lighting balanced for facial visibility", icon: "✓" },
-  { key: "shadow_removed", label: "Background and face shadows reduced", icon: "✓" },
-  { key: "contrast_optimized", label: "Contrast optimized for biometric clarity", icon: "✓" },
+ 
   { key: "white_balance_fixed", label: "Color balance normalized", icon: "✓" },
   { key: "sharpness_enhanced", label: "Image sharpness enhanced", icon: "✓" },
 
@@ -117,17 +116,7 @@ function MetricFix({ metric }: { metric: typeof METRIC_FIXES[0] }) {
 
 
 
-function SocialProof() {
-  return (
-    <div className="flex items-center gap-2 py-2">
-    
-      <p className="text-[11px] text-slate-600">
-        <span className="font-bold text-slate-900">1,847 photos</span> processed today
-      </p>
-      <span className="text-amber-500 text-[11px]">★★★★★</span>
-    </div>
-  );
-}
+
 
 function TrustBadges() {
   const badges = [
@@ -175,7 +164,7 @@ function PhotoPanel({
         {/* Top bar */}
         <div className="px-5 pt-5 pb-3 flex items-center justify-between">
           <div>
-            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Your Photo</p>
+            {/* <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Your Photo</p> */}
             <p className="text-sm font-bold text-slate-900 mt-0.5 flex items-center gap-1.5">
               <span>{spec?.flag || "📄"}</span> {spec?.country || "Document Photo"}
             </p>
@@ -197,17 +186,6 @@ function PhotoPanel({
             onContextMenu={(e) => e.preventDefault()}
           />
 
-          {/* Watermark overlay if unpaid */}
-          {/* {!hasPaid && (
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <span
-                className="text-[11px] font-bold tracking-[0.25em] uppercase text-white/20 select-none"
-                style={{ transform: "rotate(-30deg)", fontSize: 13, whiteSpace: "nowrap" }}
-              >
-                Preview Only · Upgrade to Download
-              </span>
-            </div>
-          )} */}
 
           {/* Hover zoom hint */}
           <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all flex items-center justify-center">
@@ -281,14 +259,10 @@ function OrderPanel({
               {/* Header */}
               <div>
                 <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Order Summary</p>
-                <h2 className="text-xl font-black text-slate-900 leading-tight">
-                  Get Your Official<br />
-                  <span className="text-lime-600">{productName} </span>
-                </h2>
+             
               </div>
 
-              {/* Social proof */}
-              <SocialProof />
+            
 
            
 
@@ -306,12 +280,7 @@ function OrderPanel({
                 >
                   <div className="flex justify-between items-start mb-2">
                     <div>
-                      <span className={cx(
-                        "text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-widest",
-                        !isExpertPlan ? "bg-emerald-500 text-white" : "bg-slate-100 text-slate-500"
-                      )}>
-                        Basic
-                      </span>
+                      
                       <h4 className="text-sm font-bold text-slate-900 mt-1">Standard Pack</h4>
                     </div>
                     <div className="text-right">
@@ -320,7 +289,8 @@ function OrderPanel({
                     </div>
                   </div>
                   <ul className="space-y-1.5">
-                    {[" Biometric Check", "Background Removal", "Instant Digital Photo For Submission", "A4 Print Sheet"].map(f => (
+                      
+                    {[" Biometric Check","100% Acceptance Guaranteed", "Background Removal", "Instant Digital Photo For Submission", "A4 Print Sheet"].map(f => (
                       <li key={f} className="flex items-center gap-2 text-[11px] text-slate-600 font-medium">
                         <Icon d={ICONS.check} size={12} className={!isExpertPlan ? "text-emerald-500" : "text-slate-300"} stroke={2.5} />
                         {f}
@@ -339,7 +309,7 @@ function OrderPanel({
                       : "border-slate-100 bg-white hover:border-slate-200"
                   )}
                 >
-                  <div className="absolute -top-2.5 right-4 bg-blue-600 text-white text-[9px] font-black px-2.5 py-0.5 rounded-full shadow-md">
+                  <div className="absolute -top-2.5 right-4 bg-amber-500 text-white text-[9px] font-black px-2.5 py-0.5 rounded-full shadow-md">
                     MOST POPULAR
                   </div>
                   <div className="flex justify-between items-start mb-2">
@@ -691,8 +661,8 @@ export default function PreviewClient({
       <div className="flex-1 flex items-start justify-center px-4 py-6 sm:py-8">
         <div className="w-full max-w-6xl">
           {/* Header */}
-          <div className="mb-6 text-center lg:text-left">
-            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Preview & Download</p>
+          <div className="mb-3 text-center lg:text-left">
+ 
             <h1 className="text-2xl font-black text-slate-900">
               Your  <span className="text-lime-600">ID Photo</span> Is Ready {spec?.flag || ""} {spec?.country || ""}
             </h1>
