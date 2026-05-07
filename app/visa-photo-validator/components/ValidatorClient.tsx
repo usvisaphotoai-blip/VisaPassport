@@ -134,7 +134,7 @@ function CountrySelector({
       documentTypes
         .map((d) => {
           const slug = d.id.replace(/-passport$/, "").replace(/-visa$/, "");
-          const code = countryMapping[slug] || slug.split("-")[0].toUpperCase();
+          const code = countryMapping[slug] || slug.toUpperCase();
           return { ...d, code };
         })
         .filter((d) => SUPPORTED_COUNTRIES.includes(d.code))
@@ -147,7 +147,7 @@ function CountrySelector({
   const selected = documentTypes.find(
     (d) =>
       countryMapping[d.id.replace(/-passport$/, "").replace(/-visa$/, "")] === selectedCountry ||
-      d.id.split("-")[0].toUpperCase() === selectedCountry
+      d.id.replace(/-passport$/, "").replace(/-visa$/, "").toUpperCase() === selectedCountry
   );
 
   return (

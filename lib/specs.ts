@@ -135,7 +135,7 @@ export function getFilteredDocumentTypes(): DocumentType[] {
   const all = getDocumentTypes();
   return all.filter((d) => {
     const slug = d.id.replace(/-passport$/, "").replace(/-visa$/, "");
-    const code = countryMapping[slug] || d.id.split("-")[0].toUpperCase();
+    const code = countryMapping[slug] || slug.toUpperCase();
     return SUPPORTED_COUNTRIES.includes(code);
   });
 }
@@ -143,7 +143,7 @@ export function getFilteredDocumentTypes(): DocumentType[] {
 export function getFilteredSpecs(): CountrySpec[] {
   return allSpecs.filter((s) => {
     const slug = s.id.replace(/-passport$/, "").replace(/-visa$/, "");
-    const code = countryMapping[slug] || s.id.split("-")[0].toUpperCase();
+    const code = countryMapping[slug] || slug.toUpperCase();
     return SUPPORTED_COUNTRIES.includes(code);
   });
 }

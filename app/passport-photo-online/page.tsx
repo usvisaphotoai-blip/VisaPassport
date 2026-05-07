@@ -155,7 +155,7 @@ function ToolForm() {
     setCropMsg("Processing Your Photo...");
 
     // Better country/doc type extraction
-    const countrySlug = activeDoc.id.split('-')[0].toLowerCase();
+    const countrySlug = activeDoc.id.replace(/-passport$/, "").replace(/-visa$/, "").toLowerCase();
     let countryCode = countryMapping[countrySlug] || "US";
 
     // Handle special cases for country mapping

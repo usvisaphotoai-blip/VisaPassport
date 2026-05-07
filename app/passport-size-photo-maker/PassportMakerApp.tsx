@@ -147,7 +147,7 @@ export default function PassportMakerApp() {
 
   const handleExternalProcess = async (file: File) => {
     setProcessingStage(1);
-    const countrySlug = selectedDoc.split('-')[0].toLowerCase();
+    const countrySlug = selectedDoc.replace(/-passport$/, "").replace(/-visa$/, "").toLowerCase();
     let countryCode = countryMapping[countrySlug] || "US";
     if (selectedDoc.includes("ds-160")) countryCode = "US";
     if (selectedDoc.includes("schengen")) countryCode = "EU";
