@@ -142,11 +142,11 @@ export default function HomeHero() {
 
 
           <p className="hc-desc">
-            Avoid rejection, delays, and resubmissions. AI-powered photos biometric check that meet official global standards — instantly.
+            Avoid rejection, delays, and resubmissions. Professional biometric checks that meet official global standards — instantly.
           </p>
 
           <div className="hc-btns">
-            <a href="/tool" className="hc-btn-p" data-cta="hero-upload">
+            <a href="/passport-photo-online" className="hc-btn-p" data-cta="hero-upload">
               Get your ID Photo Now →
             </a>
           </div>

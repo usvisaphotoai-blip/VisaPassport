@@ -36,7 +36,7 @@ export default function PassportDirectoryPage() {
             <span className="text-sm font-bold text-slate-900 group-hover:text-emerald-700 block mb-1">Visa Photo Directory</span>
             <p className="text-xs text-slate-500">Looking for visa photos instead? View all visa specs</p>
           </Link>
-          <Link href="/tool" className="group p-6 bg-blue-50 rounded-2xl border border-blue-100 hover:shadow-lg hover:border-blue-200 transition-all">
+          <Link href="/passport-photo-online" className="group p-6 bg-blue-50 rounded-2xl border border-blue-100 hover:shadow-lg hover:border-blue-200 transition-all">
             <span className="text-2xl mb-3 block">📸</span>
             <span className="text-sm font-bold text-slate-900 group-hover:text-blue-700 block mb-1">Create Photo Now</span>
             <p className="text-xs text-slate-500">Upload & get a compliant passport photo instantly</p>

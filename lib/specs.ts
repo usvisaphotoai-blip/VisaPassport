@@ -1,5 +1,5 @@
 import specsData from "@/data/countries-specs.json";
-import { DocumentType } from "@/app/tool/types";
+import { DocumentType } from "@/app/passport-photo-online/types";
 import { countryMapping } from "./external-api";
 
 export const SUPPORTED_COUNTRIES = [

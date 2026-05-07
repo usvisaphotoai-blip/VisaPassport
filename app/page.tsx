@@ -6,18 +6,7 @@ export const metadata: Metadata = {
   title: "Online Passport & Visa Photo Editor | Official Biometric Photo Tool",
   description:
     "Free online passport, visa, and ID photo validator. Instantly verify biometric compliance for 50+ countries including US, UK, India, and Canada. Fix background and size issues instantly.",
-  keywords: [
-    "passport photo online",
-    "visa photo maker online",
-    "biometric photo tool",
-    "india visa photo editor",
-    "uk passport photo maker",
-    "passport photo maker online",
-    "online photo resizer for visa",
-    "background remover for passport photo",
-    "official biometric photo check",
-    "how to take passport photo at home",
-  ],
+ 
   alternates: {
     canonical: "https://www.pixpassport.com",
   },

@@ -18,7 +18,7 @@ export default function Footer() {
       title: "Tools & Directories",
       items: [
         { label: "Home", href: "/" },
-        { label: "Create Photo", href: "/tool" },
+        { label: "Create Photo", href: "/passport-photo-online" },
         { label: "Free Photo Validator", href: "/visa-photo-validator" },
         { label: "Passport Photo Directory", href: "/passport-photos" },
         { label: "Visa Photo Directory", href: "/visa-photo" },
@@ -56,12 +56,12 @@ export default function Footer() {
               </span>
             </Link>
             <p className="text-sm text-slate-400 max-w-sm mb-6 leading-relaxed">
-              Your global companion for secure, biometric passport and visa photos. Our AI ensures 100% compliance with government guidelines for 50+ countries.
+              Your global companion for secure, biometric passport and visa photos. We ensure 100% compliance with official government guidelines for 50+ countries.
             </p>
 
             <div className="flex gap-4">
               <span className="bg-slate-800 px-3 py-1.5 rounded-lg text-xs font-bold text-slate-300">100% Private</span>
-              <span className="bg-slate-800 px-3 py-1.5 rounded-lg text-xs font-bold text-slate-300">Instant AI Check</span>
+              <span className="bg-slate-800 px-3 py-1.5 rounded-lg text-xs font-bold text-slate-300">Instant Compliance Check</span>
             </div>
             <div className="py-2">
               <a href="https://startupfa.me/s/pixpassport?utm_source=www.pixpassport.com" target="_blank"><img src="https://startupfa.me/badges/featured-badge-small.webp" alt="PixPassport - Featured on Startup Fame" width="224" height="36" /></a>

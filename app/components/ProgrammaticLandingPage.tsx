@@ -85,12 +85,12 @@ export default function ProgrammaticLandingPage({ spec, slug }: Props) {
               </h1>
 
               <p className="text-lg text-slate-600 mb-8 leading-relaxed max-w-xl">
-                Create a 100% compliant {docName} photo in seconds. Our AI ensures the correct {spec.width_mm}x{spec.height_mm}mm size, background color, and biometric alignment for {countryName}.
+                Create a 100% compliant {docName} photo in seconds. Our biometric checks ensure the correct {spec.width_mm}x{spec.height_mm}mm size, background color, and biometric alignment for {countryName}.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 mb-8">
                 <Link
-                  href={`/tool?type=${spec.id}`}
+                  href={`/passport-photo-online?type=${spec.id}`}
                   className="inline-flex items-center justify-center px-8 py-4 border border-transparent text-base font-bold rounded-2xl text-white bg-indigo-600 hover:bg-indigo-700 shadow-xl shadow-indigo-600/20 transition-all transform hover:-translate-y-1 hover:shadow-indigo-600/40 relative group overflow-hidden"
                 >
                   <span className="relative z-10 flex items-center">
@@ -208,7 +208,7 @@ export default function ProgrammaticLandingPage({ spec, slug }: Props) {
       {/* ── STICKY CTA ────────────────────────────────────── */}
       <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-md px-4 pointer-events-none">
         <Link
-          href={`/tool?type=${spec.id}`}
+          href={`/passport-photo-online?type=${spec.id}`}
           className="pointer-events-auto flex items-center justify-between w-full bg-slate-900 text-white p-2.5 pl-6 rounded-2xl shadow-2xl hover:bg-slate-800 transition-all border border-slate-700 hover:-translate-y-1 transform group"
         >
           <div className="flex flex-col">

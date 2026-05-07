@@ -13,7 +13,7 @@ export default function BeforeAfter() {
           Studio Quality Results Instantly
         </h2>
         <p className="mt-4 text-xl text-gray-500">
-          Our AI transforms everyday photos into perfect, compliant passport photos.
+          Our system transforms everyday photos into perfect, compliant passport photos.
         </p>
       </div>
 
@@ -27,7 +27,7 @@ export default function BeforeAfter() {
             className="object-contain bg-white"
           />
           <div className="absolute bottom-4 right-4 bg-lime-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-[0_4px_12px_rgba(132,204,22,0.3)] z-0">
-            Compliant AI Edit
+            Compliant Photo Edit
           </div>
         </div>
 

@@ -152,12 +152,12 @@ function ToolForm() {
   const handleExternalProcess = async (file: File) => {
     setIsUploading(true);
     setErrorMsg("");
-    setCropMsg("Processing Y AI...");
+    setCropMsg("Processing Your Photo...");
 
     // Better country/doc type extraction
     const countrySlug = activeDoc.id.split('-')[0].toLowerCase();
     let countryCode = countryMapping[countrySlug] || "US";
-    
+
     // Handle special cases for country mapping
     if (activeDoc.id.includes("ds-160")) countryCode = "US";
     if (activeDoc.id.includes("schengen")) countryCode = "EU";
@@ -175,7 +175,7 @@ function ToolForm() {
       const res = await fetch("/api/external-process", { method: "POST", body: formData });
       const data = await res.json();
       if (!res.ok) throw new Error(data.details || data.error || "Processing failed");
-      
+
       setCropMsg("Redirecting to your photo...");
       await new Promise(r => setTimeout(r, 800));
       router.push(`/preview/${data.photoId}`);
@@ -188,7 +188,7 @@ function ToolForm() {
 
   const handleReset = () => {
     setSelectedFile(null);
-    setErrorMsg(""); 
+    setErrorMsg("");
   };
 
 
@@ -196,24 +196,23 @@ function ToolForm() {
   return (
     <div className="flex flex-col gap-4 max-w-7xl mx-auto px-3 lg:px-0 pb-6 relative w-full">
       <div className="flex flex-col lg:min-h-[calc(100vh-200px)] gap-4">
-        
+
 
 
 
 
         {/* Main Workspace Area */}
         <div className="flex-1 flex flex-col min-w-0 bg-gray-100 border border-white rounded-2xl p-3 lg:p-5 overflow-y-auto">
-          
+
           {/* Selected Document Header — clickable to change */}
           <div className="mb-3 relative" ref={headerSelectorRef}>
             <button
               type="button"
               onClick={() => setHeaderSelectorOpen((v) => !v)}
-              className={`w-full flex items-center justify-between bg-white/60 backdrop-blur-sm px-3 py-2.5 rounded-xl border shadow-sm cursor-pointer transition-all duration-200 ${
-                headerSelectorOpen
-                  ? "border-lime-400 ring-1 ring-lime-400/20"
-                  : "border-white hover:border-slate-200"
-              }`}
+              className={`w-full flex items-center justify-between bg-white/60 backdrop-blur-sm px-3 py-2.5 rounded-xl border shadow-sm cursor-pointer transition-all duration-200 ${headerSelectorOpen
+                ? "border-lime-400 ring-1 ring-lime-400/20"
+                : "border-white hover:border-slate-200"
+                }`}
             >
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 flex items-center justify-center bg-white rounded-lg shadow-inner border border-slate-100 text-lg">
@@ -248,11 +247,11 @@ function ToolForm() {
             {headerSelectorOpen && (
               <>
                 {/* Mobile Backdrop */}
-                <div 
+                <div
                   className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[60] lg:hidden"
                   onClick={() => setHeaderSelectorOpen(false)}
                 />
-                
+
                 {/* Dropdown Container */}
                 <div className="fixed inset-x-4 top-20 bottom-4 lg:absolute lg:inset-x-0 lg:top-full lg:bottom-auto z-[70] lg:z-50 lg:mt-1 bg-white border border-slate-200 rounded-2xl lg:rounded-xl shadow-2xl overflow-hidden flex flex-col animate-in fade-in zoom-in-95 duration-200">
                   <div className="p-3 lg:p-2 border-b border-slate-100 bg-slate-50/50">
@@ -286,9 +285,8 @@ function ToolForm() {
                             setHeaderSelectorOpen(false);
                             setHeaderSearchTerm("");
                           }}
-                          className={`relative group w-full flex flex-col px-4 py-4 lg:px-3 lg:py-2.5 text-left transition-all duration-150 border-b border-slate-50 last:border-b-0 ${
-                            selectedDoc === doc.id ? "bg-blue-50" : "bg-transparent hover:bg-slate-50"
-                          }`}
+                          className={`relative group w-full flex flex-col px-4 py-4 lg:px-3 lg:py-2.5 text-left transition-all duration-150 border-b border-slate-50 last:border-b-0 ${selectedDoc === doc.id ? "bg-blue-50" : "bg-transparent hover:bg-slate-50"
+                            }`}
                         >
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-3">
@@ -313,10 +311,35 @@ function ToolForm() {
               </>
             )}
           </div>
-          
+          <div className="mt-4 mb-4 rounded-2xl border border-emerald-200/70 bg-gradient-to-r from-emerald-50 via-white to-blue-50 p-4 sm:p-5 shadow-sm">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+
+              <div className="flex items-start gap-3 min-w-0">
+                <div className="min-w-0">
+
+                  <p className="mt-1 text-xs sm:text-sm leading-relaxed text-slate-800 max-w-full sm:max-w-2xl">
+                    We do not use AI and we don't alter facial features or create synthetic images. We only provide
+                    cropping, sizing, background normalization, and compliance validation based
+                    on 2026 passport and visa photo guidelines.
+                  </p>
+
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    <span className="inline-flex items-center justify-center rounded-full border border-emerald-200 bg-red-300 px-3 py-1 text-[10px] sm:text-xs font-semibold uppercase tracking-wide text-center">
+                      We do not use AI for face editing
+                    </span>
+
+                    <span className="inline-flex items-center justify-center rounded-full border border-amber-200 bg-amber-100 px-3 py-1 text-[10px] sm:text-xs font-semibold uppercase tracking-wide text-amber-800 text-center">
+                      Expert Review Available
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
           {/* Initial State: Upload Area */}
           {!selectedFile && (
-            <UploadArea 
+            <UploadArea
               onFileChange={handleFileChange}
               guidelinesOpen={guidelinesOpen}
               setGuidelinesOpen={setGuidelinesOpen}
@@ -341,7 +364,7 @@ function ToolForm() {
                     </div>
                   )}
                   {/* Scan line */}
-                  <div 
+                  <div
                     className="absolute left-0 w-full h-0.5 bg-blue-400 shadow-[0_0_15px_rgba(96,165,250,0.8)] z-10"
                     style={{ animation: 'scanPingPong 2s ease-in-out infinite' }}
                   />
@@ -352,9 +375,9 @@ function ToolForm() {
                 <div className="flex-1 text-center sm:text-left">
                   <div className="inline-flex items-center gap-2 px-2.5 py-1 bg-blue-500/10 border border-blue-500/20 rounded-full mb-3">
                     <div className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
-                    <span className="text-[10px] font-bold text-blue-400 uppercase tracking-widest">Official AI Engine</span>
+                    <span className="text-[10px] font-bold text-blue-400 uppercase tracking-widest">Official Biometric Engine</span>
                   </div>
-                  
+
                   <h3 className="text-lg font-black text-white mb-2">
                     <span className="inline-block" style={{ minWidth: '200px' }}>
                       {cropMsg === "Processing Your Photo..." ? (
@@ -364,7 +387,7 @@ function ToolForm() {
                       )}
                     </span>
                   </h3>
-                  
+
                   <p className="text-xs text-slate-400 leading-relaxed max-w-xs mx-auto sm:mx-0">
                     Calibrating head size, fixing background lighting, and verifying ICAO biometric standards.
                   </p>
@@ -410,9 +433,9 @@ function ToolForm() {
           )}
 
           {/* Guide Prompt Modal */}
-          <GuidePrompt 
-            isOpen={showGuide} 
-            onClose={() => setShowGuide(false)} 
+          <GuidePrompt
+            isOpen={showGuide}
+            onClose={() => setShowGuide(false)}
             onUploadClick={() => {
               const input = document.getElementById("tool-photo-input");
               if (input) (input as HTMLInputElement).click();

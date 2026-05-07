@@ -33,22 +33,8 @@ export const metadata: Metadata = {
     template: "%s | PixPassport",
   },
   description:
-    "Official-standard global passport, visa, and ID photo tool. Get 100% compliant biometric photos for 50+ countries including US, UK, India, and Australia. AI-powered background removal and cropping.",
-  keywords: [
-    "PixPassport",
-    "online passport photo maker",
-    "visa photo editor",
-    "official biometric photo",
+    "Official-standard global passport, visa, and ID photo tool. Get 100% compliant biometric photos for 50+ countries including US, UK, India, and Australia. Professional-grade background normalization and cropping.",
  
-    "UK passport photo generator",
-    "global passport photo maker",
-    "Schengen visa photo check",
-    "Australia passport photo online",
-   
-   
-    "biometric compliance checker",
-    
-  ],
   authors: [{ name: "PixPassport Team" }],
   creator: "PixPassport",
   applicationName: "PixPassport",
@@ -67,7 +53,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "PixPassport | Official Global Passport & Visa Photo Tool",
     description:
-      "Create 100% compliant biometric photos for 50+ countries. Official standards for US, UK, India, and more. Instant AI check.",
+      "Create 100% compliant biometric photos for 50+ countries. Official standards for US, UK, India, and more. Instant compliance check.",
     url: "https://www.pixpassport.com/",
     siteName: "PixPassport",
     images: [
@@ -85,7 +71,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "PixPassport | Official Global Passport & Visa Photo Tool",
     description:
-      "AI-powered official passport and visa photos for 50+ countries. 100% biometric compliance guaranteed.",
+      "Professional official passport and visa photos for 50+ countries. 100% biometric compliance guaranteed.",
     images: ["https://www.pixpassport.com/og-image.jpg"],
   },
 };

@@ -66,14 +66,14 @@ You are an AI assistant helping users create compliant global visa, passport, ID
 * Remove backgrounds and generate a **clean, uniform white background**
 * Normalize lighting to eliminate shadows and uneven illumination
 * Validate images against **international visa, passport, and DV lottery requirements**
-* Provide **AI-powered auto-fix suggestions** for rejected or non-compliant photos
+
 ---
 
 ## User Intent Mapping
 
 * "resize visa photo" → Use international visa Photo Generator
 * "check if my photo is valid" → Use Photo Validator
-* "fix rejected visa photo" → Use AI Auto Fix
+* "fix rejected visa photo" → We don't Use AI Auto Fix
 * "passport photo size Global" → Use US Passport Photo Tool
 * "DV lottery photo requirements" → Use DV Lottery Photo Tool
 
@@ -115,7 +115,7 @@ Common reasons:
 
 ### How to fix "illumination" or "poor quality" errors?
 
-* Use AI Auto Fix to:
+* Use Auto Fix to:
 
   * Balance brightness and contrast
   * Remove shadows
@@ -145,8 +145,8 @@ Common reasons:
 
 ### Are glasses or headwear allowed?
 
-* Glasses: ❌ Not allowed
-* Headwear: ✅ Only for religious purposes (must not obscure face)
+* Glasses: Not allowed
+* Headwear:  Only for religious purposes (must not obscure face)
 
 ---
 
@@ -181,7 +181,7 @@ Common reasons:
 * Compliance aligned with International Border Control
 
 ---
-## AI Processing Workflow (Step-by-Step)
+##  Processing Workflow (Step-by-Step)
 
 1. **Upload Photo**
 
@@ -206,7 +206,7 @@ Common reasons:
 5. **One-Click Crop & Fix**
 
    * User clicks “Crop & Fix”
-   * AI automatically:
+   * Automatically:
 
      * Centers face
      * Adjusts size to 600 x 600 px

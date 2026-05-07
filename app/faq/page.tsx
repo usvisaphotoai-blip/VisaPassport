@@ -42,7 +42,7 @@ const getCategories = (price: string) => [
       { q: "Are my photos safe?", a: "Yes. All photos are processed securely using encrypted connections. Original photos are automatically and permanently deleted after 24 hours. We never share, sell, or use your photos for any other purpose." },
       { q: "How long do you store my photos?", a: "Original photos are auto-deleted after 24 hours. Processed photos are removed after download or within 24 hours, whichever comes first. Download links expire after 1 hour." },
       { q: "Are you GDPR compliant?", a: "Yes. We fully comply with GDPR (EU) and CCPA (California) regulations. You can request complete data deletion at any time through our privacy controls." },
-      { q: "Do you use my photos for AI training?", a: "Absolutely not. Your photos are used solely for the validation and processing you requested. We never use customer photos for AI training, marketing, or any other purpose." },
+      { q: "Do you use my photos for training?", a: "Absolutely not. Your photos are used solely for the validation and processing you requested. We never use customer photos for system training, marketing, or any other purpose." },
     ],
   },
 ];

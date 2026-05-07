@@ -18,7 +18,7 @@ export default async function PreviewPage(props: { params: Promise<{ id: string 
   }
 
   if (!photoRecord) {
-    redirect("/tool");
+    redirect("/passport-photo-online");
   }
 
   const session = await getServerSession(authOptions);

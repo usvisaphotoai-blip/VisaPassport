@@ -40,7 +40,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       ? `Official ${spec.country} Visa Photo Online (2026) | ${spec.width_mm}x${spec.height_mm}mm`
       : `Official ${spec.country} Passport Photo Maker (2026) | 100% Approved`;
 
-    const description = `Get your ${spec.country} ${intentLabel.toLowerCase()} photo in 2 mins. Guaranteed acceptance or money back. AI-powered ${spec.width_mm}x${spec.height_mm}mm cropping & background check. ➜ Click to Start!`;
+    const description = `Get your ${spec.country} ${intentLabel.toLowerCase()} photo in 2 mins. Guaranteed acceptance or money back. Official ${spec.width_mm}x${spec.height_mm}mm cropping & background check. ➜ Click to Start!`;
 
     return {
       title,
@@ -96,7 +96,7 @@ export default async function Page({ params }: PageProps) {
             {/* Badge */}
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-xs font-semibold mb-5">
               <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
-              AI-Powered · Free to try
+              Official Standards · Free to try
             </div>
 
             <h1 className="text-2xl md:text-3xl font-black text-slate-900 mb-4 tracking-tight leading-tight">
@@ -112,10 +112,10 @@ export default async function Page({ params }: PageProps) {
                 { value: "100+", label: "Countries" },
                 { value: "30+", label: "Compliance checks" },
                 { value: "< 2 min", label: "Processing time" },
-                { value: "100%", label: "AI-powered" },
+                { value: "100%", label: "Compliance rate" },
               ].map(({ value, label }) => (
                 <div key={label} className="text-center">
-                  <p className="text-2xl font-black text-blue-600">{value}</p>
+                  <p className="text-2xl font-black text-lime-600">{value}</p>
                   <p className="text-xs text-slate-500 font-medium">{label}</p>
                 </div>
               ))}

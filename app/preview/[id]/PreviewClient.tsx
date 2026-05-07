@@ -198,7 +198,7 @@ function PhotoPanel({
           />
 
           {/* Watermark overlay if unpaid */}
-          {!hasPaid && (
+          {/* {!hasPaid && (
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
               <span
                 className="text-[11px] font-bold tracking-[0.25em] uppercase text-white/20 select-none"
@@ -207,7 +207,7 @@ function PhotoPanel({
                 Preview Only · Upgrade to Download
               </span>
             </div>
-          )}
+          )} */}
 
           {/* Hover zoom hint */}
           <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all flex items-center justify-center">
@@ -468,7 +468,7 @@ function OrderPanel({
       </div>
 
       <div className="text-center">
-        <a href="/tool" className="text-sm font-bold text-slate-400 hover:text-slate-600 transition-colors">
+        <a href="/passport-photo-online" className="text-sm font-bold text-slate-400 hover:text-slate-600 transition-colors">
           Need another photo? <span className="underline">Upload again →</span>
         </a>
       </div>

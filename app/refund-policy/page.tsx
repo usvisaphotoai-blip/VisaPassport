@@ -98,7 +98,7 @@ export default function RefundPolicyPage() {
           <Link href="/contact" className="text-sm font-medium text-lime-600 hover:text-lime-700 transition-colors">
             Contact Us
           </Link>
-          <Link href="/tool" className="text-sm font-medium text-lime-600 hover:text-lime-700 transition-colors">
+          <Link href="/passport-photo-online" className="text-sm font-medium text-lime-600 hover:text-lime-700 transition-colors">
             Create Photo
           </Link>
         </div>

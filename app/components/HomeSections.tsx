@@ -154,7 +154,7 @@ const rejectionReasons = [
     num: "01",
     title: "Incorrect Background Color",
     why: "Shadows, patterns, or the wrong shade (e.g. blue instead of white) are the top rejection reasons globally.",
-    check: "AI measures background luminance and color uniformity across 9 zones.",
+    check: "Our system measures background luminance and color uniformity across 9 zones.",
   },
   {
     num: "02",
@@ -180,21 +180,21 @@ const documentTypes = [
   {
     doc: "Passport Photos",
     icon: "🛂",
-    href: "/tool",
-    toolHref: "/tool",
+    href: "/passport-photo-online",
+    toolHref: "/passport-photo-online",
     specs: [
       "Custom sizes (35x45mm, 40x60mm, etc.)",
       "Dynamic background removal",
       "Head size scaling per country",
       "Print-ready sheets (A4/Letter)",
     ],
-    note: "We support over 50 countries. Our AI automatically adapts to the specific sizing and biometric rules of the country you select.",
+    note: "We support over 50 countries. Our system automatically adapts to the specific sizing and biometric rules of the country you select.",
   },
   {
     doc: "Visa Photos",
     icon: "🌐",
-    href: "/tool",
-    toolHref: "/tool",
+    href: "/passport-photo-online",
+    toolHref: "/passport-photo-online",
     specs: [
       "Square or Rectangular formats",
       "Digital upload optimization",
@@ -241,7 +241,7 @@ const expertTips = [
 const comparisonRows = [
   ["Price", "$5.99 one-time", "$15–$25 + travel", "$3–$15 per photo"],
   ["DS-160 Upload Ready", "✅ Yes", "⚠️ Not always digital", "⚠️ Varies"],
-  ["Eye Position Check (56–69%)", "✅ AI-measured", "❌ Human eye only", "⚠️ Basic only"],
+  ["Eye Position Check (56–69%)", "✅ Biometric-measured", "❌ Human eye only", "⚠️ Basic only"],
   ["Head Size Check (50–69%)", "✅ Pixel-precise", "❌ Not measured", "⚠️ Crop only"],
   ["Background RGB Validation", "✅ 9-zone analysis", "❌ Visual only", "⚠️ Basic removal"],
   ["Glasses Detection", "✅ Auto-detected", "❌ Manual reminder", "⚠️ Not always"],
@@ -314,7 +314,7 @@ export default function HomeSections({
       </div>
       <div className="hc-seo-text">
         <h2 className="hc-seo-h2">
-          Official Global Document Photo Requirements: Why AI Precision is Necessary
+          Official Global Document Photo Requirements: Why Biometric Precision is Necessary
         </h2>
         <p className="hc-seo-p">
           Securing an international passport, navigating a Schengen Visa application,
@@ -333,7 +333,7 @@ export default function HomeSections({
           they require specific geometry. Your eyes must be positioned between{" "}
           <strong>56% and 69%</strong> from the bottom edge of the image, and
           the head must fill exactly 50% to 69% of the height. Even a 1%
-          deviation can trigger an automatic system flag. Our AI-driven
+          deviation can trigger an automatic system flag. Our system-driven
           validator scans <strong>64 unique facial landmarks</strong> in under
           five seconds.
         </p>
@@ -582,7 +582,7 @@ export default function HomeSections({
           {docPills.map((t, i) => (
             <a
               key={i}
-              href={`/tool?type=${t.toLowerCase().replace(/[\s/]/g, "-")}`}
+              href={`/passport-photo-online?type=${t.toLowerCase().replace(/[\s/]/g, "-")}`}
               className="hc-pill"
             >
               {t}
@@ -637,7 +637,7 @@ export default function HomeSections({
           </div>
           <div className="hc-sec-cta">
             <a
-              href="/tool"
+              href="/passport-photo-online"
               className="hc-btn-p"
               style={{ display: "inline-flex" }}
             >
@@ -795,7 +795,7 @@ export default function HomeSections({
             <h2 className="hc-h2">Common Biometric Photo Mistakes</h2>
             <p className="hc-sub">
               Consulates and embassies reject thousands of applications annually due to non-compliant photos.
-              Here are the most frequent failures — and what our AI checks for each one.
+              Here are the most frequent failures — and what our system checks for each one.
             </p>
           </div>
           <div
@@ -951,7 +951,7 @@ export default function HomeSections({
             <span className="hc-label">Why Us</span>
             <h2 className="hc-h2">PixPassport vs. Your Alternatives</h2>
             <p className="hc-sub">
-              See why thousands choose our AI tool over photo studios and other
+              See why thousands choose our professional tool over photo studios and other
               online services.
             </p>
           </div>
@@ -1050,7 +1050,7 @@ export default function HomeSections({
             </div>
 
             <a
-              href="/tool"
+              href="/passport-photo-online"
               className="hc-btn-block"
               style={{ marginTop: "24px" }}
             >
@@ -1095,7 +1095,7 @@ export default function HomeSections({
           Don't risk rejection. Validate your photo for free and get a
           compliant version in under a minute.
         </p>
-        <a href="/tool" className="hc-btn-final">
+        <a href="/passport-photo-online" className="hc-btn-final">
           Check Your Photo Free →
         </a>
         <div

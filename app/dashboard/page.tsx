@@ -28,7 +28,7 @@ export default async function DashboardPage() {
           </div>
           <div className="flex gap-4">
             <Link 
-              href="/tool" 
+              href="/passport-photo-online" 
               className="bg-lime-600 hover:bg-lime-700 text-white px-5 py-2.5 rounded-xl font-bold text-sm shadow-md transition-colors"
             >
               + New Photo
@@ -44,7 +44,7 @@ export default async function DashboardPage() {
             </div>
             <h2 className="text-xl font-bold text-slate-900">No photos yet</h2>
             <p className="text-slate-500 mt-2 mb-6">Create your first compliant passport photo.</p>
-            <Link href="/tool" className="text-lime-600 font-bold hover:underline">Start Studio Room &rarr;</Link>
+            <Link href="/passport-photo-online" className="text-lime-600 font-bold hover:underline">Start Studio Room &rarr;</Link>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">

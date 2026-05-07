@@ -6,7 +6,7 @@ import { useSession, signOut } from "next-auth/react";
 import LiveActivityChip from "./LiveActivityChip";
 
 const navLinks = [
-  { href: "/tool", label: "Create Photo" },
+  { href: "/passport-photo-online", label: "Create Photo" },
   { href: "/visa-photo-validator", label: "Free Validator" },
   { href: "/passport-photos", label: "Passport Sizes" },
   { href: "/blog", label: "Blog & Guides" },
@@ -101,7 +101,7 @@ export default function Navbar() {
                     Log out
                   </button>
                   <Link
-                    href="/tool"
+                    href="/passport-photo-online"
                     prefetch={true}
                     className="bg-slate-900 text-white hover:bg-slate-800 active:bg-slate-950 rounded-xl px-5 py-2.5 text-sm font-bold transition-all duration-150 shadow-sm hover:shadow-md hover:shadow-black/10 hover:-translate-y-px"
                   >
@@ -125,7 +125,7 @@ export default function Navbar() {
                     Sign up
                   </Link>
                   <Link
-                    href="/tool"
+                    href="/passport-photo-online"
                     prefetch={true}
                     className="bg-lime-600 text-white hover:bg-lime-700 active:bg-lime-800 rounded-xl px-5 py-2.5 text-sm font-bold transition-all duration-150 shadow-sm shadow-lime-600/25 hover:shadow-md hover:shadow-lime-600/30 hover:-translate-y-px whitespace-nowrap"
                   >
@@ -140,7 +140,7 @@ export default function Navbar() {
               {/* Compact CTA on mobile */}
               {status !== "loading" && !session && (
                 <Link
-                  href="/tool"
+                  href="/passport-photo-online"
                   className="bg-lime-600 text-white hover:bg-lime-700 rounded-lg px-3.5 py-2 text-xs font-bold transition-colors shadow-sm shadow-lime-600/20"
                 >
                   Get Photo
@@ -148,7 +148,7 @@ export default function Navbar() {
               )}
               {status !== "loading" && session && (
                 <Link
-                  href="/tool"
+                  href="/passport-photo-online"
                   className="bg-slate-900 text-white hover:bg-slate-800 rounded-lg px-3.5 py-2 text-xs font-bold transition-colors shadow-sm"
                 >
                   New Photo
@@ -241,7 +241,7 @@ export default function Navbar() {
                   )}
 
                   <Link
-                    href="/tool"
+                    href="/passport-photo-online"
                     onClick={() => setMobileOpen(false)}
                     className="bg-lime-600 text-white text-center hover:bg-lime-700 active:bg-lime-800 rounded-xl px-5 py-3 text-sm font-bold transition-all shadow-sm shadow-lime-600/25"
                   >

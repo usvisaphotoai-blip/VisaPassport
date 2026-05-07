@@ -18,29 +18,26 @@ export async function POST(req: NextRequest) {
     const country = req.headers.get("x-vercel-ip-country") || "Unknown";
     const userAgent = req.headers.get("user-agent") || "Unknown";
 
-    // Upsert the session
-    let session = await AnalyticsSession.findOne({ sessionId });
-    if (!session) {
-      session = new AnalyticsSession({
-        sessionId,
-        country,
-        userAgent,
-        firstSeenAt: new Date(),
-        lastSeenAt: new Date(),
-        pageViews: type === "page_view" ? 1 : 0,
-      });
-    } else {
-      session.lastSeenAt = new Date();
-      if (type === "page_view") {
-        session.pageViews += 1;
-      }
-      
-      // Update duration if provided (e.g. from beacon or heartbeat)
-      if (duration && typeof duration === "number") {
-        session.duration = Math.max(session.duration, duration);
-      }
-    }
-    await session.save();
+    // Upsert the session atomically to prevent race conditions (duplicate key errors)
+    await AnalyticsSession.findOneAndUpdate(
+      { sessionId },
+      {
+        $setOnInsert: {
+          sessionId,
+          country,
+          userAgent,
+          firstSeenAt: new Date(),
+        },
+        $set: {
+          lastSeenAt: new Date(),
+        },
+        $inc: {
+          pageViews: type === "page_view" ? 1 : 0,
+        },
+        ...(duration && typeof duration === "number" ? { $max: { duration } } : {})
+      },
+      { upsert: true }
+    );
 
     // Log the event
     if (type) {

@@ -35,7 +35,7 @@ const stagger: Variants = {
 
 const FAQ_ITEMS = [
   {
-    q: "How does AI biometric validation work?",
+    q: "How does biometric validation work?",
     a: "Our validator uses MediaPipe Face Detection combined with country-specific embassy specifications to measure facial geometry, eye-line positioning, head-to-frame ratios, and background uniformity — the same checks performed by passport officers.",
   },
   {
@@ -92,7 +92,7 @@ const HOW_STEPS = [
         <circle cx="12" cy="12" r="10" /><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32" />
       </svg>
     ),
-    title: "AI Biometric Analysis",
+    title: "Biometric Analysis",
     desc: "MediaPipe scans 468 facial landmarks, measures compliance against official ICAO standards.",
   },
   {
@@ -468,7 +468,7 @@ export default function ValidatorClient() {
           >
             <span className="inline-flex items-center gap-2 bg-blue-50 border border-blue-100 rounded-full px-4 py-1.5 text-[11px] font-bold text-blue-700 uppercase tracking-widest">
               <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
-              AI-Powered · ICAO Compliant · Embassy-Grade
+              Official Standards · ICAO Compliant · Embassy-Grade
             </span>
           </motion.div>
 
@@ -493,7 +493,7 @@ export default function ValidatorClient() {
             transition={{ duration: 0.55, delay: 0.16, ease: [0.22, 1, 0.36, 1] }}
             className="text-center text-base sm:text-lg text-slate-500 font-medium max-w-2xl mx-auto mb-10 leading-relaxed"
           >
-            Embassy-grade biometric analysis powered by MediaPipe. Validate your photo against{" "}
+            Embassy-grade biometric analysis using MediaPipe. Validate your photo against{" "}
             <strong className="text-slate-700">official ICAO standards</strong> for 60+ countries — free, instant, private.
           </motion.p>
 
@@ -727,7 +727,7 @@ export default function ValidatorClient() {
             Four steps to compliance
           </motion.h2>
           <motion.p variants={fadeUp} className="mt-4 text-base text-slate-500 font-medium max-w-xl mx-auto leading-relaxed">
-            Our AI mimics the exact checks performed at embassy biometric verification counters worldwide.
+            Our system mimics the exact checks performed at embassy biometric verification counters worldwide.
           </motion.p>
         </motion.div>
 
@@ -763,7 +763,7 @@ export default function ValidatorClient() {
                 Embassy-grade technology
               </p>
               <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight leading-tight mb-6">
-                How our AI replicates official embassy photo checks
+                How our system replicates official embassy photo checks
               </h2>
               <div className="space-y-5 text-sm text-slate-500 font-medium leading-relaxed">
                 <p>

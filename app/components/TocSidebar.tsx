@@ -78,7 +78,7 @@ export default function TocSidebar({ headings }: { headings: TOCPageHeading[] })
           Fix hair edges, remove background shadows, and validate 600x600 size instantly.
         </p>
         <a 
-          href="/tool" 
+          href="/passport-photo-online" 
           className="relative z-10 flex items-center justify-center w-full bg-lime-500 text-slate-950 font-bold py-3.5 rounded-2xl hover:bg-lime-400 transition-colors shadow-lg shadow-lime-500/20 text-sm"
         >
           Check Photo Free →

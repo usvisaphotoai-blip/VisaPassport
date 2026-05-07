@@ -37,7 +37,7 @@ const visaFaqs: FAQ[] = [
   },
   {
     q: "What is a 'Consular Quality Alert'?",
-    a: "This is a warning given by embassy portals when a photo has poor lighting or incorrect background color. Our AI pre-validates your photo to ensure you never see this alert.",
+    a: "This is a warning given by embassy portals when a photo has poor lighting or incorrect background color. Our biometric checks pre-validate your photo to ensure you never see this alert.",
   },
   ...defaultFaqs
 ];

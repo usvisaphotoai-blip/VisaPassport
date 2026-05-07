@@ -261,7 +261,7 @@ export default async function BlogIndex() {
           <section className="mt-20 pt-16 border-t border-slate-200">
             <h3 className="text-2xl font-black text-slate-900 mb-8 text-center">Explore More Tools & Resources</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              <Link href="/tool" className="group bg-white rounded-2xl border border-slate-200 p-6 hover:border-lime-300 hover:shadow-lg transition-all">
+              <Link href="/passport-photo-online" className="group bg-white rounded-2xl border border-slate-200 p-6 hover:border-lime-300 hover:shadow-lg transition-all">
                 <span className="text-2xl mb-3 block">📸</span>
                 <span className="text-base font-bold text-slate-900 group-hover:text-lime-600 block mb-2">Create Photo</span>
                 <p className="text-xs text-slate-500">Upload & get a compliant biometric photo instantly</p>

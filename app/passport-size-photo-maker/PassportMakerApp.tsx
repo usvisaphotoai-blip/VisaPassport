@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
-import { documentTypes, bgColors } from "@/app/tool/constants";
+import { documentTypes, bgColors } from "@/app/passport-photo-online/constants";
 import { compressImage } from "@/lib/compressImage";
 import PreviewClient from "@/app/preview/[id]/PreviewClient";
 import { getClientTimezoneCurrency } from "@/lib/currency";
@@ -100,7 +100,7 @@ export default function PassportMakerApp() {
 
   const STAGES = [
     { label: "Compressing image", icon: "🗜️" },
-    { label: "Processing with AI", icon: "👤" },
+    { label: "Biometric analysis", icon: "👤" },
     { label: "Generating results", icon: "✨" },
   ];
 
@@ -297,7 +297,7 @@ export default function PassportMakerApp() {
           Passport Photo Maker
         </h1>
         <p className="mt-1.5 text-sm text-slate-500">
-          AI-powered · compliant photos in seconds
+          Official standards · compliant photos in seconds
         </p>
       </div>
 

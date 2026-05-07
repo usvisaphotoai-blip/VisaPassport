@@ -42,7 +42,7 @@ const FAQ_MAP: Record<string, { question: string; answer: string }[]> = {
   'how-to-fix-passport-photo-shadows': [
     { question: 'Why do shadows cause passport photo rejections?', answer: 'Shadows disrupt the uniform white background required by the State Department and create uneven lighting on your face, which causes facial recognition algorithms to fail the biometric scan.' },
     { question: 'How do I prevent shadows in passport photos?', answer: 'Stand at least 1.5-2 feet away from the wall, use natural window light (avoid overhead lights and camera flash), and face the light source directly. Use a white reflector to fill in dark areas on your face.' },
-    { question: 'Can I fix passport photo shadows after taking the photo?', answer: 'Yes, AI-powered background removal tools like PixPassport can strip away the shadowed background and replace it with a pure white canvas, eliminating both background and some facial shadows digitally.' },
+    { question: 'Can I fix passport photo shadows after taking the photo?', answer: 'Yes, professional background removal tools like PixPassport can strip away the shadowed background and replace it with a pure white canvas, eliminating both background and some facial shadows digitally.' },
   ],
   'can-you-smile-in-passport-photos': [
     { question: 'Is smiling allowed in US passport photos?', answer: 'The official guideline requires a neutral facial expression with both eyes open and mouth closed. A very subtle, natural smile is technically acceptable, but showing teeth or exaggerated smiling will cause rejection.' },
@@ -72,18 +72,18 @@ const FAQ_MAP: Record<string, { question: string; answer: string }[]> = {
   ],
   'passport-photo-background-requirements': [
     { question: 'What background is required for US passport photos?', answer: 'The background must be plain white or off-white with absolute uniformity. No textures, patterns, gradients, or shadows are allowed.' },
-    { question: 'Can I take a passport photo against a colored wall?', answer: 'With AI background removal tools like PixPassport, you can take a photo against any background. The AI will strip the background and replace it with a compliant pure white canvas.' },
+    { question: 'Can I take a passport photo against a colored wall?', answer: 'With professional background removal tools like PixPassport, you can take a photo against any background. Our system will strip the background and replace it with a compliant pure white canvas.' },
     { question: 'Why does my white wall look grey in passport photos?', answer: 'Camera sensors interpret colors differently than the human eye. Insufficient lighting, shadows from overhead lights, and camera white balance settings can make a white wall appear grey in photos.' },
   ],
   'green-card-photo-rejection-fix-background-shadows': [
     { question: 'Why was my green card photo rejected?', answer: 'In 90% of cases, green card photo rejections are caused by background issues — shadows, grey tones, textures, or non-uniform lighting behind your head.' },
-    { question: 'How can I fix passport photo shadows online?', answer: 'Use an AI-powered tool like PixPassport to automatically remove the background and replace it with a pure white (#FFFFFF) canvas. This eliminates all shadows and guarantees a uniform background.' },
+    { question: 'How can I fix passport photo shadows online?', answer: 'Use a professional tool like PixPassport to automatically remove the background and replace it with a pure white (#FFFFFF) canvas. This eliminates all shadows and guarantees a uniform background.' },
     { question: 'Is a free US visa photo validator reliable?', answer: 'Free validators are good for preliminary checks (head size, basic dimensions), but they rarely tell you how to fix issues. For guaranteed compliance, use a professional tool that both validates and fixes your photo.' },
   ],
   'dv-lottery-2027-guide-photo-requirements-results': [
     { question: 'When will DV Lottery 2027 results be announced?', answer: 'DV-2027 results will be available through the Entrant Status Check starting in May 2026. You must check your status online — the State Department does not notify winners by email.' },
     { question: 'What are the DV Lottery photo requirements?', answer: 'Photos must be exactly 600x600 pixels, max 240KB, JPEG format. Head size must occupy 50-69% of image height. Eyes must be between 56-69% from the bottom. Background must be plain white with no shadows.' },
-    { question: 'Can a bad photo disqualify my DV Lottery entry?', answer: 'Yes. The State Department uses AI to screen photos before human review. If your photo fails biometric standards, your entry is automatically disqualified without notice — you\'ll simply see "Not Selected."' },
+    { question: 'Can a bad photo disqualify my DV Lottery entry?', answer: 'Yes. The State Department uses automated screening for photos before human review. If your photo fails biometric standards, your entry is automatically disqualified without notice — you\'ll simply see "Not Selected."' },
   ],
   'green-card-photo-requirements-2026-checklist': [
     { question: 'Are green card photo requirements the same as passport photos?', answer: 'Yes, the technical specifications are identical: 2x2 inches physical (600x600 pixels digital), white background, 50-69% head ratio. However, green card photo rejections carry higher stakes as they can delay residency by months.' },
@@ -199,9 +199,9 @@ const FAQ_MAP: Record<string, { question: string; answer: string }[]> = {
 // Default FAQ for articles that don't have a specific mapping
 const DEFAULT_FAQ = [
   { question: 'What are the standard passport photo dimensions?', answer: 'Passport photo sizes vary by country. The most common sizes are 2x2 inches (51x51 mm) for the US and India, and 35x45 mm for the UK, Europe, Australia, and many other nations. PixPassport automatically applies the correct rules for your selected country.' },
-  { question: 'Can I take a passport photo with my phone?', answer: 'Yes, modern smartphones are perfect for passport photos. Use natural lighting, avoid shadows on the face, and use an AI tool like PixPassport to automatically crop, remove the background, and verify 100% biometric compliance.' },
+  { question: 'Can I take a passport photo with my phone?', answer: 'Yes, modern smartphones are perfect for passport photos. Use natural lighting, avoid shadows on the face, and use a professional tool like PixPassport to automatically crop, remove the background, and verify 100% biometric compliance.' },
   { question: 'How much does PixPassport cost?', answer: 'PixPassport processes your photo for a small one-time fee (typically around $5.99). You receive a fully compliant digital file and a 4x6 printable sheet, saving you significant money compared to studio or pharmacy pricing.' },
-  { question: 'How do I ensure my photo won\'t be rejected?', answer: 'To avoid rejection, ensure even lighting, a neutral expression, and no glasses (for most countries). Our AI validator performs 64+ biometric checks to ensure your photo matches the exact standards used by immigration agencies.' },
+  { question: 'How do I ensure my photo won\'t be rejected?', answer: 'To avoid rejection, ensure even lighting, a neutral expression, and no glasses (for most countries). Our biometric validator performs 64+ checks to ensure your photo matches the exact standards used by immigration agencies.' },
   { question: 'Is my data safe with PixPassport?', answer: 'Absolutely. All uploaded photos are automatically and permanently deleted from our servers within 24 hours. We never share or sell your personal data, and we are fully GDPR and CCPA compliant.' },
 ];
 
@@ -508,9 +508,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                   Avoid Common Rejections Instantly
                 </h2>
                 <p className="text-slate-400 mb-10 max-w-xl mx-auto text-lg leading-relaxed relative z-10 font-medium">
-                  Our AI ensures your photo meets 2026 biometric standards: perfect 600x600 size, correct head ratio, and pure white background.
+                  We ensure your photo meets 2026 biometric standards: perfect 600x600 size, correct head ratio, and pure white background.
                 </p>
-                <Link href="/tool" className="inline-flex items-center justify-center bg-lime-500 hover:bg-lime-400 text-slate-950 font-bold text-xl py-4 px-10 rounded-2xl transition-all shadow-xl shadow-lime-500/20 group/btn relative z-10">
+                <Link href="/passport-photo-online" className="inline-flex items-center justify-center bg-lime-500 hover:bg-lime-400 text-slate-950 font-bold text-xl py-4 px-10 rounded-2xl transition-all shadow-xl shadow-lime-500/20 group/btn relative z-10">
                   Fix My Photo Now
                   <svg className="w-5 h-5 ml-2 group-hover/btn:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M14 5l7 7m0 0l-7 7m7-7H3" />

@@ -5,7 +5,7 @@ import Breadcrumbs from "../components/Breadcrumbs";
 
 export const metadata: Metadata = {
   title: "About Us - PixPassport",
-  description: "Learn about PixPassport's mission, our advanced biometric AI technology, and our strict commitment to your data privacy.",
+  description: "Learn about PixPassport's mission, our advanced biometric Compliance Processing technology, and our strict commitment to your data privacy.",
   alternates: {
     canonical: "https://www.pixpassport.com/about",
   },
@@ -41,9 +41,9 @@ export default function AboutPage() {
               </p>
               <p>
                 Founded by technologists and frequent travelers, <strong>PixPassport</strong> was built to solve this exact problem. 
-                Our platform leverages advanced artificial intelligence and biometric scanning algorithms to check your photos 
+                Our platform leverages advanced biometric detection and scanning algorithms to check your photos 
                 against the exact technical standards used by immigration agencies worldwide, including the U.S. State Department, UK HMPO, and ICAO.
-                You can <Link href="/visa-photo-validator" className="text-lime-600 font-semibold hover:underline">validate your photo for free</Link> or <Link href="/tool" className="text-lime-600 font-semibold hover:underline">create a compliant photo</Link> in seconds.
+                You can <Link href="/visa-photo-validator" className="text-lime-600 font-semibold hover:underline">validate your photo for free</Link> or <Link href="/passport-photo-online" className="text-lime-600 font-semibold hover:underline">create a compliant photo</Link> in seconds.
               </p>
             </div>
           </div>
@@ -55,7 +55,7 @@ export default function AboutPage() {
             </h2>
             <div className="prose prose-slate max-w-none text-gray-600 leading-relaxed">
               <p>
-                Our proprietary AI engine instantly performs over 15 distinct biometric checks in less than five seconds. 
+                Our proprietary Compliance Processing engine instantly performs over 15 distinct biometric checks in less than five seconds. 
                 When you upload a photo, our system measures your eye level, calculates your head-to-image ratio, 
                 detects compliance issues like glasses or uneven lighting, and mathematically strips away messy backgrounds, 
                 replacing them with a pure white (RGB 255, 255, 255) canvas. Learn more about common rejection reasons in our <Link href="/faq" className="text-lime-600 font-semibold hover:underline">FAQ</Link>.
@@ -80,7 +80,7 @@ export default function AboutPage() {
               </p>
               <ul className="list-disc pl-5 space-y-2 mt-4 marker:text-lime-500">
                 <li><strong>No Permanent Storage:</strong> All uploaded photos are automatically and permanently deleted from our servers within 24 hours.</li>
-                <li><strong>No Model Training:</strong> We never use your face or personal photos to train our AI models.</li>
+                <li><strong>No Model Training:</strong> We never use your face or personal photos to train any models.</li>
                 <li><strong>Secure Downloads:</strong> Your processed, compliant photos are delivered via secure, expiring download links.</li>
                 <li><strong>GDPR & CCPA Compliant:</strong> We strictly adhere to global privacy regulations. We do not sell your personal data.</li>
               </ul>
@@ -97,7 +97,7 @@ export default function AboutPage() {
         <div className="max-w-4xl mx-auto px-4">
           <h3 className="text-xl font-bold text-slate-900 mb-6 text-center">Explore More</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <Link href="/tool" className="p-4 bg-gray-50 rounded-xl text-center hover:bg-lime-50 hover:border-lime-200 border border-gray-100 transition-all">
+            <Link href="/passport-photo-online" className="p-4 bg-gray-50 rounded-xl text-center hover:bg-lime-50 hover:border-lime-200 border border-gray-100 transition-all">
               <span className="text-2xl block mb-2">📸</span>
               <span className="text-sm font-bold text-slate-900">Create Photo</span>
             </Link>

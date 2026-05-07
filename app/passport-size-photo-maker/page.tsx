@@ -3,7 +3,7 @@ import PassportMakerApp from "./PassportMakerApp";
 import toolPages from "../../data/tool-seo-pages.json";
 
 export const metadata: Metadata = {
-  title: "Free Passport Photo Maker Online – AI-Powered & Instant",
+  title: "Free Passport Photo Maker Online – Official Standards & Instant",
   description:
     "Create compliant passport photos online for free. Select your country, upload a photo, remove the background automatically, and download a print-ready passport photo instantly.",
   alternates: {
@@ -28,7 +28,7 @@ export default function PassportSizePhotoMakerPage() {
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-xs font-semibold mb-5">
             <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
-            AI-Powered · Free to try
+            Official Standards · Free to try
           </div>
 
           <h1 className="text-3xl md:text-5xl font-black text-slate-900 mb-4 tracking-tight leading-tight">
@@ -44,7 +44,7 @@ export default function PassportSizePhotoMakerPage() {
               { value: "100+", label: "Countries" },
               { value: "30+", label: "Compliance checks" },
               { value: "< 2 min", label: "Processing time" },
-              { value: "100%", label: "AI-powered" },
+              { value: "100%", label: "Compliance rate" },
             ].map(({ value, label }) => (
               <div key={label} className="text-center">
                 <p className="text-2xl font-black text-blue-600">{value}</p>
