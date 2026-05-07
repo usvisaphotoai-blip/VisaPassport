@@ -177,7 +177,7 @@ function PhotoPanel({
           <div>
             <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Your Photo</p>
             <p className="text-sm font-bold text-slate-900 mt-0.5 flex items-center gap-1.5">
-              <span>{spec?.flag || "📄"}</span> {spec?.name || "Document Photo"}
+              <span>{spec?.flag || "📄"}</span> {spec?.country || "Document Photo"}
             </p>
           </div>
           
@@ -283,7 +283,7 @@ function OrderPanel({
                 <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Order Summary</p>
                 <h2 className="text-xl font-black text-slate-900 leading-tight">
                   Get Your Official<br />
-                  <span className="text-lime-600">{productName} Photo</span>
+                  <span className="text-lime-600">{productName} </span>
                 </h2>
               </div>
 
@@ -694,7 +694,7 @@ export default function PreviewClient({
           <div className="mb-6 text-center lg:text-left">
             <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Preview & Download</p>
             <h1 className="text-2xl font-black text-slate-900">
-              Your  <span className="text-lime-600">{spec?.country || "US"} {docCategory} Photo</span> Is Ready
+              Your  <span className="text-lime-600">ID Photo</span> Is Ready {spec?.flag || ""} {spec?.country || ""}
             </h1>
           </div>
 
