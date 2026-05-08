@@ -662,7 +662,7 @@
   <!-- ITALY (Schengen) -->
   <url>
     <loc>https://www.pixpassport.com/italy-passport-photo-editor</loc>
-    <lastmod>2026-04-12</lastmod>
+    <lastmod>2026-05-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -677,7 +677,7 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/italy-visa-photo-editor</loc>
-    <lastmod>2026-04-12</lastmod>
+    <lastmod>2026-05-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -1072,7 +1072,7 @@
   <!-- POLAND (Schengen) -->
   <url>
     <loc>https://www.pixpassport.com/poland-passport-photo-editor</loc>
-    <lastmod>2026-04-12</lastmod>
+    <lastmod>2026-05-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -1087,7 +1087,7 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/poland-visa-photo-editor</loc>
-    <lastmod>2026-04-12</lastmod>
+    <lastmod>2026-05-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -1392,13 +1392,13 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/turkey-passport-photo-editor</loc>
-    <lastmod>2026-04-12</lastmod>
+    <lastmod>2026-05-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/turkey-visa-photo-editor</loc>
-    <lastmod>2026-04-12</lastmod>
+    <lastmod>2026-05-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -1416,13 +1416,13 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/uk-passport-photo-editor</loc>
-    <lastmod>2026-04-12</lastmod>
+    <lastmod>2026-05-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/uk-visa-photo-editor</loc>
-    <lastmod>2026-04-12</lastmod>
+    <lastmod>2026-05-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
