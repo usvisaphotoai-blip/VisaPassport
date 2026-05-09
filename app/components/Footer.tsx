@@ -22,6 +22,7 @@ export default function Footer() {
         { label: "Free Photo Validator", href: "/visa-photo-validator" },
         { label: "Passport Photo Directory", href: "/passport-photos" },
         { label: "Visa Photo Directory", href: "/visa-photo" },
+        { label: "Visa Guide to Country", href: "https://visaguide.cloud/" },
         { label: "Blog & Guides", href: "/blog" },
         { label: "FAQ", href: "/faq" },
       ],
@@ -80,9 +81,23 @@ export default function Footer() {
               <ul className="space-y-3">
                 {section.items.map((item) => (
                   <li key={item.label}>
-                    <Link href={item.href} className="text-sm font-medium text-slate-400 hover:text-lime-400 transition-colors">
-                      {item.label}
-                    </Link>
+                    {item.href.startsWith("http") ? (
+                      <a
+                        href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm font-medium text-slate-400 hover:text-lime-400 transition-colors"
+                      >
+                        {item.label}
+                      </a>
+                    ) : (
+                      <Link
+                        href={item.href}
+                        className="text-sm font-medium text-slate-400 hover:text-lime-400 transition-colors"
+                      >
+                        {item.label}
+                      </Link>
+                    )}
                   </li>
                 ))}
               </ul>
