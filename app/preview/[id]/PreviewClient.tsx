@@ -48,14 +48,14 @@ const METRIC_FIXES = [
 
   // Face & positioning fixes
   { key: "face_centered", label: "Face centered in frame", icon: "✓" },
- 
+
   { key: "eye_alignment_fixed", label: "Eye level balanced horizontally", icon: "✓" },
   { key: "chin_spacing_fixed", label: "Chin spacing adjusted to specification", icon: "✓" },
 
 
   // Image enhancement fixes
   { key: "lighting_balanced", label: "Lighting balanced for facial visibility", icon: "✓" },
- 
+
   { key: "white_balance_fixed", label: "Color balance normalized", icon: "✓" },
   { key: "sharpness_enhanced", label: "Image sharpness enhanced", icon: "✓" },
 
@@ -169,7 +169,7 @@ function PhotoPanel({
               <span>{spec?.flag || "📄"}</span> {spec?.country || "Document Photo"}
             </p>
           </div>
-          
+
         </div>
 
         {/* Photo */}
@@ -204,7 +204,7 @@ function PhotoPanel({
               <Icon d={ICONS.photo} size={14} className="text-lime-600" />
             </div>
             <div>
-             
+
               <p className="text-sm font-bold text-slate-900">What We Fixed In Your Photo</p>
             </div>
           </div>
@@ -220,7 +220,7 @@ function PhotoPanel({
         </div>
       )}
 
-     
+
     </div>
   );
 }
@@ -258,13 +258,13 @@ function OrderPanel({
             <div className="space-y-4">
               {/* Header */}
               <div>
-                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Order Summary</p>
-             
+                <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">Order Summary - Accepted for passport & visa applications</p>
+
               </div>
 
-            
 
-           
+
+
 
               {/* Plans */}
               <div className="space-y-3">
@@ -280,18 +280,18 @@ function OrderPanel({
                 >
                   <div className="flex justify-between items-start mb-2">
                     <div>
-                      
+
                       <h4 className="text-sm font-bold text-slate-900 mt-1">Standard Pack</h4>
                     </div>
                     <div className="text-right">
                       <p className="text-xl font-black text-slate-900">{localPrice?.formatted}</p>
-                      <p className="text-[10px] text-slate-400 line-through">$9.99</p>
+
                     </div>
                   </div>
                   <ul className="space-y-1.5">
-                      
-                    {[" Biometric Check","100% Acceptance Guaranteed", "Background Removal", "Instant Digital Photo For Submission", "A4 Print Sheet"].map(f => (
-                      <li key={f} className="flex items-center gap-2 text-[11px] text-slate-600 font-medium">
+
+                    {[" Biometric Check", "100% Acceptance Guaranteed", "Background Removal", "Instant Digital Photo For Submission", "A4 Print Sheet"].map(f => (
+                      <li key={f} className="flex items-center gap-2 text-[13px] text-slate-600 font-medium">
                         <Icon d={ICONS.check} size={12} className={!isExpertPlan ? "text-emerald-500" : "text-slate-300"} stroke={2.5} />
                         {f}
                       </li>
@@ -324,18 +324,19 @@ function OrderPanel({
                     </div>
                     <div className="text-right">
                       <p className="text-xl font-black text-slate-900">{expertPrice?.formatted}</p>
-                      <p className="text-[10px] text-slate-400 line-through">$14.99</p>
+
                     </div>
                   </div>
                   <ul className="space-y-1.5">
                     {[
                       "Everything in Standard",
-                      "Human Expert Manual Review",
-                      "Subtle Error Correction",
+                      "Reviewed by passport photo expert",
+                      "Extra compliance verifications",
+                      "Reduce rejection risks",
                       "100% Acceptance Guaranteed",
                       "Email Delivery Included",
                     ].map(f => (
-                      <li key={f} className="flex items-center gap-2 text-[11px] text-slate-600 font-medium">
+                      <li key={f} className="flex items-center gap-2 text-[14px] text-slate-600 font-medium">
                         <Icon d={ICONS.check} size={12} className={isExpertPlan ? "text-blue-500" : "text-slate-300"} stroke={2.5} />
                         {f}
                       </li>
@@ -467,7 +468,7 @@ function ZoomOverlay({ url, hasPaid, onClose }: { url: string; hasPaid: boolean;
       </button>
 
       <div
-    
+
         onClick={(e) => e.stopPropagation()}
         style={{ animation: "zoomIn 250ms cubic-bezier(0.22,1,0.36,1) forwards" }}
       >
@@ -478,7 +479,7 @@ function ZoomOverlay({ url, hasPaid, onClose }: { url: string; hasPaid: boolean;
             draggable={false}
             onContextMenu={(e) => e.preventDefault()}
             className="w-full h-auto block"
-          
+
           />
           {!hasPaid && (
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -662,7 +663,7 @@ export default function PreviewClient({
         <div className="w-full max-w-6xl">
           {/* Header */}
           <div className="mb-3 text-center lg:text-left">
- 
+
             <h1 className="text-2xl font-black text-slate-900">
               Your  <span className="text-lime-600">ID Photo</span> Is Ready {spec?.flag || ""} {spec?.country || ""}
             </h1>
