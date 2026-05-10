@@ -117,7 +117,7 @@ export async function POST(req: Request) {
                   <h3 style="margin: 0 0 16px; font-size: 15px; color: #334155;">📸 Your Downloads</h3>
 
                   <div style="margin-bottom: 16px;">
-                    <p style="margin: 0 0 6px; font-size: 13px; color: #64748b; font-weight: 600;">Digital Photo (600×600, DS-160 Ready)</p>
+                    <p style="margin: 0 0 6px; font-size: 13px; color: #64748b; font-weight: 600;">Digital Photo (${spec.width_px}×${spec.height_px}, ${documentName} Ready)</p>
                     <a href="${photoDownloadUrl}" style="display: inline-block; background: #0f172a; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 700;">⬇ Download Photo</a>
                   </div>
 
@@ -137,11 +137,10 @@ export async function POST(req: Request) {
                 <div style="background: white; border-radius: 12px; padding: 20px; border: 1px solid #e2e8f0; margin-bottom: 20px;">
                   <h3 style="margin: 0 0 8px; font-size: 15px; color: #334155;">📋 Photo Specifications</h3>
                   <table style="width: 100%; font-size: 13px; color: #475569;">
-                    <tr><td style="padding: 4px 0;">Size</td><td style="text-align: right; font-weight: 600;">600×600 px (2×2 in)</td></tr>
-                    <tr><td style="padding: 4px 0;">Resolution</td><td style="text-align: right; font-weight: 600;">300 DPI</td></tr>
+                    <tr><td style="padding: 4px 0;">Size</td><td style="text-align: right; font-weight: 600;">${spec.width_px}×${spec.height_px} px ${spec.width_mm !== "unspecified" ? `(${spec.width_mm}×${spec.height_mm} mm)` : ""}</td></tr>
+                    <tr><td style="padding: 4px 0;">Resolution</td><td style="text-align: right; font-weight: 600;">${spec.dpi || 300} DPI</td></tr>
                     <tr><td style="padding: 4px 0;">Format</td><td style="text-align: right; font-weight: 600;">JPEG, sRGB</td></tr>
-                    <tr><td style="padding: 4px 0;">Background</td><td style="text-align: right; font-weight: 600;">White</td></tr>
-                    <tr><td style="padding: 4px 0;">File Size</td><td style="text-align: right; font-weight: 600;">Under 240 KB</td></tr>
+                    <tr><td style="padding: 4px 0;">Background</td><td style="text-align: right; font-weight: 600;">${spec.bg_color.charAt(0).toUpperCase() + spec.bg_color.slice(1)}</td></tr>
                   </table>
                 </div>
 

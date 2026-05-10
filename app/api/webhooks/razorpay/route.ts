@@ -99,13 +99,13 @@ export async function POST(req: Request) {
                         <h3 style="margin: 0 0 16px; font-size: 15px; color: #334155;">📸 Your Downloads</h3>
 
                         <div style="margin-bottom: 16px;">
-                          <p style="margin: 0 0 6px; font-size: 13px; color: #64748b; font-weight: 600;">Digital Photo (600×600, DS-160 Ready)</p>
+                          <p style="margin: 0 0 6px; font-size: 13px; color: #64748b; font-weight: 600;">Digital Photo Ready</p>
                           <a href="${photoDownloadUrl}" style="display: inline-block; background: #0f172a; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 700;">⬇ Download Photo</a>
                         </div>
 
                         ${printSheetDownloadUrl ? `
                         <div style="margin-bottom: 16px;">
-                          <p style="margin: 0 0 6px; font-size: 13px; color: #64748b; font-weight: 600;">A4 Print Sheet (20 photos, ready to cut)</p>
+                          <p style="margin: 0 0 6px; font-size: 13px; color: #64748b; font-weight: 600;">A4 Print Sheet (5 photos, ready to cut)</p>
                           <a href="${printSheetDownloadUrl}" style="display: inline-block; background: #166534; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 700;">⬇ Download Print Sheet</a>
                         </div>
                         ` : ''}
@@ -116,16 +116,6 @@ export async function POST(req: Request) {
                         </div>
                       </div>
 
-                      <div style="background: white; border-radius: 12px; padding: 20px; border: 1px solid #e2e8f0; margin-bottom: 20px;">
-                        <h3 style="margin: 0 0 8px; font-size: 15px; color: #334155;">📋 Photo Specifications</h3>
-                        <table style="width: 100%; font-size: 13px; color: #475569;">
-                          <tr><td style="padding: 4px 0;">Size</td><td style="text-align: right; font-weight: 600;">600×600 px (2×2 in)</td></tr>
-                          <tr><td style="padding: 4px 0;">Resolution</td><td style="text-align: right; font-weight: 600;">300 DPI</td></tr>
-                          <tr><td style="padding: 4px 0;">Format</td><td style="text-align: right; font-weight: 600;">JPEG, sRGB</td></tr>
-                          <tr><td style="padding: 4px 0;">Background</td><td style="text-align: right; font-weight: 600;">White</td></tr>
-                          <tr><td style="padding: 4px 0;">File Size</td><td style="text-align: right; font-weight: 600;">Under 240 KB</td></tr>
-                        </table>
-                      </div>
 
                       <div style="text-align: center; padding: 16px 0;">
                         <p style="font-size: 13px; color: #64748b; margin: 0 0 8px;"><strong>We'd love your feedback!</strong></p>

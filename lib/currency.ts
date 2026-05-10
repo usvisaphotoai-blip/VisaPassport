@@ -53,7 +53,7 @@ const COUNTRY_TO_CURRENCY: Record<string, string> = {
 const FIXED_PRICES: Record<string, { amount: number; symbol: string; decimals: number }> = {
   // Tier 1: Base ($5.99)
   USD: { amount: 5.99, symbol: "$", decimals: 2 },
-  EUR: { amount: 5.49, symbol: "€", decimals: 2 },
+  EUR: { amount: 5.99, symbol: "€", decimals: 2 },
   GBP: { amount: 5.49, symbol: "£", decimals: 2 },
   CHF: { amount: 5.99, symbol: "CHF", decimals: 2 },
   CAD: { amount: 7.99, symbol: "C$", decimals: 2 },
@@ -75,7 +75,7 @@ const FIXED_PRICES: Record<string, { amount: number; symbol: string; decimals: n
   DKK: { amount: 39, symbol: "kr", decimals: 0 },
   
   // Tier 3: ~50% Discount
-  INR: { amount: 249, symbol: "₹", decimals: 0 },
+  INR: { amount: 199, symbol: "₹", decimals: 0 },
   CNY: { amount: 29, symbol: "¥", decimals: 0 },
   BRL: { amount: 24, symbol: "R$", decimals: 0 },
   MXN: { amount: 89, symbol: "$", decimals: 0 },
