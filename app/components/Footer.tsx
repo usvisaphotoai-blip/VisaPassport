@@ -22,7 +22,7 @@ export default function Footer() {
         { label: "Free Photo Validator", href: "/visa-photo-validator" },
         { label: "Passport Photo Directory", href: "/passport-photos" },
         { label: "Visa Photo Directory", href: "/visa-photo" },
-        { label: "Visa Guide to Country", href: "https://visaguide.cloud/" },
+
         { label: "Blog & Guides", href: "/blog" },
         { label: "FAQ", href: "/faq" },
       ],
