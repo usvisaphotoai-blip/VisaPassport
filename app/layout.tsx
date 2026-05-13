@@ -95,7 +95,7 @@ export default function RootLayout({
               "@type": "WebApplication",
               name: "PixPassport",
               url: "https://www.pixpassport.com/",
-              description: "Free global passport, visa, and ID photo validator. Instantly verify biometric compliance for any country's requirements.",
+              description: "global passport photo maker tool, free visa, and ID photo validator. Instantly verify biometric compliance for any country's requirements.",
               applicationCategory: "UtilitiesApplication",
               operatingSystem: "All",
               offers: {

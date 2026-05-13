@@ -22,13 +22,13 @@ const jsonLd = {
       "operatingSystem": "All",
       "offers": {
         "@type": "Offer",
-        "price": "2.99",
+        "price": "5.99",
         "priceCurrency": "USD",
       },
       "aggregateRating": {
         "@type": "AggregateRating",
         "ratingValue": "4.9",
-        "ratingCount": "17000"
+        "ratingCount": "170"
       }
     },
     {
