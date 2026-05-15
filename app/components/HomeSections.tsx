@@ -944,64 +944,7 @@ export default function HomeSections({
         </div>
       </section>
 
-      {/* ────────── COMPARISON TABLE ────────── */}
-      <section className="hc-sec hc-sec-alt">
-        <div className="hc-sec-in">
-          <div className="hc-head">
-            <span className="hc-label">Why Us</span>
-            <h2 className="hc-h2">PixPassport vs. Your Alternatives</h2>
-            <p className="hc-sub">
-              See why thousands choose our professional tool over photo studios and other
-              online services.
-            </p>
-          </div>
-
-          {/* Desktop table */}
-          <div className="hc-cmp-table-wrap">
-            <table className="hc-cmp-table">
-              <thead>
-                <tr>
-                  <th className="hc-cmp-th hc-cmp-th-feat">Feature</th>
-                  <th className="hc-cmp-th hc-cmp-th-us">PixPassport</th>
-                  <th className="hc-cmp-th hc-cmp-th-alt">Photo Studio</th>
-                  <th className="hc-cmp-th hc-cmp-th-alt">Other Online Tools</th>
-                </tr>
-              </thead>
-              <tbody>
-                {comparisonRows.map(([feat, us, studio, other], i) => (
-                  <tr key={i} className={i % 2 === 0 ? "hc-cmp-row-even" : "hc-cmp-row-odd"}>
-                    <td className="hc-cmp-td hc-cmp-td-feat">{feat}</td>
-                    <td className={`hc-cmp-td hc-cmp-td-us ${i % 2 === 0 ? "hc-cmp-us-even" : "hc-cmp-us-odd"}`}>{us}</td>
-                    <td className="hc-cmp-td hc-cmp-td-alt">{studio}</td>
-                    <td className="hc-cmp-td hc-cmp-td-alt">{other}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          {/* Mobile cards */}
-          <div className="hc-cmp-cards">
-            {comparisonRows.map(([feat, us, studio, other], i) => (
-              <div key={i} className="hc-cmp-card">
-                <div className="hc-cmp-card-feat">{feat}</div>
-                <div className="hc-cmp-card-row hc-cmp-card-row-us">
-                  <span className="hc-cmp-card-label">PixPassport</span>
-                  <span className="hc-cmp-card-val hc-cmp-card-val-us">{us}</span>
-                </div>
-                <div className="hc-cmp-card-row">
-                  <span className="hc-cmp-card-label">Photo Studio</span>
-                  <span className="hc-cmp-card-val">{studio}</span>
-                </div>
-                <div className="hc-cmp-card-row">
-                  <span className="hc-cmp-card-label">Other Online</span>
-                  <span className="hc-cmp-card-val">{other}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+     
 
       {/* ────────── PRICING ────────── */}
       <section className="hc-sec">
@@ -1088,23 +1031,7 @@ export default function HomeSections({
         {seoContent || defaultSeoContent}
       </section>
 
-      {/* ────────── FINAL CTA ────────── */}
-      <section className="hc-sec hc-sec-dk hc-final">
-        <h2 className="hc-final-h2">Ready to Get Your Compliant Photo?</h2>
-        <p className="hc-final-p">
-          Don't risk rejection. Validate your photo for free and get a
-          compliant version in under a minute.
-        </p>
-        <a href="/passport-photo-online" className="hc-btn-final">
-          Check Your Photo Free →
-        </a>
-        <div
-          className="hc-final-note"
-          style={{ color: "white", opacity: 0.7 }}
-        >
-          No account required · Free validation · $5.99 to download
-        </div>
-      </section>
+     
     </>
   );
 }

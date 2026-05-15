@@ -45,25 +45,25 @@ export default function TocSidebar({ headings }: { headings: TOCPageHeading[] })
   if (!headings.length) return null;
 
   return (
-    <div className="sticky top-28 space-y-6">
+    <div className="sticky top-24 lg:top-28 space-y-6">
       <div>
-        <div className="flex items-center gap-2 mb-6">
-          <div className="w-1.5 h-6 bg-lime-500 rounded-full" />
-          <h4 className="text-sm font-bold text-slate-900 uppercase tracking-widest">
+        <div className="flex items-center gap-2 mb-4 sm:mb-6">
+          <div className="w-1 h-5 sm:h-6 bg-lime-500 rounded-full" />
+          <h4 className="text-xs sm:text-sm font-bold text-slate-900 uppercase tracking-widest">
             On This Page
           </h4>
         </div>
-        <nav className="space-y-1">
+        <nav className="space-y-0.5 sm:space-y-1">
           {headings.map((heading) => (
             <a
               key={heading.id}
               href={`#${heading.id}`}
               onClick={(e) => handleClick(e, heading.id)}
-              className={`block text-sm py-2 px-3 rounded-lg transition-all border-l-2 ${
+              className={`block text-xs sm:text-sm py-1.5 sm:py-2 px-2 sm:px-3 rounded-lg transition-all border-l-2 ${
                 activeId === heading.id
                   ? "text-lime-700 bg-lime-50 border-lime-600 font-bold"
                   : "text-slate-500 border-transparent hover:text-slate-900 hover:bg-slate-50"
-              } ${heading.level === 3 ? "ml-4" : ""}`}
+              } ${heading.level === 3 ? "ml-3 sm:ml-4" : ""}`}
             >
               {heading.text}
             </a>
@@ -71,15 +71,15 @@ export default function TocSidebar({ headings }: { headings: TOCPageHeading[] })
         </nav>
       </div>
 
-      <div className="p-6 bg-slate-950 rounded-3xl text-white shadow-2xl relative overflow-hidden group">
-        <div className="absolute top-0 right-0 w-32 h-32 bg-lime-500/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700" />
-        <h4 className="font-bold text-xl mb-3 relative z-10">DS-160 Portal Error?</h4>
-        <p className="text-slate-400 text-sm mb-6 leading-relaxed relative z-10 font-medium">
+      <div className="p-4 sm:p-5 lg:p-6 bg-slate-950 rounded-2xl sm:rounded-3xl text-white shadow-2xl relative overflow-hidden group">
+        <div className="absolute top-0 right-0 w-24 h-24 sm:w-32 sm:h-32 lg:w-32 lg:h-32 bg-lime-500/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700" />
+        <h4 className="font-bold text-base sm:text-lg lg:text-xl mb-2 sm:mb-3 relative z-10">DS-160 Portal Error?</h4>
+        <p className="text-slate-400 text-xs sm:text-sm mb-4 sm:mb-6 leading-relaxed relative z-10 font-medium">
           Fix hair edges, remove background shadows, and validate 600x600 size instantly.
         </p>
-        <a 
-          href="/passport-photo-online" 
-          className="relative z-10 flex items-center justify-center w-full bg-lime-500 text-slate-950 font-bold py-3.5 rounded-2xl hover:bg-lime-400 transition-colors shadow-lg shadow-lime-500/20 text-sm"
+        <a
+          href="/passport-photo-online"
+          className="relative z-10 flex items-center justify-center w-full bg-lime-500 text-slate-950 font-bold py-2.5 sm:py-3 lg:py-3.5 rounded-xl sm:rounded-2xl hover:bg-lime-400 transition-colors shadow-lg shadow-lime-500/20 text-xs sm:text-sm"
         >
           Check Photo Free →
         </a>

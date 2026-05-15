@@ -7,338 +7,502 @@ const rawData = fs.readFileSync(dataPath, "utf8");
 let posts = JSON.parse(rawData);
 
 const newPost = {
-  "slug": "france-visa-requirements-latest-guide",
-  "title": "France Visa Photo Requirements (2026 Latest Guide): Size, Rules & Tips for Students, Professionals & Tourists",
-  "description": "Complete 2026 guide to France Schengen visa photo requirements. Covers official ICAO size (35–40×45mm), face height (32–36mm), background rules, file format, lighting, and tips for students, professionals & tourists. Verified against france-visas.gouv.fr.",
-  "date": "2026-05-13",
+  "slug": "india-visa-requirements-for-foreigners",
+  "title": "India Visa Requirements for Foreigners (2026 Complete Guide): e-Visa, Types, Fees, Photos & Application Process",
+  "description": "Complete 2026 guide to India visa requirements for foreign nationals. Covers e-Visa eligibility (166+ countries), types of visas, fees, photo specifications (2×2 inch/51×51mm), entry airports, FRRO registration, and step-by-step application process. Verified against indianvisaonline.gov.in, boi.gov.in, mha.gov.in and mea.gov.in.",
+  "date": "2026-05-15",
   "author": "PixPassport Team",
-  "featuredImage": "https://res.cloudinary.com/dipzpwbbk/image/upload/v1778666011/france-visa-photo-requirements-2026_ujgvwz.webp",
+  "featuredImage": "https://res.cloudinary.com/dipzpwbbk/image/upload/v1778863761/india-Visa-Requirements-for-Foreigners_gyycfq.webp",
 
   "content": `
-    <h1>France Visa Photo Requirements (2026 Latest Guide): Size, Rules & Tips for Students, Professionals & Tourists</h1>
+    <h1>India Visa Requirements for Foreigners (2026 Complete Guide): e-Visa, Types, Fees, Photos & Application Process</h1>
 
-    <p>Applying for a France visa — whether a short-stay Schengen tourist visa, a long-stay student visa, or a professional work permit — requires submitting a photograph that meets the official ICAO (International Civil Aviation Organisation) photo standards referenced directly by the French Ministry of Foreign Affairs on the official <strong>france-visas.gouv.fr</strong> portal.</p>
+    <p>Planning to travel to India in 2026? Whether you are visiting for tourism, business, medical treatment, or to meet family, obtaining the correct visa before arrival is a legal requirement for almost all foreign nationals. India operates one of the world's largest e-Visa systems, covering citizens of over 166 countries and territories — but the rules, fees, photo specifications, and entry requirements vary significantly by nationality and purpose of visit.</p>
 
-    <p>An incorrect photograph is one of the most common — and most avoidable — reasons for visa application delays and rejections. The biometric face-recognition systems used at French consulates and VFS Global / TLScontact visa application centres are sensitive to size, face coverage, lighting, and image quality. A photo that looks perfectly normal to the human eye can still fail automated checks if it falls outside the technical specifications.</p>
+    <p>This guide is compiled exclusively from official Indian government sources: the <strong>Bureau of Immigration (boi.gov.in)</strong>, the <strong>Indian Visa Online portal (indianvisaonline.gov.in)</strong>, the <strong>Ministry of Home Affairs (mha.gov.in)</strong>, and the <strong>Ministry of External Affairs (mea.gov.in)</strong>. Every factual claim is sourced from these portals. Visa rules can change — always verify the latest requirements at <strong>indianvisaonline.gov.in</strong> before submitting your application.</p>
 
-    <p>This guide covers every official France visa photo requirement for 2026, verified against <strong>france-visas.gouv.fr</strong> (the official French visa portal operated by the Ministry of Foreign Affairs) and the <strong>ICAO Doc 9303</strong> standard that France-Visas explicitly references for all photo submissions.</p>
+    <div class="my-6 p-5 bg-amber-50 border-l-4 border-amber-500 rounded-xl">
+      <p class="font-bold text-amber-900 mb-2">Important: Beware of Fake Visa Websites</p>
+      <p class="text-amber-800 text-sm">The Government of India has <strong>not authorised any agent or intermediary</strong> to charge fees for facilitating emergency or express visas or e-Visas. The only official Indian e-Visa application portal is <strong>indianvisaonline.gov.in/evisa</strong>. Any other website charging "service fees" or "express processing" fees for Indian government visas is unofficial. Report suspicious websites to Indian immigration authorities.</p>
+    </div>
 
-    <img
-      src="https://res.cloudinary.com/dipzpwbbk/image/upload/v1778666011/france-visa-photo-size-35x45mm-example_h8ralx.webp"
-      alt="France visa photo size example 35x45mm with face height measurement showing 32–36mm chin to forehead"
-      title="France Visa Photo Size — Official ICAO Dimensions 35×45mm"
-      loading="lazy"
-      class="w-full rounded-2xl shadow-md my-6"
-    />
+    <h2>Do Foreigners Need a Visa to Enter India?</h2>
 
-    <h2>France Visa Photo Requirements — Official Specifications</h2>
+    <p>According to the official <strong>Indian Visa Online portal (indianvisaonline.gov.in)</strong>, all foreign nationals entering India must possess a valid international travel document in the form of a national passport along with a valid visa issued by an Indian Mission or Post, or an e-Visa granted by the Bureau of Immigration — except for nationals specifically exempted under bilateral agreements.</p>
 
-    <p>According to the <strong>france-visas.gouv.fr FAQ</strong> (Ministry of Foreign Affairs, France), all visa applications require photographs that comply with the <strong>ICAO standard</strong>. France-Visas specifies two identical physical photographs for in-person applications, and one digital upload for online submissions. The photo must be recent and conform to reality.</p>
+    <p>The following nationalities are exempt from obtaining a visa before arrival, per official sources:</p>
+
+    <ul class="list-disc pl-6 my-4 space-y-2 text-gray-700">
+      <li><strong>Nepal and Bhutan:</strong> Citizens of Nepal and Bhutan do not require a visa to enter India. However, if entering India from China, Macau, Hong Kong, or Pakistan, a passport and visa are required. (Source: Bureau of Immigration, boi.gov.in)</li>
+      <li><strong>Maldives:</strong> Maldivian citizens visiting India for up to 90 days for tourism are exempt from visa requirements when holding a valid Maldivian passport, per the Incredible India government portal (incredibleindia.gov.in).</li>
+      <li><strong>Diplomatic and Official Passport holders:</strong> Subject to separate bilateral visa exemption agreements listed on the Ministry of External Affairs website (mea.gov.in/bvwa-menu.htm).</li>
+    </ul>
+
+    <p>All other foreign nationals — including citizens of the United States, United Kingdom, European Union, Canada, Australia, and most other countries — require either an e-Visa or a regular (sticker) visa issued by an Indian Mission or Post.</p>
+
+    <h2>What Is the India e-Visa?</h2>
+
+    <p>The India e-Visa (Electronic Travel Authorisation or ETA) is a fully online visa system operated by the Bureau of Immigration, Ministry of Home Affairs, Government of India. It allows eligible foreign nationals to apply for a visa from their home country without visiting an Indian embassy or consulate. According to <strong>indianvisaonline.gov.in</strong>, the e-Visa is available for tourism, business, medical treatment, and conference purposes.</p>
+
+    <p>Key official facts about the India e-Visa, per the Bureau of Immigration (boi.gov.in and indianvisaonline.gov.in):</p>
+
+    <ul class="list-disc pl-6 my-4 space-y-2 text-gray-700">
+      <li>The e-Visa is <strong>non-extendable</strong> and <strong>non-convertible</strong> once granted.</li>
+      <li>It is <strong>not valid for visiting Protected Areas, Restricted Areas, or Cantonment Areas</strong> — separate permission from civil authority is required for those zones.</li>
+      <li>Biometric details (fingerprints and photograph) are captured at immigration on arrival in India.</li>
+      <li>e-Visa holders <strong>must arrive through designated Immigration Check Posts</strong> (airports and seaports) — see the full list below.</li>
+      <li>The e-Visa fee is <strong>non-refundable</strong> whether the application is approved or rejected.</li>
+    </ul>
+
+    <h2>Types of India e-Visa — Official Categories</h2>
+
+    <p>According to the Ministry of Home Affairs document on visa details (mha.gov.in) and the Indian e-Visa portal (indianvisaonline.gov.in), there are three main sub-categories of India e-Visa:</p>
 
     <div class="overflow-x-auto my-8 rounded-2xl shadow-md border border-slate-200">
       <table class="w-full text-sm text-left">
         <thead>
-          <tr class="bg-blue-700 text-white">
-            <th class="px-4 py-3 font-semibold rounded-tl-2xl">Requirement</th>
-            <th class="px-4 py-3 font-semibold rounded-tr-2xl">Official Standard (france-visas.gouv.fr / ICAO Doc 9303)</th>
+          <tr class="bg-orange-700 text-white">
+            <th class="px-4 py-3 font-semibold rounded-tl-2xl">e-Visa Type</th>
+            <th class="px-4 py-3 font-semibold">Purpose</th>
+            <th class="px-4 py-3 font-semibold">Validity Options</th>
+            <th class="px-4 py-3 font-semibold rounded-tr-2xl">Entries</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-slate-100">
-          <tr class="bg-slate-50"><td class="px-4 py-3 font-semibold">Photo Width</td><td class="px-4 py-3">35mm to 40mm</td></tr>
-          <tr class="bg-white"><td class="px-4 py-3 font-semibold">Photo Height</td><td class="px-4 py-3">45mm (standard ICAO format)</td></tr>
-          <tr class="bg-slate-50"><td class="px-4 py-3 font-semibold">Face Height (chin to forehead, excluding hair)</td><td class="px-4 py-3">32mm to 36mm — 70% to 80% of the total image height</td></tr>
-          <tr class="bg-white"><td class="px-4 py-3 font-semibold">Background</td><td class="px-4 py-3">Plain white or very light grey — no patterns, shadows, or objects</td></tr>
-          <tr class="bg-slate-50"><td class="px-4 py-3 font-semibold">Expression</td><td class="px-4 py-3">Neutral — mouth closed, eyes open, looking directly at camera</td></tr>
-          <tr class="bg-white"><td class="px-4 py-3 font-semibold">Photo Age</td><td class="px-4 py-3">Recent — must conform to current appearance</td></tr>
-          <tr class="bg-slate-50"><td class="px-4 py-3 font-semibold">Glasses</td><td class="px-4 py-3">Not permitted under ICAO standard (referenced by france-visas.gouv.fr)</td></tr>
-          <tr class="bg-white"><td class="px-4 py-3 font-semibold">Head Coverings</td><td class="px-4 py-3">Not permitted except for religious or medical reasons</td></tr>
-          <tr class="bg-slate-50"><td class="px-4 py-3 font-semibold">Shadows</td><td class="px-4 py-3">None on face or background</td></tr>
-          <tr class="bg-white"><td class="px-4 py-3 font-semibold">Retouching / Filters</td><td class="px-4 py-3">Not permitted — colour neutrality and natural skin tone required</td></tr>
-          <tr class="bg-slate-50"><td class="px-4 py-3 font-semibold">Standard</td><td class="px-4 py-3">ICAO Doc 9303 / ISO IEC compliant</td></tr>
-          <tr class="bg-white"><td class="px-4 py-3 font-semibold">Identical copies required</td><td class="px-4 py-3">2 (physical in-person); 1 digital upload (online applications)</td></tr>
+          <tr class="bg-slate-50">
+            <td class="px-4 py-3 font-semibold">e-Tourist Visa</td>
+            <td class="px-4 py-3">Recreation, sightseeing, visiting friends/relatives, short-term yoga programmes, short courses (music, dance, cooking, language etc.)</td>
+            <td class="px-4 py-3">30 days / 1 year / 5 years</td>
+            <td class="px-4 py-3">Double (30-day); Multiple (1-yr & 5-yr)</td>
+          </tr>
+          <tr class="bg-white">
+            <td class="px-4 py-3 font-semibold">e-Business Visa</td>
+            <td class="px-4 py-3">All activities permitted under regular Business Visa</td>
+            <td class="px-4 py-3">1 year</td>
+            <td class="px-4 py-3">Multiple</td>
+          </tr>
+          <tr class="bg-slate-50">
+            <td class="px-4 py-3 font-semibold">e-Medical Visa</td>
+            <td class="px-4 py-3">Medical treatment including Indian systems of medicine (Ayurveda, Yoga, etc.)</td>
+            <td class="px-4 py-3">60 days</td>
+            <td class="px-4 py-3">Triple</td>
+          </tr>
+          <tr class="bg-white">
+            <td class="px-4 py-3 font-semibold">e-Medical Attendant Visa</td>
+            <td class="px-4 py-3">Accompanying an e-Medical Visa holder (up to 2 attendants)</td>
+            <td class="px-4 py-3">Co-terminus with principal e-Medical Visa</td>
+            <td class="px-4 py-3">Triple</td>
+          </tr>
+          <tr class="bg-slate-50">
+            <td class="px-4 py-3 font-semibold">e-Conference Visa</td>
+            <td class="px-4 py-3">Attending conferences, seminars, workshops organised by Government of India Ministries, State Governments, PSUs, and their subordinate organisations</td>
+            <td class="px-4 py-3">30 days</td>
+            <td class="px-4 py-3">Single</td>
+          </tr>
         </tbody>
       </table>
     </div>
 
     <div class="my-6 p-5 bg-blue-50 border-l-4 border-blue-500 rounded-xl">
       <p class="font-bold text-blue-900 mb-2">📋 Official Source Note</p>
-      <p class="text-blue-800 text-sm">The specifications above are drawn directly from the <strong>france-visas.gouv.fr FAQ</strong> and the <strong>ICAO photograph requirements document</strong> linked from the official France-Visas portal. France-Visas states: <em>"The photo should be between 35 and 40 mm wide. The size of the face should be 32 to 36 mm (70 to 80% of the picture) from chin to forehead (excluding hair) and comply with the ICAO standard."</em></p>
+      <p class="text-blue-800 text-sm">The above categories and entry rules are sourced directly from <strong>indianvisaonline.gov.in</strong> (Bureau of Immigration, Ministry of Home Affairs, Government of India). For maximum stay rules: the 1-year and 5-year e-Tourist Visa holders must not exceed <strong>180 days in India during one calendar year</strong>. The 30-day e-Tourist Visa permits a stay of 30 days from the date of arrival. Always confirm current rules at <a href="https://indianvisaonline.gov.in/evisa/tvoa.html" class="underline" target="_blank" rel="noopener noreferrer">indianvisaonline.gov.in/evisa/tvoa.html</a> before applying.</p>
     </div>
 
-    <h3>Photo Size — Width and Height</h3>
-    <p>The official france-visas.gouv.fr FAQ specifies that the photograph must be <strong>35mm to 40mm wide</strong> and conform to the standard ICAO portrait format of <strong>45mm height</strong>. The most common compliant size used at French consulates and visa application centres worldwide is <strong>35mm × 45mm</strong>, which is the standard Schengen biometric format. A width up to 40mm is also accepted, giving a small tolerance — but 35×45mm is the format to request at any photo studio.</p>
+    <h2>Types of Regular (Sticker) Visa — Indian Mission/Post</h2>
 
-    <h3>Face Height — The Critical Measurement</h3>
-    <p>This is the most precisely defined — and most commonly failed — requirement. The official france-visas.gouv.fr specification states that <strong>the face must measure 32mm to 36mm from chin to forehead (excluding hair)</strong>. This corresponds to 70%–80% of the total image height. This is measured from the bottom of the chin to the top of the forehead — not to the top of the hair. A common mistake is standing too far from the camera, producing a face height below 32mm, which will fail automated biometric scanning.</p>
+    <p>For those not eligible for e-Visa, or whose purpose of visit falls outside e-Visa categories, a regular visa must be obtained from the Indian Mission or Post (embassy/consulate) in your country. The Ministry of Home Affairs (mha.gov.in) recognises the following principal categories of regular visa:</p>
 
-    <h3>Background</h3>
-    <p>The background must be <strong>plain white or very light grey</strong>, uniformly lit with no shadows, patterns, textures, or other people or objects. The ICAO standard — which france-visas.gouv.fr explicitly references — requires a light, neutral background that creates clear contrast with the applicant's face. Any colour tint, shadow gradient, or visible pattern will cause rejection.</p>
-
-    <h3>Facial Expression</h3>
-    <p>Your expression must be <strong>neutral with your mouth fully closed</strong>. Eyes must be open, clearly visible, and looking directly at the camera lens. No smiling, squinting, frowning, or raised eyebrows. This requirement exists because ICAO-compliant facial recognition systems measure biometric distances between facial landmarks — altered expressions change these distances and reduce matching accuracy across border control databases.</p>
-
-    <h3>Age of Photo</h3>
-    <p>France-Visas states the photograph <strong>"must be recent and conform to reality."</strong> Standard consulate guidance across French embassies and VFS Global centres specifies a photo taken within the <strong>last 6 months</strong>, accurately reflecting your current appearance. If your appearance has significantly changed — new facial hair, different hairstyle, significant weight change — a new photo is required even within the 6-month window.</p>
-
-    <h3>Photo Quality</h3>
-    <p>The photograph must be <strong>in sharp focus</strong>, with no blur, pixelation, grain, or ink marks. Colour rendering must be natural — no oversaturation or desaturation. For physical submissions, the photo must be printed on professional photographic paper. The ICAO standard specifies <strong>even lighting without shadows, reflections, or excessive glare</strong>, with all facial features clearly visible.</p>
-
-    <h2>Technical Specifications — Digital Submissions</h2>
-
-    <h3>File Format and Pixel Dimensions</h3>
-    <p>For digital uploads via visa application portals and VFS Global / TLScontact centres, accepted file formats are <strong>JPG, JPEG, and PNG</strong> in the sRGB colour space. The minimum pixel dimensions are <strong>400 × 600 pixels</strong>. A recommended resolution of <strong>300 DPI</strong> or higher at the 35×45mm print dimensions — translating to approximately 413 × 531 pixels at 300 DPI — ensures the image meets biometric quality checks. Any modern smartphone (12 megapixels or above) in good lighting will produce sufficient resolution.</p>
-
-    <h3>File Size</h3>
-    <p>For digital submissions through VFS Global and TLScontact centres handling French visa applications, the maximum accepted file size is <strong>120 KB</strong>. This is a strict technical limit — files exceeding this threshold will trigger an upload error. If your photo file is larger, export it as a compressed JPEG at high quality (not maximum) to bring it within the limit while retaining sufficient detail. The minimum pixel requirement of 400×600 pixels still applies, so do not over-compress.</p>
-
-    <div class="my-6 p-5 bg-amber-50 border-l-4 border-amber-500 rounded-xl">
-      <p class="font-bold text-amber-900 mb-2">⚠️ Important: File Size Limit</p>
-      <p class="text-amber-800 text-sm">The digital file size limit for VFS Global and TLScontact digital submissions for French visa applications is <strong>120 KB maximum</strong>. This is commonly misquoted as 4 MB or higher. Export your photo as a compressed JPEG and verify the file size before uploading. Files over 120 KB will be rejected at the upload stage.</p>
-    </div>
-
-    <h3>Printed vs Digital Requirements</h3>
-    <p>For in-person consulate and visa centre applications, <strong>two identical physical prints</strong> on photographic paper (35×45mm) are required. For online portal submissions, a single digital image upload is accepted. Both routes require identical subject-side standards — face coverage, background, expression, lighting — with only the delivery format differing. Confirm your application method through your VFS Global or TLScontact confirmation to ensure you prepare the correct format.</p>
-
-    <h3>Lighting and Contrast</h3>
-    <p>Lighting must be <strong>even and diffuse</strong> with no shadows on either the face or the background. The ICAO standard (Doc 9303) specifies that all facial features must be clearly visible with no reflections, harsh highlights, or shadow areas. Stand approximately 50cm from your background to prevent your shadow from falling on it. For applicants with very light skin tones, a pale grey background provides better biometric contrast than pure white.</p>
-
-    <img
-      src="https://res.cloudinary.com/dipzpwbbk/image/upload/v1778666011/france-visa-photo-correct-vs-incorrect-example_ylpttb.webp"
-      alt="Correct vs incorrect France visa photo examples — lighting, background shadows, face coverage comparison"
-      title="France Visa Photo — Correct vs Incorrect Comparison Guide"
-      loading="lazy"
-      class="w-full rounded-2xl shadow-md my-6"
-    />
-
-    <h2>Do's and Don'ts for France Visa Photos</h2>
-
-    <div class="grid md:grid-cols-2 gap-6 my-8">
-      <div class="bg-green-50 border border-green-200 rounded-2xl p-6">
-        <h3 class="text-green-800 font-bold text-lg mb-4">✅ Do's</h3>
-        <ul class="space-y-2 text-green-900 text-sm">
-          <li>✔ Use a plain white or very light grey background</li>
-          <li>✔ Ensure face height is 32–36mm (chin to forehead, excluding hair)</li>
-          <li>✔ Centre your face squarely in the frame</li>
-          <li>✔ Keep your expression neutral — mouth closed, eyes fully open</li>
-          <li>✔ Ensure even, shadow-free lighting on face and background</li>
-          <li>✔ Look directly at the camera lens</li>
-          <li>✔ Ensure your full face, chin, and forehead are visible</li>
-          <li>✔ Use a recent photo taken within 6 months</li>
-          <li>✔ Use minimum 300 DPI resolution; keep file under 120 KB for digital</li>
-          <li>✔ Disable all phone beauty filters, portrait mode, and AI enhancements</li>
-          <li>✔ Have both ears visible (unless covered for religious reasons)</li>
-          <li>✔ Use a photo that accurately reflects your current appearance</li>
-        </ul>
-      </div>
-      <div class="bg-red-50 border border-red-200 rounded-2xl p-6">
-        <h3 class="text-red-800 font-bold text-lg mb-4">❌ Don'ts</h3>
-        <ul class="space-y-2 text-red-900 text-sm">
-          <li>✘ Do not wear glasses — not permitted under ICAO standard</li>
-          <li>✘ Do not tilt, turn, or angle your head</li>
-          <li>✘ Do not smile or alter your expression</li>
-          <li>✘ Do not wear a hat, cap, or head covering (except religious/medical)</li>
-          <li>✘ Do not use patterned, coloured, or textured backgrounds</li>
-          <li>✘ Do not apply filters, skin smoothing, brightness edits, or AI tools</li>
-          <li>✘ Do not submit a selfie — arm-length photos produce insufficient face coverage</li>
-          <li>✘ Do not submit a blurry, pixelated, or low-resolution photo</li>
-          <li>✘ Do not upload a digital file exceeding 120 KB</li>
-          <li>✘ Do not wear sunglasses, tinted lenses, or coloured contacts</li>
-          <li>✘ Do not submit a photo taken more than 6 months ago</li>
-          <li>✘ Do not print on standard inkjet paper — use photographic paper only</li>
-        </ul>
-      </div>
-    </div>
-
-    <h2>France Visa Photo Requirements by Applicant Type</h2>
-
-    <p>The official ICAO-compliant photo specifications are identical for all France visa categories. However, different applicant groups make predictably different mistakes. Here is what to watch for depending on your visa type.</p>
-
-    <h3>Students — Campus France / Long-Stay Student Visa (India to France)</h3>
-
-    <p>Indian students applying for a French long-stay student visa (type D) through Campus France represent one of the largest applicant groups. The photo requirements are identical to all other visa categories, but several errors appear repeatedly in this group:</p>
-
-    <ul>
-      <li><strong>Selfies:</strong> The face height achieved at arm's length is almost always below the 32mm minimum. Use a tripod or ask someone else to hold the phone, positioned at eye level, using the rear camera.</li>
-      <li><strong>Beauty mode and filters left active:</strong> Many Android and iPhone camera apps apply skin smoothing, eye widening, or scene enhancements by default. These alter facial geometry in ways that fail biometric verification. Go to Camera Settings and turn off every enhancement before the shoot.</li>
-      <li><strong>Old passport photos reused:</strong> Student applicants commonly reuse photos from earlier visa applications. If the photo is more than 6 months old or your appearance has changed, take a new one — consulate staff check this during in-person verification.</li>
-      <li><strong>Coloured or patterned backgrounds:</strong> A white bedsheet pinned against a plain wall works well as long as it is completely crease-free and evenly lit.</li>
+    <ul class="list-disc pl-6 my-4 space-y-2 text-gray-700">
+      <li><strong>Tourist Visa (T):</strong> For recreation, sightseeing, casual visits to friends or relatives, short-term yoga programmes. Not for activities that generate income.</li>
+      <li><strong>Business Visa (B):</strong> For business activities, trade visits, establishing business ventures, attending business meetings.</li>
+      <li><strong>Employment Visa (E):</strong> For foreign nationals taking up employment with Indian companies or organisations. Requires a minimum salary threshold (₹16.25 lakhs per annum as per MHA guidelines). Not granted for manual or clerical work.</li>
+      <li><strong>Student Visa (S):</strong> For pursuing full-time academic or research programmes at recognised Indian educational institutions.</li>
+      <li><strong>Medical Visa (MED):</strong> For medical treatment at recognised/specialised hospitals in India. Requires a letter from the hospital.</li>
+      <li><strong>Medical Attendant Visa (MED-X):</strong> For attendants accompanying a Medical Visa holder. Maximum of 2 attendants per patient.</li>
+      <li><strong>Conference Visa (C):</strong> For attending conferences, seminars, workshops, etc.</li>
+      <li><strong>Transit Visa (TR):</strong> For transiting through India to a destination outside India. Valid for a stay not exceeding 3 days for each leg of the journey. Can be issued for 2 entries.</li>
+      <li><strong>Research Visa (R):</strong> For research work at recognised institutions.</li>
+      <li><strong>Journalist Visa (J):</strong> For journalists and media personnel.</li>
+      <li><strong>Intern Visa (IN):</strong> For foreign nationals undertaking internship with Indian organisations.</li>
+      <li><strong>Film Visa (F):</strong> For foreign nationals involved in film shooting in India.</li>
+      <li><strong>Missionary Visa (M):</strong> For religious/missionary activities.</li>
     </ul>
 
-    <h3>Professionals — Passeport Talent / Work Visa / ICT Applicants</h3>
+    <p>Apply for regular visas through the official portal at <strong>indianvisaonline.gov.in</strong> (select "Regular/Paper visa by Indian Mission/Post").</p>
 
-    <p>For Passeport Talent (talent passport) and Intra-Company Transfer (ICT) visa applicants, the photo must meet the same ICAO technical standards — professional visa applications carry no additional latitude on photo requirements. Practical considerations specific to this group:</p>
-
-    <ul>
-      <li><strong>Dress code:</strong> France-Visas guidance does not mandate any specific clothing. Wear something plain and neutral. A shirt or blouse in a solid, muted colour works well — it keeps visual attention on the face and avoids the automated border area flagging that high-contrast patterns near the chin can occasionally trigger.</li>
-      <li><strong>Glasses:</strong> Even if you wear prescription glasses every day, remove them for the photo. France-Visas references the ICAO standard, under which glasses are not permitted. Glare and lens reflections on any lens type — including anti-reflective coated lenses — cause biometric processing failures.</li>
-      <li><strong>Facial hair consistency:</strong> Ensure your appearance in the photo matches your current appearance at the time of travel. Changes in beard or moustache style after photo submission may require a new photo at the application centre.</li>
-    </ul>
-
-    <h3>Tourists — Short-Stay Schengen Visa (Type C)</h3>
-
-    <p>Tourist visa applicants must meet the same photo standards as long-stay applicants — there is no simplified process for short stays. The most common error among tourist applicants is submitting a cropped holiday or travel photograph. These almost always fail on background, lighting, or face coverage grounds. A purpose-taken photo against a plain background takes under five minutes to arrange and is far more reliable than cropping an existing photo.</p>
-
-    <h3>Children and Infants</h3>
-
-    <p>Children of all ages applying for a France Schengen visa require an individual photograph — a child cannot appear in a parent's photo. The same ICAO-compliant 35×45mm dimensions and 32–36mm face height rules apply. Official guidance provides limited flexibility for very young children:</p>
-
-    <ul>
-      <li><strong>Eyes:</strong> Infants who cannot sustain a direct forward gaze are accepted with minor deviations, but the face must still be clearly visible and centred.</li>
-      <li><strong>Mouth:</strong> A slightly open mouth is accepted for infants and very young toddlers who cannot hold a closed expression.</li>
-      <li><strong>Support:</strong> If the infant must be supported, ensure no hands, arms, or other objects are visible in the frame. A car seat covered with a plain white cloth, photographed from directly above, is a practical solution for newborns.</li>
-      <li><strong>Children under 12:</strong> France-Visas confirms that children under 12 are exempt from biometric data collection (fingerprints) at the application stage, but an ICAO-compliant photo must still be included in the application file.</li>
-    </ul>
-
-    <img
-      src="https://res.cloudinary.com/dipzpwbbk/image/upload/v1778666011/france-visa-photo-lighting-setup-home-tips_dn1hli.webp"
-      alt="Home photography setup for France visa photo — window light, white background, rear camera on tripod"
-      title="How to Take a Compliant France Visa Photo at Home"
-      loading="lazy"
-      class="w-full rounded-2xl shadow-md my-6"
-    />
-
-    <h2>Common Reasons for France Visa Photo Rejection</h2>
-
-    <ol>
-      <li><strong>Face height below 32mm:</strong> The most common automated rejection trigger — face occupying less than 70% of image height, usually from standing too far from the camera.</li>
-      <li><strong>Incorrect photo width or dimensions:</strong> Photo outside the 35–40mm width range, or aspect ratio not conforming to ICAO portrait format.</li>
-      <li><strong>Shadows on face or background:</strong> Poor single-source or overhead lighting creates shadows that fail biometric analysis.</li>
-      <li><strong>Non-white or non-grey background:</strong> Any colour, pattern, or texture results in rejection under ICAO standards.</li>
-      <li><strong>Photo not recent:</strong> Photo older than 6 months, or that no longer reflects current appearance.</li>
-      <li><strong>Glasses worn:</strong> Prohibited under the ICAO standard referenced by france-visas.gouv.fr — glare and reflections cause system failures.</li>
-      <li><strong>Retouching, filters, or AI editing:</strong> Skin smoothing, brightness adjustment, background replacement, and AI enhancement are all grounds for rejection — colour neutrality and natural skin tone are required.</li>
-      <li><strong>Head not straight:</strong> Tilted, turned, or chin-up/chin-down poses fail ICAO geometric alignment requirements.</li>
-      <li><strong>Low image quality:</strong> Blurry, pixelated, or low-contrast images fail automated quality screening.</li>
-      <li><strong>Digital file over 120 KB:</strong> Exceeds the upload limit for VFS Global / TLScontact digital submissions — causes upload error rather than rejection of the application itself, but prevents submission.</li>
-      <li><strong>Printed on inkjet paper:</strong> Physical copies on standard office paper are rejected at the application counter — photographic paper is required.</li>
-    </ol>
-
-    <div class="my-8 p-5 bg-amber-50 border-l-4 border-amber-500 rounded-xl">
-      <p class="font-bold text-amber-900 mb-2"> Glasses Policy — Official Position</p>
-      <p class="text-amber-800 text-sm">France-Visas.gouv.fr explicitly states that all photos must comply with the ICAO standard. The ICAO Doc 9303 standard does not permit glasses in biometric travel document photos, as lens reflections — including those from anti-reflective coated lenses — interfere with automated facial feature detection. Remove all glasses, including prescription eyewear, for your France visa photograph.</p>
-    </div>
-
-    <h2>Tips to Take a France Visa Photo at Home</h2>
-
-    <p>You do not need a professional studio. A modern smartphone and a few minutes of preparation are sufficient to produce a fully ICAO-compliant photo.</p>
-
-    <h3>Smartphone Setup</h3>
-    <ul>
-      <li>Use the <strong>rear camera</strong>, not the front-facing camera — rear cameras have higher resolution and less barrel distortion.</li>
-      <li>Ask someone to take the photo, or use a tripod with a 3–5 second self-timer.</li>
-      <li>Position the camera at <strong>eye level</strong> — not above or below — to avoid facial distortion.</li>
-      <li>Set camera to its highest JPEG quality setting.</li>
-      <li>Disable portrait mode, beauty mode, AI scene enhancement, Photographic Styles (iPhone: Settings → Camera → Photographic Styles → None), and all automatic filters. On Android, these are typically under Camera → Settings → Beauty, AI Shot, or Filters.</li>
-    </ul>
-
-    <h3>Background Setup</h3>
-    <ul>
-      <li>Use a plain white bedsheet, a sheet of white foam board, or a white wall as your backdrop.</li>
-      <li>Stand <strong>50–60cm away from the background</strong> — this distance prevents your shadow from falling on it.</li>
-      <li>Avoid standing near coloured walls — ambient colour reflection can tint an otherwise white background under certain lighting conditions.</li>
-      <li>Ensure the background is crease-free and uniformly lit across its entire visible area.</li>
-    </ul>
-
-    <h3>Lighting</h3>
-    <ul>
-      <li><strong>Natural window light</strong> is the most reliable source — face a window so light falls evenly across your face.</li>
-      <li>Never photograph with the window behind you — this creates a silhouette with an overexposed background.</li>
-      <li>For artificial lighting, use two light sources of equal intensity placed at 45-degree angles on either side of your face — this eliminates shadow.</li>
-      <li>Avoid overhead lighting — it reliably creates shadows under eyes, nose, and chin that automated systems flag.</li>
-    </ul>
-
-    <h2>Where to Get France Visa Photos</h2>
-
-    <h3>Online Photo Tools</h3>
-    <p>Online tools like PixPassport allow you to upload a photo taken at home and have it automatically verified against ICAO and France Schengen specifications — checking face coverage ratio, background uniformity, file size, image sharpness, and aspect ratio before submission. This is the fastest, most cost-effective option if you have a good smartphone camera.</p>
-
-    <h3>Photo Studios</h3>
-    <p>Professional studios familiar with ICAO and Schengen biometric standards can produce compliant prints in minutes. When visiting a studio, ask specifically for a <strong>Schengen visa photo, 35×45mm, ICAO compliant</strong> — do not simply say "passport photo," as default sizes vary by country. Confirm they print on photographic paper and can produce the correct dimensions before you sit down.</p>
-
-    <h3>When to Choose Each</h3>
-    <p>Use an online tool when: applying through a digital portal, checking compliance before a studio visit, or when no professional studio is easily accessible. Use a studio when: physical prints are required, your consulate requests professionally produced photographs, or adequate home lighting is not achievable.</p>
+    <h2>e-Visa vs Regular Visa — Comparison</h2>
 
     <div class="overflow-x-auto my-8 rounded-2xl shadow-md border border-slate-200">
       <table class="w-full text-sm text-left">
         <thead>
-          <tr class="bg-slate-800 text-white">
-            <th class="px-4 py-3 font-semibold rounded-tl-2xl">Specification</th>
-            <th class="px-4 py-3 font-semibold">🇫🇷 France (Schengen / ICAO)</th>
-            <th class="px-4 py-3 font-semibold">🇳🇿 New Zealand</th>
-            <th class="px-4 py-3 font-semibold rounded-tr-2xl">🇺🇸 United States</th>
+          <tr class="bg-green-700 text-white">
+            <th class="px-4 py-3 font-semibold rounded-tl-2xl">Feature</th>
+            <th class="px-4 py-3 font-semibold">e-Visa</th>
+            <th class="px-4 py-3 font-semibold rounded-tr-2xl">Regular (Sticker) Visa</th>
           </tr>
         </thead>
-        <tbody class="divide-y divide-slate-100 text-xs">
-          <tr class="bg-slate-50"><td class="px-4 py-3 font-semibold">Print size</td><td class="px-4 py-3">35–40mm wide × 45mm high</td><td class="px-4 py-3">35×45mm</td><td class="px-4 py-3">51×51mm (2×2 inches)</td></tr>
-          <tr class="bg-white"><td class="px-4 py-3 font-semibold">Face height</td><td class="px-4 py-3">32–36mm (chin to forehead, excl. hair) = 70–80%</td><td class="px-4 py-3">70–80% of image height</td><td class="px-4 py-3">50–69% of image height (ICAO base)</td></tr>
-          <tr class="bg-slate-50"><td class="px-4 py-3 font-semibold">Background</td><td class="px-4 py-3">White or very light grey</td><td class="px-4 py-3">Neutral and plain (no colour specified)</td><td class="px-4 py-3">White or off-white</td></tr>
-          <tr class="bg-white"><td class="px-4 py-3 font-semibold">Glasses</td><td class="px-4 py-3">❌ Not permitted (ICAO standard)</td><td class="px-4 py-3">✅ Allowed (conditions apply)</td><td class="px-4 py-3">❌ Not permitted (since 2016)</td></tr>
-          <tr class="bg-slate-50"><td class="px-4 py-3 font-semibold">Digital file format</td><td class="px-4 py-3">JPG / PNG (sRGB)</td><td class="px-4 py-3">JPG / JPEG only</td><td class="px-4 py-3">JPEG</td></tr>
-          <tr class="bg-white"><td class="px-4 py-3 font-semibold">Digital file size</td><td class="px-4 py-3">Max 120 KB (VFS Global / TLScontact)</td><td class="px-4 py-3">512 KB – 3.14 MB</td><td class="px-4 py-3">Not specified (varies by portal)</td></tr>
-          <tr class="bg-slate-50"><td class="px-4 py-3 font-semibold">Min pixel dimensions</td><td class="px-4 py-3">400 × 600 px</td><td class="px-4 py-3">Not specified (min 512 KB ensures quality)</td><td class="px-4 py-3">600 × 600 px</td></tr>
-          <tr class="bg-white"><td class="px-4 py-3 font-semibold">Photo age</td><td class="px-4 py-3">Recent (current appearance) / 6 months</td><td class="px-4 py-3">6 months</td><td class="px-4 py-3">6 months</td></tr>
-          <tr class="bg-slate-50"><td class="px-4 py-3 font-semibold">Standard</td><td class="px-4 py-3">ICAO Doc 9303</td><td class="px-4 py-3">INZ biometric standard</td><td class="px-4 py-3">State Department / ICAO</td></tr>
+        <tbody class="divide-y divide-slate-100">
+          <tr class="bg-slate-50"><td class="px-4 py-3 font-semibold">Application Method</td><td class="px-4 py-3">100% online at indianvisaonline.gov.in</td><td class="px-4 py-3">Online form + in-person submission at Indian Mission/Post or VFS Global/BLS centre</td></tr>
+          <tr class="bg-white"><td class="px-4 py-3 font-semibold">Eligible Countries</td><td class="px-4 py-3">166+ countries/territories (check indianvisaonline.gov.in for current list)</td><td class="px-4 py-3">All countries (subject to specific restrictions)</td></tr>
+          <tr class="bg-slate-50"><td class="px-4 py-3 font-semibold">Entry Points</td><td class="px-4 py-3">Designated airports and seaports only</td><td class="px-4 py-3">Any authorised Immigration Check Post</td></tr>
+          <tr class="bg-white"><td class="px-4 py-3 font-semibold">Processing Time</td><td class="px-4 py-3">Up to 72 hours (per Bureau of Immigration); apply at least 4 days before arrival</td><td class="px-4 py-3">Minimum 3 working days (varies by Mission)</td></tr>
+          <tr class="bg-slate-50"><td class="px-4 py-3 font-semibold">Extensible?</td><td class="px-4 py-3">No — non-extendable (except e-Medical in some cases)</td><td class="px-4 py-3">Yes — through FRRO/FRO</td></tr>
+          <tr class="bg-white"><td class="px-4 py-3 font-semibold">Convertible?</td><td class="px-4 py-3">No — non-convertible</td><td class="px-4 py-3">Possible in certain circumstances via FRRO</td></tr>
+          <tr class="bg-slate-50"><td class="px-4 py-3 font-semibold">Embassy Visit Required?</td><td class="px-4 py-3">No</td><td class="px-4 py-3">Yes (or authorised VFS/BLS centre)</td></tr>
+          <tr class="bg-white"><td class="px-4 py-3 font-semibold">Protected/Restricted Areas</td><td class="px-4 py-3">Not valid — separate permit required</td><td class="px-4 py-3">Separate Restricted Area Permit (RAP) required</td></tr>
         </tbody>
       </table>
     </div>
 
-    <h2>France Visa Photo Checklist — Before You Submit</h2>
+    <h2>e-Visa Eligible Countries</h2>
 
-    <ul>
-      <li>☐ Photo is recent — taken within 6 months and reflects current appearance</li>
-      <li>☐ Photo width is 35–40mm; height is 45mm (standard 35×45mm is the safest)</li>
-      <li>☐ Face height (chin to forehead, excluding hair) is 32–36mm</li>
-      <li>☐ Digital file is JPG or PNG in sRGB colour space</li>
-      <li>☐ Digital file is under 120 KB and at least 400 × 600 pixels</li>
-      <li>☐ Face is centred and looking directly at the camera</li>
-      <li>☐ Expression is neutral — mouth closed, eyes fully open</li>
-      <li>☐ Head is straight — no tilt, turn, or chin angle</li>
-      <li>☐ Background is plain white or very light grey — no shadows, patterns, or objects</li>
-      <li>☐ No glasses of any type (prescription, tinted, anti-reflective)</li>
-      <li>☐ No hat or head covering (unless religious or medical)</li>
-      <li>☐ No filters, AI edits, skin smoothing, beauty mode, or background replacement</li>
-      <li>☐ Both ears visible (unless covered for religious reasons)</li>
-      <li>☐ Photo is sharp — no blur, grain, pixelation, or compression artefacts</li>
-      <li>☐ Lighting is even — no shadows under eyes, nose, or chin</li>
-      <li>☐ Printed on photographic paper (if submitting physical copies)</li>
-      <li>☐ Two identical copies prepared (for in-person consulate submissions)</li>
+    <p>According to the Bureau of Immigration (indianvisaonline.gov.in), citizens of over <strong>166 countries and territories</strong> are currently eligible for India e-Visa. These include nationals of the United States, United Kingdom, all European Union member states, Canada, Australia, New Zealand, UAE, Saudi Arabia, Qatar, Kuwait, Bahrain, Oman, South Africa, Japan, South Korea, Singapore, and many more.</p>
+
+    <p>The complete and up-to-date list of eligible countries is published on the official portal at <strong>indianvisaonline.gov.in/evisa</strong>. The list is subject to change by the Government of India. Nationals of countries not on the eligible list must apply for a regular visa at the nearest Indian Mission or Post.</p>
+
+    <div class="my-6 p-5 bg-red-50 border-l-4 border-red-500 rounded-xl">
+      <p class="font-bold text-red-900 mb-2">🚫 Important Restriction — Pakistani Nationals</p>
+      <p class="text-red-800 text-sm">Pakistani nationals are not eligible for the India e-Visa scheme. Additionally, per the Bureau of Immigration (boi.gov.in), as of 27 April 2025, all existing valid visas (except medical visas, long-term visas, and diplomatic/official visas) issued to Pakistani nationals were revoked. Visa and immigration rules for Pakistani nationals are subject to specific government policy — verify directly with the nearest Indian Mission before travel.</p>
+    </div>
+
+    <h2>Visa on Arrival — Japan, South Korea & UAE</h2>
+
+    <p>Per the official <strong>indianvisaonline.gov.in</strong> portal, Visa on Arrival is available at selected Indian airports for nationals of:</p>
+
+    <ul class="list-disc pl-6 my-4 space-y-2 text-gray-700">
+      <li><strong>Japan</strong></li>
+      <li><strong>South Korea</strong></li>
+      <li><strong>UAE</strong> — only for UAE nationals who have previously obtained an e-Visa or regular/paper visa for India</li>
     </ul>
+
+    <p>Japanese nationals are required to fill an application form and approach the "Visa Counter" at the designated airport on arrival, per Ministry of Home Affairs guidelines. An immigration officer then stamps the Visa on Arrival on the passport after checking eligibility criteria and payment of fee.</p>
+
+    <h2>India e-Tourist Visa — Validity Options (2026)</h2>
+
+    <div class="overflow-x-auto my-8 rounded-2xl shadow-md border border-slate-200">
+      <table class="w-full text-sm text-left">
+        <thead>
+          <tr class="bg-orange-700 text-white">
+            <th class="px-4 py-3 font-semibold rounded-tl-2xl">e-Tourist Visa Type</th>
+            <th class="px-4 py-3 font-semibold">Validity from Grant Date</th>
+            <th class="px-4 py-3 font-semibold">Max Stay Per Visit</th>
+            <th class="px-4 py-3 font-semibold">Max Stay Per Year</th>
+            <th class="px-4 py-3 font-semibold rounded-tr-2xl">Entries</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100">
+          <tr class="bg-slate-50">
+            <td class="px-4 py-3 font-semibold">30-Day e-Tourist Visa</td>
+            <td class="px-4 py-3">1 year from date of grant of ETA</td>
+            <td class="px-4 py-3">30 days from date of arrival</td>
+            <td class="px-4 py-3">30 days</td>
+            <td class="px-4 py-3">Double entry</td>
+          </tr>
+          <tr class="bg-white">
+            <td class="px-4 py-3 font-semibold">1-Year e-Tourist Visa</td>
+            <td class="px-4 py-3">1 year (365 days) from date of grant of ETA</td>
+            <td class="px-4 py-3">Continuous stay not to exceed 180 days</td>
+            <td class="px-4 py-3">180 days per calendar year</td>
+            <td class="px-4 py-3">Multiple entry</td>
+          </tr>
+          <tr class="bg-slate-50">
+            <td class="px-4 py-3 font-semibold">5-Year e-Tourist Visa</td>
+            <td class="px-4 py-3">5 years from date of grant of ETA</td>
+            <td class="px-4 py-3">Continuous stay not to exceed 180 days</td>
+            <td class="px-4 py-3">180 days per calendar year</td>
+            <td class="px-4 py-3">Multiple entry</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p><strong>Note on 180-day rule:</strong> Per indianvisaonline.gov.in, if a 1-year or 5-year e-Tourist Visa holder intends to stay for more than 180 days continuously, they are required to register with the FRRO/FRO concerned within two weeks after the expiry of 180 days.</p>
+
+    <h2>India e-Visa Fees (2026)</h2>
+
+    <p>Fees for India e-Visas are set in US dollars and vary by nationality and visa duration. The fee schedule is published by the Bureau of Immigration. According to official fee schedules (updated February 2026) sourced via indianvisaonline.gov.in:</p>
+
+    <div class="overflow-x-auto my-8 rounded-2xl shadow-md border border-slate-200">
+      <table class="w-full text-sm text-left">
+        <thead>
+          <tr class="bg-orange-700 text-white">
+            <th class="px-4 py-3 font-semibold rounded-tl-2xl">e-Tourist Visa Type</th>
+            <th class="px-4 py-3 font-semibold">Fee (Most Nationalities)</th>
+            <th class="px-4 py-3 font-semibold">Period Note</th>
+            <th class="px-4 py-3 font-semibold rounded-tr-2xl">Bank Charge</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100">
+          <tr class="bg-slate-50"><td class="px-4 py-3 font-semibold">30-Day e-Tourist Visa (Jul–Mar)</td><td class="px-4 py-3">USD 25</td><td class="px-4 py-3">Peak season rate</td><td class="px-4 py-3 text-gray-500">+2.5% (card) or +3% (PayPal)</td></tr>
+          <tr class="bg-white"><td class="px-4 py-3 font-semibold">30-Day e-Tourist Visa (Apr–Jun)</td><td class="px-4 py-3">USD 10</td><td class="px-4 py-3">Off-season rate</td><td class="px-4 py-3 text-gray-500">+2.5% (card) or +3% (PayPal)</td></tr>
+          <tr class="bg-slate-50"><td class="px-4 py-3 font-semibold">1-Year e-Tourist Visa</td><td class="px-4 py-3">USD 40</td><td class="px-4 py-3">Most nationalities</td><td class="px-4 py-3 text-gray-500">+2.5% (card) or +3% (PayPal)</td></tr>
+          <tr class="bg-white"><td class="px-4 py-3 font-semibold">5-Year e-Tourist Visa</td><td class="px-4 py-3">USD 80 (most); USD 160 (US); USD 484 (UK)</td><td class="px-4 py-3">Varies by nationality</td><td class="px-4 py-3 text-gray-500">+2.5% (card) or +3% (PayPal)</td></tr>
+          <tr class="bg-slate-50"><td class="px-4 py-3 font-semibold">e-Business / e-Medical / e-Medical Attendant / e-Conference Visa</td><td class="px-4 py-3">USD 80 (most nationalities; varies by country)</td><td class="px-4 py-3">Country-specific</td><td class="px-4 py-3 text-gray-500">+2.5% (card) or +3% (PayPal)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="my-6 p-5 bg-blue-50 border-l-4 border-blue-500 rounded-xl">
+      <p class="font-bold text-blue-900 mb-2">📋 Fee Verification</p>
+      <p class="text-blue-800 text-sm">Fees above are based on the Bureau of Immigration official e-Visa fee schedule (updated 20 February 2026). Certain nationalities pay different rates — for example, Japan and Sri Lanka pay USD 25 flat for 30-day, 1-year, and 5-year visas; South Africa's 30-day visa is free. Always verify the exact fee for your nationality at the official portal <strong>indianvisaonline.gov.in/evisa</strong> before applying, as fees are country-specific and non-refundable.</p>
+    </div>
+
+    <h2>India e-Visa Photo Requirements (2026)</h2>
+
+    <p>Uploading the correct photograph is mandatory for all India e-Visa applications submitted through <strong>indianvisaonline.gov.in</strong>. An incorrect photo is one of the most common reasons for application delays and rejections. The following specifications are sourced directly from the official Indian Visa Online portal's photo requirements page (indianvisaonline.gov.in/visa/instruction.html and indianvisaonline.gov.in/visa/VSS_IMAGE.pdf).</p>
+
+    <div class="overflow-x-auto my-8 rounded-2xl shadow-md border border-slate-200">
+      <table class="w-full text-sm text-left">
+        <thead>
+          <tr class="bg-orange-700 text-white">
+            <th class="px-4 py-3 font-semibold rounded-tl-2xl">Requirement</th>
+            <th class="px-4 py-3 font-semibold rounded-tr-2xl">Official Specification (indianvisaonline.gov.in)</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100">
+          <tr class="bg-slate-50"><td class="px-4 py-3 font-semibold">Photo Shape</td><td class="px-4 py-3">Square — width and height must be equal</td></tr>
+          <tr class="bg-white"><td class="px-4 py-3 font-semibold">Photo Size (Print)</td><td class="px-4 py-3">2 × 2 inches (51mm × 51mm)</td></tr>
+          <tr class="bg-slate-50"><td class="px-4 py-3 font-semibold">Head Height</td><td class="px-4 py-3">1 inch to 1⅜ inches (25mm to 35mm) from chin to top of hair</td></tr>
+          <tr class="bg-white"><td class="px-4 py-3 font-semibold">File Format (Digital)</td><td class="px-4 py-3">JPEG / JPG only</td></tr>
+          <tr class="bg-slate-50"><td class="px-4 py-3 font-semibold">File Size (e-Visa digital upload)</td><td class="px-4 py-3">Between 10 KB and 1 MB</td></tr>
+          <tr class="bg-white"><td class="px-4 py-3 font-semibold">File Size (Regular visa / BLS / VFS)</td><td class="px-4 py-3">Between 10 KB and 300 KB</td></tr>
+          <tr class="bg-slate-50"><td class="px-4 py-3 font-semibold">Minimum Resolution</td><td class="px-4 py-3">350 × 350 pixels (square); 600 × 600 pixels recommended</td></tr>
+          <tr class="bg-white"><td class="px-4 py-3 font-semibold">Background</td><td class="px-4 py-3">Plain white or off-white — no patterns, shadows, or objects</td></tr>
+          <tr class="bg-slate-50"><td class="px-4 py-3 font-semibold">Expression</td><td class="px-4 py-3">Neutral — mouth closed, eyes open, looking directly at camera</td></tr>
+          <tr class="bg-white"><td class="px-4 py-3 font-semibold">Glasses</td><td class="px-4 py-3">Not permitted (e-Visa). Regular visa: thin-framed prescription glasses with no reflections or glare may be accepted — confirm with the Mission</td></tr>
+          <tr class="bg-slate-50"><td class="px-4 py-3 font-semibold">Head Coverings</td><td class="px-4 py-3">Not permitted except for religious reasons; face must be fully visible from chin to forehead</td></tr>
+          <tr class="bg-white"><td class="px-4 py-3 font-semibold">Photo Age</td><td class="px-4 py-3">Recent — taken within the last 6 months, must match current appearance</td></tr>
+          <tr class="bg-slate-50"><td class="px-4 py-3 font-semibold">Selfies</td><td class="px-4 py-3">Not accepted — photo must be taken by another person</td></tr>
+          <tr class="bg-white"><td class="px-4 py-3 font-semibold">Editing / Filters</td><td class="px-4 py-3">Not permitted — natural skin tone and colour required</td></tr>
+          <tr class="bg-slate-50"><td class="px-4 py-3 font-semibold">Colour</td><td class="px-4 py-3">Full colour — black-and-white photos not accepted</td></tr>
+          <tr class="bg-white"><td class="px-4 py-3 font-semibold">Clothing</td><td class="px-4 py-3">Avoid white-coloured and uniform clothing (may blend with background)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="my-6 p-5 bg-amber-50 border-l-4 border-amber-500 rounded-xl">
+      <p class="font-bold text-amber-900 mb-2">⚠️ India Visa Photo vs Indian Passport Photo — These Are Different</p>
+      <p class="text-amber-800 text-sm">India visa photos are <strong>square (51×51mm / 2×2 inch)</strong>. Indian passport photos for the Passport Seva portal are <strong>rectangular (35×45mm)</strong>. These are two entirely different specifications. Do not use an Indian passport photo for a visa application, or vice versa.</p>
+    </div>
+
+    <h3>Common India Visa Photo Rejection Reasons</h3>
+    <ul class="list-disc pl-6 my-4 space-y-2 text-gray-700">
+      <li>Photo is not square (rectangular photos are rejected)</li>
+      <li>Face not centred or head tilted</li>
+      <li>Eyes not looking directly at the camera</li>
+      <li>Shadows on face or background</li>
+      <li>Glasses present (especially for e-Visa applications)</li>
+      <li>Photo taken as a selfie</li>
+      <li>File size exceeds the limit (over 1 MB for e-Visa, or 300 KB for regular visa)</li>
+      <li>Non-JPEG file format (PNG, HEIC, PDF not accepted)</li>
+      <li>Photo older than 6 months</li>
+      <li>Background not plain white/off-white</li>
+      <li>Heavy editing, filters, or colour alteration applied</li>
+    </ul>
+
+    <div class="bg-gray-50 border border-gray-200 rounded-xl p-6 text-center my-8">
+      <p class="text-lg font-semibold text-gray-800 mb-2">
+        Check Your India Visa Photo for Free
+      </p>
+      <p class="text-gray-600 mb-4 text-sm">Automatically verify your photo meets India e-Visa standards — 2×2 inch square format, white background, JPEG under 1 MB — before you submit your application at indianvisaonline.gov.in.</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="https://www.pixpassport.com/passport-photo-online?type=india-visa" class="px-6 py-3 rounded-lg bg-orange-600 text-white font-medium hover:bg-orange-700 transition duration-200 shadow">Check My India Visa Photo</a>
+      </div>
+      <p class="mt-4 text-sm text-gray-500">Powered by <a href="https://www.pixpassport.com" class="text-orange-600 hover:underline font-medium">PixPassport</a></p>
+    </div>
+
+    <h2>Required Documents for India e-Visa Application</h2>
+
+    <p>According to the official Indian e-Visa portal (indianvisaonline.gov.in), the following documents must be submitted for an e-Visa application:</p>
+
+    <ul class="list-disc pl-6 my-4 space-y-2 text-gray-700">
+      <li><strong>Valid passport:</strong> Must have at least <strong>6 months validity</strong> from the date of arrival in India, and at least <strong>2 blank pages</strong> for immigration stamping.</li>
+      <li><strong>Colour JPEG photograph:</strong> Meeting the specifications above (2×2 inch square, white background, JPEG, 10 KB–1 MB).</li>
+      <li><strong>Scanned copy of passport biographical page (data page):</strong> PDF format, maximum 300 KB, showing your personal details and photograph clearly.</li>
+      <li><strong>Return/onward ticket:</strong> Proof of travel out of India.</li>
+      <li><strong>Proof of sufficient funds:</strong> For your intended stay.</li>
+      <li><strong>Address in India:</strong> Hotel booking or host address (required in the application form).</li>
+    </ul>
+
+    <p><strong>Additional documents by visa type (per indianvisaonline.gov.in):</strong></p>
+    <ul class="list-disc pl-6 my-4 space-y-2 text-gray-700">
+      <li><strong>e-Business Visa:</strong> Business card, details of the sending and receiving organisations.</li>
+      <li><strong>e-Medical Visa:</strong> Letter from the recognised/specialised hospital in India confirming treatment, appointment details.</li>
+      <li><strong>e-Conference Visa:</strong> Invitation letter from the organising body.</li>
+    </ul>
+
+    <h2>Step-by-Step India e-Visa Application Process</h2>
+
+    <p>The following steps reflect the official application process as described on <strong>indianvisaonline.gov.in/evisa</strong>:</p>
+
+    <ol class="list-decimal pl-6 my-4 space-y-3 text-gray-700">
+      <li>Visit the official portal: <strong>indianvisaonline.gov.in/evisa</strong> and click <em>"Apply here for e-Visa"</em>.</li>
+      <li>Fill in the online application form with your passport details, travel plans, address in India, and personal information. Save your <strong>Temporary Application ID</strong> in case you need to return to complete the form.</li>
+      <li>Upload your square JPEG photograph (10 KB–1 MB) and a scanned PDF of your passport's biographical page (max 300 KB).</li>
+      <li>Pay the visa fee online using a credit or debit card, or PayPal. A banking charge applies (2.5% for cards, per official FAQs). Note: the fee is non-refundable.</li>
+      <li>Await your Electronic Travel Authorisation (ETA) by email. Processing typically takes <strong>up to 72 hours</strong> per the Bureau of Immigration, though applicants should apply well in advance.</li>
+      <li>Check your application status at indianvisaonline.gov.in. Ensure the status shows <strong>"Granted"</strong> before travelling.</li>
+      <li><strong>Print a copy of your ETA</strong> and carry it with you — it must be presented at the Immigration Check Post on arrival, where the e-Visa will be stamped on your passport.</li>
+    </ol>
+
+    <div class="my-6 p-5 bg-blue-50 border-l-4 border-blue-500 rounded-xl">
+      <p class="font-bold text-blue-900 mb-2">📅 How Far in Advance to Apply</p>
+      <p class="text-blue-800 text-sm">Per official guidance on indianvisaonline.gov.in: <strong>30-day e-Tourist Visa</strong> — can be applied up to 120 days before arrival date. <strong>1-year and 5-year e-Tourist Visas</strong> — can also be applied up to 120 days before the intended arrival date. Apply at least 4 business days before your travel date to account for processing time, as per Bureau of Immigration guidelines.</p>
+    </div>
+
+    <h2>e-Arrival Card — Mandatory for All Arrivals (2026)</h2>
+
+    <p>Per the Bureau of Immigration (boi.gov.in and indianvisaonline.gov.in), all foreign nationals — including OCI card holders — are now required to submit an <strong>e-Arrival Card online within 72 hours before arrival in India</strong>. This is separate from the visa and is for immigration record purposes.</p>
+
+    <p>The e-Arrival Card can be submitted at <strong>boi.gov.in</strong>, <strong>indianvisaonline.gov.in</strong>, or through the official <strong>"Indian Visa Su-Swagatam" mobile app</strong>.</p>
+
+    <h2>Designated Entry Points for e-Visa Holders</h2>
+
+    <p>e-Visa holders can only enter India through designated Immigration Check Posts. Per indianvisaonline.gov.in, the following airports and seaports are designated for e-Visa entry:</p>
+
+    <h3>Designated Airports (33 airports, per official list)</h3>
+    <p>Delhi, Mumbai, Bengaluru, Chennai, Kolkata, Hyderabad, Goa (Dabolim), Goa (Mopa), Jaipur, Cochin, Ahmedabad, Amritsar, Pune, Varanasi, Trivandrum, Lucknow, Gaya, Bagdogra, Bhubaneswar, Calicut, Chandigarh, Coimbatore, Guwahati, Indore, Kannur, Madurai, Mangalore, Nagpur, Port Blair, Surat, Tiruchirapalli, Vijayawada, and Visakhapatnam.</p>
+
+    <h3>Designated Seaports (for general e-Visa entry)</h3>
+    <p>Agatti, Calicut, Chennai, Cochin, Goa, Kamarajar, Kandla, Kattupalli, Kolkata, Kollam, Mangalore, Mumbai, Mundra, Nhava Sheva, Port Blair, Vallarpadam, Visakhapatnam, Vizhinjam, and Vizhinjam International.</p>
+
+    <p><strong>Note:</strong> Entry by cruise ship is allowed through 5 designated seaports: <strong>Mumbai, Chennai, Cochin, Goa (Mormugao), and New Mangalore</strong>, per the official e-Visa FAQ.</p>
+
+    <p>e-Visa holders can <strong>exit from any authorised Immigration Check Post</strong> in India — they are not restricted to departure from the same airport they arrived at.</p>
+
+    <h2>FRRO Registration</h2>
+
+    <p>Per Ministry of Home Affairs guidelines, foreign nationals staying in India for more than 180 days on a 1-year or 5-year e-Tourist Visa are required to register with the <strong>Foreigners Regional Registration Office (FRRO) or Foreigners Registration Office (FRO)</strong> within two weeks after the expiry of 180 days.</p>
+
+    <p>Foreign nationals on certain long-stay regular visas (such as student, employment, and research visas) may also have FRRO registration requirements. Confirm your specific obligations based on your visa type and duration of stay. FRRO services are accessible through the online portal at <strong>indianfrro.gov.in</strong>.</p>
+
+    <h2>OCI Card — Overseas Citizen of India</h2>
+
+    <p>Per the Bureau of Immigration (boi.gov.in), the OCI (Overseas Citizen of India) Card is a <strong>lifelong multiple-entry visa</strong> issued to a person who is a citizen of another country but who, or whose parents, grandparents, or great-grandparents, was a citizen of India at the time of, or at any time after, the commencement of the Constitution of India.</p>
+
+    <p>An OCI card is not a visa in the traditional sense, but functions as a permanent travel document for entry into India without requiring a separate visa. OCI holders are, however, still required to submit the e-Arrival Card before arriving in India.</p>
+
+    <h2>Special Rules for Specific Nationalities</h2>
+
+    <h3>Nepal and Bhutan Nationals</h3>
+    <p>Citizens of Nepal and Bhutan do not require a visa to enter India. However, if entering from China, Macau, Hong Kong, or Pakistan, a passport and visa are required. (Source: Bureau of Immigration, boi.gov.in)</p>
+
+    <h3>Maldivian Nationals</h3>
+    <p>Maldivian citizens may visit India visa-free for up to 90 days for tourism with a valid Maldivian passport, per the Incredible India government portal.</p>
+
+    <h3>Pakistani Nationals</h3>
+    <p>Pakistani nationals are not eligible for the India e-Visa. Per Bureau of Immigration (boi.gov.in), effective 27 April 2025, all valid visas (except medical visas, long-term visas, and diplomatic/official visas) issued to Pakistani nationals were revoked. Persons of Pakistani origin (where the person or either parent or grandparent was born in or permanently resident in Pakistan) are also excluded from the e-Visa scheme. Always check with the nearest Indian Mission for current rules.</p>
+
+    <h3>Dual Citizens</h3>
+    <p>India does not permit dual citizenship. Indian-born individuals who have acquired foreign citizenship must use their foreign passport to enter India. OCI card holders use their foreign passport in conjunction with their OCI card.</p>
+
+    <h3>Yellow Fever Vaccination Requirement</h3>
+    <p>Per the official e-Visa FAQ on indianvisaonline.gov.in: all foreigners arriving in India within 6 days of departure from any <strong>Yellow Fever endemic country</strong> are required to possess (in original) a valid Yellow Fever vaccination certificate at the time of arrival. The list of endemic countries is published by the Ministry of Health and Family Welfare at <strong>mohfw.gov.in</strong>.</p>
+
+    <h2>Visa Extension and Conversion</h2>
+
+    <p>Per the Bureau of Immigration:</p>
+    <ul class="list-disc pl-6 my-4 space-y-2 text-gray-700">
+      <li><strong>e-Visa is non-extendable</strong> in most cases. Extension of e-Medical Visa may be granted up to 6 months on a case-by-case basis by the FRRO/FRO.</li>
+      <li><strong>e-Visa is non-convertible</strong> — it cannot be converted to any other visa category.</li>
+      <li>Extension of regular visas may be granted by the FRRO/FRO. Any further extension beyond what FRRO can grant must be approved by the Ministry of Home Affairs.</li>
+    </ul>
+
+    <h2>Overstay Penalties</h2>
+
+    <p>Overstaying your Indian visa is a serious immigration violation. Foreign nationals who overstay are subject to penalties, deportation, and potential bans from future entry into India. Per the Bureau of Immigration, foreign nationals in India must comply with the terms and conditions of their visa including duration of stay. If you need to extend your stay, contact your jurisdictional FRRO/FRO before your visa expires.</p>
+
+    <h2>Conference Clearance for Events (New — 2026)</h2>
+
+    <p>Per the Bureau of Immigration (boi.gov.in), a new online portal has been launched at <strong>conference.epolclearance.gov.in</strong> — the Conference Clearance System — for expeditious processing of political clearances for foreign nationals participating in conferences, seminars, workshops, and sports events organised in India by Government/autonomous institutions/private bodies.</p>
+
+    <h2>Frequently Asked Questions (FAQ)</h2>
+
+    <div class="my-6 space-y-5">
+
+      <div class="p-5 bg-gray-50 border border-gray-200 rounded-xl">
+        <p class="font-bold text-gray-800 mb-2">Q: Can I apply for an India e-Visa if my passport has less than 6 months validity?</p>
+        <p class="text-gray-700 text-sm">No. Per indianvisaonline.gov.in, your passport must have at least <strong>6 months validity from the date of arrival in India</strong> to be eligible for an e-Visa. You must also have at least 2 blank pages available in your passport.</p>
+      </div>
+
+      <div class="p-5 bg-gray-50 border border-gray-200 rounded-xl">
+        <p class="font-bold text-gray-800 mb-2">Q: Can I visit Restricted or Protected Areas on an India e-Visa?</p>
+        <p class="text-gray-700 text-sm">No. Per the Bureau of Immigration, e-Visa is <strong>not valid for visiting Protected Areas, Restricted Areas, or Cantonment Areas</strong>. A separate permit from the relevant civil authority is required. Some areas such as Arunachal Pradesh, Sikkim border zones, Andaman & Nicobar Islands, and Lakshadweep require separate permits — check with the Indian Mission before travel.</p>
+      </div>
+
+      <div class="p-5 bg-gray-50 border border-gray-200 rounded-xl">
+        <p class="font-bold text-gray-800 mb-2">Q: Is the India e-Visa fee refundable if my visa is rejected?</p>
+        <p class="text-gray-700 text-sm">No. Per the official FAQ on indianvisaonline.gov.in: <em>"e-Visa processing fee once submitted is non-refundable as the fee is for processing of the application and is not dependent on either grant or rejection of the application."</em></p>
+      </div>
+
+      <div class="p-5 bg-gray-50 border border-gray-200 rounded-xl">
+        <p class="font-bold text-gray-800 mb-2">Q: Can I enter India by cruise ship on an e-Visa?</p>
+        <p class="text-gray-700 text-sm">Yes. Per indianvisaonline.gov.in, entry by cruise ship is permitted through 5 designated seaports: <strong>Mumbai, Chennai, Cochin, Goa (Mormugao), and New Mangalore</strong>.</p>
+      </div>
+
+      <div class="p-5 bg-gray-50 border border-gray-200 rounded-xl">
+        <p class="font-bold text-gray-800 mb-2">Q: Do I need to submit an e-Arrival Card even if I have a regular visa?</p>
+        <p class="text-gray-700 text-sm">Yes. Per the Bureau of Immigration (boi.gov.in), all foreign nationals — including OCI card holders — must submit the e-Arrival Card online within 72 hours before arrival in India, regardless of visa type. This can be done at boi.gov.in, indianvisaonline.gov.in, or via the official "Indian Visa Su-Swagatam" mobile app.</p>
+      </div>
+
+      <div class="p-5 bg-gray-50 border border-gray-200 rounded-xl">
+        <p class="font-bold text-gray-800 mb-2">Q: How do I check my India e-Visa application status?</p>
+        <p class="text-gray-700 text-sm">You can check your application status at <strong>indianvisaonline.gov.in</strong>. Ensure the status shows "Granted" before travelling. Your ETA will also be sent to your registered email address.</p>
+      </div>
+
+    </div>
 
     <div class="my-8 p-6 bg-slate-900 text-white rounded-3xl shadow-xl">
       <h4 class="text-xl font-bold mb-4 text-center">Official Sources Used in This Guide</h4>
       <div class="flex flex-col gap-3 text-center">
         <div class="p-4 bg-white/10 rounded-xl">
-          <div class="text-xs text-slate-400 mb-1">🇫🇷 Primary Source</div>
-          <div class="text-sm font-bold">France-Visas — Ministry of Foreign Affairs of France</div>
-          <div class="text-xs text-slate-300 mt-1">france-visas.gouv.fr — Official French visa portal (FAQ and ISO/IEC photo requirements PDF)</div>
+          <div class="text-xs text-slate-400 mb-1">🇮🇳 Primary Source</div>
+          <div class="text-sm font-bold">Indian Visa Online — Bureau of Immigration, Ministry of Home Affairs</div>
+          <div class="text-xs text-slate-300 mt-1">indianvisaonline.gov.in — Official Government of India visa application portal (e-Visa, Regular Visa, OCI)</div>
         </div>
         <div class="p-4 bg-white/10 rounded-xl">
-          <div class="text-xs text-slate-400 mb-1">🌍 International Standard</div>
-          <div class="text-sm font-bold">ICAO Doc 9303 — International Civil Aviation Organisation</div>
-          <div class="text-xs text-slate-300 mt-1">icao.int — Machine Readable Travel Documents standard, explicitly referenced by france-visas.gouv.fr</div>
+          <div class="text-xs text-slate-400 mb-1">🏛️ Immigration Authority</div>
+          <div class="text-sm font-bold">Bureau of Immigration — Ministry of Home Affairs, Government of India</div>
+          <div class="text-xs text-slate-300 mt-1">boi.gov.in — Primary authority for entry, stay, and exit rules for foreign nationals in India</div>
+        </div>
+        <div class="p-4 bg-white/10 rounded-xl">
+          <div class="text-xs text-slate-400 mb-1">🏛️ Ministry</div>
+          <div class="text-sm font-bold">Ministry of Home Affairs, Government of India</div>
+          <div class="text-xs text-slate-300 mt-1">mha.gov.in — Official visa categories and rules document (AnnexIII)</div>
+        </div>
+        <div class="p-4 bg-white/10 rounded-xl">
+          <div class="text-xs text-slate-400 mb-1">🌐 Ministry</div>
+          <div class="text-sm font-bold">Ministry of External Affairs, Government of India</div>
+          <div class="text-xs text-slate-300 mt-1">mea.gov.in — Visa exemption agreements and bilateral arrangements</div>
+        </div>
+        <div class="p-4 bg-white/10 rounded-xl">
+          <div class="text-xs text-slate-400 mb-1">🌏 Tourism</div>
+          <div class="text-sm font-bold">Incredible India — Official Tourism Portal</div>
+          <div class="text-xs text-slate-300 mt-1">incredibleindia.gov.in — Visa and immigration guidance for international visitors</div>
         </div>
         <div class="p-4 bg-white/10 rounded-xl text-sm text-slate-300">
-          All specifications on this page were verified against official sources as of May 2026. Requirements can change — always confirm at france-visas.gouv.fr before submitting your application.
+          All specifications were verified against official sources as of May 2026. Immigration rules and visa fees can change at any time. Always verify the latest requirements at <strong>indianvisaonline.gov.in</strong> and <strong>boi.gov.in</strong> before submitting your application or travelling.
         </div>
       </div>
     </div>
 
     <div class="bg-gray-50 border border-gray-200 rounded-xl p-6 text-center my-8">
       <p class="text-lg font-semibold text-gray-800 mb-2">
-        Check your France visa photo for free
+        Get Your India Visa Photo Right — First Time
       </p>
-      <p class="text-gray-600 mb-4 text-sm">Automatically verify your photo meets ICAO standards — 32–36mm face height, white background, under 120 KB file size, and JPG format — before you submit your application.</p>
+      <p class="text-gray-600 mb-4 text-sm">Automatically verify and prepare your photo to meet India e-Visa standards — 2×2 inch square format, white background, JPEG under 1 MB — before submitting your application at indianvisaonline.gov.in.</p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a href="https://www.pixpassport.com/passport-photo-online?type=france-passport" class="px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition duration-200 shadow">Check My France Visa Photo</a>
+        <a href="https://www.pixpassport.com/passport-photo-online?type=india-visa" class="px-6 py-3 rounded-lg bg-orange-600 text-white font-medium hover:bg-orange-700 transition duration-200 shadow">Prepare My India Visa Photo</a>
+        <a href="https://indianvisaonline.gov.in/evisa/tvoa.html" target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-lg border border-orange-600 text-orange-700 font-medium hover:bg-orange-50 transition duration-200">Apply at Official Portal →</a>
       </div>
-      <p class="mt-4 text-sm text-gray-500">Powered by <a href="https://www.pixpassport.com" class="text-blue-600 hover:underline font-medium">PixPassport</a></p>
+      <p class="mt-4 text-sm text-gray-500">Powered by <a href="https://www.pixpassport.com" class="text-orange-600 hover:underline font-medium">PixPassport</a></p>
     </div>
 
-    <!-- SEO Meta Tags (for CMS / head injection) -->
     <!--
-      Meta Title: France Visa Photo Requirements latest — Official Size & Rules
-      Meta Description: Official latest France Schengen visa photo guide. ICAO size 35×45mm, face 32–36mm, white background, 120KB max. Tips for students, professionals & tourists.
-      Slug: france-visa-requirements-latest-guide
+      Meta Title: India Visa Requirements for Foreigners 2026 — Complete Guide
+      Meta Description: Official 2026 India visa guide for foreigners. e-Visa eligibility (166+ countries), types, fees, photo requirements (2×2 inch JPEG), entry airports, FRRO rules. Verified from indianvisaonline.gov.in and boi.gov.in.
+      Slug: india-visa-requirements-foreigners-2026
+      Last Updated: May 2026
     -->
   `
 };
@@ -346,7 +510,7 @@ const newPost = {
 posts.push(newPost);
 
 fs.writeFileSync(dataPath, JSON.stringify(posts, null, 4), "utf8");
-console.log("Successfully added France visa photo requirements blog post.");
+console.log("Successfully added India visa requirements 2026 blog post.");
 
 // Trigger IndexNow Ping
 const siteUrl = "https://www.pixpassport.com";

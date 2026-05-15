@@ -404,15 +404,15 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
       <div className="min-h-screen bg-white">
         {/* Modern Hero Section */}
-        <header className="relative bg-slate-950 pt-32 pb-20 px-4 overflow-hidden">
+        <header className="relative bg-slate-950 pt-24 pb-12 sm:pt-28 sm:pb-16 md:pt-32 md:pb-20 px-4 overflow-hidden">
           <div className="absolute inset-0 z-0 opacity-20">
-            <div className="absolute top-0 left-1/4 w-96 h-96 bg-lime-500 rounded-full blur-[120px] animate-pulse" />
-            <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-lime-600 rounded-full blur-[150px] animate-pulse delay-700" />
+            <div className="absolute top-0 left-1/4 w-64 h-64 sm:w-96 sm:h-96 bg-lime-500 rounded-full blur-[100px] sm:blur-[120px] animate-pulse" />
+            <div className="absolute bottom-0 right-1/4 w-64 h-64 sm:w-96 sm:h-96 bg-lime-600 rounded-full blur-[120px] sm:blur-[150px] animate-pulse delay-700" />
           </div>
-          
+
           <div className="max-w-4xl mx-auto relative z-10 text-center">
-            <nav aria-label="Breadcrumb" className="mb-8 flex justify-center">
-              <ol className="flex items-center space-x-2 text-sm font-medium text-slate-400">
+            <nav aria-label="Breadcrumb" className="mb-6 sm:mb-8 flex justify-center">
+              <ol className="flex items-center space-x-2 text-xs sm:text-sm font-medium text-slate-400">
                 <li>
                   <Link href="/" className="hover:text-lime-400 transition-colors">Home</Link>
                 </li>
@@ -421,50 +421,50 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                   <Link href="/blog" className="hover:text-lime-400 transition-colors">Blog</Link>
                 </li>
                 <li aria-hidden="true" className="opacity-30">/</li>
-                <li className="text-slate-300 truncate max-w-[200px]" title={post.title}>
+                <li className="text-slate-300 truncate max-w-[120px] sm:max-w-[200px]" title={post.title}>
                   {post.title}
                 </li>
               </ol>
             </nav>
 
-            <div className="inline-flex items-center space-x-2 mb-6 bg-lime-500/10 border border-lime-500/20 px-3 py-1 rounded-full">
+            <div className="inline-flex items-center space-x-2 mb-4 sm:mb-6 bg-lime-500/10 border border-lime-500/20 px-3 py-1 rounded-full">
               <span className="w-2 h-2 bg-lime-500 rounded-full animate-pulse" />
-              <span className="text-lime-400 text-xs font-bold uppercase tracking-widest">
+              <span className="text-lime-400 text-[10px] sm:text-xs font-bold uppercase tracking-widest">
                 Compliance Guide 2026
               </span>
             </div>
-            
-            <h1 className="text-4xl md:text-6xl font-black text-white tracking-tight leading-[1.1] mb-8 text-pretty">
+
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black text-white tracking-tight leading-[1.1] mb-6 sm:mb-8 text-pretty px-2">
               {post.title}
             </h1>
-            
-            <div className="flex flex-wrap items-center justify-center gap-6 text-slate-400 text-sm font-medium">
+
+            <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-slate-400 text-xs sm:text-sm font-medium px-4">
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-slate-700 to-slate-800 border border-slate-600 flex items-center justify-center text-white text-[10px]">
+                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-br from-slate-700 to-slate-800 border border-slate-600 flex items-center justify-center text-white text-[9px] sm:text-[10px]">
                   {post.author.charAt(0)}
                 </div>
                 <span>By {post.author}</span>
               </div>
-              <span className="w-1 h-1 bg-slate-700 rounded-full" />
-              <time dateTime={post.date}>
+              <span className="w-1 h-1 bg-slate-700 rounded-full hidden sm:block" />
+              <time dateTime={post.date} className="text-slate-400">
                 {new Date(post.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
               </time>
-              <span className="w-1 h-1 bg-slate-700 rounded-full" />
-              <span>8 min read</span>
+              <span className="w-1 h-1 bg-slate-700 rounded-full hidden sm:block" />
+              <span className="hidden sm:inline">8 min read</span>
             </div>
           </div>
         </header>
 
         {/* Featured Image */}
         {post.featuredImage && (
-          <div className="max-w-6xl mx-auto -mt-10 px-4 relative z-20">
-            <div className="relative aspect-[2/1] md:aspect-[21/9] w-full overflow-hidden rounded-3xl shadow-2xl border border-white/10">
+          <div className="max-w-6xl mx-auto -mt-8 sm:-mt-10 px-4 relative z-20">
+            <div className="relative aspect-[16/9] sm:aspect-[2/1] md:aspect-[21/9] w-full overflow-hidden rounded-2xl sm:rounded-3xl shadow-2xl border border-white/10">
               <Image
                 src={post.featuredImage}
                 alt={post.title}
                 fill
                 priority
-                sizes="(max-width: 1280px) 100vw, 1200px"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 1200px"
                 className="object-cover transition-transform duration-1000 hover:scale-105"
               />
             </div>
@@ -472,12 +472,38 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         )}
 
         {/* Content Section */}
-        <main className="max-w-7xl mx-auto px-4 py-16 md:py-24">
-          <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 justify-center">
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-14 md:py-16 lg:py-20 md:py-24">
+          <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 xl:gap-24 justify-center">
             {/* Sidebar for Desktop */}
             <aside className="hidden lg:block w-72 shrink-0">
               <TocSidebar headings={headings} />
             </aside>
+
+            {/* Mobile TOC */}
+            {headings.length > 0 && (
+              <div className="lg:hidden mb-8">
+                <details className="bg-slate-50 rounded-2xl border border-slate-100 overflow-hidden">
+                  <summary className="flex items-center justify-between p-4 cursor-pointer list-none text-sm font-bold text-slate-700">
+                    <span className="flex items-center gap-2">
+                      <svg className="w-4 h-4 text-lime-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                      </svg>
+                      On This Page
+                    </span>
+                    <svg className="w-4 h-4 text-slate-400 transition-transform details-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                    </svg>
+                  </summary>
+                  <nav className="px-4 pb-4 space-y-2">
+                    {headings.map((heading) => (
+                      <a key={heading.id} href={`#${heading.id}`} className={`block text-sm py-1.5 text-slate-600 hover:text-lime-600 ${heading.level === 3 ? 'pl-4' : ''}`}>
+                        {heading.text}
+                      </a>
+                    ))}
+                  </nav>
+                </details>
+              </div>
+            )}
 
             {/* Reading Content */}
             <div className="w-full max-w-3xl blog-content-wrapper">
@@ -487,10 +513,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               />
 
               {/* FAQ Section */}
-              <section className="mt-20 pt-16 border-t border-slate-100">
-                <div className="flex items-center gap-3 mb-10">
-                  <div className="w-2 h-8 bg-lime-500 rounded-full" />
-                  <h2 className="text-3xl md:text-4xl font-black text-slate-900 !m-0 !p-0 !border-0">
+              <section className="mt-12 sm:mt-16 lg:mt-20 pt-10 sm:pt-12 lg:pt-16 border-t border-slate-100">
+                <div className="flex items-center gap-3 mb-6 sm:mb-8 lg:mb-10">
+                  <div className="w-1.5 h-6 sm:h-8 bg-lime-500 rounded-full" />
+                  <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black text-slate-900 !m-0 !p-0 !border-0">
                     Expert Q&A
                   </h2>
                 </div>
@@ -500,39 +526,39 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               </section>
 
               {/* Enhanced CTA */}
-              <section className="mt-20 p-10 md:p-14 bg-slate-950 rounded-[2.5rem] text-center relative overflow-hidden group border border-lime-500/10">
-                <div className="absolute top-0 right-0 w-64 h-64 bg-lime-500/5 rounded-full blur-3xl group-hover:scale-125 transition-transform duration-700" />
-                <div className="absolute bottom-0 left-0 w-64 h-64 bg-lime-600/5 rounded-full blur-3xl group-hover:scale-125 transition-transform duration-700" />
-                
-                <h2 className="text-3xl md:text-4xl font-black text-white mb-6 relative z-10 leading-tight">
+              <section className="mt-12 sm:mt-16 lg:mt-20 p-6 sm:p-8 md:p-10 lg:p-14 bg-slate-950 rounded-2xl sm:rounded-[2rem] lg:rounded-[2.5rem] text-center relative overflow-hidden group border border-lime-500/10">
+                <div className="absolute top-0 right-0 w-40 h-40 sm:w-48 sm:h-48 lg:w-64 lg:h-64 bg-lime-500/5 rounded-full blur-2xl sm:blur-3xl group-hover:scale-125 transition-transform duration-700" />
+                <div className="absolute bottom-0 left-0 w-40 h-40 sm:w-48 sm:h-48 lg:w-64 lg:h-64 bg-lime-600/5 rounded-full blur-2xl sm:blur-3xl group-hover:scale-125 transition-transform duration-700" />
+
+                <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black text-white mb-4 sm:mb-6 relative z-10 leading-tight px-2">
                   Avoid Common Rejections Instantly
                 </h2>
-                <p className="text-slate-400 mb-10 max-w-xl mx-auto text-lg leading-relaxed relative z-10 font-medium">
+                <p className="text-slate-400 mb-6 sm:mb-8 lg:mb-10 max-w-xl mx-auto text-sm sm:text-base lg:text-lg leading-relaxed relative z-10 font-medium px-4">
                   We ensure your photo meets 2026 biometric standards: perfect 600x600 size, correct head ratio, and pure white background.
                 </p>
-                <Link href="/passport-photo-online" className="inline-flex items-center justify-center bg-lime-500 hover:bg-lime-400 text-slate-950 font-bold text-xl py-4 px-10 rounded-2xl transition-all shadow-xl shadow-lime-500/20 group/btn relative z-10">
+                <Link href="/passport-photo-online" className="inline-flex items-center justify-center bg-lime-500 hover:bg-lime-400 text-slate-950 font-bold text-base sm:text-lg lg:text-xl py-3 sm:py-3.5 lg:py-4 px-6 sm:px-8 lg:px-10 rounded-xl sm:rounded-2xl transition-all shadow-xl shadow-lime-500/20 group/btn relative z-10">
                   Fix My Photo Now
-                  <svg className="w-5 h-5 ml-2 group-hover/btn:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5 ml-2 group-hover/btn:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                   </svg>
                 </Link>
-                <div className="mt-8 flex items-center justify-center gap-4 text-slate-500 text-sm font-bold opacity-60">
+                <div className="mt-6 sm:mt-8 flex items-center justify-center gap-3 sm:gap-4 text-slate-500 text-xs sm:text-sm font-bold opacity-60 flex-wrap px-4">
                   <span className="flex items-center gap-1.5">
-                    <svg className="w-4 h-4 text-lime-500" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 111.414-1.414L9 10.586l3.293-3.293a1 1 0 111.414 1.414z"/></svg>
+                    <svg className="w-3 h-3 sm:w-4 sm:h-4 text-lime-500" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 111.414-1.414L9 10.586l3.293-3.293a1 1 0 111.414 1.414z"/></svg>
                     Official Size
                   </span>
                   <span className="w-1 h-1 bg-slate-800 rounded-full" />
                   <span className="flex items-center gap-1.5">
-                    <svg className="w-4 h-4 text-lime-500" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 111.414-1.414L9 10.586l3.293-3.293a1 1 0 111.414 1.414z"/></svg>
+                    <svg className="w-3 h-3 sm:w-4 sm:h-4 text-lime-500" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 111.414-1.414L9 10.586l3.293-3.293a1 1 0 111.414 1.414z"/></svg>
                     Bio-Verified
                   </span>
                 </div>
               </section>
 
               {/* Related Resources */}
-              <section className="mt-16">
-                <h3 className="text-lg font-bold text-slate-900 mb-6">Related Resources</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <section className="mt-10 sm:mt-12 lg:mt-16">
+                <h3 className="text-base sm:text-lg font-bold text-slate-900 mb-4 sm:mb-6">Related Resources</h3>
+                <div className="grid grid-cols-1 xs:grid-cols-2 gap-3 sm:gap-4">
                   <Link href="/visa-photo-validator" className="group flex items-center gap-4 p-5 bg-gray-50 rounded-2xl border border-gray-100 hover:border-lime-200 hover:bg-lime-50 transition-all">
                     <span className="text-2xl">✅</span>
                     <div>

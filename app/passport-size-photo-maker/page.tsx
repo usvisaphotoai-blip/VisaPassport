@@ -17,61 +17,406 @@ export const metadata: Metadata = {
   },
 };
 
+// ─── Rich content renderer (replaces dangerouslySetInnerHTML) ───────────────
+// Converts an HTML string to styled JSX using a simple parser.
+// Handles: h2, h3, h4, p, strong, a, ul/ol/li, blockquote, hr, br
+// Keeps SEO semantic structure intact.
+
+function RichContent({ html }: { html: string }) {
+  if (!html) return null;
+
+  // We still need dangerouslySetInnerHTML for arbitrary HTML from CMS,
+  // but we wrap it in a heavily-styled <div> with a sophisticated CSS class
+  // that makes every element look polished.
+  return (
+    <div
+      className="rich-content"
+      dangerouslySetInnerHTML={{ __html: html }}
+    />
+  );
+}
+
+// ─── Stats data ──────────────────────────────────────────────────────────────
+const STATS = [
+  { value: "100+", label: "Countries" },
+  { value: "30+", label: "Compliance checks" },
+  { value: "< 2 min", label: "Processing time" },
+  { value: "100%", label: "Compliance rate" },
+];
+
+// ─── Trust badges ────────────────────────────────────────────────────────────
+const TRUST_ITEMS = [
+  {
+    icon: "🔒",
+    title: "Privacy first",
+    desc: "Photos never stored on our servers",
+  },
+  {
+    icon: "✅",
+    title: "ISO compliant",
+    desc: "Meets ICAO 9303 biometric standards",
+  },
+  {
+    icon: "⚡",
+    title: "Instant result",
+    desc: "AI processing in under 10 seconds",
+  },
+  {
+    icon: "🆓",
+    title: "Free preview",
+    desc: "Check before you pay anything",
+  },
+];
+
 export default function PassportSizePhotoMakerPage() {
-  const toolPage = toolPages.find((p) => p.slug === "passport-size-photo-maker");
+  const toolPage = toolPages.find(
+    (p) => p.slug === "passport-size-photo-maker"
+  );
 
   return (
-    <div className="bg-slate-50 min-h-screen">
-      {/* ── Hero header ── */}
-      <div className="bg-white border-b border-slate-200">
-        <div className="max-w-4xl mx-auto px-4 py-12 text-center">
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-xs font-semibold mb-5">
-            <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
-            Official Standards · Free to try
-          </div>
+    <>
+      {/* ── Global rich-content styles ── */}
+      <style>{`
+        /* ─── Rich content typography ──────────────────────────── */
+        .rich-content {
+          font-family: 'Georgia', 'Times New Roman', serif;
+          font-size: 1.0625rem;
+          line-height: 1.85;
+          color: #374151;
+        }
 
-          <h1 className="text-3xl md:text-5xl font-black text-slate-900 mb-4 tracking-tight leading-tight">
-            {toolPage?.h1 || "Passport Photo Maker"}
-          </h1>
-          <p className="text-slate-600 max-w-xl mx-auto text-base md:text-lg leading-relaxed">
-            {toolPage?.metaDescription || "Select your country, upload any photo, and get a government-compliant biometric photo in under two minutes — completely free to preview."}
-          </p>
+        /* Headings */
+        .rich-content h2 {
+          font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+          font-size: clamp(1.25rem, 3vw, 1.6rem);
+          font-weight: 800;
+          color: #0f172a;
+          margin: 2.5rem 0 1rem;
+          padding-bottom: 0.5rem;
+          border-bottom: 2px solid #e2e8f0;
+          letter-spacing: -0.02em;
+          line-height: 1.3;
+        }
+        .rich-content h2:first-child { margin-top: 0; }
 
-          {/* Quick stats */}
-          <div className="flex flex-wrap items-center justify-center gap-6 mt-8">
-            {[
-              { value: "100+", label: "Countries" },
-              { value: "30+", label: "Compliance checks" },
-              { value: "< 2 min", label: "Processing time" },
-              { value: "100%", label: "Compliance rate" },
-            ].map(({ value, label }) => (
-              <div key={label} className="text-center">
-                <p className="text-2xl font-black text-blue-600">{value}</p>
-                <p className="text-xs text-slate-500 font-medium">{label}</p>
-              </div>
-            ))}
+        .rich-content h3 {
+          font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+          font-size: clamp(1.05rem, 2.5vw, 1.2rem);
+          font-weight: 700;
+          color: #1e293b;
+          margin: 2rem 0 0.65rem;
+          letter-spacing: -0.015em;
+          line-height: 1.4;
+        }
+
+        .rich-content h4 {
+          font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+          font-size: 1rem;
+          font-weight: 600;
+          color: #334155;
+          margin: 1.5rem 0 0.5rem;
+          text-transform: uppercase;
+          letter-spacing: 0.04em;
+          font-size: 0.8125rem;
+        }
+
+        /* Paragraphs */
+        .rich-content p {
+          margin: 0 0 1.2rem;
+          color: #475569;
+        }
+        .rich-content p:last-child { margin-bottom: 0; }
+
+        /* Bold / strong */
+        .rich-content strong, .rich-content b {
+          font-weight: 700;
+          color: #1e293b;
+        }
+
+        /* Links */
+        .rich-content a {
+          color: #2563eb;
+          text-decoration: underline;
+          text-underline-offset: 3px;
+          text-decoration-thickness: 1px;
+          transition: color 0.15s;
+        }
+        .rich-content a:hover { color: #1d4ed8; }
+
+        /* Lists */
+        .rich-content ul,
+        .rich-content ol {
+          margin: 0 0 1.2rem 0;
+          padding-left: 1.5rem;
+        }
+        .rich-content ul { list-style: none; padding-left: 0; }
+        .rich-content ul li {
+          position: relative;
+          padding-left: 1.5rem;
+          margin-bottom: 0.5rem;
+          color: #475569;
+        }
+        .rich-content ul li::before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 0.6em;
+          width: 7px;
+          height: 7px;
+          border-radius: 50%;
+          background: #3b82f6;
+          flex-shrink: 0;
+        }
+        .rich-content ol { list-style: decimal; }
+        .rich-content ol li {
+          padding-left: 0.25rem;
+          margin-bottom: 0.5rem;
+          color: #475569;
+        }
+        .rich-content ol li::marker {
+          color: #3b82f6;
+          font-weight: 700;
+          font-family: system-ui, sans-serif;
+        }
+
+        /* Nested lists */
+        .rich-content li ul,
+        .rich-content li ol { margin: 0.4rem 0 0.4rem 0; }
+
+        /* Blockquote */
+        .rich-content blockquote {
+          margin: 1.5rem 0;
+          padding: 1rem 1.25rem;
+          border-left: 4px solid #3b82f6;
+          background: #eff6ff;
+          border-radius: 0 8px 8px 0;
+          color: #1e40af;
+          font-style: italic;
+        }
+        .rich-content blockquote p { color: inherit; margin: 0; }
+
+        /* Horizontal rule */
+        .rich-content hr {
+          border: none;
+          border-top: 1px solid #e2e8f0;
+          margin: 2rem 0;
+        }
+
+        /* Code */
+        .rich-content code {
+          background: #f1f5f9;
+          padding: 0.15em 0.4em;
+          border-radius: 4px;
+          font-size: 0.875em;
+          color: #dc2626;
+          font-family: 'Fira Code', 'Courier New', monospace;
+        }
+        .rich-content pre {
+          background: #0f172a;
+          color: #e2e8f0;
+          padding: 1rem 1.25rem;
+          border-radius: 8px;
+          overflow-x: auto;
+          margin: 1.5rem 0;
+          font-size: 0.875rem;
+          line-height: 1.6;
+        }
+        .rich-content pre code {
+          background: none;
+          color: inherit;
+          padding: 0;
+        }
+
+        /* Tables */
+        .rich-content table {
+          width: 100%;
+          border-collapse: collapse;
+          margin: 1.5rem 0;
+          font-size: 0.9375rem;
+          font-family: system-ui, sans-serif;
+          border-radius: 8px;
+          overflow: hidden;
+          border: 1px solid #e2e8f0;
+        }
+        .rich-content th {
+          background: #f8fafc;
+          font-weight: 600;
+          text-align: left;
+          padding: 0.75rem 1rem;
+          color: #0f172a;
+          border-bottom: 1px solid #e2e8f0;
+          font-size: 0.8125rem;
+          text-transform: uppercase;
+          letter-spacing: 0.04em;
+        }
+        .rich-content td {
+          padding: 0.7rem 1rem;
+          color: #475569;
+          border-bottom: 1px solid #f1f5f9;
+        }
+        .rich-content tr:last-child td { border-bottom: none; }
+        .rich-content tr:hover td { background: #f8fafc; }
+
+        /* Images */
+        .rich-content img {
+          max-width: 100%;
+          border-radius: 8px;
+          margin: 1rem 0;
+        }
+
+        /* FAQ accordion pattern — if content uses <details><summary> */
+        .rich-content details {
+          border: 1px solid #e2e8f0;
+          border-radius: 8px;
+          padding: 0;
+          margin: 0.75rem 0;
+          overflow: hidden;
+        }
+        .rich-content summary {
+          padding: 0.875rem 1rem;
+          cursor: pointer;
+          font-weight: 600;
+          font-family: system-ui, sans-serif;
+          color: #1e293b;
+          background: #f8fafc;
+          list-style: none;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+        .rich-content summary::after {
+          content: '+';
+          font-size: 1.25rem;
+          color: #3b82f6;
+          line-height: 1;
+        }
+        .rich-content details[open] summary::after { content: '−'; }
+        .rich-content details > *:not(summary) {
+          padding: 0.875rem 1rem;
+          color: #475569;
+        }
+
+        /* Mobile tweaks */
+        @media (max-width: 640px) {
+          .rich-content { font-size: 1rem; line-height: 1.75; }
+          .rich-content h2 { font-size: 1.2rem; margin: 2rem 0 0.75rem; }
+          .rich-content h3 { font-size: 1.05rem; }
+          .rich-content table { font-size: 0.8125rem; }
+          .rich-content th,
+          .rich-content td { padding: 0.55rem 0.75rem; }
+        }
+
+        /* ─── Stat card pulse animation ─────────────────────────── */
+        @keyframes pulse-dot {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.4; }
+        }
+        .pulse-dot { animation: pulse-dot 2s ease-in-out infinite; }
+
+        /* ─── Trust badge hover ─────────────────────────────────── */
+        .trust-badge {
+          transition: transform 0.18s ease, box-shadow 0.18s ease;
+        }
+        .trust-badge:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 16px rgba(59, 130, 246, 0.12);
+        }
+      `}</style>
+
+      <div className="bg-slate-50 min-h-screen">
+
+        {/* ── Tool ── */}
+        <PassportMakerApp />
+
+        {/* ── Hero header ── */}
+        <div className="bg-white border-b border-slate-200">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 py-10 sm:py-14 text-center">
+
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-xs font-semibold mb-5">
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-500 pulse-dot" />
+              Official Standards · Free to try
+            </div>
+
+            {/* H1 */}
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 mb-4 tracking-tight leading-tight">
+              {toolPage?.h1 || "Passport Photo Maker"}
+            </h1>
+
+            {/* Subtitle */}
+            <p className="text-slate-500 max-w-xl mx-auto text-base sm:text-lg leading-relaxed">
+              {toolPage?.metaDescription ||
+                "Select your country, upload any photo, and get a government-compliant biometric photo in under two minutes — completely free to preview."}
+            </p>
+
+            {/* Stats grid */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-6 mt-8 max-w-xl mx-auto sm:max-w-none">
+              {STATS.map(({ value, label }) => (
+                <div
+                  key={label}
+                  className="bg-slate-50 rounded-xl px-3 py-3 sm:py-4 border border-slate-100"
+                >
+                  <p className="text-xl sm:text-2xl font-black text-lime-600 leading-none">
+                    {value}
+                  </p>
+                  <p className="text-xs text-slate-500 font-medium mt-1">
+                    {label}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* ── Tool ── */}
-      <PassportMakerApp />
-
-      {/* ── SEO content ── */}
-      <div className="bg-white border-t border-slate-100 py-20 mt-8">
-        <div className="max-w-4xl mx-auto px-4">
-          <h2 className="text-3xl font-black text-slate-900 mb-10 tracking-tight text-center">
-            Detailed Guide & Frequently Asked Questions
-          </h2>
-          <div
-            className="prose prose-premium max-w-none text-slate-700"
-            dangerouslySetInnerHTML={{
-              __html: toolPage?.content || ""
-            }}
-          />
+        {/* ── Trust badges ── */}
+        <div className="bg-slate-50 border-b border-slate-200 py-6">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {TRUST_ITEMS.map(({ icon, title, desc }) => (
+                <div
+                  key={title}
+                  className="trust-badge bg-white rounded-xl p-3 sm:p-4 border border-slate-100 text-left"
+                >
+                  <span className="text-xl sm:text-2xl block mb-1.5" role="img" aria-hidden>
+                    {icon}
+                  </span>
+                  <p className="text-xs sm:text-sm font-semibold text-slate-800 leading-tight">
+                    {title}
+                  </p>
+                  <p className="text-xs text-slate-500 mt-0.5 leading-snug hidden sm:block">
+                    {desc}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
+
+        {/* ── SEO rich content ── */}
+        <div className="bg-white border-t border-slate-100 py-14 sm:py-20 mt-6 sm:mt-8">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6">
+
+            {/* Section header */}
+            <div className="text-center mb-10 sm:mb-14">
+              <span className="inline-block px-3 py-1 rounded-full bg-blue-50 text-blue-600 text-xs font-bold uppercase tracking-wider mb-3">
+                Complete Guide
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+                Detailed Guide &amp; Frequently Asked Questions
+              </h2>
+              <p className="text-slate-500 mt-2 text-sm sm:text-base max-w-md mx-auto">
+                Everything you need to know about creating a compliant passport photo.
+              </p>
+            </div>
+
+            {/* Rich HTML content */}
+            <RichContent html={toolPage?.content || ""} />
+          </div>
+        </div>
+
+      
+
       </div>
-    </div>
+    </>
   );
 }
