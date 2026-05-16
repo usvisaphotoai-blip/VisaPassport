@@ -5,6 +5,7 @@ import Photo from "@/models/Photo";
 import ExpertOrder from "@/models/ExpertOrder";
 import { sendEmail } from "@/lib/mail";
 import { getSafeSpec } from "@/lib/specs";
+import { sendGA4PurchaseEvent } from "@/lib/ga4";
 
 export async function POST(req: Request) {
   try {
@@ -47,6 +48,26 @@ export async function POST(req: Request) {
           photo.status = "paid";
           photo.razorpayPaymentId = paymentEntity.id;
           await photo.save();
+
+          // Fire GA4 Purchase Event
+          if (notes.gaClientId) {
+            const spec = getSafeSpec(photo.documentType);
+            await sendGA4PurchaseEvent({
+              clientId: notes.gaClientId,
+              transactionId: paymentEntity.id,
+              amount: paymentEntity.amount / 100,
+              currency: paymentEntity.currency,
+              items: [
+                {
+                  item_id: photoId,
+                  item_name: `${spec.name || "Passport Photo"} ${photo.isExpert ? "(Expert Review)" : "(Standard)"}`,
+                  price: paymentEntity.amount / 100,
+                  quantity: 1,
+                  item_category: photo.isExpert ? "Expert Edit" : "Standard Photo",
+                },
+              ],
+            });
+          }
 
           const userEmail = (photo as any).guestEmail || paymentEntity.email;
           if (userEmail) {
@@ -141,6 +162,25 @@ export async function POST(req: Request) {
           order.status = "paid";
           order.razorpayPaymentId = paymentEntity.id;
           await order.save();
+
+          // Fire GA4 Purchase Event
+          if (notes.gaClientId) {
+            await sendGA4PurchaseEvent({
+              clientId: notes.gaClientId,
+              transactionId: paymentEntity.id,
+              amount: paymentEntity.amount / 100,
+              currency: paymentEntity.currency,
+              items: [
+                {
+                  item_id: expertOrderId,
+                  item_name: "Expert Manual Photo Edit",
+                  price: paymentEntity.amount / 100,
+                  quantity: 1,
+                  item_category: "Expert Edit",
+                },
+              ],
+            });
+          }
 
           try {
             const adminHtml = `

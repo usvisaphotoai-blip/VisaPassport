@@ -46,6 +46,25 @@ export function usePayment({
         alert("Razorpay SDK failed to load. Are you online?");
         return;
       }
+      // Capture GA4 Client ID
+      let gaClientId = "";
+      try {
+        // @ts-ignore
+        if (typeof window !== "undefined" && window.gtag) {
+          await new Promise((resolve) => {
+            // @ts-ignore
+            window.gtag("get", "G-RJFKP2ZXNX", "client_id", (id: string) => {
+              gaClientId = id;
+              resolve(true);
+            });
+            // Timeout after 500ms to avoid blocking payment
+            setTimeout(resolve, 500);
+          });
+        }
+      } catch (e) {
+        console.error("Failed to get GA Client ID", e);
+      }
+
       const orderRes = await fetch("/api/payment/create-order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -54,6 +73,7 @@ export function usePayment({
           currencyOverride: localPrice.currency,
           isExpert,
           guestEmail: status === "authenticated" ? undefined : guestEmail,
+          gaClientId, // Pass it here
         }),
       });
       const orderData = await orderRes.json();

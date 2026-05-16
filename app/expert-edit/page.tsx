@@ -50,9 +50,28 @@ export default function ExpertEditPage() {
         throw new Error("Razorpay SDK failed to load. Are you online?");
       }
 
+      // Capture GA4 Client ID
+      let gaClientId = "";
+      try {
+        // @ts-ignore
+        if (typeof window !== "undefined" && window.gtag) {
+          await new Promise((resolve) => {
+            // @ts-ignore
+            window.gtag("get", "G-RJFKP2ZXNX", "client_id", (id: string) => {
+              gaClientId = id;
+              resolve(true);
+            });
+            setTimeout(resolve, 500);
+          });
+        }
+      } catch (e) {
+        console.error("Failed to get GA Client ID", e);
+      }
+
       // Prepare FormData
       const formData = new FormData();
       formData.append("email", email);
+      formData.append("gaClientId", gaClientId); // Pass it here
       photos.forEach((photo) => formData.append("image", photo));
 
       // Create Order

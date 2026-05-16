@@ -23,7 +23,7 @@ export async function POST(req: Request) {
 
     const session = await getServerSession(authOptions);
 
-    const { photoId, currencyOverride, isExpert, guestEmail } = await req.json();
+    const { photoId, currencyOverride, isExpert, guestEmail, gaClientId } = await req.json();
 
     if (!photoId) {
       return NextResponse.json({ error: "Missing photoId" }, { status: 400 });
@@ -65,6 +65,7 @@ export async function POST(req: Request) {
         photoId,
         ...((session?.user as any)?.id ? { userId: (session?.user as any).id } : {}),
         ...(guestEmail ? { guestEmail } : {}),
+        ...(gaClientId ? { gaClientId } : {}),
       },
     };
 

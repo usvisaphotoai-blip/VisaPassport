@@ -22,6 +22,7 @@ export async function POST(req: NextRequest) {
     const formData = await req.formData();
     const email = formData.get("email") as string;
     const images = formData.getAll("image") as File[];
+    const gaClientId = formData.get("gaClientId") as string;
 
     if (!email || images.length === 0) {
       return NextResponse.json({ error: "Email and at least one image are required" }, { status: 400 });
@@ -60,6 +61,7 @@ export async function POST(req: NextRequest) {
       notes: {
         expertOrderId: expertOrder._id.toString(),
         email: email,
+        ...(gaClientId ? { gaClientId } : {}),
       },
     };
 
