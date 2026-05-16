@@ -197,7 +197,7 @@ function PhotoPanel({
       </div>
 
       {/* What We Fixed */}
-      {metrics && (
+      {metrics && !hasPaid && (
         <div className="bg-white rounded-3xl border border-slate-100 p-5 shadow-sm">
           <div className="flex items-center gap-2 mb-4">
             <div className="w-7 h-7 bg-lime-100 rounded-lg flex items-center justify-center">
