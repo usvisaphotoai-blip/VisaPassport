@@ -20,6 +20,7 @@ export default function Footer() {
         { label: "Home", href: "/" },
         { label: "Create Photo", href: "/passport-photo-online" },
         { label: "Free Photo Validator", href: "/visa-photo-validator" },
+        { label: "Print Template Generator", href: "/passport-photo-print-template-generator" },
         { label: "Passport Photo Directory", href: "/passport-photos" },
         { label: "Visa Photo Directory", href: "/visa-photo" },
 
