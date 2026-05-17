@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import PrintTemplateApp from "./PrintTemplateApp";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Passport Photo Print Template Generator – Print at Home",
@@ -17,6 +18,7 @@ export const metadata: Metadata = {
     url: "https://www.pixpassport.com/passport-photo-print-template-generator",
   },
 };
+
 
 const STATS = [
   { value: "4×6 to A4", label: "Paper Sizes" },
@@ -85,7 +87,15 @@ export default function PrintTemplateGeneratorPage() {
       />
       <div className="bg-slate-50 min-h-screen">
         {/* Tool Component */}
-        <PrintTemplateApp />
+        <Suspense fallback={
+          <div className="flex flex-col items-center justify-center min-h-[400px] gap-3">
+            <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-lime-600"></div>
+            <p className="text-sm font-semibold text-slate-500">Loading print generator...</p>
+          </div>
+        }>
+          <PrintTemplateApp />
+        </Suspense>
+
 
         {/* Hero Info Section */}
         <div className="bg-white border-b border-slate-200">

@@ -193,8 +193,11 @@ export default function PreviewClientFr({
                       <a href={`/api/download/${photoId}`} download={`photo-${documentType}.jpeg`} className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-2xl flex items-center justify-center gap-2.5 transition-all text-sm shadow-lg shadow-blue-500/25">
                         <Icon d={ICONS.download} size={16} />{fr.result.downloadDigital} {docCategory}
                       </a>
+                      <a href={`/passport-photo-print-template-generator?imageUrl=${encodeURIComponent(`/api/download/${photoId}`)}&width=${spec?.width_mm || ""}&height=${spec?.height_mm || ""}&name=${encodeURIComponent(spec?.name || "")}`} className="w-full bg-lime-600 hover:bg-lime-700 text-white font-bold py-4 rounded-2xl flex items-center justify-center gap-2.5 transition-all text-sm shadow-lg shadow-lime-500/20">
+                        <Icon d={ICONS.photo} size={16} className="shrink-0" />Personnaliser & Imprimer (A4 / 4×6 / 5×7)
+                      </a>
                       <a href={`/api/download-sheet/${photoId}`} download={`planche-A4-${documentType}.jpeg`} className="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-4 rounded-2xl flex items-center justify-center gap-2.5 transition-all text-sm">
-                        <Icon d={ICONS.photo} size={16} />{fr.result.downloadPrintSheet} {docCategory}
+                        <Icon d={ICONS.photo} size={16} />{fr.result.downloadPrintSheet} A4 Standard
                       </a>
                       <div className="grid grid-cols-2 gap-3">
                         <button onClick={handleEmailPhoto} className="bg-slate-50 hover:bg-slate-100 text-slate-700 font-bold py-3 px-4 rounded-xl text-xs flex items-center justify-center gap-1.5"><Icon d={ICONS.mail} size={14} />{fr.result.emailMe}</button>

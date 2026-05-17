@@ -411,13 +411,22 @@ function OrderPanel({
               </a>
 
               <a
+                href={`/passport-photo-print-template-generator?imageUrl=${encodeURIComponent(`/api/download/${photoId}`)}&width=${spec?.width_mm || ""}&height=${spec?.height_mm || ""}&name=${encodeURIComponent(spec?.name || "")}`}
+                className="w-full bg-lime-600 hover:bg-lime-700 text-white font-bold py-4 rounded-2xl flex items-center justify-center gap-2.5 transition-all text-sm shadow-lg shadow-lime-500/20"
+              >
+                <Icon d={ICONS.photo} size={16} className="shrink-0" />
+                Customize & Print Sheet (A4 / 4×6 / 5×7)
+              </a>
+
+              <a
                 href={`/api/download-sheet/${photoId}`}
                 download={`print-sheet-A4-${documentType}.jpeg`}
                 className="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-4 rounded-2xl flex items-center justify-center gap-2.5 transition-all text-sm"
               >
                 <Icon d={ICONS.photo} size={16} />
-                Download {docCategory} Print Sheet
+                Download Standard A4 Print Sheet
               </a>
+
 
               <div className="grid grid-cols-2 gap-3">
                 <button

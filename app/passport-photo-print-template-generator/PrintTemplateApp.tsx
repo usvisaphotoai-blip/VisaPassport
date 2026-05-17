@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import jsPDF from "jspdf";
+import { useSearchParams } from "next/navigation";
 
 const PAPER_SIZES = {
   "4x6": { name: "4×6 inch", width: 101.6, height: 152.4 }, // mm
@@ -16,16 +17,68 @@ const PHOTO_SIZES = {
 };
 
 export default function PrintTemplateApp() {
+  const searchParams = useSearchParams();
+  const imageUrl = searchParams.get("imageUrl") || searchParams.get("image") || searchParams.get("photoUrl") || searchParams.get("photo");
+  const customWidth = searchParams.get("width");
+  const customHeight = searchParams.get("height");
+  const customName = searchParams.get("name");
+
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [imageObj, setImageObj] = useState<HTMLImageElement | null>(null);
   
   const [paperSize, setPaperSize] = useState<keyof typeof PAPER_SIZES>("4x6");
-  const [photoSize, setPhotoSize] = useState<keyof typeof PHOTO_SIZES>("2x2");
+  
+  const [photoSizes, setPhotoSizes] = useState({
+    "2x2": { name: "2×2 inch (US)", width: 51, height: 51 },
+    "35x45": { name: "35×45 mm (Europe/UK/Aus)", width: 35, height: 45 },
+  });
+  const [photoSize, setPhotoSize] = useState<string>("2x2");
+  
   const [layoutCount, setLayoutCount] = useState<number>(6);
   
   const [cropLines, setCropLines] = useState<boolean>(true);
   const [margin, setMargin] = useState<number>(10); // mm
   const [spacing, setSpacing] = useState<number>(2); // mm
+
+  // Load initial image if passed in query params
+  useEffect(() => {
+    if (imageUrl) {
+      const decodedUrl = decodeURIComponent(imageUrl);
+      setImageSrc(decodedUrl);
+      const img = new Image();
+      img.crossOrigin = "anonymous"; // Avoid tainted canvas issues
+      img.onload = () => setImageObj(img);
+      img.src = decodedUrl;
+    }
+  }, [imageUrl]);
+
+  // Load custom size if passed in query params
+  useEffect(() => {
+    if (customWidth && customHeight) {
+      const w = parseFloat(customWidth);
+      const h = parseFloat(customHeight);
+      if (!isNaN(w) && !isNaN(h)) {
+        // Check if it already matches one of the existing keys
+        const is2x2 = Math.abs(w - 51) <= 1 && Math.abs(h - 51) <= 1;
+        const is35x45 = Math.abs(w - 35) <= 1 && Math.abs(h - 45) <= 1;
+        
+        if (is2x2) {
+          setPhotoSize("2x2");
+        } else if (is35x45) {
+          setPhotoSize("35x45");
+        } else {
+          // Dynamic custom size option matching the user's document type spec
+          const label = customName ? decodeURIComponent(customName) : `${w}×${h} mm`;
+          setPhotoSizes(prev => ({
+            ...prev,
+            "custom": { name: `${label} (${w}×${h} mm)`, width: w, height: h }
+          }));
+          setPhotoSize("custom");
+        }
+      }
+    }
+  }, [customWidth, customHeight, customName]);
+
   
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -75,7 +128,7 @@ export default function PrintTemplateApp() {
     const mmToPx = (mm: number) => (mm * DPI) / 25.4;
 
     const paper = PAPER_SIZES[paperSize];
-    const photo = PHOTO_SIZES[photoSize];
+    const photo = (photoSizes as any)[photoSize] || PHOTO_SIZES["2x2"];
 
     // Set canvas dimensions
     const cWidth = mmToPx(paper.width);
@@ -130,7 +183,8 @@ export default function PrintTemplateApp() {
       }
     }
 
-  }, [imageObj, paperSize, photoSize, layoutCount, cropLines, margin, spacing]);
+  }, [imageObj, paperSize, photoSize, photoSizes, layoutCount, cropLines, margin, spacing]);
+
 
   // Download Handlers
   const handleDownloadJPG = () => {
@@ -189,7 +243,10 @@ export default function PrintTemplateApp() {
             <div className="flex justify-between items-center mb-6 border-b border-slate-100 pb-4">
               <h2 className="text-xl font-bold text-slate-800">Layout Settings</h2>
               <button 
-                onClick={() => setImageSrc(null)}
+                onClick={() => {
+                  setImageSrc(null);
+                  setImageObj(null);
+                }}
                 className="text-sm text-slate-500 hover:text-slate-800 underline"
               >
                 Change Photo
@@ -219,10 +276,10 @@ export default function PrintTemplateApp() {
               <div>
                 <label className="block text-sm font-semibold text-slate-700 mb-2">Target Photo Size</label>
                 <div className="grid grid-cols-1 gap-2">
-                  {Object.entries(PHOTO_SIZES).map(([key, val]) => (
+                  {Object.entries(photoSizes).map(([key, val]) => (
                     <button
                       key={key}
-                      onClick={() => setPhotoSize(key as any)}
+                      onClick={() => setPhotoSize(key)}
                       className={`py-2 px-3 border rounded-lg text-sm font-medium transition-colors ${
                         photoSize === key ? "bg-lime-50 border-lime-600 text-lime-700" : "bg-white border-slate-200 text-slate-600 hover:bg-slate-50"
                       }`}
@@ -232,6 +289,7 @@ export default function PrintTemplateApp() {
                   ))}
                 </div>
               </div>
+
 
               {/* Number of Photos */}
               <div>
