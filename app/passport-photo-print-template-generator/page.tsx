@@ -217,162 +217,164 @@ export default function PrintTemplateGeneratorPage() {
           </div>
         </div>
         {/* Extended SEO Content */}
-        <div className="mt-20 prose prose-slate max-w-none">
-          <h2 className="text-3xl font-black text-slate-900">
-            Free Passport Photo Print Template Generator
-          </h2>
+        <div className="bg-slate-50 py-12 sm:py-16 mt-16 border-t border-slate-200">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 prose prose-slate">
+            <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
+              Free Passport Photo Print Template Generator
+            </h2>
 
-          <p>
-            Printing passport photos at home has become one of the easiest and
-            most affordable ways to create official photo prints without
-            visiting a photo studio or pharmacy. Instead of paying high printing
-            fees for multiple copies, you can simply upload one passport image
-            and automatically generate a complete printable sheet in seconds.
-          </p>
+              <p>
+              Printing passport photos at home has become one of the easiest and
+              most affordable ways to create official photo prints without
+              visiting a photo studio or pharmacy. Instead of paying high printing
+              fees for multiple copies, you can simply upload one passport image
+              and automatically generate a complete printable sheet in seconds.
+            </p>
 
-          <p>
-            Our free Passport Photo Print Template Generator helps users create
-            high-quality print-ready layouts for passport, visa, ID card, and
-            biometric photos. Whether you need 4 photos, 8 photos, 12 photos, or
-            20 passport photos on one sheet, the tool automatically arranges
-            everything for perfect printing.
-          </p>
+            <p>
+              Our free Passport Photo Print Template Generator helps users create
+              high-quality print-ready layouts for passport, visa, ID card, and
+              biometric photos. Whether you need 4 photos, 8 photos, 12 photos, or
+              20 passport photos on one sheet, the tool automatically arranges
+              everything for perfect printing.
+            </p>
 
-          <h2>How to Use the Passport Photo Print Tool</h2>
+            <h2>How to Use the Passport Photo Print Tool</h2>
 
-          <p>Using the tool requires only three simple steps:</p>
+            <p>Using the tool requires only three simple steps:</p>
 
-          <ol>
-            <li>Upload your passport photo from your device.</li>
+            <ol>
+              <li>Upload your passport photo from your device.</li>
 
-            <li>
-              Select your preferred paper size such as:
-              <ul>
-                <li>4×6 photo paper</li>
-                <li>5×7 paper</li>
-                <li>A4 paper</li>
-                <li>Letter paper</li>
-                <li>Custom dimensions</li>
-              </ul>
-            </li>
+              <li>
+                Select your preferred paper size such as:
+                <ul>
+                  <li>4×6 photo paper</li>
+                  <li>5×7 paper</li>
+                  <li>A4 paper</li>
+                  <li>Letter paper</li>
+                  <li>Custom dimensions</li>
+                </ul>
+              </li>
 
-            <li>Choose the number of copies and click Generate.</li>
-          </ol>
+              <li>Choose the number of copies and click Generate.</li>
+            </ol>
 
-          <p>
-            The system instantly creates a high-resolution printable passport
-            photo sheet that you can download as JPG, PNG, or PDF.
-          </p>
+            <p>
+              The system instantly creates a high-resolution printable passport
+              photo sheet that you can download as JPG, PNG, or PDF.
+            </p>
 
-          <h2>Print Multiple Passport Photos from One Image</h2>
+            <h2>Print Multiple Passport Photos from One Image</h2>
 
-          <p>
-            Many people only have one digital passport photo but need several
-            printed copies for passport applications, visa applications,
-            government documents, student IDs, driving licenses, employment
-            forms, or travel documents.
-          </p>
+            <p>
+              Many people only have one digital passport photo but need several
+              printed copies for passport applications, visa applications,
+              government documents, student IDs, driving licenses, employment
+              forms, or travel documents.
+            </p>
 
-          <p>
-            Instead of manually copying and resizing images using complicated
-            editing software, our template generator automatically duplicates
-            your photo and places it correctly on the page.
-          </p>
+            <p>
+              Instead of manually copying and resizing images using complicated
+              editing software, our template generator automatically duplicates
+              your photo and places it correctly on the page.
+            </p>
 
-          <p>Popular layouts include:</p>
+            <p>Popular layouts include:</p>
 
-          <ul>
-            <li>4 passport photos on one sheet</li>
-            <li>6 passport photos on 4×6 paper</li>
-            <li>8 passport photos on A4</li>
-            <li>12 passport photos on one page</li>
-            <li>16 passport photos on one sheet</li>
-            <li>20 passport photos on one sheet</li>
-            <li>Custom layouts</li>
-          </ul>
+            <ul>
+              <li>4 passport photos on one sheet</li>
+              <li>6 passport photos on 4×6 paper</li>
+              <li>8 passport photos on A4</li>
+              <li>12 passport photos on one page</li>
+              <li>16 passport photos on one sheet</li>
+              <li>20 passport photos on one sheet</li>
+              <li>Custom layouts</li>
+            </ul>
 
-          <h2>Why Print Passport Photos at Home?</h2>
+            <h2>Why Print Passport Photos at Home?</h2>
 
-          <p>
-            Traditional passport photo printing services often charge much more
-            than the actual printing cost. Home printing offers several
-            advantages:
-          </p>
+            <p>
+              Traditional passport photo printing services often charge much more
+              than the actual printing cost. Home printing offers several
+              advantages:
+            </p>
 
-          <ul>
-            <li>Lower cost compared with photo studios</li>
+            <ul>
+              <li>Lower cost compared with photo studios</li>
 
-            <li>Instant generation and download</li>
+              <li>Instant generation and download</li>
 
-            <li>Unlimited copies</li>
+              <li>Unlimited copies</li>
 
-            <li>No waiting time</li>
+              <li>No waiting time</li>
 
-            <li>Supports different paper sizes</li>
+              <li>Supports different paper sizes</li>
 
-            <li>Print anytime</li>
+              <li>Print anytime</li>
 
-            <li>Ideal for passport, visa and ID photos</li>
-          </ul>
+              <li>Ideal for passport, visa and ID photos</li>
+            </ul>
 
-          <p>
-            If you already have a printer and photo paper, the total cost per
-            passport photo can be extremely low compared with retail printing
-            services.
-          </p>
+            <p>
+              If you already have a printer and photo paper, the total cost per
+              passport photo can be extremely low compared with retail printing
+              services.
+            </p>
 
-          <h2>Best Paper for Passport Photo Printing</h2>
+            <h2>Best Paper for Passport Photo Printing</h2>
 
-          <p>
-            For best results, use high-quality photo paper rather than regular
-            printer paper.
-          </p>
+            <p>
+              For best results, use high-quality photo paper rather than regular
+              printer paper.
+            </p>
 
-          <ul>
-            <li>Glossy photo paper</li>
+            <ul>
+              <li>Glossy photo paper</li>
 
-            <li>Matte photo paper</li>
+              <li>Matte photo paper</li>
 
-            <li>4×6 photo sheets</li>
+              <li>4×6 photo sheets</li>
 
-            <li>A4 photo sheets</li>
-          </ul>
+              <li>A4 photo sheets</li>
+            </ul>
 
-          <p>
-            Always print at 300 DPI for sharp details and accurate colors. Avoid
-            selecting "Fit to Page" during printing because it can alter the
-            official dimensions of the passport photos.
-          </p>
+            <p>
+              Always print at 300 DPI for sharp details and accurate colors. Avoid
+              selecting "Fit to Page" during printing because it can alter the
+              official dimensions of the passport photos.
+            </p>
 
-          <h2>Who Can Use This Tool?</h2>
+            <h2>Who Can Use This Tool?</h2>
 
-          <p>This tool is useful for:</p>
+            <p>This tool is useful for:</p>
 
-          <ul>
-            <li>Passport applicants</li>
-            <li>Visa applicants</li>
-            <li>Students</li>
-            <li>Travelers</li>
-            <li>Government documentation</li>
-            <li>ID card creation</li>
-            <li>Parents printing children's passport photos</li>
-            <li>Photographers</li>
-          </ul>
+            <ul>
+              <li>Passport applicants</li>
+              <li>Visa applicants</li>
+              <li>Students</li>
+              <li>Travelers</li>
+              <li>Government documentation</li>
+              <li>ID card creation</li>
+              <li>Parents printing children's passport photos</li>
+              <li>Photographers</li>
+            </ul>
 
-          <h2>Create Passport Photo Sheets Online for Free</h2>
+            <h2>Create Passport Photo Sheets Online for Free</h2>
 
-          <p>
-            No software installation is required. Upload your image, select a
-            layout, generate your sheet, and download your print-ready file
-            instantly. The process takes only a few seconds and works on desktop
-            and mobile devices.
-          </p>
+            <p>
+              No software installation is required. Upload your image, select a
+              layout, generate your sheet, and download your print-ready file
+              instantly. The process takes only a few seconds and works on desktop
+              and mobile devices.
+            </p>
 
-          <p>
-            Whether you need passport photos on A4 paper, passport photos on 4×6
-            paper, or multiple passport photos arranged automatically, this free
-            online tool simplifies the entire process.
-          </p>
+            <p>
+              Whether you need passport photos on A4 paper, passport photos on 4×6
+              paper, or multiple passport photos arranged automatically, this free
+              online tool simplifies the entire process.
+            </p>
+          </div>
         </div>
       </div>
     </>
