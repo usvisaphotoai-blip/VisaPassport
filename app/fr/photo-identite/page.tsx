@@ -27,11 +27,6 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
     { "@type": "SoftwareApplication", name: "PixPassport — Photo d'Identité", applicationCategory: "PhotographyApplication", operatingSystem: "All", inLanguage: "fr" },
-    { "@type": "FAQPage", mainEntity: [
-      { "@type": "Question", name: "Quelle taille pour une photo d'identité française ?", acceptedAnswer: { "@type": "Answer", text: "La photo d'identité française doit mesurer 35×45mm avec un visage de 32 à 36mm de hauteur." } },
-      { "@type": "Question", name: "Où utiliser une photo d'identité ?", acceptedAnswer: { "@type": "Answer", text: "La photo d'identité est utilisée pour la CNI, le permis de conduire, la carte vitale, les abonnements transport et les cartes étudiantes." } },
-      { "@type": "Question", name: "Puis-je faire ma photo d'identité en ligne ?", acceptedAnswer: { "@type": "Answer", text: "Oui, PixPassport vous permet de créer une photo d'identité conforme depuis chez vous en moins de 30 secondes." } },
-    ]},
   ],
 };
 
@@ -153,6 +148,7 @@ export default function PhotoIdentitePage() {
           Essayez dès maintenant et obtenez votre photo d'identité conforme en quelques clics.
         </p>
       </section>
+      <FaqSectionFr faqs={idFaqs} title="Questions fréquentes — Photo d'identité" />
       <StickyCTAFr ctaText="Créer votre photo d'identité" />
     </>
   );

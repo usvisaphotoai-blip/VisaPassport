@@ -113,12 +113,7 @@ export default function RootLayout({
         suppressHydrationWarning
         className={`${inter.variable} ${playfair.variable} ${dmSans.variable} antialiased bg-white text-slate-900`}
       >
-        <a
-          href="#main-content"
-          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-white focus:text-blue-600 focus:px-4 focus:py-2 focus:rounded-md focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
-          Skip to main content
-        </a>
+     
         <AuthProvider>
           <Suspense fallback={null}>
             <AnalyticsTracker />
@@ -127,7 +122,9 @@ export default function RootLayout({
             navbar={<Navbar />}
             footer={<Footer />}
           >
+      
             {children}
+        
           </ConditionalNavFooter>
         </AuthProvider>
 

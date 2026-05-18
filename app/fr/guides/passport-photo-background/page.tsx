@@ -21,7 +21,6 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
     { "@type": "Article", headline: "Fond Photo Passeport : Règles et Astuces", inLanguage: "fr" },
-    { "@type": "FAQPage", mainEntity: bgFaqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) },
   ],
 };
 

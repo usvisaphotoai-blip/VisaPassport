@@ -4,7 +4,7 @@ import { useState } from "react";
 
 interface FaqItem { readonly q: string; readonly a: string }
 
-export default function FaqSectionFr({ faqs, title = "Questions fréquentes" }: { faqs: readonly FaqItem[]; title?: string }) {
+export default function FaqSectionFr({ faqs, title = "Questions fréquentes", disableSchema = false }: { faqs: readonly FaqItem[]; title?: string; disableSchema?: boolean }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   if (!faqs || faqs.length === 0) return null;
@@ -21,7 +21,9 @@ export default function FaqSectionFr({ faqs, title = "Questions fréquentes" }: 
 
   return (
     <section className="py-16 lg:py-20 bg-white">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      {!disableSchema && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      )}
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <span className="inline-block text-xs font-bold text-lime-600 uppercase tracking-widest mb-3">FAQ</span>

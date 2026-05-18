@@ -6,6 +6,7 @@ import RequirementsFr from "../components/RequirementsFr";
 
 import StickyCTAFr from "../components/StickyCTAFr";
 import BreadcrumbsFr from "../components/BreadcrumbsFr";
+import FaqSectionFr from "../components/FaqSectionFr";
 
 export const metadata: Metadata = {
   title: "Photo Carte d'Identité en Ligne — CNI Conforme",
@@ -29,7 +30,6 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
     { "@type": "SoftwareApplication", name: "PixPassport — Photo Carte d'Identité", applicationCategory: "PhotographyApplication", inLanguage: "fr" },
-    { "@type": "FAQPage", mainEntity: cniFaqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) },
   ],
 };
 
@@ -173,6 +173,7 @@ export default function PhotoCarteIdentitePage() {
           conforme en ligne et simplifiez vos démarches administratives dès aujourd'hui.
         </p>
       </section>
+      <FaqSectionFr faqs={cniFaqs} title="Questions fréquentes — Photo carte d'identité" />
       <StickyCTAFr ctaHref="/fr/passport-photo-online?type=france-passport" ctaText="Créer votre photo CNI" />
     </>
   );

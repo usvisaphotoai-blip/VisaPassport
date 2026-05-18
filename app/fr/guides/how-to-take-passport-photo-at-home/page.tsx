@@ -29,7 +29,6 @@ const jsonLd = {
         { "@type": "HowToStep", name: "Traiter avec PixPassport", text: "Uploadez sur PixPassport pour le traitement." },
       ],
     },
-    { "@type": "FAQPage", mainEntity: howToFaqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) },
   ],
 };
 

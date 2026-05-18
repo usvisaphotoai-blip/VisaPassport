@@ -4,6 +4,7 @@ import HeroSectionFr from "../components/HeroSectionFr";
 
 import StickyCTAFr from "../components/StickyCTAFr";
 import BreadcrumbsFr from "../components/BreadcrumbsFr";
+import FaqSectionFr from "../components/FaqSectionFr";
 import { fr } from "../translations";
 
 export const metadata: Metadata = {
@@ -24,7 +25,6 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
     { "@type": "SoftwareApplication", name: "PixPassport — Photo Passeport", applicationCategory: "PhotographyApplication", operatingSystem: "All", inLanguage: "fr", offers: { "@type": "Offer", price: "5.99", priceCurrency: "USD" } },
-    { "@type": "FAQPage", mainEntity: fr.faq.passport.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) },
   ],
 };
 
@@ -181,73 +181,7 @@ export default function PhotoPasseportPage() {
         </div>
       </section>
 
-      {/* FAQ Section - Expanded French content */}
-      <section className="py-16 bg-slate-50">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10">
-            <span className="text-sm font-semibold text-green-600 uppercase tracking-wide">Questions fréquentes</span>
-            <h2 className="text-3xl font-extrabold text-slate-900 mt-2">
-              Tout savoir sur la photo passeport en ligne
-            </h2>
-            <p className="text-slate-600 mt-4">
-              Réponses aux questions les plus courantes sur PixPassport et les démarches administratives
-            </p>
-          </div>
-
-          <div className="space-y-4">
-            {[
-              {
-                q: "Quelles sont les dimensions exactes d'une photo passeport française ?",
-                a: "La photo doit mesurer exactement 35 mm de large sur 45 mm de haut. En résolution numérique, cela correspond à 413 × 531 pixels minimum (300 DPI). La tête (du menton au sommet du crâne) doit occuper entre 70% et 80% de la hauteur totale de la photo."
-              },
-              {
-                q: "Puis-je soumettre ma photo passeport en ligne à l'ANTS ?",
-                a: "Oui, absolument. PixPassport génère un fichier numérique compatible avec le format ePhoto requis par l'ANTS (Agence Nationale des Titres Sécurisés). Vous pouvez télécharger directement votre photo sur le site officiel de l'ANTS lors de votre demande de passeport ou de carte d'identité."
-              },
-              {
-                q: "Combien coûte une photo passeport sur PixPassport ?",
-                a: "Notre service est à partir de 5,99 € seulement. Ce tarif unique inclut : la vérification biométrique illimitée, la suppression automatique du fond, le recadrage aux dimensions officielles (35×45mm), le téléchargement haute résolution, une planche d'impression 4×6, et notre garantie satisfait ou remboursé."
-              },
-              {
-                q: "Est-ce que je peux utiliser une photo prise avec mon téléphone ?",
-                a: "Oui, c'est même recommandé ! Un simple selfie avec n'importe quel smartphone récent (iPhone, Samsung, Xiaomi, etc.) suffit. Notre intelligence artificielle corrige automatiquement l'éclairage, la netteté et l'angle pour garantir une conformité parfaite aux normes officielles."
-              },
-              {
-                q: "Que faire si ma photo est refusée par les autorités ?",
-                a: "PixPassport offre une garantie de remboursement intégral en cas de refus. Si votre photo d'identité est rejetée par l'ANTS, une mairie, une pharmacie ou une ambassade, contactez notre service client avec la preuve officielle du refus. Nous vous remboursons immédiatement, sans condition ni justificatif compliqué."
-              },
-              {
-                q: "Quelle est la différence entre photo numérique et photo imprimée ?",
-                a: "Les deux sont fournies ! Vous obtenez un fichier numérique haute résolution (format JPEG 300 DPI) compatible avec toutes les démarches en ligne (ANTS, FranceConnect, ambassades). Et vous recevez également une planche d'impression format 4×6 (environ 10×15 cm) avec 4 à 6 photos identiques, prête à imprimer en pharmacie ou à découper vous-même."
-              },
-              {
-                q: "Combien de temps ma photo passeport est-elle valable ?",
-                a: "Selon la réglementation française, votre photo d'identité est valable 6 mois à compter de sa date de création pour une demande de passeport ou de carte d'identité. Passé ce délai, vous devez fournir une nouvelle photo. PixPassport ajoute automatiquement la date de création sur votre fichier pour vous aider à respecter cette exigence."
-              },
-              {
-                q: "Puis-je porter des lunettes sur ma photo passeport ?",
-                a: "Depuis 2020, les lunettes ne sont généralement pas acceptées sur les photos d'identité officielles françaises, sauf cas exceptionnel (impossibilité de les retirer pour raison médicale). Si vous devez absolument les garder, assurez-vous qu'il n'y a aucun reflet sur les verres, que les montures ne masquent pas vos yeux, et prévoyez un certificat médical à joindre à votre dossier."
-              },
-              {
-                q: "Comment imprimer ma photo passeport à la maison ?",
-                a: "Téléchargez notre planche d'impression spécialement conçue pour du papier photo standard 10×15 cm (4×6 pouces). Utilisez une imprimante jet d'encre ou laser avec du papier photo brillant ou mat. Réglez l'impression en haute qualité (300 DPI). Vous pouvez également présenter le fichier numérique dans n'importe quelle pharmacie ou magasin proposant un service d'impression photo (FNAC, Intermarché, Carrefour, etc.)."
-              }
-            ].map((faq, idx) => (
-              <details key={idx} className="bg-white rounded-xl border border-slate-200 group">
-                <summary className="cursor-pointer list-none p-5 font-semibold text-slate-900 flex justify-between items-center hover:bg-slate-50 rounded-xl transition-colors">
-                  <span>{faq.q}</span>
-                  <span className="text-green-600 text-xl group-open:rotate-45 transition-transform">+</span>
-                </summary>
-                <p className="p-5 pt-0 text-slate-600 border-t border-slate-100 mt-0 leading-relaxed">
-                  {faq.a}
-                </p>
-              </details>
-            ))}
-          </div>
-
-        
-        </div>
-      </section>
+      <FaqSectionFr faqs={fr.faq.passport} title="Questions fréquentes — Photo passeport" />
       <StickyCTAFr ctaHref="/fr/passport-photo-online?type=france-passport" countryName="France" />
     </>
   );

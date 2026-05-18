@@ -4,6 +4,7 @@ import HeroSectionFr from "../components/HeroSectionFr";
 import StickyCTAFr from "../components/StickyCTAFr";
 import BreadcrumbsFr from "../components/BreadcrumbsFr";
 import Link from "next/link";
+import FaqSectionFr from "../components/FaqSectionFr";
 import { fr } from "../translations";
 
 export const metadata: Metadata = {
@@ -39,14 +40,6 @@ const jsonLd = {
       name: "PixPassport — Photo Visa",
       applicationCategory: "PhotographyApplication",
       inLanguage: "fr",
-    },
-    {
-      "@type": "FAQPage",
-      mainEntity: fr.faq.visa.map((f) => ({
-        "@type": "Question",
-        name: f.q,
-        acceptedAnswer: { "@type": "Answer", text: f.a },
-      })),
     },
   ],
 };
@@ -292,6 +285,7 @@ export default function PhotoVisaPage() {
           risque de rejet de votre dossier.
         </p>
       </section>
+      <FaqSectionFr faqs={fr.faq.visa} title="Questions fréquentes — Photo visa" />
       <StickyCTAFr ctaText="Créer votre photo visa" />
     </>
   );

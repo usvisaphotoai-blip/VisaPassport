@@ -22,7 +22,6 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
     { "@type": "Article", headline: "Taille Photo Passeport : Guide Complet 2026", description: "Guide des dimensions photo passeport par pays.", inLanguage: "fr", author: { "@type": "Organization", name: "PixPassport" } },
-    { "@type": "FAQPage", mainEntity: sizeFaqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) },
   ],
 };
 

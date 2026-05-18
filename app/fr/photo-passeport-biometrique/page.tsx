@@ -4,6 +4,7 @@ import HeroSectionFr from "../components/HeroSectionFr";
 
 import StickyCTAFr from "../components/StickyCTAFr";
 import BreadcrumbsFr from "../components/BreadcrumbsFr";
+import FaqSectionFr from "../components/FaqSectionFr";
 
 export const metadata: Metadata = {
   title: "Photo Passeport Biométrique — Normes OACI 2026",
@@ -28,7 +29,6 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
     { "@type": "SoftwareApplication", name: "PixPassport — Photo Biométrique", applicationCategory: "PhotographyApplication", inLanguage: "fr" },
-    { "@type": "FAQPage", mainEntity: bioFaqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) },
   ],
 };
 
@@ -208,6 +208,7 @@ export default function PhotoBiometriquePage() {
     conforme en ligne avec PixPassport et assurez-vous une acceptation rapide lors de vos démarches administratives.
   </p>
 </section>
+      <FaqSectionFr faqs={bioFaqs} title="Questions fréquentes — Photo biométrique" />
       <StickyCTAFr ctaText="Créer votre photo biométrique" />
     </>
   );
