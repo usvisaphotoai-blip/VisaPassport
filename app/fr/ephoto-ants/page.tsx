@@ -65,31 +65,14 @@ const ephotoFaqs = [
 ];
 
 // ─── JSON-LD SCHEMA ──────────────────────────────────────────
-const jsonLd = {
+const faqSchema = {
   "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "SoftwareApplication",
-      name: "PixPassport — ePhoto ANTS en Ligne",
-      applicationCategory: "PhotographyApplication",
-      operatingSystem: "Web, iOS, Android",
-      inLanguage: "fr",
-      offers: {
-        "@type": "Offer",
-        price: "0",
-        priceCurrency: "EUR",
-        description: "Validation biométrique gratuite",
-      },
-    },
-    {
-      "@type": "FAQPage",
-      mainEntity: ephotoFaqs.map((f) => ({
-        "@type": "Question",
-        name: f.q,
-        acceptedAnswer: { "@type": "Answer", text: f.a },
-      })),
-    },
-  ],
+  "@type": "FAQPage",
+  mainEntity: ephotoFaqs.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
 };
 
 // ─── REJECTION ERRORS DATA ───────────────────────────────────
@@ -176,7 +159,7 @@ export default function EphotoAntsPage() {
       {/* JSON-LD */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
       {/* Breadcrumbs */}
