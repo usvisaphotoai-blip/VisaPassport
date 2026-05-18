@@ -418,14 +418,14 @@ function OrderPanel({
                 Customize & Print Sheet (A4 / 4×6 / 5×7)
               </a>
 
-              <a
+              {/* <a
                 href={`/api/download-sheet/${photoId}`}
                 download={`print-sheet-A4-${documentType}.jpeg`}
                 className="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-4 rounded-2xl flex items-center justify-center gap-2.5 transition-all text-sm"
               >
                 <Icon d={ICONS.photo} size={16} />
                 Download Standard A4 Print Sheet
-              </a>
+              </a> */}
 
 
               <div className="grid grid-cols-2 gap-3">
