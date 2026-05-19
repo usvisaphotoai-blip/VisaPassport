@@ -81,7 +81,7 @@ export default function ProgrammaticLandingPage({ spec, slug }: Props) {
               </div>
 
               <h1 className="text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight mb-6">
-                Official {spec.country} {docName} Photo Editor Online
+                 {spec.country} {docName} Photo Editor Online 2026
               </h1>
 
               <p className="text-lg text-slate-600 mb-8 leading-relaxed max-w-xl">
