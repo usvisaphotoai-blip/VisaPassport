@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     template: "%s | PixPassport",
   },
   description:
-    "Official-standard global passport, visa, and ID photo tool. Get 100% compliant biometric photos for 50+ countries including US, UK, India, and Australia. Professional-grade background normalization and cropping.",
+    "Global passport Photo Maker, visa, and ID photo tool. Get 100% compliant biometric photos for 50+ countries including US, UK, India, and Australia. Professional-grade background normalization and cropping.",
  
   authors: [{ name: "PixPassport Team" }],
   creator: "PixPassport",
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "PixPassport | Official Global Passport & Visa Photo Tool",
+    title: "PixPassport | Global Passport & Visa Photo Tool",
     description:
       "Create 100% compliant biometric photos for 50+ countries. Official standards for US, UK, India, and more. Instant compliance check.",
     url: "https://www.pixpassport.com/",
@@ -62,7 +62,7 @@ export const metadata: Metadata = {
         url: "https://www.pixpassport.com/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "PixPassport - Official Global Biometric Photo Tool",
+        alt: "PixPassport - Global Biometric Photo Tool",
       },
     ],
     locale: "en_US",
@@ -70,7 +70,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "PixPassport | Official Global Passport & Visa Photo Tool",
+    title: "PixPassport | Global Passport & Visa Photo Tool",
     description:
       "Professional official passport and visa photos for 50+ countries. 100% biometric compliance guaranteed.",
     images: ["https://www.pixpassport.com/og-image.jpg"],

@@ -177,9 +177,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const intentLabel = isVisaUrl ? "Visa" : "Passport";
     const baseUrl = `https://www.pixpassport.com/${slug}`;
     const title = isVisaUrl
-      ? `Official ${spec.country} Visa Photo Online (2026) | ${spec.width_mm}x${spec.height_mm}mm`
-      : `Official ${spec.country} Passport Photo Maker (2026) | 100% Approved`;
-    const description = `Get your ${spec.country} ${intentLabel.toLowerCase()} photo in 2 mins. Guaranteed acceptance or money back. Official ${spec.width_mm}x${spec.height_mm}mm cropping & background check. ➜ Click to Start!`;
+      ? `${spec.country} Visa Photo Online (2026) | ${spec.width_mm}x${spec.height_mm}mm`
+      : `${spec.country} Passport Photo Maker (2026) | 100% Approved`;
+    const description = `Create your ${spec.country} ${intentLabel.toLowerCase()} photo in 2 mins. Guaranteed acceptance or money back. ${spec.width_mm}x${spec.height_mm}mm requirements with automatic cropping and background checks.`;
     return {
       title,
       description,
