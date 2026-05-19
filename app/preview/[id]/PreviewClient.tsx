@@ -245,7 +245,6 @@ function OrderPanel({
   handleEmailPhoto,
   spec,
 }: any) {
-  const [isReviewOpen, setIsReviewOpen] = useState(false);
   const formatTime = (s: number) =>
     `${Math.floor(s / 60).toString().padStart(2, "0")}:${(s % 60).toString().padStart(2, "0")}`;
 
@@ -435,12 +434,12 @@ function OrderPanel({
                 >
                   <Icon d={ICONS.mail} size={14} /> Email Me
                 </button>
-                <button
-                  onClick={() => setIsReviewOpen(true)}
+                <a
+                  href="#"
                   className="bg-amber-50 hover:bg-amber-100 text-amber-700 font-bold py-3 px-4 rounded-xl text-xs flex items-center justify-center gap-1.5"
                 >
                   <Icon d={ICONS.star} size={14} /> Rate Us
-                </button>
+                </a>
               </div>
             </div>
           )}

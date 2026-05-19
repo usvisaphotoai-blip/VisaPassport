@@ -25,7 +25,8 @@ export default function PrintTemplateApp() {
 
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [imageObj, setImageObj] = useState<HTMLImageElement | null>(null);
-  
+  const [imageLoadError, setImageLoadError] = useState<string | null>(null);
+
   const [paperSize, setPaperSize] = useState<keyof typeof PAPER_SIZES>("4x6");
   
   const [photoSizes, setPhotoSizes] = useState({
@@ -45,9 +46,17 @@ export default function PrintTemplateApp() {
     if (imageUrl) {
       const decodedUrl = decodeURIComponent(imageUrl);
       setImageSrc(decodedUrl);
+      setImageLoadError(null);
       const img = new Image();
-      img.crossOrigin = "anonymous"; // Avoid tainted canvas issues
-      img.onload = () => setImageObj(img);
+      img.onload = () => {
+        setImageObj(img);
+        setImageLoadError(null);
+      };
+      img.onerror = () => {
+        setImageObj(null);
+        setImageSrc(null);
+        setImageLoadError("Failed to load your photo. Please try again or upload a new photo.");
+      };
       img.src = decodedUrl;
     }
   }, [imageUrl]);
@@ -210,8 +219,70 @@ export default function PrintTemplateApp() {
     pdf.save(`passport-photo-sheet-${paperSize}.pdf`);
   };
 
+  // Error Dialog Component
+  const ErrorDialog = ({ message, onRetry, onBack }: { message: string; onRetry: () => void; onBack: () => void }) => (
+    <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6 text-center">
+        <div className="w-14 h-14 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <span className="text-2xl">⚠️</span>
+        </div>
+        <h3 className="text-lg font-bold text-slate-900 mb-2">Something went wrong</h3>
+        <p className="text-sm text-slate-500 mb-6">{message}</p>
+        <div className="flex gap-3">
+          <button
+            onClick={onBack}
+            className="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-3 rounded-xl text-sm transition-all"
+          >
+            ← Back
+          </button>
+          <button
+            onClick={onRetry}
+            className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl text-sm transition-all"
+          >
+            🔄 Retry
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
+  // Retry handler - reload the image
+  const handleRetry = () => {
+    if (imageUrl) {
+      const decodedUrl = decodeURIComponent(imageUrl);
+      setImageLoadError(null);
+      setImageSrc(decodedUrl);
+      const img = new Image();
+      img.onload = () => {
+        setImageObj(img);
+        setImageLoadError(null);
+      };
+      img.onerror = () => {
+        setImageObj(null);
+        setImageSrc(null);
+        setImageLoadError("Failed to load your photo. Please try again or upload a new photo.");
+      };
+      img.src = decodedUrl;
+    }
+  };
+
+  // Back handler - go to previous page
+  const handleBack = () => {
+    if (typeof window !== 'undefined') {
+      window.history.back();
+    }
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+      {/* Error Dialog */}
+      {imageLoadError && (
+        <ErrorDialog
+          message={imageLoadError}
+          onRetry={handleRetry}
+          onBack={handleBack}
+        />
+      )}
       {!imageSrc ? (
         <div 
           className="border-2 border-dashed border-slate-300 rounded-2xl p-6 sm:p-12 text-center bg-white hover:bg-slate-50 transition-colors cursor-pointer"
