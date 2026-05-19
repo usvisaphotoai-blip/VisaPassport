@@ -209,7 +209,7 @@ function ToolFormFr() {
 
           {/* Upload area */}
           {!selectedFile && (
-            <UploadArea onFileChange={handleFileChange} guidelinesOpen={guidelinesOpen} setGuidelinesOpen={setGuidelinesOpen} onShowGuide={() => setShowGuide(true)} />
+            <UploadArea onFileChange={handleFileChange} guidelinesOpen={guidelinesOpen} setGuidelinesOpen={setGuidelinesOpen} onShowGuide={() => setShowGuide(true)} locale="fr" />
           )}
 
           {/* Processing state */}
@@ -256,7 +256,7 @@ function ToolFormFr() {
             </div>
           )}
 
-          <GuidePrompt isOpen={showGuide} onClose={() => setShowGuide(false)} onUploadClick={() => { const input = document.getElementById("tool-photo-input"); if (input) (input as HTMLInputElement).click(); setShowGuide(false); }} />
+          <GuidePrompt isOpen={showGuide} onClose={() => setShowGuide(false)} onUploadClick={() => { const input = document.getElementById("tool-photo-input"); if (input) (input as HTMLInputElement).click(); setShowGuide(false); }} locale="fr" />
         </div>
       </div>
     </div>

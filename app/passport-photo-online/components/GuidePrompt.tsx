@@ -6,14 +6,46 @@ interface GuidePromptProps {
   isOpen: boolean;
   onClose: () => void;
   onUploadClick: () => void;
+  locale?: "en" | "fr";
 }
+
+const translations = {
+  en: {
+    header: "Upload images like these",
+    example: "Example",
+    bullets: [
+      "Good background we change them in white background",
+      "Neutral expression & open eyes",
+      "Even lighting on face",
+    ],
+    headingRight: "For better photo results...",
+    descRight: "Upload a clear photo like the examples shown. Avoid wearing hats or glasses and ensure proper lighting.",
+    cta: "Start Uploading Now",
+    subCta: "Takes less than 30 seconds",
+  },
+  fr: {
+    header: "Téléchargez des images comme celles-ci",
+    example: "Exemple",
+    bullets: [
+      "Bon arrière-plan (nous le changeons en fond blanc conforme)",
+      "Expression neutre et yeux ouverts",
+      "Éclairage uniforme sur le visage",
+    ],
+    headingRight: "Pour de meilleurs résultats...",
+    descRight: "Téléchargez une photo claire comme dans les exemples. Évitez de porter des chapeaux ou des lunettes et assurez un bon éclairage.",
+    cta: "Commencer le téléchargement maintenant",
+    subCta: "Prend moins de 30 secondes",
+  }
+};
 
 const GuidePrompt: React.FC<GuidePromptProps> = ({
   isOpen,
   onClose,
   onUploadClick,
+  locale = "en",
 }) => {
   if (!isOpen) return null;
+  const t = translations[locale];
 
   return (
     <div
@@ -39,7 +71,7 @@ const GuidePrompt: React.FC<GuidePromptProps> = ({
           {/* Header */}
           <div className="text-center px-4 sm:px-6 pt-4 pb-2">
             <h2 className="text-xl sm:text-3xl font-black text-slate-900">
-              Upload images like these
+              {t.header}
             </h2>
           </div>
 
@@ -60,18 +92,14 @@ const GuidePrompt: React.FC<GuidePromptProps> = ({
                       className="w-full h-auto object-cover"
                     />
                     <div className="absolute top-2 left-2 bg-lime-500 text-white text-[10px] px-2 py-0.5 rounded-full flex items-center gap-1">
-                      <CheckIcon className="w-3 h-3" /> Example
+                      <CheckIcon className="w-3 h-3" /> {t.example}
                     </div>
                   </div>
                 ))}
               </div>
 
               <div className="flex flex-col gap-2 mt-4 text-xs sm:text-sm">
-                {[
-                  "Good background we change them in white background",
-                  "Neutral expression & open eyes",
-                  "Even lighting on face",
-                ].map((text, i) => (
+                {t.bullets.map((text, i) => (
                   <div key={i} className="flex items-center gap-2 text-slate-600 font-semibold">
                     <div className="w-4 h-4 bg-lime-100 rounded-full flex items-center justify-center">
                       <CheckIcon className="w-2.5 h-2.5 text-lime-600" />
@@ -85,22 +113,22 @@ const GuidePrompt: React.FC<GuidePromptProps> = ({
             {/* RIGHT */}
             <div className="md:w-1/2 p-5 sm:p-8 flex flex-col justify-center text-center md:text-left">
               <h2 className="text-2xl sm:text-3xl font-black text-slate-900 mb-3">
-                For better photo results...
+                {t.headingRight}
               </h2>
 
               <p className="text-sm sm:text-base text-slate-500 mb-6">
-                Upload a clear photo like the examples shown. Avoid wearing hats or glasses and ensure proper lighting.
+                {t.descRight}
               </p>
 
               <button
                 onClick={onUploadClick}
                 className="w-full py-3 sm:py-4 bg-[#3b5bdb] hover:bg-[#2f4ac7] text-white font-bold rounded-xl shadow-md transition"
               >
-                Start Uploading Now
+                {t.cta}
               </button>
 
               <p className="text-[10px] text-slate-400 mt-3">
-                Takes less than 30 seconds
+                {t.subCta}
               </p>
             </div>
           </div>
