@@ -23,6 +23,7 @@ const guides = [
   { href: "/fr/guides/passport-photo-size", emoji: "📐", title: fr.guides.size.title, desc: fr.guides.size.description },
   { href: "/fr/guides/passport-photo-background", emoji: "🖼️", title: fr.guides.background.title, desc: fr.guides.background.description },
   { href: "/fr/guides/how-to-take-passport-photo-at-home", emoji: "🏠", title: fr.guides.howTo.title, desc: fr.guides.howTo.description },
+  { href: "/fr/guides/photo-identite-france-passeport-cni-ephoto-permis-visa", emoji: "🇫🇷", title: fr.guides.franceGuide.title, desc: fr.guides.franceGuide.description },
 ];
 
 export default function GuidesIndexPage() {

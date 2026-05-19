@@ -67,7 +67,7 @@ export const fr = {
 
   // ── Preview Page ────────────────────────────────────────────────────────────
   preview: {
-    title: "Votre photo d'identité est prête",
+    title: "Votre photo est prête",
     aiVerification: "Vérification IA",
     compliant: "Photo conforme",
     downloadPreview: "Télécharger l'aperçu",
@@ -561,6 +561,11 @@ export const fr = {
       title: "Comment Prendre une Photo Passeport à la Maison",
       description:
         "Guide étape par étape pour prendre une photo passeport professionnelle chez vous avec votre téléphone. Conseils d'éclairage, position et cadrage.",
+    },
+    franceGuide: {
+      title: "Photo d'Identité Officielle en France (2026)",
+      description:
+        "Comment créer une photo d'identité officielle en ligne en France : Passeport, CNI, ePhoto Permis, Visa, Titre de Séjour et Plus.",
     },
   },
 

@@ -20,6 +20,46 @@ function ProcessingTextFr() {
   return <span>{messages[index]}</span>;
 }
 
+const franceSubDocs = [
+  { id: "france-passport", label: "France – Photo Passeport" },
+  { id: "france-cni-passport", label: "France – Photo Carte Nationale d'Identité (CNI)" },
+  { id: "france-permis-ephoto-passport", label: "France – Photo Permis de Conduire ePhoto" },
+  { id: "france-permis-conduire-passport", label: "France – Photo Permis de Conduire" },
+  { id: "france-titre-sejour-passport", label: "France – Photo Titre de Séjour" },
+  { id: "france-carte-sejour-passport", label: "France – Photo Carte de Séjour" },
+  { id: "france-visa", label: "France – Photo Visa" },
+  { id: "france-naturalisation-passport", label: "France – Photo Naturalisation" },
+  { id: "france-carte-vitale-passport", label: "France – Photo Carte Vitale" },
+  { id: "france-carte-etudiant-passport", label: "France – Photo Carte Étudiant" },
+  { id: "france-carte-professionnelle-passport", label: "France – Photo Carte Professionnelle" },
+  { id: "france-permis-travail-passport", label: "France – Photo Permis de Travail" },
+  { id: "france-carte-residente-passport", label: "France – Photo Carte de Résident" },
+  { id: "france-demande-immigration-passport", label: "France – Photo Demande d'Immigration" },
+  { id: "france-badge-professionnel-passport", label: "France – Photo Badge Professionnel" },
+  { id: "france-carte-transport-passport", label: "France – Photo Carte de Transport" },
+  { id: "france-permis-chasse-passport", label: "France – Photo Permis de Chasse" },
+];
+
+const baseFrance = documentTypes.find((d) => d.id === "france-passport") || {
+  size: "35×45 mm (413×531 px)",
+  bg_color: "light-gray",
+  country: "France",
+  flag: "🇫🇷",
+  price: 6.99,
+  printSize: "A4" as const,
+};
+
+const localizedDocumentTypes = documentTypes.flatMap((doc) => {
+  if (doc.id === "france-passport") {
+    return franceSubDocs.map((sub) => ({
+      ...baseFrance,
+      id: sub.id,
+      label: sub.label,
+    }));
+  }
+  return doc;
+});
+
 function ToolFormFr() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -37,7 +77,7 @@ function ToolFormFr() {
   const headerSelectorRef = useRef<HTMLDivElement>(null);
   const headerSearchRef = useRef<HTMLInputElement>(null);
 
-  const headerFilteredDocs = documentTypes.filter(
+  const headerFilteredDocs = localizedDocumentTypes.filter(
     (doc) => doc.label.toLowerCase().includes(headerSearchTerm.toLowerCase()) || doc.country?.toLowerCase().includes(headerSearchTerm.toLowerCase())
   );
 
@@ -50,8 +90,8 @@ function ToolFormFr() {
   }, []);
 
   useEffect(() => { if (headerSelectorOpen && headerSearchRef.current) headerSearchRef.current.focus(); }, [headerSelectorOpen]);
-  useEffect(() => { const saved = localStorage.getItem("selectedDoc"); if (saved && documentTypes.some((d) => d.id === saved)) setSelectedDoc(saved); }, []);
-  useEffect(() => { if (initialType && documentTypes.some((d) => d.id === initialType)) setSelectedDoc(initialType); }, [initialType]);
+  useEffect(() => { const saved = localStorage.getItem("selectedDoc"); if (saved && localizedDocumentTypes.some((d) => d.id === saved)) setSelectedDoc(saved); }, []);
+  useEffect(() => { if (initialType && localizedDocumentTypes.some((d) => d.id === initialType)) setSelectedDoc(initialType); }, [initialType]);
   useEffect(() => { if (selectedDoc) localStorage.setItem("selectedDoc", selectedDoc); }, [selectedDoc]);
 
   useEffect(() => {
@@ -70,7 +110,7 @@ function ToolFormFr() {
 
 
 
-  const activeDoc = documentTypes.find((d) => d.id === selectedDoc) || documentTypes[4];
+  const activeDoc = localizedDocumentTypes.find((d) => d.id === selectedDoc) || localizedDocumentTypes[4];
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -89,6 +129,7 @@ function ToolFormFr() {
     let countryCode = countryMapping[countrySlug] || "US";
     if (activeDoc.id.includes("ds-160")) countryCode = "US";
     if (activeDoc.id.includes("schengen")) countryCode = "EU";
+    if (activeDoc.id.startsWith("france-")) countryCode = "FR";
     const documentType = activeDoc.id.includes("visa") ? "visa" : "passport";
     const formData = new FormData();
     formData.append("image", file);

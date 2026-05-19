@@ -23,6 +23,7 @@ export default function FooterFr() {
         { label: "Taille photo passeport", href: "/fr/guides/passport-photo-size" },
         { label: "Fond photo passeport", href: "/fr/guides/passport-photo-background" },
         { label: "Photo maison", href: "/fr/guides/how-to-take-passport-photo-at-home" },
+        { label: "Photo d'identité France", href: "/fr/guides/photo-identite-france-passeport-cni-ephoto-permis-visa" },
       ],
     },
     {

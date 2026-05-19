@@ -161,6 +161,7 @@ function ToolForm() {
     // Handle special cases for country mapping
     if (activeDoc.id.includes("ds-160")) countryCode = "US";
     if (activeDoc.id.includes("schengen")) countryCode = "EU";
+    if (activeDoc.id.startsWith("france-")) countryCode = "FR";
 
     const documentType = activeDoc.id.includes("visa") ? "visa" : "passport";
 

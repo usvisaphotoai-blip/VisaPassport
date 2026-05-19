@@ -187,6 +187,7 @@ export default function PassportMakerApp() {
     let countryCode = countryMapping[countrySlug] || "US";
     if (selectedDoc.includes("ds-160")) countryCode = "US";
     if (selectedDoc.includes("schengen")) countryCode = "EU";
+    if (selectedDoc.startsWith("france-")) countryCode = "FR";
 
     const formData = new FormData();
     formData.append("image", compressed);

@@ -52,6 +52,12 @@ export const allSpecs = specsData as CountrySpec[];
 export function getSpecById(id: string): CountrySpec | undefined {
   if (!id) return undefined;
 
+  // 0. France custom options override
+  if (id.startsWith("france-")) {
+    const franceSpec = allSpecs.find((s) => s.id === "france-passport");
+    if (franceSpec) return franceSpec;
+  }
+
   // 1. Direct match
   const direct = allSpecs.find((s) => s.id === id);
   if (direct) return direct;
