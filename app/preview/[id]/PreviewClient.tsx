@@ -35,73 +35,28 @@ const ICONS = {
 const cx = (...c: (string | false | undefined | null)[]) => c.filter(Boolean).join(" ");
 
 const METRIC_FIXES = [
-  { key: "background_corrected", label: "Background corrected to government standard", icon: "✓" },
-  { key: "head_height_pct", label: "Head height optimized to official specification", icon: "✓" },
-  { key: "eye_position_pct", label: "Eye position aligned within required zone", icon: "✓" },
-  { key: "top_margin_pct", label: "Top spacing adjusted per compliance rules", icon: "✓" },
 
-  // File & quality fixes
-  { key: "file_size_optimized", label: "File size compressed within allowed limit", icon: "✓" },
-  { key: "resolution_enhanced", label: "Resolution verified for embassy requirements", icon: "✓" },
-  { key: "dpi_corrected", label: "Print DPI standardized for official printing", icon: "✓" },
-  { key: "jpeg_normalized", label: "Photo converted to compliant JPEG format", icon: "✓" },
+  { key: "gov", label: "Government compliant photo", icon: "✓" },
+  { key: "gov5", label: "AI biometric validation", icon: "✓" },
+  { key: "gov2", label: "100% acceptance guarantee", icon: "✓" },
 
-  // Face & positioning fixes
-  { key: "face_centered", label: "Face centered in frame", icon: "✓" },
-
-  { key: "eye_alignment_fixed", label: "Eye level balanced horizontally", icon: "✓" },
-  { key: "chin_spacing_fixed", label: "Chin spacing adjusted to specification", icon: "✓" },
+  { key: "gov0", label: "Refund if rejected", icon: "✓" },
 
 
-  // Image enhancement fixes
-  { key: "lighting_balanced", label: "Lighting balanced for facial visibility", icon: "✓" },
+  { key: "gov3", label: "Instant download + print sheet", icon: "✓" },
 
-  { key: "white_balance_fixed", label: "Color balance normalized", icon: "✓" },
-  { key: "sharpness_enhanced", label: "Image sharpness enhanced", icon: "✓" },
 
-  // Background & print fixes
-  { key: "background_cleaned", label: "Background cleaned and normalized", icon: "✓" },
-  { key: "print_sheet_generated", label: "Print sheet generated in official layout", icon: "✓" },
 
-  // Compliance wording
-  { key: "government_compliance", label: "Photo adjusted to meet government compliance checks", icon: "✓" },
+
+ 
+
+
+  
 ];
 
-// ─── Sub-components ────────────────────────────────────────────────────────────
 
-function StatusBadge({ status }: { status: "PASS" | "WARN" | "FAIL" }) {
-  const map = {
-    PASS: { bg: "bg-emerald-500/15 text-emerald-600 border-emerald-200", dot: "bg-emerald-500", label: "PASS" },
-    WARN: { bg: "bg-amber-500/15 text-amber-600 border-amber-200", dot: "bg-amber-500", label: "WARN" },
-    FAIL: { bg: "bg-red-500/15 text-red-600 border-red-200", dot: "bg-red-500", label: "FAIL" },
-  };
-  const s = map[status];
-  return (
-    <span className={cx("inline-flex items-center gap-1 px-2 py-0.5 rounded-full border text-[9px] font-bold tracking-wider uppercase", s.bg)}>
-      <span className={cx("w-1.5 h-1.5 rounded-full", s.dot)} />
-      {s.label}
-    </span>
-  );
-}
 
-function ComplianceCard({ check }: { check: ComplianceCheck }) {
-  const colors = {
-    PASS: { bg: "bg-emerald-50 border-emerald-100", icon: "text-emerald-500", iconD: ICONS.check },
-    WARN: { bg: "bg-amber-50 border-amber-100", icon: "text-amber-500", iconD: ICONS.warn },
-    FAIL: { bg: "bg-red-50 border-red-100", icon: "text-red-500", iconD: ICONS.close },
-  };
-  const c = colors[check.status];
-  return (
-    <div className={cx("rounded-2xl border p-3 flex flex-col gap-1.5 transition-all", c.bg)}>
-      <div className="flex items-start justify-between gap-2">
-        <span className="text-[11px] font-bold text-slate-800 leading-tight">{check.name}</span>
-        <Icon d={c.iconD} size={14} className={cx("shrink-0 mt-0.5", c.icon)} />
-      </div>
-      <span className="text-[12px] font-black text-slate-700">{check.value}</span>
-      <span className="text-[10px] text-slate-500 leading-tight">{check.detail}</span>
-    </div>
-  );
-}
+
 
 function MetricFix({ metric }: { metric: typeof METRIC_FIXES[0] }) {
   return (
@@ -127,9 +82,9 @@ function TrustBadges() {
   return (
     <div className="flex items-center justify-center gap-4 py-2 flex-wrap">
       {badges.map((b, i) => (
-        <div key={i} className="flex items-center gap-1.5 text-slate-500">
+        <div key={i} className="flex items-center gap-1.5 text-red-500">
           <Icon d={b.icon} size={12} />
-          <span className="text-[10px] font-semibold">{b.text}</span>
+          <span className="text-[11px] font-semibold">{b.text}</span>
         </div>
       ))}
     </div>
@@ -205,7 +160,7 @@ function PhotoPanel({
             </div>
             <div>
 
-              <p className="text-sm font-bold text-slate-900">What We Fixed In Your Photo</p>
+              <p className="text-sm font-bold text-slate-900">Your Photo Meets Official Requirements</p>
             </div>
           </div>
           <div className="space-y-0">
@@ -214,7 +169,7 @@ function PhotoPanel({
           <div className="mt-4 rounded-xl bg-lime-50 border border-lime-100 px-3 py-2.5 flex items-start gap-2">
             <Icon d={ICONS.star} size={13} className="text-lime-500 shrink-0 mt-0.5" />
             <p className="text-[11px] text-lime-700 font-medium leading-relaxed">
-              Background removed & corrected to government-compliant white. Your original photo has been professionally processed.
+              ✓ Background professionally corrected to official requirements
             </p>
           </div>
         </div>
@@ -271,7 +226,7 @@ function OrderPanel({
                 <button
                   onClick={() => setIsExpertPlan(false)}
                   className={cx(
-                    "w-full text-left rounded-2xl border-2 p-4 transition-all duration-200 relative",
+                    "w-full text-left rounded-2xl border-2 p-4 transition-all duration-200 relative ",
                     !isExpertPlan
                       ? "border-emerald-500 bg-emerald-50/40 shadow-[0_0_0_3px_rgba(16,185,129,0.08)]"
                       : "border-slate-100 bg-white hover:border-slate-200"
@@ -289,7 +244,7 @@ function OrderPanel({
                   </div>
                   <ul className="space-y-1.5">
 
-                    {[" Biometric Check", "100% Acceptance Guaranteed", "Background Removal", "Instant Digital Photo For Submission", "A4 Print Sheet"].map(f => (
+                    {[" AI Biometric Check", "Instant digital download", " Official A4 print sheet", "100% acceptance guarantee"].map(f => (
                       <li key={f} className="flex items-center gap-2 text-[13px] text-slate-600 font-medium">
                         <Icon d={ICONS.check} size={12} className={!isExpertPlan ? "text-emerald-500" : "text-slate-300"} stroke={2.5} />
                         {f}
@@ -329,11 +284,13 @@ function OrderPanel({
                   <ul className="space-y-1.5">
                     {[
                       "Everything in Standard",
-                      "Reviewed by passport photo expert",
+                      "Human expert review in <15 min",
+                    
                       "Extra compliance verifications",
-                      "Reduce rejection risks",
-                      "100% Acceptance Guaranteed",
-                      "Email Delivery Included",
+                      "Priority processing",
+                     
+                      "Email support",
+                      "Reduced rejection risk"
                     ].map(f => (
                       <li key={f} className="flex items-center gap-2 text-[14px] text-slate-600 font-medium">
                         <Icon d={ICONS.check} size={12} className={isExpertPlan ? "text-blue-500" : "text-slate-300"} stroke={2.5} />
@@ -351,7 +308,7 @@ function OrderPanel({
               </div>
 
               {/* Guest Email */}
-              {status !== "authenticated" && (
+              {/* {status !== "authenticated" && (
                 <div>
                   <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">
                     Email for Delivery
@@ -364,10 +321,10 @@ function OrderPanel({
                     className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
                   />
                 </div>
-              )}
+              )} */}
 
               {/* CTA */}
-              <div className="space-y-2 pt-1">
+              <div className="space-y-2 pt-1 hidden md:block" >
                 <button
                   onClick={handlePayment}
                   disabled={loading || verifying}
@@ -447,8 +404,8 @@ function OrderPanel({
       </div>
 
       <div className="text-center">
-        <a href="/passport-photo-online" className="text-sm font-bold text-slate-400 hover:text-slate-600 transition-colors">
-          Need another photo? <span className="underline">Upload again →</span>
+        <a href="/passport-photo-online" className="text-sm font-bold text-lime-600 hover:text-slate-600 transition-colors">
+         Need a different document? <span className="underline">Create another photo →</span>
         </a>
       </div>
     </div>
@@ -549,7 +506,7 @@ function MobileCTA({ productName, localPrice, expertPrice, isExpertPlan, loading
               )}
             </button>
           </div>
-          <p className="text-center text-[10px] text-slate-400 mt-2">🔒 Secure · Refund if rejected · No subscription</p>
+          <p className="text-center text-[12px] text-red-400 mt-2">🔒 Secure · Refund if rejected · No subscription</p>
         </div>
       </div>
       <div className="h-28 lg:hidden" />
@@ -740,7 +697,7 @@ export default function PreviewClient({
           <div className="bg-white rounded-3xl shadow-2xl w-full max-w-sm overflow-hidden">
             <div className="p-6">
               <div className="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center mb-4 mx-auto">
-                <Icon d={ICONS.mail} size={22} className="text-blue-600" />
+                <Icon d={ICONS.mail} size={22} className="text-lime-600" />
               </div>
               <h3 className="text-xl font-black text-slate-900 mb-2 text-center">Where should we send it?</h3>
               <p className="text-sm text-slate-500 mb-5 leading-relaxed text-center">
@@ -767,7 +724,7 @@ export default function PreviewClient({
                     if (valid) { setIsEmailDialogOpen(false); handlePayment(); }
                     else alert("Please enter a valid email address.");
                   }}
-                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl text-sm transition-all shadow-lg shadow-blue-500/20"
+                  className="flex-1 bg-lime-600 hover:bg-lime-700 text-white font-bold py-3.5 rounded-xl text-sm transition-all shadow-lg shadow-lime-500/20"
                 >
                   Continue →
                 </button>
