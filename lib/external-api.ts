@@ -130,7 +130,7 @@ export async function processExternalPhoto(
 ): Promise<ExternalProcessResponse> {
   if (!EXTERNAL_API_BASE_URL) {
     throw new Error(
-      "External API URL is not configured. Set the PASSPORT_API_URL environment variable."
+      "External API URL is not configured. Set the PASSPORT_API_URL environment variable. "
     );
   }
 
