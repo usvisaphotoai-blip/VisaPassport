@@ -88,7 +88,7 @@ function ScoreRing({ score, pass }: { score: number; pass: boolean }) {
 // ─── Metric Card ───────────────────────────────────────────────────────────────
 
 function MetricCard({ metric }: { metric: ValidationMetric }) {
-  const statusConfig = {
+  const statusConfig: Record<string, any> = {
     success: {
       bg: "bg-emerald-50",
       border: "border-emerald-100",
@@ -119,18 +119,29 @@ function MetricCard({ metric }: { metric: ValidationMetric }) {
       badge: "bg-red-100 text-red-700",
       label: "Fail",
     },
+    error: {
+      bg: "bg-red-50",
+      border: "border-red-100",
+      icon: "text-red-600",
+      iconBg: "bg-red-100",
+      text: "text-red-700",
+      dot: "bg-red-400",
+      badge: "bg-red-100 text-red-700",
+      label: "Error",
+    },
   };
 
-  const cfg = statusConfig[metric.status];
+  const normalizedStatus = metric.status?.toLowerCase() || "warning";
+  const cfg = statusConfig[normalizedStatus] || statusConfig.warning;
 
   const StatusIcon = () => {
-    if (metric.status === "success")
+    if (normalizedStatus === "success")
       return (
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
           <polyline points="20 6 9 17 4 12" />
         </svg>
       );
-    if (metric.status === "warning")
+    if (normalizedStatus === "warning")
       return (
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
           <line x1="12" y1="9" x2="12" y2="13" /><line x1="12" y1="17" x2="12.01" y2="17" />
@@ -159,8 +170,13 @@ function MetricCard({ metric }: { metric: ValidationMetric }) {
       </div>
       <div className="space-y-1">
         <p className={`text-sm font-black ${cfg.text} leading-snug`}>{metric.value}</p>
+        {metric.details && (
+          <p className="text-[11px] text-slate-500 font-medium leading-tight mt-1">
+            {metric.details}
+          </p>
+        )}
         {metric.target && (
-          <p className="text-[10px] text-slate-400 font-semibold">
+          <p className="text-[10px] text-slate-400 font-semibold mt-1">
             Target: <span className="text-slate-500">{metric.target}</span>
           </p>
         )}
@@ -238,9 +254,12 @@ export default function ValidationReportView({ report, onReset }: Props) {
   const metricEntries = Object.entries(metrics).filter(([, m]) => m != null) as [string, ValidationMetric][];
 
   // Group metrics for visual hierarchy
-  const failedMetrics = metricEntries.filter(([, m]) => m.status === "fail");
-  const warningMetrics = metricEntries.filter(([, m]) => m.status === "warning");
-  const successMetrics = metricEntries.filter(([, m]) => m.status === "success");
+  const failedMetrics = metricEntries.filter(([, m]) => {
+    const s = m.status?.toLowerCase();
+    return s === "fail" || s === "error";
+  });
+  const warningMetrics = metricEntries.filter(([, m]) => m.status?.toLowerCase() === "warning");
+  const successMetrics = metricEntries.filter(([, m]) => m.status?.toLowerCase() === "success");
   const orderedMetrics: [string, ValidationMetric][] = [...failedMetrics, ...warningMetrics, ...successMetrics];
 
   return (
@@ -334,24 +353,15 @@ export default function ValidationReportView({ report, onReset }: Props) {
       {/* ── Action Footer ─────────────────────────────────────────── */}
       <motion.div
         variants={itemVariants}
-        className="flex flex-col sm:flex-row gap-3"
+        className="flex flex-col sm:flex-row gap-4 pt-2"
       >
-        <button
-          onClick={() => window.print()}
-          className="flex-1 h-11 rounded-2xl border border-slate-200 bg-white text-slate-700 font-bold text-xs uppercase tracking-widest hover:border-slate-300 hover:bg-slate-50 transition-all flex items-center justify-center gap-2"
-          aria-label="Download report"
-        >
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" />
-          </svg>
-          Download Report
-        </button>
+      
         <button
           onClick={onReset}
-          className="flex-1 h-11 rounded-2xl bg-blue-600 text-white font-bold text-xs uppercase tracking-widest hover:bg-blue-700 transition-all flex items-center justify-center gap-2 shadow-md shadow-blue-200"
+          className="w-full sm:flex-1 h-14 rounded-2xl bg-blue-600 text-white font-bold text-sm uppercase tracking-widest hover:bg-blue-700 active:scale-[0.98] transition-all flex items-center justify-center gap-2.5 shadow-lg shadow-blue-500/30"
           aria-label="Validate another photo"
         >
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <polyline points="1 4 1 10 7 10" /><path d="M3.51 15a9 9 0 102.13-9.36L1 10" />
           </svg>
           Validate Another

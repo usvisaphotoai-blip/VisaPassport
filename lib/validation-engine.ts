@@ -30,7 +30,7 @@ export interface ValidationSpec {
 export interface ValidationMetric {
   label: string;
   value: string;
-  status: "success" | "warning" | "fail";
+  status: "success" | "warning" | "fail" | "error";
   details?: string;
   target?: string;
 }
