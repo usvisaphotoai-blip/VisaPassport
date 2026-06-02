@@ -75,7 +75,7 @@ const FIXED_PRICES: Record<string, { amount: number; symbol: string; decimals: n
   DKK: { amount: 39, symbol: "kr", decimals: 0 },
   
   // Tier 3: ~50% Discount
-  INR: { amount: 299, symbol: "₹", decimals: 0 },
+  INR: { amount: 99, symbol: "₹", decimals: 0 },
   CNY: { amount: 29, symbol: "¥", decimals: 0 },
   BRL: { amount: 24, symbol: "R$", decimals: 0 },
   MXN: { amount: 89, symbol: "$", decimals: 0 },
@@ -124,7 +124,7 @@ const EXPERT_PRICES: Record<string, { amount: number; symbol: string; decimals: 
   NOK: { amount: 99, symbol: "kr", decimals: 0 },
   DKK: { amount: 69, symbol: "kr", decimals: 0 },
   
-  INR: { amount: 399, symbol: "₹", decimals: 0 },
+  INR: { amount: 199, symbol: "₹", decimals: 0 },
   CNY: { amount: 49, symbol: "¥", decimals: 0 },
   BRL: { amount: 45, symbol: "R$", decimals: 0 },
   MXN: { amount: 149, symbol: "$", decimals: 0 },
