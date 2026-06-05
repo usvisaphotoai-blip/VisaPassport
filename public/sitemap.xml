@@ -430,11 +430,11 @@
   <!-- GERMANY (Schengen) -->
   <url>
     <loc>https://www.pixpassport.com/germany-passport-photo-editor</loc>
-    <lastmod>2026-04-17</lastmod>
+    <lastmod>2026-06-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1779008016/c24d89b1-ab0e-4f1d-9035-5814bc7b91ca_preview_ip9ogs.jpg</image:loc>
     </image:image>
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
@@ -445,11 +445,11 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/germany-visa-photo-editor</loc>
-    <lastmod>2026-04-17</lastmod>
+    <lastmod>2026-06-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1779008016/c24d89b1-ab0e-4f1d-9035-5814bc7b91ca_preview_ip9ogs.jpg</image:loc>
     </image:image>
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
