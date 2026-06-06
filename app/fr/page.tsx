@@ -62,7 +62,11 @@ const faqs = [
   },
   {
     q: "Comment recevoir ma photo pour la soumettre à l'ANTS en ligne ?",
-    a: "Vous recevez un fichier numérique haute résolution, compatible avec le format ePhoto requis par l'ANTS pour toutes les demandes en ligne de passeport ou de carte d'identité.",
+    a: "Vous recevez un fichier numérique haute résolution, compatible avec le format requis par l'ANTS pour toutes les demandes en ligne de passeport ou de carte d'identité. Vous pouvez ensuite utiliser cette photo auprès d'un photographe agréé ou d'une cabine ePhoto pour obtenir votre code à 22 caractères. PixPassport ne fournit pas directement ce code ePhoto ANTS : nous vous livrons la photo conforme, vous la soumettez ensuite via les canaux officiels.",
+  },
+  {
+    q: "PixPassport est-il affilié à l'ANTS ou à une autorité gouvernementale ?",
+    a: "Non. PixPassport est un service privé et indépendant, non affilié à l'ANTS (Agence Nationale des Titres Sécurisés) ni à aucune autre autorité gouvernementale. Notre rôle est de vous fournir une photo d'identité parfaitement conforme aux normes biométriques officielles — que vous pouvez ensuite utiliser pour vos démarches administratives en toute confiance.",
   },
   {
     q: "Mes données personnelles sont-elles protégées ?",
@@ -106,10 +110,10 @@ const benefits = [
 ];
 
 const docs = [
-  { icon: "🛂", name: "Passeport français", detail: "Format ICAO · fond blanc · 35×45 mm" },
-  { icon: "🪪", name: "Carte nationale d'identité", detail: "CNI française · normes ANTS" },
+  // { icon: "🛂", name: "Passeport français", detail: "Format ICAO · fond blanc · 35×45 mm" },
+  // { icon: "🪪", name: "Carte nationale d'identité", detail: "CNI française · normes ANTS" },
   { icon: "✈️", name: "Visa Schengen", detail: "Tous pays de l'espace Schengen" },
-  { icon: "🚗", name: "Permis de conduire", detail: "Échange international et renouvellement" },
+  // { icon: "🚗", name: "Permis de conduire", detail: "Échange international et renouvellement" },
   { icon: "🇺🇸", name: "Documents américains", detail: "Passeport US · visa DS-160" },
   { icon: "🌐", name: "50+ pays disponibles", detail: "Base de données mondiale à jour" },
 ];
@@ -178,7 +182,7 @@ export default function FrHomePage() {
               className="p-hero__img p-hero__img--desk"
             />
             <Image
-              src="/c24d89b1-ab0e-4f1d-9035-5814bc7b91ca_preview.jpg"
+              src="https://res.cloudinary.com/dipzpwbbk/image/upload/v1779008016/c24d89b1-ab0e-4f1d-9035-5814bc7b91ca_preview_ip9ogs.jpg"
               alt="Photo passeport conforme en ligne sur smartphone"
               width={750}
               height={560}
@@ -207,7 +211,7 @@ export default function FrHomePage() {
               <p className="p-hero__sub">
                 Obtenez une photo d'identité 100&nbsp;% conforme aux normes biométriques officielles
                 sans vous déplacer. Fond supprimé automatiquement, recadrage précis, téléchargement
-                immédiat — acceptée par l'ANTS et les autorités de 50+ pays.
+                immédiat — acceptée par  les autorités de 50+ pays.
               </p>
 
               <ul className="p-pills" aria-label="Points clés">
@@ -227,10 +231,7 @@ export default function FrHomePage() {
                   Obtenir ma photo d'identité
                   <ArrowRight />
                 </Link>
-                <p className="p-guarantee">
-                  <ShieldIcon />
-                  Remboursé si votre photo est refusée — sans condition
-                </p>
+               
               </div>
 
             </div>
@@ -511,6 +512,24 @@ export default function FrHomePage() {
             </div>
           </div>
         </section>
+
+        {/* ══════════════════════════════════════
+            DISCLAIMER — subtle & professional
+        ══════════════════════════════════════ */}
+        <div className="p-disclaimer" role="note" aria-label="Information importante">
+          <div className="p-container p-disclaimer__inner">
+            <InfoIcon />
+            <p className="p-disclaimer__text">
+              <strong>PixPassport</strong> est un service indépendant de création de photos d'identité conformes.
+              Nous ne sommes <strong>pas affiliés</strong> à l'ANTS (Agence Nationale des Titres Sécurisés)
+              ni à aucune autorité gouvernementale.
+              Nous ne fournissons pas le <strong>code ePhoto à 22 caractères</strong> délivré par les photographes
+              agréés et cabines homologuées.
+              Notre service vous fournit une photo parfaitement conforme aux normes biométriques officielles,
+              que vous pouvez ensuite utiliser pour obtenir votre code ePhoto via les canaux officiels.
+            </p>
+          </div>
+        </div>
 
         {/* ══════════════════════════════════════
             BOTTOM CTA
@@ -1002,6 +1021,34 @@ export default function FrHomePage() {
           color: rgba(255,255,255,.4);
         }
         .p-bottom__micro svg { color: var(--lime-lt); opacity: .7; flex-shrink: 0; }
+
+        /* Disclaimer */
+        .p-disclaimer {
+          background: #f1f5f9;
+          border-top: 1px solid var(--border);
+          border-bottom: 1px solid var(--border);
+          padding: 18px 0;
+        }
+        .p-disclaimer__inner {
+          display: flex;
+          align-items: flex-start;
+          gap: 12px;
+        }
+        .p-disclaimer__inner svg {
+          flex-shrink: 0;
+          color: var(--ink3);
+          margin-top: 2px;
+        }
+        .p-disclaimer__text {
+          font-size: 12px;
+          color: var(--ink3);
+          line-height: 1.7;
+          margin: 0;
+        }
+        .p-disclaimer__text strong {
+          color: var(--ink2);
+          font-weight: 600;
+        }
       `}</style>
     </>
   );
@@ -1028,6 +1075,15 @@ function ShieldIcon() {
   return (
     <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
       <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+    </svg>
+  );
+}
+function InfoIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="10" />
+      <line x1="12" y1="16" x2="12" y2="12" />
+      <line x1="12" y1="8" x2="12.01" y2="8" />
     </svg>
   );
 }

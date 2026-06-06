@@ -88,7 +88,7 @@ export function BeforeAfterSlider() {
         }}
       >
         <Image
-          src="/c24d89b1-ab0e-4f1d-9035-5814bc7b91ca_preview.jpg"
+          src="https://res.cloudinary.com/dipzpwbbk/image/upload/v1779008016/c24d89b1-ab0e-4f1d-9035-5814bc7b91ca_preview_ip9ogs.jpg"
           alt="Après — photo biométrique conforme avec fond blanc"
           fill
           style={{ objectFit: "cover", objectPosition: "center 8%", pointerEvents: "none" }}

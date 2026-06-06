@@ -44,7 +44,11 @@ const ephotoFaqs = [
   },
   {
     q: "Comment obtenir un code ePhoto ANTS en ligne ?",
-    a: "Le code ePhoto est généralement délivré par un photomaton agréé ou un photographe professionnel. Avec PixPassport, vous créez une photo conforme aux mêmes normes directement depuis votre téléphone ou ordinateur, sans vous déplacer. Le fichier généré peut être utilisé pour vos démarches ANTS.",
+    a: "Le code ePhoto à 22 caractères est exclusivement délivré par un photographe agréé ou un photomaton homologué par l'ANTS. PixPassport ne fournit pas ce code. En revanche, nous vous permettons de créer une photo parfaitement conforme aux normes biométriques ANTS — que vous pouvez ensuite présenter à un photographe agréé ou utiliser dans une cabine pour obtenir votre code rapidement et sans risque de refus.",
+  },
+  {
+    q: "PixPassport est-il affilié à l'ANTS ou à une autorité gouvernementale ?",
+    a: "Non. PixPassport est un service privé et indépendant, non affilié à l'ANTS (Agence Nationale des Titres Sécurisés) ni à aucune autorité gouvernementale. Notre expertise est la création de photos d'identité conformes aux normes biométriques officielles, que vous pouvez ensuite utiliser pour vos démarches administratives en toute confiance.",
   },
   {
     q: "La photo PixPassport est-elle acceptée par l'ANTS ?",
@@ -433,6 +437,24 @@ export default function EphotoAntsPage() {
           </div>
         </div>
       </section>
+
+      {/* ── DISCLAIMER ── */}
+      <div className="bg-slate-100 border-y border-slate-200 py-4">
+        <div className="max-w-3xl mx-auto px-4 flex items-start gap-3">
+          <svg className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="12" y1="16" x2="12" y2="12" />
+            <line x1="12" y1="8" x2="12.01" y2="8" />
+          </svg>
+          <p className="text-xs text-slate-500 leading-relaxed">
+            <strong className="text-slate-600">PixPassport</strong> est un service indépendant de création de photos d&apos;identité conformes.
+            Nous ne sommes <strong className="text-slate-600">pas affiliés</strong> à l&apos;ANTS (Agence Nationale des Titres Sécurisés)
+            ni à aucune autorité gouvernementale et ne délivrons pas le <strong className="text-slate-600">code ePhoto à 22 caractères</strong>.
+            Notre service vous fournit une photo parfaitement conforme aux normes biométriques officielles,
+            que vous pouvez ensuite utiliser pour obtenir votre code ePhoto via un photographe agréé ou une cabine homologuée.
+          </p>
+        </div>
+      </div>
 
       {/* ── SECTION 9 : Internal link hub ── */}
       <section className="py-12 bg-white">

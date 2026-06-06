@@ -581,7 +581,7 @@ export const fr = {
     badges: ["100% Privé", "Vérification instantanée"],
     copyright: "Tous droits réservés.",
     disclaimer:
-      "Avertissement : Ce site n'est affilié à aucune agence gouvernementale.",
+      "PixPassport est un service indépendant de retouche photo. Nous ne sommes pas affiliés à l'ANTS (Agence Nationale des Titres Sécurisés) ni à aucune agence gouvernementale et ne fournissons pas le code ePhoto à 22 caractères.",
     aboutUs: "À propos",
     contactUs: "Nous contacter",
     privacyPolicy: "Politique de confidentialité",
