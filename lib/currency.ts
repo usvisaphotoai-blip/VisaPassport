@@ -52,14 +52,14 @@ const COUNTRY_TO_CURRENCY: Record<string, string> = {
 // Fixed price mapping for specific currencies (PPP-adjusted)
 const FIXED_PRICES: Record<string, { amount: number; symbol: string; decimals: number }> = {
   // Tier 1: Base ($5.99)
-  USD: { amount: 5.99, symbol: "$", decimals: 2 },
-  EUR: { amount: 5.99, symbol: "€", decimals: 2 },
-  GBP: { amount: 5.99, symbol: "£", decimals: 2 },
-  CHF: { amount: 5.99, symbol: "CHF", decimals: 2 },
-  CAD: { amount: 5.99, symbol: "C$", decimals: 2 },
-  AUD: { amount: 5.99, symbol: "A$", decimals: 2 },
-  NZD: { amount: 5.99, symbol: "NZ$", decimals: 2 },
-  JPY: { amount: 899, symbol: "¥", decimals: 0 },
+  USD: { amount: 3.99, symbol: "$", decimals: 2 },
+  EUR: { amount: 3.99, symbol: "€", decimals: 2 },
+  GBP: { amount: 3.99, symbol: "£", decimals: 2 },
+  CHF: { amount: 3.99, symbol: "CHF", decimals: 2 },
+  CAD: { amount: 3.99, symbol: "C$", decimals: 2 },
+  AUD: { amount: 3.99, symbol: "A$", decimals: 2 },
+  NZD: { amount: 3.99, symbol: "NZ$", decimals: 2 },
+  JPY: { amount: 499, symbol: "¥", decimals: 0 },
   SGD: { amount: 7.99, symbol: "S$", decimals: 2 },
   HKD: { amount: 45, symbol: "HK$", decimals: 0 },
   
