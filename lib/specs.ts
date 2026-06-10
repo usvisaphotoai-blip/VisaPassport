@@ -3,11 +3,11 @@ import { DocumentType } from "@/app/passport-photo-online/types";
 import { countryMapping } from "./external-api";
 
 export const SUPPORTED_COUNTRIES = [
-  "DZ", "AU", "AT", "BE", "BG", "CN", "HR", "CZ", "DK", "EE",
+  "DZ", "AU", "AT", "BE", "BG", "BT", "CN", "HR", "CZ", "DK", "EE",
   "FI", "FR", "DE", "GR", "HU", "IN", "ID", "IR", "IQ", "IT",
-  "JP", "KZ", "LV", "LT", "LU", "MT", "NL", "NZ", "NO", "PL",
-  "PT", "RO", "EU", "SG", "SK", "SI", "KR", "ES", "SE", "CHE",
-  "TH", "TR", "AE", "GB", "US"
+  "JP", "KZ", "LV", "LT", "LU", "MW", "MT", "MX", "NP", "NL", "NZ", "NO", "PL",
+  "PT", "RO", "EU", "SG", "SK", "SI", "KR", "ES", "LK", "SE", "CHE",
+  "TJ", "TH", "TR", "AE", "GB", "US"
 ];
 
 export interface CountrySpec {
