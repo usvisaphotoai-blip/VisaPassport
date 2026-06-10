@@ -946,66 +946,7 @@ export default function HomeSections({
 
      
 
-      {/* ────────── PRICING ────────── */}
-      <section className="hc-sec">
-        <div className="hc-sec-xs">
-          <span className="hc-label">Simple Pricing</span>
-          <h2 className="hc-h2">Why pay more?</h2>
-          <p className="hc-sub" style={{ marginBottom: "32px" }}>
-            Photo studios charge $10–$20 + travel time. Get the same compliant
-            photo here in 30 seconds for just <PriceDisplay basePrice={basePrice} />.
-          </p>
-
-          <div className="hc-price-card" style={{ marginTop: "8px" }}>
-            <div className="hc-price-pop">Most Popular</div>
-            <div className="hc-price-amt"><PriceDisplay basePrice={basePrice} /></div>
-            <div className="hc-price-note">
-              One-time · 1 digital photo + A4 print sheet
-            </div>
-
-            <div style={{ marginTop: "24px" }}>
-              <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">
-                Free Includes:
-              </p>
-              <div className="hc-price-feat" style={{ marginBottom: "20px" }}>
-                <span className="hc-pf-chk">✓</span>
-                <span className="hc-pf-txt">
-                  Check if your photo passes or fails
-                </span>
-              </div>
-
-              <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">
-                Paid Includes:
-              </p>
-              {[
-                "Official compliant photo download",
-                "Auto crop & resize (600x600)",
-                "Background correction to pure white",
-                "File size optimization (<240KB)",
-                "A4 print sheet (20 photos)",
-                "24-hour secure storage",
-              ].map((feat, i) => (
-                <div key={i} className="hc-price-feat">
-                  <span className="hc-pf-chk">✓</span>
-                  <span className="hc-pf-txt">{feat}</span>
-                </div>
-              ))}
-            </div>
-
-            <a
-              href="/passport-photo-online"
-              className="hc-btn-block"
-              style={{ marginTop: "24px" }}
-            >
-              Get My Approved Photo →
-            </a>
-            <div className="hc-price-sm">
-              No account required · One-time payment
-            </div>
-          </div>
-        </div>
-      </section>
-
+     
 
       {/* ────────── PRIVACY ────────── */}
       <section className="hc-sec">

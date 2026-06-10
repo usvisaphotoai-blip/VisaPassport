@@ -3,56 +3,20 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 
-const visaTypes = [
-  "US Visa Photo",
-  "India Passport",
-  "UK Passport",
-  "Schengen Visa",
-
-  "Australia Passport",
-];
-
 const trustBadges = [
   { icon: "🔒", text: "Secure & Private" },
   { icon: "⚡", text: "Results in 30s" },
-  { icon: "🌍", text: "Global Compliance" },
+  { icon: "🌍", text: "50+ Countries" },
   { icon: "🆓", text: "Free Validation" },
 ];
 
 export default function HomeHero() {
-  const [visaTypeIndex, setVisaTypeIndex] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(false);
-  const [photosProcessed, setPhotosProcessed] = useState(17560);
-
-  // Slider
   const [sliderPos, setSliderPos] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
   const [hasInteracted, setHasInteracted] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number | null>(null);
 
-  // ── Visa type cycling ──────────────────────────────────────
-  useEffect(() => {
-    const iv = setInterval(() => {
-      setIsAnimating(true);
-      setTimeout(() => {
-        setVisaTypeIndex((i) => (i + 1) % visaTypes.length);
-        setIsAnimating(false);
-      }, 300);
-    }, 2200);
-    return () => clearInterval(iv);
-  }, []);
-
-  // ── Counter ────────────────────────────────────────────────
-  useEffect(() => {
-    const iv = setInterval(
-      () => setPhotosProcessed((p) => p + Math.floor(Math.random() * 3) + 1),
-      4500,
-    );
-    return () => clearInterval(iv);
-  }, []);
-
-  // ── Core position calc ─────────────────────────────────────
   const calcPos = useCallback((clientX: number) => {
     if (rafRef.current) cancelAnimationFrame(rafRef.current);
     rafRef.current = requestAnimationFrame(() => {
@@ -65,7 +29,6 @@ export default function HomeHero() {
     });
   }, []);
 
-  // ── Mouse ──────────────────────────────────────────────────
   const onMouseDown = useCallback(
     (e: React.MouseEvent) => {
       e.preventDefault();
@@ -87,7 +50,6 @@ export default function HomeHero() {
     };
   }, [isDragging, calcPos]);
 
-  // ── Touch — attach directly to container element ───────────
   const onTouchStart = useCallback(
     (e: React.TouchEvent) => {
       setIsDragging(true);
@@ -100,13 +62,11 @@ export default function HomeHero() {
     if (!isDragging) return;
     const el = containerRef.current;
     if (!el) return;
-
     const move = (e: TouchEvent) => {
-      e.preventDefault();           // stops page scroll while dragging
+      e.preventDefault();
       calcPos(e.touches[0].clientX);
     };
     const end = () => setIsDragging(false);
-
     el.addEventListener("touchmove", move, { passive: false });
     el.addEventListener("touchend", end);
     return () => {
@@ -116,269 +76,389 @@ export default function HomeHero() {
   }, [isDragging, calcPos]);
 
   useEffect(
-    () => () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); },
+    () => () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    },
     [],
   );
 
   return (
-    <section className="hc-hero">
-      <div className="hc-blob hc-blob1" />
-      <div className="hc-blob hc-blob2" />
-      <div className="hc-hero-inner">
+    <>
+      {/* ── HERO SECTION ── */}
+      <section className="bg-white border-b border-slate-200">
+        {/* Gov-style top accent bar */}
+        <div className="h-1 bg-lime-700 w-full" />
 
-        {/* ── TEXT ─────────────────────────────────────────────── */}
-        <div className="hc-hero-text">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-16">
+          <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
 
+            {/* ── TEXT COLUMN ── */}
+            <div className="flex-1 w-full">
+              {/* Official badge */}
+              <div className="inline-flex items-center gap-2 bg-lime-50 border border-lime-200 rounded px-3 py-1.5 mb-5">
+                <span className="w-2 h-2 rounded-full bg-lime-600 inline-block" />
+                <span className="text-xs font-semibold text-lime-800 tracking-wide uppercase">
+                  Official Biometric Photo Tool · ICAO Compliant
+                </span>
+              </div>
 
-          <h1 className="hc-h1">
-            <span className="hc-h1-primary">Passport Photo Maker - </span>
-            <span className="hc-h1-secondary">Get a Compliant ID Picture in 30 Seconds</span>
-          </h1>
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 leading-tight tracking-tight mb-3">
+                Passport &amp; Visa Photo Maker
+              </h1>
+              <p className="text-lg sm:text-xl text-slate-500 font-normal mb-5 leading-snug">
+                Get a compliant biometric photo in 30 seconds
+              </p>
 
+              <p className="text-sm sm:text-base text-slate-600 leading-relaxed mb-7 max-w-lg">
+                Automated checks against official government specifications for 50+
+                countries — dimensions, background, face position, eye level — all
+                in under 5 seconds.
+              </p>
 
-          <div className="hc-anim-txt">
-            Passport • Visa • ID Card • Driver's License
+              {/* CTA */}
+              <div className="flex flex-col sm:flex-row gap-3 mb-7">
+                <a
+                  href="/passport-photo-online"
+                  className="inline-flex items-center justify-center bg-lime-700 hover:bg-lime-800 text-white text-sm font-semibold px-6 py-3 rounded transition-colors"
+                >
+                  Get Your ID Photo Now →
+                </a>
+                <a
+                  href="/visa-photo-validator"
+                  className="inline-flex items-center justify-center border border-slate-300 hover:border-slate-400 text-slate-700 text-sm font-semibold px-6 py-3 rounded transition-colors"
+                >
+                  Free Validator
+                </a>
+              </div>
+
+              {/* Stars */}
+              <div className="flex items-center gap-3 mb-5">
+                <div className="flex gap-0.5">
+                  {[1, 2, 3, 4, 5].map((i) => (
+                    <svg
+                      key={i}
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="#1d4ed8"
+                    >
+                      <path d="M12 2l2.9 8.9H23l-7.4 5.4 2.8 8.7L12 19.6l-6.4 5.4 2.8-8.7L2 10.9h8.1z" />
+                    </svg>
+                  ))}
+                </div>
+                <span className="text-sm text-slate-600 font-medium">
+                  4.9 · Trusted by 17,000+ users
+                </span>
+              </div>
+
+              {/* Trust badges */}
+              <div className="flex flex-wrap gap-3">
+                {trustBadges.map((t, i) => (
+                  <div
+                    key={i}
+                    className="flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded px-3 py-1.5 text-xs font-medium text-slate-700"
+                  >
+                    <span>{t.icon}</span>
+                    <span>{t.text}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* ── BEFORE / AFTER SLIDER ── */}
+            <div className="w-full lg:w-auto flex flex-col items-center gap-3">
+              <div className="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-1">
+                Before &amp; After
+              </div>
+
+              <div
+                ref={containerRef}
+                onMouseDown={onMouseDown}
+                onTouchStart={onTouchStart}
+                className="relative rounded overflow-hidden border border-slate-200"
+                style={{
+                  aspectRatio: "1 / 1",
+                  width: "100%",
+                  maxWidth: "380px",
+                  touchAction: "none",
+                  userSelect: "none",
+                  WebkitUserSelect: "none",
+                  cursor: isDragging ? "ew-resize" : "col-resize",
+                }}
+              >
+                {/* BEFORE — base layer */}
+                <Image
+                  src="/us_non_imigrant_before.webp"
+                  alt="Before – original casual photo"
+                  fill
+                  style={{
+                    objectFit: "cover",
+                    objectPosition: "center top",
+                    pointerEvents: "none",
+                    zIndex: 0,
+                  }}
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 400px"
+                />
+
+                {/* AFTER — clipped right */}
+                <div
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    zIndex: 1,
+                    clipPath: `inset(0 0 0 ${sliderPos}%)`,
+                    willChange: "clip-path",
+                    pointerEvents: "none",
+                  }}
+                >
+                  <Image
+                    src="/us_non_imigrant.png"
+                    alt="After – 100% compliant biometric photo"
+                    fill
+                    style={{
+                      objectFit: "cover",
+                      objectPosition: "center 8%",
+                      pointerEvents: "none",
+                    }}
+                    priority
+                    sizes="(max-width: 1024px) 100vw, 400px"
+                  />
+                </div>
+
+                {/* Divider */}
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    bottom: 0,
+                    left: `${sliderPos}%`,
+                    width: "2px",
+                    background: "white",
+                    transform: "translateX(-50%)",
+                    zIndex: 2,
+                    pointerEvents: "none",
+                    boxShadow: "0 0 6px rgba(0,0,0,0.3)",
+                    willChange: "left",
+                  }}
+                />
+
+                {/* Handle */}
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "50%",
+                    left: `${sliderPos}%`,
+                    transform: `translate(-50%, -50%) scale(${isDragging ? 1.1 : 1})`,
+                    width: "44px",
+                    height: "44px",
+                    background: "white",
+                    border: "2px solid #e2e8f0",
+                    borderRadius: "50%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "2px",
+                    zIndex: 3,
+                    pointerEvents: "none",
+                    willChange: "left, transform",
+                    transition: "transform 0.1s",
+                  }}
+                >
+                  <svg
+                    width="9"
+                    height="9"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#555"
+                    strokeWidth="3.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <polyline points="15 18 9 12 15 6" />
+                  </svg>
+                  <svg
+                    width="9"
+                    height="9"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#555"
+                    strokeWidth="3.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
+                </div>
+
+                {/* BEFORE badge */}
+                <div
+                  style={{
+                    position: "absolute",
+                    bottom: "12px",
+                    left: "12px",
+                    background: "rgba(0,0,0,0.6)",
+                    color: "white",
+                    padding: "3px 10px",
+                    borderRadius: "3px",
+                    fontSize: "11px",
+                    fontWeight: 600,
+                    pointerEvents: "none",
+                    zIndex: 4,
+                    opacity: sliderPos > 12 ? 1 : 0,
+                    transition: "opacity 0.2s",
+                    letterSpacing: "0.04em",
+                  }}
+                >
+                  BEFORE
+                </div>
+
+                {/* AFTER badge */}
+                <div
+                  style={{
+                    position: "absolute",
+                    bottom: "12px",
+                    right: "12px",
+                    background: "#1d4ed8",
+                    color: "white",
+                    padding: "3px 10px",
+                    borderRadius: "3px",
+                    fontSize: "11px",
+                    fontWeight: 600,
+                    pointerEvents: "none",
+                    zIndex: 4,
+                    opacity: sliderPos < 88 ? 1 : 0,
+                    transition: "opacity 0.2s",
+                    letterSpacing: "0.04em",
+                  }}
+                >
+                  COMPLIANT ✓
+                </div>
+
+                {/* Drag hint */}
+                {!hasInteracted && (
+                  <div
+                    style={{
+                      position: "absolute",
+                      bottom: "48px",
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                      background: "rgba(0,0,0,0.55)",
+                      color: "white",
+                      padding: "5px 14px",
+                      borderRadius: "3px",
+                      fontSize: "11px",
+                      fontWeight: 500,
+                      pointerEvents: "none",
+                      zIndex: 5,
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    ← drag to compare →
+                  </div>
+                )}
+              </div>
+
+              {/* Caption */}
+              <p className="text-xs text-slate-400 text-center max-w-xs">
+                Processed · White background · Biometric crop · Print-ready
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* ── EXAMPLE OUTPUT SECTION ── */}
+      <section className="bg-white border-b border-slate-200 py-10 px-4">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-7">
+            <div className="text-xs font-bold text-blue-700 uppercase tracking-widest mb-2">
+              Example Output
+            </div>
+            <h2 className="text-xl font-bold text-slate-900 mb-2">
+              See your photo transform
+            </h2>
+            <p className="text-sm text-slate-500 max-w-md mx-auto">
+              From upload to print-ready — the complete process with biometric
+              compliance built in.
+            </p>
           </div>
 
-
-          <p className="hc-desc">
-            Avoid rejection, delays, and resubmissions. Professional biometric checks that meet official global standards — instantly.
-          </p>
-
-          <div className="hc-btns">
-            <a href="/passport-photo-online" className="hc-btn-p" data-cta="hero-upload">
-              Get your ID Photo Now →
-            </a>
-          </div>
-
-          <div className="hc-tp">
-            <span className="hc-tp-stars">
-              {[1, 2, 3, 4, 5].map((i) => (
-                <svg key={i} width="18" height="18" viewBox="0 0 24 24" fill="#10b981">
-                  <path d="M12 2l2.9 8.9H23l-7.4 5.4 2.8 8.7L12 19.6l-6.4 5.4 2.8-8.7L2 10.9h8.1z" />
-                </svg>
-              ))}
-            </span>
-            
-            <span className="hc-tp-cnt">Trusted by 17,000+ users</span>
-          </div>
-
-          <div className="hc-trust">
-            {trustBadges.map((t, i) => (
-              <div key={i} className="hc-trust-item">
-                <span>{t.icon}</span>
-                <span>{t.text}</span>
+          <div className="grid sm:grid-cols-3 gap-5">
+            {[
+              {
+                src: "https://res.cloudinary.com/dipzpwbbk/image/upload/v1779008016/c24d89b1-ab0e-4f1d-9035-5814bc7b91ca_preview_ip9ogs.jpg",
+                alt: "Passport photo with measurements",
+                label: "Photo Processing",
+                note: "Face detection with biometric measurements applied",
+                href: undefined as string | undefined,
+              },
+              {
+                src: "https://res.cloudinary.com/dipzpwbbk/image/upload/v1779008017/c24d89b1-ab0e-4f1d-9035-5814bc7b91ca_photo_eyp4a3.jpg",
+                alt: "Final compliant photo",
+                label: "Final Output",
+                note: "Government-compliant photo with white/grey background",
+                href: undefined as string | undefined,
+              },
+              {
+                src: "https://res.cloudinary.com/dipzpwbbk/image/upload/v1779076959/MakePassportPhoto_ph2uog.jpg",
+                alt: "4x6 print sheet",
+                label: "Print Template",
+                note: "Ready-to-print 4×6 inch sheet with crop guides",
+                href: "https://www.photoresizer.co.in/passport-photo-print-template-generator",
+              },
+            ].map((item, i) => (
+              <div
+                key={i}
+                className="border border-slate-200 rounded overflow-hidden bg-white"
+              >
+                <div className="aspect-[3/4] relative bg-slate-100 overflow-hidden">
+                  {item.href ? (
+                    <a
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block w-full h-full"
+                    >
+                      <img
+                        src={item.src}
+                        alt={item.alt}
+                  
+                      />
+                    </a>
+                  ) : (
+                    <img
+                      src={item.src}
+                      alt={item.alt}
+                      className="w-full h-full object-cover"
+                    />
+                  )}
+                </div>
+                <div className="px-4 py-3 border-t border-slate-100">
+                  {item.href ? (
+                    <a
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm font-bold text-blue-700 hover:underline inline-flex items-center gap-1 mb-1"
+                    >
+                      {item.label} <span className="text-xs">↗</span>
+                    </a>
+                  ) : (
+                    <div className="text-sm font-bold text-slate-900 mb-1">
+                      {item.label}
+                    </div>
+                  )}
+                  <div className="text-xs text-slate-500 leading-relaxed">
+                    {item.note}
+                  </div>
+                </div>
               </div>
             ))}
           </div>
         </div>
-
-        {/* ── BEFORE / AFTER SLIDER ────────────────────────────── */}
-        {/*
-          LAYER STRATEGY (fixes the mobile blank issue)
-          ─────────────────────────────────────────────
-          Previous code had the BEFORE on top (clipped to the left).
-          On mobile, clipPath on an absolutely-positioned overlay can
-          fail to render if the browser composites it on a separate layer
-          before the image has loaded.
-
-          New approach — simpler and bulletproof:
-            z=0  BEFORE image  — full width, always visible as base
-            z=1  AFTER image   — clipped so only RIGHT side shows
-                                 (inset from LEFT by sliderPos%)
-
-          Both images are always in the DOM and painted. Only the AFTER
-          layer uses clipPath, which is far less likely to be skipped.
-        */}
-        <div
-          ref={containerRef}
-          onMouseDown={onMouseDown}
-          onTouchStart={onTouchStart}
-          style={{
-            position: "relative",
-            borderRadius: "16px",
-            overflow: "hidden",
-            aspectRatio: "1 / 1",
-            width: "100%",
-            maxWidth: "400px",
-            touchAction: "none",      // hand touch control to our handlers
-            userSelect: "none",
-            WebkitUserSelect: "none",
-            cursor: isDragging ? "ew-resize" : "col-resize",
-            boxShadow: isDragging
-              ? "0 0 0 3px rgba(37,99,235,0.35), 0 8px 40px rgba(0,0,0,0.18)"
-              : "0 4px 32px rgba(0,0,0,0.13)",
-            transition: "box-shadow 0.2s",
-          }}
-        >
-
-          {/* ── z=0: BEFORE — casual photo, full width ─────────── */}
-          <Image
-            src="/us_non_imigrant_before.webp"
-            alt="Before – original casual photo"
-            fill
-            style={{
-              objectFit: "cover",
-              objectPosition: "center top",
-              pointerEvents: "none",
-              zIndex: 0,
-            }}
-            priority
-            sizes="(max-width: 1024px) 100vw, 500px"
-          />
-
-          {/* ── z=1: AFTER — compliant visa photo, clipped right ── */}
-          <div
-            style={{
-              position: "absolute",
-              inset: 0,
-              zIndex: 1,
-              clipPath: `inset(0 0 0 ${sliderPos}%)`,   // reveal only right portion
-              willChange: "clip-path",
-              pointerEvents: "none",
-            }}
-          >
-            <Image
-              src="/us_non_imigrant.png"
-              alt="After – 100% compliant international biometric photo"
-              fill
-              style={{
-                objectFit: "cover",
-                objectPosition: "center 8%",  // shift down so top-of-head isn't cropped
-                pointerEvents: "none",
-              }}
-              priority
-              sizes="(max-width: 1024px) 100vw, 500px"
-            />
-          </div>
-
-          {/* ── z=2: Divider line ──────────────────────────────── */}
-          <div
-            style={{
-              position: "absolute",
-              top: 0,
-              bottom: 0,
-              left: `${sliderPos}%`,
-              width: "2px",
-              background: "white",
-              transform: "translateX(-50%)",
-              zIndex: 2,
-              pointerEvents: "none",
-              boxShadow: "0 0 8px rgba(0,0,0,0.4)",
-              willChange: "left",
-            }}
-          />
-
-          {/* ── z=3: Drag handle ───────────────────────────────── */}
-          <div
-            style={{
-              position: "absolute",
-              top: "50%",
-              left: `${sliderPos}%`,
-              transform: `translate(-50%, -50%) scale(${isDragging ? 1.12 : 1})`,
-              width: "48px",
-              height: "48px",
-              background: "white",
-              borderRadius: "50%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "3px",
-              zIndex: 3,
-              pointerEvents: "none",
-              willChange: "left, transform",
-              boxShadow: isDragging
-                ? "0 0 0 4px rgba(37,99,235,0.3), 0 4px 16px rgba(0,0,0,0.3)"
-                : "0 2px 14px rgba(0,0,0,0.35)",
-              transition: "box-shadow 0.15s, transform 0.1s",
-            }}
-          >
-            {/* ← */}
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none"
-              stroke="#444" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="15 18 9 12 15 6" />
-            </svg>
-            {/* → */}
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none"
-              stroke="#444" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="9 18 15 12 9 6" />
-            </svg>
-          </div>
-
-          {/* ── z=4: BEFORE badge ──────────────────────────────── */}
-          <div style={{
-            position: "absolute",
-            bottom: "14px",
-            left: "14px",
-            background: "rgba(0,0,0,0.62)",
-            color: "white",
-            padding: "4px 12px",
-            borderRadius: "20px",
-            fontSize: "12px",
-            fontWeight: 600,
-            letterSpacing: "0.02em",
-            pointerEvents: "none",
-            zIndex: 4,
-            opacity: sliderPos > 12 ? 1 : 0,
-            transition: "opacity 0.2s",
-          }}>
-            Before
-          </div>
-
-          {/* ── z=4: AFTER badge ───────────────────────────────── */}
-          <div style={{
-            position: "absolute",
-            bottom: "14px",
-            right: "14px",
-            background: "rgba(16,185,129,0.92)",
-            color: "white",
-            padding: "4px 12px",
-            borderRadius: "20px",
-            fontSize: "12px",
-            fontWeight: 600,
-            letterSpacing: "0.02em",
-            pointerEvents: "none",
-            zIndex: 4,
-            opacity: sliderPos < 88 ? 1 : 0,
-            transition: "opacity 0.2s",
-          }}>
-            After ✓
-          </div>
-
-          {/* ── z=5: Drag hint — fades after first interaction ─── */}
-          <div style={{
-            position: "absolute",
-            bottom: "50px",
-            left: "50%",
-            transform: "translateX(-50%)",
-            background: "rgba(0,0,0,0.58)",
-            color: "white",
-            padding: "6px 16px",
-            borderRadius: "20px",
-            fontSize: "12px",
-            fontWeight: 500,
-            pointerEvents: "none",
-            zIndex: 5,
-            whiteSpace: "nowrap",
-            opacity: hasInteracted ? 0 : 1,
-            transition: "opacity 0.5s",
-          }}>
-            ← drag to compare →
-          </div>
-
-          {/* ── z=6: Active border ring while dragging ─────────── */}
-          <div style={{
-            position: "absolute",
-            inset: 0,
-            borderRadius: "16px",
-            border: isDragging ? "2px solid rgba(37,99,235,0.35)" : "2px solid transparent",
-            pointerEvents: "none",
-            zIndex: 6,
-            transition: "border-color 0.2s",
-          }} />
-
-        </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }

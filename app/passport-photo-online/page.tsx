@@ -312,32 +312,7 @@ function ToolForm() {
               </>
             )}
           </div>
-          <div className="mt-4 mb-4 rounded-2xl border border-emerald-200/70 bg-gradient-to-r from-emerald-50 via-white to-blue-50 p-4 sm:p-5 shadow-sm">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-
-              <div className="flex items-start gap-3 min-w-0">
-                <div className="min-w-0">
-
-                  <p className="mt-1 text-xs sm:text-sm leading-relaxed text-slate-800 max-w-full sm:max-w-2xl">
-                    We do not use AI and we don't alter facial features or create synthetic images. We only provide
-                    cropping, sizing, background normalization, and compliance validation based
-                    on 2026 passport and visa photo guidelines.
-                  </p>
-
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    <span className="inline-flex items-center justify-center rounded-full border border-emerald-200 bg-red-300 px-3 py-1 text-[10px] sm:text-xs font-semibold uppercase tracking-wide text-center">
-                      We do not use AI for face editing
-                    </span>
-
-                    <span className="inline-flex items-center justify-center rounded-full border border-amber-200 bg-amber-100 px-3 py-1 text-[10px] sm:text-xs font-semibold uppercase tracking-wide text-amber-800 text-center">
-                      Expert Review Available
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
+        
           {/* Initial State: Upload Area */}
           {!selectedFile && (
             <UploadArea
