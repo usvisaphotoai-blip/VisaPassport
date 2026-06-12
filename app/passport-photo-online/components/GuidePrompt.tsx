@@ -6,7 +6,7 @@ interface GuidePromptProps {
   isOpen: boolean;
   onClose: () => void;
   onUploadClick: () => void;
-  locale?: "en" | "fr";
+  locale?: "en" | "fr" | "de";
 }
 
 const translations = {
@@ -35,6 +35,19 @@ const translations = {
     descRight: "Téléchargez une photo claire comme dans les exemples. Évitez de porter des chapeaux ou des lunettes et assurez un bon éclairage.",
     cta: "Commencer le téléchargement maintenant",
     subCta: "Prend moins de 30 secondes",
+  },
+  de: {
+    header: "Laden Sie Bilder wie diese hoch",
+    example: "Beispiel",
+    bullets: [
+      "Guter Hintergrund, wir ändern ihn in einen weißen Hintergrund",
+      "Neutraler Gesichtsausdruck & offene Augen",
+      "Gleichmäßige Beleuchtung im Gesicht",
+    ],
+    headingRight: "Für bessere Fotoergebnisse...",
+    descRight: "Laden Sie ein klares Foto wie in den Beispielen gezeigt hoch. Vermeiden Sie das Tragen von Hüten oder Brillen und sorgen Sie für eine gute Beleuchtung.",
+    cta: "Jetzt hochladen",
+    subCta: "Dauert weniger als 30 Sekunden",
   }
 };
 

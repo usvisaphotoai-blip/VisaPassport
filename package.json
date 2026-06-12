@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "postbuild": "node scripts/fix-fr-lang.mjs",
+    "postbuild": "node scripts/fix-lang.mjs",
     "start": "next start",
     "lint": "eslint"
   },

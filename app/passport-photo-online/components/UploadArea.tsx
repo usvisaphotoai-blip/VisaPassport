@@ -7,7 +7,7 @@ interface UploadAreaProps {
   guidelinesOpen: boolean;
   setGuidelinesOpen: (open: boolean) => void;
   onShowGuide: () => void;
-  locale?: "en" | "fr";
+  locale?: "en" | "fr" | "de";
 }
 
 const translations = {
@@ -24,6 +24,13 @@ const translations = {
     subtitle: "Glissez-déposez ou cliquez pour parcourir les fichiers",
     buttonText: "Sélectionner une image",
     privacy: "Confidentialité sécurisée : les images sont traitées localement et ne sont jamais stockées.",
+  },
+  de: {
+    showGuide: "Hochwertige Beispielfotos anzeigen",
+    title: "Foto zur Überprüfung hochladen",
+    subtitle: "Ziehen und ablegen oder klicken, um Dateien zu durchsuchen",
+    buttonText: "Bild auswählen",
+    privacy: "Datenschutz sicher: Bilder werden lokal verarbeitet und niemals gespeichert.",
   }
 };
 

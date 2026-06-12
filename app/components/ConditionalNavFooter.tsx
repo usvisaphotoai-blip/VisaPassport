@@ -14,13 +14,17 @@ export default function ConditionalNavFooter({
 }) {
   const pathname = usePathname();
   const isFrench = pathname?.startsWith("/fr");
+  const isGerman = pathname?.startsWith("/de");
+  const isLocalized = isFrench || isGerman;
 
   useEffect(() => {
-    document.documentElement.lang = isFrench ? "fr" : "en";
-  }, [isFrench]);
+    if (isFrench) document.documentElement.lang = "fr";
+    else if (isGerman) document.documentElement.lang = "de";
+    else document.documentElement.lang = "en";
+  }, [isFrench, isGerman]);
 
-  if (isFrench) {
-    // French layout renders its own NavbarFr / FooterFr
+  if (isLocalized) {
+    // Localized layouts render their own Navbar / Footer
     return <>{children}</>;
   }
 
