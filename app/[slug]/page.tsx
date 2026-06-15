@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import specs from "../../data/countries-specs.json";
 import moneyPages from "../../data/money-pages.json";
 import toolPages from "../../data/tool-seo-pages.json";
-import { getSpecIdFromSlug, getAllSlugs, SpecEntry } from "../../lib/slug-utils";
+import { getSpecIdFromSlug, getAllSlugs, SpecEntry, getShortId } from "../../lib/slug-utils";
 import ProgrammaticLandingPage from "../components/ProgrammaticLandingPage";
 import PassportMakerApp from "../passport-size-photo-maker/PassportMakerApp";
 import { getLocalPrice } from "@/lib/currency";
@@ -175,7 +175,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (spec) {
     const isVisaUrl = slug.includes("visa");
     const intentLabel = isVisaUrl ? "Visa" : "Passport";
-    const baseUrl = `https://www.pixpassport.com/${slug}`;
+    
+    // Construct the single source-of-truth canonical slug
+    const normalizedBase = getShortId(spec.country.toLowerCase().replace(/\s+/g, "-"));
+    const canonicalSlug = isVisaUrl ? `${normalizedBase}-visa-photo-editor` : `${normalizedBase}-passport-photo-editor`;
+    const baseUrl = `https://www.pixpassport.com/${canonicalSlug}`;
+
     const title = isVisaUrl
       ? `${spec.country} Visa Photo Online (2026) | ${spec.width_mm}x${spec.height_mm}mm`
       : `${spec.country} Passport Photo Maker (2026) | 100% Approved`;
