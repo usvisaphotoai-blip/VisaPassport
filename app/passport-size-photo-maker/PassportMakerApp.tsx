@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { documentTypes, bgColors } from "@/app/passport-photo-online/constants";
 import { compressImage } from "@/lib/compressImage";
 import PreviewClient from "@/app/preview/[id]/PreviewClient";
@@ -128,6 +129,7 @@ function ProcessingRing({
 
 /* ─── Main Component ─── */
 export default function PassportMakerApp() {
+  const router = useRouter();
   const [step, setStep] = useState<Step>("setup");
   const [selectedDoc, setSelectedDoc] = useState("general");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -215,7 +217,7 @@ export default function PassportMakerApp() {
         throw new Error("Failed to load generated photo details.");
 
       setPhotoData(photoResult.data);
-      setStep("preview");
+      router.push(`/preview/${data.photoId}`);
     } catch (err: any) {
       setErrorMsg(err.message || "Something went wrong. Please try again.");
       resetToSetup();

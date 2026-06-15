@@ -308,7 +308,7 @@ function OrderPanel({
               </div>
 
               {/* Guest Email */}
-              {/* {status !== "authenticated" && (
+              {status !== "authenticated" && (
                 <div>
                   <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">
                     Email for Delivery
@@ -321,10 +321,10 @@ function OrderPanel({
                     className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
                   />
                 </div>
-              )} */}
+              )}
 
               {/* CTA */}
-              <div className="space-y-2 pt-1 hidden md:block" >
+              <div className="space-y-2 pt-1 hidden lg:block" >
                 <button
                   onClick={handlePayment}
                   disabled={loading || verifying}
