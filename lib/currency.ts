@@ -54,8 +54,8 @@ const FIXED_PRICES: Record<string, { amount: number; symbol: string; decimals: n
   // Tier 1: Base ($5.99)
   USD: { amount: 5.99, symbol: "$", decimals: 2 },
   EUR: { amount: 5.99, symbol: "€", decimals: 2 },
-  GBP: { amount: 6.49, symbol: "£", decimals: 2 },
-  CHF: { amount: 5.49, symbol: "CHF", decimals: 2 },
+  GBP: { amount: 5.99, symbol: "£", decimals: 2 },
+  CHF: { amount: 5.99, symbol: "CHF", decimals: 2 },
   CAD: { amount: 5.49, symbol: "C$", decimals: 2 },
   AUD: { amount: 7.49, symbol: "A$", decimals: 2 },
   NZD: { amount: 7.99, symbol: "NZ$", decimals: 2 },

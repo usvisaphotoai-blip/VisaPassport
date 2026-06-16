@@ -152,16 +152,8 @@ export const fr = {
     "Taille du fichier compressée dans la limite autorisée",
     "Résolution vérifiée pour les exigences de l'ambassade",
     "DPI d'impression standardisé pour l'impression officielle",
-    "Photo convertie au format JPEG conforme",
-    "Visage centré dans le cadre",
-    "Niveau des yeux équilibré horizontalement",
-    "Espacement du menton ajusté selon les spécifications",
-    "Éclairage équilibré pour la visibilité du visage",
-    "Balance des couleurs normalisée",
-    "Netteté de l'image améliorée",
-    "Arrière-plan nettoyé et normalisé",
-    "Planche d'impression générée au format officiel",
-    "Photo ajustée pour répondre aux contrôles de conformité gouvernementaux",
+
+  
   ],
 
   // ── Hero Sections ───────────────────────────────────────────────────────────
