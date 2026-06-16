@@ -457,15 +457,16 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
         {/* Featured Image */}
         {post.featuredImage && (
-          <div className="max-w-6xl mx-auto -mt-8 sm:-mt-10 px-4 relative z-20">
-            <div className="relative aspect-[16/9] sm:aspect-[2/1] md:aspect-[21/9] w-full overflow-hidden rounded-2xl sm:rounded-3xl shadow-2xl border border-white/10">
+          <div className="max-w-4xl mx-auto -mt-8 sm:-mt-12 px-4 relative z-20">
+            <div className="relative aspect-[4/3] sm:aspect-video w-full overflow-hidden rounded-2xl sm:rounded-3xl shadow-2xl ring-1 ring-white/20 bg-slate-900">
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/20 to-transparent z-10 pointer-events-none" />
               <Image
                 src={post.featuredImage}
                 alt={post.title}
                 fill
                 priority
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 1200px"
-                className="object-cover transition-transform duration-1000 hover:scale-105"
+                sizes="(max-width: 1024px) 100vw, 1024px"
+                className="object-cover object-center"
               />
             </div>
           </div>
