@@ -167,6 +167,16 @@ export default function PassportMakerApp() {
     fetchPrice(true);
   }, []);
 
+  // Ensure selected document is valid when search term changes
+  useEffect(() => {
+    const docs = documentTypes.filter((doc) =>
+      `${doc.label} ${doc.size}`.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
+    if (docs.length > 0 && !docs.some((d) => d.id === selectedDoc)) {
+      setSelectedDoc(docs[0].id);
+    }
+  }, [searchTerm, selectedDoc]);
+
   const resetToSetup = () => {
     setStep("setup");
     setSelectedFile(null);
