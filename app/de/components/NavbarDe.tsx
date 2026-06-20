@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useSession, signOut } from "next-auth/react";
 import { de } from "../translations";
+import LanguageSwitcher from "../../components/LanguageSwitcher";
 
 const navLinks = [
   { href: "/de/biometrisches-passbild", label: de.nav.passportPhoto },
@@ -66,6 +67,7 @@ export default function NavbarDe() {
             </div>
 
             <div className="hidden lg:flex items-center gap-3 shrink-0">
+              <LanguageSwitcher />
               {status === "loading" ? (
                 <div className="flex items-center gap-3">
                   <div className="w-14 h-5 bg-slate-100 animate-pulse rounded-md" />
@@ -130,6 +132,9 @@ export default function NavbarDe() {
               <div className="h-px bg-gray-100 my-2 mx-1" />
               {status !== "loading" && (
                 <div className="mt-2 mx-1 flex flex-col gap-2">
+                  <div className="flex justify-center mb-2">
+                    <LanguageSwitcher />
+                  </div>
                   {session ? (
                     <>
                       <Link href="/dashboard" onClick={() => setMobileOpen(false)} className="text-center py-2.5 text-sm font-semibold text-slate-700 hover:text-lime-700 transition-colors">

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useSession, signOut } from "next-auth/react";
 import LiveActivityChip from "./LiveActivityChip";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 const navLinks = [
   { href: "/passport-photo-online", label: "Create Photo" },
@@ -80,6 +81,7 @@ export default function Navbar() {
 
             {/* ── Desktop CTA ── */}
             <div className="hidden lg:flex items-center gap-3 shrink-0">
+              <LanguageSwitcher />
               {status === "loading" ? (
                 <div className="flex items-center gap-3">
                   <div className="w-14 h-5 bg-slate-100 animate-pulse rounded-md" />
@@ -110,7 +112,7 @@ export default function Navbar() {
                 </>
               ) : (
                 <>
-                  <Link
+                  {/* <Link
                     href="/login"
                     prefetch={true}
                     className="text-sm font-semibold text-slate-600 hover:text-lime-700 transition-colors duration-150"
@@ -123,7 +125,7 @@ export default function Navbar() {
                     className="text-sm font-semibold text-slate-600 hover:text-lime-700 transition-colors duration-150 hidden xl:block"
                   >
                     Sign up
-                  </Link>
+                  </Link> */}
                   <Link
                     href="/passport-photo-online"
                     prefetch={true}
@@ -204,6 +206,9 @@ export default function Navbar() {
               {/* Auth section on mobile */}
               {status !== "loading" && (
                 <div className="mt-2 mx-1 flex flex-col gap-2">
+                  <div className="flex justify-center mb-2">
+                    <LanguageSwitcher />
+                  </div>
                   {session ? (
                     <>
                       <Link
