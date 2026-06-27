@@ -40,22 +40,6 @@ export const metadata: Metadata = {
 export default function FrLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "WebApplication",
-            name: "PixPassport",
-            url: "https://www.pixpassport.com/fr",
-            description: "Outil professionnel de création de photos passeport, visa et identité conformes aux normes biométriques officielles.",
-            applicationCategory: "PhotographyApplication",
-            operatingSystem: "All",
-            inLanguage: "fr",
-            offers: { "@type": "Offer", price: "5.99", priceCurrency: "EUR" },
-          }),
-        }}
-      />
     
       <NavbarFr />
       <main id="main-content" className="grow">

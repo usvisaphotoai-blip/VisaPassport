@@ -40,22 +40,6 @@ export const metadata: Metadata = {
 export default function DeLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "WebApplication",
-            name: "PixPassport",
-            url: "https://www.pixpassport.com/de",
-            description: "Professionelles Tool zur Erstellung biometrischer Passbilder, Visumfotos und Ausweisfotos nach offiziellen Vorgaben.",
-            applicationCategory: "PhotographyApplication",
-            operatingSystem: "All",
-            inLanguage: "de",
-            offers: { "@type": "Offer", price: "5.99", priceCurrency: "EUR" },
-          }),
-        }}
-      />
     
       <NavbarDe />
       <main id="main-content" className="grow">

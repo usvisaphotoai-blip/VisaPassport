@@ -85,28 +85,6 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-
-
-        {/* Structured Data */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "WebApplication",
-              name: "PixPassport",
-              url: "https://www.pixpassport.com/",
-              description: "global passport photo maker tool, free visa, and ID photo validator. Instantly verify biometric compliance for any country's requirements.",
-              applicationCategory: "UtilitiesApplication",
-              operatingSystem: "All",
-              offers: {
-                "@type": "Offer",
-                price: "5.99",
-                priceCurrency: "USD"
-              }
-            })
-          }}
-        />
       </head>
 
       <body
