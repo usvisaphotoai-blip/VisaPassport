@@ -305,7 +305,7 @@ export default function PassportMakerApp() {
           <p className="text-sm text-slate-400 mb-10">
             Hang tight — almost done!
           </p>
-          <div className="bg-slate-50 rounded-2xl p-4 space-y-3">
+          <div className="bg-slate-50 rounded-xl p-4 space-y-3">
             {STAGES.map(({ label, icon }, i) => {
               const isDone = i < processingStage;
               const isActive = i === processingStage;
@@ -359,7 +359,7 @@ export default function PassportMakerApp() {
     <div className="max-w-xl mx-auto px-4 py-8 sm:py-10">
       {/* Header */}
       <div className="text-center mb-8">
-        <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-lime-600 shadow-lg shadow-lime-200 mb-4">
+        <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-lime-600 shadow-lg shadow-lime-200 mb-4">
           <svg
             className="w-7 h-7 text-white"
             fill="none"
@@ -386,7 +386,7 @@ export default function PassportMakerApp() {
 
       {/* Error banner */}
       {errorMsg && (
-        <div className="flex items-start gap-3 p-4 mb-6 bg-red-50 border border-red-200 rounded-2xl text-red-700">
+        <div className="flex items-start gap-3 p-4 mb-6 bg-red-50 border border-red-200 rounded-xl text-red-700">
           <svg
             className="w-5 h-5 shrink-0 mt-0.5"
             fill="none"
@@ -428,9 +428,9 @@ export default function PassportMakerApp() {
 
       <div className="space-y-4">
         {/* ── Step 1: Document type ── */}
-        <div className="bg-white rounded-3xl border border-slate-200/80 shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden">
+        <div className="bg-white rounded-xl border border-slate-200/80 shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden">
           <div className="px-5 py-5 border-b border-slate-100 bg-gradient-to-r from-lime-50 via-white to-emerald-50 flex items-start gap-4">
-            <div className="w-9 h-9 rounded-2xl bg-lime-600 text-white text-sm font-bold flex items-center justify-center shadow-sm shrink-0">
+            <div className="w-9 h-9 rounded-xl bg-lime-600 text-white text-sm font-bold flex items-center justify-center  shrink-0">
               1
             </div>
             <div>
@@ -470,7 +470,7 @@ export default function PassportMakerApp() {
                 placeholder="Search document type..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full rounded-2xl border border-slate-200 bg-slate-50 pl-11 pr-4 py-3 text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-lime-100 focus:border-lime-500 transition-all"
+                className="w-full rounded-xl border border-slate-200 bg-slate-50 pl-11 pr-4 py-3 text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-lime-100 focus:border-lime-500 transition-all"
               />
             </div>
 
@@ -479,7 +479,7 @@ export default function PassportMakerApp() {
               <select
                 value={selectedDoc}
                 onChange={(e) => setSelectedDoc(e.target.value)}
-                className="w-full appearance-none rounded-2xl border border-slate-200 bg-white px-4 py-3.5 pr-11 text-sm font-semibold text-slate-800 shadow-sm hover:border-slate-300 focus:outline-none focus:ring-4 focus:ring-lime-100 focus:border-lime-500 transition-all cursor-pointer"
+                className="w-full appearance-none rounded-xl border border-slate-200 bg-white px-4 py-3.5 pr-11 text-sm font-semibold text-slate-800  hover:border-slate-300 focus:outline-none focus:ring-4 focus:ring-lime-100 focus:border-lime-500 transition-all cursor-pointer"
               >
                 {filteredDocs.map((doc) => (
                   <option key={doc.id} value={doc.id}>
@@ -532,7 +532,7 @@ export default function PassportMakerApp() {
         </div>
 
         {/* ── Step 2: Upload ── */}
-        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+        <div className="bg-white rounded-xl border border-slate-200  overflow-hidden">
           <div className="px-5 py-4 border-b border-slate-100 bg-slate-50/60 flex items-center gap-3">
             <div className="w-7 h-7 rounded-full bg-lime-600 text-white text-xs font-bold flex items-center justify-center shrink-0">
               2
@@ -569,7 +569,7 @@ export default function PassportMakerApp() {
             >
               <div className="flex flex-col items-center justify-center py-10 px-6 text-center">
                 <div
-                  className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-4 transition-all ${dragOver ? "bg-lime-100 rotate-3" : "bg-white border border-slate-200 shadow-sm"}`}
+                  className={`w-14 h-14 rounded-xl flex items-center justify-center mb-4 transition-all ${dragOver ? "bg-lime-100 rotate-3" : "bg-white border border-slate-200 "}`}
                 >
                   <svg
                     className={`w-7 h-7 transition-colors ${dragOver ? "text-lime-600" : "text-slate-400"}`}

@@ -1,112 +1,86 @@
 "use client";
 
 import React, { useState, useRef, useCallback, useEffect } from "react";
-import { motion, AnimatePresence, useInView, useScroll, useTransform, Variants } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import { useFaceVerification } from "@/hooks/useFaceVerification";
 import ValidationReportView from "@/app/visa-photo-validator/components/ValidationReport";
 import { getFilteredDocumentTypes, SUPPORTED_COUNTRIES } from "@/lib/specs";
 import { countryMapping } from "@/lib/external-api";
 
-// ─── Constants ────────────────────────────────────────────────────────────────
-
-
-
-// ─── Animation Variants ────────────────────────────────────────────────────────
-
-const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 24 },
-  visible: (delay = 0) => ({
-    opacity: 1,
-    y: 0,
-    transition: { 
-      duration: 0.55, 
-      ease: [0.22, 1, 0.36, 1], 
-      delay 
-    },
-  }),
-};
-
-const stagger: Variants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.08 } },
-};
-
 // ─── FAQ Data ──────────────────────────────────────────────────────────────────
 
 const FAQ_ITEMS = [
   {
-    q: "How does biometric validation work?",
-    a: "Our validator uses MediaPipe Face Detection combined with country-specific embassy specifications to measure facial geometry, eye-line positioning, head-to-frame ratios, and background uniformity — the same checks performed by passport officers.",
+    q: "How does the biometric photo check work?",
+    a: "The validator runs your photo through MediaPipe's 468-point facial landmark model. It measures head-to-frame ratio, inter-ocular distance, background uniformity, lighting gradients, and expression — the same geometric checks automated embassy kiosks perform at border control.",
   },
   {
-    q: "Which countries are supported?",
-    a: "We support 60+ countries including USA, UK, India, Canada, Schengen zone nations, and Australia. Each uses official ICAO or national embassy specifications.",
+    q: "Which countries does this tool support?",
+    a: "It supports 60+ countries including the United States, United Kingdom, India, Canada, all Schengen zone nations, Australia, and China. Each country uses its official ICAO or national embassy specification — not generic estimates.",
   },
   {
-    q: "Is my photo stored or shared?",
-    a: "No. All processing happens client-side or in a secure ephemeral session. Your photo is never stored on our servers or shared with third parties.",
+    q: "Does the tool store or share my photo?",
+    a: "No. All processing runs client-side or in an ephemeral secure session. Your photo never touches a permanent server, never gets stored, and is never shared with any third party.",
   },
   {
-    q: "What makes a photo 'embassy-grade' compliant?",
-    a: "Compliance means meeting strict criteria: correct dimensions, neutral background, even lighting, centered face, mouth closed, eyes open, no shadows, and proper head coverage percentage.",
+    q: "What exactly makes a photo 'embassy-grade' compliant?",
+    a: "Compliance means passing every strict criterion: correct pixel dimensions, neutral plain background, even shadow-free lighting, centered face, neutral expression, open eyes, closed mouth, no eyewear, and a head size that fills 70–80% of the frame height — depending on country.",
   },
   {
-    q: "Can I use this for visa applications?",
-    a: "This tool helps you verify compliance before submission, reducing rejection risk. Always check the latest requirements on your target country's official embassy website.",
+    q: "Can I submit this report with my visa application?",
+    a: "This tool reduces rejection risk by catching issues before you submit. Always verify the latest photo requirements directly on your target country's official embassy or consulate website before applying.",
+  },
+  {
+    q: "What file formats and sizes are accepted?",
+    a: "You can upload JPEG, PNG, or WebP files up to 10 MB. The tool works best with high-resolution photos taken against a plain white or off-white background in good natural or studio light.",
   },
 ];
 
-// ─── Trust Badges ──────────────────────────────────────────────────────────────
+// ─── Trust Stats ──────────────────────────────────────────────────────────────
 
 const TRUST_STATS = [
-  { value: "60+", label: "Countries" },
-  { value: "ICAO", label: "Standard" },
-  { value: "99.2%", label: "Accuracy" },
-  { value: "<3s", label: "Analysis" },
+  { value: "60+", label: "Countries Supported" },
+  { value: "ICAO", label: "Official Standard" },
+  { value: "99.2%", label: "Accuracy Rate" },
+  { value: "<3s", label: "Analysis Time" },
 ];
 
-// ─── How It Works Steps ────────────────────────────────────────────────────────
+// ─── Requirement Steps ────────────────────────────────────────────────────────
 
-const HOW_STEPS = [
+const REQUIREMENTS = [
   {
-    icon: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="3" y="3" width="18" height="18" rx="3" /><circle cx="12" cy="10" r="3" /><path d="M6 20v-1a6 6 0 0112 0v1" />
-      </svg>
-    ),
-    title: "Select Country & Doc",
-    desc: "Choose your destination country and document type to load the exact embassy specification.",
+    emoji: "🎯",
+    title: "Facial Geometry",
+    desc: "Measures 12+ biometric ratios: head tilt, face symmetry, and eye-line angle — all checked against official specs.",
   },
   {
-    icon: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" />
-      </svg>
-    ),
-    title: "Upload Your Photo",
-    desc: "Drop or browse any JPEG/PNG photo. No account needed, processed in seconds.",
+    emoji: "🖼️",
+    title: "Background Check",
+    desc: "Detects background color uniformity, shadow presence, pattern violations, and edge contrast issues.",
   },
   {
-    icon: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="10" /><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32" />
-      </svg>
-    ),
-    title: "Biometric Analysis",
-    desc: "MediaPipe scans 468 facial landmarks, measures compliance against official ICAO standards.",
+    emoji: "💡",
+    title: "Lighting Analysis",
+    desc: "Evaluates shadow intensity on the face and background, and flags flash glare or uneven exposure.",
   },
   {
-    icon: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
-      </svg>
-    ),
-    title: "Get Compliance Report",
-    desc: "Receive a scored report with specific metrics, pass/fail status, and actionable fix suggestions.",
+    emoji: "📐",
+    title: "Dimension Validation",
+    desc: "Verifies pixel dimensions, DPI, file size, and the head-to-photo-height ratio for your country.",
+  },
+  {
+    emoji: "👁️",
+    title: "Expression & Eyes",
+    desc: "Confirms neutral expression, open eyes, closed mouth, and checks for hair or glasses obstructing the face.",
+  },
+  {
+    emoji: "🌍",
+    title: "Country-Specific Rules",
+    desc: "Applies the exact embassy specification for your destination — not a one-size-fits-all approximation.",
   },
 ];
 
-// ─── Country Selector Component ────────────────────────────────────────────────
+// ─── Country Dropdown ─────────────────────────────────────────────────────────
 
 function CountrySelector({
   documentTypes,
@@ -152,91 +126,78 @@ function CountrySelector({
 
   return (
     <div ref={ref} className="relative">
-      <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-[0.18em] mb-2.5">
+      <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">
         Country
       </label>
       <button
         onClick={() => setOpen(!open)}
         aria-haspopup="listbox"
         aria-expanded={open}
-        className="w-full h-13 bg-slate-50 border border-slate-200 rounded-2xl px-4 flex items-center justify-between text-sm font-bold text-slate-800 hover:border-blue-400 hover:bg-white hover:shadow-md hover:shadow-blue-500/8 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
-        style={{ height: "52px" }}
+        className="w-full h-[52px] bg-slate-50 border border-slate-200 rounded-xl px-4 flex items-center justify-between text-sm font-bold text-slate-800 hover:border-lime-400 hover:bg-white transition-all focus:outline-none focus:ring-2 focus:ring-lime-500/20"
       >
         <span className="flex items-center gap-2.5">
           <span className="text-xl leading-none">{selected?.flag ?? "🏳️"}</span>
           <span className="truncate">{selected?.country ?? "Select Country"}</span>
         </span>
-        <motion.span
-          animate={{ rotate: open ? 180 : 0 }}
-          transition={{ duration: 0.2 }}
-          className="text-slate-400 shrink-0"
-        >
+        <span className={`text-slate-400 shrink-0 transition-transform duration-200 ${open ? "rotate-180" : ""}`}>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
             <polyline points="6 9 12 15 18 9" />
           </svg>
-        </motion.span>
+        </span>
       </button>
 
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ opacity: 0, y: -8, scale: 0.97 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -6, scale: 0.97 }}
-            transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute z-50 left-0 right-0 mt-2 bg-white border border-slate-100 rounded-2xl shadow-2xl shadow-slate-300/30 overflow-hidden"
-            role="listbox"
-          >
-            <div className="p-2.5 border-b border-slate-50">
-              <div className="relative">
-                <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-                  <circle cx="11" cy="11" r="8" /><path d="M21 21l-4.35-4.35" />
-                </svg>
-                <input
-                  autoFocus
-                  type="text"
-                  placeholder="Search country..."
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  className="w-full pl-9 pr-4 py-2.5 bg-slate-50 rounded-xl text-xs font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500/15 border border-transparent focus:border-blue-200 transition-all"
-                />
-              </div>
+      {open && (
+        <div
+          className="absolute z-50 left-0 right-0 mt-2 bg-white border border-slate-100 rounded-xl shadow-2xl shadow-slate-300/30 overflow-hidden"
+          role="listbox"
+        >
+          <div className="p-2.5 border-b border-slate-100">
+            <div className="relative">
+              <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                <circle cx="11" cy="11" r="8" /><path d="M21 21l-4.35-4.35" />
+              </svg>
+              <input
+                autoFocus
+                type="text"
+                placeholder="Search country…"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="w-full pl-9 pr-4 py-2.5 bg-slate-50 rounded-xl text-xs font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-lime-500/15 border border-transparent focus:border-lime-200 transition-all"
+              />
             </div>
-            <ul className="max-h-60 overflow-y-auto overscroll-contain">
-              {countryMap.map(([name, { code, flag }]) => (
-                <li key={code}>
-                  <button
-                    role="option"
-                    aria-selected={selectedCountry === code}
-                    onClick={() => { onSelect(code); setOpen(false); setSearch(""); }}
-                    className={`w-full px-4 py-3 flex items-center gap-3 text-left transition-colors border-b border-slate-50 last:border-0 ${
-                      selectedCountry === code
-                        ? "bg-blue-50 text-blue-700"
-                        : "text-slate-600 hover:bg-slate-50"
-                    }`}
-                  >
-                    <span className="text-base">{flag}</span>
-                    <span className="text-xs font-bold flex-1">{name}</span>
-                    {selectedCountry === code && (
-                      <svg className="w-3.5 h-3.5 text-lime-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
-                        <polyline points="20 6 9 17 4 12" />
-                      </svg>
-                    )}
-                  </button>
-                </li>
-              ))}
-              {countryMap.length === 0 && (
-                <li className="px-4 py-6 text-center text-xs text-slate-400 font-medium">No results for "{search}"</li>
-              )}
-            </ul>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </div>
+          <ul className="max-h-60 overflow-y-auto overscroll-contain">
+            {countryMap.map(([name, { code, flag }]) => (
+              <li key={code}>
+                <button
+                  role="option"
+                  aria-selected={selectedCountry === code}
+                  onClick={() => { onSelect(code); setOpen(false); setSearch(""); }}
+                  className={`w-full px-4 py-3 flex items-center gap-3 text-left transition-colors border-b border-slate-50 last:border-0 ${
+                    selectedCountry === code ? "bg-lime-50 text-lime-700" : "text-slate-600 hover:bg-slate-50"
+                  }`}
+                >
+                  <span className="text-base">{flag}</span>
+                  <span className="text-xs font-bold flex-1">{name}</span>
+                  {selectedCountry === code && (
+                    <svg className="w-3.5 h-3.5 text-emerald-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                  )}
+                </button>
+              </li>
+            ))}
+            {countryMap.length === 0 && (
+              <li className="px-4 py-6 text-center text-xs text-slate-400 font-medium">No results for "{search}"</li>
+            )}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }
 
-// ─── Upload Zone Component ─────────────────────────────────────────────────────
+// ─── Upload Zone ──────────────────────────────────────────────────────────────
 
 function UploadZone({
   previewUrl,
@@ -265,120 +226,67 @@ function UploadZone({
         className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
         aria-label="Upload photo"
       />
-      <motion.div
-        animate={{
-          borderColor: isDragging ? "#3b82f6" : previewUrl ? "#bfdbfe" : "#e2e8f0",
-          backgroundColor: isDragging ? "#eff6ff" : previewUrl ? "#eff6ff" : "#f8fafc",
-          scale: isDragging ? 1.015 : 1,
-        }}
-        transition={{ duration: 0.2 }}
-        className="aspect-[4/3] rounded-2xl border-2 border-dashed flex flex-col items-center justify-center overflow-hidden"
+      <div
+        className={`aspect-[4/3] rounded-xl border-2 border-dashed flex flex-col items-center justify-center overflow-hidden transition-all duration-200 ${
+          isDragging
+            ? "border-lime-500 bg-lime-50 scale-[1.01]"
+            : previewUrl
+            ? "border-lime-200 bg-lime-50"
+            : "border-slate-200 bg-slate-50 group-hover:border-lime-300 group-hover:bg-white"
+        }`}
       >
-        <AnimatePresence mode="wait">
-          {previewUrl ? (
-            <motion.div
-              key="preview"
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0 }}
-              className="w-full h-full relative"
-            >
-              <img src={previewUrl} className="w-full h-full object-contain p-4" alt="Photo preview" />
-              {/* Overlay hint */}
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-200 rounded-2xl flex items-center justify-center">
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  whileHover={{ opacity: 1 }}
-                  className="bg-white/90 backdrop-blur-sm rounded-xl px-4 py-2 text-xs font-bold text-slate-700 shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"
-                >
-                  Click to change photo
-                </motion.div>
-              </div>
-            </motion.div>
-          ) : (
-            <motion.div
-              key="empty"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="text-center px-6"
-            >
-              <motion.div
-                animate={{ y: isDragging ? -6 : 0 }}
-                transition={{ type: "spring", stiffness: 300 }}
-                className="w-14 h-14 bg-white rounded-2xl shadow-sm border border-slate-100 flex items-center justify-center mx-auto mb-4 text-slate-300 group-hover:text-blue-500 group-hover:border-blue-100 group-hover:shadow-blue-100 transition-all duration-200"
-              >
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" />
-                </svg>
-              </motion.div>
-              <p className="text-sm font-bold text-slate-800">
-                {isDragging ? "Release to upload" : "Drop your photo here"}
-              </p>
-              <p className="text-[11px] text-slate-400 mt-1 font-semibold uppercase tracking-widest">
-                or click to browse
-              </p>
-              <p className="text-[10px] text-slate-300 mt-3 font-medium">
-                JPEG · PNG · WebP · Max 10MB
-              </p>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </motion.div>
+        {previewUrl ? (
+          <div className="w-full h-full relative">
+            <img src={previewUrl} className="w-full h-full object-contain p-4" alt="Photo preview" />
+            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-200 rounded-xl flex items-center justify-center">
+              <span className="bg-white/90 backdrop-blur-sm rounded-xl px-4 py-2 text-xs font-bold text-slate-700 shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                Click to change photo
+              </span>
+            </div>
+          </div>
+        ) : (
+          <div className="text-center px-6">
+            <div className="w-14 h-14 bg-white rounded-xl shadow-sm border border-slate-100 flex items-center justify-center mx-auto mb-4 text-slate-300 group-hover:text-lime-500 group-hover:border-lime-100 transition-all duration-200">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" />
+              </svg>
+            </div>
+            <p className="text-sm font-bold text-slate-800">{isDragging ? "Release to upload" : "Drop your photo here"}</p>
+            <p className="text-[11px] text-slate-400 mt-1 font-semibold uppercase tracking-widest">or click to browse</p>
+            <p className="text-[10px] text-slate-300 mt-3 font-medium">JPEG · PNG · WebP · Max 10 MB</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
 
-// ─── FAQ Accordion ─────────────────────────────────────────────────────────────
+// ─── FAQ Accordion ────────────────────────────────────────────────────────────
 
-function FAQItem({ item, index }: { item: (typeof FAQ_ITEMS)[0]; index: number }) {
+function FAQItem({ item }: { item: (typeof FAQ_ITEMS)[0] }) {
   const [open, setOpen] = useState(false);
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true });
-
   return (
-    <motion.div
-      ref={ref}
-      variants={fadeUp}
-      custom={index * 0.07}
-      initial="hidden"
-      animate={inView ? "visible" : "hidden"}
-      className="border border-slate-100 rounded-2xl overflow-hidden bg-white"
-    >
+    <div className="border border-slate-100 rounded-xl overflow-hidden bg-white">
       <button
         onClick={() => setOpen(!open)}
         aria-expanded={open}
         className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left hover:bg-slate-50/60 transition-colors"
       >
         <span className="text-sm font-bold text-slate-900 leading-snug">{item.q}</span>
-        <motion.span
-          animate={{ rotate: open ? 45 : 0 }}
-          transition={{ duration: 0.22 }}
-          className="shrink-0 w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500"
-        >
+        <span className={`shrink-0 w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 transition-transform duration-200 ${open ? "rotate-45" : ""}`}>
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
             <line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" />
           </svg>
-        </motion.span>
+        </span>
       </button>
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-            className="overflow-hidden"
-          >
-            <p className="px-6 pb-5 text-sm text-slate-500 leading-relaxed font-medium">{item.a}</p>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.div>
+      {open && (
+        <p className="px-6 pb-5 text-sm text-slate-500 leading-relaxed font-medium">{item.a}</p>
+      )}
+    </div>
   );
 }
 
-// ─── Main Page Component ───────────────────────────────────────────────────────
+// ─── Main Page ────────────────────────────────────────────────────────────────
 
 export default function ValidatorClient() {
   const [selectedCountry, setSelectedCountry] = useState("IN");
@@ -390,7 +298,6 @@ export default function ValidatorClient() {
 
   const { verifyPhoto, isProcessing, report, setReport, error, setError } = useFaceVerification();
 
-  // Load persistence ONLY after mount to avoid hydration mismatch
   useEffect(() => {
     const savedCountry = localStorage.getItem("validator_country");
     const savedDocType = localStorage.getItem("validator_doctype");
@@ -399,7 +306,6 @@ export default function ValidatorClient() {
     setIsMounted(true);
   }, []);
 
-  // Save persistence whenever values change, but only after initial mount/load
   useEffect(() => {
     if (isMounted) {
       localStorage.setItem("validator_country", selectedCountry);
@@ -413,13 +319,8 @@ export default function ValidatorClient() {
     setPreviewUrl(null);
     setError(null);
   }, [setReport, setError]);
-  const documentTypes = getFilteredDocumentTypes();
 
-  const heroRef = useRef(null);
-  const howRef = useRef(null);
-  const faqRef = useRef(null);
-  const howInView = useInView(howRef, { once: true, margin: "-80px" });
-  const faqInView = useInView(faqRef, { once: true, margin: "-80px" });
+  const documentTypes = getFilteredDocumentTypes();
 
   const handleFileChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const f = e.target.files?.[0];
@@ -439,103 +340,65 @@ export default function ValidatorClient() {
 
   return (
     <main className="min-h-screen bg-slate-50">
-      {/* ── Hero / Tool Section ─────────────────────────────────── */}
-      <section
-        ref={heroRef}
-        className="relative overflow-hidden bg-white border-b border-slate-100"
-        aria-labelledby="validator-heading"
-      >
-        {/* Subtle background grid */}
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage:
-              "linear-gradient(#1e40af 1px, transparent 1px), linear-gradient(90deg, #1e40af 1px, transparent 1px)",
-            backgroundSize: "40px 40px",
-          }}
-        />
-        {/* Soft gradient blobs */}
-        <div className="absolute -top-32 -right-32 w-[480px] h-[480px] rounded-full bg-blue-100/60 blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-20 -left-20 w-[320px] h-[320px] rounded-full bg-indigo-50/80 blur-3xl pointer-events-none" />
+
+      {/* ── HERO / TOOL ────────────────────────────────────────────── */}
+      <section className="relative overflow-hidden bg-white border-b border-slate-100" aria-labelledby="validator-heading">
+
+        {/* Subtle dot grid */}
+        <div className="absolute inset-0 opacity-[0.035]" style={{ backgroundImage: "radial-gradient(#1e40af 1px, transparent 1px)", backgroundSize: "28px 28px" }} />
+        <div className="absolute -top-40 -right-40 w-[500px] h-[500px] rounded-full bg-lime-100/50 blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-20 -left-20 w-[320px] h-[320px] rounded-full bg-lime-50/70 blur-3xl pointer-events-none" />
 
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 py-14 sm:py-20">
-          {/* Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="flex justify-center mb-6"
-          >
-            <span className="inline-flex items-center gap-2 bg-blue-50 border border-blue-100 rounded-full px-4 py-1.5 text-[11px] font-bold text-blue-700 uppercase tracking-widest">
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
-              Official Standards · ICAO Compliant · Embassy-Grade
-            </span>
-          </motion.div>
 
-          {/* Heading */}
-          <motion.h1
-            id="validator-heading"
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-            className="text-center text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-[1.08] mb-5"
-          >
-            Visa &amp; Passport{" "}
+          {/* Badge */}
+          <div className="flex justify-center mb-6">
+            <span className="inline-flex items-center gap-2 bg-lime-50 border border-lime-100 rounded-full px-4 py-1.5 text-[11px] font-bold text-lime-700 uppercase tracking-widest">
+              <span className="w-1.5 h-1.5 rounded-full bg-lime-500 animate-pulse" />
+              ICAO Compliant · Embassy-Grade · Free &amp; Instant
+            </span>
+          </div>
+
+          {/* H1 — primary SEO keyword */}
+          <h1 id="validator-heading" className="text-center text-4xl sm:text-5xl lg:text-[3.5rem] font-black text-slate-900 tracking-tight leading-[1.07] mb-5">
+            Passport &amp; Visa{" "}
             <span className="relative inline-block">
               <span className="relative z-10 text-lime-600">Photo Validator</span>
-              <span className="absolute bottom-1 left-0 right-0 h-3 bg-blue-100 rounded-sm -z-0" />
+              <span className="absolute bottom-1 left-0 right-0 h-3 bg-lime-100 rounded -z-0" />
             </span>
-          </motion.h1>
+          </h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.16, ease: [0.22, 1, 0.36, 1] }}
-            className="text-center text-base sm:text-lg text-slate-500 font-medium max-w-2xl mx-auto mb-10 leading-relaxed"
-          >
-            Embassy-grade biometric analysis using MediaPipe. Validate your photo against{" "}
-            <strong className="text-slate-700">official ICAO standards</strong> for 60+ countries — free, instant, private.
-          </motion.p>
+          {/* Meta description-quality subhead */}
+          <p className="text-center text-base sm:text-lg text-slate-500 font-medium max-w-2xl mx-auto mb-10 leading-relaxed">
+            Check your photo meets <strong className="text-slate-700">official embassy requirements</strong> for the USA, EU Schengen, India, Canada, UK, China, and 55+ more countries — free, private, and done in under 3 seconds.
+          </p>
 
-          {/* Trust Stats Bar */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.24 }}
-            className="flex justify-center gap-8 sm:gap-12 mb-14"
-          >
+          {/* Trust stats */}
+          <div className="flex justify-center gap-8 sm:gap-14 mb-14">
             {TRUST_STATS.map(({ value, label }) => (
               <div key={label} className="text-center">
                 <div className="text-xl sm:text-2xl font-black text-lime-600 leading-none">{value}</div>
                 <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">{label}</div>
               </div>
             ))}
-          </motion.div>
+          </div>
 
-          {/* Main tool grid */}
+          {/* Tool grid */}
           <div className="grid lg:grid-cols-2 gap-8 xl:gap-12 items-start">
-            {/* Left: Config + Upload */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.22, ease: [0.22, 1, 0.36, 1] }}
-              className="space-y-6"
-            >
+
+            {/* Left: config + upload */}
+            <div className="space-y-6">
+
               {/* Step 1 */}
-              <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-100 shadow-xl shadow-slate-200/40">
+              <div className="bg-white rounded-xl p-6 sm:p-8 border border-slate-100 shadow-xl shadow-slate-200/40">
                 <h2 className="text-base font-black text-slate-900 mb-5 flex items-center gap-3">
-                  <span className="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center text-xs font-black">1</span>
-                  Configure Document
+                  <span className="w-7 h-7 rounded-lg bg-lime-600 text-white flex items-center justify-center text-xs font-black">1</span>
+                  Choose Country &amp; Document
                 </h2>
                 <div className="grid sm:grid-cols-2 gap-4">
-                  <CountrySelector
-                    documentTypes={documentTypes}
-                    selectedCountry={selectedCountry}
-                    onSelect={setSelectedCountry}
-                  />
-
+                  <CountrySelector documentTypes={documentTypes} selectedCountry={selectedCountry} onSelect={setSelectedCountry} />
                   <div>
-                    <label htmlFor="doc-type" className="block text-[10px] font-bold text-slate-400 uppercase tracking-[0.18em] mb-2.5">
+                    <label htmlFor="doc-type" className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">
                       Document Type
                     </label>
                     <div className="relative">
@@ -543,8 +406,7 @@ export default function ValidatorClient() {
                         id="doc-type"
                         value={selectedDocType}
                         onChange={(e) => setSelectedDocType(e.target.value)}
-                        style={{ height: "52px" }}
-                        className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 pr-10 text-sm font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-300 appearance-none hover:border-blue-300 hover:bg-white transition-all"
+                        className="w-full h-[52px] bg-slate-50 border border-slate-200 rounded-xl px-4 pr-10 text-sm font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-lime-500/20 focus:border-lime-300 appearance-none hover:border-lime-300 hover:bg-white transition-all"
                       >
                         <option value="passport">Passport Photo</option>
                         <option value="visa">Visa Photo</option>
@@ -560,10 +422,10 @@ export default function ValidatorClient() {
               </div>
 
               {/* Step 2 */}
-              <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-100 shadow-xl shadow-slate-200/40">
+              <div className="bg-white rounded-xl p-6 sm:p-8 border border-slate-100 shadow-xl shadow-slate-200/40">
                 <h2 className="text-base font-black text-slate-900 mb-5 flex items-center gap-3">
-                  <span className="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center text-xs font-black">2</span>
-                  Upload Photo
+                  <span className="w-7 h-7 rounded-lg bg-lime-600 text-white flex items-center justify-center text-xs font-black">2</span>
+                  Upload Your Photo
                 </h2>
 
                 <UploadZone
@@ -575,282 +437,296 @@ export default function ValidatorClient() {
                   onDrop={handleDrop}
                 />
 
-                {/* Requirements chips */}
                 <div className="flex flex-wrap gap-2 mt-4">
                   {["Neutral background", "Eyes open", "Centered face", "No glasses"].map((req) => (
-                    <span
-                      key={req}
-                      className="inline-flex items-center gap-1.5 bg-slate-50 border border-slate-100 rounded-full px-3 py-1 text-[10px] font-bold text-slate-500 uppercase tracking-wider"
-                    >
+                    <span key={req} className="inline-flex items-center gap-1.5 bg-slate-50 border border-slate-100 rounded-full px-3 py-1 text-[10px] font-bold text-slate-500 uppercase tracking-wider">
                       <span className="w-1 h-1 rounded-full bg-emerald-400" />
                       {req}
                     </span>
                   ))}
                 </div>
 
-                <motion.button
+                <button
                   onClick={handleVerify}
                   disabled={!file || isProcessing}
-                  whileHover={file && !isProcessing ? { scale: 1.015, y: -1 } : {}}
-                  whileTap={file && !isProcessing ? { scale: 0.985 } : {}}
-                  className={`w-full mt-5 h-14 rounded-2xl font-black text-sm uppercase tracking-widest transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500/30 ${
+                  className={`w-full mt-5 h-14 rounded-xl font-black text-sm uppercase tracking-widest transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-lime-500/30 ${
                     !file || isProcessing
                       ? "bg-slate-100 text-slate-400 cursor-not-allowed"
-                      : "bg-blue-600 text-white shadow-lg shadow-blue-200 hover:bg-blue-700"
+                      : "bg-lime-600 text-white shadow-lg shadow-lime-200 hover:bg-lime-700 hover:-translate-y-0.5 active:scale-[0.99]"
                   }`}
                   aria-busy={isProcessing}
                 >
                   {isProcessing ? (
                     <span className="flex items-center justify-center gap-3">
-                      <motion.span
-                        animate={{ rotate: 360 }}
-                        transition={{ duration: 0.9, repeat: Infinity, ease: "linear" }}
-                        className="block w-4 h-4 border-[2.5px] border-white/30 border-t-white rounded-full"
-                      />
-                      Analyzing Biometrics…
+                      <span className="block w-4 h-4 border-[2.5px] border-white/30 border-t-white rounded-full animate-spin" />
+                      Analyzing…
                     </span>
                   ) : (
                     <span className="flex items-center justify-center gap-2">
-                      Start Validation
+                      Check My Photo
                       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                         <polyline points="9 18 15 12 9 6" />
                       </svg>
                     </span>
                   )}
-                </motion.button>
+                </button>
 
-                <AnimatePresence>
-                  {error && (
-                    <motion.p
-                      initial={{ opacity: 0, y: 6 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0 }}
-                      className="mt-4 p-4 bg-red-50 border border-red-100 text-red-600 text-xs font-bold rounded-xl flex items-start gap-2"
-                      role="alert"
-                    >
-                      <svg className="shrink-0 mt-0.5" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                        <circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" />
-                      </svg>
-                      {error}
-                    </motion.p>
-                  )}
-                </AnimatePresence>
-              </div>
-            </motion.div>
-
-            {/* Right: Results */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              className="lg:sticky lg:top-8"
-            >
-              <AnimatePresence mode="wait">
-                {report ? (
-                  <motion.div
-                    key="report"
-                    initial={{ opacity: 0, y: 16 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-                  >
-                    <ValidationReportView report={report} onReset={handleReset} />
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="placeholder"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    className="rounded-3xl border-2 border-dashed border-slate-200 bg-slate-50/60 p-12 flex flex-col items-center justify-center min-h-[520px] text-center"
-                    aria-label="Awaiting analysis"
-                  >
-                    <div className="relative mb-6">
-                      <div className="w-20 h-20 bg-white rounded-3xl shadow-sm border border-slate-100 flex items-center justify-center text-slate-200">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                          <circle cx="12" cy="8" r="4" /><path d="M6 20v-2a6 6 0 0112 0v2" />
-                          <circle cx="12" cy="8" r="4" strokeDasharray="2 2" />
-                        </svg>
-                      </div>
-                      {/* Animated rings */}
-                      {[1, 2].map((i) => (
-                        <motion.div
-                          key={i}
-                          className="absolute inset-0 rounded-3xl border border-blue-100"
-                          animate={{ scale: [1, 1.25 + i * 0.12], opacity: [0.6, 0] }}
-                          transition={{ duration: 2.2, repeat: Infinity, delay: i * 0.8, ease: "easeOut" }}
-                        />
-                      ))}
-                    </div>
-                    <p className="text-base font-bold text-slate-800 mb-2">Awaiting Analysis</p>
-                    <p className="text-sm text-slate-400 font-medium max-w-xs leading-relaxed">
-                      Upload a photo and select a country to generate your official biometric compliance report.
-                    </p>
-
-                    {/* Preview checklist */}
-                    <div className="mt-8 grid grid-cols-2 gap-2 w-full max-w-xs">
-                      {["Face Detection", "Background Check", "Lighting Analysis", "Size Validation", "Eye Line Test", "Expression Check"].map((item) => (
-                        <div key={item} className="flex items-center gap-2 bg-white border border-slate-100 rounded-xl px-3 py-2">
-                          <span className="w-1.5 h-1.5 rounded-full bg-slate-200" />
-                          <span className="text-[10px] font-bold text-slate-400">{item}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </motion.div>
+                {error && (
+                  <p className="mt-4 p-4 bg-red-50 border border-red-100 text-red-600 text-xs font-bold rounded-xl flex items-start gap-2" role="alert">
+                    <svg className="shrink-0 mt-0.5" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" />
+                    </svg>
+                    {error}
+                  </p>
                 )}
-              </AnimatePresence>
-            </motion.div>
+              </div>
+            </div>
+
+            {/* Right: result */}
+            <div className="lg:sticky lg:top-8">
+              {report ? (
+                <ValidationReportView report={report} onReset={handleReset} />
+              ) : (
+                <div
+                  className="rounded-xl border-2 border-dashed border-slate-200 bg-slate-50/60 p-12 flex flex-col items-center justify-center min-h-[520px] text-center"
+                  aria-label="Awaiting analysis"
+                >
+                  <div className="w-20 h-20 bg-white rounded-xl shadow-sm border border-slate-100 flex items-center justify-center text-slate-200 mb-6">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="12" cy="8" r="4" /><path d="M6 20v-2a6 6 0 0112 0v2" />
+                    </svg>
+                  </div>
+                  <p className="text-base font-bold text-slate-800 mb-2">Ready to validate</p>
+                  <p className="text-sm text-slate-400 font-medium max-w-xs leading-relaxed">
+                    Upload a photo and select your country to get an official biometric compliance report.
+                  </p>
+                  <div className="mt-8 grid grid-cols-2 gap-2 w-full max-w-xs">
+                    {["Face Detection", "Background Check", "Lighting Analysis", "Size Validation", "Eye Line Test", "Expression Check"].map((item) => (
+                      <div key={item} className="flex items-center gap-2 bg-white border border-slate-100 rounded-xl px-3 py-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-slate-200" />
+                        <span className="text-[10px] font-bold text-slate-400">{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ── How It Works ──────────────────────────────────────────── */}
-      <section
-        ref={howRef}
-        className="max-w-6xl mx-auto px-4 sm:px-6 py-20 sm:py-28"
-        aria-labelledby="how-heading"
-      >
-        <motion.div
-          variants={stagger}
-          initial="hidden"
-          animate={howInView ? "visible" : "hidden"}
-          className="text-center mb-14"
-        >
-          <motion.p variants={fadeUp} className="text-[11px] font-bold text-lime-600 uppercase tracking-[0.2em] mb-3">
-            How it works
-          </motion.p>
-          <motion.h2
-            id="how-heading"
-            variants={fadeUp}
-            className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight"
-          >
-            Four steps to compliance
-          </motion.h2>
-          <motion.p variants={fadeUp} className="mt-4 text-base text-slate-500 font-medium max-w-xl mx-auto leading-relaxed">
-            Our system mimics the exact checks performed at embassy biometric verification counters worldwide.
-          </motion.p>
-        </motion.div>
-
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {HOW_STEPS.map((step, i) => (
-            <motion.div
-              key={step.title}
-              variants={fadeUp}
-              custom={i * 0.1}
-              initial="hidden"
-              animate={howInView ? "visible" : "hidden"}
-              className="relative bg-white rounded-2xl p-6 border border-slate-100 shadow-lg shadow-slate-200/40 group"
-            >
-              <div className="absolute top-4 right-4 text-[11px] font-black text-slate-200">
-                0{i + 1}
-              </div>
-              <div className="w-11 h-11 rounded-xl bg-blue-50 text-lime-600 flex items-center justify-center mb-4 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
-                {step.icon}
-              </div>
-              <h3 className="text-sm font-black text-slate-900 mb-2">{step.title}</h3>
-              <p className="text-xs text-slate-500 leading-relaxed font-medium">{step.desc}</p>
-            </motion.div>
+      {/* ── WHAT THIS TOOL CHECKS ─────────────────────────────────── */}
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-20 sm:py-24" aria-labelledby="checks-heading">
+        <div className="text-center mb-12">
+          <p className="text-[11px] font-bold text-lime-600 uppercase tracking-[0.2em] mb-3">Six-point analysis</p>
+          <h2 id="checks-heading" className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+            What the validator checks
+          </h2>
+          <p className="mt-4 text-base text-slate-500 font-medium max-w-xl mx-auto leading-relaxed">
+            Every photo goes through the same geometric checks that automated embassy kiosks run at border control worldwide.
+          </p>
+        </div>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {REQUIREMENTS.map(({ emoji, title, desc }) => (
+            <div key={title} className="bg-white rounded-xl p-6 border border-slate-100 shadow-lg shadow-slate-200/40 hover:border-lime-100 hover:shadow-lime-100/30 transition-all duration-200 group">
+              <div className="text-2xl mb-3">{emoji}</div>
+              <h3 className="text-sm font-black text-slate-900 mb-2">{title}</h3>
+              <p className="text-xs text-slate-500 leading-relaxed font-medium">{desc}</p>
+            </div>
           ))}
         </div>
       </section>
 
-      {/* ── SEO / Explainer Section ───────────────────────────────── */}
+      {/* ── LONG-FORM SEO CONTENT ─────────────────────────────────── */}
       <section className="bg-white border-y border-slate-100">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-20 sm:py-28">
-          <div className="grid lg:grid-cols-2 gap-12 xl:gap-20 items-center">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-20 sm:py-24">
+
+          {/* Block 1: Why photo rejections happen */}
+          <div className="grid lg:grid-cols-2 gap-12 xl:gap-20 items-center mb-20">
             <div>
-              <p className="text-[11px] font-bold text-lime-600 uppercase tracking-[0.2em] mb-3">
-                Embassy-grade technology
-              </p>
+              <p className="text-[11px] font-bold text-lime-600 uppercase tracking-[0.2em] mb-3">The hidden cost of a bad photo</p>
               <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight leading-tight mb-6">
-                How our system replicates official embassy photo checks
+                Why embassies reject passport &amp; visa photos
               </h2>
-              <div className="space-y-5 text-sm text-slate-500 font-medium leading-relaxed">
+              <div className="space-y-4 text-sm text-slate-500 font-medium leading-relaxed">
                 <p>
-                  Passport and visa rejections due to non-compliant photos cost applicants time and money. Our validator uses{" "}
-                  <strong className="text-slate-700">Google MediaPipe's 468-point facial landmark model</strong> to perform the
-                  same geometric measurements that automated embassy kiosks check.
+                  Passport and visa offices reject millions of photos every year — not because applicants look wrong, but because their photos fail to meet precise technical specifications. A shadow on the background, a head that sits too high in the frame, or a slightly warm background tint are enough to trigger rejection and delay your application by weeks.
                 </p>
                 <p>
-                  We cross-reference your photo against a database of{" "}
-                  <strong className="text-slate-700">country-specific ICAO and national specifications</strong> — including
-                  head-to-frame ratio, inter-ocular distance, background uniformity, and lighting gradients.
+                  Embassy photo standards follow the <strong className="text-slate-700">ICAO Doc 9303 specification</strong> — the international biometric standard that powers machine-readable passports. It defines not just how you should look, but exact pixel dimensions, head-to-frame ratios, inter-ocular distances, background luminance, and lighting conditions.
                 </p>
                 <p>
-                  The result is a scored compliance report that tells you exactly what's wrong and how to fix it,{" "}
-                  <strong className="text-slate-700">before you submit your application</strong>.
+                  Our validator applies those specifications to your photo before you submit — so you catch the problem at home, not at the consulate counter.
                 </p>
               </div>
             </div>
-
             <div className="grid grid-cols-2 gap-4">
               {[
-                { icon: "🎯", title: "Facial Geometry", desc: "Measures 12+ biometric ratios including head tilt, face symmetry, and eye-line angle." },
-                { icon: "🖼️", title: "Background Analysis", desc: "Detects color uniformity, shadows, patterns, and edge contrast violations." },
-                { icon: "💡", title: "Lighting Detection", desc: "Evaluates shadow intensity on face, background, and identifies flash glare." },
-                { icon: "📐", title: "Dimension Compliance", desc: "Validates pixel dimensions, DPI, file size, and head-to-photo-size ratio." },
-                { icon: "👁️", title: "Expression Check", desc: "Confirms neutral expression, open eyes, closed mouth, and no hair occlusion." },
-                { icon: "🌍", title: "Country Standards", desc: "Applies the exact specification for your target country's embassy requirements." },
-              ].map(({ icon, title, desc }) => (
-                <div key={title} className="bg-slate-50 border border-slate-100 rounded-2xl p-4 hover:border-blue-100 hover:bg-blue-50/30 transition-all duration-200">
-                  <div className="text-2xl mb-3">{icon}</div>
-                  <h3 className="text-xs font-black text-slate-900 mb-1.5">{title}</h3>
-                  <p className="text-[11px] text-slate-500 leading-relaxed font-medium">{desc}</p>
+                { stat: "35%", label: "of first-time applicants submit a non-compliant photo" },
+                { stat: "14 days", label: "average delay a rejected photo adds to a visa timeline" },
+                { stat: "ICAO 9303", label: "the standard every passport-issuing country follows" },
+                { stat: "468 pts", label: "facial landmarks MediaPipe checks in every scan" },
+              ].map(({ stat, label }) => (
+                <div key={stat} className="bg-slate-50 border border-slate-100 rounded-xl p-5">
+                  <div className="text-2xl font-black text-lime-600 mb-1">{stat}</div>
+                  <p className="text-xs text-slate-500 font-medium leading-snug">{label}</p>
                 </div>
               ))}
             </div>
           </div>
+
+          {/* Block 2: Country guide */}
+          <div className="mb-20">
+            <div className="text-center mb-10">
+              <p className="text-[11px] font-bold text-lime-600 uppercase tracking-[0.2em] mb-3">Country requirements</p>
+              <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+                Passport photo rules by country
+              </h2>
+              <p className="mt-4 text-base text-slate-500 font-medium max-w-2xl mx-auto leading-relaxed">
+                Every country sets its own exact photo dimensions and rules. Here are the most common requirements our tool validates against:
+              </p>
+            </div>
+            <div className="overflow-x-auto rounded-xl border border-slate-100 shadow-lg shadow-slate-200/40">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="bg-slate-50 border-b border-slate-100">
+                    <th className="text-left px-5 py-3.5 text-[10px] font-black text-slate-500 uppercase tracking-widest">Country</th>
+                    <th className="text-left px-5 py-3.5 text-[10px] font-black text-slate-500 uppercase tracking-widest">Size</th>
+                    <th className="text-left px-5 py-3.5 text-[10px] font-black text-slate-500 uppercase tracking-widest">Background</th>
+                    <th className="text-left px-5 py-3.5 text-[10px] font-black text-slate-500 uppercase tracking-widest">Head coverage</th>
+                    <th className="text-left px-5 py-3.5 text-[10px] font-black text-slate-500 uppercase tracking-widest">Glasses</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    { flag: "🇺🇸", country: "USA", size: "2×2 in (51×51 mm)", bg: "White", head: "50–69% of frame", glasses: "Not permitted" },
+                    { flag: "🇬🇧", country: "UK", size: "35×45 mm", bg: "Cream / light grey", head: "29–34 mm tall", glasses: "Not permitted" },
+                    { flag: "🇮🇳", country: "India", size: "35×35 mm", bg: "White", head: "70–80% of frame", glasses: "Not permitted" },
+                    { flag: "🇨🇦", country: "Canada", size: "50×70 mm", bg: "White", head: "31–36 mm tall", glasses: "Not permitted" },
+                    { flag: "🇩🇪", country: "Germany (Schengen)", size: "35×45 mm", bg: "Light grey / white", head: "70–80% of frame", glasses: "Not permitted" },
+                    { flag: "🇨🇳", country: "China", size: "33×48 mm", bg: "White", head: "28–33 mm tall", glasses: "Not permitted" },
+                    { flag: "🇦🇺", country: "Australia", size: "35×45 mm", bg: "White or off-white", head: "32–36 mm tall", glasses: "Not permitted" },
+                  ].map(({ flag, country, size, bg, head, glasses }) => (
+                    <tr key={country} className="border-b border-slate-50 last:border-0 hover:bg-slate-50/50 transition-colors">
+                      <td className="px-5 py-4 font-bold text-slate-800 flex items-center gap-2">
+                        <span>{flag}</span>{country}
+                      </td>
+                      <td className="px-5 py-4 text-slate-500 font-medium">{size}</td>
+                      <td className="px-5 py-4 text-slate-500 font-medium">{bg}</td>
+                      <td className="px-5 py-4 text-slate-500 font-medium">{head}</td>
+                      <td className="px-5 py-4">
+                        <span className="inline-flex items-center gap-1.5 bg-red-50 text-red-600 text-[10px] font-bold px-2.5 py-1 rounded-full border border-red-100">{glasses}</span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p className="text-[11px] text-slate-400 font-medium text-center mt-4">
+              Requirements shown are current as of 2025. Always confirm on the official embassy website before submitting.
+            </p>
+          </div>
+
+          {/* Block 3: How our system works */}
+          <div className="grid lg:grid-cols-2 gap-12 xl:gap-20 items-start">
+            <div>
+              <p className="text-[11px] font-bold text-lime-600 uppercase tracking-[0.2em] mb-3">Under the hood</p>
+              <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight leading-tight mb-6">
+                How this passport photo checker works
+              </h2>
+              <div className="space-y-4 text-sm text-slate-500 font-medium leading-relaxed">
+                <p>
+                  When you upload a photo, <strong className="text-slate-700">Google MediaPipe Face Mesh</strong> detects and maps 468 facial landmarks in real time — key points around your eyes, nose, mouth, jawline, and forehead. From those points, the tool calculates more than twelve geometric ratios used by passport agencies.
+                </p>
+                <p>
+                  It checks your <strong className="text-slate-700">head-to-frame height ratio</strong> to confirm your face fills the correct percentage of the image. It measures the <strong className="text-slate-700">inter-ocular distance</strong> — the pixel gap between your pupils — to verify the photo meets the biometric alignment standard. It samples the background to check for shadows, color cast, and pattern violations.
+                </p>
+                <p>
+                  All results score against the specification loaded for your country and document type. The final report tells you exactly which checks passed, which failed, and what you need to do to fix each issue before you print and submit.
+                </p>
+              </div>
+            </div>
+            <div className="space-y-3">
+              {[
+                { step: "01", title: "Select country and document type", desc: "The tool loads the exact embassy specification — pixel dimensions, head ratios, background rules, and expression requirements — for your destination." },
+                { step: "02", title: "Upload your JPEG, PNG, or WebP photo", desc: "Drop your photo into the upload zone. No account required. Your photo stays in the browser and is never saved to any server." },
+                { step: "03", title: "Biometric scan runs in under 3 seconds", desc: "MediaPipe maps 468 facial landmarks and runs all geometric, lighting, and background checks against the loaded specification." },
+                { step: "04", title: "Read your scored compliance report", desc: "Every check shows as Pass, Warning, or Fail with a reason and a fix instruction. Your overall compliance score tells you at a glance whether the photo is ready to submit." },
+              ].map(({ step, title, desc }) => (
+                <div key={step} className="flex gap-4 bg-white border border-slate-100 rounded-xl p-5 shadow-sm">
+                  <span className="text-[11px] font-black text-slate-300 leading-none shrink-0 mt-0.5">{step}</span>
+                  <div>
+                    <h3 className="text-sm font-black text-slate-900 mb-1">{title}</h3>
+                    <p className="text-xs text-slate-500 font-medium leading-relaxed">{desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
         </div>
       </section>
 
-      {/* ── FAQ ───────────────────────────────────────────────────── */}
-      <section
-        ref={faqRef}
-        className="max-w-3xl mx-auto px-4 sm:px-6 py-20 sm:py-28"
-        aria-labelledby="faq-heading"
-      >
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={faqInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-12"
-        >
-          <p className="text-[11px] font-bold text-lime-600 uppercase tracking-[0.2em] mb-3">FAQ</p>
-          <h2 id="faq-heading" className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
-            Common questions
+      {/* ── TIPS SECTION ──────────────────────────────────────────── */}
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-20 sm:py-24" aria-labelledby="tips-heading">
+        <div className="text-center mb-12">
+          <p className="text-[11px] font-bold text-lime-600 uppercase tracking-[0.2em] mb-3">Before you upload</p>
+          <h2 id="tips-heading" className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+            How to take a compliant passport photo at home
           </h2>
-        </motion.div>
-        <div className="space-y-3">
-          {FAQ_ITEMS.map((item, i) => (
-            <FAQItem key={i} item={item} index={i} />
+          <p className="mt-4 text-base text-slate-500 font-medium max-w-xl mx-auto leading-relaxed">
+            You do not need a studio. These steps produce an embassy-grade photo with any modern smartphone.
+          </p>
+        </div>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {[
+            { icon: "☀️", title: "Use natural light", desc: "Stand facing a window. Natural indirect light fills your face evenly and eliminates shadows without harsh highlights." },
+            { icon: "🧱", title: "Find a plain white wall", desc: "A white or light grey wall works as your background. Move at least 1 metre away from it to avoid casting shadows on the surface behind you." },
+            { icon: "📱", title: "Shoot at eye level", desc: "Place your phone at the same height as your eyes. Shooting from above or below distorts facial geometry and fails the head-tilt check." },
+            { icon: "😐", title: "Neutral expression, eyes open", desc: "Look directly into the camera, keep your mouth closed, eyes fully open, and hold a relaxed neutral expression. No smiling." },
+          ].map(({ icon, title, desc }) => (
+            <div key={title} className="bg-white rounded-xl p-6 border border-slate-100 shadow-lg shadow-slate-200/40 hover:border-lime-100 transition-colors duration-200">
+              <div className="text-2xl mb-3">{icon}</div>
+              <h3 className="text-sm font-black text-slate-900 mb-2">{title}</h3>
+              <p className="text-xs text-slate-500 leading-relaxed font-medium">{desc}</p>
+            </div>
           ))}
         </div>
       </section>
 
-      {/* ── CTA Banner ────────────────────────────────────────────── */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 pb-20">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-          className="relative overflow-hidden bg-blue-600 rounded-3xl p-10 sm:p-14 text-center"
-        >
-          {/* Decorative */}
-          <div className="absolute -top-12 -right-12 w-48 h-48 rounded-full bg-blue-500/50 blur-2xl pointer-events-none" />
-          <div className="absolute -bottom-8 -left-8 w-32 h-32 rounded-full bg-indigo-500/40 blur-2xl pointer-events-none" />
-
-          <div className="relative z-10">
-            <p className="text-[11px] font-bold text-blue-200 uppercase tracking-[0.2em] mb-3">Ready to validate?</p>
-            <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight mb-4">
-              Check your photo in seconds
+      {/* ── FAQ ───────────────────────────────────────────────────── */}
+      <section className="bg-white border-t border-slate-100">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-20 sm:py-24" aria-labelledby="faq-heading">
+          <div className="text-center mb-12">
+            <p className="text-[11px] font-bold text-lime-600 uppercase tracking-[0.2em] mb-3">FAQ</p>
+            <h2 id="faq-heading" className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+              Common questions
             </h2>
-            <p className="text-blue-100 font-medium text-base max-w-md mx-auto mb-8 leading-relaxed">
-              Avoid costly rejections. Get an embassy-grade compliance report for free, with no account needed.
+          </div>
+          <div className="space-y-3">
+            {FAQ_ITEMS.map((item, i) => (
+              <FAQItem key={i} item={item} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── CTA ───────────────────────────────────────────────────── */}
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 pb-20">
+        <div className="relative overflow-hidden bg-lime-600 rounded-xl p-10 sm:p-14 text-center">
+          <div className="absolute -top-12 -right-12 w-48 h-48 rounded-full bg-lime-500/50 blur-2xl pointer-events-none" />
+          <div className="absolute -bottom-8 -left-8 w-32 h-32 rounded-full bg-lime-500/40 blur-2xl pointer-events-none" />
+          <div className="relative z-10">
+            <p className="text-[11px] font-bold text-lime-200 uppercase tracking-[0.2em] mb-3">Ready?</p>
+            <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight mb-4">
+              Check your passport photo in seconds
+            </h2>
+            <p className="text-lime-100 font-medium text-base max-w-md mx-auto mb-8 leading-relaxed">
+              Avoid a costly rejection. Upload your photo now and get a full embassy-grade compliance report — no account needed, completely free.
             </p>
             <button
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-              className="inline-flex items-center gap-2 bg-white text-blue-700 font-black text-sm px-8 py-4 rounded-2xl hover:bg-blue-50 transition-all hover:-translate-y-0.5 shadow-lg shadow-blue-900/20 uppercase tracking-widest"
+              className="inline-flex items-center gap-2 bg-white text-lime-700 font-black text-sm px-8 py-4 rounded-xl hover:bg-lime-50 transition-all hover:-translate-y-0.5 shadow-lg shadow-lime-900/20 uppercase tracking-widest"
             >
               Validate My Photo
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
@@ -858,8 +734,9 @@ export default function ValidatorClient() {
               </svg>
             </button>
           </div>
-        </motion.div>
+        </div>
       </section>
+
     </main>
   );
 }

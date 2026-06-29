@@ -158,7 +158,7 @@ function MetricCard({ metric }: { metric: ValidationMetric }) {
     <motion.div
       variants={itemVariants}
       whileHover={{ y: -2, transition: { duration: 0.2 } }}
-      className={`rounded-2xl p-4 border ${cfg.bg} ${cfg.border} transition-shadow hover:shadow-md`}
+      className={`rounded-xl p-4 border ${cfg.bg} ${cfg.border} transition-shadow hover:shadow-md`}
     >
       <div className="flex items-start justify-between mb-3">
         <span className="text-[9px] font-black text-slate-400 uppercase tracking-[0.15em] leading-tight max-w-[80%]">
@@ -202,7 +202,7 @@ function SummaryList({ items, title, dark = false }: { items: string[]; title: s
   return (
     <motion.div
       variants={itemVariants}
-      className={`rounded-3xl p-6 ${dark ? "bg-slate-900 shadow-xl" : "bg-white border border-slate-100 shadow-lg shadow-slate-200/40"}`}
+      className={`rounded-xl p-6 ${dark ? "bg-slate-900 shadow-xl" : "bg-white border border-slate-100 shadow-lg shadow-slate-200/40"}`}
     >
       <h3 className={`text-sm font-black mb-4 flex items-center gap-2 ${dark ? "text-white" : "text-slate-900"}`}>
         <span
@@ -274,7 +274,7 @@ export default function ValidationReportView({ report, onReset }: Props) {
       {/* ── Header Card ──────────────────────────────────────────── */}
       <motion.div
         variants={itemVariants}
-        className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-100 shadow-xl shadow-slate-200/40"
+        className="bg-white rounded-xl p-6 sm:p-8 border border-slate-100 shadow-xl shadow-slate-200/40"
       >
         <div className="flex flex-col sm:flex-row items-center gap-6 sm:gap-8 justify-between">
           {/* Pass / Fail badge */}
@@ -358,7 +358,7 @@ export default function ValidationReportView({ report, onReset }: Props) {
       
         <button
           onClick={onReset}
-          className="w-full sm:flex-1 h-14 rounded-2xl bg-blue-600 text-white font-bold text-sm uppercase tracking-widest hover:bg-blue-700 active:scale-[0.98] transition-all flex items-center justify-center gap-2.5 shadow-lg shadow-blue-500/30"
+          className="w-full sm:flex-1 h-14 rounded-xl bg-blue-600 text-white font-bold text-sm uppercase tracking-widest hover:bg-blue-700 active:scale-[0.98] transition-all flex items-center justify-center gap-2.5 shadow-lg shadow-blue-500/30"
           aria-label="Validate another photo"
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
