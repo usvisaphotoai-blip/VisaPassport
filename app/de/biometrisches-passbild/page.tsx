@@ -88,30 +88,49 @@ const dontList = [
   "Unscharfe oder pixelige Aufnahmen",
 ];
 
+const useCases = [
+  {
+    title: "Reisepass",
+    desc: "PixPassport erfüllt alle Vorgaben der Bundesdruckerei für den biometrischen Reisepass und liefert ein Foto, das Behörden ohne Rückfragen akzeptieren.",
+  },
+  {
+    title: "Personalausweis",
+    desc: "Da dieselbe ICAO-Norm gilt, eignet sich dasselbe Passbild auch für den neuen Personalausweis mit elektronischem Chip.",
+  },
+  {
+    title: "ePass & Visum",
+    desc: "Auch für den ePass sowie viele Visa-Anträge im Ausland erfüllt das Foto die internationalen biometrischen Standards.",
+  },
+  {
+    title: "Baby- und Kinderpass",
+    desc: "Unser System erkennt Babygesichter zuverlässig und passt Zuschnitt sowie Beurteilung an die besonderen Anforderungen für Kleinkinder an.",
+  },
+];
+
 const faqs = [
   {
     q: "Was ist ein biometrisches Passbild?",
-    a: "Ein biometrisches Passbild ist ein Lichtbild, das den internationalen ICAO-9303-Normen entspricht. Es dient als maschinenlesbare Identifikation in Reisepässen, Personalausweisen und ePässen. Dabei werden Maße, Kopfgröße, Hintergrundfarbe und Gesichtsausdruck exakt vorgeschrieben.",
+    a: "Ein biometrisches Passbild ist ein Lichtbild, das den internationalen ICAO-9303-Normen entspricht. Es dient als maschinenlesbare Identifikation in Reisepässen, Personalausweisen und ePässen. Software zur Gesichtserkennung vergleicht charakteristische Punkte im Gesicht, etwa den Abstand der Augen oder die Kinnlinie, mit dem gespeicherten Chip-Datensatz. Damit dieser Abgleich zuverlässig funktioniert, schreibt die Norm exakte Maße, Kopfgröße, Hintergrundfarbe und einen neutralen Gesichtsausdruck vor.",
   },
   {
     q: "Welche Maße hat ein biometrisches Passbild in Deutschland?",
-    a: "In Deutschland muss ein biometrisches Passbild das Format 35 × 45 mm aufweisen. Die Kopfgröße (Scheitel bis Kinn) soll zwischen 27 und 36 mm liegen. Der Hintergrund muss hell (weiß oder hellgrau) und gleichmäßig ausgeleuchtet sein.",
+    a: "In Deutschland muss ein biometrisches Passbild das Format 35 × 45 mm aufweisen. Die Kopfgröße, gemessen vom Scheitel bis zum Kinn, soll zwischen 27 und 36 mm liegen und etwa 70 bis 80 Prozent der Bildhöhe einnehmen. Der Hintergrund muss hell, also weiß oder hellgrau, sowie gleichmäßig ausgeleuchtet sein, ohne Schatten oder Farbverläufe.",
   },
   {
     q: "Kann ich das Passbild auch für den Personalausweis verwenden?",
-    a: "Ja. Die Anforderungen für Reisepass und Personalausweis sind in Deutschland identisch – beide folgen der ICAO-Norm. Ein mit PixPassport erstelltes biometrisches Foto ist für beide Dokumente geeignet.",
+    a: "Ja, die Anforderungen für Reisepass und Personalausweis sind in Deutschland identisch, da beide Dokumente derselben ICAO-Norm folgen. Ein mit PixPassport erstelltes biometrisches Foto eignet sich daher gleichermaßen für beide Dokumente und muss nicht doppelt erstellt werden.",
   },
   {
     q: "Ist ein biometrisches Passbild für ein Baby gültig?",
-    a: "Ja, auch Babys benötigen ein eigenes biometrisches Passbild. Das Foto muss dieselben Vorgaben erfüllen. Babys dürfen die Augen leicht geöffnet haben – ein neutraler Gesichtsausdruck ist erwünscht, wird aber bei Kleinstkindern pragmatisch beurteilt.",
+    a: "Ja, auch Babys benötigen seit der Geburt ein eigenes biometrisches Passbild. Das Foto muss grundsätzlich dieselben Vorgaben erfüllen, etwa hinsichtlich Hintergrund und Bildgröße. Bei Kleinstkindern werden Kriterien wie Blickrichtung oder neutraler Ausdruck jedoch pragmatischer beurteilt, da ein bewusstes Stillhalten kaum möglich ist.",
   },
   {
     q: "Darf ich eine Brille auf dem Passbild tragen?",
-    a: "Nein. Seit 2017 sind Brillen auf deutschen Passbildern grundsätzlich nicht mehr erlaubt – unabhängig davon, ob es sich um Sonnen- oder Korrektionsbrillen handelt. Dies gilt für Reisepass, Personalausweis und ePass.",
+    a: "Nein, seit 2017 sind Brillen auf deutschen Passbildern grundsätzlich nicht mehr erlaubt. Diese Regel gilt unabhängig davon, ob es sich um eine Sonnenbrille oder eine Korrektionsbrille handelt, da Reflexionen und Tönungen die biometrische Auswertung des Gesichts stören können. Die Vorgabe betrifft Reisepass, Personalausweis und ePass gleichermaßen.",
   },
   {
     q: "Wie lange ist ein biometrisches Passbild gültig?",
-    a: "Behörden akzeptieren Passbilder, die nicht älter als 6 Monate sind und das aktuelle Erscheinungsbild korrekt wiedergeben. PixPassport erstellt das Bild digital – Sie können es jederzeit erneut herunterladen.",
+    a: "Behörden akzeptieren Passbilder grundsätzlich, wenn sie nicht älter als sechs Monate sind und das aktuelle Erscheinungsbild der Person korrekt wiedergeben. Da PixPassport das Bild rein digital erstellt, können Sie es bei Bedarf jederzeit erneut herunterladen oder ein neues, aktuelles Foto in wenigen Sekunden anfertigen.",
   },
 ];
 
@@ -121,7 +140,7 @@ export default function BiometrischesPassbildPage() {
     <main className="bg-white text-slate-900 font-sans antialiased">
 
       {/* ══════════════ HERO ══════════════ */}
-      <section className="bg-gradient-to-b from-lime-50 via-white to-white pt-10 pb-16 px-4">
+      <section className="  pt-10 pb-16 px-4">
         <div className="max-w-5xl mx-auto flex flex-col items-center text-center gap-5">
           <span className="inline-flex items-center gap-2 bg-lime-100 text-lime-700 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full">
             ✅ ICAO-konform · Bundesdruckerei-geprüft
@@ -133,8 +152,8 @@ export default function BiometrischesPassbildPage() {
           </h1>
 
           <p className="max-w-2xl text-lg text-slate-600 leading-relaxed">
-            Offizielle Passbilder für <strong>Reisepass, Personalausweis und ePass</strong> nach
-            den Vorgaben der Bundesdruckerei (ICAO-Standard). Automatischer Zuschnitt,
+            Erstellen Sie ein offizielles Passbild für <strong>Reisepass, Personalausweis und ePass</strong> nach
+            den Vorgaben der Bundesdruckerei und der ICAO-Norm. Unsere KI übernimmt Zuschnitt,
             Hintergrundkorrektur und Qualitätsprüfung – fertig in unter 30 Sekunden.
           </p>
 
@@ -173,21 +192,31 @@ export default function BiometrischesPassbildPage() {
             Was ist ein biometrisches Passbild?
           </h2>
           <p className="text-slate-600 leading-relaxed text-lg mb-4">
-            Ein <strong>biometrisches Passbild</strong> ist kein gewöhnliches Porträtfoto. Es folgt
-            den internationalen Normen der ICAO (International Civil Aviation Organization,
-            Standard 9303) und ermöglicht die automatische Gesichtserkennung in modernen
-            Ausweisdokumenten.
+            Ein <strong>biometrisches Passbild</strong> unterscheidet sich deutlich von einem
+            gewöhnlichen Porträtfoto. Es folgt den internationalen Normen der ICAO
+            (International Civil Aviation Organization, Standard 9303) und ermöglicht
+            dadurch die automatische Gesichtserkennung in modernen Ausweisdokumenten mit
+            elektronischem Chip.
           </p>
           <p className="text-slate-600 leading-relaxed text-lg mb-4">
             In Deutschland gelten diese Vorgaben für alle hoheitlichen Dokumente –
             Reisepass, Personalausweis und ePass. Die Bundesdruckerei veröffentlicht
-            konkrete Maßtabellen und Prüfkriterien, die Behörden bei der Annahme
-            strikt anwenden.
+            konkrete Maßtabellen und Prüfkriterien, an denen sich Behörden bei der
+            Annahme von Passbildern strikt orientieren. Schon kleine Abweichungen,
+            etwa ein zu dunkler Hintergrund oder eine leicht geneigte Kopfhaltung,
+            führen häufig zur Ablehnung des Fotos.
+          </p>
+          <p className="text-slate-600 leading-relaxed text-lg mb-4">
+            Genau hier setzt PixPassport an. Unsere Plattform übernimmt die gesamte
+            technische Prüfung automatisch: Bildgröße, Kopfposition, Belichtung,
+            Hintergrundfarbe und Bildschärfe werden per KI analysiert und in Echtzeit
+            korrigiert. Sie benötigen weder ein Fotostudio noch einen Termin – ein
+            normales Smartphone-Foto reicht als Ausgangspunkt vollkommen aus.
           </p>
           <p className="text-slate-600 leading-relaxed text-lg">
-            PixPassport übernimmt die gesamte technische Prüfung automatisch: Bildgröße,
-            Kopfposition, Belichtung, Hintergrundfarbe und Bildschärfe werden per KI
-            analysiert und korrigiert – ohne Fotostudio, ohne Termin.
+            Das Ergebnis ist ein druckfertiges, behördlich anerkanntes Foto, das Sie
+            sofort herunterladen und bei der zuständigen Meldebehörde, dem Bürgeramt
+            oder direkt online bei der Passbeantragung einreichen können.
           </p>
         </div>
       </section>
@@ -229,7 +258,8 @@ export default function BiometrischesPassbildPage() {
             </h2>
             <p className="text-slate-500 leading-relaxed max-w-2xl">
               Die folgenden Kriterien entsprechen den aktuellen Vorgaben der Bundesdruckerei
-              und der ICAO-Norm 9303. Alle Punkte werden von PixPassport automatisch geprüft.
+              und der ICAO-Norm 9303. PixPassport prüft jeden dieser Punkte automatisch,
+              bevor Sie Ihr Foto herunterladen.
             </p>
           </div>
 
@@ -317,8 +347,32 @@ export default function BiometrischesPassbildPage() {
         </div>
       </section>
 
-      {/* ══════════════ VORTEILE ══════════════ */}
+      {/* ══════════════ ANWENDUNGSFÄLLE ══════════════ */}
       <section className="py-20 px-4 bg-white">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-12">
+            <p className="text-lime-600 font-bold text-xs uppercase tracking-widest mb-2">Einsatzbereiche</p>
+            <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-900">
+              Für welche Dokumente Sie das Foto nutzen können
+            </h2>
+            <p className="mt-3 text-slate-500 max-w-xl mx-auto">
+              Ein biometrisches Passbild von PixPassport gilt für mehrere amtliche Dokumente gleichzeitig.
+            </p>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {useCases.map((u) => (
+              <div key={u.title} className="bg-slate-50 border border-slate-200 rounded-2xl p-6">
+                <h3 className="font-bold text-slate-900 mb-2">{u.title}</h3>
+                <p className="text-slate-500 text-sm leading-relaxed">{u.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ══════════════ VORTEILE ══════════════ */}
+      <section className="py-20 px-4 bg-slate-50 border-y border-slate-100">
         <div className="max-w-5xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
           <div>
             <p className="text-lime-600 font-bold text-xs uppercase tracking-widest mb-2">Warum PixPassport</p>
@@ -326,9 +380,10 @@ export default function BiometrischesPassbildPage() {
               Biometrisches Passbild ohne Fotostudio
             </h2>
             <p className="text-slate-500 leading-relaxed mb-6">
-              Traditionelle Passfotos kosten Zeit und Geld. PixPassport bietet eine vollständig
-              automatisierte Alternative, die alle behördlichen Anforderungen erfüllt – und das
-              vom Sofa aus.
+              Ein klassisches Passfoto beim Fotografen kostet Zeit, einen Termin und meist
+              zwischen 8 und 15 Euro. PixPassport ersetzt diesen Weg durch eine vollständig
+              automatisierte Lösung, die sämtliche behördlichen Anforderungen zuverlässig
+              erfüllt – bequem von zu Hause aus.
             </p>
             <ul className="flex flex-col gap-3 mb-8">
               {[
@@ -375,7 +430,7 @@ export default function BiometrischesPassbildPage() {
       </section>
 
       {/* ══════════════ FAQ ══════════════ */}
-      <section className="py-20 px-4 bg-slate-50 border-t border-slate-100">
+      <section className="py-20 px-4 bg-white">
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-12">
             <p className="text-lime-600 font-bold text-xs uppercase tracking-widest mb-2">Häufige Fragen</p>
@@ -415,8 +470,8 @@ export default function BiometrischesPassbildPage() {
             Jetzt biometrisches Passbild erstellen
           </h2>
           <p className="text-lime-100 text-lg max-w-xl leading-relaxed">
-            Kein Termin, kein Fotostudio. Einfach Foto hochladen und in Sekunden
-            ein ICAO-konformes Passbild für Reisepass oder Personalausweis erhalten.
+            Kein Termin, kein Fotostudio. Laden Sie einfach ein Foto hoch und erhalten Sie
+            in Sekunden ein ICAO-konformes Passbild für Reisepass oder Personalausweis.
           </p>
           <Link
             href={ctaHref}

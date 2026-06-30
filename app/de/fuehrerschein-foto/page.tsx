@@ -39,6 +39,22 @@ const Cross = () => (
     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
   </svg>
 );
+const Clock = () => (
+  <svg className="w-5 h-5 text-lime-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <circle cx="12" cy="12" r="9" />
+    <path strokeLinecap="round" strokeLinejoin="round" d="M12 7v5l3 3" />
+  </svg>
+);
+const Shield = () => (
+  <svg className="w-5 h-5 text-lime-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M12 3l7 3v6c0 5-3.5 7.5-7 9-3.5-1.5-7-4-7-9V6l7-3z" />
+  </svg>
+);
+const Euro = () => (
+  <svg className="w-5 h-5 text-lime-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M16 7c-1-1.2-2.4-2-4-2-3 0-5.3 2.7-5.3 7s2.3 7 5.3 7c1.6 0 3-.8 4-2M4 10h8M4 14h7" />
+  </svg>
+);
 
 /* ─── Data ─── */
 const steps = [
@@ -60,46 +76,14 @@ const steps = [
 ];
 
 const specs = [
-  {
-    krit: "Format",
-    vorschrift: "35 × 45 mm",
-    hinweis: "Hochformat, exakt – nicht größer, nicht kleiner",
-  },
-  {
-    krit: "Kopfgröße",
-    vorschrift: "32–35 mm",
-    hinweis: "Scheitel bis Kinn, ca. 70–80 % der Bildfläche",
-  },
-  {
-    krit: "Hintergrund",
-    vorschrift: "Weiß oder Hellgrau",
-    hinweis: "Einfarbig, keine Muster, klarer Kontrast zur Kleidung",
-  },
-  {
-    krit: "Auflösung",
-    vorschrift: "Min. 600 dpi",
-    hinweis: "Digital: JPEG-Format vorgeschrieben",
-  },
-  {
-    krit: "Gesichtsausdruck",
-    vorschrift: "Neutral, Mund geschlossen",
-    hinweis: "Kein Lächeln, keine sichtbaren Zähne",
-  },
-  {
-    krit: "Augen",
-    vorschrift: "Geöffnet, gut erkennbar",
-    hinweis: "Keine Sonnenbrille; Korrektionsbrille erlaubt (kein Blendreflex)",
-  },
-  {
-    krit: "Kopfbedeckung",
-    vorschrift: "Grundsätzlich verboten",
-    hinweis: "Ausnahme: religiöse Kopfbedeckung, Gesicht vollständig sichtbar",
-  },
-  {
-    krit: "Alter des Fotos",
-    vorschrift: "Max. 6 Monate",
-    hinweis: "Aktuelles Erscheinungsbild muss erkennbar sein",
-  },
+  { krit: "Format", vorschrift: "35 × 45 mm", hinweis: "Hochformat, exakt – nicht größer, nicht kleiner" },
+  { krit: "Kopfgröße", vorschrift: "32–35 mm", hinweis: "Scheitel bis Kinn, ca. 70–80 % der Bildfläche" },
+  { krit: "Hintergrund", vorschrift: "Weiß oder Hellgrau", hinweis: "Einfarbig, keine Muster, klarer Kontrast zur Kleidung" },
+  { krit: "Auflösung", vorschrift: "Min. 600 dpi", hinweis: "Digital: JPEG-Format vorgeschrieben" },
+  { krit: "Gesichtsausdruck", vorschrift: "Neutral, Mund geschlossen", hinweis: "Kein Lächeln, keine sichtbaren Zähne" },
+  { krit: "Augen", vorschrift: "Geöffnet, gut erkennbar", hinweis: "Keine Sonnenbrille; Korrektionsbrille erlaubt (kein Blendreflex)" },
+  { krit: "Kopfbedeckung", vorschrift: "Grundsätzlich verboten", hinweis: "Ausnahme: religiöse Kopfbedeckung, Gesicht vollständig sichtbar" },
+  { krit: "Alter des Fotos", vorschrift: "Max. 6 Monate", hinweis: "Aktuelles Erscheinungsbild muss erkennbar sein" },
 ];
 
 const umtauschFristen = [
@@ -129,30 +113,49 @@ const dontList = [
   "Lächeln oder geöffneter Mund",
 ];
 
+const vergleich = [
+  { kriterium: "Format", fuehrerschein: "35 × 45 mm", reisepass: "35 × 45 mm" },
+  { kriterium: "Kopfgröße", fuehrerschein: "32–35 mm", reisepass: "27–36 mm" },
+  { kriterium: "Brille erlaubt", fuehrerschein: "Ja, Korrektionsbrille", reisepass: "Nein, seit 2017 verboten" },
+  { kriterium: "Rechtsgrundlage", fuehrerschein: "EU-Richtlinie 2006/126/EG", reisepass: "ICAO-Norm 9303" },
+  { kriterium: "Gültigkeitsdauer", fuehrerschein: "Max. 6 Monate", reisepass: "Max. 6 Monate" },
+];
+
+const kosten = [
+  { label: "Foto bei PixPassport", value: "ab 7,99 €", icon: "euro" },
+  { label: "Foto beim Fotografen", value: "8–15 €", icon: "euro" },
+  { label: "Umtauschgebühr (GebOSt)", value: "25,30 €", icon: "shield" },
+  { label: "Direktversand (optional)", value: "5,10 €", icon: "clock" },
+];
+
 const faqs = [
   {
     q: "Welche Maße muss ein Führerschein Foto haben?",
-    a: "Ein Führerschein Foto muss in Deutschland exakt 35 × 45 mm groß sein (Hochformat). Die Kopfgröße – gemessen von Scheitel bis Kinn – soll zwischen 32 und 35 mm liegen und etwa 70–80 % der Bildfläche einnehmen. Diese Vorgaben basieren auf der EU-Führerscheinrichtlinie 2006/126/EG.",
+    a: "Ein Führerschein Foto muss in Deutschland exakt 35 × 45 mm groß sein und im Hochformat vorliegen. Die Kopfgröße, gemessen von Scheitel bis Kinn, soll zwischen 32 und 35 mm liegen und etwa 70 bis 80 Prozent der Bildfläche einnehmen. Diese Vorgaben basieren auf der EU-Führerscheinrichtlinie 2006/126/EG und werden von jeder Führerscheinstelle in Deutschland einheitlich angewendet.",
   },
   {
     q: "Darf ich für den Führerschein eine Brille tragen?",
-    a: "Im Gegensatz zum Reisepass ist eine Korrektionsbrille für das Führerschein Foto in Deutschland grundsätzlich erlaubt – sofern die Augen klar und ohne Blendreflexe erkennbar sind. Sonnenbrillen und stark getönte Gläser sind jedoch verboten.",
+    a: "Im Gegensatz zum Reisepass ist eine Korrektionsbrille für das Führerschein Foto in Deutschland grundsätzlich erlaubt, sofern die Augen klar und ohne Blendreflexe erkennbar bleiben. Sonnenbrillen und stark getönte Gläser sind dagegen verboten, da sie die Identifizierung erschweren.",
   },
   {
     q: "Brauche ich für den Führerscheinumtausch ein neues Foto?",
-    a: "Ja. Für den Umtausch des alten Papier- oder Scheckkartenführerscheins in den neuen EU-Kartenführerschein benötigen Sie ein aktuelles biometrisches Passfoto. Laut Bundesregierung sind neben dem Passfoto auch Personalausweis oder Reisepass sowie der alte Führerschein erforderlich.",
+    a: "Ja, für den Umtausch des alten Papier- oder Scheckkartenführerscheins in den neuen EU-Kartenführerschein benötigen Sie ein aktuelles biometrisches Passfoto. Zusätzlich verlangt die Behörde üblicherweise den Personalausweis oder Reisepass sowie den bisherigen Führerschein im Original.",
   },
   {
     q: "Bis wann muss ich meinen Führerschein umtauschen?",
-    a: "Das hängt vom Ausstellungsdatum und Geburtsjahr ab. Die nächste wichtige Frist laut ADAC und Bundesregierung ist der 19. Januar 2027 (für Scheckkartenführerscheine aus 2002–2004). Alle vor dem 19. Januar 2013 ausgestellten Führerscheine müssen spätestens bis zum 19. Januar 2033 umgetauscht werden.",
+    a: "Der Stichtag hängt vom Ausstellungsdatum und teilweise vom Geburtsjahr ab. Die nächste relevante Frist betrifft Scheckkartenführerscheine aus den Jahren 2002 bis 2004 und läuft am 19. Januar 2027 ab. Alle vor dem 19. Januar 2013 ausgestellten Führerscheine müssen spätestens bis zum 19. Januar 2033 umgetauscht werden.",
   },
   {
     q: "Was kostet der Führerscheinumtausch?",
-    a: "Die Gebühr für den Umtausch beträgt laut Gebührenordnung für Maßnahmen im Straßenverkehr (GebOSt) 25,30 Euro, zuzüglich 5,10 Euro für den Direktversand. Hinzu kommen die Kosten für das biometrische Passfoto.",
+    a: "Die amtliche Gebühr für den Umtausch beträgt nach der Gebührenordnung für Maßnahmen im Straßenverkehr (GebOSt) 25,30 Euro. Wer den neuen Führerschein direkt per Post erhalten möchte, zahlt zusätzlich 5,10 Euro. Hinzu kommen die Kosten für das biometrische Passfoto, das Sie mit PixPassport deutlich günstiger als beim klassischen Fotografen erstellen.",
   },
   {
     q: "Kann ich das Foto selbst machen oder muss ich zum Fotografen?",
-    a: "Ein selbst aufgenommenes Foto ist zulässig, sofern es alle amtlichen Vorgaben erfüllt. Die Führerscheinstelle kann ein Foto ablehnen, wenn es nicht den Anforderungen entspricht. PixPassport prüft und optimiert Ihr Foto automatisch nach allen offiziellen Kriterien – sicher beim ersten Versuch.",
+    a: "Ein selbst aufgenommenes Foto ist grundsätzlich zulässig, solange es alle amtlichen Vorgaben exakt erfüllt. Führerscheinstellen lehnen Fotos häufig wegen falscher Maße, eines ungeeigneten Hintergrunds oder unzureichender Bildschärfe ab. PixPassport prüft und optimiert Ihr Foto automatisch nach allen offiziellen Kriterien, sodass es bereits beim ersten Versuch akzeptiert wird.",
+  },
+  {
+    q: "Worin unterscheidet sich das Führerschein Foto vom Passbild für den Reisepass?",
+    a: "Beide Fotos teilen dasselbe Format von 35 × 45 mm, unterscheiden sich aber in wichtigen Details. Beim Führerschein ist eine Korrektionsbrille erlaubt, beim Reisepass nicht. Außerdem gilt für den Führerschein die EU-Richtlinie 2006/126/EG, während der Reisepass der internationalen ICAO-Norm 9303 folgt. PixPassport erkennt automatisch, welches Dokument Sie auswählen, und passt die Prüfkriterien entsprechend an.",
   },
 ];
 
@@ -162,39 +165,41 @@ export default function FuehrerscheinFotoPage() {
     <main className="bg-white text-slate-900 font-sans antialiased">
 
       {/* ══════════════ HERO ══════════════ */}
-      <section className="bg-gradient-to-b from-lime-50 via-white to-white pt-10 pb-16 px-4">
-        <div className="max-w-5xl mx-auto flex flex-col items-center text-center gap-5">
-          <span className="inline-flex items-center gap-2 bg-lime-100 text-lime-700 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full">
+      <section className="relative overflow-hidden bg-slate-900 pt-16 pb-20 px-4">
+        <div className="absolute inset-0 bg-gradient-to-br from-lime-600/20 via-slate-900 to-slate-900" />
+        <div className="absolute -top-24 -right-24 w-96 h-96 bg-lime-500/20 rounded-full blur-3xl" />
+        <div className="relative max-w-5xl mx-auto flex flex-col items-center text-center gap-5">
+          <span className="inline-flex items-center gap-2 bg-lime-500/15 text-lime-300 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full ring-1 ring-lime-400/30">
             🚗 EU-konform · Biometrisch · Führerscheinstelle-geprüft
           </span>
 
-          <h1 className="text-4xl sm:text-5xl lg:text-[3.25rem] font-black tracking-tight leading-[1.07] text-slate-900 max-w-3xl">
-            <span className="text-lime-600">Führerschein Foto</span>{" "}
+          <h1 className="text-4xl sm:text-5xl lg:text-[3.25rem] font-black tracking-tight leading-[1.07] text-white max-w-3xl">
+            <span className="text-lime-400">Führerschein Foto</span>{" "}
             Online Erstellen
           </h1>
 
-          <p className="max-w-2xl text-lg text-slate-600 leading-relaxed">
-            Biometrisches Passbild <strong>35 × 45 mm</strong> für den EU-Führerschein, Erstantrag
-            oder den Pflichtumtausch bis 2027/2033. KI-Prüfung nach EU-Richtlinie
-            2006/126/EG – fertig in unter 30 Sekunden, ohne Fotostudio.
+          <p className="max-w-2xl text-lg text-slate-300 leading-relaxed">
+            Erstellen Sie Ihr biometrisches Passbild <strong className="text-white">35 × 45 mm</strong> für den
+            EU-Führerschein, Erstantrag oder den Pflichtumtausch bis 2027/2033. Unsere KI prüft jedes Detail
+            nach der EU-Richtlinie 2006/126/EG – fertig in unter 30 Sekunden, ohne Fotostudio.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 mt-2">
             <Link
               href={ctaHref}
-              className="inline-flex items-center gap-2 bg-lime-600 hover:bg-lime-700 active:bg-lime-800 text-white font-bold text-lg px-8 py-4 rounded-xl shadow-lg shadow-lime-200 transition-colors"
+              className="inline-flex items-center gap-2 bg-lime-500 hover:bg-lime-400 active:bg-lime-600 text-slate-900 font-bold text-lg px-8 py-4 rounded-xl shadow-lg shadow-lime-500/30 transition-colors"
             >
               Führerschein Foto erstellen <ArrowRight />
             </Link>
             <Link
               href="#anforderungen"
-              className="inline-flex items-center gap-2 border border-slate-200 hover:border-slate-300 text-slate-700 font-semibold text-base px-6 py-4 rounded-xl bg-white transition-colors"
+              className="inline-flex items-center gap-2 border border-white/20 hover:border-white/40 text-white font-semibold text-base px-6 py-4 rounded-xl bg-white/5 backdrop-blur transition-colors"
             >
               Alle Anforderungen ansehen
             </Link>
           </div>
 
-          <div className="w-full mt-4 rounded-2xl overflow-hidden shadow-xl border border-slate-100">
+          <div className="w-full mt-4 rounded-2xl overflow-hidden shadow-2xl ring-1 ring-white/10">
             <Image
               src="/photo_officielle passeport.jpg"
               alt="Biometrisches Führerschein Foto online erstellen – 35x45mm, EU-konform"
@@ -214,21 +219,27 @@ export default function FuehrerscheinFotoPage() {
             Führerscheinumtausch: Warum Sie jetzt ein neues Foto brauchen
           </h2>
           <p className="text-slate-600 leading-relaxed text-lg mb-4">
-            Seit dem 19. Januar 2013 gilt in Deutschland die Pflicht zum Umtausch aller
-            älteren Führerscheine in den neuen <strong>EU-Kartenführerschein</strong> im
-            Scheckkartenformat. Grundlage ist die EU-Richtlinie 2006/126/EG, umgesetzt durch
-            die Fahrerlaubnis-Verordnung (FeV).
+            Seit dem 19. Januar 2013 gilt in Deutschland die Pflicht, alle älteren Führerscheine in den
+            neuen <strong>EU-Kartenführerschein</strong> im Scheckkartenformat umzutauschen. Grundlage dafür
+            bildet die EU-Richtlinie 2006/126/EG, die der Gesetzgeber über die Fahrerlaubnis-Verordnung
+            (FeV) in deutsches Recht umgesetzt hat.
           </p>
           <p className="text-slate-600 leading-relaxed text-lg mb-4">
-            Laut Kraftfahrt-Bundesamt (KBA) wurden bis Ende 2024 bereits rund{" "}
-            <strong>8,1 Millionen Papierführerscheine</strong> in EU-Kartenführerscheine
-            umgetauscht. Trotzdem müssen noch Millionen Inhaber handeln – die nächste
-            wichtige Frist ist der <strong>19. Januar 2027</strong>.
+            Das Kraftfahrt-Bundesamt (KBA) meldet, dass Behörden bis Ende 2024 bereits rund{" "}
+            <strong>8,1 Millionen Papierführerscheine</strong> in EU-Kartenführerscheine umgetauscht haben.
+            Trotzdem müssen noch Millionen Inhaberinnen und Inhaber aktiv werden, denn die nächste
+            wichtige Frist rückt näher: der <strong>19. Januar 2027</strong>.
+          </p>
+          <p className="text-slate-600 leading-relaxed text-lg mb-4">
+            Wichtig zu wissen: Der Umtausch betrifft ausschließlich das physische Dokument. Ihre
+            Fahrerlaubnis als solche bleibt vollständig gültig und erlischt durch den fälligen
+            Kartentausch nicht. Wer die Frist verpasst, riskiert dennoch ein Verwarngeld, da das
+            mitgeführte Dokument dann formal ungültig ist.
           </p>
           <p className="text-slate-600 leading-relaxed text-lg">
-            Für jeden Umtausch und jeden Erstantrag benötigen Sie ein <strong>aktuelles
-            biometrisches Passfoto</strong>. PixPassport erstellt dieses Foto in unter
-            30 Sekunden – behördenkonform und ohne Termin.
+            Für jeden Umtausch und jeden Erstantrag verlangt die Führerscheinstelle ein <strong>aktuelles
+            biometrisches Passfoto</strong>. PixPassport erstellt dieses Foto in unter 30 Sekunden,
+            vollständig behördenkonform und ohne Termin beim Fotografen.
           </p>
         </div>
       </section>
@@ -248,7 +259,7 @@ export default function FuehrerscheinFotoPage() {
 
           <ol className="grid sm:grid-cols-3 gap-6 list-none p-0">
             {steps.map((s) => (
-              <li key={s.n} className="bg-white border border-slate-200 rounded-2xl p-7 flex flex-col gap-3">
+              <li key={s.n} className="bg-white border border-slate-200 rounded-2xl p-7 flex flex-col gap-3 hover:shadow-lg hover:-translate-y-0.5 transition-all">
                 <span className="w-10 h-10 rounded-xl bg-lime-600 text-white font-black text-lg flex items-center justify-center shadow-md shadow-lime-200">
                   {s.n}
                 </span>
@@ -269,19 +280,19 @@ export default function FuehrerscheinFotoPage() {
               Führerschein Foto Anforderungen (EU-Norm)
             </h2>
             <p className="text-slate-500 leading-relaxed max-w-2xl">
-              Die folgenden Kriterien basieren auf der EU-Führerscheinrichtlinie 2006/126/EG
-              sowie den deutschen Vorgaben der Fahrerlaubnis-Verordnung (FeV). Alle Punkte
-              werden von PixPassport automatisch geprüft und angepasst.
+              Die folgenden Kriterien basieren auf der EU-Führerscheinrichtlinie 2006/126/EG sowie den
+              deutschen Vorgaben der Fahrerlaubnis-Verordnung (FeV). PixPassport prüft jeden dieser Punkte
+              automatisch und passt das Foto bei Bedarf direkt an.
             </p>
           </div>
 
           <div className="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm">
             <table className="w-full text-sm text-left">
               <thead>
-                <tr className="bg-slate-50 border-b border-slate-200">
-                  <th className="px-5 py-4 font-bold text-slate-700 w-1/4">Kriterium</th>
-                  <th className="px-5 py-4 font-bold text-slate-700 w-1/3">Vorschrift</th>
-                  <th className="px-5 py-4 font-bold text-slate-700">Hinweis</th>
+                <tr className="bg-slate-900 text-white">
+                  <th className="px-5 py-4 font-bold w-1/4">Kriterium</th>
+                  <th className="px-5 py-4 font-bold w-1/3">Vorschrift</th>
+                  <th className="px-5 py-4 font-bold">Hinweis</th>
                 </tr>
               </thead>
               <tbody>
@@ -302,8 +313,46 @@ export default function FuehrerscheinFotoPage() {
         </div>
       </section>
 
-      {/* ══════════════ UMTAUSCHFRISTEN TABELLE ══════════════ */}
+      {/* ══════════════ VERGLEICH FÜHRERSCHEIN VS REISEPASS ══════════════ */}
       <section className="py-20 px-4 bg-slate-50 border-y border-slate-100">
+        <div className="max-w-4xl mx-auto">
+          <div className="mb-10">
+            <p className="text-lime-600 font-bold text-xs uppercase tracking-widest mb-2">Direktvergleich</p>
+            <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-900 mb-3">
+              Führerschein Foto vs. Reisepass Foto
+            </h2>
+            <p className="text-slate-500 leading-relaxed max-w-2xl">
+              Beide Fotos wirken auf den ersten Blick gleich, folgen aber unterschiedlichen
+              Rechtsgrundlagen. PixPassport berücksichtigt diese Unterschiede automatisch,
+              sobald Sie das passende Dokument auswählen.
+            </p>
+          </div>
+
+          <div className="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm bg-white">
+            <table className="w-full text-sm text-left">
+              <thead>
+                <tr className="bg-slate-50 border-b border-slate-200">
+                  <th className="px-5 py-4 font-bold text-slate-700">Kriterium</th>
+                  <th className="px-5 py-4 font-bold text-lime-700">Führerschein</th>
+                  <th className="px-5 py-4 font-bold text-slate-700">Reisepass</th>
+                </tr>
+              </thead>
+              <tbody>
+                {vergleich.map((v, i) => (
+                  <tr key={v.kriterium} className={`border-b border-slate-100 ${i % 2 === 0 ? "bg-white" : "bg-slate-50/50"}`}>
+                    <td className="px-5 py-4 font-semibold text-slate-800">{v.kriterium}</td>
+                    <td className="px-5 py-4 text-lime-700 font-medium">{v.fuehrerschein}</td>
+                    <td className="px-5 py-4 text-slate-500">{v.reisepass}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      {/* ══════════════ UMTAUSCHFRISTEN TABELLE ══════════════ */}
+      <section className="py-20 px-4 bg-white">
         <div className="max-w-4xl mx-auto">
           <div className="mb-10">
             <p className="text-lime-600 font-bold text-xs uppercase tracking-widest mb-2">Quelle: KBA / Bundesregierung</p>
@@ -312,8 +361,8 @@ export default function FuehrerscheinFotoPage() {
             </h2>
             <p className="text-slate-500 leading-relaxed max-w-2xl">
               Der Stufenplan basiert auf der Fahrerlaubnis-Verordnung (FeV) und wird vom
-              Kraftfahrt-Bundesamt (KBA) koordiniert. Nur das Dokument läuft ab –
-              die Fahrerlaubnis selbst bleibt weiterhin gültig.
+              Kraftfahrt-Bundesamt (KBA) koordiniert. Nur das Dokument läuft ab – die
+              Fahrerlaubnis selbst bleibt weiterhin gültig.
             </p>
           </div>
 
@@ -356,6 +405,33 @@ export default function FuehrerscheinFotoPage() {
         </div>
       </section>
 
+      {/* ══════════════ KOSTENÜBERSICHT ══════════════ */}
+      <section className="py-20 px-4 bg-slate-50 border-y border-slate-100">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-12">
+            <p className="text-lime-600 font-bold text-xs uppercase tracking-widest mb-2">Transparente Kosten</p>
+            <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-900">
+              Was kostet Foto und Umtausch insgesamt?
+            </h2>
+            <p className="mt-3 text-slate-500 max-w-xl mx-auto">
+              Ein Überblick über alle Posten, mit denen Sie beim Führerscheinumtausch rechnen sollten.
+            </p>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {kosten.map((k) => (
+              <div key={k.label} className="bg-white border border-slate-200 rounded-2xl p-6 flex flex-col gap-3">
+                <span className="w-10 h-10 rounded-xl bg-lime-50 flex items-center justify-center">
+                  {k.icon === "euro" ? <Euro /> : k.icon === "shield" ? <Shield /> : <Clock />}
+                </span>
+                <span className="text-2xl font-black text-slate-900">{k.value}</span>
+                <span className="text-slate-500 text-sm leading-snug">{k.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ══════════════ DO / DON'T ══════════════ */}
       <section className="py-20 px-4 bg-white">
         <div className="max-w-5xl mx-auto">
@@ -367,7 +443,7 @@ export default function FuehrerscheinFotoPage() {
           </div>
 
           <div className="grid sm:grid-cols-2 gap-6">
-            <div className="bg-white border border-slate-200 rounded-2xl p-7">
+            <div className="bg-lime-50/50 border border-lime-200 rounded-2xl p-7">
               <h3 className="font-bold text-lg text-slate-900 mb-5 flex items-center gap-2">
                 <span className="w-7 h-7 bg-lime-100 rounded-lg flex items-center justify-center">
                   <Check cls="w-4 h-4 text-lime-600" />
@@ -386,7 +462,7 @@ export default function FuehrerscheinFotoPage() {
               </ul>
             </div>
 
-            <div className="bg-white border border-slate-200 rounded-2xl p-7">
+            <div className="bg-red-50/40 border border-red-100 rounded-2xl p-7">
               <h3 className="font-bold text-lg text-slate-900 mb-5 flex items-center gap-2">
                 <span className="w-7 h-7 bg-red-50 rounded-lg flex items-center justify-center">
                   <Cross />
@@ -417,9 +493,9 @@ export default function FuehrerscheinFotoPage() {
               Führerschein Foto ohne Fotostudio
             </h2>
             <p className="text-slate-500 leading-relaxed mb-6">
-              Ein professioneller Fotografen-Termin für ein Führerscheinfoto kostet Zeit
-              und oft mehr als nötig. PixPassport bietet dieselbe Qualität, vollautomatisch –
-              direkt vom Smartphone aus.
+              Ein Termin beim Fotografen kostet Zeit und meist mehr Geld als nötig. PixPassport
+              liefert dieselbe behördliche Qualität vollautomatisch und in Sekunden – direkt vom
+              Smartphone aus, ohne Wartezeit und ohne Anfahrt.
             </p>
             <ul className="flex flex-col gap-3 mb-8">
               {[
@@ -448,7 +524,7 @@ export default function FuehrerscheinFotoPage() {
             </Link>
           </div>
 
-          <div className="bg-gradient-to-br from-lime-50 to-lime-100 border border-lime-200 rounded-2xl p-10 grid grid-cols-2 gap-8">
+          <div className="bg-gradient-to-br from-slate-900 to-slate-800 border border-slate-700 rounded-2xl p-10 grid grid-cols-2 gap-8">
             {[
               { val: "35×45 mm", label: "Offizielle Führerschein-Fotomaße" },
               { val: "< 30 Sek", label: "Bis zum fertigen Foto" },
@@ -456,8 +532,8 @@ export default function FuehrerscheinFotoPage() {
               { val: "25,30 €", label: "Gebühr Führerscheinumtausch (GebOSt)" },
             ].map((s) => (
               <div key={s.label} className="flex flex-col gap-1">
-                <span className="text-3xl font-black text-lime-700 leading-none">{s.val}</span>
-                <span className="text-slate-600 text-xs leading-tight">{s.label}</span>
+                <span className="text-3xl font-black text-lime-400 leading-none">{s.val}</span>
+                <span className="text-slate-300 text-xs leading-tight">{s.label}</span>
               </div>
             ))}
           </div>
@@ -473,14 +549,14 @@ export default function FuehrerscheinFotoPage() {
               FAQ – Führerschein Foto
             </h2>
             <p className="mt-3 text-slate-500 max-w-xl mx-auto">
-              Alle wichtigen Fragen zu Maßen, Anforderungen und Umtauschfristen – beantwortet
-              auf Basis offizieller Quellen (KBA, Bundesregierung, FeV).
+              Alle wichtigen Fragen zu Maßen, Anforderungen und Umtauschfristen, beantwortet auf
+              Basis offizieller Quellen wie KBA, Bundesregierung und FeV.
             </p>
           </div>
 
           <div className="flex flex-col gap-3">
             {faqs.map((f) => (
-              <details key={f.q} className="group bg-white border border-slate-200 rounded-xl overflow-hidden">
+              <details key={f.q} className="group bg-white border border-slate-200 rounded-xl overflow-hidden open:border-lime-300 open:shadow-md transition-all">
                 <summary className="flex justify-between items-center px-6 py-5 cursor-pointer list-none select-none">
                   <h3 className="font-bold text-slate-900 text-base pr-4">{f.q}</h3>
                   <span className="text-lime-600 text-2xl font-light shrink-0 transition-transform group-open:rotate-45">
@@ -497,19 +573,20 @@ export default function FuehrerscheinFotoPage() {
       </section>
 
       {/* ══════════════ FINAL CTA ══════════════ */}
-      <section className="py-20 px-4 bg-lime-600">
-        <div className="max-w-3xl mx-auto text-center flex flex-col items-center gap-5">
+      <section className="relative overflow-hidden py-20 px-4 bg-slate-900">
+        <div className="absolute -bottom-20 -left-20 w-72 h-72 bg-lime-500/15 rounded-full blur-3xl" />
+        <div className="relative max-w-3xl mx-auto text-center flex flex-col items-center gap-5">
           <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
             Führerschein Foto jetzt online erstellen
           </h2>
-          <p className="text-lime-100 text-lg max-w-xl leading-relaxed">
-            Kein Termin, kein Fotostudio. Einfach Foto hochladen und in Sekunden
-            ein EU-konformes Führerscheinfoto (35 × 45 mm) für den Umtausch oder
-            Erstantrag erhalten.
+          <p className="text-slate-300 text-lg max-w-xl leading-relaxed">
+            Kein Termin, kein Fotostudio. Laden Sie einfach ein Foto hoch und erhalten Sie in
+            Sekunden ein EU-konformes Führerscheinfoto (35 × 45 mm) für den Umtausch oder
+            Erstantrag.
           </p>
           <Link
             href={ctaHref}
-            className="inline-flex items-center gap-2 bg-white text-lime-700 hover:bg-lime-50 font-bold text-lg px-9 py-4 rounded-xl shadow-lg transition-colors"
+            className="inline-flex items-center gap-2 bg-lime-500 hover:bg-lime-400 text-slate-900 font-bold text-lg px-9 py-4 rounded-xl shadow-lg transition-colors"
           >
             Jetzt Foto hochladen <ArrowRight />
           </Link>
