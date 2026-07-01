@@ -55,8 +55,8 @@ const FIXED_PRICES: Record<string, { amount: number; symbol: string; decimals: n
   USD: { amount: 6.99, symbol: "$", decimals: 2 },
   EUR: { amount: 5.99, symbol: "€", decimals: 2 },
   GBP: { amount: 6.49, symbol: "£", decimals: 2 },
-  CHF: { amount: 6.99, symbol: "CHF", decimals: 2 },
-  CAD: { amount: 6.99, symbol: "C$", decimals: 2 },
+  CHF: { amount: 7.99, symbol: "CHF", decimals: 2 },
+  CAD: { amount: 7.99, symbol: "C$", decimals: 2 },
   AUD: { amount: 8.99, symbol: "A$", decimals: 2 },
   NZD: { amount: 9.99, symbol: "NZ$", decimals: 2 },
   JPY: { amount: 699, symbol: "¥", decimals: 0 },
@@ -75,7 +75,7 @@ const FIXED_PRICES: Record<string, { amount: number; symbol: string; decimals: n
   DKK: { amount: 39, symbol: "kr", decimals: 0 },
   
   // Tier 3: ~50% Discount
-  INR: { amount: 99, symbol: "₹", decimals: 0 },
+  INR: { amount: 399, symbol: "₹", decimals: 0 },
   CNY: { amount: 29, symbol: "¥", decimals: 0 },
   BRL: { amount: 24, symbol: "R$", decimals: 0 },
   MXN: { amount: 89, symbol: "$", decimals: 0 },
@@ -106,7 +106,7 @@ const EXPERT_PRICES: Record<string, { amount: number; symbol: string; decimals: 
   USD: { amount: 9.99, symbol: "$", decimals: 2 },
   EUR: { amount: 9.99, symbol: "€", decimals: 2 },
   GBP: { amount: 9.99, symbol: "£", decimals: 2 },
-  CHF: { amount: 9.99, symbol: "CHF", decimals: 2 },
+  CHF: { amount: 10.99, symbol: "CHF", decimals: 2 },
   CAD: { amount: 12.99, symbol: "C$", decimals: 2 },
   AUD: { amount: 12.99, symbol: "A$", decimals: 2 },
   NZD: { amount: 15.99, symbol: "NZ$", decimals: 2 },
@@ -124,7 +124,7 @@ const EXPERT_PRICES: Record<string, { amount: number; symbol: string; decimals: 
   NOK: { amount: 99, symbol: "kr", decimals: 0 },
   DKK: { amount: 69, symbol: "kr", decimals: 0 },
   
-  INR: { amount: 199, symbol: "₹", decimals: 0 },
+  INR: { amount: 499, symbol: "₹", decimals: 0 },
   CNY: { amount: 49, symbol: "¥", decimals: 0 },
   BRL: { amount: 45, symbol: "R$", decimals: 0 },
   MXN: { amount: 149, symbol: "$", decimals: 0 },
@@ -133,7 +133,7 @@ const EXPERT_PRICES: Record<string, { amount: number; symbol: string; decimals: 
   MYR: { amount: 24.99, symbol: "RM", decimals: 2 },
   THB: { amount: 229, symbol: "฿", decimals: 0 },
   
-  IDR: { amount: 79000, symbol: "Rp", decimals: 0 },
+  IDR: { amount: 80000, symbol: "Rp", decimals: 0 },
   PHP: { amount: 249, symbol: "₱", decimals: 0 },
   VND: { amount: 129000, symbol: "₫", decimals: 0 },
   PKR: { amount: 1299, symbol: "Rs", decimals: 0 },

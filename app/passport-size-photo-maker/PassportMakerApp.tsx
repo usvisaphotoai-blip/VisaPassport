@@ -131,7 +131,7 @@ function ProcessingRing({
 export default function PassportMakerApp() {
   const router = useRouter();
   const [step, setStep] = useState<Step>("setup");
-  const [selectedDoc, setSelectedDoc] = useState("general");
+  const [selectedDoc, setSelectedDoc] = useState("uk-passport");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [dragOver, setDragOver] = useState(false);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -428,15 +428,15 @@ export default function PassportMakerApp() {
 
       <div className="space-y-4">
         {/* ── Step 1: Document type ── */}
-        <div className="bg-white rounded-xl border border-slate-200/80 shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden">
-          <div className="px-5 py-5 border-b border-slate-100 bg-gradient-to-r from-lime-50 via-white to-emerald-50 flex items-start gap-4">
+        <div className="bg-white rounded-xl border border-slate-200/80  overflow-hidden">
+          <div className="px-5 py-5 border-b border-slate-100  flex items-start gap-4">
             <div className="w-9 h-9 rounded-xl bg-lime-600 text-white text-sm font-bold flex items-center justify-center  shrink-0">
               1
             </div>
             <div>
               <div className="flex items-center gap-2 flex-wrap">
                 <p className="text-sm sm:text-base font-bold text-slate-900">
-                  Select document type
+                  Select Country Please
                 </p>
                 <span className="px-2 py-0.5 rounded-full bg-lime-100 text-[10px] font-bold uppercase tracking-wide text-lime-700">
                   Required
@@ -467,7 +467,7 @@ export default function PassportMakerApp() {
               </svg>
               <input
                 type="text"
-                placeholder="Search document type..."
+                placeholder="Search Country/Document type..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full rounded-xl border border-slate-200 bg-slate-50 pl-11 pr-4 py-3 text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-lime-100 focus:border-lime-500 transition-all"
@@ -585,11 +585,9 @@ export default function PassportMakerApp() {
                     />
                   </svg>
                 </div>
-                <p className="text-base font-bold text-slate-900 mb-1">
-                  {dragOver ? "Drop it here!" : "Drag & drop your photo"}
-                </p>
+              
                 <p className="text-xs text-slate-500 mb-5">
-                  or tap the button below to browse
+                  Click here to upload your photo
                 </p>
                 <button
                   type="button"
@@ -612,7 +610,7 @@ export default function PassportMakerApp() {
                       d="M12 4v16m8-8H4"
                     />
                   </svg>
-                  Choose Photo
+                  Upload Your Photo
                 </button>
               </div>
             </div>
