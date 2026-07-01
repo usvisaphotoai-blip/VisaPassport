@@ -178,7 +178,7 @@ export default function EphotoAntsPage() {
         description="Créez votre ePhoto ANTS sans photomaton ni rendez-vous. Notre IA vérifie automatiquement le cadrage, le fond et la conformité ISO — pour votre passeport, carte d'identité ou permis de conduire."
         ctaHref="/fr/passport-photo-online?type=france-passport"
         ctaText="Obtenir mon ePhoto ANTS →"
-        showBeforeAfter={true}
+        showImage={true}
       />
 
       {/* Trust strip */}

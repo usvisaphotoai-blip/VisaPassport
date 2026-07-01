@@ -42,7 +42,7 @@ export default function PhotoBiometriquePage() {
         subtitle="Conforme aux normes OACI internationales"
         description="Photo biométrique conforme aux standards OACI pour passeports et visas. Vérification automatique de la position des yeux, taille de la tête et arrière-plan."
         ctaHref="/fr/passport-photo-online"
-        showBeforeAfter={true}
+        showImage={true}
       />
     
 

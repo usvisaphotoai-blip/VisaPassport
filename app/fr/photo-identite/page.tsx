@@ -1,11 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import HeroSectionFr from "../components/HeroSectionFr";
-import TrustStripFr from "../components/TrustStripFr";
-import HowItWorksFr from "../components/HowItWorksFr";
-import RequirementsFr from "../components/RequirementsFr";
+
 import FaqSectionFr from "../components/FaqSectionFr";
-import RelatedGuidesFr from "../components/RelatedGuidesFr";
 import StickyCTAFr from "../components/StickyCTAFr";
 import BreadcrumbsFr from "../components/BreadcrumbsFr";
 import { fr } from "../translations";
@@ -52,7 +49,7 @@ export default function PhotoIdentitePage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <BreadcrumbsFr items={[{ label: "Photo d'identité", href: "/fr/photo-identite" }]} />
-      <HeroSectionFr title={fr.hero.id.title} subtitle={fr.hero.id.subtitle} description={fr.hero.id.description} ctaHref="/fr/passport-photo-online"     showBeforeAfter={true}/>
+      <HeroSectionFr title={fr.hero.id.title} subtitle={fr.hero.id.subtitle} description={fr.hero.id.description} ctaHref="/fr/passport-photo-online"     showImage={true}/>
        <section className="max-w-5xl mx-auto px-4 py-10 text-gray-800">
         <h2 className="text-3xl font-bold mb-6">
           Photo d'identité en ligne : rapide, conforme et acceptée en France

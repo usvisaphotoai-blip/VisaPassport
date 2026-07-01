@@ -119,7 +119,7 @@ export default function PhotoVisaPage() {
         subtitle={fr.hero.visa.subtitle}
         description={fr.hero.visa.description}
         ctaHref="/fr/passport-photo-online"
-        showBeforeAfter={true}
+        showImage={true}
       />
 
       {/* Country selector */}

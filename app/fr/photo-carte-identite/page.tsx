@@ -43,7 +43,7 @@ export default function PhotoCarteIdentitePage() {
         subtitle="Aux normes de la carte nationale d'identité française"
         description="Photo conforme aux exigences de la CNI française. Format 35×45mm, fond blanc uni, cadrage biométrique automatique. Prête en 30 secondes."
         ctaHref="/fr/passport-photo-online?type=france-passport"
-        showBeforeAfter={true}
+        showImage={true}
       />
 
       <RequirementsFr countryName="France (CNI)" specs={[

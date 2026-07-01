@@ -47,7 +47,7 @@ export default function PhotoPasseportPage() {
         subtitle={fr.hero.passport.subtitle}
         description={fr.hero.passport.description}
         ctaHref="/fr/passport-photo-online?type=france-passport"
-        showBeforeAfter={true}
+        showImage={true}
       />
      
 
