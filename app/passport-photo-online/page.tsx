@@ -194,12 +194,13 @@ function ToolForm() {
 
           {/* Selected Document Header — clickable to change */}
           <div className="mb-3 relative" ref={headerSelectorRef}>
+         
             <button
               type="button"
               onClick={() => setHeaderSelectorOpen((v) => !v)}
               className={`w-full flex items-center justify-between bg-white/60 backdrop-blur-sm px-3 py-2.5 rounded-xl border shadow-sm cursor-pointer transition-all duration-200 ${headerSelectorOpen
                 ? "border-lime-400 ring-1 ring-lime-400/20"
-                : "border-white hover:border-slate-200"
+                : "border-white hover:border-green-400"
                 }`}
             >
               <div className="flex items-center gap-3">
@@ -212,17 +213,7 @@ function ToolForm() {
                 </div>
               </div>
               <div className="flex items-center gap-4">
-                <div className="flex items-center gap-4 text-right">
-                  <div className="hidden sm:flex flex-col">
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1">Dimensions</span>
-                    <span className="text-xs font-bold text-slate-600 leading-none">{activeDoc.size}</span>
-                  </div>
-                  <div className="w-px h-8 bg-slate-200 hidden sm:block" />
-                  <div className="flex flex-col">
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1">Background</span>
-                    <span className="text-xs font-bold text-lime-600 leading-none">{activeDoc.bg_color}</span>
-                  </div>
-                </div>
+             
                 <svg
                   className={`w-4 h-4 text-slate-400 shrink-0 transition-transform duration-200 ${headerSelectorOpen ? "rotate-180" : ""}`}
                   fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
