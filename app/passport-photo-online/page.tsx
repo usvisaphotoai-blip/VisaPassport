@@ -103,20 +103,7 @@ function ToolForm() {
     }
   }, [selectedDoc]);
 
-  useEffect(() => {
-    // Check if user has already seen the guide
-    const hasSeenGuide = localStorage.getItem("hasSeenGuide");
-    if (hasSeenGuide) return;
 
-    // Show guide modal after 6 seconds if no file is selected
-    const timer = setTimeout(() => {
-      if (!selectedFile) {
-        setShowGuide(true);
-        localStorage.setItem("hasSeenGuide", "true");
-      }
-    }, 6000);
-    return () => clearTimeout(timer);
-  }, [selectedFile]);
 
   useEffect(() => {
     if (!selectedFile) {
