@@ -351,11 +351,30 @@ function OrderPanel({
           ) : (
             /* ── Paid ─────────────────────────────────────────────────────────── */
             <div className="space-y-4">
-              <div className="bg-emerald-50 rounded-2xl p-5 text-center border border-emerald-100">
-                <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-3 text-2xl">🎉</div>
-                <p className="text-emerald-700 font-bold text-lg">Payment Successful!</p>
-                <p className="text-emerald-600 text-sm mt-1">Your photo is ready for download.</p>
-              </div>
+            <div className="bg-emerald-50 rounded-2xl p-6 text-center border border-emerald-100 shadow-sm">
+  <div className="w-14 h-14 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">
+    🎉
+  </div>
+
+  <h2 className="text-emerald-800 font-semibold text-xl">
+    Payment Successful!
+  </h2>
+
+  <div className="mt-3 text-emerald-600 text-sm leading-relaxed">
+    <p>
+      Every ID photo is carefully reviewed by our experts to ensure it meets all requirements.
+    </p>
+    <p className="mt-1">
+      If we find any issues, we’ll notify you via email with your photo.
+    </p>
+    <p className="mt-1">
+      For any questions, feel free to contact us at{" "}
+      <span className="font-medium text-emerald-700">
+        usvisaphotoai@gmail.com
+      </span>
+    </p>
+  </div>
+</div>
 
               <a
                 href={`/api/download/${photoId}`}
