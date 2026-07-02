@@ -226,12 +226,14 @@ export default function FrHomePage() {
                 ))}
               </ul>
 
-              <div className="p-hero__actions">
+              <div className="p-hero__actions" style={{ display: 'flex', alignItems: 'center', gap: '20px', flexWrap: 'wrap' }}>
                 <Link href={ctaHref} className="p-btn p-btn--primary">
                   Obtenir ma photo d'identité
                   <ArrowRight />
                 </Link>
-               
+                <Link href="/fr/photo-identite-en-ligne" className="text-sm font-semibold text-slate-600 hover:text-lime-700 underline underline-offset-4">
+                  Photo d'identité en ligne
+                </Link>
               </div>
 
             </div>

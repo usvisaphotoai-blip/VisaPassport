@@ -9,6 +9,7 @@ import LanguageSwitcher from "../../components/LanguageSwitcher";
 const navLinks = [
   { href: "/fr/photo-passeport", label: fr.nav.passportPhoto },
   { href: "/fr/photo-identite", label: fr.nav.idPhoto },
+  { href: "/fr/photo-identite-en-ligne", label: "Photo d'identité en ligne" },
   { href: "/fr/photo-visa", label: fr.nav.visaPhoto },
   { href: "/fr/guides", label: fr.nav.guides },
 ];
