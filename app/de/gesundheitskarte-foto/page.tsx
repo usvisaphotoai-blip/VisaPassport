@@ -12,10 +12,7 @@ export const metadata: Metadata = {
     "egk foto",
     "krankenkasse foto",
     "aok foto hochladen",
-    "tk foto gesundheitskarte",
-    "barmer foto hochladen",
-    "foto elektronische gesundheitskarte",
-    "versichertenkarte foto anforderungen",
+ 
   ],
   alternates: { canonical: "https://www.pixpassport.com/de/gesundheitskarte-foto" },
 };

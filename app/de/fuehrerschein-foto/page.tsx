@@ -12,10 +12,7 @@ export const metadata: Metadata = {
     "passbild führerschein",
     "eu führerschein foto",
     "führerscheinumtausch foto",
-    "biometrisches foto führerschein",
-    "führerschein foto online",
-    "führerschein foto anforderungen",
-    "führerschein foto 35x45mm",
+  
   ],
   alternates: { canonical: "https://www.pixpassport.com/de/fuehrerschein-foto" },
 };

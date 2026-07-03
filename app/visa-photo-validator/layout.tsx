@@ -9,12 +9,7 @@ export const metadata: Metadata = {
     "visa photo checker",
     "free passport photo compliance check",
     "AI biometric photo check",
-    "validate passport photo online",
-    "US visa photo validator",
-    "UK passport photo checker",
-    "Schengen visa photo check",
-    "global passport photo validation",
-    "ICAO photo checker",
+
   ],
   alternates: {
     canonical: "https://www.pixpassport.com/visa-photo-validator",

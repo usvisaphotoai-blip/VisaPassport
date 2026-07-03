@@ -12,10 +12,7 @@ export const metadata: Metadata = {
     "bewerbungsfoto online erstellen",
     "lebenslauf foto",
     "bewerbungsbild tipps",
-    "professionelles foto bewerbung",
-    "cv foto online",
-    "bewerbungsfoto hintergrund",
-    "bewerbungsfoto größe",
+   
   ],
   alternates: { canonical: "https://www.pixpassport.com/de/bewerbungsfoto" },
   openGraph: {

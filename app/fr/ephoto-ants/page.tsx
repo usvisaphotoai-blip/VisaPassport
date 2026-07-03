@@ -16,11 +16,7 @@ export const metadata: Metadata = {
     "code ephoto ants",
     "ephoto ants en ligne",
     "photo numérique ants",
-    "photo passeport france en ligne",
-    "ephoto cni 2026",
-    "photo identité numérique ants",
-    "ephoto permis de conduire",
-    "créer ephoto ants",
+  
   ],
   alternates: {
     canonical: "https://www.pixpassport.com/fr/ephoto-ants",

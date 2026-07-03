@@ -7,7 +7,7 @@ import { de } from "./translations";
    Metadata
 ───────────────────────────────────────────── */
 export const metadata: Metadata = {
-  title: "Biometrisches Passbild Online 2025 | Konform & Garantiert | PixPassport",
+  title: "Biometrisches Passbild Online 2026 | 35x45 mm KI Passfoto",
   description:
     "Erstellen Sie ein 100 % konformes biometrisches Passbild nach offiziellen BMI-Vorgaben (35×45 mm). Digitale Übermittlung, KI-Prüfung, Hintergrund entfernt – in 30 Sekunden. Ab 5,99 €.",
   keywords: [
@@ -15,12 +15,7 @@ export const metadata: Metadata = {
     "passbild online erstellen",
     "passfoto generator 2025",
     "passbild größe 35x45",
-    "digitales passbild",
-    "bewerbungsfoto selber machen",
-    "visum foto",
-    "führerschein foto",
-    "passbilder rossmann",
-    "passbild anforderungen bmi",
+ 
   ],
   alternates: { canonical: "https://www.pixpassport.com/de" },
   openGraph: {

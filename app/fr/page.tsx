@@ -14,11 +14,7 @@ export const metadata: Metadata = {
     "photo identité conforme",
     "photo visa biométrique",
     "ePhoto ANTS",
-    "photo passeport france",
-    "photo identité numérique",
-    "photo carte identité en ligne",
-    "photo visa schengen",
-    "photo permis conduire",
+
   ],
   alternates: { canonical: "https://www.pixpassport.com/fr" },
   openGraph: {

@@ -11,9 +11,7 @@ export const metadata: Metadata = {
     "photo identite france",
     "photo passeport en ligne",
     "photo cni en ligne",
-    "ephoto permis de conduire",
-    "photo titre de sejour",
-    "norme photo identite 2026"
+    
   ],
   alternates: {
     canonical: "https://www.pixpassport.com/fr/guides/photo-identite-france-passeport-cni-ephoto-permis-visa"

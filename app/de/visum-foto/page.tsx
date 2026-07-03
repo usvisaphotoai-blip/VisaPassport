@@ -12,9 +12,7 @@ export const metadata: Metadata = {
     "china visum foto",
     "ds-160 foto",
     "visa picture online",
-    "visum foto erstellen",
-    "2x2 zoll foto",
-    "passfoto online",
+ 
   ],
   alternates: { canonical: "https://www.pixpassport.com/de/visum-foto" },
 };

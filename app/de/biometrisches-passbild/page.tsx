@@ -12,10 +12,7 @@ export const metadata: Metadata = {
     "passbild online erstellen",
     "biometrisches foto",
     "passfoto online",
-    "personalausweis foto",
-    "passbild baby",
-    "icao passbild",
-    "biometrisches passbild anforderungen",
+
   ],
   alternates: {
     canonical: "https://www.pixpassport.com/de/biometrisches-passbild",
