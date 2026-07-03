@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+<urlset xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://www.pixpassport.com</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.pixpassport.com/fr" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.pixpassport.com/de" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
@@ -15,37 +20,29 @@
   </url>
     <url>
     <loc>https://www.pixpassport.com/passport-photo-maker</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/passport-photo-maker" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/passport-photo-maker" />
     <lastmod>2026-04-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1777076552/PixPassport_free_passport_photo_tool_passport_photo_ai_kscj2n.png</image:loc>
-    </image:image>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/passport_photo_requirements_specs_official_guide_2026_c29t35.png</image:loc>
-    </image:image>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_89a6o689a6o689a6_n1b1x0.png</image:loc>
-    </image:image>
+   
+
   </url>
    <url>
     <loc>https://www.pixpassport.com/passport-size-photo-maker</loc>
-    <lastmod>2026-04-25</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/passport-size-photo-maker" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/passport-size-photo-maker" />
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1777076552/PixPassport_free_passport_photo_tool_passport_photo_ai_kscj2n.png</image:loc>
-    </image:image>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/passport_photo_requirements_specs_official_guide_2026_c29t35.png</image:loc>
-    </image:image>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_89a6o689a6o689a6_n1b1x0.png</image:loc>
-    </image:image>
+    <priority>0.8</priority>
+   
+
   </url>
 
   <url>
     <loc>https://www.pixpassport.com/visa-photo-validator</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/visa-photo-validator" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/visa-photo-validator" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
@@ -55,78 +52,104 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/blog</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/blog" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/blog" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/about</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/about" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/about" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/contact</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/contact" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/contact" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/faq</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/faq" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/faq" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/privacy-policy</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/privacy-policy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/privacy-policy" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/terms</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/terms" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/terms" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/refund-policy</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/refund-policy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/refund-policy" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/algeria-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/algeria-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/algeria-passport-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/algeria-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/algeria-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/algeria-visa-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/argentina-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/argentina-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/argentina-passport-photo-editor" />
     <lastmod>2026-04-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/argentina-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/argentina-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/argentina-visa-photo-editor" />
     <lastmod>2026-04-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/australia-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/australia-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/australia-passport-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/australia-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/australia-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/australia-visa-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -135,12 +158,12 @@
   <!-- AUSTRIA (Schengen) -->
   <url>
     <loc>https://www.pixpassport.com/austria-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/austria-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/austria-passport-photo-editor" />
     <lastmod>2026-04-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -150,12 +173,12 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/austria-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/austria-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/austria-visa-photo-editor" />
     <lastmod>2026-04-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -180,12 +203,12 @@
   <!-- BELGIUM (Schengen) -->
   <url>
     <loc>https://www.pixpassport.com/belgium-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/belgium-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/belgium-passport-photo-editor" />
     <lastmod>2026-04-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -195,12 +218,12 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/belgium-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/belgium-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/belgium-visa-photo-editor" />
     <lastmod>2026-04-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -211,30 +234,40 @@
 
   <url>
     <loc>https://www.pixpassport.com/brazil-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/brazil-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/brazil-passport-photo-editor" />
     <lastmod>2026-04-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/brazil-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/brazil-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/brazil-visa-photo-editor" />
     <lastmod>2026-04-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/chile-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/chile-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/chile-passport-photo-editor" />
     <lastmod>2026-04-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/chile-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/chile-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/chile-visa-photo-editor" />
     <lastmod>2026-04-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/china-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/china-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/china-passport-photo-editor" />
     <lastmod>2026-06-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -244,6 +277,8 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/china-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/china-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/china-visa-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -255,12 +290,12 @@
   <!-- CROATIA (Schengen) -->
   <url>
     <loc>https://www.pixpassport.com/croatia-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/croatia-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/croatia-passport-photo-editor" />
     <lastmod>2026-04-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -270,12 +305,12 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/croatia-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/croatia-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/croatia-visa-photo-editor" />
     <lastmod>2026-04-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -289,12 +324,12 @@
   <!-- DENMARK (Schengen) -->
   <url>
     <loc>https://www.pixpassport.com/denmark-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/denmark-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/denmark-passport-photo-editor" />
     <lastmod>2026-04-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -304,12 +339,12 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/denmark-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/denmark-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/denmark-visa-photo-editor" />
     <lastmod>2026-04-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -320,12 +355,16 @@
 
   <url>
     <loc>https://www.pixpassport.com/egypt-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/egypt-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/egypt-passport-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/egypt-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/egypt-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/egypt-visa-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -334,12 +373,12 @@
   <!-- ESTONIA (Schengen) -->
   <url>
     <loc>https://www.pixpassport.com/estonia-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/estonia-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/estonia-passport-photo-editor" />
     <lastmod>2026-04-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -349,12 +388,12 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/estonia-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/estonia-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/estonia-visa-photo-editor" />
     <lastmod>2026-04-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -366,12 +405,12 @@
   <!-- FINLAND (Schengen) -->
   <url>
     <loc>https://www.pixpassport.com/finland-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/finland-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/finland-passport-photo-editor" />
     <lastmod>2026-04-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -381,12 +420,12 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/finland-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/finland-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/finland-visa-photo-editor" />
     <lastmod>2026-04-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -398,6 +437,8 @@
   <!-- FRANCE (Schengen) -->
   <url>
     <loc>https://www.pixpassport.com/france-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/france-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/france-passport-photo-editor" />
     <lastmod>2026-07-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -405,6 +446,8 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/france-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/france-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/france-visa-photo-editor" />
      <lastmod>2026-07-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -414,6 +457,8 @@
   <!-- GERMANY (Schengen) -->
   <url>
     <loc>https://www.pixpassport.com/germany-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/germany-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/germany-passport-photo-editor" />
     <lastmod>2026-06-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -429,6 +474,8 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/germany-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/germany-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/germany-visa-photo-editor" />
     <lastmod>2026-06-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -445,12 +492,16 @@
 
   <url>
     <loc>https://www.pixpassport.com/ghana-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/ghana-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/ghana-passport-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/ghana-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/ghana-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/ghana-visa-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -459,12 +510,12 @@
   <!-- GREECE (Schengen) -->
   <url>
     <loc>https://www.pixpassport.com/greece-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/greece-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/greece-passport-photo-editor" />
     <lastmod>2026-04-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -474,12 +525,12 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/greece-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/greece-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/greece-visa-photo-editor" />
     <lastmod>2026-04-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -491,12 +542,12 @@
   <!-- HUNGARY (Schengen) -->
   <url>
     <loc>https://www.pixpassport.com/hungary-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/hungary-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/hungary-passport-photo-editor" />
     <lastmod>2026-04-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -506,12 +557,12 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/hungary-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/hungary-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/hungary-visa-photo-editor" />
     <lastmod>2026-04-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -526,9 +577,7 @@
     <lastmod>2026-04-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -541,9 +590,7 @@
     <lastmod>2026-04-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -554,60 +601,80 @@
 
   <url>
     <loc>https://www.pixpassport.com/india-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/india-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/india-passport-photo-editor" />
     <lastmod>2026-04-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/india-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/india-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/india-visa-photo-editor" />
     <lastmod>2026-07-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/indonesia-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/indonesia-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/indonesia-passport-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/indonesia-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/indonesia-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/indonesia-visa-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/iran-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/iran-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/iran-passport-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/iran-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/iran-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/iran-visa-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/iraq-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/iraq-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/iraq-passport-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/iraq-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/iraq-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/iraq-visa-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/israel-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/israel-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/israel-passport-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/israel-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/israel-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/israel-visa-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -616,12 +683,12 @@
   <!-- ITALY (Schengen) -->
   <url>
     <loc>https://www.pixpassport.com/italy-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/italy-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/italy-passport-photo-editor" />
     <lastmod>2026-05-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -631,12 +698,12 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/italy-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/italy-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/italy-visa-photo-editor" />
     <lastmod>2026-05-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -647,24 +714,32 @@
 
   <url>
     <loc>https://www.pixpassport.com/japan-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/japan-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/japan-passport-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/japan-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/japan-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/japan-visa-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/kazakhstan-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/kazakhstan-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/kazakhstan-passport-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/kazakhstan-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/kazakhstan-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/kazakhstan-visa-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -673,12 +748,12 @@
   <!-- LATVIA (Schengen) -->
   <url>
     <loc>https://www.pixpassport.com/latvia-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/latvia-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/latvia-passport-photo-editor" />
     <lastmod>2026-04-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -688,12 +763,12 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/latvia-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/latvia-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/latvia-visa-photo-editor" />
     <lastmod>2026-04-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -708,9 +783,7 @@
     <lastmod>2026-04-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -723,9 +796,7 @@
     <lastmod>2026-04-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -737,12 +808,12 @@
   <!-- LITHUANIA (Schengen) -->
   <url>
     <loc>https://www.pixpassport.com/lithuania-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/lithuania-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/lithuania-passport-photo-editor" />
     <lastmod>2026-04-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -752,12 +823,12 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/lithuania-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/lithuania-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/lithuania-visa-photo-editor" />
     <lastmod>2026-04-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -769,12 +840,12 @@
   <!-- LUXEMBOURG (Schengen) -->
   <url>
     <loc>https://www.pixpassport.com/luxembourg-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/luxembourg-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/luxembourg-passport-photo-editor" />
     <lastmod>2026-04-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -784,12 +855,12 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/luxembourg-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/luxembourg-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/luxembourg-visa-photo-editor" />
     <lastmod>2026-04-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -801,12 +872,12 @@
   <!-- MALTA (Schengen) -->
   <url>
     <loc>https://www.pixpassport.com/malta-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/malta-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/malta-passport-photo-editor" />
     <lastmod>2026-04-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -816,12 +887,12 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/malta-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/malta-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/malta-visa-photo-editor" />
     <lastmod>2026-04-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -832,48 +903,64 @@
 
   <url>
     <loc>https://www.pixpassport.com/malaysia-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/malaysia-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/malaysia-passport-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/malaysia-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/malaysia-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/malaysia-visa-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/mexico-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/mexico-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/mexico-passport-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/mexico-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/mexico-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/mexico-visa-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/morocco-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/morocco-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/morocco-passport-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/morocco-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/morocco-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/morocco-visa-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/nepal-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/nepal-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/nepal-passport-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/nepal-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/nepal-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/nepal-visa-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -882,12 +969,12 @@
   <!-- NETHERLANDS (Schengen) -->
   <url>
     <loc>https://www.pixpassport.com/netherlands-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/netherlands-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/netherlands-passport-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -897,12 +984,12 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/netherlands-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/netherlands-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/netherlands-visa-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -913,12 +1000,12 @@
 
   <url>
     <loc>https://www.pixpassport.com/new-zealand-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/new-zealand-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/new-zealand-passport-photo-editor" />
     <lastmod>2026-04-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-     <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+   
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -928,18 +1015,20 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/new-zealand-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/new-zealand-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/new-zealand-visa-photo-editor" />
     <lastmod>2026-04-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/nigeria-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/nigeria-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/nigeria-passport-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-     <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+   
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -949,6 +1038,8 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/nigeria-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/nigeria-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/nigeria-visa-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -957,12 +1048,12 @@
   <!-- NORWAY (Schengen) -->
   <url>
     <loc>https://www.pixpassport.com/norway-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/norway-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/norway-passport-photo-editor" />
     <lastmod>2026-04-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -972,12 +1063,12 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/norway-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/norway-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/norway-visa-photo-editor" />
     <lastmod>2026-04-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -988,36 +1079,48 @@
 
   <url>
     <loc>https://www.pixpassport.com/pakistan-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/pakistan-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/pakistan-passport-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/pakistan-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/pakistan-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/pakistan-visa-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/peru-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/peru-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/peru-passport-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/peru-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/peru-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/peru-visa-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/philippines-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/philippines-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/philippines-passport-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/philippines-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/philippines-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/philippines-visa-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -1026,12 +1129,12 @@
   <!-- POLAND (Schengen) -->
   <url>
     <loc>https://www.pixpassport.com/poland-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/poland-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/poland-passport-photo-editor" />
     <lastmod>2026-05-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -1041,12 +1144,12 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/poland-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/poland-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/poland-visa-photo-editor" />
     <lastmod>2026-05-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -1058,12 +1161,12 @@
   <!-- PORTUGAL (Schengen) -->
   <url>
     <loc>https://www.pixpassport.com/portugal-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/portugal-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/portugal-passport-photo-editor" />
     <lastmod>2026-04-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -1073,12 +1176,12 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/portugal-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/portugal-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/portugal-visa-photo-editor" />
     <lastmod>2026-04-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -1089,30 +1192,40 @@
 
   <url>
     <loc>https://www.pixpassport.com/romania-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/romania-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/romania-passport-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/romania-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/romania-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/romania-visa-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/russia-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/russia-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/russia-passport-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/russia-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/russia-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/russia-visa-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/saudi-arabia-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/saudi-arabia-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/saudi-arabia-passport-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -1122,6 +1235,8 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/saudi-arabia-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/saudi-arabia-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/saudi-arabia-visa-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -1133,12 +1248,12 @@
   <!-- SLOVAKIA (Schengen) -->
   <url>
     <loc>https://www.pixpassport.com/slovakia-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/slovakia-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/slovakia-passport-photo-editor" />
     <lastmod>2026-04-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -1148,12 +1263,12 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/slovakia-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/slovakia-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/slovakia-visa-photo-editor" />
     <lastmod>2026-04-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -1165,12 +1280,12 @@
   <!-- SLOVENIA (Schengen) -->
   <url>
     <loc>https://www.pixpassport.com/slovenia-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/slovenia-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/slovenia-passport-photo-editor" />
     <lastmod>2026-04-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -1180,12 +1295,12 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/slovenia-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/slovenia-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/slovenia-visa-photo-editor" />
     <lastmod>2026-04-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -1196,24 +1311,32 @@
 
   <url>
     <loc>https://www.pixpassport.com/south-africa-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/south-africa-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/south-africa-passport-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/south-africa-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/south-africa-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/south-africa-visa-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/south-korea-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/south-korea-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/south-korea-passport-photo-editor" />
     <lastmod>2026-04-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/south-korea-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/south-korea-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/south-korea-visa-photo-editor" />
     <lastmod>2026-04-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -1222,12 +1345,12 @@
   <!-- SPAIN (Schengen) -->
   <url>
     <loc>https://www.pixpassport.com/spain-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/spain-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/spain-passport-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -1237,12 +1360,12 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/spain-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/spain-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/spain-visa-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -1254,12 +1377,12 @@
   <!-- SWEDEN (Schengen) -->
   <url>
     <loc>https://www.pixpassport.com/sweden-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/sweden-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/sweden-passport-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -1269,12 +1392,12 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/sweden-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/sweden-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/sweden-visa-photo-editor" />
     <lastmod>2026-04-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -1286,12 +1409,12 @@
   <!-- SWITZERLAND (Schengen) -->
   <url>
     <loc>https://www.pixpassport.com/switzerland-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/switzerland-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/switzerland-passport-photo-editor" />
     <lastmod>2026-04-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -1302,12 +1425,12 @@
 
  <url>
     <loc>https://www.pixpassport.com/schengen-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/schengen-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/schengen-visa-photo-editor" />
     <lastmod>2026-04-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -1318,12 +1441,12 @@
 
   <url>
     <loc>https://www.pixpassport.com/switzerland-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/switzerland-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/switzerland-visa-photo-editor" />
     <lastmod>2026-04-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -1334,84 +1457,112 @@
 
   <url>
     <loc>https://www.pixpassport.com/thailand-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/thailand-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/thailand-passport-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/thailand-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/thailand-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/thailand-visa-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/turkey-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/turkey-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/turkey-passport-photo-editor" />
     <lastmod>2026-05-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/turkey-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/turkey-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/turkey-visa-photo-editor" />
     <lastmod>2026-05-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/uae-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/uae-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/uae-passport-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/uae-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/uae-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/uae-visa-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/uk-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/uk-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/uk-passport-photo-editor" />
     <lastmod>2026-05-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/uk-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/uk-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/uk-visa-photo-editor" />
     <lastmod>2026-05-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/us-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/us-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/us-passport-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/us-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/us-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/us-visa-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/uzbekistan-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/uzbekistan-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/uzbekistan-passport-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/uzbekistan-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/uzbekistan-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/uzbekistan-visa-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/venezuela-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/venezuela-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/venezuela-passport-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/venezuela-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/venezuela-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/venezuela-visa-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -1430,12 +1581,16 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/yemen-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/yemen-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/yemen-passport-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/yemen-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/yemen-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/yemen-visa-photo-editor" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -1444,12 +1599,12 @@
   <!-- BULGARIA (Schengen - full membership as of March 2025) -->
   <url>
     <loc>https://www.pixpassport.com/bulgaria-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/bulgaria-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/bulgaria-passport-photo-editor" />
     <lastmod>2026-04-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -1459,12 +1614,12 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/bulgaria-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/bulgaria-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/bulgaria-visa-photo-editor" />
     <lastmod>2026-04-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -1476,12 +1631,12 @@
   <!-- ROMANIA (Schengen - full membership as of March 2025) -->
   <url>
     <loc>https://www.pixpassport.com/romania-passport-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/romania-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/romania-passport-photo-editor" />
     <lastmod>2026-04-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -1491,12 +1646,12 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/romania-visa-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/romania-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/romania-visa-photo-editor" />
     <lastmod>2026-04-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_r6qmchr6qmchr6qm_waiqxf.png</image:loc>
-    </image:image>
+  
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
     </image:image>
@@ -1507,18 +1662,24 @@
 
   <url>
     <loc>https://www.pixpassport.com/blog/us-visa-photo-size-background-rules-guide-uk-europe</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/blog/us-visa-photo-size-background-rules-guide-uk-europe" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/blog/us-visa-photo-size-background-rules-guide-uk-europe" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
    <url>
     <loc>https://www.pixpassport.com/blog/germany-student-visa-photo-requirements</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/blog/germany-student-visa-photo-requirements" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/blog/germany-student-visa-photo-requirements" />
     <lastmod>2026-06-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/blog/schengen-visa-photo-requirements-size-maker-tool-2026</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/blog/schengen-visa-photo-requirements-size-maker-tool-2026" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/blog/schengen-visa-photo-requirements-size-maker-tool-2026" />
     <lastmod>2026-04-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -1531,6 +1692,8 @@
   </url>
     <url>
     <loc>https://www.pixpassport.com/blog/australia-visa-photo-requirements-size-specifications</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/blog/australia-visa-photo-requirements-size-specifications" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/blog/australia-visa-photo-requirements-size-specifications" />
     <lastmod>2026-04-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -1543,6 +1706,8 @@
   </url>
     <url>
     <loc>https://www.pixpassport.com/blog/uk-digital-passport-photo</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/blog/uk-digital-passport-photo" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/blog/uk-digital-passport-photo" />
     <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -1553,6 +1718,8 @@
   </url>
    <url>
     <loc>https://www.pixpassport.com/uk-passport-photo-requirements-tool</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/uk-passport-photo-requirements-tool" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/uk-passport-photo-requirements-tool" />
     <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -1563,12 +1730,16 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/digital-visa-photo-specs-2026</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/digital-visa-photo-specs-2026" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/digital-visa-photo-specs-2026" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
     <url>
     <loc>https://www.pixpassport.com/blog/new-zealand-visa-photo-requirements</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/blog/new-zealand-visa-photo-requirements" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/blog/new-zealand-visa-photo-requirements" />
     <lastmod>2026-05-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -1578,6 +1749,8 @@
   </url>
    <url>
     <loc>https://www.pixpassport.com/blog/france-visa-requirements-latest-guide</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/blog/france-visa-requirements-latest-guide" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/blog/france-visa-requirements-latest-guide" />
     <lastmod>2026-05-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -1596,6 +1769,10 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/fr</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com" />
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.pixpassport.com/fr" />
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://www.pixpassport.com/de" />
     <lastmod>2026-05-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
@@ -1605,15 +1782,11 @@
      <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1779008017/c24d89b1-ab0e-4f1d-9035-5814bc7b91ca_photo_eyp4a3.jpg</image:loc>
     </image:image>
-      <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1778666011/france-visa-photo-size-35x45mm-example_h8ralx.webp</image:loc>
-    </image:image>
-     <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1778666011/france-visa-photo-requirements-2026_ujgvwz.webp</image:loc>
-    </image:image>
+ 
   </url>
   <url>
     <loc>https://www.pixpassport.com/fr/ephoto-ants</loc>
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.pixpassport.com/fr/ephoto-ants" />
     <lastmod>2026-05-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
@@ -1623,15 +1796,11 @@
      <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1779008017/c24d89b1-ab0e-4f1d-9035-5814bc7b91ca_photo_eyp4a3.jpg</image:loc>
     </image:image>
-      <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1778666011/france-visa-photo-size-35x45mm-example_h8ralx.webp</image:loc>
-    </image:image>
-     <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1778666011/france-visa-photo-requirements-2026_ujgvwz.webp</image:loc>
-    </image:image>
+ 
   </url>
   <url>
     <loc>https://www.pixpassport.com/fr/photo-carte-identite</loc>
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.pixpassport.com/fr/photo-carte-identite" />
     <lastmod>2026-05-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
@@ -1641,21 +1810,18 @@
      <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1779008017/c24d89b1-ab0e-4f1d-9035-5814bc7b91ca_photo_eyp4a3.jpg</image:loc>
     </image:image>
-      <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1778666011/france-visa-photo-size-35x45mm-example_h8ralx.webp</image:loc>
-    </image:image>
-     <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1778666011/france-visa-photo-requirements-2026_ujgvwz.webp</image:loc>
-    </image:image>
+ 
   </url>
   <url>
     <loc>https://www.pixpassport.com/fr/photo-identite-en-ligne</loc>
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.pixpassport.com/fr/photo-identite-en-ligne" />
     <lastmod>2026-07-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/fr/photo-identite</loc>
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.pixpassport.com/fr/photo-identite" />
     <lastmod>2026-05-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
@@ -1665,15 +1831,11 @@
      <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1779008017/c24d89b1-ab0e-4f1d-9035-5814bc7b91ca_photo_eyp4a3.jpg</image:loc>
     </image:image>
-      <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1778666011/france-visa-photo-size-35x45mm-example_h8ralx.webp</image:loc>
-    </image:image>
-     <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1778666011/france-visa-photo-requirements-2026_ujgvwz.webp</image:loc>
-    </image:image>
+ 
   </url>
   <url>
     <loc>https://www.pixpassport.com/fr/photo-passeport</loc>
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.pixpassport.com/fr/photo-passeport" />
     <lastmod>2026-05-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
@@ -1683,15 +1845,11 @@
      <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1779008017/c24d89b1-ab0e-4f1d-9035-5814bc7b91ca_photo_eyp4a3.jpg</image:loc>
     </image:image>
-      <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1778666011/france-visa-photo-size-35x45mm-example_h8ralx.webp</image:loc>
-    </image:image>
-     <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1778666011/france-visa-photo-requirements-2026_ujgvwz.webp</image:loc>
-    </image:image>
+ 
   </url>
   <url>
     <loc>https://www.pixpassport.com/fr/photo-passeport-biometrique</loc>
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.pixpassport.com/fr/photo-passeport-biometrique" />
     <lastmod>2026-05-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
@@ -1701,15 +1859,11 @@
      <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1779008017/c24d89b1-ab0e-4f1d-9035-5814bc7b91ca_photo_eyp4a3.jpg</image:loc>
     </image:image>
-      <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1778666011/france-visa-photo-size-35x45mm-example_h8ralx.webp</image:loc>
-    </image:image>
-     <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1778666011/france-visa-photo-requirements-2026_ujgvwz.webp</image:loc>
-    </image:image>
+ 
   </url>
   <url>
     <loc>https://www.pixpassport.com/fr/photo-visa</loc>
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.pixpassport.com/fr/photo-visa" />
     <lastmod>2026-05-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
@@ -1719,21 +1873,23 @@
      <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1779008017/c24d89b1-ab0e-4f1d-9035-5814bc7b91ca_photo_eyp4a3.jpg</image:loc>
     </image:image>
-      <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1778666011/france-visa-photo-size-35x45mm-example_h8ralx.webp</image:loc>
-    </image:image>
-     <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1778666011/france-visa-photo-requirements-2026_ujgvwz.webp</image:loc>
-    </image:image>
+ 
   </url>
   <url>
     <loc>https://www.pixpassport.com/passport-photo-online</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/passport-photo-online" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/passport-photo-online" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.pixpassport.com/fr/passport-photo-online" />
     <lastmod>2026-06-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/fr/passport-photo-online</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/passport-photo-online" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/passport-photo-online" />
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.pixpassport.com/fr/passport-photo-online" />
+    
     <lastmod>2026-05-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -1743,15 +1899,11 @@
      <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1779008017/c24d89b1-ab0e-4f1d-9035-5814bc7b91ca_photo_eyp4a3.jpg</image:loc>
     </image:image>
-      <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1778666011/france-visa-photo-size-35x45mm-example_h8ralx.webp</image:loc>
-    </image:image>
-     <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1778666011/france-visa-photo-requirements-2026_ujgvwz.webp</image:loc>
-    </image:image>
+ 
   </url>
   <url>
     <loc>https://www.pixpassport.com/fr/guides</loc>
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.pixpassport.com/fr/guides" />
     <lastmod>2026-05-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -1761,15 +1913,11 @@
      <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1779008017/c24d89b1-ab0e-4f1d-9035-5814bc7b91ca_photo_eyp4a3.jpg</image:loc>
     </image:image>
-      <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1778666011/france-visa-photo-size-35x45mm-example_h8ralx.webp</image:loc>
-    </image:image>
-     <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1778666011/france-visa-photo-requirements-2026_ujgvwz.webp</image:loc>
-    </image:image>
+ 
   </url>
   <url>
     <loc>https://www.pixpassport.com/fr/guides/how-to-take-passport-photo-at-home</loc>
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.pixpassport.com/fr/guides/how-to-take-passport-photo-at-home" />
     <lastmod>2026-05-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -1779,15 +1927,11 @@
      <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1779008017/c24d89b1-ab0e-4f1d-9035-5814bc7b91ca_photo_eyp4a3.jpg</image:loc>
     </image:image>
-      <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1778666011/france-visa-photo-size-35x45mm-example_h8ralx.webp</image:loc>
-    </image:image>
-     <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1778666011/france-visa-photo-requirements-2026_ujgvwz.webp</image:loc>
-    </image:image>
+ 
   </url>
   <url>
     <loc>https://www.pixpassport.com/fr/guides/passport-photo-background</loc>
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.pixpassport.com/fr/guides/passport-photo-background" />
     <lastmod>2026-05-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -1797,15 +1941,11 @@
      <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1779008017/c24d89b1-ab0e-4f1d-9035-5814bc7b91ca_photo_eyp4a3.jpg</image:loc>
     </image:image>
-      <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1778666011/france-visa-photo-size-35x45mm-example_h8ralx.webp</image:loc>
-    </image:image>
-     <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1778666011/france-visa-photo-requirements-2026_ujgvwz.webp</image:loc>
-    </image:image>
+ 
   </url>
   <url>
     <loc>https://www.pixpassport.com/fr/guides/passport-photo-size</loc>
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.pixpassport.com/fr/guides/passport-photo-size" />
     <lastmod>2026-05-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -1815,21 +1955,19 @@
      <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1779008017/c24d89b1-ab0e-4f1d-9035-5814bc7b91ca_photo_eyp4a3.jpg</image:loc>
     </image:image>
-      <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1778666011/france-visa-photo-size-35x45mm-example_h8ralx.webp</image:loc>
-    </image:image>
-     <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1778666011/france-visa-photo-requirements-2026_ujgvwz.webp</image:loc>
-    </image:image>
+ 
   </url>
   <url>
     <loc>https://www.pixpassport.com/fr/guides/photo-identite-france-passeport-cni-ephoto-permis-visa</loc>
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.pixpassport.com/fr/guides/photo-identite-france-passeport-cni-ephoto-permis-visa" />
     <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/passport-photo-print-template-generator</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/passport-photo-print-template-generator" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/passport-photo-print-template-generator" />
     <lastmod>2026-05-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
@@ -1839,42 +1977,52 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/de</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com" />
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.pixpassport.com/fr" />
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://www.pixpassport.com/de" />
     <lastmod>2026-06-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/de/bewerbungsfoto</loc>
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://www.pixpassport.com/de/bewerbungsfoto" />
     <lastmod>2026-06-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/de/biometrisches-passbild</loc>
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://www.pixpassport.com/de/biometrisches-passbild" />
     <lastmod>2026-06-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/de/fuehrerschein-foto</loc>
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://www.pixpassport.com/de/fuehrerschein-foto" />
     <lastmod>2026-06-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/de/gesundheitskarte-foto</loc>
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://www.pixpassport.com/de/gesundheitskarte-foto" />
     <lastmod>2026-06-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/de/passbild-online</loc>
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://www.pixpassport.com/de/passbild-online" />
     <lastmod>2026-06-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/de/visum-foto</loc>
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://www.pixpassport.com/de/visum-foto" />
     <lastmod>2026-06-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
