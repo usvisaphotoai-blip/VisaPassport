@@ -221,7 +221,6 @@ export default function HomeHero() {
                       objectPosition: "center 8%",
                       pointerEvents: "none",
                     }}
-                    priority
                     sizes="(max-width: 1024px) 100vw, 400px"
                   />
                 </div>
@@ -427,7 +426,6 @@ export default function HomeHero() {
                         fill
                         sizes="(max-width: 768px) 100vw, 33vw"
                         className="object-cover"
-                        priority
                         unoptimized
                       />
                     </a>
@@ -438,7 +436,6 @@ export default function HomeHero() {
                       fill
                       sizes="(max-width: 768px) 100vw, 33vw"
                       className="object-cover"
-                      priority
                       unoptimized
                     />
                   )}

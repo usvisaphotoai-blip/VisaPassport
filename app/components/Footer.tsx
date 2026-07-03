@@ -66,11 +66,11 @@ export default function Footer() {
               <span className="bg-slate-800 px-3 py-1.5 rounded-lg text-xs font-bold text-slate-300">Instant Compliance Check</span>
             </div>
             <div className="py-2">
-              <a href="https://startupfa.me/s/pixpassport?utm_source=www.pixpassport.com" target="_blank"><img src="https://startupfa.me/badges/featured-badge-small.webp" alt="PixPassport - Featured on Startup Fame" width="224" height="36" /></a>
+              <a href="https://startupfa.me/s/pixpassport?utm_source=www.pixpassport.com" target="_blank"><img src="https://startupfa.me/badges/featured-badge-small.webp" alt="PixPassport - Featured on Startup Fame" width="224" height="36" loading="lazy" /></a>
             </div>
             <div className="py-2">
               <a href="https://findly.tools/pixpassport?utm_source=pixpassport" target="_blank" rel="noopener noreferrer">
-                <img src="https://findly.tools/badges/findly-tools-badge-light.svg" alt="Featured on Findly.tools" width="175" height="55" />
+                <img src="https://findly.tools/badges/findly-tools-badge-light.svg" alt="Featured on Findly.tools" width="175" height="55" loading="lazy" />
               </a>
             </div>
           </div>
