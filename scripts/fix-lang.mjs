@@ -34,7 +34,7 @@ function collectRoutes(dir, targetLang) {
   if (!fs.existsSync(dir)) return;
   const files = fs.readdirSync(dir);
   for (const file of files) {
-    if (targetLang === '' && (file === 'fr' || file === 'de') && dir === NEXT_SERVER_DIR) continue;
+    if (targetLang === '' && (file === 'fr' || file === 'de' || file === 'fr.html' || file === 'de.html') && dir === NEXT_SERVER_DIR) continue;
     const fullPath = path.join(dir, file);
     if (fs.statSync(fullPath).isDirectory()) {
       collectRoutes(fullPath, targetLang);
@@ -99,7 +99,7 @@ function walkDir(dir, targetLang) {
   if (!fs.existsSync(dir)) return;
   const files = fs.readdirSync(dir);
   for (const file of files) {
-    if (targetLang === '' && (file === 'fr' || file === 'de') && dir === NEXT_SERVER_DIR) continue;
+    if (targetLang === '' && (file === 'fr' || file === 'de' || file === 'fr.html' || file === 'de.html') && dir === NEXT_SERVER_DIR) continue;
     const fullPath = path.join(dir, file);
     if (fs.statSync(fullPath).isDirectory()) {
       walkDir(fullPath, targetLang);
