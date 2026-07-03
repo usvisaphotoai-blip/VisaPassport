@@ -6,8 +6,8 @@
     <loc>https://www.pixpassport.com</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.pixpassport.com/fr" />
-    <xhtml:link rel="alternate" hreflang="de" href="https://www.pixpassport.com/de" />
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.pixpassport.com/fr" />
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://www.pixpassport.com/de" />
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
@@ -1879,7 +1879,7 @@
     <loc>https://www.pixpassport.com/passport-photo-online</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/passport-photo-online" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/passport-photo-online" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.pixpassport.com/fr/passport-photo-online" />
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.pixpassport.com/fr/passport-photo-online" />
     <lastmod>2026-06-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
