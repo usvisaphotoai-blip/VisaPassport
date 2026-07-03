@@ -388,21 +388,21 @@ export default function HomeHero() {
           <div className="grid sm:grid-cols-3 gap-5">
             {[
               {
-                src: "https://res.cloudinary.com/dipzpwbbk/image/upload/v1779008016/c24d89b1-ab0e-4f1d-9035-5814bc7b91ca_preview_ip9ogs.jpg",
+                src: "https://res.cloudinary.com/dipzpwbbk/image/upload/f_auto,q_auto,w_600/v1779008016/c24d89b1-ab0e-4f1d-9035-5814bc7b91ca_preview_ip9ogs.jpg",
                 alt: "Passport photo with measurements",
                 label: "Photo Processing",
                 note: "Face detection with biometric measurements applied",
                 href: undefined as string | undefined,
               },
               {
-                src: "https://res.cloudinary.com/dipzpwbbk/image/upload/v1779008017/c24d89b1-ab0e-4f1d-9035-5814bc7b91ca_photo_eyp4a3.jpg",
+                src: "https://res.cloudinary.com/dipzpwbbk/image/upload/f_auto,q_auto,w_600/v1779008017/c24d89b1-ab0e-4f1d-9035-5814bc7b91ca_photo_eyp4a3.jpg",
                 alt: "Final compliant photo",
                 label: "Final Output",
                 note: "Government-compliant photo with white/grey background",
                 href: undefined as string | undefined,
               },
               {
-                src: "https://res.cloudinary.com/dipzpwbbk/image/upload/v1779076959/MakePassportPhoto_ph2uog.jpg",
+                src: "https://res.cloudinary.com/dipzpwbbk/image/upload/f_auto,q_auto,w_600/v1779076959/MakePassportPhoto_ph2uog.jpg",
                 alt: "4x6 print sheet",
                 label: "Print Template",
                 note: "Ready-to-print 4×6 inch sheet with crop guides",
@@ -419,19 +419,27 @@ export default function HomeHero() {
                       href={item.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block w-full h-full"
+                      className="block w-full h-full relative"
                     >
-                      <img
+                      <Image
                         src={item.src}
                         alt={item.alt}
-                  
+                        fill
+                        sizes="(max-width: 768px) 100vw, 33vw"
+                        className="object-cover"
+                        priority
+                        unoptimized
                       />
                     </a>
                   ) : (
-                    <img
+                    <Image
                       src={item.src}
                       alt={item.alt}
-                      className="w-full h-full object-cover"
+                      fill
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      className="object-cover"
+                      priority
+                      unoptimized
                     />
                   )}
                 </div>
