@@ -57,7 +57,7 @@ const FIXED_PRICES: Record<string, { amount: number; symbol: string; decimals: n
   GBP: { amount: 6.49, symbol: "£", decimals: 2 },
   CHF: { amount: 7.99, symbol: "CHF", decimals: 2 },
   CAD: { amount: 7.99, symbol: "C$", decimals: 2 },
-  AUD: { amount: 8.99, symbol: "A$", decimals: 2 },
+  AUD: { amount: 7.99, symbol: "A$", decimals: 2 },
   NZD: { amount: 9.99, symbol: "NZ$", decimals: 2 },
   JPY: { amount: 699, symbol: "¥", decimals: 0 },
   SGD: { amount: 7.99, symbol: "S$", decimals: 2 },
