@@ -236,7 +236,7 @@ export default async function Page({ params }: PageProps) {
           <Breadcrumbs />
 
           {/* Tool */}
-          <PassportMakerApp />
+          <PassportMakerApp title={toolPage.h1} subtitle={toolPage.metaDescription} />
 
           {/* Hero */}
           <div className="bg-white border-b border-slate-200">
@@ -245,13 +245,6 @@ export default async function Page({ params }: PageProps) {
                 <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
                 Official Standards · Free to try
               </div>
-
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 mb-4 tracking-tight leading-tight">
-                {toolPage.h1}
-              </h1>
-              <p className="text-slate-500 max-w-xl mx-auto text-base sm:text-lg leading-relaxed">
-                {toolPage.metaDescription}
-              </p>
 
               {/* Stats grid — 2 cols mobile, 4 cols sm+ */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-6 mt-8 max-w-sm mx-auto sm:max-w-none">

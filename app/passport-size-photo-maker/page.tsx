@@ -36,13 +36,7 @@ function RichContent({ html }: { html: string }) {
   );
 }
 
-// ─── Stats data ──────────────────────────────────────────────────────────────
-const STATS = [
-  { value: "100+", label: "Countries" },
-  { value: "30+", label: "Compliance checks" },
-  { value: "< 2 min", label: "Processing time" },
-  { value: "100%", label: "Compliance rate" },
-];
+
 
 // ─── Trust badges ────────────────────────────────────────────────────────────
 const TRUST_ITEMS = [
@@ -326,47 +320,9 @@ export default function PassportSizePhotoMakerPage() {
       <div className="bg-slate-50 min-h-screen">
 
         {/* ── Tool ── */}
-        <PassportMakerApp />
+        <PassportMakerApp title={toolPage?.h1} subtitle={toolPage?.metaDescription} />
 
-        {/* ── Hero header ── */}
-        <div className="bg-white border-b border-slate-200">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 py-10 sm:py-14 text-center">
-
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-xs font-semibold mb-5">
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-500 pulse-dot" />
-              Official Standards · Free to try
-            </div>
-
-            {/* H1 */}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 mb-4 tracking-tight leading-tight">
-              {toolPage?.h1 || "Passport Photo Maker"}
-            </h1>
-
-            {/* Subtitle */}
-            <p className="text-slate-500 max-w-xl mx-auto text-base sm:text-lg leading-relaxed">
-              {toolPage?.metaDescription ||
-                "Select your country, upload any photo, and get a government-compliant biometric photo in under two minutes — completely free to preview."}
-            </p>
-
-            {/* Stats grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-6 mt-8 max-w-xl mx-auto sm:max-w-none">
-              {STATS.map(({ value, label }) => (
-                <div
-                  key={label}
-                  className="bg-slate-50 rounded-xl px-3 py-3 sm:py-4 border border-slate-100"
-                >
-                  <p className="text-xl sm:text-2xl font-black text-lime-600 leading-none">
-                    {value}
-                  </p>
-                  <p className="text-xs text-slate-500 font-medium mt-1">
-                    {label}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+      
 
         {/* ── Trust badges ── */}
         <div className="bg-slate-50 border-b border-slate-200 py-6">

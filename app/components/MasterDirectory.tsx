@@ -28,9 +28,9 @@ export default function MasterDirectory({ title, subtitle, specs, type }: Master
         <h1 className="text-4xl lg:text-6xl font-extrabold text-slate-900 tracking-tight mb-4">
           {title}
         </h1>
-        <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
+        <h2 className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed font-normal">
           {subtitle}
-        </p>
+        </h2>
         
         <div className="mt-10 max-w-xl mx-auto relative">
           <input

@@ -406,7 +406,14 @@ function ToolForm() {
 export default function ToolPage() {
   return (
     <div className="bg-slate-50 min-h-screen font-sans">
-
+      <div className="max-w-xl mx-auto px-4 pt-2 sm:pt-2 text-center">
+        <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+          Passport size photo maker  & Visa Photo maker
+        </h1>
+        <h2 className="mt-1.5 text-sm text-slate-500 font-normal">
+          Free visa photo Validator & Maker for 50+ Countries
+        </h2>
+      </div>
       <div className="py-4">
         <Suspense fallback={<div className="flex items-center justify-center h-64"><div className="w-8 h-8 border-4 border-lime-500 border-t-transparent rounded-full animate-spin" /></div>}>
           <ToolForm />

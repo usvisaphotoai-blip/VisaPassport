@@ -128,7 +128,7 @@ function ProcessingRing({
 }
 
 /* ─── Main Component ─── */
-export default function PassportMakerApp() {
+export default function PassportMakerApp({ title, subtitle }: { title?: string, subtitle?: string } = {}) {
   const router = useRouter();
   const [step, setStep] = useState<Step>("setup");
   const [selectedDoc, setSelectedDoc] = useState("uk-passport");
@@ -375,11 +375,11 @@ export default function PassportMakerApp() {
           </svg>
         </div>
         <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-          Passport Photo Maker
+          {title || "Passport Photo Maker"}
         </h1>
-        <p className="mt-1.5 text-sm text-slate-500">
-          Official standards · compliant photos in seconds
-        </p>
+        <h2 className="mt-1.5 text-sm text-slate-500 font-normal">
+          {subtitle || "Official standards · compliant photos in seconds"}
+        </h2>
       </div>
 
       <StepIndicator current={selectedFile ? 2 : 1} />
