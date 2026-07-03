@@ -245,21 +245,24 @@ body {
   }
 }
 
-/* Custom prose overrides for premium look */
+/* ==========================================================================
+   Custom prose overrides for premium look — blog article body typography
+   NOTE: --tw-prose-* CSS variables were removed here. They only take effect
+   when Tailwind Typography's `prose` class is applied, which this project
+   does not use (only the custom `prose-premium` class is applied in JSX).
+   Every rule below is explicit and self-contained so it works standalone
+   under Tailwind's preflight reset (which strips default heading/list/
+   table/link styling).
+   ========================================================================== */
+
 .prose-premium {
-  --tw-prose-headings: #0f172a;
-  --tw-prose-body: #334155;
-  --tw-prose-bold: #0f172a;
-  --tw-prose-links: #4f46e5;
-  --tw-prose-quotes: #4f46e5;
-  --tw-prose-bullets: #10b981;
-  --tw-prose-counters: #4f46e5;
-  --tw-prose-hr: #e2e8f0;
-  --tw-prose-th-borders: #cbd5e1;
-  --tw-prose-td-borders: #e2e8f0;
+  color: #334155;
+  font-size: 1.125rem;
+  line-height: 1.85;
 }
 
 .prose-premium h2 {
+  font-size: 1.75rem;
   font-weight: 800;
   letter-spacing: -0.025em;
   margin-top: 3.5rem;
@@ -271,9 +274,20 @@ body {
 }
 
 .prose-premium h3 {
+  font-size: 1.35rem;
   font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.3;
   margin-top: 2.5rem;
   margin-bottom: 1rem;
+  color: #1e293b;
+}
+
+.prose-premium h4 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
   color: #1e293b;
 }
 
@@ -283,9 +297,30 @@ body {
   font-size: 1.125rem;
 }
 
+.prose-premium a {
+  color: #4f46e5;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: #c7d2fe;
+  text-underline-offset: 3px;
+  transition: color 0.15s ease, text-decoration-color 0.15s ease;
+}
+
+.prose-premium a:hover {
+  color: #3730a3;
+  text-decoration-color: #4f46e5;
+}
+
+.prose-premium strong {
+  color: #0f172a;
+  font-weight: 700;
+}
+
+/* Unordered lists — checkmark style */
 .prose-premium ul {
   list-style-type: none;
   padding-left: 0;
+  margin-bottom: 1.75rem;
 }
 
 .prose-premium ul li {
@@ -302,18 +337,163 @@ body {
   font-weight: 900;
 }
 
-.prose-premium strong {
-  color: #0f172a;
+/* Ordered lists — numbered badge style */
+.prose-premium ol {
+  list-style: none;
+  counter-reset: prose-counter;
+  padding-left: 0;
+  margin-bottom: 1.75rem;
+}
+
+.prose-premium ol li {
+  position: relative;
+  padding-left: 2.25rem;
+  margin-bottom: 0.75rem;
+  counter-increment: prose-counter;
+}
+
+.prose-premium ol li::before {
+  content: counter(prose-counter);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
   font-weight: 700;
+  color: #ffffff;
+  background: #4f46e5;
+  border-radius: 9999px;
+}
+
+.prose-premium li > ul,
+.prose-premium li > ol {
+  margin-top: 0.75rem;
+  margin-bottom: 0;
 }
 
 .prose-premium blockquote {
   border-left: 4px solid #10b981;
   background: #f0fdf4;
   padding: 1.5rem 2rem;
+  margin: 2rem 0;
   border-radius: 0 1rem 1rem 0;
   font-style: italic;
   color: #047857;
+}
+
+.prose-premium blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* Images */
+.prose-premium img {
+  width: 100%;
+  height: auto;
+  border-radius: 1.25rem;
+  margin: 2.5rem 0;
+  border: 1px solid var(--border);
+  box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.15);
+}
+
+.prose-premium figcaption {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-top: -1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+/* Tables */
+.prose-premium table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2.5rem 0;
+  font-size: 1rem;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.prose-premium thead {
+  background: #0f172a;
+}
+
+.prose-premium th {
+  text-align: left;
+  color: #060606;
+  font-weight: 700;
+  padding: 0.9rem 1.1rem;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.prose-premium td {
+  padding: 0.9rem 1.1rem;
+  border-top: 1px solid var(--border);
+  color: #334155;
+}
+
+.prose-premium tbody tr:nth-child(even) {
+  background: #f8fafc;
+}
+
+/* Inline code / code blocks */
+.prose-premium code {
+  background: #eef2ff;
+  color: #4338ca;
+  padding: 0.2em 0.45em;
+  border-radius: 0.4rem;
+  font-size: 0.875em;
+  font-weight: 600;
+}
+
+.prose-premium pre {
+  background: #0f172a;
+  color: #e2e8f0;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  overflow-x: auto;
+  margin: 2rem 0;
+}
+
+.prose-premium pre code {
+  background: none;
+  color: inherit;
+  padding: 0;
+  font-weight: 400;
+}
+
+.prose-premium hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 3rem 0;
+}
+
+.prose-premium > *:first-child {
+  margin-top: 0;
+}
+
+.prose-premium > *:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 640px) {
+  .prose-premium {
+    font-size: 1rem;
+  }
+  .prose-premium h2 {
+    font-size: 1.4rem;
+    margin-top: 2.5rem;
+  }
+  .prose-premium h3 {
+    font-size: 1.15rem;
+    margin-top: 2rem;
+  }
 }
 
 /* Blog Layout Utilities */

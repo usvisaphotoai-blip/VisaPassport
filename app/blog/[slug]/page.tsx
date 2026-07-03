@@ -434,7 +434,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               </span>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black text-white tracking-tight leading-[1.1] mb-6 sm:mb-8 text-pretty px-2">
+            <h1 className="text-xl sm:text-xl md:text-2xl lg:text-3xl font-extrabold text-white tracking-tight leading-[1.2] mb-6 sm:mb-8 text-pretty px-2">
               {post.title}
             </h1>
 
@@ -457,8 +457,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
         {/* Featured Image */}
         {post.featuredImage && (
-          <div className="max-w-4xl mx-auto -mt-8 sm:-mt-12 px-4 relative z-20">
-            <div className="relative aspect-[4/3] sm:aspect-video w-full overflow-hidden rounded-2xl sm:rounded-3xl shadow-2xl ring-1 ring-white/20 bg-slate-900">
+          <div className="max-w-2xl mx-auto -mt-6 sm:-mt-8 px-4 relative z-20">
+            <div className="relative aspect-video w-full overflow-hidden rounded-xl sm:rounded-2xl shadow-lg ring-1 ring-white/20 bg-slate-900">
               <div className="absolute inset-0 bg-gradient-to-t from-slate-900/20 to-transparent z-10 pointer-events-none" />
               <Image
                 src={post.featuredImage}
