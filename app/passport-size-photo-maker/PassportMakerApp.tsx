@@ -177,11 +177,11 @@ export default function PassportMakerApp({ title, subtitle }: { title?: string, 
     }
   }, [searchTerm, selectedDoc]);
 
-  const resetToSetup = () => {
+  const resetToSetup = (clearError = true) => {
     setStep("setup");
     setSelectedFile(null);
     setPhotoData(null);
-    setErrorMsg("");
+    if (clearError) setErrorMsg("");
     setProcessingStage(0);
   };
 
@@ -230,7 +230,7 @@ export default function PassportMakerApp({ title, subtitle }: { title?: string, 
       router.push(`/preview/${data.photoId}`);
     } catch (err: any) {
       setErrorMsg(err.message || "Something went wrong. Please try again.");
-      resetToSetup();
+      resetToSetup(false);
     }
   };
 
@@ -257,7 +257,7 @@ export default function PassportMakerApp({ title, subtitle }: { title?: string, 
       <div className="animate-in fade-in duration-500">
         <div className="max-w-6xl mx-auto px-4 py-4 mb-2">
           <button
-            onClick={resetToSetup}
+            onClick={() => resetToSetup()}
             className="inline-flex items-center gap-2 text-sm font-semibold text-lime-600 hover:text-lime-700 transition-colors group"
           >
             <span className="w-7 h-7 rounded-full bg-lime-50 group-hover:bg-lime-100 flex items-center justify-center transition-colors">
@@ -384,48 +384,6 @@ export default function PassportMakerApp({ title, subtitle }: { title?: string, 
 
       <StepIndicator current={selectedFile ? 2 : 1} />
 
-      {/* Error banner */}
-      {errorMsg && (
-        <div className="flex items-start gap-3 p-4 mb-6 bg-red-50 border border-red-200 rounded-xl text-red-700">
-          <svg
-            className="w-5 h-5 shrink-0 mt-0.5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={2}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"
-            />
-          </svg>
-          <div className="flex-1">
-            <p className="text-sm font-semibold">Processing failed</p>
-            <p className="text-sm mt-0.5 text-red-600">{errorMsg}</p>
-          </div>
-          <button
-            onClick={() => setErrorMsg("")}
-            className="text-red-400 hover:text-red-600 transition-colors"
-            aria-label="Dismiss"
-          >
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
-        </div>
-      )}
-
       <div className="space-y-4">
         {/* ── Step 1: Document type ── */}
         <div className="bg-white rounded-xl border border-slate-200/80  overflow-hidden">
@@ -530,6 +488,48 @@ export default function PassportMakerApp({ title, subtitle }: { title?: string, 
             )}
           </div>
         </div>
+
+        {/* Error banner */}
+        {errorMsg && (
+          <div className="flex items-start gap-3 p-4 bg-red-50 border border-red-200 rounded-xl text-red-700">
+            <svg
+              className="w-5 h-5 shrink-0 mt-0.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"
+              />
+            </svg>
+            <div className="flex-1">
+              <p className="text-sm font-semibold">Processing failed</p>
+              <p className="text-sm mt-0.5 text-red-600">{errorMsg}</p>
+            </div>
+            <button
+              onClick={() => setErrorMsg("")}
+              className="text-red-400 hover:text-red-600 transition-colors"
+              aria-label="Dismiss"
+            >
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+        )}
 
         {/* ── Step 2: Upload ── */}
         <div className="bg-white rounded-xl border border-slate-200  overflow-hidden">
