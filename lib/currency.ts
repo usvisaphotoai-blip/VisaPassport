@@ -66,7 +66,7 @@ const FIXED_PRICES: Record<string, { amount: number; symbol: string; decimals: n
   // Tier 2: ~20-30% Discount
   KRW: { amount: 6900, symbol: "₩", decimals: 0 },
   TWD: { amount: 159, symbol: "NT$", decimals: 0 },
-  AED: { amount: 22, symbol: "AED", decimals: 0 },
+  AED: { amount: 25, symbol: "AED", decimals: 0 },
   SAR: { amount: 22, symbol: "SAR", decimals: 0 },
   ILS: { amount: 22, symbol: "₪", decimals: 0 },
   PLN: { amount: 19.99, symbol: "zł", decimals: 2 },
@@ -124,7 +124,7 @@ const EXPERT_PRICES: Record<string, { amount: number; symbol: string; decimals: 
   NOK: { amount: 99, symbol: "kr", decimals: 0 },
   DKK: { amount: 69, symbol: "kr", decimals: 0 },
   
-  INR: { amount: 499, symbol: "₹", decimals: 0 },
+  INR: { amount: 599, symbol: "₹", decimals: 0 },
   CNY: { amount: 49, symbol: "¥", decimals: 0 },
   BRL: { amount: 45, symbol: "R$", decimals: 0 },
   MXN: { amount: 149, symbol: "$", decimals: 0 },
