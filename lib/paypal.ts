@@ -1,10 +1,13 @@
-export const PAYPAL_API_BASE = process.env.NODE_ENV === "production" && !process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID?.includes("sandbox") && !process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID?.startsWith("Ac") // User's ID starts with Ac, usually sandbox
+const rawClientId = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || "";
+const cleanClientId = rawClientId.replace(/['"]+/g, '').trim();
+
+export const PAYPAL_API_BASE = process.env.NODE_ENV === "production" && !cleanClientId.includes("sandbox") && !cleanClientId.startsWith("Ac")
   ? "https://api-m.paypal.com"
   : "https://api-m.sandbox.paypal.com";
 
 export async function getPayPalAccessToken() {
-  const clientId = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID;
-  const clientSecret = process.env.PAYPAL_CLIENT_SECRET;
+  const clientId = (process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || "").replace(/['"]+/g, '').trim();
+  const clientSecret = (process.env.PAYPAL_CLIENT_SECRET || "").replace(/['"]+/g, '').trim();
 
   if (!clientId || !clientSecret) {
     throw new Error("Missing PayPal credentials");

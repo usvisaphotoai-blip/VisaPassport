@@ -811,7 +811,7 @@ export default function PreviewClient({
   return (
     <PayPalScriptProvider
       options={{
-        clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || "",
+        clientId: (process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || "").replace(/['"]+/g, '').trim(),
         currency: providerCurrency || "USD",
         intent: "capture",
       }}
