@@ -509,7 +509,7 @@ export default function PreviewClient({
   const [timeLeft, setTimeLeft] = useState(20 * 60);
   const [localPrice, setLocalPrice] = useState<LocalPrice>(initialLocalPrice);
   const [expertPrice, setExpertPrice] = useState<LocalPrice>(initialExpertPrice);
-  const [isExpertPlan, setIsExpertPlan] = useState(false);
+  const [isExpertPlan, setIsExpertPlan] = useState(true);
   const [isZoomOpen, setIsZoomOpen] = useState(false);
   const [isEmailDialogOpen, setIsEmailDialogOpen] = useState(false);
 
