@@ -6,6 +6,8 @@ export interface IExpertOrder extends Document {
   status: 'pending_payment' | 'paid' | 'completed' | 'payment_failed';
   razorpayOrderId?: string;
   razorpayPaymentId?: string;
+  paypalOrderId?: string;
+  paypalPaymentId?: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -21,6 +23,8 @@ const ExpertOrderSchema: Schema = new Schema(
     },
     razorpayOrderId: { type: String },
     razorpayPaymentId: { type: String },
+    paypalOrderId: { type: String },
+    paypalPaymentId: { type: String },
   },
   { timestamps: true }
 );

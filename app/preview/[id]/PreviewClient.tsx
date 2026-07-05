@@ -6,10 +6,31 @@ import { getClientTimezoneCurrency } from "@/lib/currency";
 import { getSpecById } from "@/lib/specs";
 import { usePayment, LocalPrice } from "./hooks/usePayment";
 import { ComplianceCheck } from "./types";
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 // ─── Icons ────────────────────────────────────────────────────────────────────
-const Icon = ({ d, size = 16, stroke = 2, className = "" }: { d: string; size?: number; stroke?: number; className?: string }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={stroke} strokeLinecap="round" strokeLinejoin="round" className={className}>
+const Icon = ({
+  d,
+  size = 16,
+  stroke = 2,
+  className = "",
+}: {
+  d: string;
+  size?: number;
+  stroke?: number;
+  className?: string;
+}) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth={stroke}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
     <path d={d} />
   </svg>
 );
@@ -22,56 +43,79 @@ const ICONS = {
   zoom: "M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z",
   mail: "M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z",
   close: "M18 6L6 18M6 6l12 12",
-  clock: "M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zM12 6v6l4 2",
+  clock:
+    "M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zM12 6v6l4 2",
   lock: "M19 11H5a2 2 0 00-2 2v7a2 2 0 002 2h14a2 2 0 002-2v-7a2 2 0 00-2-2zM7 11V7a5 5 0 0110 0v4",
   warn: "M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z",
   eye: "M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8zM12 9a3 3 0 100 6 3 3 0 000-6z",
-  photo: "M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2zM12 17a4 4 0 100-8 4 4 0 000 8",
-  person: "M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2M12 11a4 4 0 100-8 4 4 0 000 8",
-  refresh: "M1 4v6h6M23 20v-6h-6M20.49 9A9 9 0 005.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 013.51 15",
+  photo:
+    "M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2zM12 17a4 4 0 100-8 4 4 0 000 8",
+  person:
+    "M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2M12 11a4 4 0 100-8 4 4 0 000 8",
+  refresh:
+    "M1 4v6h6M23 20v-6h-6M20.49 9A9 9 0 005.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 013.51 15",
 };
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
-const cx = (...c: (string | false | undefined | null)[]) => c.filter(Boolean).join(" ");
+const cx = (...c: (string | false | undefined | null)[]) =>
+  c.filter(Boolean).join(" ");
+
+const PAYPAL_SUPPORTED_CURRENCIES = [
+  "AUD",
+  "BRL",
+  "CAD",
+  "CNY",
+  "CZK",
+  "DKK",
+  "EUR",
+  "HKD",
+  "HUF",
+  "ILS",
+  "JPY",
+  "MYR",
+  "MXN",
+  "TWD",
+  "NZD",
+  "NOK",
+  "PHP",
+  "PLN",
+  "GBP",
+  "RUB",
+  "SGD",
+  "SEK",
+  "CHF",
+  "THB",
+  "USD",
+];
 
 const METRIC_FIXES = [
-
   { key: "gov", label: "Government compliant photo", icon: "✓" },
   { key: "gov5", label: "AI biometric validation", icon: "✓" },
   { key: "gov2", label: "100% acceptance guarantee", icon: "✓" },
-
   { key: "gov0", label: "Refund if rejected", icon: "✓" },
-
-
   { key: "gov3", label: "Instant download + print sheet", icon: "✓" },
-
-
-
-
- 
-
-
-  
 ];
 
+// Single flat radius + border used everywhere so the page reads as one system.
+const CARD = "bg-white rounded-2xl border border-slate-200";
 
-
-
-
-function MetricFix({ metric }: { metric: typeof METRIC_FIXES[0] }) {
+function MetricFix({ metric }: { metric: (typeof METRIC_FIXES)[0] }) {
   return (
-    <div className="flex items-center gap-2.5 py-2 border-b border-slate-100 last:border-0">
-      <div className="w-5 h-5 rounded-full bg-lime-100 flex items-center justify-center shrink-0">
-        <Icon d={ICONS.check} size={11} className="text-lime-600" stroke={2.5} />
+    <div className="flex items-center gap-2.5 py-2.5 border-b border-slate-100 last:border-0">
+      <div className="w-5 h-5 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center shrink-0">
+        <Icon
+          d={ICONS.check}
+          size={11}
+          className="text-emerald-600"
+          stroke={2.5}
+        />
       </div>
-      <span className="text-[12px] text-slate-700 font-medium">{metric.label}</span>
+      <span className="text-[13px] text-slate-700 font-medium">
+        {metric.label}
+      </span>
     </div>
   );
 }
-
-
-
-
 
 function TrustBadges() {
   const badges = [
@@ -80,9 +124,9 @@ function TrustBadges() {
     { icon: ICONS.lock, text: "256-bit SSL" },
   ];
   return (
-    <div className="flex items-center justify-center gap-4 py-2 flex-wrap">
+    <div className="flex items-center justify-center gap-4 flex-wrap">
       {badges.map((b, i) => (
-        <div key={i} className="flex items-center gap-1.5 text-red-500">
+        <div key={i} className="flex items-center gap-1.5 text-slate-500">
           <Icon d={b.icon} size={12} />
           <span className="text-[11px] font-semibold">{b.text}</span>
         </div>
@@ -96,8 +140,6 @@ function TrustBadges() {
 function PhotoPanel({
   previewUrl,
   hasPaid,
-  checks,
-  passCount,
   metrics,
   spec,
   onZoom,
@@ -110,26 +152,19 @@ function PhotoPanel({
   spec: any;
   onZoom: () => void;
 }) {
-  const allPass = checks.length > 0 && passCount === checks.length;
-
   return (
     <div className="space-y-4">
       {/* Photo Card */}
-      <div className="bg-white rounded-3xl border border-slate-100 overflow-hidden shadow-sm">
-        {/* Top bar */}
-        <div className="px-5 pt-5 pb-3 flex items-center justify-between">
-          <div>
-            {/* <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Your Photo</p> */}
-            <p className="text-sm font-bold text-slate-900 mt-0.5 flex items-center gap-1.5">
-              <span>{spec?.flag || "📄"}</span> {spec?.country || "Document Photo"}
-            </p>
-          </div>
-
+      <div className={CARD}>
+        <div className="px-5 pt-5 pb-3">
+          <p className="text-sm font-bold text-slate-900 flex items-center gap-1.5">
+            <span>{spec?.flag || "📄"}</span>
+            {spec?.country || "Document Photo"}
+          </p>
         </div>
 
-        {/* Photo */}
         <div
-          className="relative cursor-zoom-in group mx-5 mb-5 rounded-2xl overflow-hidden bg-slate-50 border border-slate-100 flex items-center justify-center"
+          className="relative cursor-zoom-in group mx-5 mb-5 rounded-xl overflow-hidden bg-slate-50 border border-slate-200 flex items-center justify-center"
           onClick={onZoom}
           style={{ minHeight: 240 }}
         >
@@ -141,10 +176,8 @@ function PhotoPanel({
             onContextMenu={(e) => e.preventDefault()}
           />
 
-
-          {/* Hover zoom hint */}
-          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all flex items-center justify-center">
-            <div className="bg-white/90 rounded-full p-2.5 shadow-lg opacity-0 group-hover:opacity-100 transition-opacity">
+          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
+            <div className="bg-white border border-slate-200 rounded-full p-2.5 opacity-0 group-hover:opacity-100 transition-opacity">
               <Icon d={ICONS.zoom} size={18} className="text-slate-800" />
             </div>
           </div>
@@ -153,30 +186,155 @@ function PhotoPanel({
 
       {/* What We Fixed */}
       {metrics && !hasPaid && (
-        <div className="bg-white rounded-3xl border border-slate-100 p-5 shadow-sm">
-          <div className="flex items-center gap-2 mb-4">
-            <div className="w-7 h-7 bg-lime-100 rounded-lg flex items-center justify-center">
-              <Icon d={ICONS.photo} size={14} className="text-lime-600" />
+        <div className={cx(CARD, "p-5")}>
+          <div className="flex items-center gap-2 mb-3">
+            <div className="w-7 h-7 bg-emerald-50 border border-emerald-200 rounded-lg flex items-center justify-center">
+              <Icon d={ICONS.photo} size={14} className="text-emerald-600" />
             </div>
-            <div>
-
-              <p className="text-sm font-bold text-slate-900">Your Photo Meets Official Requirements</p>
-            </div>
+            <p className="text-sm font-bold text-slate-900">
+              Your Photo Meets Official Requirements
+            </p>
           </div>
-          <div className="space-y-0">
-            {METRIC_FIXES.map((m) => <MetricFix key={m.key} metric={m} />)}
+          <div>
+            {METRIC_FIXES.map((m) => (
+              <MetricFix key={m.key} metric={m} />
+            ))}
           </div>
-          <div className="mt-4 rounded-xl bg-lime-50 border border-lime-100 px-3 py-2.5 flex items-start gap-2">
-            <Icon d={ICONS.star} size={13} className="text-lime-500 shrink-0 mt-0.5" />
-            <p className="text-[11px] text-lime-700 font-medium leading-relaxed">
-              ✓ Background professionally corrected to official requirements
+          <div className="mt-4 rounded-xl bg-emerald-50 border border-emerald-200 px-3 py-2.5 flex items-start gap-2">
+            <Icon
+              d={ICONS.star}
+              size={13}
+              className="text-emerald-600 shrink-0 mt-0.5"
+            />
+            <p className="text-[11px] text-emerald-800 font-medium leading-relaxed">
+              Background professionally corrected to official requirements
             </p>
           </div>
         </div>
       )}
-
-
     </div>
+  );
+}
+
+function PlanCard({
+  selected,
+  onSelect,
+  badge,
+  title,
+  price,
+  features,
+  accent,
+  note,
+}: {
+  selected: boolean;
+  onSelect: () => void;
+  badge?: string;
+  title: string;
+  price?: string;
+  features: string[];
+  accent: "emerald" | "blue";
+  note?: string;
+}) {
+  const accentMap = {
+    emerald: {
+      border: "border-emerald-500",
+      bg: "bg-emerald-50/60",
+      ring: "ring-1 ring-emerald-500/20",
+      dot: "text-emerald-600",
+      badgeBg: "bg-emerald-600",
+    },
+    blue: {
+      border: "border-blue-500",
+      bg: "bg-blue-50/60",
+      ring: "ring-1 ring-blue-500/20",
+      dot: "text-blue-600",
+      badgeBg: "bg-blue-600",
+    },
+  }[accent];
+
+  return (
+    <button
+      onClick={onSelect}
+      aria-pressed={selected}
+      className={cx(
+        "w-full text-left rounded-2xl border p-4 transition-colors relative",
+        selected
+          ? cx(accentMap.border, accentMap.bg, accentMap.ring)
+          : "border-slate-200 bg-white hover:border-slate-300",
+      )}
+    >
+      {badge && (
+        <div
+          className={cx(
+            "absolute -top-2.5 right-4 text-white text-[9px] font-black px-2.5 py-0.5 rounded-full",
+            accentMap.badgeBg,
+          )}
+        >
+          {badge}
+        </div>
+      )}
+
+      <div className="flex justify-between items-start gap-3 mb-2">
+        <div className="flex items-center gap-2.5">
+          <span
+            className={cx(
+              "w-4 h-4 rounded-full border-2 shrink-0 flex items-center justify-center mt-0.5",
+              selected ? accentMap.border : "border-slate-300",
+            )}
+          >
+            {selected && (
+              <span
+                className={cx(
+                  "w-2 h-2 rounded-full",
+                  accent === "emerald" ? "bg-emerald-500" : "bg-blue-500",
+                )}
+              />
+            )}
+          </span>
+          <h4 className="text-sm font-bold text-slate-900">{title}</h4>
+        </div>
+        <p className="text-xl font-black text-slate-900 leading-none">
+          {price || "..."}
+        </p>
+      </div>
+
+      <ul className="space-y-1.5 pl-6">
+        {features.map((f) => (
+          <li
+            key={f}
+            className="flex items-center gap-2 text-[13px] text-slate-600 font-medium"
+          >
+            <Icon
+              d={ICONS.check}
+              size={12}
+              className={selected ? accentMap.dot : "text-slate-300"}
+              stroke={2.5}
+            />
+            {f}
+          </li>
+        ))}
+      </ul>
+
+      {note && selected && (
+        <div
+          className={cx(
+            "mt-3 ml-6 rounded-xl px-3 py-2 text-[11px] font-semibold flex items-center gap-1.5",
+            accent === "emerald"
+              ? "bg-emerald-100/60 text-emerald-800"
+              : "bg-blue-100/60 text-blue-800",
+          )}
+        >
+          <Icon
+            d={ICONS.shield}
+            size={12}
+            className={
+              accent === "emerald" ? "text-emerald-600" : "text-blue-600"
+            }
+          />
+          {note}
+        </div>
+      )}
+    </button>
   );
 }
 
@@ -188,198 +346,107 @@ function OrderPanel({
   isExpertPlan,
   setIsExpertPlan,
   hasPaid,
-  timeLeft,
-  loading,
-  verifying,
-  handlePayment,
   documentType,
   photoId,
-  status,
-  guestEmail,
-  setGuestEmail,
   handleEmailPhoto,
   spec,
+  createPayPalOrder,
+  onPayPalApprove,
 }: any) {
-  const formatTime = (s: number) =>
-    `${Math.floor(s / 60).toString().padStart(2, "0")}:${(s % 60).toString().padStart(2, "0")}`;
-
   return (
-    <div className="w-full lg:w-[38%] space-y-4">
-      <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden lg:sticky lg:top-6">
+    <div className="w-full lg:w-[38%]">
+      <div className={cx(CARD, "lg:sticky lg:top-6")}>
         <div className="p-5 sm:p-6">
-
           {!hasPaid ? (
             <div className="space-y-4">
-              {/* Header */}
               <div>
-                <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">Order Summary - Accepted for passport & visa applications</p>
-
+                <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                  Order Summary
+                </p>
+                <p className="text-[11px] text-slate-400 mt-0.5">
+                  Accepted for passport &amp; visa applications
+                </p>
               </div>
 
-
-
-
-
-              {/* Plans */}
               <div className="space-y-3">
-                {/* Basic */}
-                <button
-                  onClick={() => setIsExpertPlan(false)}
-                  className={cx(
-                    "w-full text-left rounded-2xl border-2 p-4 transition-all duration-200 relative ",
-                    !isExpertPlan
-                      ? "border-emerald-500 bg-emerald-50/40 shadow-[0_0_0_3px_rgba(16,185,129,0.08)]"
-                      : "border-slate-100 bg-white hover:border-slate-200"
-                  )}
-                >
-                  <div className="flex justify-between items-start mb-2">
-                    <div>
+                <PlanCard
+                  selected={!isExpertPlan}
+                  onSelect={() => setIsExpertPlan(false)}
+                  title="Standard Pack"
+                  price={localPrice?.formatted}
+                  accent="emerald"
+                  features={[
+                    "AI Biometric Check",
+                    "Instant digital download",
+                    "Official A4 print sheet",
+                    "100% acceptance guarantee",
+                  ]}
+                />
 
-                      <h4 className="text-sm font-bold text-slate-900 mt-1">Standard Pack</h4>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-xl font-black text-slate-900">{localPrice?.formatted}</p>
-
-                    </div>
-                  </div>
-                  <ul className="space-y-1.5">
-
-                    {[" AI Biometric Check", "Instant digital download", " Official A4 print sheet", "100% acceptance guarantee"].map(f => (
-                      <li key={f} className="flex items-center gap-2 text-[13px] text-slate-600 font-medium">
-                        <Icon d={ICONS.check} size={12} className={!isExpertPlan ? "text-emerald-500" : "text-slate-300"} stroke={2.5} />
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
-                </button>
-
-                {/* Expert */}
-                <button
-                  onClick={() => setIsExpertPlan(true)}
-                  className={cx(
-                    "w-full text-left rounded-2xl border-2 p-4 transition-all duration-200 relative",
-                    isExpertPlan
-                      ? "border-blue-500 bg-blue-50/40 shadow-[0_0_0_3px_rgba(59,91,219,0.08)]"
-                      : "border-slate-100 bg-white hover:border-slate-200"
-                  )}
-                >
-                  <div className="absolute -top-2.5 right-4 bg-amber-500 text-white text-[9px] font-black px-2.5 py-0.5 rounded-full shadow-md">
-                    MOST POPULAR
-                  </div>
-                  <div className="flex justify-between items-start mb-2">
-                    <div>
-                      <span className={cx(
-                        "text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-widest",
-                        isExpertPlan ? "bg-blue-600 text-white" : "bg-slate-100 text-slate-500"
-                      )}>
-                        Expert Review
-                      </span>
-                      <h4 className="text-sm font-bold text-slate-900 mt-1">Premium Pack</h4>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-xl font-black text-slate-900">{expertPrice?.formatted}</p>
-
-                    </div>
-                  </div>
-                  <ul className="space-y-1.5">
-                    {[
-                      "Everything in Standard",
-                      "Human expert review in <15 min",
-                    
-                      "Extra compliance verifications",
-                      "Priority processing",
-                     
-                      "Email support",
-                      "Reduced rejection risk"
-                    ].map(f => (
-                      <li key={f} className="flex items-center gap-2 text-[14px] text-slate-600 font-medium">
-                        <Icon d={ICONS.check} size={12} className={isExpertPlan ? "text-blue-500" : "text-slate-300"} stroke={2.5} />
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
-                  {isExpertPlan && (
-                    <div className="mt-3 bg-blue-100/50 rounded-xl px-3 py-2 text-[11px] text-blue-800 font-semibold flex items-center gap-1.5">
-                      <Icon d={ICONS.shield} size={12} className="text-blue-600 shrink-0" />
-                      100% money-back if your photo gets rejected
-                    </div>
-                  )}
-                </button>
+                <PlanCard
+                  selected={isExpertPlan}
+                  onSelect={() => setIsExpertPlan(true)}
+                  badge="MOST POPULAR"
+                  title="Premium Pack"
+                  price={expertPrice?.formatted}
+                  accent="blue"
+                  note="100% money-back if your photo gets rejected"
+                  features={[
+                    "Everything in Standard",
+                    "Human expert review in <15 min",
+                    "Extra compliance verifications",
+                    "Priority processing",
+                    "Email support",
+                    "Reduced rejection risk",
+                  ]}
+                />
               </div>
 
-              {/* Guest Email */}
-              {status !== "authenticated" && (
-                <div>
-                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">
-                    Email for Delivery
-                  </label>
-                  <input
-                    type="email"
-                    value={guestEmail}
-                    onChange={(e: any) => setGuestEmail(e.target.value)}
-                    placeholder="Enter your email"
-                    className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+              <div className="space-y-3 pt-1 hidden lg:block">
+                <div className="w-full relative z-10">
+                  <PayPalButtons
+                    style={{ layout: "vertical", shape: "rect", color: "blue" }}
+                    createOrder={createPayPalOrder}
+                    onApprove={onPayPalApprove}
                   />
                 </div>
-              )}
-
-              {/* CTA */}
-              <div className="space-y-2 pt-1 hidden lg:block" >
-                <button
-                  onClick={handlePayment}
-                  disabled={loading || verifying}
-                  className={cx(
-                    "w-full font-bold py-4 rounded-2xl transition-all text-sm tracking-wide flex items-center justify-center gap-2.5 disabled:opacity-50 shadow-lg",
-                    isExpertPlan
-                      ? "bg-blue-600 hover:bg-blue-700 text-white shadow-blue-500/25"
-                      : "bg-slate-900 hover:bg-black text-white shadow-slate-900/20"
-                  )}
-                >
-                  {loading ? (
-                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                  ) : (
-                    <>
-                      <Icon d={ICONS.download} size={16} className="shrink-0" />
-                      {isExpertPlan ? "Get Expert Review" : "Download Now"} — {isExpertPlan ? expertPrice?.formatted : localPrice?.formatted}
-                    </>
-                  )}
-                </button>
-
                 <TrustBadges />
               </div>
             </div>
           ) : (
             /* ── Paid ─────────────────────────────────────────────────────────── */
             <div className="space-y-4">
-            <div className="bg-emerald-50 rounded-2xl p-6 text-center border border-emerald-100 shadow-sm">
-  <div className="w-14 h-14 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">
-    🎉
-  </div>
+              <div className="bg-emerald-50 rounded-2xl p-6 text-center border border-emerald-200">
+                <div className="w-14 h-14 bg-white border border-emerald-200 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">
+                  🎉
+                </div>
 
-  <h2 className="text-emerald-800 font-semibold text-xl">
-    Payment Successful!
-  </h2>
+                <h2 className="text-emerald-800 font-bold text-xl">
+                  Payment Successful!
+                </h2>
 
-  <div className="mt-3 text-emerald-600 text-sm leading-relaxed">
-    <p>
-      Every ID photo is carefully reviewed by our experts to ensure it meets all requirements.
-    </p>
-    <p className="mt-1">
-      If we find any issues, we’ll notify you via email with your photo.
-    </p>
-    <p className="mt-1">
-      For any questions, feel free to contact us at{" "}
-      <span className="font-medium text-emerald-700">
-        usvisaphotoai@gmail.com
-      </span>
-    </p>
-  </div>
-</div>
+                <div className="mt-3 text-emerald-700 text-sm leading-relaxed">
+                  <p>
+                    Every ID photo is carefully reviewed by our experts to
+                    ensure it meets all requirements.
+                  </p>
+                  <p className="mt-1">
+                    If we find any issues, we'll notify you via email with your
+                    photo.
+                  </p>
+                  <p className="mt-1">
+                    For any questions, feel free to contact us at{" "}
+                    <span className="font-semibold text-emerald-800">
+                      usvisaphotoai@gmail.com
+                    </span>
+                  </p>
+                </div>
+              </div>
 
               <a
                 href={`/api/download/${photoId}`}
                 download={`studio-photo-${documentType}.jpeg`}
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-2xl flex items-center justify-center gap-2.5 transition-all text-sm shadow-lg shadow-blue-500/25"
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2.5 transition-colors text-sm"
               >
                 <Icon d={ICONS.download} size={16} />
                 Download Digital {docCategory} Photo
@@ -387,32 +454,22 @@ function OrderPanel({
 
               <a
                 href={`/passport-photo-print-template-generator?imageUrl=${encodeURIComponent(`/api/download/${photoId}`)}&width=${spec?.width_mm || ""}&height=${spec?.height_mm || ""}&name=${encodeURIComponent(spec?.name || "")}`}
-                className="w-full bg-lime-600 hover:bg-lime-700 text-white font-bold py-4 rounded-2xl flex items-center justify-center gap-2.5 transition-all text-sm shadow-lg shadow-lime-500/20"
+                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2.5 transition-colors text-sm"
               >
                 <Icon d={ICONS.photo} size={16} className="shrink-0" />
-                Customize & Print Sheet (A4 / 4×6 / 5×7)
+                Customize &amp; Print Sheet (A4 / 4×6 / 5×7)
               </a>
-
-              {/* <a
-                href={`/api/download-sheet/${photoId}`}
-                download={`print-sheet-A4-${documentType}.jpeg`}
-                className="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-4 rounded-2xl flex items-center justify-center gap-2.5 transition-all text-sm"
-              >
-                <Icon d={ICONS.photo} size={16} />
-                Download Standard A4 Print Sheet
-              </a> */}
-
 
               <div className="grid grid-cols-2 gap-3">
                 <button
                   onClick={handleEmailPhoto}
-                  className="bg-slate-50 hover:bg-slate-100 text-slate-700 font-bold py-3 px-4 rounded-xl text-xs flex items-center justify-center gap-1.5"
+                  className="bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 font-bold py-3 px-4 rounded-xl text-xs flex items-center justify-center gap-1.5 transition-colors"
                 >
                   <Icon d={ICONS.mail} size={14} /> Email Me
                 </button>
                 <a
                   href="#"
-                  className="bg-amber-50 hover:bg-amber-100 text-amber-700 font-bold py-3 px-4 rounded-xl text-xs flex items-center justify-center gap-1.5"
+                  className="bg-amber-50 hover:bg-amber-100 border border-amber-200 text-amber-700 font-bold py-3 px-4 rounded-xl text-xs flex items-center justify-center gap-1.5 transition-colors"
                 >
                   <Icon d={ICONS.star} size={14} /> Rate Us
                 </a>
@@ -421,19 +478,23 @@ function OrderPanel({
           )}
         </div>
       </div>
-
-      <div className="text-center">
-        <a href="/passport-photo-online" className="text-sm font-bold text-lime-600 hover:text-slate-600 transition-colors">
-         Need a different document? <span className="underline">Create another photo →</span>
-        </a>
-      </div>
     </div>
   );
 }
 
-function ZoomOverlay({ url, hasPaid, onClose }: { url: string; hasPaid: boolean; onClose: () => void }) {
+function ZoomOverlay({
+  url,
+  hasPaid,
+  onClose,
+}: {
+  url: string;
+  hasPaid: boolean;
+  onClose: () => void;
+}) {
   useEffect(() => {
-    const h = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    const h = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
     window.addEventListener("keydown", h);
     return () => window.removeEventListener("keydown", h);
   }, [onClose]);
@@ -446,28 +507,31 @@ function ZoomOverlay({ url, hasPaid, onClose }: { url: string; hasPaid: boolean;
     >
       <button
         onClick={onClose}
-        className="absolute top-5 right-5 w-9 h-9 rounded-full border border-white/15 bg-white/8 flex items-center justify-center hover:bg-white/15 transition-all"
+        className="absolute top-5 right-5 w-9 h-9 rounded-full border border-white/15 bg-white/8 flex items-center justify-center hover:bg-white/15 transition-colors"
       >
         <Icon d={ICONS.close} size={16} className="text-white/70" />
       </button>
 
       <div
-
         onClick={(e) => e.stopPropagation()}
-        style={{ animation: "zoomIn 250ms cubic-bezier(0.22,1,0.36,1) forwards" }}
+        style={{
+          animation: "zoomIn 200ms ease-out forwards",
+        }}
       >
-        <div className="rounded-lg overflow-hidden shadow-2xl">
+        <div className="relative rounded-lg overflow-hidden">
           <img
             src={url}
             alt="Full preview"
             draggable={false}
             onContextMenu={(e) => e.preventDefault()}
             className="w-full h-auto block"
-
           />
           {!hasPaid && (
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <span className="text-white/15 text-xs font-bold tracking-[0.3em] uppercase select-none" style={{ transform: "rotate(-30deg)" }}>
+              <span
+                className="text-white/15 text-xs font-bold tracking-[0.3em] uppercase select-none"
+                style={{ transform: "rotate(-30deg)" }}
+              >
                 Preview Only
               </span>
             </div>
@@ -477,55 +541,52 @@ function ZoomOverlay({ url, hasPaid, onClose }: { url: string; hasPaid: boolean;
           {hasPaid ? "Full Resolution" : "Watermarked Preview"} · Esc to close
         </p>
       </div>
-      <style>{`@keyframes zoomIn { from { opacity:0; transform:scale(0.93) } to { opacity:1; transform:scale(1) } }`}</style>
+      <style>{`@keyframes zoomIn { from { opacity:0; transform:scale(0.96) } to { opacity:1; transform:scale(1) } }`}</style>
     </div>
   );
 }
 
-function MobileCTA({ productName, localPrice, expertPrice, isExpertPlan, loading, handlePayment, status, guestEmail, setGuestEmail }: any) {
+function MobileCTA({
+  productName,
+  localPrice,
+  expertPrice,
+  isExpertPlan,
+  createPayPalOrder,
+  onPayPalApprove,
+}: any) {
   const price = isExpertPlan ? expertPrice : localPrice;
   return (
     <>
-      <div className="fixed bottom-0 left-0 right-0 z-50 bg-white/96 backdrop-blur-xl border-t border-slate-200 shadow-[0_-8px_32px_rgba(0,0,0,0.12)] px-4 pt-3 pb-4 lg:hidden">
+      <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-slate-200 px-4 pt-3 pb-4 lg:hidden">
         <div className="max-w-lg mx-auto">
-          {status !== "authenticated" && (
-            <div className="mb-2.5">
-              <input
-                type="email"
-                value={guestEmail || ""}
-                onChange={(e: any) => setGuestEmail(e.target.value)}
-                placeholder="Email for your photo"
-                className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 outline-none transition-all"
-              />
-            </div>
-          )}
           <div className="flex items-center gap-3">
             <div className="shrink-0">
-              <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">{productName}</p>
-              <p className="text-lg font-black text-slate-900 leading-tight">{price?.formatted || "..."}</p>
+              <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">
+                {productName}
+              </p>
+              <p className="text-lg font-black text-slate-900 leading-tight">
+                {price?.formatted || "..."}
+              </p>
             </div>
             <div className="w-px h-8 bg-slate-200 shrink-0" />
-            <button
-              onClick={handlePayment}
-              disabled={loading}
-              className={cx(
-                "flex-1 font-bold py-3 px-4 rounded-xl text-sm flex items-center justify-center gap-2 disabled:opacity-50 transition-all shadow-lg",
-                isExpertPlan
-                  ? "bg-blue-600 hover:bg-blue-700 text-white shadow-blue-500/20"
-                  : "bg-blue-600 hover:bg-blue-700 text-white shadow-blue-500/20"
-              )}
-            >
-              {loading ? (
-                <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-              ) : (
-                <>
-                  <Icon d={ICONS.download} size={16} />
-                  {isExpertPlan ? "Expert Review" : "Download Photo"}
-                </>
-              )}
-            </button>
+            <div className="flex-1 relative z-10 min-w-[150px]">
+              <PayPalButtons
+                style={{
+                  layout: "horizontal",
+                  height: 40,
+                  shape: "rect",
+                  color: "blue",
+                  tagline: false,
+                }}
+                createOrder={createPayPalOrder}
+                onApprove={onPayPalApprove}
+              />
+            </div>
           </div>
-          <p className="text-center text-[12px] text-red-400 mt-2">🔒 Secure · Refund if rejected · No subscription</p>
+          <p className="text-center text-[11px] text-slate-400 mt-2 flex items-center justify-center gap-1">
+            <Icon d={ICONS.lock} size={11} className="text-slate-400" />
+            Secure · Refund if rejected · No subscription
+          </p>
         </div>
       </div>
       <div className="h-28 lg:hidden" />
@@ -557,13 +618,16 @@ export default function PreviewClient({
   const [guestEmail, setGuestEmail] = useState("");
   const [timeLeft, setTimeLeft] = useState(20 * 60);
   const [localPrice, setLocalPrice] = useState<LocalPrice>(initialLocalPrice);
-  const [expertPrice, setExpertPrice] = useState<LocalPrice>(initialExpertPrice);
+  const [expertPrice, setExpertPrice] =
+    useState<LocalPrice>(initialExpertPrice);
   const [isExpertPlan, setIsExpertPlan] = useState(false);
   const [isZoomOpen, setIsZoomOpen] = useState(false);
-  const [isEmailDialogOpen, setIsEmailDialogOpen] = useState(false);
+  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
 
   const spec = getSpecById(documentType);
-  const isVisa = spec?.name?.toLowerCase().includes("visa") || documentType.toLowerCase().includes("visa");
+  const isVisa =
+    spec?.name?.toLowerCase().includes("visa") ||
+    documentType.toLowerCase().includes("visa");
   const docCategory = isVisa ? "Visa" : "Passport";
   const productName = spec?.name || `${docCategory} Photo`;
 
@@ -572,7 +636,12 @@ export default function PreviewClient({
     const results: ComplianceCheck[] = [];
     let hasWarn = false;
 
-    const push = (name: string, s: "PASS" | "WARN" | "FAIL", value: string, detail: string) => {
+    const push = (
+      name: string,
+      s: "PASS" | "WARN" | "FAIL",
+      value: string,
+      detail: string,
+    ) => {
       results.push({ name, status: s, value, detail });
       if (s === "WARN" || s === "FAIL") hasWarn = true;
     };
@@ -582,176 +651,271 @@ export default function PreviewClient({
     const eyePct = metrics.eyeLevelPct || 0;
     const minEye = Number(spec?.eye_min_pct) || 56;
     const maxEye = Number(spec?.eye_max_pct) || 69;
-    push("Eye Level", eyePct >= minEye && eyePct <= maxEye ? "PASS" : "WARN", `${eyePct.toFixed(1)}%`, `Target: ${minEye}–${maxEye}%`);
+    push(
+      "Eye Level",
+      eyePct >= minEye && eyePct <= maxEye ? "PASS" : "WARN",
+      `${eyePct.toFixed(1)}%`,
+      `Target: ${minEye}–${maxEye}%`,
+    );
 
     const headPct = metrics.headSizePct || 0;
     const minHead = Number(spec?.head_min_pct) || 50;
     const maxHead = Number(spec?.head_max_pct) || 69;
-    push("Head Size", headPct >= minHead && headPct <= maxHead ? "PASS" : "WARN", `${headPct.toFixed(1)}%`, `Target: ${minHead}–${maxHead}%`);
+    push(
+      "Head Size",
+      headPct >= minHead && headPct <= maxHead ? "PASS" : "WARN",
+      `${headPct.toFixed(1)}%`,
+      `Target: ${minHead}–${maxHead}%`,
+    );
 
     const bgValid = metrics.backgroundValid || metrics.backgroundCorrected;
-    push("Background", bgValid ? "PASS" : "WARN", bgValid ? "Corrected ✓" : "Review Needed", bgValid ? "Auto-corrected to white" : "Needs correction");
+    push(
+      "Background",
+      bgValid ? "PASS" : "WARN",
+      bgValid ? "Corrected ✓" : "Review Needed",
+      bgValid ? "Auto-corrected to white" : "Needs correction",
+    );
 
     return { verifying: false, checks: results, overallPass: !hasWarn };
   }, [metrics, spec]);
 
-  const passCount = checks.filter(c => c.status === "PASS").length;
+  const passCount = checks.filter((c) => c.status === "PASS").length;
 
   const { loading, handlePayment } = usePayment({
     photoId,
     localPrice: isExpertPlan ? expertPrice : localPrice,
     isExpert: isExpertPlan,
     guestEmail,
-    status: status === "authenticated" ? "authenticated" : status === "loading" ? "loading" : "unauthenticated",
+    status:
+      status === "authenticated"
+        ? "authenticated"
+        : status === "loading"
+          ? "loading"
+          : "unauthenticated",
     session,
     setHasPaid,
   });
 
   const onPaymentClick = () => {
-    const isEmailValid = guestEmail && guestEmail.includes("@") && guestEmail.includes(".");
-    if (status !== "authenticated" && !isEmailValid) {
-      setIsEmailDialogOpen(true);
-      return;
-    }
     handlePayment();
   };
 
   useEffect(() => {
     const tzCurrency = getClientTimezoneCurrency();
-    if (!initialLocalPrice || (tzCurrency !== initialLocalPrice.currency && tzCurrency !== "USD")) {
-      fetch(`/api/currency?currency=${tzCurrency}`).then(r => r.json()).then(d => { if (d?.formatted) setLocalPrice(d); }).catch(console.error);
-      fetch(`/api/currency?currency=${tzCurrency}&isExpert=true`).then(r => r.json()).then(d => { if (d?.formatted) setExpertPrice(d); }).catch(console.error);
+    if (
+      !initialLocalPrice ||
+      (tzCurrency !== initialLocalPrice.currency && tzCurrency !== "USD")
+    ) {
+      fetch(`/api/currency?currency=${tzCurrency}`)
+        .then((r) => r.json())
+        .then((d) => {
+          if (d?.formatted) setLocalPrice(d);
+        })
+        .catch(console.error);
+      fetch(`/api/currency?currency=${tzCurrency}&isExpert=true`)
+        .then((r) => r.json())
+        .then((d) => {
+          if (d?.formatted) setExpertPrice(d);
+        })
+        .catch(console.error);
     }
   }, [initialLocalPrice]);
 
   useEffect(() => {
-    const interval = setInterval(() => setTimeLeft(p => (p > 0 ? p - 1 : 0)), 1000);
+    const interval = setInterval(
+      () => setTimeLeft((p) => (p > 0 ? p - 1 : 0)),
+      1000,
+    );
     return () => clearInterval(interval);
   }, []);
 
   const handleEmailPhoto = async () => {
-    const emailTo = window.prompt("Enter your email address to receive the photo:");
+    const emailTo = window.prompt(
+      "Enter your email address to receive the photo:",
+    );
     if (!emailTo) return;
     try {
       const res = await fetch("/api/send-photo", {
-        method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: emailTo, photoUrl: previewUrl, documentType, photoId }),
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: emailTo,
+          photoUrl: previewUrl,
+          documentType,
+          photoId,
+        }),
       });
-      alert(res.ok ? "Photo sent! Check your inbox." : "Failed to send. Please try again.");
-    } catch { alert("Error sending email."); }
+      alert(
+        res.ok
+          ? "Photo sent! Check your inbox."
+          : "Failed to send. Please try again.",
+      );
+    } catch {
+      alert("Error sending email.");
+    }
   };
 
+  const createPayPalOrder = async () => {
+    const targetCurrency = (isExpertPlan ? expertPrice : localPrice).currency;
+    const paypalCurrency = PAYPAL_SUPPORTED_CURRENCIES.includes(targetCurrency)
+      ? targetCurrency
+      : "USD";
+
+    const orderRes = await fetch("/api/paypal/create-order", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        photoId,
+        currencyOverride: paypalCurrency,
+        isExpert: isExpertPlan,
+        guestEmail: status === "authenticated" ? undefined : guestEmail,
+      }),
+    });
+    const orderData = await orderRes.json();
+    if (!orderRes.ok) {
+      alert(orderData.error);
+      throw new Error(orderData.error);
+    }
+    return orderData.orderId;
+  };
+
+  const onPayPalApprove = async (data: any, actions: any) => {
+    setIsProcessingPayment(true);
+    try {
+      const verifyRes = await fetch("/api/paypal/capture-order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ orderID: data.orderID, photoId }),
+      });
+      if (verifyRes.ok) {
+        setHasPaid(true);
+      } else {
+        const errData = await verifyRes.json();
+        alert(errData.error || "Payment capture failed");
+        return actions.restart();
+      }
+    } catch (e) {
+      alert("Payment capture error");
+      return actions.restart();
+    } finally {
+      setIsProcessingPayment(false);
+    }
+  };
+
+  const providerCurrency = PAYPAL_SUPPORTED_CURRENCIES.includes(
+    localPrice?.currency || "",
+  )
+    ? localPrice?.currency
+    : "USD";
+
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col">
-      <div className="flex-1 flex items-start justify-center px-4 py-6 sm:py-8">
-        <div className="w-full max-w-6xl">
-          {/* Header */}
-          <div className="mb-3 text-center lg:text-left">
+    <PayPalScriptProvider
+      options={{
+        clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || "",
+        currency: providerCurrency || "USD",
+        intent: "capture",
+      }}
+    >
+      <div className="min-h-screen bg-slate-50 flex flex-col">
+        <div className="flex-1 flex items-start justify-center px-4 py-6 sm:py-8">
+          <div className="w-full max-w-6xl">
+            {/* Header */}
+            <div className="mb-4 text-center lg:text-left">
+              <h1 className="text-2xl sm:text-[28px] font-black text-slate-900 leading-tight">
+                Your <span className="text-emerald-600">ID Photo</span> Is Ready{" "}
+                {spec?.flag || ""} {spec?.country || ""}
+              </h1>
+            </div>
 
-            <h1 className="text-2xl font-black text-slate-900">
-              Your  <span className="text-lime-600">ID Photo</span> Is Ready {spec?.flag || ""} {spec?.country || ""}
-            </h1>
-          </div>
+            <div className="flex flex-col lg:flex-row gap-5">
+              {/* Left */}
+              <div className="w-full lg:w-[62%]">
+                <PhotoPanel
+                  previewUrl={previewUrl}
+                  hasPaid={hasPaid}
+                  checks={checks}
+                  passCount={passCount}
+                  metrics={metrics}
+                  spec={spec}
+                  onZoom={() => setIsZoomOpen(true)}
+                />
+              </div>
 
-          <div className="flex flex-col lg:flex-row gap-5">
-            {/* Left */}
-            <div className="w-full lg:w-[62%]">
-              <PhotoPanel
-                previewUrl={previewUrl}
+              {/* Right */}
+              <OrderPanel
+                productName={productName}
+                docCategory={docCategory}
+                localPrice={localPrice}
+                expertPrice={expertPrice}
+                isExpertPlan={isExpertPlan}
+                setIsExpertPlan={setIsExpertPlan}
                 hasPaid={hasPaid}
-                checks={checks}
-                passCount={passCount}
-                metrics={metrics}
+                timeLeft={timeLeft}
+                loading={loading}
+                verifying={verifying}
+                handlePayment={onPaymentClick}
+                documentType={documentType}
+                photoId={photoId}
+                status={
+                  status === "authenticated"
+                    ? "authenticated"
+                    : status === "loading"
+                      ? "loading"
+                      : "unauthenticated"
+                }
+                guestEmail={guestEmail}
+                setGuestEmail={setGuestEmail}
+                handleEmailPhoto={handleEmailPhoto}
                 spec={spec}
-                onZoom={() => setIsZoomOpen(true)}
+                createPayPalOrder={createPayPalOrder}
+                onPayPalApprove={onPayPalApprove}
               />
             </div>
-
-            {/* Right */}
-            <OrderPanel
-              productName={productName}
-              docCategory={docCategory}
-              localPrice={localPrice}
-              expertPrice={expertPrice}
-              isExpertPlan={isExpertPlan}
-              setIsExpertPlan={setIsExpertPlan}
-              hasPaid={hasPaid}
-              timeLeft={timeLeft}
-              loading={loading}
-              verifying={verifying}
-              handlePayment={onPaymentClick}
-              documentType={documentType}
-              photoId={photoId}
-              status={status === "authenticated" ? "authenticated" : status === "loading" ? "loading" : "unauthenticated"}
-              guestEmail={guestEmail}
-              setGuestEmail={setGuestEmail}
-              handleEmailPhoto={handleEmailPhoto}
-              spec={spec}
-            />
           </div>
         </div>
-      </div>
 
-      {/* Zoom */}
-      {isZoomOpen && <ZoomOverlay url={previewUrl} hasPaid={hasPaid} onClose={() => setIsZoomOpen(false)} />}
+        {/* Zoom */}
+        {isZoomOpen && (
+          <ZoomOverlay
+            url={previewUrl}
+            hasPaid={hasPaid}
+            onClose={() => setIsZoomOpen(false)}
+          />
+        )}
 
-      {/* Mobile CTA */}
-      {!hasPaid && !verifying && (
-        <MobileCTA
-          productName={productName}
-          localPrice={localPrice}
-          expertPrice={expertPrice}
-          isExpertPlan={isExpertPlan}
-          loading={loading}
-          handlePayment={onPaymentClick}
-          status={status === "authenticated" ? "authenticated" : "unauthenticated"}
-          guestEmail={guestEmail}
-          setGuestEmail={setGuestEmail}
-        />
-      )}
+        {/* Mobile CTA */}
+        {!hasPaid && !verifying && (
+          <MobileCTA
+            productName={productName}
+            localPrice={localPrice}
+            expertPrice={expertPrice}
+            isExpertPlan={isExpertPlan}
+            loading={loading}
+            handlePayment={onPaymentClick}
+            status={
+              status === "authenticated" ? "authenticated" : "unauthenticated"
+            }
+            guestEmail={guestEmail}
+            setGuestEmail={setGuestEmail}
+            createPayPalOrder={createPayPalOrder}
+            onPayPalApprove={onPayPalApprove}
+          />
+        )}
 
-      {/* Email Dialog */}
-      {isEmailDialogOpen && (
-        <div className="fixed inset-0 z-[150] flex items-center justify-center bg-slate-900/50 backdrop-blur-sm px-4">
-          <div className="bg-white rounded-3xl shadow-2xl w-full max-w-sm overflow-hidden">
-            <div className="p-6">
-              <div className="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center mb-4 mx-auto">
-                <Icon d={ICONS.mail} size={22} className="text-lime-600" />
-              </div>
-              <h3 className="text-xl font-black text-slate-900 mb-2 text-center">Where should we send it?</h3>
-              <p className="text-sm text-slate-500 mb-5 leading-relaxed text-center">
-                Enter your email to receive your processed photo and receipt.
+        {isProcessingPayment && (
+          <div className="fixed inset-0 z-[300] flex items-center justify-center bg-slate-900/50 backdrop-blur-sm">
+            <div className="bg-white p-6 rounded-2xl border border-slate-200 flex flex-col items-center">
+              <div className="w-10 h-10 border-4 border-slate-200 border-t-blue-600 rounded-full animate-spin mb-4" />
+              <p className="text-sm font-bold text-slate-800">
+                Processing Payment...
               </p>
-              <input
-                type="email"
-                value={guestEmail}
-                onChange={(e: any) => setGuestEmail(e.target.value)}
-                placeholder="you@example.com"
-                className="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all mb-4"
-                autoFocus
-              />
-              <div className="flex gap-3">
-                <button
-                  onClick={() => setIsEmailDialogOpen(false)}
-                  className="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-3.5 rounded-xl text-sm transition-all"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={() => {
-                    const valid = guestEmail && guestEmail.includes("@") && guestEmail.includes(".");
-                    if (valid) { setIsEmailDialogOpen(false); handlePayment(); }
-                    else alert("Please enter a valid email address.");
-                  }}
-                  className="flex-1 bg-lime-600 hover:bg-lime-700 text-white font-bold py-3.5 rounded-xl text-sm transition-all shadow-lg shadow-lime-500/20"
-                >
-                  Continue →
-                </button>
-              </div>
+              <p className="text-xs text-slate-500 mt-1">
+                Please do not close this window
+              </p>
             </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </PayPalScriptProvider>
   );
 }

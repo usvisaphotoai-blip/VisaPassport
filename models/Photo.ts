@@ -48,6 +48,12 @@ const PhotoSchema = new Schema(
     razorpayPaymentId: {
       type: String,
     },
+    paypalOrderId: {
+      type: String,
+    },
+    paypalPaymentId: {
+      type: String,
+    },
     isExpert: {
       type: Boolean,
       default: false,

@@ -153,7 +153,10 @@ export default function ChinaPassportMakerApp() {
       setStep("preview");
     } catch (err: any) {
       setErrorMsg(err.message || "Something went wrong. Please try again.");
-      resetToSetup();
+      setStep("setup");
+      setSelectedFile(null);
+      setPhotoData(null);
+      setProcessingStage(0);
     }
   };
 

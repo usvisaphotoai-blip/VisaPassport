@@ -230,7 +230,10 @@ export default function PassportMakerApp({ title, subtitle }: { title?: string, 
       router.push(`/preview/${data.photoId}`);
     } catch (err: any) {
       setErrorMsg(err.message || "Something went wrong. Please try again.");
-      resetToSetup();
+      setStep("setup");
+      setSelectedFile(null);
+      setPhotoData(null);
+      setProcessingStage(0);
     }
   };
 
