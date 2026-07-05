@@ -339,10 +339,10 @@ export default function ValidatorClient() {
   }, [file, selectedCountry, selectedDocType, verifyPhoto]);
 
   return (
-    <main className="min-h-screen bg-slate-50">
+    <main className="min-h-screen bg-slate-100">
 
       {/* ── HERO / TOOL ────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden bg-white border-b border-slate-100" aria-labelledby="validator-heading">
+      <section className="relative overflow-hidden bg-white border-b border-slate-200" aria-labelledby="validator-heading">
 
         {/* Subtle dot grid */}
         <div className="absolute inset-0 opacity-[0.035]" style={{ backgroundImage: "radial-gradient(#1e40af 1px, transparent 1px)", backgroundSize: "28px 28px" }} />
@@ -360,7 +360,7 @@ export default function ValidatorClient() {
           </div>
 
           {/* H1 — primary SEO keyword */}
-          <h1 id="validator-heading" className="text-center text-4xl sm:text-5xl lg:text-[3.5rem] font-black text-slate-900 tracking-tight leading-[1.07] mb-5">
+          <h1 id="validator-heading" className="text-center text-2xl sm:text-3xl lg:text-[2.5rem] font-black text-slate-900 tracking-tight leading-[1.07] mb-5">
             Passport &amp; Visa{" "}
             <span className="relative inline-block">
               <span className="relative z-10 text-lime-600">Photo Validator</span>
@@ -369,7 +369,7 @@ export default function ValidatorClient() {
           </h1>
 
           {/* Meta description-quality subhead */}
-          <p className="text-center text-base sm:text-lg text-slate-500 font-medium max-w-2xl mx-auto mb-10 leading-relaxed">
+          <p className="text-center text-base sm:text-md text-slate-500 font-medium max-w-xl mx-auto mb-10 leading-relaxed">
             Check your photo meets <strong className="text-slate-700">official embassy requirements</strong> for the USA, EU Schengen, India, Canada, UK, China, and 55+ more countries — free, private, and done in under 3 seconds.
           </p>
 
@@ -485,7 +485,32 @@ export default function ValidatorClient() {
             {/* Right: result */}
             <div className="lg:sticky lg:top-8">
               {report ? (
-                <ValidationReportView report={report} onReset={handleReset} />
+                <ValidationReportView 
+                  report={report} 
+                  onReset={handleReset} 
+                  selectedDocId={
+                    (documentTypes.find((d) => {
+                      const slug = d.id.replace(/-passport$/, "").replace(/-visa$/, "");
+                      const code = countryMapping[slug] || slug.toUpperCase();
+                      return code === selectedCountry && d.id.endsWith(`-${selectedDocType}`);
+                    }) || documentTypes.find((d) => {
+                      const slug = d.id.replace(/-passport$/, "").replace(/-visa$/, "");
+                      const code = countryMapping[slug] || slug.toUpperCase();
+                      return code === selectedCountry;
+                    }))?.id || "us-passport"
+                  }
+                  selectedDocPrice={
+                    (documentTypes.find((d) => {
+                      const slug = d.id.replace(/-passport$/, "").replace(/-visa$/, "");
+                      const code = countryMapping[slug] || slug.toUpperCase();
+                      return code === selectedCountry && d.id.endsWith(`-${selectedDocType}`);
+                    }) || documentTypes.find((d) => {
+                      const slug = d.id.replace(/-passport$/, "").replace(/-visa$/, "");
+                      const code = countryMapping[slug] || slug.toUpperCase();
+                      return code === selectedCountry;
+                    }))?.price || 5.99
+                  }
+                />
               ) : (
                 <div
                   className="rounded-xl border-2 border-dashed border-slate-200 bg-slate-50/60 p-12 flex flex-col items-center justify-center min-h-[520px] text-center"

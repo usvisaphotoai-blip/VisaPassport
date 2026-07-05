@@ -9,7 +9,11 @@ import { ValidationReport, ValidationMetric } from "@/lib/validation-engine";
 interface Props {
   report: ValidationReport;
   onReset: () => void;
+  selectedDocId?: string;
+  selectedDocPrice?: number;
 }
+
+import PriceDisplay from "@/app/components/PriceDisplay";
 
 // ─── Animation Variants ────────────────────────────────────────────────────────
 
@@ -245,7 +249,7 @@ function SummaryList({ items, title, dark = false }: { items: string[]; title: s
 
 // ─── Main Report Component ─────────────────────────────────────────────────────
 
-export default function ValidationReportView({ report, onReset }: Props) {
+export default function ValidationReportView({ report, onReset, selectedDocId, selectedDocPrice }: Props) {
   const { overall_result, compliance_score, summary, suggestions, metrics } = report;
   const ref = useRef(null);
   const inView = useInView(ref, { once: true });
@@ -328,6 +332,20 @@ export default function ValidationReportView({ report, onReset }: Props) {
           {/* Score ring */}
           <ScoreRing score={compliance_score} pass={isPass} />
         </div>
+
+        {overall_result === "FAIL" && (
+          <div className="mt-6 border-t border-slate-100 pt-6">
+            <button
+              onClick={() => {
+                const url = selectedDocId ? `/passport-photo-online?type=${selectedDocId}` : '/passport-photo-online';
+                window.location.href = url;
+              }}
+              className="w-full h-14 rounded-xl bg-lime-600 text-white font-bold text-sm uppercase tracking-widest hover:bg-lime-700 active:scale-[0.98] transition-all flex items-center justify-center gap-2.5 shadow-lg shadow-lime-500/30"
+            >
+              Get your ID photo at <PriceDisplay basePrice={selectedDocPrice || 5.99} />
+            </button>
+          </div>
+        )}
       </motion.div>
 
       {/* ── Metric Cards Grid ─────────────────────────────────────── */}
@@ -355,7 +373,6 @@ export default function ValidationReportView({ report, onReset }: Props) {
         variants={itemVariants}
         className="flex flex-col sm:flex-row gap-4 pt-2"
       >
-      
         <button
           onClick={onReset}
           className="w-full sm:flex-1 h-14 rounded-xl bg-blue-600 text-white font-bold text-sm uppercase tracking-widest hover:bg-blue-700 active:scale-[0.98] transition-all flex items-center justify-center gap-2.5 shadow-lg shadow-blue-500/30"
