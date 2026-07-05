@@ -405,6 +405,7 @@ function OrderPanel({
               <div className="space-y-3 pt-1 hidden lg:block">
                 <div className="w-full relative z-10">
                   <PayPalButtons
+                    fundingSource="card"
                     style={{ layout: "vertical", shape: "rect", color: "blue" }}
                     createOrder={createPayPalOrder}
                     onApprove={onPayPalApprove}
@@ -571,6 +572,7 @@ function MobileCTA({
             <div className="w-px h-8 bg-slate-200 shrink-0" />
             <div className="flex-1 relative z-10 min-w-[150px]">
               <PayPalButtons
+                fundingSource="card"
                 style={{
                   layout: "horizontal",
                   height: 40,
@@ -811,7 +813,7 @@ export default function PreviewClient({
   return (
     <PayPalScriptProvider
       options={{
-        clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || "",
+        "client-id": process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || "",
         currency: providerCurrency || "USD",
         intent: "capture",
       }}
