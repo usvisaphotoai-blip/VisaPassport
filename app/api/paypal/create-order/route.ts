@@ -30,7 +30,18 @@ export async function POST(req: Request) {
     const basePrice = isExpert ? 9.99 : (spec?.price || 5.99);
 
     const { getLocalPrice } = await import("@/lib/currency");
-    const localPrice = await getLocalPrice(basePrice, currencyOverride, isExpert);
+    let localPrice = await getLocalPrice(basePrice, currencyOverride, isExpert);
+
+    const PAYPAL_SUPPORTED_CURRENCIES = [
+      "AUD", "BRL", "CAD", "CNY", "CZK", "DKK", "EUR", "HKD", "HUF", "ILS",
+      "JPY", "MYR", "MXN", "TWD", "NZD", "NOK", "PHP", "PLN", "GBP", "RUB",
+      "SGD", "SEK", "CHF", "THB", "USD",
+    ];
+
+    if (!PAYPAL_SUPPORTED_CURRENCIES.includes(localPrice.currency)) {
+      // Fallback to USD if the resolved local currency is not supported by PayPal
+      localPrice = await getLocalPrice(basePrice, "USD", isExpert);
+    }
 
     const accessToken = await getPayPalAccessToken();
 
@@ -41,15 +52,10 @@ export async function POST(req: Request) {
           reference_id: photoId,
           amount: {
             currency_code: localPrice.currency,
-            value: localPrice.amount.toFixed(2),
+            value: localPrice.amount.toFixed(localPrice.decimals ?? 2),
           },
           description: isExpert ? "Expert Photo Review" : "Digital Document Photo",
-          custom_id: JSON.stringify({
-            photoId,
-            userId: session?.user?.email || guestEmail,
-            isExpert,
-            gaClientId
-          }),
+          custom_id: JSON.stringify({ photoId }),
         },
       ],
       application_context: {
@@ -70,7 +76,8 @@ export async function POST(req: Request) {
 
     if (!response.ok) {
       console.error("PayPal Create Order Error:", data);
-      throw new Error("Failed to create PayPal order");
+      const errorMessage = data.details?.[0]?.description || data.message || "Failed to create PayPal order";
+      throw new Error(errorMessage);
     }
 
     // Save paypalOrderId to DB
@@ -91,7 +98,7 @@ export async function POST(req: Request) {
   } catch (error: any) {
     console.error("PayPal Create Order Error:", error);
     return NextResponse.json(
-      { error: "Failed to create payment order" },
+      { error: error.message || "Failed to create payment order" },
       { status: 500 }
     );
   }

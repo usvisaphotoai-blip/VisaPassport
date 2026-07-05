@@ -99,6 +99,7 @@ export interface LocalPrice {
   amount: number; // Decimal amount (e.g. 5.99 or 399)
   formatted: string; // e.g. "$5.99" or "₹399"
   symbol: string;
+  decimals: number;
 }
 
 const EXPERT_PRICES: Record<string, { amount: number; symbol: string; decimals: number }> = {
@@ -188,6 +189,7 @@ export async function getLocalPrice(
       amount,
       formatted,
       symbol,
+      decimals,
     };
   } catch (error) {
     console.error("Failed to get local price, falling back to USD", error);
@@ -196,6 +198,7 @@ export async function getLocalPrice(
       amount: 5.99,
       formatted: "$5.99",
       symbol: "$",
+      decimals: 2,
     };
   }
 }
