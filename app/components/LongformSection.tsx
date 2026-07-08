@@ -99,7 +99,7 @@ export default function LongformSection({
                         <span className="block w-6 h-px bg-indigo-400" />
                     </span>
                     <h2 className="text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight">
-                        {countryName} {docName} Photo — Complete Guide
+                        {countryName} {docName} Photo — Editor and photo maker
                     </h2>
                 </div>
 
