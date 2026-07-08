@@ -8,6 +8,7 @@ import ConditionalNavFooter from "./components/ConditionalNavFooter";
 import AnalyticsTracker from "./components/AnalyticsTracker";
 import Script from "next/script";
 import { Suspense } from "react";
+import RecentSaleNotification from "./components/RecentSaleNotification";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -104,6 +105,7 @@ export default function RootLayout({
             {children}
         
           </ConditionalNavFooter>
+          <RecentSaleNotification />
         </AuthProvider>
 
         {/* Microsoft Clarity */}
