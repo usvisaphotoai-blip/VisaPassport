@@ -29,8 +29,17 @@ export default function LiveActivityChip() {
 
   if (!isClient) {
     return (
-      <div className="flex justify-center bg-slate-900 py-1.5 px-4 font-mono text-xs font-semibold text-white tracking-wider sm:text-sm">
-        <span className="opacity-0">Live: 85,432 approvals</span>
+      <div className="bg-slate-900 text-white border-b border-slate-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row items-center justify-center py-2 md:py-1.5 gap-2 md:gap-6 text-[10px] sm:text-xs font-medium">
+            <div className="flex items-center gap-2 shrink-0 opacity-0">
+              <span className="relative flex h-2 w-2"></span>
+              <span className="font-bold uppercase tracking-wider text-[11px] sm:text-xs">
+                Live: 85,432 photos processed
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

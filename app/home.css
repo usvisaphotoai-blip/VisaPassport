@@ -1210,3 +1210,207 @@
 .hc-seo-p strong {
   color: #0f1e2d;
 }
+
+/* ── Document Type Cards ── */
+.hc-doctype-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 32px;
+}
+.hc-doctype-card {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 24px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 20px;
+  align-items: start;
+}
+.hc-doctype-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.hc-doctype-h3 {
+  font-size: 18px;
+  font-weight: 800;
+  color: #1a202c;
+  margin: 0;
+}
+.hc-doctype-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.hc-doctype-pill {
+  font-size: 12px;
+  font-weight: 600;
+  color: #2d6a4f;
+  background: #f0faf6;
+  border: 1px solid #b2dfdb;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+.hc-doctype-note {
+  font-size: 14px;
+  color: #4a5568;
+  line-height: 1.6;
+  margin: 0;
+}
+.hc-doctype-actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  min-width: 130px;
+}
+.hc-doctype-btn {
+  font-size: 13px !important;
+  padding: 10px 14px !important;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.hc-doctype-link {
+  font-size: 12px;
+  color: #3d8c6e;
+  text-align: center;
+  text-decoration: underline;
+}
+@media (max-width: 640px) {
+  .hc-doctype-card {
+    grid-template-columns: 1fr;
+  }
+  .hc-doctype-actions {
+    flex-direction: row;
+    min-width: unset;
+    align-items: center;
+  }
+  .hc-doctype-btn {
+    flex: 1;
+  }
+  .hc-doctype-h3 {
+    font-size: 16px;
+  }
+}
+
+/* ── Comparison Table (desktop) ── */
+.hc-cmp-table-wrap {
+  margin-top: 32px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+}
+.hc-cmp-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.hc-cmp-th {
+  padding: 14px 18px;
+  font-weight: 700;
+  border-bottom: 2px solid #b2dfdb;
+  white-space: nowrap;
+}
+.hc-cmp-th-feat {
+  text-align: left;
+  color: #1a202c;
+  background: #f0faf6;
+}
+.hc-cmp-th-us {
+  text-align: center;
+  color: #2d6a4f;
+  font-weight: 800;
+  background: #d8f3dc;
+  border-bottom-color: #3d8c6e;
+}
+.hc-cmp-th-alt {
+  text-align: center;
+  color: #4a5568;
+  background: #f0faf6;
+}
+.hc-cmp-td {
+  padding: 12px 18px;
+  border-bottom: 1px solid #e2e8f0;
+}
+.hc-cmp-td-feat {
+  font-weight: 600;
+  color: #2d3748;
+}
+.hc-cmp-td-us {
+  text-align: center;
+  color: #2d6a4f;
+  font-weight: 700;
+}
+.hc-cmp-td-alt {
+  text-align: center;
+  color: #4a5568;
+}
+.hc-cmp-row-even { background: #fff; }
+.hc-cmp-row-odd  { background: #f8fdf9; }
+.hc-cmp-us-even  { background: #f0faf6; }
+.hc-cmp-us-odd   { background: #e8f5e9; }
+
+/* ── Comparison Mobile Cards ── */
+.hc-cmp-cards { display: none; }
+
+@media (max-width: 700px) {
+  .hc-cmp-table-wrap { display: none; }
+  .hc-cmp-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 24px;
+  }
+  .hc-cmp-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 16px;
+  }
+  .hc-cmp-card-feat {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a202c;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #f0faf6;
+  }
+  .hc-cmp-card-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px dashed #f0f4f8;
+    gap: 8px;
+  }
+  .hc-cmp-card-row:last-child { border-bottom: none; }
+  .hc-cmp-card-row-us {
+    background: #f0faf6;
+    border-radius: 8px;
+    padding: 6px 10px;
+    border-bottom: none;
+    margin-bottom: 4px;
+  }
+  .hc-cmp-card-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #718096;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+  .hc-cmp-card-val {
+    font-size: 13px;
+    color: #4a5568;
+    text-align: right;
+  }
+  .hc-cmp-card-val-us {
+    color: #2d6a4f;
+    font-weight: 700;
+  }
+}

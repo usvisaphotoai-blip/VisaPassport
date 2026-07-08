@@ -140,6 +140,9 @@ export default function Navbar() {
             {/* ── Mobile right: CTA + hamburger ── */}
             <div className="flex lg:hidden items-center gap-2">
               {/* Compact CTA on mobile */}
+              {status === "loading" && (
+                <div className="w-[84px] h-[32px] bg-slate-100 animate-pulse rounded-lg" />
+              )}
               {status !== "loading" && !session && (
                 <Link
                   href="/passport-photo-online"

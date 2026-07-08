@@ -70,7 +70,7 @@ export default function Footer() {
             </div>
             <div className="py-2">
               <a href="https://findly.tools/pixpassport?utm_source=pixpassport" target="_blank" rel="noopener noreferrer">
-                <img src="https://findly.tools/badges/findly-tools-badge-light.svg" alt="Featured on Findly.tools" width="175" height="55" loading="lazy" />
+                <img src="/findly-tools-badge-light.svg" alt="Featured on Findly.tools" width="175" height="55" loading="lazy" />
               </a>
             </div>
           </div>

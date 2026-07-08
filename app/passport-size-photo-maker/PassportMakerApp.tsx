@@ -128,10 +128,10 @@ function ProcessingRing({
 }
 
 /* ─── Main Component ─── */
-export default function PassportMakerApp({ title, subtitle }: { title?: string, subtitle?: string } = {}) {
+export default function PassportMakerApp({ title, subtitle, defaultDoc = "uk-passport" }: { title?: string, subtitle?: string, defaultDoc?: string } = {}) {
   const router = useRouter();
   const [step, setStep] = useState<Step>("setup");
-  const [selectedDoc, setSelectedDoc] = useState("uk-passport");
+  const [selectedDoc, setSelectedDoc] = useState(defaultDoc);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [dragOver, setDragOver] = useState(false);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
