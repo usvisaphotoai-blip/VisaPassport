@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { fakeSalesData, products } from "@/lib/fakeSalesData";
+import { fakeSalesData, getRandomSale } from "@/lib/fakeSalesData";
 
 export default function RecentSaleNotification() {
   const [isVisible, setIsVisible] = useState(false);
@@ -14,35 +14,18 @@ export default function RecentSaleNotification() {
   });
 
   useEffect(() => {
-    let timeoutId: NodeJS.Timeout;
+    let showTimeoutId: NodeJS.Timeout;
+    let hideTimeoutId: NodeJS.Timeout;
 
     const scheduleNext = (delay: number) => {
-      timeoutId = setTimeout(() => {
-        const randomPerson = fakeSalesData[Math.floor(Math.random() * fakeSalesData.length)];
-        const randomProduct = products[Math.floor(Math.random() * products.length)];
+      showTimeoutId = setTimeout(() => {
+        const sale = getRandomSale();
         
-        // Random time between 1 min to 24 hours
-        const isMinutes = Math.random() > 0.5;
-        let timeAgo = "";
-        if (isMinutes) {
-          const mins = Math.floor(Math.random() * 59) + 1;
-          timeAgo = `${mins} minute${mins > 1 ? 's' : ''} ago`;
-        } else {
-          const hours = Math.floor(Math.random() * 24) + 1;
-          timeAgo = `${hours} hour${hours > 1 ? 's' : ''} ago`;
-        }
-        
-        setNotification({
-          name: randomPerson.name,
-          location: randomPerson.location,
-          product: randomProduct,
-          timeAgo,
-        });
-        
+        setNotification(sale);
         setIsVisible(true);
         
         // Hide after 6 seconds, then schedule next after 10-30 seconds
-        setTimeout(() => {
+        hideTimeoutId = setTimeout(() => {
           setIsVisible(false);
           const nextDelay = Math.floor(Math.random() * 20000) + 10000;
           scheduleNext(nextDelay);
@@ -53,7 +36,10 @@ export default function RecentSaleNotification() {
     // Start first notification after 3 seconds
     scheduleNext(3000);
 
-    return () => clearTimeout(timeoutId);
+    return () => {
+      clearTimeout(showTimeoutId);
+      clearTimeout(hideTimeoutId);
+    };
   }, []);
 
   return (

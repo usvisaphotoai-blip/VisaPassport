@@ -102,9 +102,34 @@ export const fakeSalesData = [
 ];
 
 export const products = [
-  "ordered a Passport Photo",
-  "ordered a Visa Photo",
-  "ordered an ID Photo",
-  "ordered a Green Card Photo",
-  "ordered a Driving License Photo"
+  { name: "ordered a Passport Photo", usOnly: false },
+  { name: "ordered a Visa Photo", usOnly: false },
+  { name: "ordered an ID Photo", usOnly: false },
+  { name: "ordered a Green Card Photo", usOnly: true },
+  { name: "ordered a Driving License Photo", usOnly: false }
 ];
+
+export function getRandomSale() {
+  const randomPerson = fakeSalesData[Math.floor(Math.random() * fakeSalesData.length)];
+  const isUS = randomPerson.location.includes("United States");
+  
+  const availableProducts = products.filter(p => isUS || !p.usOnly);
+  const randomProduct = availableProducts[Math.floor(Math.random() * availableProducts.length)].name;
+  
+  const isMinutes = Math.random() > 0.5;
+  let timeAgo = "";
+  if (isMinutes) {
+    const mins = Math.floor(Math.random() * 59) + 1;
+    timeAgo = `${mins} minute${mins > 1 ? 's' : ''} ago`;
+  } else {
+    const hours = Math.floor(Math.random() * 24) + 1;
+    timeAgo = `${hours} hour${hours > 1 ? 's' : ''} ago`;
+  }
+  
+  return {
+    name: randomPerson.name,
+    location: randomPerson.location,
+    product: randomProduct,
+    timeAgo,
+  };
+}
