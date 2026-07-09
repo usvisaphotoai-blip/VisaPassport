@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { uploadBufferToCloudinary } from "@/lib/cloudinary";
 
 export async function POST(request: Request) {
   try {
@@ -14,7 +15,18 @@ export async function POST(request: Request) {
       );
     }
 
-    const response = await fetch(`${apiUrl}/validate`, {
+    const imageFile = formData.get("image") as File;
+    let uploadPromise = Promise.resolve();
+
+    if (imageFile) {
+      uploadPromise = imageFile.arrayBuffer().then(buffer => 
+        uploadBufferToCloudinary(Buffer.from(buffer), 'visa_validator', ['validator photo']).catch(err => {
+          console.error("Failed to upload to Cloudinary:", err);
+        })
+      ) as Promise<void>;
+    }
+
+    const validatePromise = fetch(`${apiUrl}/validate`, {
       method: "POST",
       headers: {
         "X-API-Key": apiKey,
@@ -22,6 +34,8 @@ export async function POST(request: Request) {
       },
       body: formData,
     });
+
+    const [, response] = await Promise.all([uploadPromise, validatePromise]);
 
     if (!response.ok) {
       const errorData = await response.text();

@@ -296,7 +296,7 @@ export default function ValidatorClient() {
   const [isDragging, setIsDragging] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
-  const { verifyPhoto, isProcessing, report, setReport, error, setError } = useFaceVerification();
+  const { verifyPhoto, isProcessing, loadingMessage, report, setReport, error, setError } = useFaceVerification();
 
   useEffect(() => {
     const savedCountry = localStorage.getItem("validator_country");
@@ -458,8 +458,8 @@ export default function ValidatorClient() {
                 >
                   {isProcessing ? (
                     <span className="flex items-center justify-center gap-3">
-                      <span className="block w-4 h-4 border-[2.5px] border-white/30 border-t-white rounded-full animate-spin" />
-                      Analyzing…
+                      <span className="block w-4 h-4 border-[2.5px] border-lime-600/30 border-t-lime-600 rounded-full animate-spin" />
+                      {loadingMessage}
                     </span>
                   ) : (
                     <span className="flex items-center justify-center gap-2">

@@ -342,7 +342,7 @@ export default function ValidationReportView({ report, onReset, selectedDocId, s
               }}
               className="w-full h-14 rounded-xl bg-lime-600 text-white font-bold text-sm uppercase tracking-widest hover:bg-lime-700 active:scale-[0.98] transition-all flex items-center justify-center gap-2.5 shadow-lg shadow-lime-500/30"
             >
-              Get your ID photo at <PriceDisplay basePrice={selectedDocPrice || 5.99} />
+              Get your ID photo
             </button>
           </div>
         )}
