@@ -3,10 +3,12 @@ import Link from "next/link";
 import Head from "next/head";
 
 export const metadata: Metadata = {
-  title: "Online Passport & Visa Photo Editor | Official Biometric Photo Tool",
-  description:
-    "Free online passport, visa, and ID photo validator. Instantly verify biometric compliance for 50+ countries including US, UK, India, and Canada. Fix background and size issues instantly.",
- 
+  title:
+    "Passport Photo Maker & Visa Photo Tool for 50+ Countries | PixPassport",
+
+description:
+  "Passport size photo maker for 50+ countries. Create visa, ID, and passport photos with AI biometric validation, background removal, and auto crop.",
+
   alternates: {
     canonical: "https://www.pixpassport.com",
   },
