@@ -36,7 +36,18 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
    
+  </url>
 
+  <url>
+    <loc>https://www.pixpassport.com/uk-passport-size-photo-maker</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/uk-passport-size-photo-maker" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/uk-passport-size-photo-maker" />
+    <lastmod>2026-07-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1784690540/uk-hero_m4cc8l.webp</image:loc>
+    </image:image>
   </url>
 
   <url>
