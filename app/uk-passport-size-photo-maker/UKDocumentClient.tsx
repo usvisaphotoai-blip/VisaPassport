@@ -124,7 +124,7 @@ export default function UKDocumentClient() {
         throw new Error("Failed to load generated photo details.");
       }
 
-      router.push(`/preview/${data.photoId}`);
+      router.push(`/preview/${data.photoId}?from=uk-passport`);
     } catch (err: any) {
       setErrorMsg(err.message || "Something went wrong. Please try again.");
       setIsProcessing(false);

@@ -6,8 +6,9 @@ import { getLocalPrice } from "@/lib/currency";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
-export default async function PreviewPage(props: { params: Promise<{ id: string }> }) {
+export default async function PreviewPage(props: { params: Promise<{ id: string }>, searchParams: Promise<{ [key: string]: string | string[] | undefined }> }) {
   const params = await props.params;
+  const searchParams = await props.searchParams;
 
   let photoRecord;
   try {
@@ -41,6 +42,7 @@ export default async function PreviewPage(props: { params: Promise<{ id: string 
       localPrice={localPrice}
       expertPrice={expertPrice}
       initialIsPaid={isPaid}
+      from={searchParams.from as string}
     />
   );
 }

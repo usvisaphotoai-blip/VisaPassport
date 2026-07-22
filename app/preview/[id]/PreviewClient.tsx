@@ -54,7 +54,7 @@ function MetricFix({ metric }: { metric: typeof METRIC_FIXES[0] }) {
 }
 
 // Flat trust strip — the thing that should make someone feel safe paying
-function TrustBadges() {
+function TrustBadges({ from }: { from?: string }) {
   const badges = [
     { icon: ICONS.shield, text: "Secure Checkout" },
     { icon: ICONS.refresh, text: "Refund if Rejected" },
@@ -62,6 +62,12 @@ function TrustBadges() {
   ];
   return (
     <div className="flex items-center justify-center gap-x-5 gap-y-1.5 py-3 flex-wrap border-t border-slate-100 mt-3">
+      {from === "uk-passport" && (
+        <div className="flex items-center gap-1.5 text-slate-500">
+          <span className="text-[14px]">🇬🇧</span>
+          <span className="text-[11px] font-semibold text-slate-700">UK Gov Compliant</span>
+        </div>
+      )}
       {badges.map((b, i) => (
         <div key={i} className="flex items-center gap-1.5 text-slate-500">
           <Icon d={b.icon} size={13} className="text-emerald-600" />
@@ -178,6 +184,7 @@ function OrderPanel({
   setGuestEmail,
   handleEmailPhoto,
   spec,
+  from,
 }: any) {
   return (
     <div className="w-full lg:w-[38%] space-y-4">
@@ -312,7 +319,7 @@ function OrderPanel({
                   )}
                 </button>
 
-                <TrustBadges />
+                <TrustBadges from={from} />
 
                 <div className="flex justify-center pt-1">
                   <a href="https://razorpay.com/" target="_blank" rel="noopener noreferrer">
@@ -494,6 +501,7 @@ export default function PreviewClient({
   localPrice: initialLocalPrice,
   expertPrice: initialExpertPrice,
   initialIsPaid,
+  from,
 }: {
   photoId: string;
   previewUrl: string;
@@ -502,6 +510,7 @@ export default function PreviewClient({
   localPrice: LocalPrice;
   expertPrice: LocalPrice;
   initialIsPaid?: boolean;
+  from?: string;
 }) {
   const { data: session, status } = useSession();
   const [hasPaid, setHasPaid] = useState(initialIsPaid || false);
@@ -603,8 +612,13 @@ export default function PreviewClient({
             </h1>
             <div className="flex items-center justify-center lg:justify-start gap-1.5 mt-2">
               <Icon d={ICONS.shield} size={13} className="text-emerald-600 shrink-0" />
-              <p className="text-[12px] text-slate-500 font-semibold">
+              <p className="text-[12px] text-slate-500 font-semibold flex items-center gap-1 flex-wrap justify-center lg:justify-start">
                 Secure checkout · 100% acceptance guarantee · Refund if rejected
+                {from === "uk-passport" && (
+                  <span className="ml-1 md:ml-2 font-bold text-slate-700 flex items-center gap-1">
+                    <span className="text-xl">🇬🇧</span> UK Gov Compliant
+                  </span>
+                )}
               </p>
             </div>
           </div>
@@ -643,6 +657,7 @@ export default function PreviewClient({
               setGuestEmail={setGuestEmail}
               handleEmailPhoto={handleEmailPhoto}
               spec={spec}
+              from={from}
             />
           </div>
         </div>
