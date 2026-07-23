@@ -11,7 +11,7 @@ const twoByTwoDocuments = [
   { id: "cibtvisas", label: "CIBTvisas visa photo (any country)", size: "2 × 2 inch" },
   { id: "cvs", label: "CVS photo", size: "2 × 2 inch" },
   { id: "digital-passport", label: "Digital Passport Photo", size: "Digital upload" },
-  { id: "travisa", label: "Travisa visa photo (any country)", size: "2 × 2 inch" },
+
   { id: "us-citizenship", label: "US Citizenship (naturalization) 2x2 inch (51x51 mm)", size: "2 × 2 inch" },
   { id: "us-dv-lottery", label: "US Electronic Diversity Visa Lottery (600x600 px, 2x2 inches, white bg)", size: "600 × 600 px" },
   { id: "us-employment-auth", label: "US Employment Authorization 2x2 inch (51x51 mm)", size: "2 × 2 inch" },
@@ -22,20 +22,18 @@ const twoByTwoDocuments = [
   { id: "us-passport", label: "US Passport 2x2 inch (51x51 mm)", size: "2 × 2 inch" },
   { id: "us-veteran-id", label: "US Veteran ID Card 2x2 inch", size: "2 × 2 inch" },
   { id: "us-passport-card", label: "US passport card 2x2 inch", size: "2 × 2 inch" },
-  { id: "usa-cchi-id", label: "USA CCHI ID badge 3x3 inch", size: "3 × 3 inch" },
+
   { id: "usa-foid", label: "USA FOID 1.25x1.5 inch", size: "1.25 × 1.5 inch" },
   { id: "usa-form-i-130", label: "USA Form I-130 2x2 inch", size: "2 × 2 inch" },
   { id: "usa-nursing-license", label: "USA Nursing License 2x2 inch", size: "2 × 2 inch" },
-  { id: "usa-padi", label: "USA PADI certification card 45x57 mm (1.75x2.25 inch)", size: "1.75 × 2.25 inch" },
+
   { id: "usa-re-entry-permit", label: "USA Re-entry Permit 2x2 inch", size: "2 × 2 inch" },
   { id: "usa-sat", label: "USA SAT 2x2 inch", size: "2 × 2 inch" },
   { id: "usa-advance-parole", label: "USA advance parole 2x2 inch", size: "2 × 2 inch" },
   { id: "usa-bar-examination", label: "USA bar examination 300x300 pixels", size: "300 × 300 px" },
   { id: "usa-crew-visa", label: "USA crew visa 2x2 inch", size: "2 × 2 inch" },
   { id: "usa-welding-cert", label: "USA welding certificate 2x2 inch", size: "2 × 2 inch" },
-  { id: "visa-headquarters", label: "Visa Headquarters visa photo (any country)", size: "2 × 2 inch" },
-  { id: "visacentral", label: "VisaCentral visa photo (any country)", size: "2 × 2 inch" },
-  { id: "visahq", label: "VisaHQ visa photo (any country)", size: "2 × 2 inch" },
+
 ];
 
 const TRUST_ITEMS = [
