@@ -8,23 +8,28 @@ import BreadcrumbsFr from "../components/BreadcrumbsFr";
 import { fr } from "../translations";
 
 export const metadata: Metadata = {
-  title: "Photo d'Identité en Ligne — CNI, Permis & Documents Officiels",
+  title: "Photo d'Identité en Ligne — Générateur Biométrique 30s | PixPassport",
   description:
-    "Créez une photo d'identité conforme en ligne pour CNI, permis de conduire et tous documents officiels français. Vérification biométrique IA instantanée.",
+    "Générez votre photo d'identité en ligne depuis chez vous. Fond supprimé, recadrage biométrique IA automatique pour CNI, permis et documents officiels.",
   keywords: [
-    "photo identité",
     "photo identité en ligne",
-    "photo CNI",
-    "photo permis de conduire",
-    "photo identité conforme",
+    "générateur photo identité",
+    "photo CNI en ligne",
+    "photo permis de conduire en ligne",
+    "photo identité biométrique",
   ],
   alternates: {
     canonical: "https://www.pixpassport.com/fr/photo-identite-en-ligne",
+    languages: {
+      en: "https://www.pixpassport.com/make-passport-photo-online-free",
+      fr: "https://www.pixpassport.com/fr/photo-identite-en-ligne",
+      "x-default": "https://www.pixpassport.com/make-passport-photo-online-free",
+    },
   },
   openGraph: {
-    title: "Photo d'Identité en Ligne | PixPassport",
+    title: "Photo d'Identité en Ligne — Générateur Biométrique | PixPassport",
     description:
-      "Photo d'identité conforme pour CNI et documents officiels. Vérification biométrique IA.",
+      "Générez votre photo d'identité en ligne. Fond supprimé, recadrage biométrique IA automatique.",
     url: "https://www.pixpassport.com/fr/photo-identite-en-ligne",
     siteName: "PixPassport",
     locale: "fr_FR",
@@ -38,6 +43,13 @@ export const metadata: Metadata = {
       },
     ],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Photo d'Identité en Ligne | PixPassport",
+    description:
+      "Générez votre photo d'identité en ligne. Fond supprimé, recadrage biométrique IA automatique.",
+    images: ["https://www.pixpassport.com/og-image.jpg"],
+  },
 };
 
 const jsonLd = {
@@ -49,6 +61,7 @@ const jsonLd = {
       applicationCategory: "PhotographyApplication",
       operatingSystem: "All",
       inLanguage: "fr",
+      offers: { "@type": "Offer", price: "6.99", priceCurrency: "EUR" },
     },
   ],
 };

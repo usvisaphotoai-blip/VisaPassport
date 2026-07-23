@@ -9,13 +9,27 @@ import BreadcrumbsFr from "../components/BreadcrumbsFr";
 import FaqSectionFr from "../components/FaqSectionFr";
 
 export const metadata: Metadata = {
-  title: "Photo Carte d'Identité en Ligne — CNI Conforme",
+  title: "Photo Carte d'Identité en Ligne — CNI Conforme | PixPassport",
   description: "Créez une photo carte d'identité conforme aux normes françaises. Format 35×45mm, fond blanc, cadrage biométrique automatique. Résultat instantané.",
   keywords: ["photo carte identité", "photo CNI", "photo carte nationale identité", "photo CNI en ligne"],
-  alternates: { canonical: "https://www.pixpassport.com/fr/photo-carte-identite" },
+  alternates: {
+    canonical: "https://www.pixpassport.com/fr/photo-carte-identite",
+    languages: {
+      en: "https://www.pixpassport.com/passport-photos",
+      fr: "https://www.pixpassport.com/fr/photo-carte-identite",
+      "x-default": "https://www.pixpassport.com/passport-photos",
+    },
+  },
   openGraph: {
     title: "Photo Carte d'Identité en Ligne | PixPassport", description: "Photo CNI conforme aux normes françaises.",
     url: "https://www.pixpassport.com/fr/photo-carte-identite", siteName: "PixPassport", locale: "fr_FR", type: "website",
+    images: [{ url: "https://www.pixpassport.com/og-image.jpg", width: 1200, height: 630, alt: "Photo Carte d'Identité en Ligne" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Photo Carte d'Identité en Ligne | PixPassport",
+    description: "Photo CNI conforme aux normes françaises. Vérification biométrique IA.",
+    images: ["https://www.pixpassport.com/og-image.jpg"],
   },
 };
 
@@ -29,7 +43,7 @@ const cniFaqs = [
 const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
-    { "@type": "SoftwareApplication", name: "PixPassport — Photo Carte d'Identité", applicationCategory: "PhotographyApplication", inLanguage: "fr" },
+    { "@type": "SoftwareApplication", name: "PixPassport — Photo Carte d'Identité", applicationCategory: "PhotographyApplication", operatingSystem: "All", inLanguage: "fr", offers: { "@type": "Offer", price: "6.99", priceCurrency: "EUR" } },
   ],
 };
 

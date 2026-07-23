@@ -8,11 +8,18 @@ import FaqSectionFr from "../components/FaqSectionFr";
 import { fr } from "../translations";
 
 export const metadata: Metadata = {
-  title: "Photo Visa en Ligne — Tous Pays & Types de Visa",
+  title: "Photo Visa en Ligne — Tous Pays & Types de Visa | PixPassport",
   description:
     "Créez une photo visa conforme pour Schengen, États-Unis, Canada, Australie et plus de 50 pays. Vérification biométrique IA instantanée.",
 
-  alternates: { canonical: "https://www.pixpassport.com/fr/photo-visa" },
+  alternates: {
+    canonical: "https://www.pixpassport.com/fr/photo-visa",
+    languages: {
+      en: "https://www.pixpassport.com/visa-photo",
+      fr: "https://www.pixpassport.com/fr/photo-visa",
+      "x-default": "https://www.pixpassport.com/visa-photo",
+    },
+  },
   openGraph: {
     title: "Photo Visa en Ligne | PixPassport",
     description:
@@ -30,6 +37,13 @@ export const metadata: Metadata = {
       },
     ],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Photo Visa en Ligne | PixPassport",
+    description:
+      "Photo visa conforme pour tous les pays. Vérification biométrique IA.",
+    images: ["https://www.pixpassport.com/og-image.jpg"],
+  },
 };
 
 const jsonLd = {
@@ -39,7 +53,9 @@ const jsonLd = {
       "@type": "SoftwareApplication",
       name: "PixPassport — Photo Visa",
       applicationCategory: "PhotographyApplication",
+      operatingSystem: "All",
       inLanguage: "fr",
+      offers: { "@type": "Offer", price: "6.99", priceCurrency: "EUR" },
     },
   ],
 };

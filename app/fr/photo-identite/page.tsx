@@ -8,22 +8,35 @@ import BreadcrumbsFr from "../components/BreadcrumbsFr";
 import { fr } from "../translations";
 
 export const metadata: Metadata = {
-  title: "Photo d'Identité en Ligne — CNI, Permis & Documents Officiels",
-  description: "Créez une photo d'identité conforme en ligne pour CNI, permis de conduire et tous documents officiels français. Vérification biométrique IA instantanée.",
-  keywords: ["photo identité", "photo identité en ligne", "photo CNI", "photo permis de conduire", "photo identité conforme"],
-  alternates: { canonical: "https://www.pixpassport.com/fr/photo-identite" },
+  title: "Photo d'Identité Officielle — Passeport, CNI & Permis | PixPassport",
+  description: "Obtenez votre photo d'identité aux normes françaises en 30s. Valide pour CNI, permis de conduire et carte Vitale. Garanti conforme ou remboursé.",
+  keywords: ["photo identité", "photo identité france", "photo CNI", "photo permis de conduire", "photo identité conforme"],
+  alternates: {
+    canonical: "https://www.pixpassport.com/fr/photo-identite",
+    languages: {
+      en: "https://www.pixpassport.com/passport-photos",
+      fr: "https://www.pixpassport.com/fr/photo-identite",
+      "x-default": "https://www.pixpassport.com/passport-photos",
+    },
+  },
   openGraph: {
-    title: "Photo d'Identité en Ligne | PixPassport",
-    description: "Photo d'identité conforme pour CNI et documents officiels. Vérification biométrique IA.",
+    title: "Photo d'Identité Officielle | PixPassport",
+    description: "Photo d'identité conforme pour CNI, permis et documents officiels. Vérification biométrique IA.",
     url: "https://www.pixpassport.com/fr/photo-identite", siteName: "PixPassport", locale: "fr_FR", type: "website",
-    images: [{ url: "https://www.pixpassport.com/og-image.jpg", width: 1200, height: 630, alt: "Photo d'Identité en Ligne" }],
+    images: [{ url: "https://www.pixpassport.com/og-image.jpg", width: 1200, height: 630, alt: "Photo d'Identité Officielle" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Photo d'Identité Officielle | PixPassport",
+    description: "Photo d'identité conforme pour CNI, permis et documents officiels. Vérification biométrique IA.",
+    images: ["https://www.pixpassport.com/og-image.jpg"],
   },
 };
 
 const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
-    { "@type": "SoftwareApplication", name: "PixPassport — Photo d'Identité", applicationCategory: "PhotographyApplication", operatingSystem: "All", inLanguage: "fr" },
+    { "@type": "SoftwareApplication", name: "PixPassport — Photo d'Identité", applicationCategory: "PhotographyApplication", operatingSystem: "All", inLanguage: "fr", offers: { "@type": "Offer", price: "6.99", priceCurrency: "EUR" } },
   ],
 };
 

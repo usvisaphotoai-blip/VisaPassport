@@ -5,10 +5,24 @@ import FaqSectionFr from "../../components/FaqSectionFr";
 import StickyCTAFr from "../../components/StickyCTAFr";
 
 export const metadata: Metadata = {
-  title: "Fond Photo Passeport : Règles et Astuces 2026",
+  title: "Fond Photo Passeport : Règles et Astuces 2026 | PixPassport",
   description: "Apprenez les règles d'arrière-plan pour les photos passeport. Couleur, éclairage, ombres — tout pour un fond conforme.",
   keywords: ["fond photo passeport", "arrière-plan photo identité", "fond blanc photo"],
-  alternates: { canonical: "https://www.pixpassport.com/fr/guides/passport-photo-background" },
+  alternates: {
+    canonical: "https://www.pixpassport.com/fr/guides/passport-photo-background",
+    languages: {
+      en: "https://www.pixpassport.com/blog",
+      fr: "https://www.pixpassport.com/fr/guides/passport-photo-background",
+      "x-default": "https://www.pixpassport.com/blog",
+    },
+  },
+  openGraph: { title: "Fond Photo Passeport : Règles et Astuces | PixPassport", url: "https://www.pixpassport.com/fr/guides/passport-photo-background", locale: "fr_FR", type: "article" },
+  twitter: {
+    card: "summary_large_image",
+    title: "Fond Photo Passeport : Règles et Astuces | PixPassport",
+    description: "Apprenez les règles d'arrière-plan pour les photos passeport.",
+    images: ["https://www.pixpassport.com/og-image.jpg"],
+  },
 };
 
 const bgFaqs = [

@@ -5,23 +5,34 @@ import FaqSectionFr from "../../components/FaqSectionFr";
 import StickyCTAFr from "../../components/StickyCTAFr";
 
 export const metadata: Metadata = {
-  title: "Photo d’Identité France 2026 : Passeport, CNI, ePhoto Permis, Visa",
+  title: "Photo d’Identité France 2026 : Passeport, CNI, ePhoto Permis, Visa | PixPassport",
   description: "Créez une photo d’identité officielle en ligne pour passeport, CNI, ePhoto permis, visa, titre de séjour, carte Vitale et plus. Guide France 2026 complet.",
   keywords: [
     "photo identite france",
     "photo passeport en ligne",
     "photo cni en ligne",
-    
   ],
   alternates: {
-    canonical: "https://www.pixpassport.com/fr/guides/photo-identite-france-passeport-cni-ephoto-permis-visa"
+    canonical: "https://www.pixpassport.com/fr/guides/photo-identite-france-passeport-cni-ephoto-permis-visa",
+    languages: {
+      en: "https://www.pixpassport.com/blog",
+      fr: "https://www.pixpassport.com/fr/guides/photo-identite-france-passeport-cni-ephoto-permis-visa",
+      "x-default": "https://www.pixpassport.com/blog",
+    },
   },
   openGraph: {
     title: "Comment Créer une Photo d’Identité Officielle en Ligne en France (2026) | PixPassport",
     url: "https://www.pixpassport.com/fr/guides/photo-identite-france-passeport-cni-ephoto-permis-visa",
     locale: "fr_FR",
-    type: "article"
-  }
+    type: "article",
+    images: [{ url: "https://www.pixpassport.com/og-image.jpg", width: 1200, height: 630, alt: "Photo d'Identité France 2026" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Photo d’Identité France 2026 | PixPassport",
+    description: "Guide officiel pour photo passeport, CNI, ePhoto permis et visa en France.",
+    images: ["https://www.pixpassport.com/og-image.jpg"],
+  },
 };
 
 const guideFaqs = [

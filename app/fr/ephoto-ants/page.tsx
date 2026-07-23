@@ -20,6 +20,11 @@ export const metadata: Metadata = {
   ],
   alternates: {
     canonical: "https://www.pixpassport.com/fr/ephoto-ants",
+    languages: {
+      en: "https://www.pixpassport.com/passport-photos",
+      fr: "https://www.pixpassport.com/fr/ephoto-ants",
+      "x-default": "https://www.pixpassport.com/passport-photos",
+    },
   },
   openGraph: {
     title: "ePhoto ANTS en Ligne — Photo & Code Numérique | PixPassport",
@@ -29,6 +34,14 @@ export const metadata: Metadata = {
     siteName: "PixPassport",
     locale: "fr_FR",
     type: "website",
+    images: [{ url: "https://www.pixpassport.com/og-image.jpg", width: 1200, height: 630, alt: "ePhoto ANTS en Ligne" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "ePhoto ANTS en Ligne | PixPassport",
+    description:
+      "Créez votre ePhoto ANTS conforme en 30s. Photo biométrique pour passeport, CNI et permis.",
+    images: ["https://www.pixpassport.com/og-image.jpg"],
   },
 };
 

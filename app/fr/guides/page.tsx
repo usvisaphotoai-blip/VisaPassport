@@ -4,10 +4,23 @@ import BreadcrumbsFr from "../components/BreadcrumbsFr";
 import { fr } from "../translations";
 
 export const metadata: Metadata = {
-  title: "Guides Photo d'Identité — Conseils et Tutoriels",
+  title: "Guides Photo d'Identité — Conseils et Tutoriels | PixPassport",
   description: "Guides complets pour des photos d'identité conformes : tailles, arrière-plans, astuces pour photos maison. Tout savoir pour réussir vos photos passeport et visa.",
-  alternates: { canonical: "https://www.pixpassport.com/fr/guides" },
+  alternates: {
+    canonical: "https://www.pixpassport.com/fr/guides",
+    languages: {
+      en: "https://www.pixpassport.com/blog",
+      fr: "https://www.pixpassport.com/fr/guides",
+      "x-default": "https://www.pixpassport.com/blog",
+    },
+  },
   openGraph: { title: "Guides Photo d'Identité | PixPassport", description: "Guides complets photo passeport et visa.", url: "https://www.pixpassport.com/fr/guides", siteName: "PixPassport", locale: "fr_FR", type: "website" },
+  twitter: {
+    card: "summary_large_image",
+    title: "Guides Photo d'Identité | PixPassport",
+    description: "Guides complets photo passeport et visa.",
+    images: ["https://www.pixpassport.com/og-image.jpg"],
+  },
 };
 
 const jsonLd = {

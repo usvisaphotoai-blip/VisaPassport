@@ -8,7 +8,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Photo Passeport en Ligne | Conforme & Garantie | PixPassport",
   description:
-    "Créez votre photo passeport, visa ou carte d'identité 100 % conforme en 30 secondes. Vérification biométrique automatique, fond supprimé, résultat immédiat. 50+ pays, garanti ou remboursé.",
+    "Créez votre photo passeport, visa ou carte d'identité 100 % conforme en 30 s. Vérification biométrique IA, fond supprimé, 50+ pays. Garanti ou remboursé.",
   keywords: [
     "photo passeport en ligne",
     "photo identité conforme",
@@ -16,7 +16,14 @@ export const metadata: Metadata = {
     "ePhoto ANTS",
 
   ],
-  alternates: { canonical: "https://www.pixpassport.com/fr" },
+  alternates: {
+    canonical: "https://www.pixpassport.com/fr",
+    languages: {
+      en: "https://www.pixpassport.com/",
+      fr: "https://www.pixpassport.com/fr",
+      "x-default": "https://www.pixpassport.com/",
+    },
+  },
   openGraph: {
     title: "PixPassport — Photo Passeport Conforme en 30 Secondes",
     description:
@@ -33,6 +40,13 @@ export const metadata: Metadata = {
         alt: "PixPassport — Photo passeport biométrique en ligne",
       },
     ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Photo Passeport en Ligne | Conforme & Garantie | PixPassport",
+    description:
+      "Créez votre photo passeport, visa ou carte d'identité 100 % conforme en 30 s. Vérification biométrique IA.",
+    images: ["https://www.pixpassport.com/og-image.jpg"],
   },
 };
 
@@ -100,7 +114,7 @@ const benefits = [
   { icon: "🎯", title: "Conformité biométrique garantie", desc: "Validée selon les critères officiels de l'ANTS et des autorités de 50+ pays. Taux d'acceptation supérieur à 99 %. Remboursé si refusé." },
   { icon: "⚡", title: "Résultat en moins de 30 secondes", desc: "Disponible 24h/24, 7j/7. Pas de déplacement, pas d'attente en pharmacie ou en studio photo." },
   { icon: "🔒", title: "Données 100 % sécurisées & RGPD", desc: "Chiffrement de bout en bout. Vos photos sont supprimées après 24 h. Aucune revente, aucun partage." },
-  { icon: "💶", title: "À partir de 5,99 € seulement", desc: "Économisez sur les frais de studio et les resoumissions en cas de refus. Tarif unique, sans abonnement." },
+  { icon: "💶", title: "À partir de 6,99 € seulement", desc: "Économisez sur les frais de studio et les resoumissions en cas de refus. Tarif unique, sans abonnement." },
   { icon: "🌍", title: "50+ pays et documents couverts", desc: "France, États-Unis, Canada, Royaume-Uni, espace Schengen — base de données mondiale mise à jour en permanence." },
   { icon: "🖨️", title: "Planche d'impression incluse", desc: "Format prêt à imprimer, accepté dans toutes les pharmacies, mairies et bureaux de poste français." },
 ];
@@ -124,6 +138,20 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
     {
+      "@type": "Organization",
+      name: "PixPassport",
+      url: "https://www.pixpassport.com",
+      logo: "https://www.pixpassport.com/logo.png",
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://www.pixpassport.com/fr/#webpage",
+      url: "https://www.pixpassport.com/fr",
+      name: "Photo Passeport en Ligne | Conforme & Garantie | PixPassport",
+      inLanguage: "fr",
+      description: "Créez votre photo passeport, visa ou carte d'identité 100 % conforme en 30 s.",
+    },
+    {
       "@type": "SoftwareApplication",
       name: "PixPassport",
       url: "https://www.pixpassport.com/fr",
@@ -131,7 +159,7 @@ const jsonLd = {
       operatingSystem: "All",
       inLanguage: "fr",
       offers: { "@type": "Offer", price: "6.99", priceCurrency: "EUR" },
-      aggregateRating: { "@type": "AggregateRating", ratingValue: "4.9", ratingCount: "170" },
+      aggregateRating: { "@type": "AggregateRating", ratingValue: "4.9", ratingCount: "17000" },
     },
     {
       "@type": "FAQPage",
@@ -170,7 +198,7 @@ export default function FrHomePage() {
           {/* ── Full-width image block ── */}
           <div className="p-hero__imgwrap">
             <Image
-              src="/photo_officielle passeport.jpg"
+              src="/photo-officielle-passeport.jpg"
               alt="Exemples de photos passeport conformes aux normes biométriques officielles"
               width={1440}
               height={620}
@@ -314,7 +342,7 @@ export default function FrHomePage() {
             <div className="p-prose">
               <p>
                 Une <strong>photo passeport conforme</strong> doit répondre à des critères précis
-                définis par l'ANTS (Agence Nationale des Titres Sécurisés) pour la France et par
+                définis par l'<strong><Link href="/fr/ephoto-ants" className="text-lime-700 underline hover:text-lime-800">ANTS (Agence Nationale des Titres Sécurisés)</Link></strong> pour la France et par
                 l'OACI (Organisation de l'Aviation Civile Internationale) pour les documents de
                 voyage internationaux. Ces exigences couvrent le fond (blanc uni), les dimensions
                 (35×45 mm), l'expression neutre, les yeux ouverts, l'absence d'accessoires sur
@@ -327,8 +355,9 @@ export default function FrHomePage() {
                 vérifiant chaque critère avant que vous ne soumettez votre demande.
               </p>
               <p>
-                Notre service génère des photos conformes pour le passeport biométrique français,
-                la carte nationale d'identité, les visas Schengen, le permis de conduire
+                Notre service génère des photos conformes pour le <Link href="/fr/photo-passeport" className="text-lime-700 underline hover:text-lime-800">passeport biométrique français</Link>,
+                la <Link href="/fr/photo-carte-identite" className="text-lime-700 underline hover:text-lime-800">carte nationale d'identité (CNI)</Link>,
+                les <Link href="/fr/photo-visa" className="text-lime-700 underline hover:text-lime-800">visas Schengen</Link>, le permis de conduire
                 international et de nombreux autres documents officiels dans plus de 50 pays.
               </p>
             </div>
@@ -434,7 +463,7 @@ export default function FrHomePage() {
                 <ul className="p-compare__list">
                   <li>100 % en ligne, depuis chez vous</li>
                   <li>Disponible 24h/24, 7j/7</li>
-                  <li>À partir de 5,99 € seulement</li>
+                  <li>À partir de 6,99 € seulement</li>
                   <li>Garanti ou remboursé</li>
                   <li>Résultat en moins de 30 secondes</li>
                   <li>Format ePhoto ANTS inclus</li>
@@ -541,7 +570,7 @@ export default function FrHomePage() {
             </h2>
             <p className="p-bottom__sub">
               Rejoignez plus de 17 000 utilisateurs qui ont obtenu leur photo d'identité en ligne
-              rapidement, sans déplacement et sans risque de refus. À partir de 5,99 €,
+              rapidement, sans déplacement et sans risque de refus. À partir de 6,99 €,
               garanti ou remboursé.
             </p>
             <Link href={ctaHref} className="p-btn p-btn--primary p-btn--lg">

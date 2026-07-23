@@ -5,10 +5,24 @@ import FaqSectionFr from "../../components/FaqSectionFr";
 import StickyCTAFr from "../../components/StickyCTAFr";
 
 export const metadata: Metadata = {
-  title: "Comment Prendre une Photo Passeport à la Maison",
+  title: "Comment Prendre une Photo Passeport à la Maison | PixPassport",
   description: "Guide étape par étape pour prendre une photo passeport professionnelle chez vous avec votre téléphone.",
   keywords: ["photo passeport maison", "prendre photo identité téléphone", "photo passeport smartphone"],
-  alternates: { canonical: "https://www.pixpassport.com/fr/guides/how-to-take-passport-photo-at-home" },
+  alternates: {
+    canonical: "https://www.pixpassport.com/fr/guides/how-to-take-passport-photo-at-home",
+    languages: {
+      en: "https://www.pixpassport.com/blog",
+      fr: "https://www.pixpassport.com/fr/guides/how-to-take-passport-photo-at-home",
+      "x-default": "https://www.pixpassport.com/blog",
+    },
+  },
+  openGraph: { title: "Comment Prendre une Photo Passeport à la Maison | PixPassport", url: "https://www.pixpassport.com/fr/guides/how-to-take-passport-photo-at-home", locale: "fr_FR", type: "article" },
+  twitter: {
+    card: "summary_large_image",
+    title: "Comment Prendre une Photo Passeport à la Maison | PixPassport",
+    description: "Guide étape par étape pour prendre une photo passeport avec votre téléphone.",
+    images: ["https://www.pixpassport.com/og-image.jpg"],
+  },
 };
 
 const howToFaqs = [

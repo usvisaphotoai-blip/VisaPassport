@@ -7,13 +7,27 @@ import BreadcrumbsFr from "../components/BreadcrumbsFr";
 import FaqSectionFr from "../components/FaqSectionFr";
 
 export const metadata: Metadata = {
-  title: "Photo Passeport Biométrique — Normes OACI 2026",
+  title: "Photo Passeport Biométrique — Normes OACI 2026 | PixPassport",
   description: "Photo passeport biométrique conforme aux normes OACI internationales. Vérification automatique de la position des yeux, taille de la tête et arrière-plan.",
   keywords: ["photo biométrique", "photo passeport biométrique", "normes OACI", "ICAO photo", "photo biométrique en ligne"],
-  alternates: { canonical: "https://www.pixpassport.com/fr/photo-passeport-biometrique" },
+  alternates: {
+    canonical: "https://www.pixpassport.com/fr/photo-passeport-biometrique",
+    languages: {
+      en: "https://www.pixpassport.com/passport-photos",
+      fr: "https://www.pixpassport.com/fr/photo-passeport-biometrique",
+      "x-default": "https://www.pixpassport.com/passport-photos",
+    },
+  },
   openGraph: {
     title: "Photo Passeport Biométrique | PixPassport", description: "Photo biométrique conforme aux normes OACI internationales.",
     url: "https://www.pixpassport.com/fr/photo-passeport-biometrique", siteName: "PixPassport", locale: "fr_FR", type: "website",
+    images: [{ url: "https://www.pixpassport.com/og-image.jpg", width: 1200, height: 630, alt: "Photo Passeport Biométrique" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Photo Passeport Biométrique | PixPassport",
+    description: "Photo biométrique conforme aux normes OACI internationales. Vérification biométrique IA.",
+    images: ["https://www.pixpassport.com/og-image.jpg"],
   },
 };
 
@@ -28,7 +42,7 @@ const bioFaqs = [
 const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
-    { "@type": "SoftwareApplication", name: "PixPassport — Photo Biométrique", applicationCategory: "PhotographyApplication", inLanguage: "fr" },
+    { "@type": "SoftwareApplication", name: "PixPassport — Photo Biométrique", applicationCategory: "PhotographyApplication", operatingSystem: "All", inLanguage: "fr", offers: { "@type": "Offer", price: "6.99", priceCurrency: "EUR" } },
   ],
 };
 

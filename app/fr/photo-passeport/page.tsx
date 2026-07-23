@@ -11,7 +11,14 @@ export const metadata: Metadata = {
   title: "Photo Passeport en Ligne — Conforme & Instantanée",
   description: "Créez une photo passeport conforme en ligne avec vérification biométrique IA. Format 35×45mm, fond blanc, cadrage automatique. Résultat en 30 secondes.",
   keywords: ["photo passeport", "photo passeport en ligne", "photo passeport conforme", "photo passeport france", "35x45mm"],
-  alternates: { canonical: "https://www.pixpassport.com/fr/photo-passeport" },
+  alternates: {
+    canonical: "https://www.pixpassport.com/fr/photo-passeport",
+    languages: {
+      en: "https://www.pixpassport.com/passport-photos",
+      fr: "https://www.pixpassport.com/fr/photo-passeport",
+      "x-default": "https://www.pixpassport.com/passport-photos",
+    },
+  },
   openGraph: {
     title: "Photo Passeport en Ligne | PixPassport",
     description: "Créez une photo passeport conforme avec vérification biométrique IA. Format 35×45mm, fond blanc.",
@@ -19,12 +26,18 @@ export const metadata: Metadata = {
     siteName: "PixPassport", locale: "fr_FR", type: "website",
     images: [{ url: "https://www.pixpassport.com/og-image.jpg", width: 1200, height: 630, alt: "Photo Passeport en Ligne" }],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Photo Passeport en Ligne | PixPassport",
+    description: "Créez une photo passeport conforme avec vérification biométrique IA. Format 35×45mm, fond blanc.",
+    images: ["https://www.pixpassport.com/og-image.jpg"],
+  },
 };
 
 const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
-    { "@type": "SoftwareApplication", name: "PixPassport — Photo Passeport", applicationCategory: "PhotographyApplication", operatingSystem: "All", inLanguage: "fr", offers: { "@type": "Offer", price: "6.99", priceCurrency: "USD" } },
+    { "@type": "SoftwareApplication", name: "PixPassport — Photo Passeport", applicationCategory: "PhotographyApplication", operatingSystem: "All", inLanguage: "fr", offers: { "@type": "Offer", price: "6.99", priceCurrency: "EUR" } },
   ],
 };
 

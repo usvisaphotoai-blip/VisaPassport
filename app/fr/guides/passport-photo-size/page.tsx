@@ -5,11 +5,24 @@ import FaqSectionFr from "../../components/FaqSectionFr";
 import StickyCTAFr from "../../components/StickyCTAFr";
 
 export const metadata: Metadata = {
-  title: "Taille Photo Passeport : Guide Complet 2026",
+  title: "Taille Photo Passeport : Guide Complet 2026 | PixPassport",
   description: "Découvrez les dimensions exactes requises pour les photos passeport dans chaque pays. Guide complet avec tableaux de tailles, conseils pratiques et outil gratuit.",
   keywords: ["taille photo passeport", "dimension photo passeport", "photo 35x45", "photo 2x2 pouces", "format photo identité"],
-  alternates: { canonical: "https://www.pixpassport.com/fr/guides/passport-photo-size" },
+  alternates: {
+    canonical: "https://www.pixpassport.com/fr/guides/passport-photo-size",
+    languages: {
+      en: "https://www.pixpassport.com/blog",
+      fr: "https://www.pixpassport.com/fr/guides/passport-photo-size",
+      "x-default": "https://www.pixpassport.com/blog",
+    },
+  },
   openGraph: { title: "Taille Photo Passeport — Guide Complet | PixPassport", url: "https://www.pixpassport.com/fr/guides/passport-photo-size", locale: "fr_FR", type: "article" },
+  twitter: {
+    card: "summary_large_image",
+    title: "Taille Photo Passeport — Guide Complet | PixPassport",
+    description: "Dimensions exactes pour les photos passeport dans chaque pays.",
+    images: ["https://www.pixpassport.com/og-image.jpg"],
+  },
 };
 
 const sizeFaqs = [
