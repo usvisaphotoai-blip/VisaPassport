@@ -13,9 +13,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://www.pixpassport.com/de",
     languages: {
-      "de": "https://www.pixpassport.com/de",
-      "en": "https://www.pixpassport.com/",
-      "fr": "https://www.pixpassport.com/fr",
+      de: "https://www.pixpassport.com/de",
+      en: "https://www.pixpassport.com/",
+      fr: "https://www.pixpassport.com/fr",
       "x-default": "https://www.pixpassport.com/",
     },
   },
@@ -286,80 +286,52 @@ export default function DeHomePage() {
       <main className="bg-white text-slate-900">
         {/* ══════════════ HERO ══════════════ */}
         <section aria-labelledby="hero-h1" className="pt-8 md:pt-10">
-          <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-10">
-            <div className="overflow-hidden rounded-xl bg-slate-100">
-              <Image
-                src="/photo-officielle-passeport.jpg"
-                alt="Beispiele für offizielle biometrische Passbilder nach BMI-Standard"
-                width={1440}
-                height={620}
-                priority
-                className="hidden w-full sm:block"
-              />
-              <Image
-                src="https://res.cloudinary.com/dipzpwbbk/image/upload/v1779008016/c24d89b1-ab0e-4f1d-9035-5814bc7b91ca_preview_ip9ogs.jpg"
-                alt="Biometrisches Passbild online per Smartphone erstellen"
-                width={750}
-                height={560}
-                className="block w-full sm:hidden"
-              />
-            </div>
-          </div>
+          <div className="mx-auto max-w-7xl px-3 py-10 sm:px-4 md:py-10 lg:px-6">
+            <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-12">
+              <div>
+                <p className="mb-4 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-lime-700">
+                  <span
+                    className="h-2 w-2 rounded-full bg-lime-600"
+                    aria-hidden="true"
+                  />
+                  Neu seit Mai 2025 · Digitales Passbild nach BMI-Vorgabe
+                </p>
 
-          <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6 md:py-16 lg:px-10">
-            <p className="mb-4 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-lime-700">
-              <span
-                className="h-2 w-2 rounded-full bg-lime-600"
-                aria-hidden="true"
-              />
-              Neu seit Mai 2025 · Digitales Passbild nach BMI-Vorgabe
-            </p>
-
-            <h1
-              id="hero-h1"
-              className="max-w-3xl text-4xl font-extrabold leading-tight tracking-tight text-slate-900 sm:text-5xl"
-            >
-              Passbild online erstellen —{" "}
-              <span className="text-lime-600">biometrisch konform</span> in 30
-              Sekunden
-            </h1>
-
-            <p className="mt-5 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
-              Erstellen Sie Ihr biometrisches Passbild direkt am Smartphone.
-              Unser Passfoto Generator prüft über 50 offizielle Kriterien nach
-              BMI-Standard und liefert ein konformes Foto für Reisepass,
-              Personalausweis und Visum — ganz ohne Fototermin.
-            </p>
-
-            <ul
-              className="mt-6 flex flex-wrap gap-2"
-              aria-label="Vorteile auf einen Blick"
-            >
-              {[
-                "99,8 % Akzeptanzrate",
-                "Ergebnis in 30 Sekunden",
-                "Offizielle BMI-Konformität",
-                "50+ Länder",
-                "DSGVO-konform",
-                "Geld-zurück-Garantie",
-              ].map((p) => (
-                <li
-                  key={p}
-                  className="rounded-full border border-lime-200 bg-lime-50 px-3 py-1 text-xs font-semibold text-lime-700"
+                <h1
+                  id="hero-h1"
+                  className="max-w-2xl text-3xl font-extrabold leading-tight tracking-tight text-slate-900 sm:text-4xl"
                 >
-                  {p}
-                </li>
-              ))}
-            </ul>
+                  Passbild Online für Deutschland
+                </h1>
 
-            <div className="mt-8">
-              <Link
-                href={ctaHref}
-                className="inline-flex items-center gap-2 rounded-md bg-lime-600 px-7 py-3.5 text-base font-bold text-white hover:bg-lime-700"
-              >
-                Jetzt Passbild erstellen
-                <ArrowRight />
-              </Link>
+                <p className="mt-5 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
+                  Erstellen Sie Ihr biometrisches Passbild in nur 30 Sekunden.
+                  Automatische KI-Prüfung nach offiziellen deutschen
+                  Anforderungen Hintergrund, Bildgröße 35×45 mm,
+                  Gesichtsposition und Belichtung.
+                </p>
+
+                <div className="mt-8">
+                  <Link
+                    href={ctaHref}
+                    className="inline-flex items-center justify-center bg-lime-700 hover:bg-lime-800 text-white text-sm font-semibold px-6 py-3 rounded transition-colors"
+                  >
+                    Jetzt Passbild erstellen
+                    <ArrowRight />
+                  </Link>
+                </div>
+              </div>
+
+              <div className="flex justify-center">
+                <Image
+                  src="https://res.cloudinary.com/dipzpwbbk/image/upload/v1779008016/c24d89b1-ab0e-4f1d-9035-5814bc7b91ca_preview_ip9ogs.jpg"
+                  alt="Biometrisches Passbild online per Smartphone erstellen"
+                  width={700}
+                  height={560}
+                  className="w-full h-auto rounded-lg "
+                  priority
+                />
+              </div>
             </div>
           </div>
         </section>
@@ -397,7 +369,6 @@ export default function DeHomePage() {
             ))}
           </div>
         </div>
-
 
         {/* ══════════════ SO FUNKTIONIERT ES ══════════════ */}
         <section aria-labelledby="how-h2" className="py-14 sm:py-20">
@@ -838,8 +809,6 @@ export default function DeHomePage() {
             </p>
           </div>
         </div>
-
-     
       </main>
     </>
   );
