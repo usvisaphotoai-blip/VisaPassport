@@ -56,7 +56,7 @@ export default function AmericaVisaSizePhotoPage() {
       operatingSystem: "All",
       offers: {
         "@type": "Offer",
-        price: "5.99",
+        price: "6.99",
         priceCurrency: "USD",
       },
     },

@@ -24,7 +24,7 @@ const jsonLd = {
       "operatingSystem": "All",
       "offers": {
         "@type": "Offer",
-        "price": "5.99",
+        "price": "6.99",
         "priceCurrency": "USD",
       },
       "aggregateRating": {
@@ -85,7 +85,7 @@ export default async function Home() {
   // Use skipHeaders: true to keep the page static
   // We no longer need the full localPrice object here for display, 
   // as HomeSections will handle it via PriceDisplay client component.
-  const basePrice = 5.99;
+  const basePrice = 6.99;
 
   return (
     <>

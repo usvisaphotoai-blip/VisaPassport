@@ -2,326 +2,477 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
+/* ─── Metadata ─── */
 export const metadata: Metadata = {
-  title: "Visum Foto Online Erstellen | USA, China, Indien & mehr | PixPassport",
+  title: "Biometrisches Passbild online erstellen – ICAO-konform | PixPassport",
   description:
-    "Erstellen Sie Ihr Visum-Foto online für über 50 Länder (USA, China, Indien, Vietnam etc.). Automatische Anpassung an Größe, Hintergrund und Belichtung – in unter 2 Minuten.",
+    "Biometrisches Passbild für Reisepass, Personalausweis und ePass online erstellen. KI prüft Größe, Hintergrund und Ausleuchtung nach ICAO-Norm. Fertig in 30 Sekunden.",
   keywords: [
-    "visum foto",
-    "usa visum foto",
-    "china visum foto",
-    "ds-160 foto",
-    "visa picture online",
- 
+    "biometrisches Passbild",
+    "Passbild online erstellen",
+    "biometrisches Foto",
+    "Passfoto online",
+    "Passbild Reisepass",
+    "Passbild Personalausweis",
   ],
-  alternates: { canonical: "https://www.pixpassport.com/de/visum-foto" },
+  alternates: {
+    canonical: "https://www.pixpassport.com/de/biometrisches-passbild",
+  },
+  openGraph: {
+    title: "Biometrisches Passbild online erstellen – ICAO-konform | PixPassport",
+    description:
+      "Biometrisches Passbild für Reisepass, Personalausweis und ePass online erstellen. Fertig in 30 Sekunden.",
+    url: "https://www.pixpassport.com/de/biometrisches-passbild",
+    type: "website",
+    locale: "de_DE",
+  },
 };
 
-const ctaHref = "/de/passbild-online";
+/* ─── Constants ─── */
+const ctaHref = "/de/passbild-online?type=germany-passport";
 
+/* ─── Icons ─── */
 const ArrowRight = () => (
-  <svg
-    className="w-5 h-5"
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-    strokeWidth={2}
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M14 5l7 7m0 0l-7 7m7-7H3"
-    />
+  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
   </svg>
 );
-
-const CheckIcon = () => (
-  <svg
-    className="w-5 h-5 text-lime-600 shrink-0 mt-0.5"
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-    strokeWidth={2.5}
-  >
+const Check = ({ className = "w-4 h-4" }: { className?: string }) => (
+  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} aria-hidden="true">
     <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
   </svg>
 );
+const X = () => (
+  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} aria-hidden="true">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+  </svg>
+);
 
-const countries = [
-  { flag: "🇺🇸", name: "USA (DS-160)", size: "2×2 Zoll (51×51 mm)" },
-  { flag: "🇨🇳", name: "China", size: "33×48 mm" },
-  { flag: "🇮🇳", name: "Indien", size: "51×51 mm" },
-  { flag: "🇻🇳", name: "Vietnam", size: "40×60 mm" },
-  { flag: "🇷🇺", name: "Russland", size: "35×45 mm" },
-  { flag: "🇸🇦", name: "Saudi-Arabien", size: "4×6 cm" },
-  { flag: "🇧🇷", name: "Brasilien", size: "3×4 cm" },
-  { flag: "🇦🇺", name: "Australien", size: "35×45 mm" },
-];
-
+/* ─── Data ─── */
 const steps = [
   {
-    num: "1",
+    n: "1",
     title: "Foto hochladen",
-    desc: "Laden Sie ein aktuelles Selfie oder Porträtfoto hoch – Smartphone-Qualität reicht vollständig aus.",
+    desc: "Laden Sie ein aktuelles Selfie oder Porträtfoto hoch. Smartphone-Qualität reicht vollkommen aus.",
   },
   {
-    num: "2",
-    title: "Land & Visumsart wählen",
-    desc: "Wählen Sie das Zielland und den Verwendungszweck. Unsere KI passt alle Maße automatisch an.",
+    n: "2",
+    title: "KI prüft und korrigiert",
+    desc: "Die KI kontrolliert Ausleuchtung, Kopfgröße, Mimik und Hintergrund nach ICAO-Norm und korrigiert Abweichungen automatisch.",
   },
   {
-    num: "3",
-    title: "Foto prüfen & herunterladen",
-    desc: "Das fertige, behördenkonforme Bild steht sofort zum Download und zum Drucken bereit.",
+    n: "3",
+    title: "Foto herunterladen",
+    desc: "Sie laden das fertige Passbild direkt herunter oder bestellen den Druckbogen für dm, Rossmann oder CEWE.",
   },
 ];
 
-const features = [
-  "Automatischer Hintergrundwechsel auf Weiß oder Hellgrau",
-  "Zuschnitt und Skalierung nach offiziellen Ländervorgaben",
-  "KI-gestützte Belichtungs- und Kontrastkorrektur",
-  "ICAO-konforme Gesichtserkennung und Ausrichtung",
-  "Sofort-Download als JPEG oder druckfertiges PDF",
-  "100 % datenschutzkonform – keine Speicherung Ihrer Fotos",
+const specs = [
+  { label: "Format", value: "35 × 45 mm", detail: "Hochformat nach ISO/IEC 19794-5" },
+  { label: "Auflösung", value: "min. 600 dpi", detail: "Mindestens 600 × 800 Pixel" },
+  { label: "Hintergrund", value: "Hellgrau oder Weiß", detail: "Einheitlich, ohne Muster oder Schatten" },
+  { label: "Kopfgröße", value: "27–36 mm", detail: "Scheitel bis Kinn, 70–80 % des Bildausschnitts" },
+  { label: "Augen", value: "Geöffnet und sichtbar", detail: "Keine Sonnenbrille, keine getönten Gläser" },
+  { label: "Mimik", value: "Neutral", detail: "Mund geschlossen, keine sichtbaren Zähne" },
+  { label: "Belichtung", value: "Gleichmäßig", detail: "Kein direkter Blitz, kein Gegenlicht" },
+  { label: "Aktualität", value: "Max. 6 Monate", detail: "Zeigt Ihr aktuelles Erscheinungsbild" },
+];
+
+const doList = [
+  "Halten Sie eine neutrale Mimik mit geschlossenem Mund.",
+  "Blicken Sie frontal in die Kamera, ohne den Kopf zu neigen.",
+  "Tragen Sie Kleidung, die sich vom hellen Hintergrund abhebt.",
+  "Nutzen Sie Tageslicht oder eine gleichmäßige Innenbeleuchtung.",
+  "Verwenden Sie eine aktuelle Aufnahme, die nicht älter als sechs Monate ist.",
+];
+
+const dontList = [
+  "Vermeiden Sie Sonnenbrillen, getönte Gläser und Kopfbedeckungen.",
+  "Vermeiden Sie Schatten im Gesicht oder auf dem Hintergrund.",
+  "Vermeiden Sie ein Lächeln oder einen geöffneten Mund.",
+  "Vermeiden Sie Filter und nachträgliche Bildbearbeitung.",
+  "Vermeiden Sie unscharfe oder verpixelte Aufnahmen.",
+];
+
+const useCases = [
+  {
+    title: "Reisepass",
+    desc: "PixPassport erfüllt die Vorgaben der Bundesdruckerei für den biometrischen Reisepass. Behörden akzeptieren das Foto ohne Rückfragen.",
+  },
+  {
+    title: "Personalausweis",
+    desc: "Da dieselbe ICAO-Norm gilt, nutzen Sie dasselbe Passbild auch für den Personalausweis mit elektronischem Chip.",
+  },
+  {
+    title: "ePass und Visum",
+    desc: "Auch der ePass sowie viele Visa-Anträge im Ausland verlangen dieselben internationalen biometrischen Standards.",
+  },
+  {
+    title: "Baby- und Kinderpass",
+    desc: "Das System erkennt Babygesichter zuverlässig und passt Zuschnitt sowie Bewertung an die Anforderungen für Kleinkinder an.",
+  },
+];
+
+const benefits = [
+  "Die Bildverarbeitung folgt der aktuellen ICAO-Norm.",
+  "Der Hintergrund wechselt automatisch zu Weiß oder Hellgrau.",
+  "Die KI schneidet das Bild exakt auf 35 × 45 mm zu.",
+  "Belichtung und Kontrast werden automatisch korrigiert.",
+  "Sie laden das Ergebnis sofort als JPEG oder druckfertiges PDF herunter.",
+  "Sie bestellen wahlweise einen Druckbogen für dm, Rossmann oder CEWE.",
+  "Ihre Fotos werden nach der Verarbeitung nicht gespeichert.",
+  "Das Tool eignet sich für Babys, Kinder und Erwachsene.",
+];
+
+const stats = [
+  { val: "35×45 mm", label: "Offizielle Passbildgröße in Deutschland" },
+  { val: "< 30 Sek.", label: "Von der Aufnahme bis zum fertigen Foto" },
+  { val: "ICAO 9303", label: "Zugrunde liegende internationale Norm" },
+  { val: "0", label: "Gespeicherte Fotos nach der Verarbeitung" },
 ];
 
 const faqs = [
   {
-    q: "Welche Größe brauche ich für das USA-Visum (DS-160)?",
-    a: "Für das US-amerikanische DS-160-Formular wird ein quadratisches Foto im Format 2×2 Zoll (51×51 mm) mit weißem Hintergrund benötigt. PixPassport erstellt dieses Format vollautomatisch.",
+    q: "Was ist ein biometrisches Passbild?",
+    a: "Ein biometrisches Passbild ist ein Lichtbild, das den internationalen ICAO-9303-Normen entspricht und die automatische Gesichtserkennung in Ausweisdokumenten mit Chip ermöglicht. Software vergleicht dabei charakteristische Punkte im Gesicht, etwa den Augenabstand oder die Kinnlinie, mit dem gespeicherten Datensatz. Die Norm schreibt deshalb exakte Maße, Kopfgröße, Hintergrundfarbe und eine neutrale Mimik vor.",
   },
   {
-    q: "Funktioniert das auch für das China-Visum?",
-    a: "Ja. Das chinesische Visum erfordert ein Foto im Format 33×48 mm mit weißem oder hellblauem Hintergrund. Unsere Software passt Größe, Hintergrundfarbe und Belichtung entsprechend an.",
+    q: "Welche Maße hat ein biometrisches Passbild in Deutschland?",
+    a: "Ein biometrisches Passbild misst in Deutschland 35 × 45 mm. Die Kopfgröße vom Scheitel bis zum Kinn liegt zwischen 27 und 36 mm und nimmt etwa 70 bis 80 Prozent der Bildhöhe ein. Der Hintergrund muss hell und gleichmäßig ausgeleuchtet sein, ohne Schatten oder Farbverläufe.",
   },
   {
-    q: "Wie aktuell muss das Foto sein?",
-    a: "Die meisten Botschaften verlangen ein Foto, das nicht älter als sechs Monate ist und Ihr aktuelles Erscheinungsbild widerspiegelt. Brillen sind in der Regel nicht mehr erlaubt.",
+    q: "Kann ich das Passbild auch für den Personalausweis verwenden?",
+    a: "Ja, denn Reisepass und Personalausweis folgen in Deutschland derselben ICAO-Norm. Ein mit PixPassport erstelltes Foto eignet sich daher für beide Dokumente, Sie müssen es nicht doppelt anfertigen lassen.",
   },
   {
-    q: "Kann ich das Foto direkt für den Online-Antrag verwenden?",
-    a: "Ja. Sie erhalten eine digitale Datei, die Sie direkt in Online-Formulare wie DS-160, India e-Visa oder andere Portale hochladen können.",
+    q: "Ist ein biometrisches Passbild für ein Baby gültig?",
+    a: "Ja, auch Babys benötigen ab der Geburt ein eigenes biometrisches Passbild. Es muss grundsätzlich dieselben Vorgaben erfüllen wie bei Erwachsenen. Kriterien wie Blickrichtung oder Mimik beurteilen Behörden bei Kleinkindern jedoch nachsichtiger, da ein bewusstes Stillhalten kaum möglich ist.",
+  },
+  {
+    q: "Darf ich eine Brille auf dem Passbild tragen?",
+    a: "Nein, seit 2017 sind Brillen auf deutschen Passbildern nicht mehr erlaubt. Diese Regel betrifft Sonnenbrillen ebenso wie Korrektionsbrillen, da Reflexionen und Tönungen die biometrische Auswertung des Gesichts stören können. Sie gilt für Reisepass, Personalausweis und ePass gleichermaßen.",
+  },
+  {
+    q: "Wie lange ist ein biometrisches Passbild gültig?",
+    a: "Behörden akzeptieren ein Passbild, wenn es nicht älter als sechs Monate ist und Ihr aktuelles Erscheinungsbild zeigt. Da PixPassport das Bild digital erstellt, laden Sie es bei Bedarf jederzeit erneut herunter oder erstellen in Sekunden ein neues, aktuelles Foto.",
   },
 ];
 
-export default function VisumFotoPage() {
+/* ─── JSON-LD structured data ─── */
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
+};
+
+/* ─── Page ─── */
+export default function BiometrischesPassbildPage() {
   return (
-    <main className="bg-white text-slate-900 ">
-      {/* ── HERO ── */}
-      <section className="bg-gradient-to-b from-lime-50 to-white pt-10 pb-16 px-4">
-        <div className="max-w-5xl mx-auto flex flex-col items-center text-center gap-6">
-          {/* Badge */}
-          <span className="inline-flex items-center gap-2 bg-lime-100 text-lime-700 text-sm font-semibold px-4 py-1.5 rounded-full">
-            ✅ Behördenkonform für 50+ Länder
+    <main className="bg-white text-slate-900 antialiased">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+
+      {/* ══════════════ HERO ══════════════ */}
+      <section className="px-4 pt-10 pb-14 sm:pt-14 sm:pb-16">
+        <div className="mx-auto flex max-w-5xl flex-col items-center gap-5 text-center">
+          <span className="inline-flex items-center gap-2 rounded-full bg-lime-100 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-lime-700">
+            ICAO-konform · Bundesdruckerei-geprüft
           </span>
 
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.07] text-slate-900">
-            Visum Foto{" "}
-            <span className="text-lime-600">Online Erstellen</span>
+          <h1 className="max-w-3xl text-3xl font-black leading-[1.1] tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
+            <span className="text-lime-600">Biometrisches Passbild</span> online erstellen
           </h1>
 
-          <p className="max-w-2xl text-lg text-slate-600 leading-relaxed">
-            Ob 2×2 Zoll für die USA (DS-160), 33×48 mm für China oder
-            spezifische Maße für Indien, Vietnam und Russland – PixPassport
-            passt Ihr Foto automatisch an die offiziellen Vorgaben von über 50
-            Ländern an. Fertig in unter 2 Minuten.
+          <p className="max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
+            Erstellen Sie ein offizielles Passbild für <strong>Reisepass, Personalausweis und ePass</strong> nach
+            den Vorgaben der Bundesdruckerei und der ICAO-Norm. Die KI übernimmt Zuschnitt, Hintergrund und
+            Qualitätsprüfung – fertig in unter 30 Sekunden.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-3 mt-2">
+          <div className="mt-2 flex flex-col gap-3 sm:flex-row">
             <Link
               href={ctaHref}
-              className="inline-flex items-center gap-2 bg-lime-600 hover:bg-lime-700 active:bg-lime-800 text-white font-bold text-lg px-8 py-4 rounded-xl shadow-lg shadow-lime-200 transition-colors duration-150"
+              className="inline-flex items-center justify-center gap-2 rounded-lg bg-lime-600 px-8 py-4 text-lg font-bold text-white transition-colors hover:bg-lime-700 active:bg-lime-800"
             >
-              Jetzt Visum Foto erstellen <ArrowRight />
+              Passbild jetzt erstellen <ArrowRight />
             </Link>
             <Link
-              href="#laender"
-              className="inline-flex items-center gap-2 border border-slate-200 hover:border-slate-300 text-slate-700 font-semibold text-base px-6 py-4 rounded-xl bg-white transition-colors duration-150"
+              href="#anforderungen"
+              className="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-slate-200 bg-white px-6 py-4 text-base font-semibold text-slate-700 transition-colors hover:border-slate-400"
             >
-              Alle Länder ansehen
+              Alle Anforderungen ansehen
             </Link>
           </div>
 
-          {/* Hero image */}
-          <div className="w-full mt-6 rounded-2xl overflow-hidden shadow-xl border border-slate-100">
+          <div className="mt-4 w-full overflow-hidden rounded-2xl border-2 border-slate-200">
             <Image
               src="/photo_officielle passeport.jpg"
-              alt="Visum Foto online erstellen – behördenkonformes Passbild für über 50 Länder"
+              alt="Beispiele biometrisches Passbild für Reisepass und Personalausweis nach ICAO-Norm"
               width={1120}
               height={480}
               priority
-              className="w-full h-auto object-cover"
+              className="h-auto w-full object-cover"
             />
           </div>
         </div>
       </section>
 
-      {/* ── HOW IT WORKS ── */}
-      <section className="py-20 px-4 bg-white">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
-            <p className="text-lime-600 font-semibold text-sm uppercase tracking-widest mb-2">
-              So einfach geht&apos;s
-            </p>
-            <h2 className="text-3xl sm:text-4xl font-black tracking-tight">
-              Visum Foto in 3 Schritten
-            </h2>
-            <p className="mt-3 text-slate-500 max-w-xl mx-auto">
-              Kein Fotostudio, keine Wartezeit. Alles online – direkt am
-              Smartphone oder Computer.
-            </p>
-          </div>
-
-          <div className="grid sm:grid-cols-3 gap-6">
-            {steps.map((s) => (
-              <div
-                key={s.num}
-                className="bg-slate-50 border border-slate-100 rounded-2xl p-7 flex flex-col gap-3"
-              >
-                <span className="w-10 h-10 rounded-xl bg-lime-600 text-white font-black text-lg flex items-center justify-center shadow-md shadow-lime-200">
-                  {s.num}
-                </span>
-                <h3 className="font-bold text-lg text-slate-900">{s.title}</h3>
-                <p className="text-slate-500 text-sm leading-relaxed">
-                  {s.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── COUNTRY TABLE ── */}
-      <section id="laender" className="py-20 px-4 bg-slate-50">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
-            <p className="text-lime-600 font-semibold text-sm uppercase tracking-widest mb-2">
-              Länderübersicht
-            </p>
-            <h2 className="text-3xl sm:text-4xl font-black tracking-tight">
-              Visum Foto Maße nach Land
-            </h2>
-            <p className="mt-3 text-slate-500 max-w-xl mx-auto">
-              Jedes Land hat eigene Vorgaben für Fotogröße, Hintergrundfarbe und
-              Belichtung. Wir kennen sie alle.
-            </p>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {countries.map((c) => (
-              <div
-                key={c.name}
-                className="bg-white border border-slate-200 rounded-xl p-5 flex flex-col gap-2 hover:border-lime-300 hover:shadow-sm transition-all"
-              >
-                <span className="text-3xl">{c.flag}</span>
-                <p className="font-bold text-slate-900">{c.name}</p>
-                <p className="text-sm text-slate-500">{c.size}</p>
-              </div>
-            ))}
-          </div>
-
-          <p className="mt-8 text-center text-slate-400 text-sm">
-            … und über 42 weitere Länder. Das richtige Format wird automatisch
-            erkannt.
+      {/* ══════════════ WAS IST EIN BIOMETRISCHES PASSBILD ══════════════ */}
+      <section className="bg-white px-4 py-16 sm:py-20">
+        <div className="mx-auto max-w-3xl">
+          <h2 className="mb-4 text-2xl font-black tracking-tight text-slate-900 sm:text-3xl lg:text-4xl">
+            Was ist ein biometrisches Passbild?
+          </h2>
+          <p className="mb-4 text-base leading-relaxed text-slate-600 sm:text-lg">
+            Ein <strong>biometrisches Passbild</strong> unterscheidet sich deutlich von einem gewöhnlichen
+            Porträtfoto. Es folgt der internationalen ICAO-Norm 9303 und ermöglicht dadurch die automatische
+            Gesichtserkennung in modernen Ausweisdokumenten mit elektronischem Chip.
+          </p>
+          <p className="mb-4 text-base leading-relaxed text-slate-600 sm:text-lg">
+            In Deutschland gelten diese Vorgaben für alle hoheitlichen Dokumente: Reisepass, Personalausweis
+            und ePass. Die Bundesdruckerei veröffentlicht konkrete Maßtabellen und Prüfkriterien, an denen sich
+            Behörden bei der Annahme von Passbildern strikt orientieren. Schon kleine Abweichungen, etwa ein zu
+            dunkler Hintergrund oder eine geneigte Kopfhaltung, führen häufig zur Ablehnung des Fotos.
+          </p>
+          <p className="mb-4 text-base leading-relaxed text-slate-600 sm:text-lg">
+            PixPassport übernimmt die technische Prüfung automatisch. Die KI analysiert Bildgröße, Kopfposition,
+            Belichtung, Hintergrundfarbe und Bildschärfe und korrigiert Abweichungen in Echtzeit. Sie benötigen
+            weder ein Fotostudio noch einen Termin, denn ein gewöhnliches Smartphone-Foto reicht als
+            Ausgangspunkt vollkommen aus.
+          </p>
+          <p className="text-base leading-relaxed text-slate-600 sm:text-lg">
+            Das Ergebnis ist ein druckfertiges, behördlich anerkanntes Foto. Sie laden es sofort herunter und
+            reichen es beim Bürgeramt, der Meldebehörde oder direkt online bei der Passbeantragung ein.
           </p>
         </div>
       </section>
 
-      {/* ── FEATURES ── */}
-      <section className="py-20 px-4 bg-white">
-        <div className="max-w-5xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
-          <div>
-            <p className="text-lime-600 font-semibold text-sm uppercase tracking-widest mb-2">
-              Warum PixPassport
-            </p>
-            <h2 className="text-3xl sm:text-4xl font-black tracking-tight mb-4">
-              Alles, was Ihr Visum Foto braucht
+      {/* ══════════════ 3 SCHRITTE ══════════════ */}
+      <section className="border-y-2 border-slate-100 bg-slate-50 px-4 py-16 sm:py-20">
+        <div className="mx-auto max-w-5xl">
+          <div className="mb-10 text-center sm:mb-12">
+            <p className="mb-2 text-xs font-bold uppercase tracking-widest text-lime-600">So funktioniert es</p>
+            <h2 className="text-2xl font-black tracking-tight text-slate-900 sm:text-3xl lg:text-4xl">
+              Biometrisches Passbild in drei Schritten
             </h2>
-            <p className="text-slate-500 leading-relaxed mb-8">
-              Unsere KI prüft Ihr Foto nach denselben Kriterien, die Botschaften
-              und Konsulate weltweit anwenden – und korrigiert automatisch, was
-              nicht passt. Das Ergebnis ist ein Foto, das beim ersten Versuch
-              akzeptiert wird.
+            <p className="mx-auto mt-3 max-w-xl text-slate-500">
+              Kein Fotostudio nötig. Alles läuft online, direkt am Smartphone oder Computer.
             </p>
+          </div>
 
-            <ul className="flex flex-col gap-3">
-              {features.map((f) => (
-                <li key={f} className="flex gap-3 text-slate-700 text-sm leading-snug">
-                  <CheckIcon />
+          <ol className="grid list-none gap-6 p-0 sm:grid-cols-3">
+            {steps.map((s) => (
+              <li key={s.n} className="flex flex-col gap-3 rounded-2xl border-2 border-slate-200 bg-white p-6 sm:p-7">
+                <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-lime-600 text-lg font-black text-white">
+                  {s.n}
+                </span>
+                <h3 className="text-lg font-bold text-slate-900">{s.title}</h3>
+                <p className="text-sm leading-relaxed text-slate-500">{s.desc}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      {/* ══════════════ ANFORDERUNGEN TABELLE ══════════════ */}
+      <section id="anforderungen" className="bg-white px-4 py-16 sm:py-20">
+        <div className="mx-auto max-w-4xl">
+          <div className="mb-8 sm:mb-10">
+            <p className="mb-2 text-xs font-bold uppercase tracking-widest text-lime-600">Offizielle Vorgaben</p>
+            <h2 className="mb-3 text-2xl font-black tracking-tight text-slate-900 sm:text-3xl lg:text-4xl">
+              Anforderungen an das biometrische Passbild
+            </h2>
+            <p className="max-w-2xl leading-relaxed text-slate-500">
+              Diese Kriterien entsprechen den aktuellen Vorgaben der Bundesdruckerei und der ICAO-Norm 9303.
+              PixPassport prüft jeden dieser Punkte automatisch, bevor Sie Ihr Foto herunterladen.
+            </p>
+          </div>
+
+          <div className="overflow-x-auto rounded-2xl border-2 border-slate-200">
+            <table className="w-full text-left text-sm">
+              <thead>
+                <tr className="border-b-2 border-slate-200 bg-slate-50">
+                  <th scope="col" className="w-1/4 px-5 py-4 font-bold text-slate-700">Kriterium</th>
+                  <th scope="col" className="w-1/3 px-5 py-4 font-bold text-slate-700">Vorschrift</th>
+                  <th scope="col" className="px-5 py-4 font-bold text-slate-700">Hinweis</th>
+                </tr>
+              </thead>
+              <tbody>
+                {specs.map((s, i) => (
+                  <tr
+                    key={s.label}
+                    className={`border-b border-slate-100 ${i % 2 === 0 ? "bg-white" : "bg-slate-50"}`}
+                  >
+                    <td className="px-5 py-4 font-semibold text-slate-800">{s.label}</td>
+                    <td className="px-5 py-4">
+                      <span className="inline-block rounded-md bg-lime-100 px-2.5 py-0.5 text-xs font-semibold text-lime-700">
+                        {s.value}
+                      </span>
+                    </td>
+                    <td className="px-5 py-4 text-slate-500">{s.detail}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      {/* ══════════════ DO / DON'T ══════════════ */}
+      <section className="border-y-2 border-slate-100 bg-slate-50 px-4 py-16 sm:py-20">
+        <div className="mx-auto max-w-5xl">
+          <div className="mb-10 text-center sm:mb-12">
+            <p className="mb-2 text-xs font-bold uppercase tracking-widest text-lime-600">Checkliste</p>
+            <h2 className="text-2xl font-black tracking-tight text-slate-900 sm:text-3xl lg:text-4xl">
+              Das gehört auf ein gutes Passbild
+            </h2>
+          </div>
+
+          <div className="grid gap-6 sm:grid-cols-2">
+            {/* DO */}
+            <div className="rounded-2xl border-2 border-slate-200 bg-white p-6 sm:p-7">
+              <h3 className="mb-5 flex items-center gap-2 text-lg font-bold text-slate-900">
+                <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-lime-100">
+                  <Check className="h-4 w-4 text-lime-600" />
+                </span>
+                Das sollten Sie tun
+              </h3>
+              <ul className="flex flex-col gap-3">
+                {doList.map((item) => (
+                  <li key={item} className="flex items-start gap-3 text-sm leading-snug text-slate-700">
+                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-lime-100">
+                      <Check className="h-3 w-3 text-lime-600" />
+                    </span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* DON'T */}
+            <div className="rounded-2xl border-2 border-slate-200 bg-white p-6 sm:p-7">
+              <h3 className="mb-5 flex items-center gap-2 text-lg font-bold text-slate-900">
+                <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-red-100">
+                  <X />
+                </span>
+                Das sollten Sie vermeiden
+              </h3>
+              <ul className="flex flex-col gap-3">
+                {dontList.map((item) => (
+                  <li key={item} className="flex items-start gap-3 text-sm leading-snug text-slate-700">
+                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-red-100">
+                      <X />
+                    </span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ══════════════ ANWENDUNGSFÄLLE ══════════════ */}
+      <section className="bg-white px-4 py-16 sm:py-20">
+        <div className="mx-auto max-w-5xl">
+          <div className="mb-10 text-center sm:mb-12">
+            <p className="mb-2 text-xs font-bold uppercase tracking-widest text-lime-600">Einsatzbereiche</p>
+            <h2 className="text-2xl font-black tracking-tight text-slate-900 sm:text-3xl lg:text-4xl">
+              Für diese Dokumente nutzen Sie das Foto
+            </h2>
+            <p className="mx-auto mt-3 max-w-xl text-slate-500">
+              Ein biometrisches Passbild von PixPassport gilt für mehrere amtliche Dokumente gleichzeitig.
+            </p>
+          </div>
+
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {useCases.map((u) => (
+              <div key={u.title} className="rounded-2xl border-2 border-slate-200 bg-slate-50 p-6">
+                <h3 className="mb-2 font-bold text-slate-900">{u.title}</h3>
+                <p className="text-sm leading-relaxed text-slate-500">{u.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ══════════════ VORTEILE ══════════════ */}
+      <section className="border-y-2 border-slate-100 bg-slate-50 px-4 py-16 sm:py-20">
+        <div className="mx-auto grid max-w-5xl items-start gap-10 lg:grid-cols-2 lg:items-center lg:gap-12">
+          <div>
+            <p className="mb-2 text-xs font-bold uppercase tracking-widest text-lime-600">Warum PixPassport</p>
+            <h2 className="mb-4 text-2xl font-black tracking-tight text-slate-900 sm:text-3xl lg:text-4xl">
+              Biometrisches Passbild ohne Fotostudio
+            </h2>
+            <p className="mb-6 leading-relaxed text-slate-500">
+              Ein klassisches Passfoto beim Fotografen kostet Zeit, einen Termin und meist zwischen 8 und 15 Euro.
+              PixPassport ersetzt diesen Weg durch eine automatisierte Lösung, die alle behördlichen Anforderungen
+              zuverlässig erfüllt, bequem von zu Hause aus.
+            </p>
+            <ul className="mb-8 flex flex-col gap-3">
+              {benefits.map((f) => (
+                <li key={f} className="flex items-start gap-3 text-sm leading-snug text-slate-700">
+                  <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-lime-100">
+                    <Check className="h-3 w-3 text-lime-600" />
+                  </span>
                   {f}
                 </li>
               ))}
             </ul>
-
             <Link
               href={ctaHref}
-              className="inline-flex items-center gap-2 mt-8 bg-lime-600 hover:bg-lime-700 text-white font-bold px-7 py-3.5 rounded-xl shadow-md shadow-lime-200 transition-colors text-base"
+              className="inline-flex items-center gap-2 rounded-lg bg-lime-600 px-7 py-3.5 font-bold text-white transition-colors hover:bg-lime-700"
             >
-              Foto jetzt hochladen <ArrowRight />
+              Jetzt Passbild erstellen <ArrowRight />
             </Link>
           </div>
 
-          {/* Visual stat card */}
-          <div className="bg-gradient-to-br from-lime-50 to-lime-100 border border-lime-200 rounded-2xl p-10 flex flex-col gap-6">
-            {[
-              { val: "50+", label: "unterstützte Länder" },
-              { val: "< 2 Min", label: "bis zum fertigen Foto" },
-              { val: "ICAO", label: "konforme Verarbeitung" },
-              { val: "100 %", label: "datenschutzkonform" },
-            ].map((s) => (
-              <div key={s.label} className="flex flex-col">
-                <span className="text-4xl font-black text-lime-700 leading-none">
-                  {s.val}
-                </span>
-                <span className="text-slate-600 text-sm mt-1">{s.label}</span>
+          {/* Stats */}
+          <div className="grid grid-cols-2 gap-8 rounded-2xl border-2 border-lime-200 bg-lime-100 p-8 sm:p-10">
+            {stats.map((s) => (
+              <div key={s.label} className="flex flex-col gap-1">
+                <span className="text-2xl font-black leading-none text-lime-700 sm:text-3xl">{s.val}</span>
+                <span className="text-xs leading-tight text-slate-600">{s.label}</span>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── FAQ ── */}
-      <section className="py-20 px-4 bg-slate-50">
-        <div className="max-w-3xl mx-auto">
-          <div className="text-center mb-12">
-            <p className="text-lime-600 font-semibold text-sm uppercase tracking-widest mb-2">
-              Häufige Fragen
-            </p>
-            <h2 className="text-3xl sm:text-4xl font-black tracking-tight">
-              FAQ – Visum Foto
+      {/* ══════════════ FAQ ══════════════ */}
+      <section className="bg-white px-4 py-16 sm:py-20">
+        <div className="mx-auto max-w-3xl">
+          <div className="mb-10 text-center sm:mb-12">
+            <p className="mb-2 text-xs font-bold uppercase tracking-widest text-lime-600">Häufige Fragen</p>
+            <h2 className="text-2xl font-black tracking-tight text-slate-900 sm:text-3xl lg:text-4xl">
+              FAQ zum biometrischen Passbild
             </h2>
+            <p className="mx-auto mt-3 max-w-xl text-slate-500">
+              Alles Wichtige zu Maßen, Anforderungen und der Verwendung Ihres biometrischen Passbildes.
+            </p>
           </div>
 
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-3">
             {faqs.map((f) => (
-              <div
-                key={f.q}
-                className="bg-white border border-slate-200 rounded-xl p-6"
-              >
-                <h3 className="font-bold text-slate-900 mb-2">{f.q}</h3>
-                <p className="text-slate-500 text-sm leading-relaxed">{f.a}</p>
-              </div>
+              <details key={f.q} className="group overflow-hidden rounded-xl border-2 border-slate-200 bg-white">
+                <summary className="flex cursor-pointer select-none list-none items-center justify-between gap-4 px-5 py-4 sm:px-6 sm:py-5">
+                  <h3 className="text-base font-bold text-slate-900">{f.q}</h3>
+                  <span className="shrink-0 text-2xl font-light text-lime-600 transition-transform group-open:rotate-45">
+                    +
+                  </span>
+                </summary>
+                <p className="border-t-2 border-slate-100 px-5 pb-5 pt-4 text-sm leading-relaxed text-slate-500 sm:px-6">
+                  {f.a}
+                </p>
+              </details>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* ── FINAL CTA ── */}
-      <section className="py-20 px-4 bg-lime-600">
-        <div className="max-w-3xl mx-auto text-center flex flex-col items-center gap-5">
-          <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
-            Visum Foto jetzt online erstellen
-          </h2>
-          <p className="text-lime-100 text-lg max-w-xl leading-relaxed">
-            Kein Termin. Kein Fotostudio. Einfach Foto hochladen und in
-            Sekunden ein behördenkonformes Bild für Ihr Visum erhalten.
-          </p>
-          <Link
-            href={ctaHref}
-            className="inline-flex items-center gap-2 bg-white text-lime-700 hover:bg-lime-50 font-bold text-lg px-9 py-4 rounded-xl shadow-lg transition-colors"
-          >
-            Jetzt starten <ArrowRight />
-          </Link>
         </div>
       </section>
     </main>

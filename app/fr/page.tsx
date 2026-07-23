@@ -130,7 +130,7 @@ const jsonLd = {
       applicationCategory: "PhotographyApplication",
       operatingSystem: "All",
       inLanguage: "fr",
-      offers: { "@type": "Offer", price: "5.99", priceCurrency: "EUR" },
+      offers: { "@type": "Offer", price: "6.99", priceCurrency: "EUR" },
       aggregateRating: { "@type": "AggregateRating", ratingValue: "4.9", ratingCount: "170" },
     },
     {

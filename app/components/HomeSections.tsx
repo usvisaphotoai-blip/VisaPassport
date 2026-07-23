@@ -239,7 +239,7 @@ const expertTips = [
 ];
 
 const comparisonRows = [
-  ["Price", "$5.99 one-time", "$15–$25 + travel", "$3–$15 per photo"],
+  ["Price", "$6.99 one-time", "$15–$25 + travel", "$3–$15 per photo"],
   ["DS-160 Upload Ready", "✅ Yes", "⚠️ Not always digital", "⚠️ Varies"],
   ["Eye Position Check (56–69%)", "✅ Biometric-measured", "❌ Human eye only", "⚠️ Basic only"],
   ["Head Size Check (50–69%)", "✅ Pixel-precise", "❌ Not measured", "⚠️ Crop only"],
@@ -253,7 +253,7 @@ const comparisonRows = [
 ];
 
 export default function HomeSections({
-  basePrice = 5.99,
+  basePrice = 6.99,
   seoContent,
 }: {
   basePrice?: number;

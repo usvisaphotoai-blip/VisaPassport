@@ -12,9 +12,33 @@ export const metadata: Metadata = {
     "passbild führerschein",
     "eu führerschein foto",
     "führerscheinumtausch foto",
-  
   ],
-  alternates: { canonical: "https://www.pixpassport.com/de/fuehrerschein-foto" },
+  alternates: {
+    canonical: "https://www.pixpassport.com/de/fuehrerschein-foto",
+    languages: {
+      "de": "https://www.pixpassport.com/de/fuehrerschein-foto",
+      "en": "https://www.pixpassport.com/",
+      "fr": "https://www.pixpassport.com/fr",
+      "x-default": "https://www.pixpassport.com/",
+    },
+  },
+  openGraph: {
+    title: "Führerschein Foto Online Erstellen | PixPassport",
+    description:
+      "Führerschein Foto online erstellen – biometrisch, 35×45 mm, konform mit EU-Führerscheinrichtlinie. Ideal für Erstantrag, Umtausch und Verlängerung.",
+    url: "https://www.pixpassport.com/de/fuehrerschein-foto",
+    siteName: "PixPassport",
+    locale: "de_DE",
+    type: "website",
+    images: [
+      {
+        url: "https://www.pixpassport.com/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Führerschein Foto Online Erstellen - PixPassport",
+      },
+    ],
+  },
 };
 
 /* ─── Constants ─── */
@@ -156,10 +180,57 @@ const faqs = [
   },
 ];
 
+/* ─── JSON-LD structured data ─── */
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "FAQPage",
+      mainEntity: faqs.map((f) => ({
+        "@type": "Question",
+        name: f.q,
+        acceptedAnswer: { "@type": "Answer", text: f.a },
+      })),
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Startseite",
+          item: "https://www.pixpassport.com/de",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Führerschein Foto",
+          item: "https://www.pixpassport.com/de/fuehrerschein-foto",
+        },
+      ],
+    },
+    {
+      "@type": "Service",
+      name: "Führerschein Foto Online Erstellen",
+      provider: {
+        "@type": "Organization",
+        name: "PixPassport",
+        url: "https://www.pixpassport.com/de",
+      },
+      areaServed: "DE",
+      serviceType: "Driving License Photo Generator",
+    },
+  ],
+};
+
 /* ─── Page ─── */
 export default function FuehrerscheinFotoPage() {
   return (
     <main className="bg-white text-slate-900  antialiased">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
 
       {/* ══════════════ HERO ══════════════ */}
       <section className="relative overflow-hidden bg-slate-900 pt-16 pb-20 px-4">

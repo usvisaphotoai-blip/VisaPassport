@@ -12,9 +12,33 @@ export const metadata: Metadata = {
     "egk foto",
     "krankenkasse foto",
     "aok foto hochladen",
- 
   ],
-  alternates: { canonical: "https://www.pixpassport.com/de/gesundheitskarte-foto" },
+  alternates: {
+    canonical: "https://www.pixpassport.com/de/gesundheitskarte-foto",
+    languages: {
+      "de": "https://www.pixpassport.com/de/gesundheitskarte-foto",
+      "en": "https://www.pixpassport.com/",
+      "fr": "https://www.pixpassport.com/fr",
+      "x-default": "https://www.pixpassport.com/",
+    },
+  },
+  openGraph: {
+    title: "Foto für Gesundheitskarte (eGK) Online Erstellen | PixPassport",
+    description:
+      "Foto für die elektronische Gesundheitskarte (eGK) online erstellen. 35×45 mm, frontal, für TK, AOK, Barmer, DAK & alle gesetzlichen Krankenkassen.",
+    url: "https://www.pixpassport.com/de/gesundheitskarte-foto",
+    siteName: "PixPassport",
+    locale: "de_DE",
+    type: "website",
+    images: [
+      {
+        url: "https://www.pixpassport.com/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Foto für Gesundheitskarte Online Erstellen - PixPassport",
+      },
+    ],
+  },
 };
 
 /* ─── Constants ─── */
@@ -157,10 +181,57 @@ const faqs = [
   },
 ];
 
+/* ─── JSON-LD structured data ─── */
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "FAQPage",
+      mainEntity: faqs.map((f) => ({
+        "@type": "Question",
+        name: f.q,
+        acceptedAnswer: { "@type": "Answer", text: f.a },
+      })),
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Startseite",
+          item: "https://www.pixpassport.com/de",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Gesundheitskarte Foto",
+          item: "https://www.pixpassport.com/de/gesundheitskarte-foto",
+        },
+      ],
+    },
+    {
+      "@type": "Service",
+      name: "Foto für Gesundheitskarte (eGK) Online Erstellen",
+      provider: {
+        "@type": "Organization",
+        name: "PixPassport",
+        url: "https://www.pixpassport.com/de",
+      },
+      areaServed: "DE",
+      serviceType: "Health Insurance Card Photo Generator",
+    },
+  ],
+};
+
 /* ─── Page ─── */
 export default function GesundheitskarteFotoPage() {
   return (
     <main className="bg-white text-slate-900  antialiased">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
 
       {/* ══════════════ HERO ══════════════ */}
       <section className="bg-gradient-to-b from-lime-50 via-white to-white pt-10 pb-16 px-4">

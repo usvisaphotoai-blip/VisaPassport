@@ -30,7 +30,7 @@ export default async function PreviewPage(props: { params: Promise<{ id: string 
     redirect("/dashboard");
   }
 
-  const localPrice = await getLocalPrice(5.99);
+  const localPrice = await getLocalPrice(6.99);
   const expertPrice = await getLocalPrice(9.99, undefined, true);
 
   return (

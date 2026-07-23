@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title:
-    "Bewerbungsfoto Online Erstellen 2025 | Tipps & Vorschriften | PixPassport",
+    "Bewerbungsfoto Online Erstellen 2026 | Tipps & Vorschriften | PixPassport",
   description:
     "Professionelles Bewerbungsfoto online erstellen: Hintergrund wechseln, zuschneiden, optimieren. Mit offiziellen Tipps für das perfekte Lebenslauf-Foto. Ab 5,99 €.",
   keywords: [
@@ -12,17 +12,32 @@ export const metadata: Metadata = {
     "bewerbungsfoto online erstellen",
     "lebenslauf foto",
     "bewerbungsbild tipps",
-   
   ],
-  alternates: { canonical: "https://www.pixpassport.com/de/bewerbungsfoto" },
+  alternates: {
+    canonical: "https://www.pixpassport.com/de/bewerbungsfoto",
+    languages: {
+      "de": "https://www.pixpassport.com/de/bewerbungsfoto",
+      "en": "https://www.pixpassport.com/",
+      "fr": "https://www.pixpassport.com/fr",
+      "x-default": "https://www.pixpassport.com/",
+    },
+  },
   openGraph: {
-    title: "Bewerbungsfoto Online Erstellen | PixPassport",
+    title: "Bewerbungsfoto Online Erstellen 2026 | PixPassport",
     description:
       "Professionelles Bewerbungsfoto in Sekunden. Hintergrund entfernen, zuschneiden, KI-optimiert. Ab 5,99 €.",
     url: "https://www.pixpassport.com/de/bewerbungsfoto",
     siteName: "PixPassport",
     locale: "de_DE",
     type: "website",
+    images: [
+      {
+        url: "https://www.pixpassport.com/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Bewerbungsfoto Online Erstellen - PixPassport",
+      },
+    ],
   },
 };
 

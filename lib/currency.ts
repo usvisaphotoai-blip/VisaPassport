@@ -51,7 +51,7 @@ const COUNTRY_TO_CURRENCY: Record<string, string> = {
 
 // Fixed price mapping for specific currencies (PPP-adjusted)
 const FIXED_PRICES: Record<string, { amount: number; symbol: string; decimals: number }> = {
-  // Tier 1: Base ($5.99)
+  // Tier 1: Base ($6.99)
   USD: { amount: 6.99, symbol: "$", decimals: 2 },
   EUR: { amount: 6.99, symbol: "€", decimals: 2 },
   GBP: { amount: 6.99, symbol: "£", decimals: 2 },
@@ -96,8 +96,8 @@ const FIXED_PRICES: Record<string, { amount: number; symbol: string; decimals: n
 
 export interface LocalPrice {
   currency: string;
-  amount: number; // Decimal amount (e.g. 5.99 or 399)
-  formatted: string; // e.g. "$5.99" or "₹399"
+  amount: number; 
+  formatted: string; 
   symbol: string;
 }
 
@@ -143,7 +143,7 @@ const EXPERT_PRICES: Record<string, { amount: number; symbol: string; decimals: 
 };
 
 export async function getLocalPrice(
-  baseUsdPrice: number = 5.99,
+  baseUsdPrice: number = 6.99,
   forcedCurrency?: string,
   isExpert: boolean = false,
   skipHeaders: boolean = false
@@ -193,8 +193,8 @@ export async function getLocalPrice(
     console.error("Failed to get local price, falling back to USD", error);
     return {
       currency: "USD",
-      amount: 5.99,
-      formatted: "$5.99",
+      amount: 6.99,
+      formatted: "$6.99",
       symbol: "$",
     };
   }

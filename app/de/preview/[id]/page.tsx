@@ -27,7 +27,7 @@ export default async function DePreviewPage(props: { params: Promise<{ id: strin
     redirect("/dashboard");
   }
 
-  const localPrice = await getLocalPrice(5.99);
+  const localPrice = await getLocalPrice(6.99);
   const expertPrice = await getLocalPrice(9.99, undefined, true);
 
   return (

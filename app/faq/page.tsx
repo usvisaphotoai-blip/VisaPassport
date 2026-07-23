@@ -49,11 +49,11 @@ const getCategories = (price: string) => [
 
 export default function FAQPage() {
   const [activeCategory, setActiveCategory] = useState(0);
-  const [priceStr, setPriceStr] = useState("$5.99");
+  const [priceStr, setPriceStr] = useState("$6.99");
 
   useEffect(() => {
     // If we passed localPrice in props, use it, else fetch on mount
-    getLocalPrice(5.99).then(res => setPriceStr(res.formatted));
+    getLocalPrice(6.99).then(res => setPriceStr(res.formatted));
   }, []);
 
   const categories = getCategories(priceStr);

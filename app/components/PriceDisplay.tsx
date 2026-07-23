@@ -11,9 +11,9 @@ interface PriceDisplayProps {
 
 // Fixed price mapping for specific currencies (matching lib/currency.ts)
 const FIXED_PRICES: Record<string, { amount: number; symbol: string; decimals: number }> = {
-  USD: { amount: 5.99, symbol: "$", decimals: 2 },
-  EUR: { amount: 5.49, symbol: "€", decimals: 2 },
-  GBP: { amount: 5.49, symbol: "£", decimals: 2 },
+  USD: { amount: 6.99, symbol: "$", decimals: 2 },
+  EUR: { amount: 6.99, symbol: "€", decimals: 2 },
+  GBP: { amount: 6.99, symbol: "£", decimals: 2 },
   INR: { amount: 299, symbol: "₹", decimals: 0 },
   JPY: { amount: 799, symbol: "¥", decimals: 0 },
   BRL: { amount: 30, symbol: "R$", decimals: 0 },
