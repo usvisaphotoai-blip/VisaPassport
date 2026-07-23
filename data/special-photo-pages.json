@@ -1,0 +1,36 @@
+[
+  {
+    "slug": "canada-visa-size-photo",
+    "title": "Canada Visa Size Photo Maker: Get a Compliant Photo in Seconds",
+    "metaDescription": "Upload a selfie and get a properly sized Canada visa photo — 35 × 45 mm, correct head size, and a clean background — ready for your application.",
+    "jsonLd": {
+      "name": "Canada Visa Size Photo Maker",
+      "description": "Online biometric tool for Canada Visa photo requirements.",
+      "applicationCategory": "UtilitiesApplication"
+    },
+    "openGraph": {
+      "title": "Canada Visa Size Photo Maker | PixPassport",
+      "description": "Create Canada visa photos online. 100% compliant in under a minute.",
+      "image": "https://res.cloudinary.com/dipzpwbbk/image/upload/v1784690540/uk-hero_m4cc8l.webp"
+    },
+    "countryCode": "CA",
+    "heroTitle": "Canada Visa Size Photo Maker",
+    "heroSubtitle": "Upload a selfie and get a properly sized Canada visa photo — 35 × 45 mm, correct head size, and a clean white background — ready for your application.",
+    "documents": [
+      { "id": "ca-visa", "label": "Canada Visa 35x45 mm", "size": "35 × 45 mm", "type": "visa" },
+      { "id": "ca-passport", "label": "Canada Passport 50x70 mm", "size": "50 × 70 mm", "type": "passport" },
+      { "id": "ca-citizenship", "label": "Canada Citizenship 50x70 mm", "size": "50 × 70 mm", "type": "passport" }
+    ],
+    "contentHtml": "<h2>What Size Is a Canada Visa Photo?</h2><p>The Canada visa photo size is 35 &times; 45 mm. Your head must measure 31 to 36 mm from chin to crown. For digital applications, the photo needs to be at least 420 &times; 540 pixels.</p><h2>How to Take Your Own Photo at Home</h2><ol><li><strong>Set up your background:</strong> Stand 3&ndash;4 feet from a plain white or off-white wall, with soft daylight coming from in front of you.</li><li><strong>Take the photo:</strong> Face the camera directly, keep a neutral expression, and remove glasses, hats, and headphones.</li><li><strong>Upload and download:</strong> Our tool crops, centers, and formats the photo to the required dimensions.</li></ol><h2>Common Reasons Canada Visa Photos Get Rejected</h2><ul><li>Eyeglasses, shadows, or a busy background.</li><li>A smile, tilted head, or off-center framing.</li><li>A photo of a printed photo instead of an original digital file.</li></ul>",
+    "faqs": [
+      {
+        "q": "What is the official Canada visa photo size?",
+        "a": "The physical print must be 35 mm by 45 mm, with the face measuring 31 to 36 mm from chin to crown."
+      },
+      {
+        "q": "Can I wear glasses in a Canada visa photo?",
+        "a": "No, glasses are generally not allowed unless worn for medical reasons, and even then there must be no glare or tinted lenses."
+      }
+    ]
+  }
+]

@@ -3,9 +3,11 @@ import { notFound } from "next/navigation";
 import specs from "../../data/countries-specs.json";
 import moneyPages from "../../data/money-pages.json";
 import toolPages from "../../data/tool-seo-pages.json";
+import specialPages from "../../data/special-photo-pages.json";
 import { getSpecIdFromSlug, getAllSlugs, SpecEntry, getShortId } from "../../lib/slug-utils";
 import ProgrammaticLandingPage from "../components/ProgrammaticLandingPage";
 import PassportMakerApp from "../passport-size-photo-maker/PassportMakerApp";
+import SpecialPhotoPageClient from "../components/SpecialPhotoPageClient";
 import { getLocalPrice } from "@/lib/currency";
 import Breadcrumbs from "../components/Breadcrumbs";
 
@@ -219,6 +221,19 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
+  const specialPage = specialPages.find((p) => p.slug === slug);
+  if (specialPage) {
+    return {
+      title: specialPage.title,
+      description: specialPage.metaDescription,
+      alternates: { canonical: `https://www.pixpassport.com/${slug}` },
+      openGraph: { 
+        ...specialPage.openGraph,
+        url: `https://www.pixpassport.com/${slug}`
+      },
+    };
+  }
+
   return {};
 }
 
@@ -349,6 +364,21 @@ export default async function Page({ params }: PageProps) {
             />
           </div>
         </div>
+      </>
+    );
+  }
+
+  // ── 4. Special Photo Pages ────────────────────────────────────────────────
+  const specialPage = specialPages.find((p) => p.slug === slug);
+  if (specialPage) {
+    return (
+      <>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(specialPage.jsonLd) }}
+        />
+        <style dangerouslySetInnerHTML={{ __html: RICH_CONTENT_STYLES }} />
+        <SpecialPhotoPageClient {...specialPage} />
       </>
     );
   }

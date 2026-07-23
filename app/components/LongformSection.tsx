@@ -91,17 +91,7 @@ export default function LongformSection({
             />
 
             <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                {/* Section eyebrow */}
-                <div className="text-center mb-14">
-                    <span className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-indigo-500 mb-3">
-                        <span className="block w-6 h-px bg-indigo-400" />
-                        Official Guide
-                        <span className="block w-6 h-px bg-indigo-400" />
-                    </span>
-                    <h2 className="text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight">
-                        {countryName} {docName} Photo — Editor and photo maker
-                    </h2>
-                </div>
+               
 
                 <div className="lg:grid lg:grid-cols-[260px_1fr] lg:gap-14 items-start">
                     {/* ── Sidebar TOC ───────────────────────── */}
