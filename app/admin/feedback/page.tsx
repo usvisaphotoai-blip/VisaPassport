@@ -51,7 +51,7 @@ export default async function FeedbackPage() {
               {fb.photoId && (
                 <div className="mt-4 pt-4 border-t border-slate-100">
                   <span className="text-xs text-slate-400 block mb-1 uppercase font-semibold tracking-wider">Related Photo ID</span>
-                  <Link href={`/preview/${fb.photoId}`} className="text-xs font-mono bg-slate-50 px-2 py-1 rounded text-slate-600 hover:text-lime-600 transition-colors">
+                  <Link href={`/preview/${fb.photoId}`} className="text-xs  bg-slate-50 px-2 py-1 rounded text-slate-600 hover:text-lime-600 transition-colors">
                     {fb.photoId}
                   </Link>
                 </div>

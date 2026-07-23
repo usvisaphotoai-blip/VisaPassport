@@ -405,7 +405,7 @@ function ToolForm() {
 
 export default function ToolPage() {
   return (
-    <div className="bg-slate-50 min-h-screen font-sans">
+    <div className="bg-slate-50 min-h-screen ">
       <div className="max-w-xl mx-auto px-4 pt-2 sm:pt-2 text-center">
         <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
           Passport size photo maker  & Visa Photo maker

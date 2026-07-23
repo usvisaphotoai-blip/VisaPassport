@@ -152,7 +152,7 @@ export default function PhotoPasseportPage() {
               <div key={spec.label} className="border-b border-slate-100 pb-4">
                 <div className="flex justify-between items-start">
                   <span className="font-bold text-slate-800">{spec.label}</span>
-                  <span className="text-green-700 font-mono bg-green-50 px-2 py-0.5 rounded text-sm">{spec.value}</span>
+                  <span className="text-green-700  bg-green-50 px-2 py-0.5 rounded text-sm">{spec.value}</span>
                 </div>
                 <p className="text-sm text-slate-500 mt-1">{spec.detail}</p>
               </div>

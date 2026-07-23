@@ -159,7 +159,7 @@ const faqs = [
 /* ─── Page ─── */
 export default function FuehrerscheinFotoPage() {
   return (
-    <main className="bg-white text-slate-900 font-sans antialiased">
+    <main className="bg-white text-slate-900  antialiased">
 
       {/* ══════════════ HERO ══════════════ */}
       <section className="relative overflow-hidden bg-slate-900 pt-16 pb-20 px-4">

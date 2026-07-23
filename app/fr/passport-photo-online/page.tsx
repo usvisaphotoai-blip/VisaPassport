@@ -306,7 +306,7 @@ function ToolFormFr() {
 
 export default function FrToolPage() {
   return (
-    <div className="bg-slate-50 min-h-screen font-sans">
+    <div className="bg-slate-50 min-h-screen ">
       <div className="py-4">
         <Suspense fallback={<div className="flex items-center justify-center h-64"><div className="w-8 h-8 border-4 border-lime-500 border-t-transparent rounded-full animate-spin" /></div>}>
           <ToolFormFr />

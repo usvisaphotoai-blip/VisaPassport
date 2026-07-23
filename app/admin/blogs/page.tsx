@@ -161,7 +161,7 @@ export default function AdminBlogsPage() {
             </label>
             <textarea
               required
-              className="w-full border rounded-lg p-2 text-sm h-64 font-mono"
+              className="w-full border rounded-lg p-2 text-sm h-64 "
               value={currentBlog.content || ""}
               onChange={(e) =>
                 setCurrentBlog({ ...currentBlog, content: e.target.value })

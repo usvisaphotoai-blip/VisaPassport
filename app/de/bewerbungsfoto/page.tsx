@@ -212,7 +212,7 @@ export default function BewerbungsfotoPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <main className="font-sans text-slate-900 antialiased">
+      <main className=" text-slate-900 antialiased">
         {/* HERO */}
         <section className="px-4 pt-6 sm:px-8 sm:pt-10">
           <div className="mx-auto max-w-6xl overflow-hidden rounded-2xl">

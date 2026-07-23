@@ -106,7 +106,7 @@ const faqs = [
 
 export default function VisumFotoPage() {
   return (
-    <main className="bg-white text-slate-900 font-sans">
+    <main className="bg-white text-slate-900 ">
       {/* ── HERO ── */}
       <section className="bg-gradient-to-b from-lime-50 to-white pt-10 pb-16 px-4">
         <div className="max-w-5xl mx-auto flex flex-col items-center text-center gap-6">

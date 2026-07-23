@@ -434,7 +434,7 @@ function ZoomOverlay({ url, hasPaid, onClose }: { url: string; hasPaid: boolean;
             </div>
           )}
         </div>
-        <p className="text-center text-white/25 text-[11px] mt-4 font-mono tracking-widest uppercase">
+        <p className="text-center text-white/25 text-[11px] mt-4  tracking-widest uppercase">
           {hasPaid ? "Full Resolution" : "Watermarked Preview"} · Esc to close
         </p>
       </div>

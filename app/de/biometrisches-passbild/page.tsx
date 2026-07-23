@@ -134,7 +134,7 @@ const faqs = [
 /* ─── Page ─── */
 export default function BiometrischesPassbildPage() {
   return (
-    <main className="bg-white text-slate-900 font-sans antialiased">
+    <main className="bg-white text-slate-900  antialiased">
 
       {/* ══════════════ HERO ══════════════ */}
       <section className="  pt-10 pb-16 px-4">

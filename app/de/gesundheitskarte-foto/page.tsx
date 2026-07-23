@@ -160,7 +160,7 @@ const faqs = [
 /* ─── Page ─── */
 export default function GesundheitskarteFotoPage() {
   return (
-    <main className="bg-white text-slate-900 font-sans antialiased">
+    <main className="bg-white text-slate-900  antialiased">
 
       {/* ══════════════ HERO ══════════════ */}
       <section className="bg-gradient-to-b from-lime-50 via-white to-white pt-10 pb-16 px-4">

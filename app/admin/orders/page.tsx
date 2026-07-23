@@ -76,7 +76,7 @@ export default async function AdminOrdersPage() {
                       <td className="px-6 py-4">
                         <div className="flex flex-col">
                           <span className="font-bold text-slate-900">{email}</span>
-                          <span className="text-[10px] text-slate-400 mt-0.5 font-mono uppercase tracking-tighter">
+                          <span className="text-[10px] text-slate-400 mt-0.5  uppercase tracking-tighter">
                             {photo.userId ? "Registered" : "Guest Checkout"}
                           </span>
                         </div>
@@ -84,7 +84,7 @@ export default async function AdminOrdersPage() {
                       <td className="px-6 py-4">
                         <div className="flex flex-col">
                           <span className="font-semibold text-slate-700">{countryName}</span>
-                          <span className="text-[10px] text-slate-400 font-mono">{photo.documentType}</span>
+                          <span className="text-[10px] text-slate-400 ">{photo.documentType}</span>
                         </div>
                       </td>
                       <td className="px-6 py-4">
@@ -123,13 +123,13 @@ export default async function AdminOrdersPage() {
                       <td className="px-6 py-4">
                         <div className="flex flex-col gap-1">
                           {photo.razorpayPaymentId ? (
-                            <code className="text-[11px] bg-emerald-50 text-emerald-700 px-2 py-1 rounded-md font-mono border border-emerald-100 w-fit">
+                            <code className="text-[11px] bg-emerald-50 text-emerald-700 px-2 py-1 rounded-md  border border-emerald-100 w-fit">
                               {photo.razorpayPaymentId}
                             </code>
                           ) : (
                             <span className="text-xs text-slate-400 italic">No manual ID</span>
                           )}
-                          <span className="text-[9px] text-slate-300 font-mono">
+                          <span className="text-[9px] text-slate-300 ">
                             {photo.razorpayOrderId}
                           </span>
                         </div>

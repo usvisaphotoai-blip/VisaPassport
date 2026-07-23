@@ -222,7 +222,7 @@ export default function PreviewClientDe({
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={previewUrl} alt="Vorschau komplett" draggable={false} onContextMenu={(e) => e.preventDefault()} className="w-full h-auto block" />
             </div>
-            <p className="text-center text-white/25 text-[11px] mt-4 font-mono tracking-widest uppercase">
+            <p className="text-center text-white/25 text-[11px] mt-4  tracking-widest uppercase">
               {hasPaid ? de.preview.fullResolution : de.preview.watermarkedPreview} · {de.preview.escToClose}
             </p>
           </div>

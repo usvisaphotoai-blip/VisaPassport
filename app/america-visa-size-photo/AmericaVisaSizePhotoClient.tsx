@@ -37,10 +37,10 @@ const twoByTwoDocuments = [
 ];
 
 const TRUST_ITEMS = [
-  { icon: "🔒", title: "Privacy first", desc: "Photos never stored on our servers" },
-  { icon: "✅", title: "ICAO compliant", desc: "Meets 9303 biometric standards" },
-  { icon: "⚡", title: "Instant result", desc: "AI processing in under 10 seconds" },
-  { icon: "🆓", title: "Free preview", desc: "Check before you pay anything" },
+  { tag: "01", title: "Privacy first", desc: "Photos never stored on our servers" },
+  { tag: "02", title: "ICAO compliant", desc: "Meets 9303 biometric standards" },
+  { tag: "03", title: "Instant result", desc: "AI processing in under 10 seconds" },
+  { tag: "04", title: "Free preview", desc: "Check before you pay anything" },
 ];
 
 const FAQ_ITEMS = [
@@ -170,8 +170,6 @@ export default function AmericaVisaSizePhotoClient() {
     return () => URL.revokeObjectURL(url);
   }, [selectedFile]);
 
-  const currentStep = selectedFile ? 3 : 2;
-
   const processFile = async () => {
     if (!selectedFile) return;
     setErrorMsg("");
@@ -233,152 +231,194 @@ export default function AmericaVisaSizePhotoClient() {
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
-  return (
-    <div className="min-h-screen bg-slate-50 font-sans pb-24 sm:pb-0">
-      {/* FAQ structured data for search engines */}
-     
-      <div className="bg-white py-10 sm:py-12 px-4 sm:px-6 lg:px-8 border-b border-slate-200">
-        <div className="max-w-4xl mx-auto">
-          {/* Breadcrumb */}
-          <nav aria-label="Breadcrumb" className="mb-6">
-            <ol className="flex items-center gap-2 text-xs text-slate-500">
-              <li><a href="/" className="hover:text-lime-700">Home</a></li>
-            
-           
-              <li aria-hidden>/</li>
-              <li className="text-slate-700 font-medium" aria-current="page">America Visa Size Photo</li>
-            </ol>
-          </nav>
+  const activeDoc = twoByTwoDocuments.find((d) => d.id === selectedDoc);
 
-          <div className="text-center mb-10">
-            <span className="inline-block mb-3 px-3 py-1 rounded-full bg-lime-100 text-lime-800 text-xs font-semibold tracking-wide uppercase">
-              Updated for 2026 requirements
+  return (
+    <div className="min-h-screen bg-white  pb-28 lg:pb-0">
+      {/* Breadcrumb strip */}
+      <div className="border-b border-slate-200 px-4 sm:px-6 lg:px-8 py-3">
+        <nav aria-label="Breadcrumb" className="max-w-6xl mx-auto">
+          <ol className="flex items-center gap-2 text-xs  uppercase tracking-wide text-slate-500">
+            <li><a href="/" className="hover:text-lime-700">Home</a></li>
+            <li aria-hidden>/</li>
+            <li className="text-slate-900 font-semibold" aria-current="page">America Visa Size Photo</li>
+          </ol>
+        </nav>
+      </div>
+
+      {/* Hero + Form: two columns on desktop */}
+      <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6 py-8 lg:py-10">
+        <div className="grid lg:grid-cols-12 lg:gap-0 rounded-2xl border border-slate-200">
+          {/* LEFT — heading + document select + submit */}
+          <div className="lg:col-span-5  p-6 sm:p-8 lg:p-10 flex flex-col rounded-t-2xl lg:rounded-l-2xl lg:rounded-tr-none">
+            <span className="inline-flex w-fit items-center  text-xs uppercase tracking-widest text-lime-800 bg-lime-100 rounded-full px-3 py-1 mb-4">
+              America visa size photo maker
             </span>
-            <h1 className="text-4xl font-bold text-slate-900 mb-4 tracking-tight">
+            <h1 className="text-2xl sm:text-2xl font-bold text-slate-900 mb-4 tracking-tight leading-[1.05]">
               America Visa Size Photo Maker: Get a Compliant Photo in Seconds
             </h1>
-            <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-              Upload a selfie and get a properly sized America visa photo — 2 × 2 inches, correct head size, and a
-              clean white background — ready for your DS-160 or in-person application.
+            <p className="text-md sm:text-md text-slate-600 leading-relaxed mb-7 max-w-lg">
+              Upload a portrait photo of yourself and get a properly sized America visa photo 2 × 2 inches, correct head size, and a clean white background ready for your DS-160 or in-person application.
             </p>
-          </div>
 
-          {/* Progress indicator */}
-          <div className="flex items-center justify-center gap-2 mb-8" aria-label="Progress">
-            {[1, 2, 3].map((step) => (
-              <div key={step} className="flex items-center gap-2">
-                <div
-                  className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-colors
-                    ${step <= currentStep ? "bg-lime-600 text-white" : "bg-slate-200 text-slate-500"}`}
+            {/* Field 01 — document type */}
+            <div className="mb-8">
+              <div className="flex items-center gap-3 mb-3">
+                <span className=" text-xs font-bold w-7 h-7 rounded-lg flex items-center justify-center bg-lime-600 text-white shrink-0">
+                  01
+                </span>
+                <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-900">
+                  Select Photo type
+                </h2>
+              </div>
+
+              <div className="relative" ref={dropdownRef}>
+                <button
+                  type="button"
+                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                  aria-haspopup="listbox"
+                  aria-expanded={isDropdownOpen}
+                  className={`w-full bg-white border rounded-xl text-slate-900 py-3 px-4 transition-colors font-medium cursor-pointer flex items-center justify-between text-left
+                    ${isDropdownOpen ? "border-lime-600 ring-2 ring-lime-100" : "border-slate-200 hover:border-slate-300"}`}
                 >
-                  {step < currentStep ? "✓" : step}
-                </div>
-                {step < 3 && (
-                  <div className={`w-8 sm:w-16 h-0.5 ${step < currentStep ? "bg-lime-600" : "bg-slate-200"}`} />
+                  <span className="truncate pr-4  text-sm">
+                    {activeDoc?.label} {activeDoc?.size ? `(${activeDoc.size})` : ""}
+                  </span>
+                  <svg
+                    className={`w-4 h-4 shrink-0 text-lime-700 transition-transform ${isDropdownOpen ? "rotate-180" : ""}`}
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+
+                {isDropdownOpen && (
+                  <div className="absolute z-10 mt-2 w-full bg-white border border-slate-200 rounded-xl max-h-80 overflow-hidden flex flex-col shadow-xl">
+                    <div className="p-3 border-b border-slate-100 bg-slate-50">
+                      <div className="relative">
+                        <svg className="absolute left-3 top-2.5 w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                        <input
+                          type="text"
+                          placeholder="Search documents..."
+                          value={searchQuery}
+                          onChange={(e) => setSearchQuery(e.target.value)}
+                          className="w-full pl-9 pr-3 py-2 bg-white border border-slate-200 rounded-lg text-sm  focus:outline-none focus:border-lime-600 focus:ring-2 focus:ring-lime-100"
+                          autoFocus
+                        />
+                      </div>
+                    </div>
+                    <ul className="overflow-auto py-1.5 px-1.5" role="listbox">
+                      {filteredDocs.length > 0 ? (
+                        filteredDocs.map((doc) => (
+                          <li
+                            key={doc.id}
+                            role="option"
+                            aria-selected={selectedDoc === doc.id}
+                            onClick={() => {
+                              setSelectedDoc(doc.id);
+                              setIsDropdownOpen(false);
+                              setSearchQuery("");
+                            }}
+                            className={`px-3.5 py-3 rounded-lg cursor-pointer text-sm  transition-colors border-l-[3px]
+                              ${selectedDoc === doc.id
+                                ? "bg-lime-50 border-l-lime-600 text-lime-900 font-semibold"
+                                : "border-l-transparent text-slate-700 hover:bg-slate-50 hover:border-l-slate-200"}`}
+                          >
+                            {doc.label} {doc.size && <span className={selectedDoc === doc.id ? "text-lime-600" : "text-slate-400 ml-1"}>({doc.size})</span>}
+                          </li>
+                        ))
+                      ) : (
+                        <li className="px-4 py-6 text-sm text-slate-500 text-center ">No documents found</li>
+                      )}
+                    </ul>
+                  </div>
                 )}
               </div>
-            ))}
-          </div>
+            </div>
 
-          <div className="bg-white rounded-xl border border-slate-200 shadow-sm">
-            <div className="p-6 sm:p-10">
-              {/* Step 1: Select Document */}
-              <div className="mb-10">
-                <h2 className="text-xl font-semibold text-slate-900 mb-4 flex items-center">
-                  <span className="flex items-center justify-center w-8 h-8 rounded-full bg-lime-600 text-white font-bold mr-3 text-sm shrink-0">
-                    1
-                  </span>
-                  Select photo type
-                </h2>
-                <div className="relative" ref={dropdownRef}>
-                  <button
-                    type="button"
-                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                    aria-haspopup="listbox"
-                    aria-expanded={isDropdownOpen}
-                    className="w-full bg-white border border-slate-300 text-slate-700 py-3 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-500 focus:border-lime-500 transition-colors font-medium cursor-pointer hover:border-slate-400 flex items-center justify-between text-left"
-                  >
-                    <span className="truncate pr-4">
-                      {twoByTwoDocuments.find((d) => d.id === selectedDoc)?.label}{" "}
-                      {twoByTwoDocuments.find((d) => d.id === selectedDoc)?.size
-                        ? `(${twoByTwoDocuments.find((d) => d.id === selectedDoc)?.size})`
-                        : ""}
-                    </span>
-                    <svg
-                      className={`w-5 h-5 shrink-0 text-slate-500 transition-transform ${isDropdownOpen ? "rotate-180" : ""}`}
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </button>
-
-                  {isDropdownOpen && (
-                    <div className="absolute z-10 mt-2 w-full bg-white border border-slate-200 rounded-xl shadow-xl overflow-hidden">
-                      <div className="p-3 border-b border-slate-100 bg-slate-50/50">
-                        <div className="relative">
-                          <svg className="absolute left-3 top-2.5 w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                          </svg>
-                          <input
-                            type="text"
-                            placeholder="Search documents..."
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full pl-9 pr-3 py-2 bg-white border border-slate-300 rounded-lg text-sm focus:outline-none focus:border-lime-500 focus:ring-1 focus:ring-lime-500 transition-shadow"
-                            autoFocus
-                          />
-                        </div>
-                      </div>
-                      <ul className="max-h-64 overflow-auto py-2 scrollbar-thin scrollbar-thumb-slate-200" role="listbox">
-                        {filteredDocs.length > 0 ? (
-                          filteredDocs.map((doc) => (
-                            <li
-                              key={doc.id}
-                              role="option"
-                              aria-selected={selectedDoc === doc.id}
-                              onClick={() => {
-                                setSelectedDoc(doc.id);
-                                setIsDropdownOpen(false);
-                                setSearchQuery("");
-                              }}
-                              className={`px-4 py-3 cursor-pointer text-sm transition-colors
-                                ${selectedDoc === doc.id ? "bg-lime-50 text-lime-900 font-medium" : "text-slate-700 hover:bg-slate-50"}`}
-                            >
-                              {doc.label} {doc.size && <span className="text-slate-400 ml-1">({doc.size})</span>}
-                            </li>
-                          ))
-                        ) : (
-                          <li className="px-4 py-6 text-sm text-slate-500 text-center">No documents found</li>
-                        )}
-                      </ul>
-                    </div>
-                  )}
+            {errorMsg && (
+              <div className="mb-6 p-4 rounded-xl bg-rose-50 border border-rose-200 flex items-start gap-3" role="alert">
+                <svg className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                <div>
+                  <h4 className="text-sm font-semibold text-rose-700 uppercase tracking-wide">Processing failed</h4>
+                  <p className="text-sm text-rose-600 mt-1">{errorMsg}</p>
                 </div>
               </div>
+            )}
+          </div>
 
-              {/* Step 2: Upload Photo */}
-              <div className="mb-10">
-                <h2 className="text-xl font-semibold text-slate-900 mb-4 flex items-center">
-                  <span className="flex items-center justify-center w-8 h-8 rounded-full bg-lime-600 text-white font-bold mr-3 text-sm shrink-0">
-                    2
-                  </span>
-                  Upload your photo
-                </h2>
+          {/* RIGHT — upload & submit */}
+          <div className="lg:col-span-7 p-6 sm:p-8 lg:p-10 bg-slate-50 lg:border-l lg:border-slate-200 flex flex-col rounded-b-2xl lg:rounded-r-2xl lg:rounded-bl-none">
+            <div className="flex items-center gap-3 mb-5">
+              <span className={`text-xs font-bold w-7 h-7 rounded-lg flex items-center justify-center text-white shrink-0 ${selectedFile ? "bg-lime-600" : "bg-slate-900"}`}>
+                {selectedFile ? "✓" : "02"}
+              </span>
+              <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-900">
+                Upload your photo
+              </h2>
+            </div>
 
-                {!selectedFile ? (
-                  <div
-                    className={`relative rounded-xl border-2 border-dashed p-8 sm:p-12 text-center cursor-pointer transition-colors
-                      ${dragOver ? "border-lime-600 bg-lime-50" : "border-slate-300 hover:border-lime-500"}`}
-                    onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
-                    onDragLeave={() => setDragOver(false)}
-                    onDrop={handleDrop}
-                    onClick={() => fileInputRef.current?.click()}
-                    role="button"
-                    tabIndex={0}
-                    aria-label="Upload your photo"
-                  >
+            {!selectedFile ? (
+              <div
+                className={`relative flex-1 min-h-[260px] rounded-xl border-2 border-dashed p-8 sm:p-12 text-center cursor-pointer transition-colors flex flex-col items-center justify-center
+                  ${dragOver ? "border-lime-600 bg-lime-50" : "border-slate-300 hover:border-lime-400 bg-white"}`}
+                onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
+                onDragLeave={() => setDragOver(false)}
+                onDrop={handleDrop}
+                onClick={() => fileInputRef.current?.click()}
+                role="button"
+                tabIndex={0}
+                aria-label="Upload your photo"
+              >
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  onChange={handleFileChange}
+                  accept="image/jpeg,image/png,image/webp,image/heic"
+                  className="hidden"
+                />
+                <div className="mx-auto w-16 h-16 mb-4 rounded-full bg-lime-100 flex items-center justify-center">
+                  <svg className="w-7 h-7 text-lime-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-medium text-slate-900 mb-2">Drag and drop your portrait photo</h3>
+                <p className="text-sm text-slate-500 mb-6">JPG · PNG · WEBP · HEIC</p>
+                <button className="px-6 py-2.5 rounded-lg bg-slate-900 text-white text-sm font-medium hover:bg-lime-600 transition-colors">
+                  Select image
+                </button>
+              </div>
+            ) : (
+              <div className="flex-1 flex flex-col sm:flex-row items-center gap-8 bg-white rounded-xl border border-slate-200 p-6">
+                {/* Preview with crop-guide corner marks */}
+                <div className="relative w-36 h-44 rounded-lg overflow-hidden bg-slate-100 shrink-0">
+                  {previewUrl && (
+                    <Image src={previewUrl} alt="Selected photo" fill className="object-cover" />
+                  )}
+                  {/* crop marks */}
+                  <span className="absolute top-1.5 left-1.5 w-4 h-4 border-t-2 border-l-2 border-lime-500" />
+                  <span className="absolute top-1.5 right-1.5 w-4 h-4 border-t-2 border-r-2 border-lime-500" />
+                  <span className="absolute bottom-1.5 left-1.5 w-4 h-4 border-b-2 border-l-2 border-lime-500" />
+                  <span className="absolute bottom-1.5 right-1.5 w-4 h-4 border-b-2 border-r-2 border-lime-500" />
+                </div>
+                <div className="flex-1 text-center sm:text-left">
+                  <h4 className="font-medium text-slate-900 mb-1 line-clamp-1">{selectedFile.name}</h4>
+                  <p className="text-sm text-slate-500 mb-4">
+                    {(selectedFile.size / (1024 * 1024)).toFixed(2)} MB
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-3 justify-center sm:justify-start">
+                    <button
+                      onClick={() => fileInputRef.current?.click()}
+                      className="text-sm font-medium text-slate-900 rounded-lg border border-slate-300 px-4 py-2 hover:border-slate-900 transition-colors"
+                    >
+                      Replace photo
+                    </button>
                     <input
                       type="file"
                       ref={fileInputRef}
@@ -386,97 +426,67 @@ export default function AmericaVisaSizePhotoClient() {
                       accept="image/jpeg,image/png,image/webp,image/heic"
                       className="hidden"
                     />
-                    <div className="mx-auto w-16 h-16 mb-4 rounded-full bg-slate-100 flex items-center justify-center">
-                      <svg className="w-8 h-8 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                    <button
+                      onClick={clearSelection}
+                      className="text-sm font-medium text-rose-600 hover:text-rose-700 flex items-center justify-center sm:justify-start gap-1.5"
+                    >
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                       </svg>
-                    </div>
-                    <h3 className="text-lg font-medium text-slate-900 mb-2">Drag and drop your portrait photo</h3>
-                    <p className="text-sm text-slate-500 mb-6">Or click to browse from your device — JPG, PNG, WEBP, or HEIC</p>
-                    <button className="px-6 py-2.5 bg-white border border-slate-300 text-slate-700 rounded-lg text-sm font-medium hover:bg-slate-50">
-                      Select image
+                      Remove
                     </button>
                   </div>
-                ) : (
-                  <div className="relative rounded-xl border border-slate-200 bg-slate-50 p-6">
-                    <div className="flex flex-col sm:flex-row items-center gap-6">
-                      <div className="relative w-32 h-40 rounded-lg overflow-hidden bg-white border border-slate-200 shrink-0">
-                        {previewUrl && (
-                          <Image src={previewUrl} alt="Selected photo" fill className="object-cover" />
-                        )}
-                      </div>
-                      <div className="flex-1 text-center sm:text-left">
-                        <h4 className="font-medium text-slate-900 mb-1 line-clamp-1">{selectedFile.name}</h4>
-                        <p className="text-sm text-slate-500 mb-4">
-                          {(selectedFile.size / (1024 * 1024)).toFixed(2)} MB
-                        </p>
-                        <button
-                          onClick={clearSelection}
-                          className="text-sm font-medium text-rose-600 hover:text-rose-700 flex items-center justify-center sm:justify-start gap-1.5"
-                        >
-                          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                          </svg>
-                          Remove photo
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {errorMsg && (
-                <div className="mb-8 p-4 rounded-xl bg-rose-50 border border-rose-200 flex items-start gap-3" role="alert">
-                  <svg className="w-5 h-5 text-rose-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                  </svg>
-                  <div>
-                    <h4 className="text-sm font-semibold text-rose-800">Processing failed</h4>
-                    <p className="text-sm text-rose-600 mt-1">{errorMsg}</p>
-                  </div>
                 </div>
-              )}
-
-              {/* Step 3: Process — hidden on mobile, replaced by sticky bar */}
-              <div className="pt-6 border-t border-slate-100 hidden sm:block">
-                <button
-                  onClick={processFile}
-                  disabled={!selectedFile || isProcessing}
-                  className={`w-full py-4 px-6 rounded-xl text-lg font-bold flex items-center justify-center gap-2 transition-colors
-                    ${!selectedFile
-                      ? "bg-slate-100 text-slate-400 cursor-not-allowed"
-                      : isProcessing
-                      ? "bg-lime-600 text-white cursor-wait"
-                      : "bg-lime-600 hover:bg-lime-700 text-white"}`}
-                >
-                  {isProcessing ? (
-                    <>
-                      <svg className="animate-spin -ml-1 mr-2 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                      </svg>
-                      Processing photo...
-                    </>
-                  ) : (
-                    <>
-                      Proceed to verification
-                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                      </svg>
-                    </>
-                  )}
-                </button>
-                <p className="text-xs text-slate-400 text-center mt-3">
-                  Free to preview. You only pay if you choose to download or print.
-                </p>
               </div>
+            )}
+
+            {/* Step 03 — submit (desktop) */}
+            <div className="mt-6 pt-6 border-t border-slate-200 hidden lg:block">
+              <div className="flex items-center gap-3 mb-3">
+                <span className="text-xs font-bold w-7 h-7 rounded-lg flex items-center justify-center bg-slate-900 text-white shrink-0">
+                  03
+                </span>
+                <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-900">
+                  Submit
+                </h2>
+              </div>
+              <button
+                onClick={processFile}
+                disabled={!selectedFile || isProcessing}
+                className={`w-full py-4 px-6 rounded-xl text-base font-bold flex items-center justify-center gap-2 transition-colors
+                  ${!selectedFile
+                    ? "bg-slate-100 text-slate-400 cursor-not-allowed"
+                    : isProcessing
+                    ? "bg-lime-600 text-white cursor-wait"
+                    : "bg-lime-600 hover:bg-lime-700 text-white"}`}
+              >
+                {isProcessing ? (
+                  <>
+                    <svg className="animate-spin -ml-1 mr-2 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                    </svg>
+                    Processing photo...
+                  </>
+                ) : (
+                  <>
+                    Proceed to verification
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                  </>
+                )}
+              </button>
+              <p className="text-xs text-slate-400 text-center mt-3">
+                Free to preview · pay only to download or print
+              </p>
             </div>
           </div>
         </div>
       </div>
 
       {/* Sticky mobile CTA */}
-      <div className="sm:hidden fixed bottom-0 inset-x-0 z-20 bg-white border-t border-slate-200 p-3">
+      <div className="lg:hidden fixed bottom-0 inset-x-0 z-20 bg-white border-t border-slate-200 p-3">
         <button
           onClick={processFile}
           disabled={!selectedFile || isProcessing}
@@ -487,17 +497,16 @@ export default function AmericaVisaSizePhotoClient() {
         </button>
       </div>
 
-      {/* Trust Badges */}
-      <div className="bg-white border-b border-slate-200 py-8">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            {TRUST_ITEMS.map(({ icon, title, desc }) => (
-              <div
-                key={title}
-                className="bg-slate-50 rounded-xl p-4 border border-slate-100 text-left transition-all duration-200 hover:-translate-y-1 hover:shadow-lg hover:shadow-lime-500/10"
-              >
-                <span className="text-2xl block mb-2" role="img" aria-hidden>{icon}</span>
-                <p className="text-sm font-semibold text-slate-800 leading-tight">{title}</p>
+      {/* Trust strip — flat, colorful, no shadow */}
+      <div className="border-y border-slate-200 bg-slate-50">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 sm:grid-cols-4 divide-x divide-slate-200">
+            {TRUST_ITEMS.map(({ tag, title, desc }) => (
+              <div key={title} className="py-6 px-4 sm:px-6">
+                <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-lime-100 text-lime-800  text-[11px] font-bold mb-3">
+                  {tag}
+                </span>
+                <p className="text-sm font-semibold text-slate-900 leading-tight">{title}</p>
                 <p className="text-xs text-slate-500 mt-1 leading-snug hidden sm:block">{desc}</p>
               </div>
             ))}
@@ -518,7 +527,7 @@ export default function AmericaVisaSizePhotoClient() {
               on a plain background, with a neutral expression. Our tool fixes that in under ten seconds.
             </p>
             <p className="text-lg text-slate-700 leading-relaxed mb-4">
-              Upload a selfie, and the AI resizes your photo, centers your head, and replaces the background with
+              Upload a portrait photo of yourself, and the AI resizes your photo, centers your head, and replaces the background with
               pure white so it matches the exact American visa photo size the State Department publishes. You skip
               the pharmacy line, the booth fee, and the risk of a second visit because the first print didn't pass.
             </p>
@@ -555,7 +564,7 @@ export default function AmericaVisaSizePhotoClient() {
           {/* Section 2: Visual examples with placeholders */}
           <div>
             <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-6 pb-3 border-b-2 border-lime-500">
-              What a Compliant Photo Looks Like
+              What a Compliant Photo Looks Like for us visa photo maker
             </h2>
             <p className="mb-6">
               Seeing the difference is faster than reading about it. Compare a compliant shot against the most

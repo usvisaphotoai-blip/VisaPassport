@@ -140,11 +140,11 @@ export default function SpecialPhotoPageClient({
   const activeDoc = documents.find((d) => d.id === selectedDoc);
 
   return (
-    <div className="min-h-screen bg-white font-sans pb-28 lg:pb-0">
+    <div className="min-h-screen bg-white  pb-28 lg:pb-0">
       {/* Breadcrumb strip */}
       <div className="border-b border-slate-200 px-4 sm:px-6 lg:px-8 py-3">
         <nav aria-label="Breadcrumb" className="max-w-6xl mx-auto">
-          <ol className="flex items-center gap-2 text-xs font-mono uppercase tracking-wide text-slate-500">
+          <ol className="flex items-center gap-2 text-xs  uppercase tracking-wide text-slate-500">
             <li><a href="/" className="hover:text-lime-700">Home</a></li>
             <li aria-hidden>/</li>
             <li className="text-slate-900 font-semibold" aria-current="page">{countryCode}</li>
@@ -157,7 +157,7 @@ export default function SpecialPhotoPageClient({
         <div className="grid lg:grid-cols-12 lg:gap-0 rounded-2xl border border-slate-200">
           {/* LEFT — heading + document select + submit */}
           <div className="lg:col-span-5 bg-gradient-to-b from-lime-50/70 to-white p-6 sm:p-8 lg:p-10 flex flex-col rounded-t-2xl lg:rounded-l-2xl lg:rounded-tr-none">
-            <span className="inline-flex w-fit items-center font-mono text-xs uppercase tracking-widest text-lime-800 bg-lime-100 rounded-full px-3 py-1 mb-4">
+            <span className="inline-flex w-fit items-center  text-xs uppercase tracking-widest text-lime-800 bg-lime-100 rounded-full px-3 py-1 mb-4">
               Photo · {countryCode}
             </span>
             <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4 tracking-tight leading-[1.05]">
@@ -170,7 +170,7 @@ export default function SpecialPhotoPageClient({
             {/* Field 01 — document type */}
             <div className="mb-8">
               <div className="flex items-center gap-3 mb-3">
-                <span className="font-mono text-xs font-bold w-7 h-7 rounded-lg flex items-center justify-center bg-lime-600 text-white shrink-0">
+                <span className=" text-xs font-bold w-7 h-7 rounded-lg flex items-center justify-center bg-lime-600 text-white shrink-0">
                   01
                 </span>
                 <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-900">
@@ -187,7 +187,7 @@ export default function SpecialPhotoPageClient({
                   className={`w-full bg-white border rounded-xl text-slate-900 py-3 px-4 transition-colors font-medium cursor-pointer flex items-center justify-between text-left
                     ${isDropdownOpen ? "border-lime-600 ring-2 ring-lime-100" : "border-slate-200 hover:border-slate-300"}`}
                 >
-                  <span className="truncate pr-4 font-mono text-sm">
+                  <span className="truncate pr-4  text-sm">
                     {activeDoc?.label} {activeDoc?.size ? `(${activeDoc.size})` : ""}
                   </span>
                   <svg
@@ -212,7 +212,7 @@ export default function SpecialPhotoPageClient({
                           placeholder="Search documents..."
                           value={searchQuery}
                           onChange={(e) => setSearchQuery(e.target.value)}
-                          className="w-full pl-9 pr-3 py-2 bg-white border border-slate-200 rounded-lg text-sm font-mono focus:outline-none focus:border-lime-600 focus:ring-2 focus:ring-lime-100"
+                          className="w-full pl-9 pr-3 py-2 bg-white border border-slate-200 rounded-lg text-sm  focus:outline-none focus:border-lime-600 focus:ring-2 focus:ring-lime-100"
                           autoFocus
                         />
                       </div>
@@ -229,7 +229,7 @@ export default function SpecialPhotoPageClient({
                               setIsDropdownOpen(false);
                               setSearchQuery("");
                             }}
-                            className={`px-3.5 py-3 rounded-lg cursor-pointer text-sm font-mono transition-colors border-l-[3px]
+                            className={`px-3.5 py-3 rounded-lg cursor-pointer text-sm  transition-colors border-l-[3px]
                               ${selectedDoc === doc.id
                                 ? "bg-lime-50 border-l-lime-600 text-lime-900 font-semibold"
                                 : "border-l-transparent text-slate-700 hover:bg-slate-50 hover:border-l-slate-200"}`}
@@ -238,7 +238,7 @@ export default function SpecialPhotoPageClient({
                           </li>
                         ))
                       ) : (
-                        <li className="px-4 py-6 text-sm text-slate-500 text-center font-mono">No documents found</li>
+                        <li className="px-4 py-6 text-sm text-slate-500 text-center ">No documents found</li>
                       )}
                     </ul>
                   </div>
@@ -252,17 +252,105 @@ export default function SpecialPhotoPageClient({
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                 </svg>
                 <div>
-                  <h4 className="text-sm font-semibold text-rose-700 font-mono uppercase tracking-wide">Processing failed</h4>
+                  <h4 className="text-sm font-semibold text-rose-700 uppercase tracking-wide">Processing failed</h4>
                   <p className="text-sm text-rose-600 mt-1">{errorMsg}</p>
                 </div>
               </div>
             )}
+          </div>
 
-            {/* Field 02 — submit (desktop) */}
-            <div className="mt-auto pt-6 hidden lg:block">
+          {/* RIGHT — upload & submit */}
+          <div className="lg:col-span-7 p-6 sm:p-8 lg:p-10 bg-slate-50 lg:border-l lg:border-slate-200 flex flex-col rounded-b-2xl lg:rounded-r-2xl lg:rounded-bl-none">
+            <div className="flex items-center gap-3 mb-5">
+              <span className={`text-xs font-bold w-7 h-7 rounded-lg flex items-center justify-center text-white shrink-0 ${selectedFile ? "bg-lime-600" : "bg-slate-900"}`}>
+                {selectedFile ? "✓" : "02"}
+              </span>
+              <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-900">
+                Upload your photo
+              </h2>
+            </div>
+
+            {!selectedFile ? (
+              <div
+                className={`relative flex-1 min-h-[260px] rounded-xl border-2 border-dashed p-8 sm:p-12 text-center cursor-pointer transition-colors flex flex-col items-center justify-center
+                  ${dragOver ? "border-lime-600 bg-lime-50" : "border-slate-300 hover:border-lime-400 bg-white"}`}
+                onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
+                onDragLeave={() => setDragOver(false)}
+                onDrop={handleDrop}
+                onClick={() => fileInputRef.current?.click()}
+                role="button"
+                tabIndex={0}
+                aria-label="Upload your photo"
+              >
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  onChange={handleFileChange}
+                  accept="image/jpeg,image/png,image/webp,image/heic"
+                  className="hidden"
+                />
+                <div className="mx-auto w-16 h-16 mb-4 rounded-full bg-lime-100 flex items-center justify-center">
+                  <svg className="w-7 h-7 text-lime-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-medium text-slate-900 mb-2">Drag and drop your portrait photo</h3>
+                <p className="text-sm text-slate-500 mb-6">JPG · PNG · WEBP · HEIC</p>
+                <button className="px-6 py-2.5 rounded-lg bg-slate-900 text-white text-sm font-medium hover:bg-lime-600 transition-colors">
+                  Select image
+                </button>
+              </div>
+            ) : (
+              <div className="flex-1 flex flex-col sm:flex-row items-center gap-8 bg-white rounded-xl border border-slate-200 p-6">
+                {/* Preview with crop-guide corner marks */}
+                <div className="relative w-36 h-44 rounded-lg overflow-hidden bg-slate-100 shrink-0">
+                  {previewUrl && (
+                    <Image src={previewUrl} alt="Selected photo" fill className="object-cover" />
+                  )}
+                  {/* crop marks */}
+                  <span className="absolute top-1.5 left-1.5 w-4 h-4 border-t-2 border-l-2 border-lime-500" />
+                  <span className="absolute top-1.5 right-1.5 w-4 h-4 border-t-2 border-r-2 border-lime-500" />
+                  <span className="absolute bottom-1.5 left-1.5 w-4 h-4 border-b-2 border-l-2 border-lime-500" />
+                  <span className="absolute bottom-1.5 right-1.5 w-4 h-4 border-b-2 border-r-2 border-lime-500" />
+                </div>
+                <div className="flex-1 text-center sm:text-left">
+                  <h4 className="font-medium text-slate-900 mb-1 line-clamp-1">{selectedFile.name}</h4>
+                  <p className="text-sm text-slate-500 mb-4">
+                    {(selectedFile.size / (1024 * 1024)).toFixed(2)} MB
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-3 justify-center sm:justify-start">
+                    <button
+                      onClick={() => fileInputRef.current?.click()}
+                      className="text-sm font-medium text-slate-900 rounded-lg border border-slate-300 px-4 py-2 hover:border-slate-900 transition-colors"
+                    >
+                      Replace photo
+                    </button>
+                    <input
+                      type="file"
+                      ref={fileInputRef}
+                      onChange={handleFileChange}
+                      accept="image/jpeg,image/png,image/webp,image/heic"
+                      className="hidden"
+                    />
+                    <button
+                      onClick={clearSelection}
+                      className="text-sm font-medium text-rose-600 hover:text-rose-700 flex items-center justify-center sm:justify-start gap-1.5"
+                    >
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                      </svg>
+                      Remove
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Step 03 — submit (desktop) */}
+            <div className="mt-6 pt-6 border-t border-slate-200 hidden lg:block">
               <div className="flex items-center gap-3 mb-3">
-                <span className="font-mono text-xs font-bold w-7 h-7 rounded-lg flex items-center justify-center bg-slate-900 text-white shrink-0">
-                  02
+                <span className="text-xs font-bold w-7 h-7 rounded-lg flex items-center justify-center bg-slate-900 text-white shrink-0">
+                  03
                 </span>
                 <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-900">
                   Submit
@@ -295,98 +383,10 @@ export default function SpecialPhotoPageClient({
                   </>
                 )}
               </button>
-              <p className="text-xs text-slate-400 text-center mt-3 font-mono">
+              <p className="text-xs text-slate-400 text-center mt-3">
                 Free to preview · pay only to download or print
               </p>
             </div>
-          </div>
-
-          {/* RIGHT — upload */}
-          <div className="lg:col-span-7 p-6 sm:p-8 lg:p-10 bg-slate-50 lg:border-l lg:border-slate-200 flex flex-col rounded-b-2xl lg:rounded-r-2xl lg:rounded-bl-none">
-            <div className="flex items-center gap-3 mb-5">
-              <span className={`font-mono text-xs font-bold w-7 h-7 rounded-lg flex items-center justify-center text-white shrink-0 ${selectedFile ? "bg-lime-600" : "bg-slate-900"}`}>
-                {selectedFile ? "✓" : "03"}
-              </span>
-              <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-900">
-                Upload your photo
-              </h2>
-            </div>
-
-            {!selectedFile ? (
-              <div
-                className={`relative flex-1 min-h-[320px] rounded-xl border-2 border-dashed p-8 sm:p-12 text-center cursor-pointer transition-colors flex flex-col items-center justify-center
-                  ${dragOver ? "border-lime-600 bg-lime-50" : "border-slate-300 hover:border-lime-400 bg-white"}`}
-                onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
-                onDragLeave={() => setDragOver(false)}
-                onDrop={handleDrop}
-                onClick={() => fileInputRef.current?.click()}
-                role="button"
-                tabIndex={0}
-                aria-label="Upload your photo"
-              >
-                <input
-                  type="file"
-                  ref={fileInputRef}
-                  onChange={handleFileChange}
-                  accept="image/jpeg,image/png,image/webp,image/heic"
-                  className="hidden"
-                />
-                <div className="mx-auto w-16 h-16 mb-4 rounded-full bg-lime-100 flex items-center justify-center">
-                  <svg className="w-7 h-7 text-lime-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-                  </svg>
-                </div>
-                <h3 className="text-lg font-medium text-slate-900 mb-2">Drag and drop your portrait photo</h3>
-                <p className="text-sm text-slate-500 mb-6 font-mono">JPG · PNG · WEBP · HEIC</p>
-                <button className="px-6 py-2.5 rounded-lg bg-slate-900 text-white text-sm font-medium hover:bg-lime-600 transition-colors">
-                  Select image
-                </button>
-              </div>
-            ) : (
-              <div className="flex-1 flex flex-col sm:flex-row items-center gap-8 bg-white rounded-xl border border-slate-200 p-6">
-                {/* Preview with crop-guide corner marks */}
-                <div className="relative w-36 h-44 rounded-lg overflow-hidden bg-slate-100 shrink-0">
-                  {previewUrl && (
-                    <Image src={previewUrl} alt="Selected photo" fill className="object-cover" />
-                  )}
-                  {/* crop marks */}
-                  <span className="absolute top-1.5 left-1.5 w-4 h-4 border-t-2 border-l-2 border-lime-500" />
-                  <span className="absolute top-1.5 right-1.5 w-4 h-4 border-t-2 border-r-2 border-lime-500" />
-                  <span className="absolute bottom-1.5 left-1.5 w-4 h-4 border-b-2 border-l-2 border-lime-500" />
-                  <span className="absolute bottom-1.5 right-1.5 w-4 h-4 border-b-2 border-r-2 border-lime-500" />
-                </div>
-                <div className="flex-1 text-center sm:text-left">
-                  <h4 className="font-medium text-slate-900 mb-1 line-clamp-1">{selectedFile.name}</h4>
-                  <p className="text-sm text-slate-500 mb-4 font-mono">
-                    {(selectedFile.size / (1024 * 1024)).toFixed(2)} MB
-                  </p>
-                  <div className="flex flex-col sm:flex-row gap-3 justify-center sm:justify-start">
-                    <button
-                      onClick={() => fileInputRef.current?.click()}
-                      className="text-sm font-medium text-slate-900 rounded-lg border border-slate-300 px-4 py-2 hover:border-slate-900 transition-colors"
-                    >
-                      Replace photo
-                    </button>
-                    <input
-                      type="file"
-                      ref={fileInputRef}
-                      onChange={handleFileChange}
-                      accept="image/jpeg,image/png,image/webp,image/heic"
-                      className="hidden"
-                    />
-                    <button
-                      onClick={clearSelection}
-                      className="text-sm font-medium text-rose-600 hover:text-rose-700 flex items-center justify-center sm:justify-start gap-1.5"
-                    >
-                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                      </svg>
-                      Remove
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
           </div>
         </div>
       </div>
@@ -409,7 +409,7 @@ export default function SpecialPhotoPageClient({
           <div className="grid grid-cols-2 sm:grid-cols-4 divide-x divide-slate-200">
             {TRUST_ITEMS.map(({ tag, title, desc }) => (
               <div key={title} className="py-6 px-4 sm:px-6">
-                <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-lime-100 text-lime-800 font-mono text-[11px] font-bold mb-3">
+                <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-lime-100 text-lime-800  text-[11px] font-bold mb-3">
                   {tag}
                 </span>
                 <p className="text-sm font-semibold text-slate-900 leading-tight">{title}</p>
