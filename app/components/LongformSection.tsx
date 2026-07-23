@@ -331,6 +331,57 @@ export default function LongformSection({
           margin-bottom: 0 !important;
           font-size: 0.9375rem;
         }
+
+        /* ── Tables ──────────────────────────────── */
+        .longform-prose .overflow-x-auto {
+          margin: 2rem 0;
+          border-radius: 1.25rem;
+          border: 1px solid #e2e8f0;
+          box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04);
+          overflow: hidden;
+          background: #ffffff;
+        }
+        .longform-prose table {
+          width: 100%;
+          border-collapse: collapse;
+          margin: 1.5rem 0;
+          font-family: system-ui, -apple-system, sans-serif;
+          font-size: 0.9375rem;
+          background: #ffffff;
+        }
+        .longform-prose .overflow-x-auto table {
+          margin: 0;
+          border: none;
+          box-shadow: none;
+        }
+        .longform-prose thead {
+          background: #f8fafc;
+          border-bottom: 1px solid #e2e8f0;
+        }
+        .longform-prose th {
+          padding: 1rem 1.25rem;
+          font-weight: 700;
+          font-size: 0.75rem;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          color: #0f172a;
+          text-align: left;
+        }
+        .longform-prose td {
+          padding: 1rem 1.25rem;
+          color: #334155;
+          border-bottom: 1px solid #f1f5f9;
+          line-height: 1.6;
+        }
+        .longform-prose tr:last-child td {
+          border-bottom: none;
+        }
+        .longform-prose tbody tr {
+          transition: background-color 0.15s ease;
+        }
+        .longform-prose tbody tr:hover td {
+          background-color: #f8fafc;
+        }
       `}</style>
         </section>
     );
