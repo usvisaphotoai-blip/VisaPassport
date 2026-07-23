@@ -3,16 +3,16 @@ import PassportMakerApp from "./PassportMakerApp";
 import toolPages from "../../data/tool-seo-pages.json";
 
 export const metadata: Metadata = {
-  title: "Free Passport Photo Maker Online – Official Standards & Instant",
+  title: "Free Passport Photo Maker Online | Official Passport Standards",
   description:
-    "Create compliant passport photos online for free. Select your country, upload a photo, remove the background automatically, and download a print-ready passport photo instantly.",
+    "Create passport size photos online for free. Select your country, upload a photo, remove the background automatically, and download a print-ready photo.",
   alternates: {
     canonical: "/passport-size-photo-maker",
   },
   openGraph: {
     title: "Free Passport Photo Maker Online",
     description:
-      "Create compliant passport & visa photos online. Select your country, upload a photo, and get a print-ready photo instantly.",
+      "Create passport and visa photos online. Select your country, upload a photo, and download a print-ready photo instantly.",
     type: "website",
   },
 };

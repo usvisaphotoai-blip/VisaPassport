@@ -144,6 +144,38 @@ export default async function Home() {
                   </p>
                 </Link>
               ))}
+              <Link 
+                href="/america-visa-size-photo"
+                className="group bg-white p-6 rounded-2xl border border-slate-200 hover:border-lime-400 hover:shadow-xl transition-all"
+              >
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-10 h-10 bg-lime-100 rounded-lg flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+                    📸
+                  </div>
+                  <h3 className="font-bold text-slate-900 group-hover:text-lime-700 transition-colors">
+                    America Visa Size Photo
+                  </h3>
+                </div>
+                <p className="text-sm text-slate-500 line-clamp-2 leading-relaxed">
+                  Upload a selfie and get a properly sized America visa photo — 2 × 2 inches, correct head size, and a clean white background.
+                </p>
+              </Link>
+              <Link 
+                href="/uk-passport-size-photo-maker"
+                className="group bg-white p-6 rounded-2xl border border-slate-200 hover:border-lime-400 hover:shadow-xl transition-all"
+              >
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-10 h-10 bg-lime-100 rounded-lg flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+                    📸
+                  </div>
+                  <h3 className="font-bold text-slate-900 group-hover:text-lime-700 transition-colors">
+                    UK Passport Size Photo Maker
+                  </h3>
+                </div>
+                <p className="text-sm text-slate-500 line-clamp-2 leading-relaxed">
+                  Create a compliant UK passport or visa photo online. Automatic biometric checks and background removal.
+                </p>
+              </Link>
             </div>
           </div>
         </section>
