@@ -153,10 +153,10 @@ export default function SpecialPhotoPageClient({
       </div>
 
       {/* Hero + Form: two columns on desktop */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-10">
+      <div className="max-w-7xl mx-auto px-3 sm:px-5 lg:px-8 py-8 lg:py-10">
         <div className="grid lg:grid-cols-12 lg:gap-0 rounded-2xl border border-slate-200">
           {/* LEFT — heading + document select + submit */}
-          <div className="lg:col-span-5 bg-gradient-to-b from-lime-50/70 to-white p-6 sm:p-8 lg:p-10 flex flex-col rounded-t-2xl lg:rounded-l-2xl lg:rounded-tr-none">
+          <div className="lg:col-span-5  p-6 sm:p-8 lg:p-10 flex flex-col rounded-t-2xl lg:rounded-l-2xl lg:rounded-tr-none">
             <span className="inline-flex w-fit items-center  text-xs uppercase tracking-widest text-lime-800 bg-lime-100 rounded-full px-3 py-1 mb-4">
               Photo · {countryCode}
             </span>

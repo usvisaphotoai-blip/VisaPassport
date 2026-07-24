@@ -33,5 +33,352 @@
         "a": "No, glasses are generally not allowed unless worn for medical reasons, and even then there must be no glare or tinted lenses."
       }
     ]
+  },
+   {
+    "slug": "photo-for-american-visa",
+    "title": "Photo for American Visa: Get a Compliant DS-160 Photo in Seconds",
+    "metaDescription": "Upload a selfie and get a properly sized photo for an American visa — 2 x 2 in, correct head size, and a plain white background — ready for your DS-160 application.",
+    "jsonLd": {
+      "name": "Photo for American Visa Maker",
+      "description": "Online biometric tool for American (US) visa photo requirements.",
+      "applicationCategory": "UtilitiesApplication"
+    },
+    "openGraph": {
+      "title": "Photo for American Visa | PixPassport",
+      "description": "Create a photo for your American visa online. 100% compliant in under a minute.",
+      "image": "https://res.cloudinary.com/dipzpwbbk/image/upload/v1784690540/uk-hero_m4cc8l.webp"
+    },
+    "countryCode": "US",
+    "heroTitle": "Photo for American Visa Maker",
+    "heroSubtitle": "Upload a selfie and get a properly sized photo for an American visa — 2 x 2 in, correct head size, and a clean white background — ready for your DS-160 application.",
+    "documents": [
+      {
+        "id": "us-passport",
+        "label": "US Passport 2x2 in",
+        "size": "2 x 2 in (51 x 51 mm)",
+        "type": "passport"
+      },
+      {
+        "id": "us-visa",
+        "label": "US Visa 2x2 in",
+        "size": "2 x 2 in (51 x 51 mm)",
+        "type": "visa"
+      },
+      {
+        "id": "us-green-card",
+        "label": "US Green Card 2x2 in",
+        "size": "2 x 2 in (51 x 51 mm)",
+        "type": "passport"
+      }
+    ],
+    "contentHtml": "<h2>What Photo Do You Need for an American Visa?</h2><p>Every American (US) visa application, whether it is a tourist B1/B2, student F1, or work visa, is submitted through the DS-160 online form, and that form requires a digital photo that meets the US Department of State's rules. The photo must be square, 2 x 2 inches (51 x 51 mm), taken against a plain white or off-white background, with your head filling roughly 50% to 69% of the frame. This is the same standard used for a US passport photo, so one properly sized picture can usually be reused for both a visa and a passport application.</p><h2>How the Photo for American Visa Maker Works</h2><ol><li><strong>Upload a photo:</strong> Use a recent selfie or a photo taken by someone else, ideally with even lighting and no shadows on your face.</li><li><strong>Automatic sizing:</strong> The tool detects your face, crops it to the correct proportions, and replaces the background with plain white.</li><li><strong>Download and submit:</strong> You get a digital file sized to the pixel dimensions the DS-160 upload tool expects, ready to attach to your application.</li></ol><h2>Rules to Keep in Mind</h2><p>The State Department is strict about a few details that trip up first-time applicants. Your expression should be neutral, with both eyes open and visible. Glasses are not allowed unless you can document a medical necessity, and even then there must be no glare on the lenses. Headwear is only permitted for religious or medical reasons, and in that case your full face must still be visible from chin to forehead. The photo should be recent, generally taken within the last six months, so that it reflects your current appearance.</p><h2>Common Reasons a Visa Photo Gets Rejected</h2><ul><li>A background that is not plain white, such as a patterned wall or shadow.</li><li>A head that is too large, too small, or off-center in the frame.</li><li>Wearing glasses, a hat, or headphones without a valid exemption.</li><li>Low resolution images that look blurry or pixelated once resized.</li></ul><h2>Digital File Requirements</h2><p>Beyond the physical proportions, the DS-160 system expects a JPEG file, ideally between 600 x 600 and 1200 x 1200 pixels, with a reasonably small file size. Our tool exports the photo in this format automatically, so you do not need to manually resize or convert anything before uploading it.</p><h2>Who Needs This Photo</h2><p>This requirement applies to almost every category of nonimmigrant visa applicant, including tourists, students, exchange visitors, and temporary workers, since the DS-160 form is shared across these categories. It also applies to each family member listed on a joint application, so parents applying alongside children will need a separately sized photo for every person, including infants, even though positioning a baby correctly can take a few extra tries.</p><h2>Retaking the Photo if Something Changes</h2><p>If your appearance has changed noticeably since your last photo, or if your previous photo is older than six months, it is worth retaking it rather than reusing an old file. Consular officers compare the photo to the applicant in person during the visa interview, and a photo that no longer matches your current appearance can raise unnecessary questions during an already time-limited appointment.</p><h2>Saving Time Before Your Appointment</h2><p>Because visa interview slots are often booked weeks or months in advance, a photo-related error on the DS-160 form is one of the more frustrating ways to lose time, since it may require resubmitting the form before your appointment can proceed. Running your photo through a sizing tool ahead of time, rather than after a rejection, is generally the fastest way to avoid this kind of delay.</p>",
+    "faqs": [
+      {
+        "q": "What size photo do I need for an American visa?",
+        "a": "The photo must be 2 x 2 inches (51 x 51 mm), with your head measuring roughly 1 to 1 3/8 inches from chin to crown, taken against a plain white background."
+      },
+      {
+        "q": "Can I use my passport photo for my American visa application?",
+        "a": "Yes, US visa and US passport photos share the same specifications, so a single correctly sized photo can generally be used for both."
+      }
+    ]
+  },
+  {
+    "slug": "america-passport-photo",
+    "title": "America Passport Photo Maker: Get a Compliant Photo in Seconds",
+    "metaDescription": "Upload a selfie and get a properly sized America passport photo — 2 x 2 in, correct head size, and a plain white background — ready for your DS-11 application.",
+    "jsonLd": {
+      "name": "America Passport Photo Maker",
+      "description": "Online biometric tool for America (US) passport photo requirements.",
+      "applicationCategory": "UtilitiesApplication"
+    },
+    "openGraph": {
+      "title": "America Passport Photo Maker | PixPassport",
+      "description": "Create America passport photos online. 100% compliant in under a minute.",
+      "image": "https://res.cloudinary.com/dipzpwbbk/image/upload/v1784690540/uk-hero_m4cc8l.webp"
+    },
+    "countryCode": "US",
+    "heroTitle": "America Passport Photo Maker",
+    "heroSubtitle": "Upload a selfie and get a properly sized America passport photo — 2 x 2 in, correct head size, and a clean white background — ready for your application.",
+    "documents": [
+      {
+        "id": "us-passport",
+        "label": "US Passport 2x2 in",
+        "size": "2 x 2 in (51 x 51 mm)",
+        "type": "passport"
+      },
+      {
+        "id": "us-visa",
+        "label": "US Visa 2x2 in",
+        "size": "2 x 2 in (51 x 51 mm)",
+        "type": "visa"
+      },
+      {
+        "id": "us-green-card",
+        "label": "US Green Card 2x2 in",
+        "size": "2 x 2 in (51 x 51 mm)",
+        "type": "passport"
+      }
+    ],
+    "contentHtml": "<h2>What Does an America Passport Photo Look Like?</h2><p>An America passport photo is a square 2 x 2 inch (51 x 51 mm) image with a plain white or off-white background. Your head, measured from chin to the top of your hair, needs to fall between 1 inch and 1 3/8 inches, and your eyes should sit roughly between 1 1/8 and 1 3/8 inches from the bottom edge of the photo. The picture has to be recent, in color, and show your full face looking straight at the camera with a neutral expression.</p><h2>Taking the Photo Yourself</h2><ol><li><strong>Choose a plain wall:</strong> Stand a few feet from a white or light-colored wall so there are no shadows behind you.</li><li><strong>Use natural light:</strong> Face a window or soft light source so your face is evenly lit without harsh shadows or glare.</li><li><strong>Keep a neutral expression:</strong> Look directly at the camera with your mouth closed and both eyes open.</li><li><strong>Upload to our tool:</strong> The America Passport Photo Maker crops, resizes, and cleans up the background automatically.</li></ol><h2>What the Government Actually Checks</h2><p>Passport photo reviewers are trained to check specific measurements and details, not just general appearance. They look at head size and position, background uniformity, lighting, and whether the applicant is wearing anything that obscures the face. Glasses have not been allowed in America passport photos since 2016, so it is best to remove them entirely before your photo is taken. Uniforms, and anything that looks like one, are also not permitted.</p><h2>Common Mistakes That Cause Rejections</h2><ul><li>Photos printed on regular paper instead of true photographic paper.</li><li>A visible shadow or uneven lighting across the face.</li><li>Smiling, tilting the head, or looking slightly off camera.</li><li>Photos that are more than six months old and no longer resemble the applicant.</li></ul><h2>Digital vs. Printed Copies</h2><p>If you are applying online or renewing by mail, you may need a digital file rather than a printed photo. Our tool produces both: a print-ready file at true 2 x 2 inch size for a photo lab, and a digital JPEG sized for online upload, so you are covered no matter how you plan to submit your application.</p><h2>First-Time vs. Renewal Applications</h2><p>The photo requirement is identical whether this is your first passport or a renewal, but renewals submitted through the newer online system are more likely to require a digital upload rather than a mailed print. It is worth checking which format your specific application method requires before finalizing your photo, since submitting the wrong format can add an extra step to an otherwise straightforward renewal.</p><h2>Photographing Infants and Young Children</h2><p>Babies and toddlers need their own passport photo meeting the same 2 x 2 inch standard, which can be tricky since they cannot be prompted to hold a neutral expression or look straight ahead. A common approach is to lay the child on a plain white sheet and photograph them from directly above, then let a cropping tool handle the framing, since holding a baby upright against a wall rarely produces a clean, centered result.</p><h2>Keeping a Copy for Future Applications</h2><p>Since America passport photos are only valid for about six months from when they are taken, it rarely makes sense to keep an old file for later use, but keeping a record of what worked, such as the lighting setup or camera distance, can make retaking the photo faster the next time a renewal is due.</p>",
+    "faqs": [
+      {
+        "q": "What is the official America passport photo size?",
+        "a": "The physical photo must be 2 x 2 inches (51 x 51 mm), with the head measuring between 1 and 1 3/8 inches from chin to crown."
+      },
+      {
+        "q": "Can I smile in my America passport photo?",
+        "a": "No, a neutral expression with both eyes open and mouth closed is required; smiling broadly enough to show teeth is not accepted."
+      }
+    ]
+  },
+  {
+    "slug": "america-passport-photo-size",
+    "title": "America Passport Photo Size: The Exact Dimensions You Need",
+    "metaDescription": "Learn the exact America passport photo size — 2 x 2 in, head height, and pixel dimensions — then generate a compliant photo instantly from a selfie.",
+    "jsonLd": {
+      "name": "America Passport Photo Size Tool",
+      "description": "Online tool that checks and formats photos to the America (US) passport photo size.",
+      "applicationCategory": "UtilitiesApplication"
+    },
+    "openGraph": {
+      "title": "America Passport Photo Size | PixPassport",
+      "description": "Get the exact America passport photo size, checked and generated automatically.",
+      "image": "https://res.cloudinary.com/dipzpwbbk/image/upload/v1784690540/uk-hero_m4cc8l.webp"
+    },
+    "countryCode": "US",
+    "heroTitle": "America Passport Photo Size Tool",
+    "heroSubtitle": "Find out the exact America passport photo size and turn any selfie into a compliant, correctly proportioned photo in under a minute.",
+    "documents": [
+      {
+        "id": "us-passport",
+        "label": "US Passport 2x2 in",
+        "size": "2 x 2 in (51 x 51 mm)",
+        "type": "passport"
+      },
+      {
+        "id": "us-visa",
+        "label": "US Visa 2x2 in",
+        "size": "2 x 2 in (51 x 51 mm)",
+        "type": "visa"
+      },
+      {
+        "id": "us-green-card",
+        "label": "US Green Card 2x2 in",
+        "size": "2 x 2 in (51 x 51 mm)",
+        "type": "passport"
+      }
+    ],
+    "contentHtml": "<h2>The Exact America Passport Photo Size</h2><p>The America passport photo size is fixed at 2 x 2 inches, which is 51 x 51 millimeters. Within that square, your head must measure between 1 inch and 1 3/8 inches from the bottom of the chin to the top of the head, and your eye level should fall between 1 1/8 and 1 3/8 inches up from the bottom edge. These measurements exist so that every photo, regardless of who took it, produces a consistent, comparable image for identity verification.</p><h2>Digital Pixel Requirements</h2><p>If you are uploading your photo instead of mailing a print, the digital file has its own size rules. It should be a square image, generally between 600 x 600 pixels and 1200 x 1200 pixels, saved as a JPEG. A file that is too small will look blurry once printed or scanned, while one that is far too large may be rejected by the upload system, so hitting the right range matters.</p><h2>Why Getting the Size Wrong Causes Delays</h2><p>A photo that is even slightly off in proportion can cause an application to be flagged for manual review or sent back entirely. Common sizing mistakes include a head that is cropped too tightly, too much empty space above the hair, or a photo that was resized without maintaining a perfect square aspect ratio. Because passport offices measure these dimensions precisely, a photo that looks fine to the eye can still fail a strict check.</p><h2>How to Get the Size Right Every Time</h2><ol><li><strong>Start with a clear photo:</strong> Take a straight-on picture against a plain background with even lighting.</li><li><strong>Let the tool measure your head:</strong> Our size checker detects your chin and hairline and scales the image to the correct proportions.</li><li><strong>Export in the right format:</strong> Download either a print-ready 2 x 2 inch file or a properly sized digital JPEG.</li></ol><h2>Printing Your Photo at the Correct Size</h2><p>If you plan to have your photo printed, ask for true 2 x 2 inch passport photo paper rather than a standard photo print, since a slightly larger or smaller print will not meet the requirement. Many pharmacies and photo labs offer this size specifically for passport and visa photos, and our tool prepares a file formatted to print correctly at that exact size.</p><h2>How Size Requirements Compare to Other Countries</h2><p>The 2 x 2 inch America passport photo size is larger than the standard used by many other countries, which often specify a smaller 35 x 45 mm photo instead. This means a photo formatted for a different country's passport will not automatically work for an American passport, and vice versa, so it is worth confirming which size applies before reusing a photo from a previous international application.</p><h2>Checking Your Photo Before You Submit</h2><p>Because passport applications can be delayed by a photo that is off by even a small margin, it is worth double-checking the size and proportions before mailing an application or uploading it online. Comparing your cropped photo against the guidelines for head height and eye position, rather than assuming it looks correct, catches most sizing errors before they become a rejection.</p><h2>What to Do if Your Photo Is Rejected for Size</h2><p>If a submitted photo is rejected for not meeting the size requirement, the passport office will typically request a new one rather than processing the application further, adding time to the overall process. Retaking the photo with a sizing tool that measures head height and centers the eyes correctly is generally enough to resolve this on the next attempt.</p>",
+    "faqs": [
+      {
+        "q": "What is the America passport photo size in inches and mm?",
+        "a": "It is 2 x 2 inches, which converts to 51 x 51 millimeters, with a required head height of 1 to 1 3/8 inches."
+      },
+      {
+        "q": "What pixel size should a digital America passport photo be?",
+        "a": "A digital photo is generally expected to be between 600 x 600 and 1200 x 1200 pixels, saved as a JPEG file."
+      }
+    ]
+  },
+  {
+    "slug": "america-passport-size",
+    "title": "America Passport Size Photo: Requirements Explained",
+    "metaDescription": "Understand the America passport size photo requirements — dimensions, background, and head position — then create a compliant photo from your phone.",
+    "jsonLd": {
+      "name": "America Passport Size Photo Tool",
+      "description": "Online tool for meeting America (US) passport size photo requirements.",
+      "applicationCategory": "UtilitiesApplication"
+    },
+    "openGraph": {
+      "title": "America Passport Size Photo | PixPassport",
+      "description": "Create a correctly sized America passport photo online in under a minute.",
+      "image": "https://res.cloudinary.com/dipzpwbbk/image/upload/v1784690540/uk-hero_m4cc8l.webp"
+    },
+    "countryCode": "US",
+    "heroTitle": "America Passport Size Photo Maker",
+    "heroSubtitle": "Turn a selfie into a correctly sized America passport photo, with the right dimensions, head position, and background.",
+    "documents": [
+      {
+        "id": "us-passport",
+        "label": "US Passport 2x2 in",
+        "size": "2 x 2 in (51 x 51 mm)",
+        "type": "passport"
+      },
+      {
+        "id": "us-visa",
+        "label": "US Visa 2x2 in",
+        "size": "2 x 2 in (51 x 51 mm)",
+        "type": "visa"
+      },
+      {
+        "id": "us-green-card",
+        "label": "US Green Card 2x2 in",
+        "size": "2 x 2 in (51 x 51 mm)",
+        "type": "passport"
+      }
+    ],
+    "contentHtml": "<h2>Understanding America Passport Size Rules</h2><p>When people search for the America passport size, they usually mean the physical dimensions required for a US passport photo: a 2 x 2 inch square print with a plain white or off-white background. This size applies to both first-time passport applications and renewals, and it is the same size used for many other US travel documents.</p><h2>Why the Size Is So Specific</h2><p>Passport photos are scanned and compared against facial recognition databases, so consistency in size and framing matters more than it might seem. A photo that is even a little too zoomed in or too far away changes how much of the face is visible relative to the frame, which can affect how the image is processed. That is why the government specifies not just the overall photo size, but the exact head height and eye position within it.</p><h2>Step-by-Step: Meeting the Size Requirement</h2><ol><li><strong>Photograph yourself straight on:</strong> Keep the camera at eye level and your shoulders square to it.</li><li><strong>Avoid cropping too tight:</strong> Leave some space around your head and shoulders so the tool has room to size it correctly.</li><li><strong>Let automated cropping handle the math:</strong> Rather than eyeballing the 2 x 2 inch square yourself, our tool measures your face and crops precisely.</li><li><strong>Check the preview:</strong> Confirm your head fills roughly 50 to 69 percent of the frame before downloading.</li></ol><h2>Background and Lighting Still Matter</h2><p>Even a perfectly sized photo will be rejected if the background is not plain white or off-white, or if there are shadows behind you. Overhead lighting that casts a shadow on the wall, or a colored wall, are both common reasons photos come back for correction. Standing a few feet away from a plain wall, with light coming from the front rather than above, generally gives the cleanest result.</p><h2>One Size, Multiple Documents</h2><p>Because the passport, visa, and green card photo requirements in the US all use the same 2 x 2 inch specification, a single well-sized photo can typically serve multiple applications. This is useful for people applying for a passport and a visa around the same time, since they do not need to repeat the photo process for each document.</p><h2>Getting Head Position Right</h2><p>Beyond overall size, head position within the frame is one of the details most likely to cause a photo to be rejected. The face should be centered horizontally, looking straight at the camera rather than turned slightly to one side, and the eyes should sit at a consistent height within the required 1 1/8 to 1 3/8 inch range from the bottom of the photo.</p><h2>Comparing a Photo Booth to a DIY Photo</h2><p>A passport photo booth at a pharmacy or shipping store is convenient but not always cheaper or faster than taking your own photo and running it through a sizing tool, especially if the nearest booth is not close by. A DIY photo, taken carefully against a plain wall and processed through an automated tool, generally meets the same standard as a booth photo at a fraction of the cost.</p><h2>Applying With Confidence</h2><p>Once your photo is sized correctly, you can move on to the rest of your passport application without worrying that the photo itself will be the reason for a delay, which is one of the more common and avoidable causes of processing setbacks.</p>",
+    "faqs": [
+      {
+        "q": "What is the standard America passport size photo?",
+        "a": "It is a 2 x 2 inch square photo with a plain white or off-white background and a head height of 1 to 1 3/8 inches."
+      },
+      {
+        "q": "Is the America passport size the same for adults and children?",
+        "a": "Yes, the 2 x 2 inch requirement applies to applicants of all ages, though positioning a young child's head correctly can be more difficult and may take extra attempts."
+      }
+    ]
+  },
+  {
+    "slug": "america-passport-size-photo",
+    "title": "America Passport Size Photo Generator: Fast and Compliant",
+    "metaDescription": "Generate an America passport size photo from any selfie — correct 2 x 2 in dimensions, head height, and white background, ready to print or upload.",
+    "jsonLd": {
+      "name": "America Passport Size Photo Generator",
+      "description": "Online generator for America (US) passport size photos.",
+      "applicationCategory": "UtilitiesApplication"
+    },
+    "openGraph": {
+      "title": "America Passport Size Photo Generator | PixPassport",
+      "description": "Generate a compliant America passport size photo online in seconds.",
+      "image": "https://res.cloudinary.com/dipzpwbbk/image/upload/v1784690540/uk-hero_m4cc8l.webp"
+    },
+    "countryCode": "US",
+    "heroTitle": "America Passport Size Photo Generator",
+    "heroSubtitle": "Upload a selfie and generate an America passport size photo, correctly sized to 2 x 2 inches with a compliant white background.",
+    "documents": [
+      {
+        "id": "us-passport",
+        "label": "US Passport 2x2 in",
+        "size": "2 x 2 in (51 x 51 mm)",
+        "type": "passport"
+      },
+      {
+        "id": "us-visa",
+        "label": "US Visa 2x2 in",
+        "size": "2 x 2 in (51 x 51 mm)",
+        "type": "visa"
+      },
+      {
+        "id": "us-green-card",
+        "label": "US Green Card 2x2 in",
+        "size": "2 x 2 in (51 x 51 mm)",
+        "type": "passport"
+      }
+    ],
+    "contentHtml": "<h2>What an America Passport Size Photo Generator Does</h2><p>Instead of measuring your photo by hand with a ruler, a passport size photo generator takes a regular picture and automatically converts it into a compliant 2 x 2 inch America passport photo. It detects your face, checks that your head falls within the required 1 to 1 3/8 inch height range, centers your eyes at the correct level, and replaces or cleans up the background so it is plain white.</p><h2>Why Manual Cropping Often Fails</h2><p>Many people try to crop their own photo in a basic image editor, but without precise measurement guides it is easy to end up with a head that is slightly too large, too small, or off-center. Because passport offices measure these details closely, even a photo that looks correct to the eye can be rejected on a technicality. A generator removes this guesswork by applying the exact ratios the government specifies.</p><h2>Using the Generator: A Simple Process</h2><ol><li><strong>Take or select a photo:</strong> A recent, well-lit, straight-on photo works best, ideally against a light background already.</li><li><strong>Upload it to the tool:</strong> The generator analyzes your face position and proportions automatically.</li><li><strong>Review the result:</strong> You will see a preview showing the cropped 2 x 2 inch square with guidelines for head height and eye position.</li><li><strong>Download your file:</strong> Choose between a print-ready file or a digital JPEG suited for online applications.</li></ol><h2>What Still Depends on the Original Photo</h2><p>A generator can fix framing and sizing, but it cannot fully correct a photo taken in poor lighting, at an odd angle, or with an obstructed face. For the best result, take the original photo facing forward, with even light on your face and no glasses, hats, or headphones, so the generator has clean source material to work with.</p><h2>Printing or Uploading the Final Photo</h2><p>Once generated, your photo can be printed at true size by any photo lab that offers passport photo printing, or uploaded directly if you are applying online. Because the file is sized precisely to government specifications, you can move straight to submitting your application without further adjustments.</p><h2>Generating Multiple Photos for a Family Application</h2><p>Families applying for passports together often need several correctly sized photos at once, one for each applicant, since the 2 x 2 inch requirement applies individually regardless of age. A generator makes this faster, since each family member's photo can be processed the same way in a few minutes, rather than measuring and cropping each one by hand.</p><h2>What to Do if the Generator Flags an Issue</h2><p>If the tool detects a problem, such as a shadow across the face or a head that is too large for the frame, it is usually faster to retake the original photo rather than try to fix it after the fact. Adjusting the distance from the camera, moving to a more evenly lit spot, or trying a different plain background typically resolves most flagged issues on the next attempt.</p><h2>A Faster Alternative to In-Person Photo Services</h2><p>Compared to visiting a pharmacy or shipping store for a passport photo, generating one online from a photo you already have, or one taken in a few minutes at home, is usually faster and does not require waiting in line or paying an in-store service fee.</p>",
+    "faqs": [
+      {
+        "q": "How does an America passport size photo generator work?",
+        "a": "It detects your face in an uploaded photo, measures your head height and eye position, crops the image to a 2 x 2 inch square, and cleans up the background to plain white."
+      },
+      {
+        "q": "Can I use a photo taken with my phone?",
+        "a": "Yes, a phone photo works well as long as it is clear, well-lit, and taken facing forward against a relatively plain background."
+      }
+    ]
+  },
+
+
+  {
+    "slug": "american-passport-pic",
+    "title": "American Passport Pic Maker: Get a Compliant Photo in Seconds",
+    "metaDescription": "Upload a selfie and get a properly sized American passport pic — 2 x 2 in, correct head size, and a plain white background — ready for your DS-11 form.",
+    "jsonLd": {
+      "name": "American Passport Pic Maker",
+      "description": "Online biometric tool for American (US) passport photo requirements.",
+      "applicationCategory": "UtilitiesApplication"
+    },
+    "openGraph": {
+      "title": "American Passport Pic Maker | PixPassport",
+      "description": "Create American passport pics online. 100% compliant in under a minute.",
+      "image": "https://res.cloudinary.com/dipzpwbbk/image/upload/v1784690540/uk-hero_m4cc8l.webp"
+    },
+    "countryCode": "US",
+    "heroTitle": "American Passport Pic Maker",
+    "heroSubtitle": "Upload a selfie and get a properly sized American passport pic — 2 x 2 in, correct head size, and a clean white background — ready for your application.",
+    "documents": [
+      {
+        "id": "us-passport",
+        "label": "US Passport 2x2 in",
+        "size": "2 x 2 in (51 x 51 mm)",
+        "type": "passport"
+      },
+      {
+        "id": "us-visa",
+        "label": "US Visa 2x2 in",
+        "size": "2 x 2 in (51 x 51 mm)",
+        "type": "visa"
+      },
+      {
+        "id": "us-green-card",
+        "label": "US Green Card 2x2 in",
+        "size": "2 x 2 in (51 x 51 mm)",
+        "type": "passport"
+      }
+    ],
+    "contentHtml": "<h2>What Makes a Good American Passport Pic?</h2><p>An American passport pic needs to be a 2 x 2 inch square photo, taken recently, in color, with a plain white or off-white background. It should show your full face, front-on, with a neutral expression and no accessories covering your features. This standard applies whether you are applying for your first passport, renewing an old one, or replacing a lost passport.</p><h2>Taking the Pic Without a Studio</h2><ol><li><strong>Pick a bright, plain spot:</strong> A light-colored wall with soft daylight in front of you works better than a dark room with overhead lighting.</li><li><strong>Steady the camera:</strong> Use a tripod, a stack of books, or a friend to hold the phone level with your face.</li><li><strong>Relax your expression:</strong> A neutral, closed-mouth expression with both eyes open is required, not a smile.</li><li><strong>Upload the pic:</strong> Our tool automatically crops and resizes it to the correct government specification.</li></ol><h2>Details That Are Easy to Overlook</h2><p>Beyond the obvious background and expression rules, a few smaller details often catch first-time applicants off guard. Glasses have not been allowed in American passport photos for several years, so they should be removed entirely, even prescription glasses. Hair should not fall across the eyes, and any headwear must be for religious or medical reasons, in which case the full face must still be clearly visible.</p><h2>Digital File Considerations</h2><p>If you are applying using the newer online passport renewal process, you will need to upload a digital pic rather than mail a printed one. This digital file has its own pixel dimension requirements, generally between 600 x 600 and 1200 x 1200 pixels, saved as a JPEG, which our tool handles automatically when you export your photo.</p><h2>Avoiding a Second Trip to the Passport Office</h2><p>A rejected pic means resubmitting your entire application, which can add weeks to an already time-sensitive process if you are traveling soon. Running your photo through a dedicated sizing and compliance tool before you submit reduces the chance of a rejection based on background, size, or head position, all of which are among the most common reasons applications are sent back.</p><h2>Taking a Pic That Still Looks Like You</h2><p>Passport pics are meant to help identify you at a border crossing, so it is worth taking one that genuinely reflects how you currently look, including your natural hair color and style, rather than a heavily edited or outdated photo. A pic that is technically compliant but does not resemble you can cause delays at immigration checkpoints even after it clears the initial application review.</p><h2>Choosing Between a Phone Camera and a Professional Photographer</h2><p>A modern smartphone camera is generally sharp enough to produce a compliant passport pic, provided the lighting and background are handled correctly, which means a professional photographer is not strictly necessary for most applicants. The main advantage of a professional service is convenience and guaranteed lighting setup, but a careful DIY approach paired with a sizing tool can achieve the same result at no extra cost.</p><h2>Final Check Before Submitting</h2><p>Before mailing or uploading your application, it helps to compare your finished pic side by side with the official size and background guidelines one more time, since this final check catches most remaining issues before they become a delay.</p><h2>A Small Step With a Big Payoff</h2><p>Getting the pic right on the first attempt saves time compared to resubmitting after a rejection, and a properly sized, well-lit pic taken at home is generally just as acceptable to the passport office as one taken at a professional studio.</p>",
+    "faqs": [
+      {
+        "q": "What size should an American passport pic be?",
+        "a": "It must be a 2 x 2 inch square photo, with the head measuring 1 to 1 3/8 inches from chin to crown, against a plain white background."
+      },
+      {
+        "q": "Can I take my own American passport pic at home?",
+        "a": "Yes, as long as it meets the size, background, lighting, and expression requirements, a photo taken at home with a smartphone is generally acceptable."
+      }
+    ]
+  },
+  {
+    "slug": "american-passport-picture-size",
+    "title": "American Passport Picture Size: Exact Requirements and Tool",
+    "metaDescription": "Check the exact American passport picture size — 2 x 2 in, head height, and pixel dimensions — then generate a compliant photo instantly.",
+    "jsonLd": {
+      "name": "American Passport Picture Size Tool",
+      "description": "Online tool that checks and formats photos to the American (US) passport picture size.",
+      "applicationCategory": "UtilitiesApplication"
+    },
+    "openGraph": {
+      "title": "American Passport Picture Size | PixPassport",
+      "description": "Get the exact American passport picture size, checked and generated automatically.",
+      "image": "https://res.cloudinary.com/dipzpwbbk/image/upload/v1784690540/uk-hero_m4cc8l.webp"
+    },
+    "countryCode": "US",
+    "heroTitle": "American Passport Picture Size Tool",
+    "heroSubtitle": "Find out the exact American passport picture size and turn any selfie into a compliant, correctly proportioned photo in under a minute.",
+    "documents": [
+      {
+        "id": "us-passport",
+        "label": "US Passport 2x2 in",
+        "size": "2 x 2 in (51 x 51 mm)",
+        "type": "passport"
+      },
+      {
+        "id": "us-visa",
+        "label": "US Visa 2x2 in",
+        "size": "2 x 2 in (51 x 51 mm)",
+        "type": "visa"
+      },
+      {
+        "id": "us-green-card",
+        "label": "US Green Card 2x2 in",
+        "size": "2 x 2 in (51 x 51 mm)",
+        "type": "passport"
+      }
+    ],
+    "contentHtml": "<h2>The Exact American Passport Picture Size</h2><p>The American passport picture size is set at 2 x 2 inches, equal to 51 x 51 millimeters. Within that frame, the head must be between 1 inch and 1 3/8 inches tall, measured from the bottom of the chin to the top of the head, with the eyes positioned between 1 1/8 and 1 3/8 inches from the bottom of the photo. These measurements are the same regardless of the applicant's age, though photographing a young child to this precise standard can take a few extra attempts.</p><h2>Physical Print Size vs. Digital Size</h2><p>For applicants submitting a paper application, the picture must be printed at true 2 x 2 inch dimensions on photographic paper, not a standard printer or a photo cut down from a larger print. For applicants using the online renewal system, the file should instead meet digital dimension guidelines, typically a square JPEG between 600 x 600 and 1200 x 1200 pixels.</p><h2>Why Precision Matters Here</h2><p>Because passport photos are scanned and compared to biometric standards, a picture that is off by even a small margin in head height or eye position can be flagged during processing. This is one of the more common reasons applications are delayed, since the mistake is often invisible to the applicant looking at the photo casually, but very visible to a reviewer measuring against the government's exact ratios.</p><h2>Getting the Size Right With a Tool</h2><ol><li><strong>Upload a clear, front-facing photo:</strong> Even lighting and a plain background give the best starting point.</li><li><strong>Automatic measurement:</strong> The tool identifies your chin and hairline to calculate correct head height.</li><li><strong>Precise cropping:</strong> The image is cropped to a perfect 2 x 2 inch square with the head and eyes positioned correctly.</li><li><strong>Export the right format:</strong> Choose a print-ready file or a properly sized digital JPEG.</li></ol><h2>Printing Tips</h2><p>When printing, ask specifically for passport-size photo printing rather than a standard wallet or 4x6 print, since photo labs usually offer a dedicated 2 x 2 inch option formatted for government documents.</p><h2>Measuring Head Size Yourself</h2><p>If you want to check the head-height measurement before uploading anywhere, you can hold a ruler against a printed test copy and measure from the bottom of the chin straight up to the top of the hair, comparing that distance against the required 1 to 1 3/8 inch range. This manual check is a useful backup, though an automated tool is generally more precise since it measures directly from the pixels in the image rather than a printed copy.</p><h2>Why Some Photos Look Right but Still Fail</h2><p>It is common for a photo to look correctly sized to the eye but still fail a strict measurement check, usually because the head is a few percentage points too large or too small relative to the frame. This is why relying on a tool that measures proportions directly, rather than judging by appearance alone, produces more consistent results across different applicants and photos.</p><h2>Keeping a Backup Copy</h2><p>Once you have a correctly sized photo, it is worth saving a copy of the original uncropped image as well, in case you need to make small adjustments later or generate an additional print for a different document.</p><h2>Summary of the Key Numbers</h2><p>To recap the exact figures: a 2 x 2 inch (51 x 51 mm) frame, a head height of 1 to 1 3/8 inches, an eye position of 1 1/8 to 1 3/8 inches from the bottom edge, and a digital size of roughly 600 x 600 to 1200 x 1200 pixels when uploading online.</p>",
+    "faqs": [
+      {
+        "q": "What is the American passport picture size in inches?",
+        "a": "It is 2 x 2 inches (51 x 51 mm), with a required head height of 1 to 1 3/8 inches from chin to crown."
+      },
+      {
+        "q": "What happens if my picture is the wrong size?",
+        "a": "A picture outside the required dimensions is typically rejected during processing, which can delay your passport application until a corrected photo is submitted."
+      }
+    ]
   }
+
+ 
 ]
