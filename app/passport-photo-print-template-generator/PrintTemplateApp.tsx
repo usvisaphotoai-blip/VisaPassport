@@ -27,7 +27,7 @@ export default function PrintTemplateApp() {
   const [imageObj, setImageObj] = useState<HTMLImageElement | null>(null);
   const [imageLoadError, setImageLoadError] = useState<string | null>(null);
 
-  const [paperSize, setPaperSize] = useState<keyof typeof PAPER_SIZES>("4x6");
+  const [paperSize, setPaperSize] = useState<keyof typeof PAPER_SIZES>("5x7");
   
   const [photoSizes, setPhotoSizes] = useState({
     "2x2": { name: "2×2 inch (US)", width: 51, height: 51 },
@@ -38,8 +38,8 @@ export default function PrintTemplateApp() {
   const [layoutCount, setLayoutCount] = useState<number>(6);
   
   const [cropLines, setCropLines] = useState<boolean>(true);
-  const [margin, setMargin] = useState<number>(10); // mm
-  const [spacing, setSpacing] = useState<number>(2); // mm
+  const [margin, setMargin] = useState<number>(5); // mm
+  const [spacing, setSpacing] = useState<number>(0); // mm
 
   // Load initial image if passed in query params
   useEffect(() => {
@@ -191,7 +191,14 @@ export default function PrintTemplateApp() {
         count++;
       }
     }
-
+ctx.fillStyle = "#666";
+ctx.font = `${mmToPx(2.8)}px Arial`;
+ctx.textAlign = "right";
+ctx.fillText(
+  "pixpassport.com",
+  cWidth - marginPx,
+  cHeight - mmToPx(2)
+);
   }, [imageObj, paperSize, photoSize, photoSizes, layoutCount, cropLines, margin, spacing]);
 
 
@@ -199,7 +206,7 @@ export default function PrintTemplateApp() {
   const handleDownloadJPG = () => {
     if (!canvasRef.current) return;
     const link = document.createElement("a");
-    link.download = `passport-photo-sheet-${paperSize}.jpg`;
+link.download = `pixpassport.com_dimensions_${paperSize}.jpg`;
     link.href = canvasRef.current.toDataURL("image/jpeg", 1.0);
     link.click();
   };
@@ -216,7 +223,7 @@ export default function PrintTemplateApp() {
     });
     
     pdf.addImage(imgData, "JPEG", 0, 0, paper.width, paper.height);
-    pdf.save(`passport-photo-sheet-${paperSize}.pdf`);
+  pdf.save(`pixpassport.com_dimensions_${paperSize}.pdf`);
   };
 
   // Error Dialog Component
@@ -295,7 +302,7 @@ export default function PrintTemplateApp() {
           </div>
           <h3 className="text-xl font-bold text-slate-800 mb-2">Upload your passport photo</h3>
           <p className="text-slate-500 mb-6">Drag and drop your image here, or click to browse.</p>
-          <button className="bg-lime-600 hover:bg-lime-700 text-white px-6 py-3 rounded-lg font-semibold shadow-sm transition-colors">
+          <button className="bg-lime-600 hover:bg-lime-700 text-white px-6 py-3 rounded-lg font-semibold  transition-colors">
             Select Photo
           </button>
           <input 
@@ -310,7 +317,7 @@ export default function PrintTemplateApp() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 flex-col-reverse lg:flex-row">
           
           {/* Controls Sidebar */}
-          <div className="lg:col-span-4 bg-white p-4 sm:p-6 rounded-2xl shadow-sm border border-slate-200 order-2 lg:order-1">
+          <div className="lg:col-span-4 bg-white p-4 sm:p-6 rounded-sm  border border-slate-200 order-2 lg:order-1">
             <div className="flex justify-between items-center mb-6 border-b border-slate-100 pb-4">
               <h2 className="text-xl font-bold text-slate-800">Layout Settings</h2>
               <button 
@@ -378,7 +385,7 @@ export default function PrintTemplateApp() {
               </div>
 
               {/* Options */}
-              <div className="space-y-3 pt-2">
+              {/* <div className="space-y-3 pt-2">
                 <label className="flex items-center space-x-3">
                   <input 
                     type="checkbox" 
@@ -416,7 +423,7 @@ export default function PrintTemplateApp() {
                     className="w-full accent-lime-600"
                   />
                 </div>
-              </div>
+              </div> */}
             </div>
             
             {/* Download Buttons */}
@@ -440,14 +447,14 @@ export default function PrintTemplateApp() {
           </div>
 
           {/* Canvas Preview Area */}
-          <div className="lg:col-span-8 bg-slate-200 rounded-2xl p-2 sm:p-8 flex items-center justify-center overflow-hidden min-h-[300px] lg:min-h-[500px] border border-slate-300 shadow-inner order-1 lg:order-2" ref={containerRef}>
-            <div className="relative shadow-2xl bg-white max-w-full max-h-[80vh] overflow-hidden group">
+          <div className="lg:col-span-8 bg-slate-200 rounded-sm p-2 sm:p-6 flex items-center justify-center  border border-slate-300  order-1 lg:order-2" ref={containerRef}>
+          
                {/* Note: The canvas draws at 300DPI which is huge, we use CSS to scale it down for preview */}
               <canvas 
                 ref={canvasRef} 
-                className="w-auto h-auto max-w-full max-h-[75vh] object-contain transition-transform duration-300 group-hover:scale-[1.02]"
+                className="w-auto h-auto max-w-full max-h-[70vh] object-contain transition-transform duration-300 group-hover:scale-[1.02]"
               />
-            </div>
+      
           </div>
 
         </div>
