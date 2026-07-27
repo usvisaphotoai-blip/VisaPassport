@@ -8,7 +8,7 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com" />
     <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.pixpassport.com/fr" />
     <xhtml:link rel="alternate" hreflang="de-DE" href="https://www.pixpassport.com/de" />
-    <lastmod>2026-04-12</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -1826,14 +1826,14 @@
   <url>
     <loc>https://www.pixpassport.com/fr/photo-identite-en-ligne</loc>
     <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.pixpassport.com/fr/photo-identite-en-ligne" />
-    <lastmod>2026-07-02</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/fr/photo-identite</loc>
     <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.pixpassport.com/fr/photo-identite" />
-    <lastmod>2026-05-17</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
      <image:image>
@@ -1847,7 +1847,7 @@
   <url>
     <loc>https://www.pixpassport.com/fr/photo-passeport</loc>
     <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.pixpassport.com/fr/photo-passeport" />
-    <lastmod>2026-05-17</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
      <image:image>
@@ -1957,7 +1957,7 @@
   <url>
     <loc>https://www.pixpassport.com/fr/guides/passport-photo-size</loc>
     <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.pixpassport.com/fr/guides/passport-photo-size" />
-    <lastmod>2026-05-17</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
      <image:image>
@@ -1971,7 +1971,7 @@
   <url>
     <loc>https://www.pixpassport.com/fr/guides/photo-identite-france-passeport-cni-ephoto-permis-visa</loc>
     <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.pixpassport.com/fr/guides/photo-identite-france-passeport-cni-ephoto-permis-visa" />
-    <lastmod>2026-05-19</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

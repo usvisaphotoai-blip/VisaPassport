@@ -63,7 +63,7 @@ export default function HeroSectionFr({
 
             <Link
               href={ctaHref}
-              className="inline-flex items-center justify-center px-8 py-4 rounded-2xl text-white bg-lime-600 hover:bg-lime-700"
+                  className="inline-flex items-center justify-center bg-lime-700 hover:bg-lime-800 text-white text-sm font-semibold px-6 py-3 rounded transition-colors"
             >
               {ctaText}
             </Link>

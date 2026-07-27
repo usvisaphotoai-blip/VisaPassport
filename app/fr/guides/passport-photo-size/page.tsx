@@ -5,8 +5,8 @@ import FaqSectionFr from "../../components/FaqSectionFr";
 import StickyCTAFr from "../../components/StickyCTAFr";
 
 export const metadata: Metadata = {
-  title: "Taille Photo Passeport : Guide Complet 2026 | PixPassport",
-  description: "Découvrez les dimensions exactes requises pour les photos passeport dans chaque pays. Guide complet avec tableaux de tailles, conseils pratiques et outil gratuit.",
+  title: "Taille Photo Passeport : Dimensions Exactes par Pays 2026 | PixPassport",
+  description: "Quelle taille pour une photo passeport ? Dimensions exactes par pays, résolution numérique et format photo identité expliqués simplement, avec tableau complet.",
   keywords: ["taille photo passeport", "dimension photo passeport", "photo 35x45", "photo 2x2 pouces", "format photo identité"],
   alternates: {
     canonical: "https://www.pixpassport.com/fr/guides/passport-photo-size",
@@ -16,35 +16,40 @@ export const metadata: Metadata = {
       "x-default": "https://www.pixpassport.com/blog",
     },
   },
-  openGraph: { title: "Taille Photo Passeport — Guide Complet | PixPassport", url: "https://www.pixpassport.com/fr/guides/passport-photo-size", locale: "fr_FR", type: "article" },
+  openGraph: { title: "Taille Photo Passeport — Dimensions par Pays | PixPassport", url: "https://www.pixpassport.com/fr/guides/passport-photo-size", locale: "fr_FR", type: "article" },
   twitter: {
     card: "summary_large_image",
-    title: "Taille Photo Passeport — Guide Complet | PixPassport",
+    title: "Taille Photo Passeport — Dimensions par Pays | PixPassport",
     description: "Dimensions exactes pour les photos passeport dans chaque pays.",
     images: ["https://www.pixpassport.com/og-image.jpg"],
   },
 };
 
 const sizeFaqs = [
-  { q: "Quelle est la taille standard d'une photo passeport ?", a: "La taille la plus courante est 35×45mm, utilisée en France, dans l'UE et dans la majorité des pays. Les États-Unis et l'Inde utilisent 51×51mm (2×2 pouces)." },
-  { q: "Quelle résolution pour une photo passeport numérique ?", a: "La résolution minimale est généralement de 300 DPI. Pour une photo 35×45mm, cela correspond à 413×531 pixels. Pour 51×51mm (US), c'est 600×600 pixels." },
-  { q: "Puis-je recadrer une photo existante ?", a: "Oui, mais vous risquez de perdre en qualité. Notre outil recadre automatiquement votre photo aux bonnes dimensions tout en préservant la résolution." },
+  { q: "Quelle est la taille standard d'une photo passeport ?", a: "Le format 35×45 mm domine en France, dans l'Union européenne et dans la majorité des pays. Les États-Unis et l'Inde utilisent plutôt le format 2×2 pouces, soit 51×51 mm." },
+  { q: "Quelle résolution choisir pour une photo passeport numérique ?", a: "Visez au minimum 300 DPI. Pour un format 35×45 mm, cela donne 413×531 pixels. Pour un format 2×2 pouces (États-Unis), comptez 600×600 pixels." },
+  { q: "Puis-je recadrer moi-même une photo existante ?", a: "Vous le pouvez, mais un recadrage manuel dégrade souvent la netteté et fausse les proportions du visage. Un outil automatisé calcule les dimensions exactes sans perte de qualité." },
+  { q: "La taille de la photo change-t-elle selon le document ?", a: "En France, non : passeport, CNI et permis de conduire partagent le même format 35×45 mm. À l'étranger, chaque pays fixe sa propre norme, d'où l'intérêt de vérifier le format photo identité avant l'envoi." },
 ];
 
 const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
-    { "@type": "Article", headline: "Taille Photo Passeport : Guide Complet 2026", description: "Guide des dimensions photo passeport par pays.", inLanguage: "fr", author: { "@type": "Organization", name: "PixPassport" } },
+    { "@type": "Article", headline: "Taille Photo Passeport : Dimensions Exactes par Pays 2026", description: "Guide des dimensions photo passeport par pays, avec résolution numérique et conseils pratiques.", inLanguage: "fr", author: { "@type": "Organization", name: "PixPassport" } },
+    {
+      "@type": "FAQPage",
+      mainEntity: sizeFaqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+    },
   ],
 };
 
 const sizeTable = [
   { country: "🇫🇷 France", mm: "35 × 45", px: "413 × 531", usage: "Passeport, CNI, Visa" },
-  { country: "🇺🇸 États-Unis", mm: "51 × 51", px: "600 × 600", usage: "Passeport, Visa, Green Card" },
+  { country: "🇺🇸 États-Unis", mm: "51 × 51 (2×2 po)", px: "600 × 600", usage: "Passeport, Visa, Green Card" },
   { country: "🇬🇧 Royaume-Uni", mm: "35 × 45", px: "413 × 531", usage: "Passeport, Visa" },
   { country: "🇨🇦 Canada", mm: "35 × 45", px: "413 × 531", usage: "Passeport, Visa" },
   { country: "🇩🇪 Allemagne", mm: "35 × 45", px: "413 × 531", usage: "Passeport, Personalausweis" },
-  { country: "🇮🇳 Inde", mm: "51 × 51", px: "600 × 600", usage: "Passeport, Visa, OCI" },
+  { country: "🇮🇳 Inde", mm: "51 × 51 (2×2 po)", px: "600 × 600", usage: "Passeport, Visa, OCI" },
   { country: "🇯🇵 Japon", mm: "35 × 45", px: "413 × 531", usage: "Passeport" },
   { country: "🇨🇳 Chine", mm: "33 × 48", px: "390 × 567", usage: "Passeport, Visa" },
   { country: "🇦🇺 Australie", mm: "35 × 45", px: "413 × 531", usage: "Passeport, Visa" },
@@ -58,8 +63,19 @@ export default function PassportPhotoSizePage() {
       <BreadcrumbsFr items={[{ label: "Guides", href: "/fr/guides" }, { label: "Taille photo passeport", href: "/fr/guides/passport-photo-size" }]} />
       <article className="py-16 lg:py-20 bg-white">
         <div className="max-w-3xl mx-auto px-4">
-          <h1 className="text-3xl lg:text-4xl font-extrabold text-slate-900 mb-4">Taille Photo Passeport : Guide Complet 2026</h1>
-          <p className="text-lg text-slate-600 mb-8 leading-relaxed">Chaque pays a ses propres exigences de dimensions pour les photos passeport. Ce guide couvre les formats les plus courants et vous aide à obtenir une photo conforme du premier coup.</p>
+          <h1 className="text-3xl lg:text-4xl font-extrabold text-slate-900 mb-4">Taille Photo Passeport : Dimensions Exactes par Pays (2026)</h1>
+          <p className="text-lg text-slate-600 mb-4 leading-relaxed">
+            La taille photo passeport varie selon le pays qui délivre le document, et une erreur de quelques
+            millimètres suffit à faire rejeter votre dossier. Ce guide réunit les dimensions exactes par pays, la
+            résolution numérique attendue et les erreurs de cadrage les plus fréquentes, pour que vous obteniez
+            une photo conforme dès le premier envoi.
+          </p>
+          <p className="text-slate-600 mb-10 leading-relaxed">
+            Deux formats dominent la planète : le 35×45 mm, utilisé en France et dans la majorité des pays
+            européens, et le 2×2 pouces (51×51 mm), la norme américaine reprise par plusieurs pays d&apos;Asie du
+            Sud. Connaître le bon format photo identité avant de photographier évite un recadrage approximatif et
+            un rejet administratif.
+          </p>
 
           <h2 className="text-2xl font-bold text-slate-900 mt-12 mb-6">📏 Dimensions par pays</h2>
           <div className="overflow-x-auto rounded-2xl border border-slate-200">
@@ -85,25 +101,48 @@ export default function PassportPhotoSizePage() {
             </table>
           </div>
 
-          <h2 className="text-2xl font-bold text-slate-900 mt-12 mb-4">📐 Proportions et cadrage</h2>
-          <p className="text-slate-600 leading-relaxed mb-4">Au-delà des dimensions extérieures, le cadrage du visage est tout aussi important :</p>
-          <ul className="space-y-3 mb-8">
+          <h2 className="text-2xl font-bold text-slate-900 mt-12 mb-4">🌍 35×45 mm ou 2×2 pouces : comment les distinguer</h2>
+          <p className="text-slate-600 leading-relaxed mb-4">
+            Le format 35×45 mm mesure le rectangle exact imprimé sur le papier photo : 3,5 cm de large sur 4,5 cm
+            de haut, un standard hérité des normes européennes et repris par l&apos;ICAO pour la reconnaissance
+            faciale internationale. Le format 2×2 pouces, lui, dessine un carré de 5,08 cm de côté, utilisé pour
+            le passeport, le visa et la carte verte américaine, ainsi que pour la plupart des démarches indiennes.
+          </p>
+          <p className="text-slate-600 leading-relaxed mb-8">
+            Confondre les deux formats est l&apos;erreur la plus commune chez les voyageurs qui préparent plusieurs
+            documents à la fois. Une photo passeport conforme pour la France ne l&apos;est pas automatiquement
+            pour un visa américain : vérifiez toujours le format exigé par l&apos;administration destinataire avant
+            de faire tirer votre photo.
+          </p>
+
+          <h2 className="text-2xl font-bold text-slate-900 mt-12 mb-4">📐 Proportions et cadrage du visage</h2>
+          <p className="text-slate-600 leading-relaxed mb-4">Au-delà des dimensions extérieures, le cadrage du visage compte tout autant :</p>
+          <ul className="space-y-3 mb-10">
             {[
-              "La tête doit occuper 70 à 80% de la hauteur de la photo",
-              "Les yeux doivent se situer entre 56% et 69% de la hauteur depuis le bas",
-              "L'espace au-dessus de la tête ne doit pas dépasser 10% de la hauteur",
-              "Le visage doit être centré horizontalement",
+              "La tête occupe 70 à 80 % de la hauteur totale de la photo",
+              "Les yeux se situent entre 56 % et 69 % de la hauteur depuis le bas",
+              "L'espace au-dessus de la tête ne dépasse pas 10 % de la hauteur",
+              "Le visage reste centré horizontalement, sans inclinaison",
             ].map((item, i) => (
               <li key={i} className="flex items-start gap-3"><span className="w-5 h-5 bg-lime-100 rounded-full flex items-center justify-center shrink-0 mt-0.5"><span className="text-lime-600 text-xs font-bold">✓</span></span><span className="text-slate-600 text-sm">{item}</span></li>
             ))}
           </ul>
 
-          <h2 className="text-2xl font-bold text-slate-900 mt-12 mb-4">💡 Conseils pratiques</h2>
+          <h2 className="text-2xl font-bold text-slate-900 mt-12 mb-4">💻 Quelle résolution pour une photo d&apos;identité numérique ?</h2>
+          <p className="text-slate-600 leading-relaxed mb-8">
+            La dimension photo passeport en millimètres ne suffit pas pour un envoi en ligne : les administrations
+            exigent aussi une résolution minimale, généralement 300 DPI. Concrètement, un fichier 35×45 mm doit
+            mesurer au moins 413×531 pixels, et un fichier 2×2 pouces au moins 600×600 pixels. En dessous de ce
+            seuil, l&apos;impression sort floue et le fichier numérique risque un rejet automatique lors de la
+            vérification biométrique.
+          </p>
+
+          <h2 className="text-2xl font-bold text-slate-900 mt-12 mb-4">💡 Trois conseils pour ne pas se tromper</h2>
           <div className="grid gap-4 mb-8">
             {[
-              { title: "Utilisez la plus haute résolution", desc: "Réglez votre appareil photo ou téléphone sur la qualité maximale pour éviter la pixellisation lors du recadrage." },
-              { title: "Ne recadrez pas vous-même", desc: "Laissez notre outil calibrer automatiquement les dimensions. Un recadrage manuel risque de ne pas respecter les proportions biométriques." },
-              { title: "Vérifiez avant d'imprimer", desc: "Utilisez notre vérification de conformité gratuite pour vous assurer que votre photo sera acceptée avant de l'imprimer." },
+              { title: "Photographiez en haute résolution", desc: "Réglez votre smartphone sur la qualité maximale : un recadrage précis a besoin de pixels en réserve." },
+              { title: "Ne recadrez jamais à la main", desc: "Un générateur de photo passeport calcule les proportions biométriques exactes ; un recadrage manuel les fausse presque toujours." },
+              { title: "Vérifiez le format avant d'imprimer", desc: "Contrôlez la conformité de votre photo avant de la faire tirer, pour éviter un aller-retour en pharmacie." },
             ].map((tip, i) => (
               <div key={i} className="bg-slate-50 rounded-2xl p-5 border border-slate-100">
                 <h3 className="font-bold text-slate-900 text-sm mb-1">{tip.title}</h3>
@@ -113,8 +152,8 @@ export default function PassportPhotoSizePage() {
           </div>
 
           <div className="bg-lime-50 border border-lime-200 rounded-2xl p-6 text-center mt-12">
-            <h3 className="text-lg font-bold text-slate-900 mb-2">Créez votre photo aux bonnes dimensions</h3>
-            <p className="text-sm text-slate-600 mb-4">Notre outil adapte automatiquement la taille selon le pays sélectionné.</p>
+            <h3 className="text-lg font-bold text-slate-900 mb-2">Créez votre photo d&apos;identité numérique aux bonnes dimensions</h3>
+            <p className="text-sm text-slate-600 mb-4">Notre générateur de photo passeport adapte automatiquement la taille et la résolution selon le pays choisi.</p>
             <Link href="/fr/passport-photo-online" className="inline-flex items-center px-6 py-3 bg-lime-600 text-white rounded-xl font-bold text-sm hover:bg-lime-700 transition-all shadow-lg">
               Commencer gratuitement →
             </Link>

@@ -91,7 +91,7 @@ export default function NavbarFr() {
                   {/* <Link href="/login" prefetch={true} className="text-sm font-semibold text-slate-600 hover:text-lime-700 transition-colors duration-150">
                     {fr.nav.login}
                   </Link> */}
-                  <Link href="/fr/passport-photo-online" prefetch={true} className="bg-lime-600 text-white hover:bg-lime-700 active:bg-lime-800 rounded-xl px-5 py-2.5 text-sm font-bold transition-all duration-150 shadow-sm shadow-lime-600/25 hover:shadow-md hover:shadow-lime-600/30 hover:-translate-y-px whitespace-nowrap">
+                  <Link href="/fr/passport-photo-online" prefetch={true} className="bg-lime-700 text-white hover:bg-lime-800 active:bg-lime-800 rounded-sm px-5 py-2.5 text-sm font-bold transition-all duration-150  hover:-translate-y-px whitespace-nowrap">
                     {fr.nav.getPhoto} →
                   </Link>
                 </>

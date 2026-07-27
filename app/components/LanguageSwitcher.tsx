@@ -117,7 +117,7 @@ export default function LanguageSwitcher() {
         value={currentLang}
         onChange={handleLanguageChange}
         aria-label="Select language"
-        className="bg-white border border-gray-200 text-slate-700 text-sm rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-lime-500 cursor-pointer shadow-sm hover:border-lime-500 transition-colors"
+        className="bg-white border border-gray-200 text-slate-700 text-sm rounded-sm px-5 py-2 focus:outline-none focus:ring-2 focus:ring-lime-500 cursor-pointer hover:border-lime-500 transition-colors"
       >
         {languages.map((l) => (
           <option key={l.code} value={l.code}>
