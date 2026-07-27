@@ -7,8 +7,8 @@ import { useSearchParams } from "next/navigation";
 const PAPER_SIZES = {
   "4x6": { name: "4×6 inch", width: 101.6, height: 152.4 }, // mm
   "5x7": { name: "5×7 inch", width: 127, height: 177.8 },
-  "A4": { name: "A4", width: 210, height: 297 },
-  "Letter": { name: "Letter", width: 215.9, height: 279.4 },
+  A4: { name: "A4", width: 210, height: 297 },
+  Letter: { name: "Letter", width: 215.9, height: 279.4 },
 };
 
 const PHOTO_SIZES = {
@@ -18,7 +18,11 @@ const PHOTO_SIZES = {
 
 export default function PrintTemplateApp() {
   const searchParams = useSearchParams();
-  const imageUrl = searchParams.get("imageUrl") || searchParams.get("image") || searchParams.get("photoUrl") || searchParams.get("photo");
+  const imageUrl =
+    searchParams.get("imageUrl") ||
+    searchParams.get("image") ||
+    searchParams.get("photoUrl") ||
+    searchParams.get("photo");
   const customWidth = searchParams.get("width");
   const customHeight = searchParams.get("height");
   const customName = searchParams.get("name");
@@ -28,15 +32,15 @@ export default function PrintTemplateApp() {
   const [imageLoadError, setImageLoadError] = useState<string | null>(null);
 
   const [paperSize, setPaperSize] = useState<keyof typeof PAPER_SIZES>("5x7");
-  
+
   const [photoSizes, setPhotoSizes] = useState({
     "2x2": { name: "2×2 inch (US)", width: 51, height: 51 },
     "35x45": { name: "35×45 mm (Europe/UK/Aus)", width: 35, height: 45 },
   });
   const [photoSize, setPhotoSize] = useState<string>("2x2");
-  
+
   const [layoutCount, setLayoutCount] = useState<number>(6);
-  
+
   const [cropLines, setCropLines] = useState<boolean>(true);
   const [margin, setMargin] = useState<number>(5); // mm
   const [spacing, setSpacing] = useState<number>(0); // mm
@@ -55,7 +59,9 @@ export default function PrintTemplateApp() {
       img.onerror = () => {
         setImageObj(null);
         setImageSrc(null);
-        setImageLoadError("Failed to load your photo. Please try again or upload a new photo.");
+        setImageLoadError(
+          "Failed to load your photo. Please try again or upload a new photo.",
+        );
       };
       img.src = decodedUrl;
     }
@@ -70,17 +76,19 @@ export default function PrintTemplateApp() {
         // Check if it already matches one of the existing keys
         const is2x2 = Math.abs(w - 51) <= 1 && Math.abs(h - 51) <= 1;
         const is35x45 = Math.abs(w - 35) <= 1 && Math.abs(h - 45) <= 1;
-        
+
         if (is2x2) {
           setPhotoSize("2x2");
         } else if (is35x45) {
           setPhotoSize("35x45");
         } else {
           // Dynamic custom size option matching the user's document type spec
-          const label = customName ? decodeURIComponent(customName) : `${w}×${h} mm`;
-          setPhotoSizes(prev => ({
+          const label = customName
+            ? decodeURIComponent(customName)
+            : `${w}×${h} mm`;
+          setPhotoSizes((prev) => ({
             ...prev,
-            "custom": { name: `${label} (${w}×${h} mm)`, width: w, height: h }
+            custom: { name: `${label} (${w}×${h} mm)`, width: w, height: h },
           }));
           setPhotoSize("custom");
         }
@@ -88,7 +96,6 @@ export default function PrintTemplateApp() {
     }
   }, [customWidth, customHeight, customName]);
 
-  
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -128,7 +135,7 @@ export default function PrintTemplateApp() {
   // Draw Canvas
   useEffect(() => {
     if (!imageObj || !canvasRef.current) return;
-    
+
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
@@ -157,10 +164,10 @@ export default function PrintTemplateApp() {
     // Calculate Grid
     const availableW = cWidth - 2 * marginPx;
     const availableH = cHeight - 2 * marginPx;
-    
+
     const cols = Math.floor((availableW + spacingPx) / (photoWPx + spacingPx));
     const rows = Math.floor((availableH + spacingPx) / (photoHPx + spacingPx));
-    
+
     const maxPhotos = cols * rows;
     const actualCount = Math.min(layoutCount, maxPhotos);
 
@@ -174,7 +181,7 @@ export default function PrintTemplateApp() {
     for (let r = 0; r < rows; r++) {
       for (let c = 0; c < cols; c++) {
         if (count >= actualCount) break;
-        
+
         const x = startX + c * (photoWPx + spacingPx);
         const y = startY + r * (photoHPx + spacingPx);
 
@@ -191,22 +198,42 @@ export default function PrintTemplateApp() {
         count++;
       }
     }
-ctx.fillStyle = "#666";
-ctx.font = `${mmToPx(2.8)}px Arial`;
-ctx.textAlign = "right";
-ctx.fillText(
-  "pixpassport.com",
-  cWidth - marginPx,
-  cHeight - mmToPx(2)
-);
-  }, [imageObj, paperSize, photoSize, photoSizes, layoutCount, cropLines, margin, spacing]);
+    const printDate = new Date().toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    });
+    ctx.fillStyle = "#0e7b07ff";
+    ctx.font = `${mmToPx(2.8)}px Arial`;
+    ctx.textBaseline = "bottom";
 
+    // Website (left)
+    ctx.textAlign = "left";
+    ctx.fillText("pixpassport.com", marginPx, cHeight - mmToPx(2));
+
+    // Date (right)
+    ctx.textAlign = "right";
+    ctx.fillText(
+      `Printed: ${printDate}`,
+      cWidth - marginPx,
+      cHeight - mmToPx(2),
+    );
+  }, [
+    imageObj,
+    paperSize,
+    photoSize,
+    photoSizes,
+    layoutCount,
+    cropLines,
+    margin,
+    spacing,
+  ]);
 
   // Download Handlers
   const handleDownloadJPG = () => {
     if (!canvasRef.current) return;
     const link = document.createElement("a");
-link.download = `pixpassport.com_dimensions_${paperSize}.jpg`;
+    link.download = `pixpassport.com_dimensions_${paperSize}.jpg`;
     link.href = canvasRef.current.toDataURL("image/jpeg", 1.0);
     link.click();
   };
@@ -219,21 +246,31 @@ link.download = `pixpassport.com_dimensions_${paperSize}.jpg`;
     const pdf = new jsPDF({
       orientation: paper.width > paper.height ? "landscape" : "portrait",
       unit: "mm",
-      format: [paper.width, paper.height]
+      format: [paper.width, paper.height],
     });
-    
+
     pdf.addImage(imgData, "JPEG", 0, 0, paper.width, paper.height);
-  pdf.save(`pixpassport.com_dimensions_${paperSize}.pdf`);
+    pdf.save(`pixpassport.com_dimensions_${paperSize}.pdf`);
   };
 
   // Error Dialog Component
-  const ErrorDialog = ({ message, onRetry, onBack }: { message: string; onRetry: () => void; onBack: () => void }) => (
+  const ErrorDialog = ({
+    message,
+    onRetry,
+    onBack,
+  }: {
+    message: string;
+    onRetry: () => void;
+    onBack: () => void;
+  }) => (
     <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6 text-center">
         <div className="w-14 h-14 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
           <span className="text-2xl">⚠️</span>
         </div>
-        <h3 className="text-lg font-bold text-slate-900 mb-2">Something went wrong</h3>
+        <h3 className="text-lg font-bold text-slate-900 mb-2">
+          Something went wrong
+        </h3>
         <p className="text-sm text-slate-500 mb-6">{message}</p>
         <div className="flex gap-3">
           <button
@@ -267,7 +304,9 @@ link.download = `pixpassport.com_dimensions_${paperSize}.jpg`;
       img.onerror = () => {
         setImageObj(null);
         setImageSrc(null);
-        setImageLoadError("Failed to load your photo. Please try again or upload a new photo.");
+        setImageLoadError(
+          "Failed to load your photo. Please try again or upload a new photo.",
+        );
       };
       img.src = decodedUrl;
     }
@@ -275,7 +314,7 @@ link.download = `pixpassport.com_dimensions_${paperSize}.jpg`;
 
   // Back handler - go to previous page
   const handleBack = () => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       window.history.back();
     }
   };
@@ -291,7 +330,7 @@ link.download = `pixpassport.com_dimensions_${paperSize}.jpg`;
         />
       )}
       {!imageSrc ? (
-        <div 
+        <div
           className="border-2 border-dashed border-slate-300 rounded-2xl p-6 sm:p-12 text-center bg-white hover:bg-slate-50 transition-colors cursor-pointer"
           onDragOver={(e) => e.preventDefault()}
           onDrop={handleDrop}
@@ -300,27 +339,32 @@ link.download = `pixpassport.com_dimensions_${paperSize}.jpg`;
           <div className="mx-auto w-16 h-16 bg-lime-100 text-lime-600 rounded-full flex items-center justify-center text-3xl mb-4">
             📷
           </div>
-          <h3 className="text-xl font-bold text-slate-800 mb-2">Upload your passport photo</h3>
-          <p className="text-slate-500 mb-6">Drag and drop your image here, or click to browse.</p>
+          <h3 className="text-xl font-bold text-slate-800 mb-2">
+            Upload your passport photo
+          </h3>
+          <p className="text-slate-500 mb-6">
+            Drag and drop your image here, or click to browse.
+          </p>
           <button className="bg-lime-600 hover:bg-lime-700 text-white px-6 py-3 rounded-lg font-semibold  transition-colors">
             Select Photo
           </button>
-          <input 
-            type="file" 
-            id="photo-upload" 
-            accept="image/jpeg, image/png, image/webp" 
-            className="hidden" 
-            onChange={handleFileUpload} 
+          <input
+            type="file"
+            id="photo-upload"
+            accept="image/jpeg, image/png, image/webp"
+            className="hidden"
+            onChange={handleFileUpload}
           />
         </div>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 flex-col-reverse lg:flex-row">
-          
           {/* Controls Sidebar */}
           <div className="lg:col-span-4 bg-white p-4 sm:p-6 rounded-sm  border border-slate-200 order-2 lg:order-1">
             <div className="flex justify-between items-center mb-6 border-b border-slate-100 pb-4">
-              <h2 className="text-xl font-bold text-slate-800">Layout Settings</h2>
-              <button 
+              <h2 className="text-xl font-bold text-slate-800">
+                Layout Settings
+              </h2>
+              <button
                 onClick={() => {
                   setImageSrc(null);
                   setImageObj(null);
@@ -334,14 +378,18 @@ link.download = `pixpassport.com_dimensions_${paperSize}.jpg`;
             <div className="space-y-6">
               {/* Paper Size */}
               <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-2">Paper Size</label>
+                <label className="block text-sm font-semibold text-slate-700 mb-2">
+                  Paper Size
+                </label>
                 <div className="grid grid-cols-2 gap-2">
                   {Object.entries(PAPER_SIZES).map(([key, val]) => (
                     <button
                       key={key}
                       onClick={() => setPaperSize(key as any)}
                       className={`py-2 px-3 border rounded-lg text-sm font-medium transition-colors ${
-                        paperSize === key ? "bg-lime-50 border-lime-600 text-lime-700" : "bg-white border-slate-200 text-slate-600 hover:bg-slate-50"
+                        paperSize === key
+                          ? "bg-lime-50 border-lime-600 text-lime-700"
+                          : "bg-white border-slate-200 text-slate-600 hover:bg-slate-50"
                       }`}
                     >
                       {val.name}
@@ -352,14 +400,18 @@ link.download = `pixpassport.com_dimensions_${paperSize}.jpg`;
 
               {/* Photo Size */}
               <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-2">Target Photo Size</label>
+                <label className="block text-sm font-semibold text-slate-700 mb-2">
+                  Target Photo Size
+                </label>
                 <div className="grid grid-cols-1 gap-2">
                   {Object.entries(photoSizes).map(([key, val]) => (
                     <button
                       key={key}
                       onClick={() => setPhotoSize(key)}
                       className={`py-2 px-3 border rounded-lg text-sm font-medium transition-colors ${
-                        photoSize === key ? "bg-lime-50 border-lime-600 text-lime-700" : "bg-white border-slate-200 text-slate-600 hover:bg-slate-50"
+                        photoSize === key
+                          ? "bg-lime-50 border-lime-600 text-lime-700"
+                          : "bg-white border-slate-200 text-slate-600 hover:bg-slate-50"
                       }`}
                     >
                       {val.name}
@@ -368,17 +420,20 @@ link.download = `pixpassport.com_dimensions_${paperSize}.jpg`;
                 </div>
               </div>
 
-
               {/* Number of Photos */}
               <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-2">Number of Copies</label>
-                <select 
-                  value={layoutCount} 
+                <label className="block text-sm font-semibold text-slate-700 mb-2">
+                  Number of Copies
+                </label>
+                <select
+                  value={layoutCount}
                   onChange={(e) => setLayoutCount(Number(e.target.value))}
                   className="w-full border border-slate-200 rounded-lg p-2.5 text-slate-700 focus:ring-2 focus:ring-lime-500 focus:outline-none"
                 >
-                  {[2, 4, 6, 8, 10, 12, 16, 20].map(num => (
-                    <option key={num} value={num}>{num} Photos</option>
+                  {[2, 4, 6, 8, 10, 12, 16, 20].map((num) => (
+                    <option key={num} value={num}>
+                      {num} Photos
+                    </option>
                   ))}
                   <option value={99}>Fill Entire Page</option>
                 </select>
@@ -425,16 +480,16 @@ link.download = `pixpassport.com_dimensions_${paperSize}.jpg`;
                 </div>
               </div> */}
             </div>
-            
+
             {/* Download Buttons */}
             <div className="mt-8 pt-6 border-t border-slate-100 space-y-3">
-              <button 
+              <button
                 onClick={handleDownloadJPG}
                 className="w-full bg-lime-600 hover:bg-lime-700 text-white py-3 px-4 rounded-lg font-bold shadow-md transition-colors flex items-center justify-center gap-2"
               >
                 <span>Download as JPG</span>
               </button>
-              <button 
+              <button
                 onClick={handleDownloadPDF}
                 className="w-full bg-slate-800 hover:bg-slate-900 text-white py-3 px-4 rounded-lg font-bold shadow-md transition-colors flex items-center justify-center gap-2"
               >
@@ -447,16 +502,16 @@ link.download = `pixpassport.com_dimensions_${paperSize}.jpg`;
           </div>
 
           {/* Canvas Preview Area */}
-          <div className="lg:col-span-8 bg-slate-200 rounded-sm p-2 sm:p-6 flex items-center justify-center  border border-slate-300  order-1 lg:order-2" ref={containerRef}>
-          
-               {/* Note: The canvas draws at 300DPI which is huge, we use CSS to scale it down for preview */}
-              <canvas 
-                ref={canvasRef} 
-                className="w-auto h-auto max-w-full max-h-[70vh] object-contain transition-transform duration-300 group-hover:scale-[1.02]"
-              />
-      
+          <div
+            className="lg:col-span-8 bg-slate-200 rounded-sm p-2 sm:p-6 flex items-center justify-center  border border-slate-300  order-1 lg:order-2"
+            ref={containerRef}
+          >
+            {/* Note: The canvas draws at 300DPI which is huge, we use CSS to scale it down for preview */}
+            <canvas
+              ref={canvasRef}
+              className="w-auto h-auto max-w-full max-h-[70vh] object-contain transition-transform duration-300 group-hover:scale-[1.02]"
+            />
           </div>
-
         </div>
       )}
     </div>
