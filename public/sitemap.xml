@@ -153,7 +153,7 @@
     <loc>https://www.pixpassport.com/australia-passport-photo-editor</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/australia-passport-photo-editor" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/australia-passport-photo-editor" />
-    <lastmod>2026-04-12</lastmod>
+    <lastmod>2026-07-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -161,7 +161,8 @@
     <loc>https://www.pixpassport.com/australia-visa-photo-editor</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/australia-visa-photo-editor" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/australia-visa-photo-editor" />
-    <lastmod>2026-04-12</lastmod>
+       <lastmod>2026-07-29</lastmod>
+
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -337,7 +338,7 @@
     <loc>https://www.pixpassport.com/denmark-passport-photo-editor</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/denmark-passport-photo-editor" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/denmark-passport-photo-editor" />
-    <lastmod>2026-04-18</lastmod>
+    <lastmod>2026-07-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   
@@ -352,7 +353,7 @@
     <loc>https://www.pixpassport.com/denmark-visa-photo-editor</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/denmark-visa-photo-editor" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/denmark-visa-photo-editor" />
-    <lastmod>2026-04-18</lastmod>
+    <lastmod>2026-07-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   
@@ -449,8 +450,10 @@
   <url>
     <loc>https://www.pixpassport.com/france-passport-photo-editor</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/france-passport-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.pixpassport.com/fr/photo-passeport" />
+
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/france-passport-photo-editor" />
-    <lastmod>2026-07-01</lastmod>
+    <lastmod>2026-07-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
  
@@ -458,8 +461,10 @@
   <url>
     <loc>https://www.pixpassport.com/france-visa-photo-editor</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/france-visa-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://www.pixpassport.com/de/visum-foto" />
+
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/france-visa-photo-editor" />
-     <lastmod>2026-07-01</lastmod>
+     <lastmod>2026-07-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   
