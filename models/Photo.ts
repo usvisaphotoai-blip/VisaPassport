@@ -31,6 +31,10 @@ const PhotoSchema = new Schema(
       type: String,
       required: false,
     },
+    originalUrl: {
+      type: String,
+      required: false,
+    },
     metrics: {
       headSizePct: Schema.Types.Mixed,
       eyeLevelPct: Schema.Types.Mixed,

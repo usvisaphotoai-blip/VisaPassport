@@ -483,10 +483,14 @@ export async function POST(req: NextRequest) {
       .jpeg({ quality: 100 })
       .toBuffer();
 
-    const [secureUrl, previewUrl, printSheetUrl] = await Promise.all([
+    const [secureUrl, previewUrl, printSheetUrl, originalUrl] = await Promise.all([
       uploadBufferToCloudinary(processedBuffer, "visa-photos-pixpassport", ["secure"]),
       uploadBufferToCloudinary(watermarkedBuffer, "visa-photos-pixpassport", ["preview"]),
       uploadBufferToCloudinary(printSheetBuffer, "visa-photos-pixpassport", ["print-sheet"]),
+      uploadBufferToCloudinary(buffer, "visa-photos-pixpassport", ["original"]).catch((err) => {
+        console.warn("[crop] Failed to upload original image to Cloudinary:", err);
+        return undefined;
+      }),
     ]);
 
     // ---- Metrics ----
@@ -508,6 +512,7 @@ export async function POST(req: NextRequest) {
       secureUrl,
       previewUrl,
       printSheetUrl,
+      originalUrl,
       metrics: {
         headSizePct: finalHeadPct.toFixed(1),
         eyeLevelPct: finalEyeFromBottomPct.toFixed(1),

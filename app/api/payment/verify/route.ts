@@ -74,6 +74,7 @@ export async function POST(req: Request) {
       const previewLink = `${appUrl}/preview/${photoId}`;
       const spec = getSafeSpec(photo.documentType);
       const documentName = spec.name || "Passport Photo";
+      const countryName = spec.country || spec.name || "Passport Photo";
 
       try {
         if (photo.isExpert) {
@@ -81,9 +82,12 @@ export async function POST(req: Request) {
             <h2>New Expert Edit Order (Photo Upgrade)</h2>
             <p><strong>Photo ID:</strong> ${photo._id}</p>
             <p><strong>Customer Email:</strong> ${userEmail}</p>
-            <p><strong>Photo to Edit:</strong></p>
+            <p><strong>Selected Country:</strong> ${countryName}</p>
+            <p><strong>Document Type:</strong> ${documentName}</p>
+            <p><strong>Photos:</strong></p>
             <ul>
-              <li><a href="${photo.secureUrl}">${photo.secureUrl}</a></li>
+              ${photo.originalUrl ? `<li><strong>Original Image:</strong> <a href="${photo.originalUrl}">${photo.originalUrl}</a></li>` : ''}
+              <li><strong>Processed Image:</strong> <a href="${photo.secureUrl}">${photo.secureUrl}</a></li>
             </ul>
           `;
 
@@ -91,7 +95,7 @@ export async function POST(req: Request) {
           if (adminEmail) {
             await sendEmail({
               to: adminEmail,
-              subject: `New Expert Edit Order: ${photo._id}`,
+              subject: `New Expert Edit Order: ${photo._id} (${countryName})`,
               html: adminHtml,
             });
           }
@@ -99,17 +103,17 @@ export async function POST(req: Request) {
           await sendEmail({
             to: userEmail,
             subject: "Your Expert Photo Edit Order is Confirmed - PixPassport",
-            html: `<p>Hi there,</p><p>We have received your payment for the expert photo edit for your <strong>${documentName}</strong>. Our team is working on your photo now and will email it back to you when it is ready.</p><p>Thank you for choosing PixPassport!</p>`,
+            html: `<p>Hi there,</p><p>We have received your payment for the expert photo edit for your <strong>${countryName} (${documentName})</strong>.</p>${photo.originalUrl ? `<p><strong>Original Image:</strong> <a href="${photo.originalUrl}">${photo.originalUrl}</a></p>` : ''}<p>Our team is working on your photo now and will email it back to you when it is ready.</p><p>Thank you for choosing PixPassport!</p>`,
           });
           console.log(`[PAYMENT VERIFY] Expert emails sent successfully for photo ${photoId}`);
         } else {
           await sendEmail({
             to: userEmail,
-            subject: "Your Passport Photo is ready — Download now! 🎉",
+            subject: `Your ${countryName} (${documentName}) photo is ready — Download now! 🎉`,
             html: `
               <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; color: #1e293b; background: #f8fafc; padding: 32px; border-radius: 16px;">
                 <div style="text-align: center; margin-bottom: 24px;">
-                  <h1 style="font-size: 22px; color: #0f172a; margin: 0 0 8px;">Your ${documentName} is Ready! ✅</h1>
+                  <h1 style="font-size: 22px; color: #0f172a; margin: 0 0 8px;">Your ${countryName} (${documentName}) is Ready! ✅</h1>
                   <p style="color: #64748b; font-size: 14px; margin: 0;">Thank you for your purchase</p>
                 </div>
 
@@ -117,9 +121,16 @@ export async function POST(req: Request) {
                   <h3 style="margin: 0 0 16px; font-size: 15px; color: #334155;">📸 Your Downloads</h3>
 
                   <div style="margin-bottom: 16px;">
-                    <p style="margin: 0 0 6px; font-size: 13px; color: #64748b; font-weight: 600;">Digital Photo (${spec.width_px}×${spec.height_px}, ${documentName} Ready)</p>
+                    <p style="margin: 0 0 6px; font-size: 13px; color: #64748b; font-weight: 600;">Digital Photo (${spec.width_px}×${spec.height_px}, ${countryName} ${documentName} Ready)</p>
                     <a href="${photoDownloadUrl}" style="display: inline-block; background: #0f172a; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 700;">⬇ Download Photo</a>
                   </div>
+
+                  ${photo.originalUrl ? `
+                  <div style="margin-bottom: 16px;">
+                    <p style="margin: 0 0 6px; font-size: 13px; color: #64748b; font-weight: 600;">Original Uploaded Image</p>
+                    <a href="${photo.originalUrl}" style="display: inline-block; background: #475569; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 700;">⬇ Download Original Image</a>
+                  </div>
+                  ` : ''}
 
                   ${printSheetDownloadUrl ? `
                   <div style="margin-bottom: 16px;">
@@ -137,6 +148,8 @@ export async function POST(req: Request) {
                 <div style="background: white; border-radius: 12px; padding: 20px; border: 1px solid #e2e8f0; margin-bottom: 20px;">
                   <h3 style="margin: 0 0 8px; font-size: 15px; color: #334155;">📋 Photo Specifications</h3>
                   <table style="width: 100%; font-size: 13px; color: #475569;">
+                    <tr><td style="padding: 4px 0;">Selected Country</td><td style="text-align: right; font-weight: 600;">${countryName}</td></tr>
+                    <tr><td style="padding: 4px 0;">Document Type</td><td style="text-align: right; font-weight: 600;">${documentName}</td></tr>
                     <tr><td style="padding: 4px 0;">Size</td><td style="text-align: right; font-weight: 600;">${spec.width_px}×${spec.height_px} px ${spec.width_mm !== "unspecified" ? `(${spec.width_mm}×${spec.height_mm} mm)` : ""}</td></tr>
                     <tr><td style="padding: 4px 0;">Resolution</td><td style="text-align: right; font-weight: 600;">${spec.dpi || 300} DPI</td></tr>
                     <tr><td style="padding: 4px 0;">Format</td><td style="text-align: right; font-weight: 600;">JPEG, sRGB</td></tr>

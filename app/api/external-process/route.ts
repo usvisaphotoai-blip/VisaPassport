@@ -35,6 +35,16 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Upload original image to Cloudinary
+    let originalUrl: string | undefined;
+    try {
+      const { uploadBufferToCloudinary } = await import("@/lib/cloudinary");
+      const imageBuffer = Buffer.from(await image.arrayBuffer());
+      originalUrl = await uploadBufferToCloudinary(imageBuffer, "visa-photos-pixpassport", ["original"]);
+    } catch (err) {
+      console.warn("[external-process] Failed to upload original image to Cloudinary:", err);
+    }
+
     // Save to database
     await dbConnect();
 
@@ -45,6 +55,7 @@ export async function POST(req: NextRequest) {
       secureUrl: result.image_url,
       previewUrl: result.preview_url,
       printSheetUrl: result.print_sheet_url,
+      originalUrl,
       externalResultId: result.result_id,
       metrics: {
         headSizePct: result.metrics.head_height_pct,
