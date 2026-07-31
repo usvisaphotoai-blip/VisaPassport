@@ -6,7 +6,7 @@ export const SUPPORTED_COUNTRIES = [
   "DZ", "AU", "AT", "BE", "BG", "BT", "CN", "HR", "CZ", "DK", "EE",
   "FI", "FR", "DE", "GR", "HU", "IN", "ID", "IR", "IQ", "IT",
   "JP", "KZ", "LV", "LT", "LU", "MW", "MT", "MX", "NP", "NL", "NZ", "NO", "PL",
-  "PT", "RO", "EU", "SG", "SK", "SI", "KR", "ES", "LK", "SE", "CHE",
+  "PT", "RO", "RU", "SA", "EU", "SG", "SK", "SI", "KR", "ES", "LK", "SE", "CHE",
   "TJ", "TH", "TR", "AE", "GB", "US"
 ];
 

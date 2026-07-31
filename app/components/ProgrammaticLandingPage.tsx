@@ -53,6 +53,8 @@ export default function ProgrammaticLandingPage({ spec, slug }: Props) {
 
   return (
     <main className="min-h-screen bg-white hcr">
+        <div className="h-1 bg-lime-700 w-full" />
+
       <Breadcrumbs 
         items={[
           { label: `${docName} Photos`, href: isVisaIntent ? "/visa-photo" : "/passport-photos" },
@@ -60,18 +62,19 @@ export default function ProgrammaticLandingPage({ spec, slug }: Props) {
         ]} 
       />
       {/* ── HERO ─────────────────────────────────────────── */}
-      <section className="relative overflow-hidden pt-20 pb-16 lg:pt-32 lg:pb-24 bg-gradient-to-b from-[#f8faf9] to-white">
+      <section className="relative overflow-hidden pt-10 pb-16 lg:pt-10 lg:pb-24 ">
+        
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="lg:grid lg:grid-cols-2 lg:gap-12 items-center">
             <div>
               <div className="flex flex-wrap items-center gap-3 mb-6">
-                <div className="inline-flex items-center space-x-2 bg-emerald-50 border border-emerald-100 px-3 py-1 rounded-full">
-                  <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                  <span className="text-sm font-semibold text-emerald-700 tracking-wide uppercase">AI Compliance Check</span>
+                <div className="inline-flex items-center space-x-2 bg-lime-50 border border-emerald-100 px-3 py-1 rounded-sm">
+                  <span className="flex h-2 w-2 rounded-full bg-lime-500 animate-pulse"></span>
+                  <span className="text-sm font-semibold text-lime-700 tracking-wide uppercase">AI Compliance Check</span>
                 </div>
                 <Link
                   href={siblingLink.href}
-                  className="inline-flex items-center space-x-2 bg-white border border-slate-200 hover:border-blue-300 hover:bg-blue-50 px-3 py-1 rounded-full transition-all group shadow-sm"
+                  className="inline-flex items-center space-x-2 bg-white border border-slate-200 hover:border-blue-300 hover:bg-blue-50 px-3 py-1 rounded-sm transition-all group "
                 >
                   <span className="text-sm font-semibold text-slate-500 group-hover:text-blue-600">Switch to {siblingLink.label}</span>
                   <svg className="w-3.5 h-3.5 text-slate-400 group-hover:text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -80,18 +83,20 @@ export default function ProgrammaticLandingPage({ spec, slug }: Props) {
                 </Link>
               </div>
 
-              <h1 className="text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight mb-6">
+                        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 leading-tight tracking-tight mb-3">
+
                  {spec.country} {docName} Photo Editor Online 2026
               </h1>
 
-              <p className="text-lg text-slate-600 mb-8 leading-relaxed max-w-xl">
+              <p className="text-sm sm:text-base text-slate-600 leading-relaxed mb-7 max-w-lg">
                 Create a 100% compliant {docName} photo in seconds. Our biometric checks ensure the correct {spec.width_mm}x{spec.height_mm}mm size, background color, and biometric alignment for {countryName}.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 mb-8">
                 <Link
                   href={`/passport-photo-online?type=${spec.id}`}
-                  className="inline-flex items-center justify-center px-8 py-4 border border-transparent text-base font-bold rounded-2xl text-white bg-indigo-600 hover:bg-indigo-700 shadow-xl shadow-indigo-600/20 transition-all transform hover:-translate-y-1 hover:shadow-indigo-600/40 relative group overflow-hidden"
+                  className="inline-flex items-center justify-center bg-lime-700 hover:bg-lime-800 text-white text-sm font-semibold px-6 py-3 rounded transition-colors"
+    
                 >
                   <span className="relative z-10 flex items-center">
                     Upload Your Photo Now
@@ -119,7 +124,8 @@ export default function ProgrammaticLandingPage({ spec, slug }: Props) {
               </div>
             </div>
 
-            <div className="mt-12 lg:mt-0 relative flex justify-center lg:justify-end">
+            <div className="w-full lg:w-auto flex flex-col items-center gap-3">
+          
               <Image
                 src={spec.hero_photo || "/us_non_imigrant.png"}
                 alt={`Official ${countryName} ${docName} photo compliance example`}
@@ -149,7 +155,7 @@ export default function ProgrammaticLandingPage({ spec, slug }: Props) {
               { label: "Head Size", val: `${spec.head_min_pct}% - ${spec.head_max_pct}%` },
               { label: "Resolution", val: `${spec.width_px} × ${spec.height_px} px` },
             ].map((s, i) => (
-              <div key={i} className="bg-white p-6 rounded-3xl border border-slate-100 text-center shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+              <div key={i} className="bg-white p-6 rounded-xl border border-lime-400 text-center ">
                 <div className="w-10 h-10 mx-auto rounded-full bg-indigo-50 flex items-center justify-center mb-4">
                   <div className="w-4 h-4 rounded-full bg-indigo-500 opacity-20"></div>
                 </div>
@@ -199,11 +205,7 @@ export default function ProgrammaticLandingPage({ spec, slug }: Props) {
         </div>
       </section>
 
-      {/* <HomeSections
-        price={spec.local_price ? `${spec.local_price.symbol}${spec.local_price.amount}` : `$${spec.price}`}
-      /> */}
-
-      {/* <HomeFAQ type={isVisaIntent ? "visa" : "passport"} /> */}
+   
 
       {/* ── STICKY CTA ────────────────────────────────────── */}
       <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-md px-4 pointer-events-none">
