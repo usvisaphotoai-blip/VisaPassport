@@ -18,21 +18,11 @@ export async function POST(req: Request) {
 
     const existingUser = await User.findOne({ email });
 
-    // Handle case where user exists but might only be registered via OAuth
     if (existingUser) {
-      if (existingUser.password) {
-        return NextResponse.json(
-          { error: "A user with this email already exists." },
-          { status: 400 }
-        );
-      } else {
-        // Option to link account: User previously logged in with Google, now setting a password
-        const hashedPassword = await bcrypt.hash(password, 10);
-        existingUser.password = hashedPassword;
-        existingUser.name = name; 
-        await existingUser.save();
-        return NextResponse.json({ message: "Account updated successfully" });
-      }
+      return NextResponse.json(
+        { error: "A user with this email already exists. Please log in using your original sign-in method or reset your password." },
+        { status: 400 }
+      );
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);

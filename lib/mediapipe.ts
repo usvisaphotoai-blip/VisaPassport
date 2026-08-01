@@ -56,7 +56,7 @@ export async function getMediaPipeLandmarker(): Promise<FaceLandmarker> {
         console.log = suppress as typeof console.log;
         console.info = suppress as typeof console.info;
 
-        const landmarkerPromise = FaceLandmarker.createFromOptions(vision, {
+        const landmarkerInstPromise = FaceLandmarker.createFromOptions(vision, {
           baseOptions: {
             modelAssetPath:
               "https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task",
@@ -74,7 +74,7 @@ export async function getMediaPipeLandmarker(): Promise<FaceLandmarker> {
           setTimeout(() => reject(new Error("MediaPipe initialization timed out")), INIT_TIMEOUT_MS)
         );
 
-        return await Promise.race([landmarkerPromise, timeoutPromise]);
+        return await Promise.race([landmarkerInstPromise, timeoutPromise]);
       } finally {
         // Always restore original console methods
         console.warn = _warn;
@@ -82,7 +82,10 @@ export async function getMediaPipeLandmarker(): Promise<FaceLandmarker> {
         console.log = _log;
         console.info = _info;
       }
-    })();
+    })().catch((err) => {
+      landmarkerPromise = null;
+      throw err;
+    });
   }
   return landmarkerPromise;
 }

@@ -88,7 +88,12 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
   },
-  secret: process.env.NEXTAUTH_SECRET || "fallback_secret_for_development_purposes_only_replace_in_production",
+  secret: (() => {
+    if (!process.env.NEXTAUTH_SECRET && process.env.NODE_ENV === "production") {
+      throw new Error("NEXTAUTH_SECRET is required in production environments");
+    }
+    return process.env.NEXTAUTH_SECRET || "fallback_secret_for_development_purposes_only_replace_in_production";
+  })(),
 };
 
 const handler = NextAuth(authOptions);

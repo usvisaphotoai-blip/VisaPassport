@@ -119,7 +119,7 @@ export const countryMapping: Record<string, string> = {
   "sri-lanka": "LK",
   srilanka: "LK",
   sweden: "SE",
-  switzerland: "CHE",
+  switzerland: "CH",
   tajikistan: "TJ",
   thailand: "TH",
   turkey: "TR",
@@ -175,6 +175,24 @@ export async function processExternalPhoto(
       (typeof errorData.detail === "string" && errorData.detail) ||
       (typeof errorData.error === "string" && errorData.error) ||
       `Processing failed: ${response.status} ${response.statusText}`;
+
+    // Fallback to "US" standard config if external API lacks config for the requested country
+    if (countryCode !== "US" && message.includes("No config found for country")) {
+      console.warn(`[external-api] ${message} — falling back to country_code "EU"`);
+      formData.set("country_code", "EU");
+      const fallbackRes = await fetch(`${EXTERNAL_API_BASE_URL}/process`, {
+        method: "POST",
+        headers,
+        body: formData,
+      });
+      if (fallbackRes.ok) {
+        const fallbackData = (await fallbackRes.json()) as unknown;
+        if (fallbackData && typeof fallbackData === "object" && !Array.isArray(fallbackData)) {
+          return fallbackData as ExternalProcessResponse;
+        }
+      }
+    }
+
     throw new Error(message);
   }
 

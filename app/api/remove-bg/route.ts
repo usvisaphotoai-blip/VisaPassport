@@ -9,8 +9,13 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "No image provided" }, { status: 400 });
     }
 
-    const apiUrl = "http://34.14.136.60/api/remove-bg";
-    const apiToken = "wbg_sk_2026_prod_xK9mN3pQ7rT1vW5y";
+    const apiUrl = process.env.REMOVE_BG_API_URL;
+    const apiToken = process.env.REMOVE_BG_API_TOKEN;
+
+    if (!apiUrl || !apiToken) {
+      console.error("Missing REMOVE_BG_API_URL or REMOVE_BG_API_TOKEN configuration");
+      return NextResponse.json({ error: "Background removal service is not configured" }, { status: 500 });
+    }
 
     const backendFormData = new FormData();
     backendFormData.append("image", file);

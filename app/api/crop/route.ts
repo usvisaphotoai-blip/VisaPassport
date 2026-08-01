@@ -446,9 +446,27 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // MINOR FIX — watermarkedBuffer and print sheet both built from
-    // final processedBuffer (post-compression) for consistency.
-    const watermarkedBuffer = processedBuffer;
+    // Apply visible semi-transparent watermark grid to watermarkedBuffer for preview
+    const watermarkSvg = `<svg width="${targetW}" height="${targetH}">
+      <style>
+        .watermark-text {
+          fill: rgba(0, 0, 0, 0.35);
+          font-family: Arial, sans-serif;
+          font-size: ${Math.max(18, Math.round(targetW / 16))}px;
+          font-weight: bold;
+          letter-spacing: 2px;
+        }
+      </style>
+      <g transform="rotate(-30 ${targetW / 2} ${targetH / 2})">
+        <text x="-20%" y="20%" class="watermark-text">PIXPASSPORT PREVIEW • NOT PAID</text>
+        <text x="-20%" y="50%" class="watermark-text">PIXPASSPORT PREVIEW • NOT PAID</text>
+        <text x="-20%" y="80%" class="watermark-text">PIXPASSPORT PREVIEW • NOT PAID</text>
+      </g>
+    </svg>`;
+
+    const watermarkedBuffer = await sharp(processedBuffer)
+      .composite([{ input: Buffer.from(watermarkSvg), blend: "over" }])
+      .toBuffer();
 
     // ---- Print sheet ----
     const svgBorder = `<svg width="${targetW}" height="${targetH}"><rect x="1" y="1" width="${targetW - 2}" height="${targetH - 2}" fill="none" stroke="black" stroke-width="2"/></svg>`;

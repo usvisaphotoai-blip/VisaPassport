@@ -8,23 +8,23 @@ export async function POST(req: Request) {
   try {
     const { email, photoUrl, documentType, photoId } = await req.json();
 
-    if (!email || !photoUrl) {
-      return NextResponse.json({ error: "Email and photo URL are required" }, { status: 400 });
+    if (!email || !photoId) {
+      return NextResponse.json({ error: "Email and photoId are required" }, { status: 400 });
     }
 
-    // Fetch printSheetUrl from the database if photoId is provided
-    let printSheetUrl = '';
-    if (photoId) {
-      try {
-        await dbConnect();
-        const photo = await Photo.findById(photoId);
-        if (photo?.printSheetUrl) {
-          printSheetUrl = photo.printSheetUrl;
-        }
-      } catch {
-        // Non-critical — continue without print sheet
-      }
+    await dbConnect();
+    const photo = await Photo.findById(photoId);
+
+    if (!photo) {
+      return NextResponse.json({ error: "Photo record not found" }, { status: 404 });
     }
+
+    if (photo.status !== "paid") {
+      return NextResponse.json({ error: "Payment required before sending photo" }, { status: 402 });
+    }
+
+    const verifiedPhotoUrl = photo.secureUrl || photo.previewUrl;
+    const printSheetUrl = photo.printSheetUrl || "";
 
     const spec = getSafeSpec(documentType || 'us-passport');
     const docName = spec.name || 'Photo';
@@ -42,7 +42,7 @@ export async function POST(req: Request) {
 
           <div style="margin-bottom: 16px;">
            
-            <a href="${photoUrl}" style="display: inline-block; background: #0f172a; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 700;">⬇ Download Photo</a>
+            <a href="${verifiedPhotoUrl}" style="display: inline-block; background: #0f172a; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 700;">⬇ Download Photo</a>
           </div>
 
           ${printSheetUrl ? `

@@ -28,14 +28,25 @@ export async function POST(req: Request) {
         <tbody>
     `;
 
+    const escapeHtml = (str: unknown) =>
+      String(str ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
     checks.forEach((check: any) => {
       const isPass = check.status === "PASS";
       const color = isPass ? "#65a30d" : (check.status === "FAIL" ? "#dc2626" : "#ca8a04");
+      const safeName = escapeHtml(check.name);
+      const safeStatus = escapeHtml(check.status);
+      const safeDetail = escapeHtml(check.detail);
       checksHtml += `
         <tr>
-          <td style="padding: 12px; border-bottom: 1px solid #e2e8f0;"><strong>${check.name}</strong></td>
-          <td style="padding: 12px; border-bottom: 1px solid #e2e8f0; color: ${color}; font-weight: bold;">${check.status}</td>
-          <td style="padding: 12px; border-bottom: 1px solid #e2e8f0;">${check.detail}</td>
+          <td style="padding: 12px; border-bottom: 1px solid #e2e8f0;"><strong>${safeName}</strong></td>
+          <td style="padding: 12px; border-bottom: 1px solid #e2e8f0; color: ${color}; font-weight: bold;">${safeStatus}</td>
+          <td style="padding: 12px; border-bottom: 1px solid #e2e8f0;">${safeDetail}</td>
         </tr>
       `;
     });

@@ -5,17 +5,17 @@ export const revalidate = 0; // Disable caching
 
 export async function GET(request: Request) {
   try {
-    // Optional: Add a simple auth token check if you want to secure this endpoint
-    // const authHeader = request.headers.get('authorization');
-    // if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
-    //   return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    // }
+    const authHeader = request.headers.get('authorization');
+    const cronSecret = process.env.CRON_SECRET;
+    if (!cronSecret || authHeader !== `Bearer ${cronSecret}`) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
 
     console.log('[Cloudinary Cleanup] Starting cleanup job...');
 
     // Search for images with the specific tag uploaded more than 1 day ago
     const result = await cloudinary.search
-      .expression('tags:us-visa-photo AND uploaded_at<1d')
+      .expression('tags:us-visa-photo AND uploaded_at>1d')
       .max_results(500)
       .execute();
 

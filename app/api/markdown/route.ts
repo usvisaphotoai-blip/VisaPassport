@@ -4,15 +4,24 @@ import { NodeHtmlMarkdown } from "node-html-markdown";
 export async function GET(req: NextRequest) {
   const targetPath = req.nextUrl.searchParams.get("path");
 
-  if (!targetPath) {
-    return new NextResponse("Missing path parameter", { status: 400 });
+  if (!targetPath || !targetPath.startsWith("/") || targetPath.startsWith("//") || targetPath.includes(":")) {
+    return new NextResponse("Invalid path parameter — must be a relative path", { status: 400 });
   }
 
-  // Construct the full URL to the local page
+  // Construct the full URL to the local page and verify origin matches
   const url = new URL(targetPath, req.nextUrl.origin);
+  if (url.origin !== req.nextUrl.origin) {
+    return new NextResponse("Invalid origin", { status: 400 });
+  }
 
-  // Clone headers to forward them (e.g., cookies for auth)
-  const headers = new Headers(req.headers);
+  // Safe headers to forward
+  const headers = new Headers();
+  if (req.headers.get("cookie")) {
+    headers.set("cookie", req.headers.get("cookie")!);
+  }
+  if (req.headers.get("user-agent")) {
+    headers.set("user-agent", req.headers.get("user-agent")!);
+  }
   
   // CRITICAL: Override the Accept header to request HTML, otherwise we'll enter an infinite loop!
   headers.set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9");
