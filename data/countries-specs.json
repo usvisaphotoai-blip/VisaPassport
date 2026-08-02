@@ -84,7 +84,7 @@
   },
   {
     "id": "schengen-visa",
-    "name": "Schengen countries visa photo maker",
+    "name": "Schengen countries / ICAO standard photo",
     "country": "Schengen",
     "flag": "🇪🇺",
     "width_mm": 35,

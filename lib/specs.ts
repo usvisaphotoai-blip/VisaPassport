@@ -85,6 +85,8 @@ export function getSpecById(id: string): CountrySpec | undefined {
   if (base === "u-s-a" || base === "usa") return allSpecs.find((s) => s.id === "us-passport");
   if (base === "belguim" || base === "belgium") return allSpecs.find((s) => s.id === "belgium-passport");
   if (base === "uk" || base === "united-kingdom") return allSpecs.find((s) => s.id === "uk-passport");
+  if (base === "icao" || base === "icao-standard" || base === "icao-standard-photograph") return allSpecs.find((s) => s.id === "icao-passport");
+  if (base === "eu" || base === "european-union") return allSpecs.find((s) => s.id === "icao-passport") || allSpecs.find((s) => s.id === "schengen-visa");
 
   // ---------------------------------------------------------------
   // BUG FIX — Country-name fragment fallback.

@@ -251,7 +251,7 @@ export default async function Page({ params }: PageProps) {
           <Breadcrumbs />
 
           {/* Tool */}
-          <PassportMakerApp title={toolPage.h1} subtitle={toolPage.metaDescription} />
+          <PassportMakerApp title={toolPage.h1} subtitle={toolPage.metaDescription} img={(toolPage as any).img} />
 
           {/* Hero */}
           <div className="bg-white border-b border-slate-200">

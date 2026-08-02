@@ -100,16 +100,16 @@ export default async function Home() {
         <section className="bg-white py-12 border-y border-slate-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid md:grid-cols-2 gap-8 text-center sm:text-left">
-              <div className="bg-gradient-to-br from-blue-50 to-white p-8 rounded-3xl border border-blue-100 group hover:shadow-lg transition-all">
-                <div className="text-3xl mb-4">🛂</div>
+              <div className="bg-gradient-to-br from-lime-50 to-white p-8 rounded-sm border border-lime-100 group hover:shadow-lg transition-all">
+           
                 <h3 className="text-xl font-bold text-slate-900 mb-2">Passport Photo Directory</h3>
                 <p className="text-sm text-slate-600 mb-6">Browse official 2026 passport photo requirements for 50+ countries. Find the exact size for your application.</p>
                 <Link href="/passport-photos" className="inline-flex items-center text-blue-600 font-bold hover:underline">
                   View All Countries <span className="ml-2">→</span>
                 </Link>
               </div>
-              <div className="bg-gradient-to-br from-emerald-50 to-white p-8 rounded-3xl border border-emerald-100 group hover:shadow-lg transition-all">
-                <div className="text-3xl mb-4">🌐</div>
+              <div className="bg-gradient-to-br from-emerald-50 to-white p-8 rounded-sm border border-emerald-100 group hover:shadow-lg transition-all">
+               
                 <h3 className="text-xl font-bold text-slate-900 mb-2">Visa Photo Directory</h3>
                 <p className="text-sm text-slate-600 mb-6">Database of international visa photo specifications. Support for US Visa, UK Visa, Schengen, and more.</p>
                 <Link href="/visa-photo" className="inline-flex items-center text-emerald-600 font-bold hover:underline">

@@ -36,11 +36,11 @@ function StepBadge({ n, current }: { n: number; current: number }) {
   const active = n <= current;
   return (
     <div
-      className={`flex items-center justify-center w-8 h-8 rounded-full text-xs font-bold transition-all ${active ? "bg-lime-600 text-white shadow-lg shadow-lime-200" : "bg-slate-100 text-slate-400"}`}
+      className={`flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full text-xs font-bold transition-all ${active ? "bg-lime-600 text-white" : "bg-slate-100 text-slate-400"}`}
     >
       {n < current ? (
         <svg
-          className="w-4 h-4"
+          className="w-3.5 h-3.5 sm:w-4 sm:h-4"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -59,28 +59,6 @@ function StepBadge({ n, current }: { n: number; current: number }) {
   );
 }
 
-function StepIndicator({ current }: { current: 1 | 2 }) {
-  return (
-    <div className="flex items-center justify-center gap-2 mb-8">
-      {[1, 2].map((n) => (
-        <div key={n} className="flex items-center gap-2">
-          <StepBadge n={n} current={current} />
-          <span
-            className={`text-xs font-semibold hidden sm:block ${n <= current ? "text-slate-800" : "text-slate-400"}`}
-          >
-            {n === 1 ? "Document" : "Upload Photo"}
-          </span>
-          {n < 2 && (
-            <div
-              className={`w-8 h-px ${n < current ? "bg-lime-400" : "bg-slate-200"}`}
-            />
-          )}
-        </div>
-      ))}
-    </div>
-  );
-}
-
 function ProcessingRing({
   stage,
   previewUrl,
@@ -89,7 +67,7 @@ function ProcessingRing({
   previewUrl: string | null;
 }) {
   return (
-    <div className="relative w-36 h-36 mb-8 mx-auto">
+    <div className="relative w-28 h-28 sm:w-36 sm:h-36 mb-6 sm:mb-8 mx-auto">
       <div className="absolute inset-0 rounded-full bg-lime-100 animate-pulse" />
       <div className="absolute inset-1 rounded-full border-[3px] border-slate-100" />
       <div
@@ -100,7 +78,7 @@ function ProcessingRing({
         className="absolute inset-4 rounded-full border-[3px] border-transparent border-t-lime-300 animate-spin"
         style={{ animationDuration: "1.6s", animationDirection: "reverse" }}
       />
-      <div className="absolute inset-6 rounded-full overflow-hidden bg-slate-100 flex items-center justify-center shadow-inner">
+      <div className="absolute inset-6 rounded-full overflow-hidden bg-slate-100 flex items-center justify-center">
         {previewUrl ? (
           <img
             src={previewUrl}
@@ -127,8 +105,61 @@ function ProcessingRing({
   );
 }
 
+/* Hero mockup: flat preview container showing full uncropped image */
+function HeroMockup({
+  previewUrl,
+  img,
+}: {
+  previewUrl: string | null;
+  img?: string;
+}) {
+  return (
+    <div className="relative mx-auto w-full max-w-sm sm:max-w-md md:max-w-lg flex items-center justify-center">
+      {previewUrl ? (
+        <img
+          src={previewUrl}
+          alt="Your photo"
+          className="w-full h-auto max-h-[550px] object-contain rounded-lg"
+        />
+      ) : img ? (
+        <img
+          src={img}
+          alt="Passport photo preview"
+          className="w-full h-auto max-h-[550px] object-contain rounded-lg"
+        />
+      ) : (
+        <div className="relative aspect-[3/4] w-full flex items-center justify-center bg-slate-100 rounded-lg">
+          <svg
+            className="w-20 h-20 text-slate-300"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={1}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+            />
+          </svg>
+        </div>
+      )}
+    </div>
+  );
+}
+
 /* ─── Main Component ─── */
-export default function PassportMakerApp({ title, subtitle, defaultDoc = "uk-passport" }: { title?: string, subtitle?: string, defaultDoc?: string } = {}) {
+export default function PassportMakerApp({
+  title,
+  subtitle,
+  defaultDoc = "uk-passport",
+  img,
+}: {
+  title?: string;
+  subtitle?: string;
+  defaultDoc?: string;
+  img?: string;
+} = {}) {
   const router = useRouter();
   const [step, setStep] = useState<Step>("setup");
   const [selectedDoc, setSelectedDoc] = useState(defaultDoc);
@@ -143,6 +174,7 @@ export default function PassportMakerApp({ title, subtitle, defaultDoc = "uk-pas
   const [expertPrice, setExpertPrice] = useState<LocalPrice | null>(null);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const uploadSectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!selectedFile) return setPreviewUrl(null);
@@ -170,7 +202,7 @@ export default function PassportMakerApp({ title, subtitle, defaultDoc = "uk-pas
   // Ensure selected document is valid when search term changes
   useEffect(() => {
     const docs = documentTypes.filter((doc) =>
-      `${doc.label} ${doc.size}`.toLowerCase().includes(searchTerm.toLowerCase()),
+      `${doc.label} ${doc.country || ""} ${doc.id} ${doc.size}`.toLowerCase().includes(searchTerm.toLowerCase()),
     );
     if (docs.length > 0 && !docs.some((d) => d.id === selectedDoc)) {
       setSelectedDoc(docs[0].id);
@@ -198,7 +230,7 @@ export default function PassportMakerApp({ title, subtitle, defaultDoc = "uk-pas
       .toLowerCase();
     let countryCode = countryMapping[countrySlug] || "US";
     if (selectedDoc.includes("ds-160")) countryCode = "US";
-    if (selectedDoc.includes("schengen")) countryCode = "EU";
+    if (selectedDoc.includes("schengen") || selectedDoc.includes("icao") || selectedDoc.startsWith("eu")) countryCode = "EU";
     if (selectedDoc.startsWith("france-")) countryCode = "FR";
 
     const formData = new FormData();
@@ -246,16 +278,20 @@ export default function PassportMakerApp({ title, subtitle, defaultDoc = "uk-pas
     if (file?.type.startsWith("image/")) await processFile(file);
   };
 
+  const scrollToUpload = () => {
+    uploadSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   const selectedDocSpec = documentTypes.find((d) => d.id === selectedDoc);
   const filteredDocs = documentTypes.filter((doc) =>
-    `${doc.label} ${doc.size}`.toLowerCase().includes(searchTerm.toLowerCase()),
+    `${doc.label} ${doc.country || ""} ${doc.id} ${doc.size}`.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   /* ── PREVIEW ── */
   if (step === "preview" && photoData && localPrice && expertPrice) {
     return (
       <div className="animate-in fade-in duration-500">
-        <div className="max-w-6xl mx-auto px-4 py-4 mb-2">
+        <div className="max-w-6xl mx-auto px-3 sm:px-4 py-2 sm:py-3 mb-1">
           <button
             onClick={() => resetToSetup()}
             className="inline-flex items-center gap-2 text-sm font-semibold text-lime-600 hover:text-lime-700 transition-colors group"
@@ -296,27 +332,27 @@ export default function PassportMakerApp({ title, subtitle, defaultDoc = "uk-pas
   /* ── PROCESSING ── */
   if (step === "processing") {
     return (
-      <div className="min-h-[60vh] flex items-center justify-center px-4 py-16">
+      <div className="min-h-[50vh] flex items-center justify-center px-3 py-8 sm:py-12">
         <div className="w-full max-w-sm text-center">
           <ProcessingRing stage={processingStage} previewUrl={previewUrl} />
-          <h2 className="text-xl font-bold text-slate-900 mb-1">
+          <h2 className="text-lg sm:text-xl font-bold text-slate-900 mb-1">
             {STAGES[processingStage].label}…
           </h2>
-          <p className="text-sm text-slate-400 mb-10">
+          <p className="text-xs sm:text-sm text-slate-400 mb-6 sm:mb-8">
             Hang tight — almost done!
           </p>
-          <div className="bg-slate-50 rounded-xl p-4 space-y-3">
+          <div className="bg-slate-50 rounded-xl p-3.5 sm:p-4 space-y-2.5 sm:space-y-3">
             {STAGES.map(({ label, icon }, i) => {
               const isDone = i < processingStage;
               const isActive = i === processingStage;
               return (
-                <div key={i} className="flex items-center gap-3">
+                <div key={i} className="flex items-center gap-2.5 sm:gap-3">
                   <div
-                    className={`w-8 h-8 rounded-full flex items-center justify-center text-sm shrink-0 transition-all duration-300 ${isDone ? "bg-emerald-100 text-emerald-600" : isActive ? "bg-lime-100 text-lime-600 animate-pulse" : "bg-white text-slate-300 border border-slate-200"}`}
+                    className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-xs sm:text-sm shrink-0 transition-all duration-300 ${isDone ? "bg-emerald-100 text-emerald-600" : isActive ? "bg-lime-100 text-lime-600 animate-pulse" : "bg-white text-slate-300 border border-slate-200"}`}
                   >
                     {isDone ? (
                       <svg
-                        className="w-4 h-4"
+                        className="w-3.5 h-3.5 sm:w-4 sm:h-4"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -333,15 +369,15 @@ export default function PassportMakerApp({ title, subtitle, defaultDoc = "uk-pas
                     )}
                   </div>
                   <span
-                    className={`text-sm font-medium flex-1 text-left transition-colors duration-300 ${isDone ? "text-emerald-600 line-through decoration-emerald-300" : isActive ? "text-lime-700 font-semibold" : "text-slate-400"}`}
+                    className={`text-xs sm:text-sm font-medium flex-1 text-left transition-colors duration-300 ${isDone ? "text-emerald-600 line-through decoration-emerald-300" : isActive ? "text-lime-700 font-semibold" : "text-slate-400"}`}
                   >
                     {label}
                   </span>
                   {isActive && (
-                    <div className="w-4 h-4 rounded-full border-2 border-lime-400 border-t-transparent animate-spin" />
+                    <div className="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full border-2 border-lime-400 border-t-transparent animate-spin" />
                   )}
                   {isDone && (
-                    <span className="text-xs font-bold text-emerald-500">
+                    <span className="text-[11px] sm:text-xs font-bold text-emerald-500">
                       Done
                     </span>
                   )}
@@ -356,142 +392,280 @@ export default function PassportMakerApp({ title, subtitle, defaultDoc = "uk-pas
 
   /* ── SETUP ── */
   return (
-    <div className="max-w-xl mx-auto px-4 py-8 sm:py-10">
-      {/* Header */}
-      <div className="text-center mb-8">
-        <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-lime-600 shadow-lg shadow-lime-200 mb-4">
-          <svg
-            className="w-7 h-7 text-white"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={1.5}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
-            />
-          </svg>
-        </div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-          {title || "Passport Photo Maker"}
-        </h1>
-        <h2 className="mt-1.5 text-sm text-slate-500 font-normal">
-          {subtitle || "Official standards · compliant photos in seconds"}
-        </h2>
-      </div>
+    <div className="pb-4 sm:pb-6">
+      {/* ── Hero: split text / image ── */}
+      <section className="max-w-6xl mx-auto px-3 sm:px-4 pt-3 sm:pt-6 pb-4 sm:pb-6">
+        <div className="grid md:grid-cols-2 gap-5 sm:gap-6 md:gap-8 items-center">
+          {/* Left: text */}
+          <div className="text-center md:text-left">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-lime-50 border border-lime-200 px-2.5 py-0.5 sm:px-3 sm:py-1 text-[10px] sm:text-[11px] font-bold uppercase tracking-wide text-lime-700 mb-2 sm:mb-3">
+              <span className="w-1.5 h-1.5 rounded-full bg-lime-500" />
+              Official photo specs
+            </span>
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight sm:leading-[1.15]">
+              {title || "Passport photos, done right in seconds"}
+            </h1>
+            <p className="mt-2 sm:mt-3 text-xs sm:text-base text-slate-500 max-w-md mx-auto md:mx-0">
+              {subtitle ||
+                "Upload any photo. We crop it, fix the background and check it against 30+ official rules for your country's passport, visa or ID."}
+            </p>
 
-      <StepIndicator current={selectedFile ? 2 : 1} />
-
-      <div className="space-y-4">
-        {/* ── Step 1: Document type ── */}
-        <div className="bg-white rounded-xl border border-slate-200/80  overflow-hidden">
-          <div className="px-5 py-5 border-b border-slate-100  flex items-start gap-4">
-            <div className="w-9 h-9 rounded-xl bg-lime-600 text-white text-sm font-bold flex items-center justify-center  shrink-0">
-              1
+            <div className="mt-4 sm:mt-5 flex flex-col sm:flex-row items-center md:items-start gap-2.5">
+              <button
+                onClick={scrollToUpload}
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 sm:py-3 bg-lime-700 text-white text-xs sm:text-sm font-bold rounded-sm hover:bg-lime-600 active:scale-95 transition-all"
+              >
+                Start with your photo
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2.5}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M13 7l5 5m0 0l-5 5m5-5H6"
+                  />
+                </svg>
+              </button>
             </div>
-            <div>
-              <div className="flex items-center gap-2 flex-wrap">
-                <p className="text-sm sm:text-base font-bold text-slate-900">
-                  Select Country Please
-                </p>
-                <span className="px-2 py-0.5 rounded-full bg-lime-100 text-[10px] font-bold uppercase tracking-wide text-lime-700">
-                  Required
-                </span>
-              </div>
-              <p className="text-xs text-slate-500 mt-1">
-                Search and choose your passport, visa, ID card, or government
-                photo specification.
-              </p>
+
+            <div className="mt-4 sm:mt-5 flex flex-wrap items-center justify-center md:justify-start gap-x-4 gap-y-1.5">
+              {TRUST.map(({ icon, text }) => (
+                <div
+                  key={text}
+                  className="flex items-center gap-1.5 text-xs text-slate-500 font-semibold"
+                >
+                  <span>{icon}</span>
+                  {text}
+                </div>
+              ))}
             </div>
           </div>
 
-          <div className="p-5 space-y-4">
-            {/* Search */}
-            <div className="relative">
-              <svg
-                className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M21 21l-4.35-4.35m1.85-5.15a7 7 0 11-14 0 7 7 0 0114 0z"
+          {/* Right: image / mockup */}
+          <div>
+            <HeroMockup previewUrl={previewUrl} img={img} />
+          </div>
+        </div>
+      </section>
+
+      {/* ── Below hero: split country support / upload ── */}
+      <section
+        ref={uploadSectionRef}
+        className="max-w-6xl mx-auto px-3 sm:px-4 scroll-mt-4 pt-10"
+      >
+        <div className="grid md:grid-cols-2 gap-3 sm:gap-4 items-start">
+          {/* ── Left: Document / country support ── */}
+          <div className="bg-white rounded-xl border border-slate-200/80 overflow-hidden h-full">
+            <div className="px-3.5 py-3 sm:px-4 sm:py-3.5 border-b border-slate-100 flex items-start gap-3">
+              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-lime-600 text-white text-xs sm:text-sm font-bold flex items-center justify-center shrink-0">
+                1
+              </div>
+              <div>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <p className="text-xs sm:text-base font-bold text-slate-900">
+                    Select country &amp; document
+                  </p>
+                  <span className="px-1.5 py-0.5 rounded-full bg-lime-100 text-[9px] sm:text-[10px] font-bold uppercase tracking-wide text-lime-700">
+                    Required
+                  </span>
+                </div>
+                <p className="text-[11px] sm:text-xs text-slate-500 mt-0.5">
+                  Search and choose your passport, visa, ID card, or government
+                  photo specification.
+                </p>
+              </div>
+            </div>
+
+            <div className="p-3.5 sm:p-4 space-y-3">
+              {/* Search */}
+              <div className="relative">
+                <svg
+                  className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M21 21l-4.35-4.35m1.85-5.15a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
+                </svg>
+                <input
+                  type="text"
+                  placeholder="Search country/document type..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full rounded-xl border border-slate-200 bg-slate-50 pl-10 pr-3.5 py-2 sm:py-2.5 text-xs sm:text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-lime-200 focus:border-lime-500 transition-all"
                 />
-              </svg>
+              </div>
+
+              {/* Select */}
+              <div className="relative">
+                <select
+                  value={selectedDoc}
+                  onChange={(e) => setSelectedDoc(e.target.value)}
+                  className="w-full appearance-none rounded-xl border border-slate-200 bg-white px-3.5 py-2 sm:py-2.5 pr-10 text-xs sm:text-sm font-semibold text-slate-800 hover:border-slate-300 focus:outline-none focus:ring-2 focus:ring-lime-200 focus:border-lime-500 transition-all cursor-pointer"
+                >
+                  {filteredDocs.map((doc) => (
+                    <option key={doc.id} value={doc.id}>
+                      {doc.flag} {doc.label} ({doc.size})
+                    </option>
+                  ))}
+                </select>
+                <svg
+                  className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              </div>
+
+              {/* Spec pills */}
+              {selectedDocSpec && (
+                <div className="flex flex-wrap gap-1.5 pt-0.5">
+                  {[
+                    {
+                      label: "Photo Size",
+                      value: selectedDocSpec.size,
+                      icon: "📐",
+                    },
+                    {
+                      label: "Background",
+                      value: selectedDocSpec.bg_color || "White",
+                      icon: "🎨",
+                    },
+                  ].map(({ label, value, icon }) => (
+                    <div
+                      key={label}
+                      className="inline-flex items-center gap-1.5 rounded-full border border-lime-200 bg-lime-50/60 px-2.5 py-1 text-[11px] sm:text-xs font-semibold text-lime-800"
+                    >
+                      <span>{icon}</span>
+                      <span className="text-lime-600">{label}:</span>
+                      <span className="text-slate-700">{value}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* ── Right: Upload ── */}
+          <div className="bg-white rounded-xl border border-slate-200 overflow-hidden h-full">
+            <div className="px-3.5 py-3 sm:px-4 sm:py-3 border-b border-slate-100 bg-slate-50/60 flex items-center gap-2.5">
+              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-lime-600 text-white text-xs sm:text-sm font-bold flex items-center justify-center shrink-0">
+                2
+              </div>
+              <div>
+                <p className="text-xs sm:text-sm font-bold text-slate-900">
+                  Upload your photo
+                </p>
+                <p className="text-[11px] sm:text-xs text-slate-500">
+                  JPEG, PNG or WEBP · max 15 MB
+                </p>
+              </div>
+            </div>
+
+            <div className="p-3.5 sm:p-4">
               <input
-                type="text"
-                placeholder="Search Country/Document type..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full rounded-xl border border-slate-200 bg-slate-50 pl-11 pr-4 py-3 text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-lime-100 focus:border-lime-500 transition-all"
+                ref={fileInputRef}
+                id="photo-upload"
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                className="hidden"
+                onChange={handleFileChange}
               />
-            </div>
 
-            {/* Select */}
-            <div className="relative">
-              <select
-                value={selectedDoc}
-                onChange={(e) => setSelectedDoc(e.target.value)}
-                className="w-full appearance-none rounded-xl border border-slate-200 bg-white px-4 py-3.5 pr-11 text-sm font-semibold text-slate-800  hover:border-slate-300 focus:outline-none focus:ring-4 focus:ring-lime-100 focus:border-lime-500 transition-all cursor-pointer"
+              <div
+                onClick={() => fileInputRef.current?.click()}
+                onDragOver={(e) => {
+                  e.preventDefault();
+                  setDragOver(true);
+                }}
+                onDragLeave={() => setDragOver(false)}
+                onDrop={handleDrop}
+                className={`relative cursor-pointer rounded-xl border-2 border-dashed transition-all duration-200 select-none ${dragOver ? "border-lime-400 bg-lime-50" : "border-slate-200 bg-slate-50/50 hover:border-lime-300 hover:bg-lime-50/30"}`}
               >
-                {filteredDocs.map((doc) => (
-                  <option key={doc.id} value={doc.id}>
-                    {doc.flag} {doc.label} ({doc.size})
-                  </option>
-                ))}
-              </select>
-              <svg
-                className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M19 9l-7 7-7-7"
-                />
-              </svg>
-            </div>
-
-            {/* Spec pills */}
-            {selectedDocSpec && (
-              <div className="flex flex-wrap gap-2 pt-1">
-                {[
-                  {
-                    label: "Photo Size",
-                    value: selectedDocSpec.size,
-                    icon: "📐",
-                  },
-                  {
-                    label: "Background",
-                    value: selectedDocSpec.bg_color || "White",
-                    icon: "🎨",
-                  },
-                ].map(({ label, value, icon }) => (
+                <div className="flex flex-col items-center justify-center py-6 sm:py-8 px-4 text-center">
                   <div
-                    key={label}
-                    className="inline-flex items-center gap-2 rounded-full border border-lime-200 bg-gradient-to-r from-lime-50 to-emerald-50 px-3.5 py-1.5 text-xs font-semibold text-lime-800"
+                    className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center mb-3 transition-all ${dragOver ? "bg-lime-100" : "bg-white border border-slate-200"}`}
                   >
-                    <span>{icon}</span>
-                    <span className="text-lime-600">{label}:</span>
-                    <span className="text-slate-700">{value}</span>
+                    <svg
+                      className={`w-5 h-5 sm:w-6 sm:h-6 transition-colors ${dragOver ? "text-lime-600" : "text-slate-400"}`}
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={1.5}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"
+                      />
+                    </svg>
+                  </div>
+
+                  <p className="text-xs text-slate-500 mb-3">
+                    Click here to upload your photo
+                  </p>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      fileInputRef.current?.click();
+                    }}
+                    className="inline-flex items-center gap-2 px-5 py-2.5 bg-lime-600 text-white text-xs sm:text-sm font-bold rounded-xl hover:bg-lime-700 active:scale-95 transition-all"
+                  >
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2.5}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M12 4v16m8-8H4"
+                      />
+                    </svg>
+                    Upload Your Photo
+                  </button>
+                </div>
+              </div>
+
+              <div className="mt-3 grid grid-cols-3 gap-1.5 sm:gap-2">
+                {TIPS.map(({ icon, tip }) => (
+                  <div
+                    key={tip}
+                    className="flex flex-col items-center gap-1 p-2 sm:p-2.5 rounded-xl bg-slate-50 border border-slate-100 text-center"
+                  >
+                    <span className="text-base sm:text-lg leading-none">{icon}</span>
+                    <p className="text-[10px] sm:text-[11px] text-slate-500 font-medium leading-snug">
+                      {tip}
+                    </p>
                   </div>
                 ))}
               </div>
-            )}
+            </div>
           </div>
         </div>
 
         {/* Error banner */}
         {errorMsg && (
-          <div className="flex items-start gap-3 p-4 bg-red-50 border border-red-200 rounded-xl text-red-700">
+          <div className="mt-4 flex items-start gap-2.5 sm:gap-3 p-3 sm:p-4 bg-red-50 border border-red-200 rounded-xl text-red-700">
             <svg
               className="w-5 h-5 shrink-0 mt-0.5"
               fill="none"
@@ -506,8 +680,8 @@ export default function PassportMakerApp({ title, subtitle, defaultDoc = "uk-pas
               />
             </svg>
             <div className="flex-1">
-              <p className="text-sm font-semibold">Processing failed</p>
-              <p className="text-sm mt-0.5 text-red-600">{errorMsg}</p>
+              <p className="text-xs sm:text-sm font-semibold">Processing failed</p>
+              <p className="text-xs sm:text-sm mt-0.5 text-red-600">{errorMsg}</p>
             </div>
             <button
               onClick={() => setErrorMsg("")}
@@ -530,120 +704,7 @@ export default function PassportMakerApp({ title, subtitle, defaultDoc = "uk-pas
             </button>
           </div>
         )}
-
-        {/* ── Step 2: Upload ── */}
-        <div className="bg-white rounded-xl border border-slate-200  overflow-hidden">
-          <div className="px-5 py-4 border-b border-slate-100 bg-slate-50/60 flex items-center gap-3">
-            <div className="w-7 h-7 rounded-full bg-lime-600 text-white text-xs font-bold flex items-center justify-center shrink-0">
-              2
-            </div>
-            <div>
-              <p className="text-sm font-bold text-slate-900">
-                Upload your photo
-              </p>
-              <p className="text-xs text-slate-500 hidden sm:block">
-                JPEG, PNG or WEBP · max 15 MB
-              </p>
-            </div>
-          </div>
-
-          <div className="p-5">
-            <input
-              ref={fileInputRef}
-              id="photo-upload"
-              type="file"
-              accept="image/jpeg,image/png,image/webp"
-              className="hidden"
-              onChange={handleFileChange}
-            />
-
-            <div
-              onClick={() => fileInputRef.current?.click()}
-              onDragOver={(e) => {
-                e.preventDefault();
-                setDragOver(true);
-              }}
-              onDragLeave={() => setDragOver(false)}
-              onDrop={handleDrop}
-              className={`relative cursor-pointer rounded-xl border-2 border-dashed transition-all duration-200 select-none ${dragOver ? "border-lime-400 bg-lime-50 scale-[1.01]" : "border-slate-200 bg-slate-50/50 hover:border-lime-300 hover:bg-lime-50/30"}`}
-            >
-              <div className="flex flex-col items-center justify-center py-10 px-6 text-center">
-                <div
-                  className={`w-14 h-14 rounded-xl flex items-center justify-center mb-4 transition-all ${dragOver ? "bg-lime-100 rotate-3" : "bg-white border border-slate-200 "}`}
-                >
-                  <svg
-                    className={`w-7 h-7 transition-colors ${dragOver ? "text-lime-600" : "text-slate-400"}`}
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={1.5}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"
-                    />
-                  </svg>
-                </div>
-              
-                <p className="text-xs text-slate-500 mb-5">
-                  Click here to upload your photo
-                </p>
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    fileInputRef.current?.click();
-                  }}
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-lime-600 text-white text-sm font-bold rounded-xl hover:bg-lime-700 active:scale-95 transition-all shadow-md shadow-lime-200"
-                >
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2.5}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M12 4v16m8-8H4"
-                    />
-                  </svg>
-                  Upload Your Photo
-                </button>
-              </div>
-            </div>
-
-            <div className="mt-4 grid grid-cols-3 gap-2">
-              {TIPS.map(({ icon, tip }) => (
-                <div
-                  key={tip}
-                  className="flex flex-col items-center gap-1.5 p-3 rounded-xl bg-slate-50 border border-slate-100 text-center"
-                >
-                  <span className="text-xl leading-none">{icon}</span>
-                  <p className="text-[11px] text-slate-500 font-medium leading-snug">
-                    {tip}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Trust bar */}
-      <div className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
-        {TRUST.map(({ icon, text }) => (
-          <div
-            key={text}
-            className="flex items-center gap-1.5 text-xs text-slate-400 font-medium"
-          >
-            <span>{icon}</span>
-            {text}
-          </div>
-        ))}
-      </div>
+      </section>
     </div>
   );
 }

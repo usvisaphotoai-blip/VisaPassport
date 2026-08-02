@@ -320,7 +320,7 @@ export default function PassportSizePhotoMakerPage() {
       <div className="bg-slate-50 min-h-screen">
 
         {/* ── Tool ── */}
-        <PassportMakerApp title={toolPage?.h1} subtitle={toolPage?.metaDescription} />
+        <PassportMakerApp title={toolPage?.h1} subtitle={toolPage?.metaDescription} img={(toolPage as any)?.img} />
 
       
 
