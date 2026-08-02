@@ -148,6 +148,193 @@ function HeroMockup({
   );
 }
 
+function CustomDocumentDropdown({
+  selectedDoc,
+  setSelectedDoc,
+}: {
+  selectedDoc: string;
+  setSelectedDoc: (id: string) => void;
+}) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
+  const activeDoc = documentTypes.find((d) => d.id === selectedDoc);
+  const filteredDocs = documentTypes.filter((doc) =>
+    `${doc.label} ${doc.country || ""} ${doc.id} ${doc.size}`
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase())
+  );
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsOpen(false);
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isOpen) {
+      setTimeout(() => searchInputRef.current?.focus(), 50);
+    } else {
+      setSearchTerm("");
+    }
+  }, [isOpen]);
+
+  return (
+    <div className="relative w-full" ref={dropdownRef}>
+      {/* Trigger Button */}
+      <button
+        type="button"
+        onClick={() => setIsOpen(!isOpen)}
+        className={`w-full flex items-center justify-between gap-3 px-3.5 sm:px-4 py-3 sm:py-3.5 rounded-xl border text-left bg-white transition-all duration-200 ${
+          isOpen
+            ? "border-lime-500 ring-2 ring-lime-200 shadow-md"
+            : "border-slate-200 hover:border-slate-300 shadow-xs"
+        }`}
+        aria-expanded={isOpen}
+      >
+        <div className="flex items-center gap-3 min-w-0 flex-1">
+          {activeDoc?.flag && (
+            <span className="text-xl sm:text-2xl leading-none shrink-0">{activeDoc.flag}</span>
+          )}
+          <div className="min-w-0 flex-1">
+            <p className="text-xs sm:text-sm md:text-base font-bold text-slate-900 truncate">
+              {activeDoc?.label || "Select country & document"}
+            </p>
+            {activeDoc && (
+              <p className="text-[11px] sm:text-xs text-slate-500 font-medium truncate mt-0.5">
+                {activeDoc.size} · {activeDoc.bg_color || "White"} background
+              </p>
+            )}
+          </div>
+        </div>
+        <svg
+          className={`w-5 h-5 text-slate-400 shrink-0 transition-transform duration-200 ${
+            isOpen ? "rotate-180 text-lime-600" : ""
+          }`}
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={2}
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+
+      {/* Custom Dropdown Menu */}
+      {isOpen && (
+        <div className="absolute left-0 right-0 z-50 mt-2 bg-white border border-slate-200 rounded-xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+          {/* Search bar inside dropdown */}
+          <div className="p-2.5 sm:p-3 border-b border-slate-100 bg-slate-50/90 sticky top-0 z-10">
+            <div className="relative">
+              <svg
+                className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M21 21l-4.35-4.35m1.85-5.15a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
+              <input
+                ref={searchInputRef}
+                type="text"
+                placeholder="Search country or document type..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-9 pr-9 py-2 sm:py-2.5 text-xs sm:text-sm font-medium text-slate-900 bg-white border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-300 focus:border-lime-500 placeholder:text-slate-400 transition-all"
+              />
+              {searchTerm && (
+                <button
+                  type="button"
+                  onClick={() => setSearchTerm("")}
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-600 rounded-md transition-colors"
+                >
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* List of documents */}
+          <div className="max-h-64 sm:max-h-72 overflow-y-auto divide-y divide-slate-100">
+            {filteredDocs.length > 0 ? (
+              filteredDocs.map((doc) => {
+                const isSelected = selectedDoc === doc.id;
+                return (
+                  <button
+                    key={doc.id}
+                    type="button"
+                    onClick={() => {
+                      setSelectedDoc(doc.id);
+                      setIsOpen(false);
+                    }}
+                    className={`w-full flex items-center justify-between px-3.5 sm:px-4 py-2.5 sm:py-3 text-left transition-all ${
+                      isSelected
+                        ? "bg-lime-50/80 text-lime-900 font-semibold"
+                        : "hover:bg-slate-50 text-slate-700"
+                    }`}
+                  >
+                    <div className="flex items-center gap-2.5 min-w-0 pr-2">
+                      <span className="text-lg sm:text-xl leading-none shrink-0">{doc.flag}</span>
+                      <div className="min-w-0">
+                        <p className={`text-xs sm:text-sm truncate ${isSelected ? "font-bold text-lime-950" : "font-medium text-slate-900"}`}>
+                          {doc.label}
+                        </p>
+                        <p className="text-[11px] text-slate-500">
+                          {doc.size} {doc.bg_color ? `· ${doc.bg_color}` : ""}
+                        </p>
+                      </div>
+                    </div>
+                    {isSelected && (
+                      <div className="w-5 h-5 rounded-full bg-lime-600 text-white flex items-center justify-center shrink-0">
+                        <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                    )}
+                  </button>
+                );
+              })
+            ) : (
+              <div className="p-5 text-center">
+                <p className="text-xs sm:text-sm text-slate-500 font-medium">
+                  No document found for &quot;{searchTerm}&quot;
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setSearchTerm("")}
+                  className="mt-2 text-xs font-bold text-lime-600 hover:text-lime-700 underline"
+                >
+                  Clear search
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 /* ─── Main Component ─── */
 export default function PassportMakerApp({
   title,
@@ -455,209 +642,173 @@ export default function PassportMakerApp({
       {/* ── Below hero: split country support / upload ── */}
       <section
         ref={uploadSectionRef}
-        className="max-w-6xl mx-auto px-3 sm:px-4 scroll-mt-4 pt-10"
+        className="max-w-6xl mx-auto px-3 sm:px-4 scroll-mt-4 pt-8 sm:pt-10"
       >
-        <div className="grid md:grid-cols-2 gap-3 sm:gap-4 items-start">
+        <div className="grid md:grid-cols-2 gap-4 sm:gap-6 items-stretch">
           {/* ── Left: Document / country support ── */}
-          <div className="bg-white rounded-xl border border-slate-200/80 overflow-hidden h-full">
-            <div className="px-3.5 py-3 sm:px-4 sm:py-3.5 border-b border-slate-100 flex items-start gap-3">
-              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-lime-600 text-white text-xs sm:text-sm font-bold flex items-center justify-center shrink-0">
-                1
-              </div>
-              <div>
-                <div className="flex items-center gap-2 flex-wrap">
-                  <p className="text-xs sm:text-base font-bold text-slate-900">
-                    Select country &amp; document
+          <div className="relative z-20 bg-white rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between">
+            <div>
+              <div className="rounded-t-2xl px-4 py-3.5 sm:px-5 sm:py-4 border-b border-slate-100 flex items-start gap-3 bg-slate-50/40">
+                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-lime-600 text-white text-xs sm:text-sm font-bold flex items-center justify-center shrink-0 shadow-xs">
+                  1
+                </div>
+                <div>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <p className="text-sm sm:text-base font-bold text-slate-900">
+                      Select country &amp; document
+                    </p>
+                    <span className="px-2 py-0.5 rounded-full bg-lime-100 text-[10px] sm:text-[11px] font-bold uppercase tracking-wide text-lime-700">
+                      Required
+                    </span>
+                  </div>
+                  <p className="text-xs text-slate-500 mt-0.5 leading-snug">
+                    Search and choose your passport, visa, ID card, or government
+                    photo specification.
                   </p>
-                  <span className="px-1.5 py-0.5 rounded-full bg-lime-100 text-[9px] sm:text-[10px] font-bold uppercase tracking-wide text-lime-700">
-                    Required
-                  </span>
                 </div>
-                <p className="text-[11px] sm:text-xs text-slate-500 mt-0.5">
-                  Search and choose your passport, visa, ID card, or government
-                  photo specification.
-                </p>
               </div>
-            </div>
 
-            <div className="p-3.5 sm:p-4 space-y-3">
-              {/* Search */}
-              <div className="relative">
-                <svg
-                  className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M21 21l-4.35-4.35m1.85-5.15a7 7 0 11-14 0 7 7 0 0114 0z"
-                  />
-                </svg>
-                <input
-                  type="text"
-                  placeholder="Search country/document type..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 bg-slate-50 pl-10 pr-3.5 py-2 sm:py-2.5 text-xs sm:text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-lime-200 focus:border-lime-500 transition-all"
+              <div className="p-4 sm:p-5 space-y-4">
+                {/* Custom Searchable Select Dropdown */}
+                <CustomDocumentDropdown
+                  selectedDoc={selectedDoc}
+                  setSelectedDoc={setSelectedDoc}
                 />
-              </div>
 
-              {/* Select */}
-              <div className="relative">
-                <select
-                  value={selectedDoc}
-                  onChange={(e) => setSelectedDoc(e.target.value)}
-                  className="w-full appearance-none rounded-xl border border-slate-200 bg-white px-3.5 py-2 sm:py-2.5 pr-10 text-xs sm:text-sm font-semibold text-slate-800 hover:border-slate-300 focus:outline-none focus:ring-2 focus:ring-lime-200 focus:border-lime-500 transition-all cursor-pointer"
-                >
-                  {filteredDocs.map((doc) => (
-                    <option key={doc.id} value={doc.id}>
-                      {doc.flag} {doc.label} ({doc.size})
-                    </option>
-                  ))}
-                </select>
-                <svg
-                  className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
+                {/* Spec pills */}
+                {selectedDocSpec && (
+                  <div className="flex flex-wrap gap-2 pt-1">
+                    {[
+                      {
+                        label: "Photo Size",
+                        value: selectedDocSpec.size,
+                        icon: "📐",
+                      },
+                      {
+                        label: "Background",
+                        value: selectedDocSpec.bg_color || "White",
+                        icon: "🎨",
+                      },
+                    ].map(({ label, value, icon }) => (
+                      <div
+                        key={label}
+                        className="inline-flex items-center gap-1.5 rounded-xl border border-lime-200 bg-lime-50/70 px-3 py-1.5 text-xs font-semibold text-lime-800"
+                      >
+                        <span>{icon}</span>
+                        <span className="text-lime-700">{label}:</span>
+                        <span className="text-slate-900 font-bold">{value}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
-
-              {/* Spec pills */}
-              {selectedDocSpec && (
-                <div className="flex flex-wrap gap-1.5 pt-0.5">
-                  {[
-                    {
-                      label: "Photo Size",
-                      value: selectedDocSpec.size,
-                      icon: "📐",
-                    },
-                    {
-                      label: "Background",
-                      value: selectedDocSpec.bg_color || "White",
-                      icon: "🎨",
-                    },
-                  ].map(({ label, value, icon }) => (
-                    <div
-                      key={label}
-                      className="inline-flex items-center gap-1.5 rounded-full border border-lime-200 bg-lime-50/60 px-2.5 py-1 text-[11px] sm:text-xs font-semibold text-lime-800"
-                    >
-                      <span>{icon}</span>
-                      <span className="text-lime-600">{label}:</span>
-                      <span className="text-slate-700">{value}</span>
-                    </div>
-                  ))}
-                </div>
-              )}
             </div>
           </div>
 
           {/* ── Right: Upload ── */}
-          <div className="bg-white rounded-xl border border-slate-200 overflow-hidden h-full">
-            <div className="px-3.5 py-3 sm:px-4 sm:py-3 border-b border-slate-100 bg-slate-50/60 flex items-center gap-2.5">
-              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-lime-600 text-white text-xs sm:text-sm font-bold flex items-center justify-center shrink-0">
-                2
-              </div>
-              <div>
-                <p className="text-xs sm:text-sm font-bold text-slate-900">
-                  Upload your photo
-                </p>
-                <p className="text-[11px] sm:text-xs text-slate-500">
-                  JPEG, PNG or WEBP · max 15 MB
-                </p>
-              </div>
-            </div>
-
-            <div className="p-3.5 sm:p-4">
-              <input
-                ref={fileInputRef}
-                id="photo-upload"
-                type="file"
-                accept="image/jpeg,image/png,image/webp"
-                className="hidden"
-                onChange={handleFileChange}
-              />
-
-              <div
-                onClick={() => fileInputRef.current?.click()}
-                onDragOver={(e) => {
-                  e.preventDefault();
-                  setDragOver(true);
-                }}
-                onDragLeave={() => setDragOver(false)}
-                onDrop={handleDrop}
-                className={`relative cursor-pointer rounded-xl border-2 border-dashed transition-all duration-200 select-none ${dragOver ? "border-lime-400 bg-lime-50" : "border-slate-200 bg-slate-50/50 hover:border-lime-300 hover:bg-lime-50/30"}`}
-              >
-                <div className="flex flex-col items-center justify-center py-6 sm:py-8 px-4 text-center">
-                  <div
-                    className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center mb-3 transition-all ${dragOver ? "bg-lime-100" : "bg-white border border-slate-200"}`}
-                  >
-                    <svg
-                      className={`w-5 h-5 sm:w-6 sm:h-6 transition-colors ${dragOver ? "text-lime-600" : "text-slate-400"}`}
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={1.5}
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"
-                      />
-                    </svg>
-                  </div>
-
-                  <p className="text-xs text-slate-500 mb-3">
-                    Click here to upload your photo
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden flex flex-col justify-between">
+            <div>
+              <div className="px-4 py-3.5 sm:px-5 sm:py-4 border-b border-slate-100 bg-slate-50/60 flex items-center gap-3">
+                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-lime-600 text-white text-xs sm:text-sm font-bold flex items-center justify-center shrink-0 shadow-xs">
+                  2
+                </div>
+                <div>
+                  <p className="text-sm sm:text-base font-bold text-slate-900">
+                    Upload your photo
                   </p>
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      fileInputRef.current?.click();
-                    }}
-                    className="inline-flex items-center gap-2 px-5 py-2.5 bg-lime-600 text-white text-xs sm:text-sm font-bold rounded-xl hover:bg-lime-700 active:scale-95 transition-all"
-                  >
-                    <svg
-                      className="w-4 h-4"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2.5}
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M12 4v16m8-8H4"
-                      />
-                    </svg>
-                    Upload Your Photo
-                  </button>
+                  <p className="text-xs text-slate-500">
+                    JPEG, PNG or WEBP · max 15 MB
+                  </p>
                 </div>
               </div>
 
-              <div className="mt-3 grid grid-cols-3 gap-1.5 sm:gap-2">
-                {TIPS.map(({ icon, tip }) => (
-                  <div
-                    key={tip}
-                    className="flex flex-col items-center gap-1 p-2 sm:p-2.5 rounded-xl bg-slate-50 border border-slate-100 text-center"
-                  >
-                    <span className="text-base sm:text-lg leading-none">{icon}</span>
-                    <p className="text-[10px] sm:text-[11px] text-slate-500 font-medium leading-snug">
-                      {tip}
+              <div className="p-4 sm:p-5 space-y-4">
+                <input
+                  ref={fileInputRef}
+                  id="photo-upload"
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp"
+                  className="hidden"
+                  onChange={handleFileChange}
+                />
+
+                <div
+                  onClick={() => fileInputRef.current?.click()}
+                  onDragOver={(e) => {
+                    e.preventDefault();
+                    setDragOver(true);
+                  }}
+                  onDragLeave={() => setDragOver(false)}
+                  onDrop={handleDrop}
+                  className={`relative cursor-pointer rounded-2xl border-2 border-dashed transition-all duration-200 select-none ${
+                    dragOver
+                      ? "border-lime-500 bg-lime-50"
+                      : "border-slate-200 bg-slate-50/60 hover:border-lime-400 hover:bg-lime-50/30"
+                  }`}
+                >
+                  <div className="flex flex-col items-center justify-center py-7 sm:py-10 px-4 text-center">
+                    <div
+                      className={`w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center mb-3 transition-all ${
+                        dragOver ? "bg-lime-100 text-lime-600" : "bg-white border border-slate-200 text-slate-400 shadow-xs"
+                      }`}
+                    >
+                      <svg
+                        className="w-6 h-6 sm:w-7 sm:h-7"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={1.5}
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"
+                        />
+                      </svg>
+                    </div>
+
+                    <p className="text-xs sm:text-sm font-medium text-slate-500 mb-3.5">
+                      Click here or drag and drop your photo
                     </p>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        fileInputRef.current?.click();
+                      }}
+                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 bg-lime-600 text-white text-xs sm:text-sm font-bold rounded-xl hover:bg-lime-700 active:scale-98 transition-all shadow-sm"
+                    >
+                      <svg
+                        className="w-4 h-4 sm:w-5 sm:h-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2.5}
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M12 4v16m8-8H4"
+                        />
+                      </svg>
+                      Upload Your Photo
+                    </button>
                   </div>
-                ))}
+                </div>
+
+                <div className="grid grid-cols-3 gap-2">
+                  {TIPS.map(({ icon, tip }) => (
+                    <div
+                      key={tip}
+                      className="flex flex-col items-center gap-1 p-2.5 sm:p-3 rounded-xl bg-slate-50 border border-slate-100 text-center"
+                    >
+                      <span className="text-base sm:text-lg leading-none">{icon}</span>
+                      <p className="text-[11px] sm:text-xs text-slate-600 font-medium leading-tight">
+                        {tip}
+                      </p>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
