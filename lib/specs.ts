@@ -51,25 +51,25 @@ export const allSpecs = specsData as CountrySpec[];
 // ---------------------------------------------------------------
 export function getSpecById(id: string): CountrySpec | undefined {
   if (!id) return undefined;
+  const cleanId = id.toLowerCase().trim();
 
   // 0. France custom options override
-  if (id.startsWith("france-")) {
+  if (cleanId.startsWith("france-")) {
     const franceSpec = allSpecs.find((s) => s.id === "france-passport");
     if (franceSpec) return franceSpec;
   }
 
-  // 1. Direct match
-  const direct = allSpecs.find((s) => s.id === id);
+  // 1. Direct match (case-insensitive)
+  const direct = allSpecs.find((s) => s.id.toLowerCase() === cleanId);
   if (direct) return direct;
 
   // 2. Strip known URL suffixes to get the base slug
-  const base = id
+  const base = cleanId
     .replace(/-photo-editor-tool$/, "")
     .replace(/-editor-tool$/, "")
     .replace(/-photo-editor$/, "")
     .replace(/-photo$/, "")
     .replace(/-editor$/, "")
-    .toLowerCase()
     .trim();
 
   // 3. Try exact base, then base-passport, then base-visa
@@ -80,22 +80,36 @@ export function getSpecById(id: string): CountrySpec | undefined {
   if (byBase) return byBase;
 
   // 4. Special hardcoded overrides
+  if (base.includes("icao") || base === "eu" || base === "eu-passport" || base === "eu-visa" || base === "european-union") {
+    return allSpecs.find((s) => s.id === "icao-passport") || allSpecs.find((s) => s.id === "schengen-visa");
+  }
   if (base === "us-visa" || base === "ds-160") return allSpecs.find((s) => s.id === "ds-160-visa");
-  if (base === "general") return allSpecs.find((s) => s.id === "us-passport");
-  if (base === "u-s-a" || base === "usa") return allSpecs.find((s) => s.id === "us-passport");
+  if (base === "general" || base === "u-s-a" || base === "usa" || base === "us") return allSpecs.find((s) => s.id === "us-passport");
   if (base === "belguim" || base === "belgium") return allSpecs.find((s) => s.id === "belgium-passport");
-  if (base === "uk" || base === "united-kingdom") return allSpecs.find((s) => s.id === "uk-passport");
-  if (base === "icao" || base === "icao-standard" || base === "icao-standard-photograph") return allSpecs.find((s) => s.id === "icao-passport");
-  if (base === "eu" || base === "european-union") return allSpecs.find((s) => s.id === "icao-passport") || allSpecs.find((s) => s.id === "schengen-visa");
+  if (base === "uk" || base === "united-kingdom" || base === "gb") return allSpecs.find((s) => s.id === "uk-passport");
+  if (base === "in" || base === "india") return allSpecs.find((s) => s.id === "india-passport");
+
+  // Country code mappings fallback (e.g., if id is "EU-passport", "IN-passport", "GB-passport", etc.)
+  const codeToSpec: Record<string, string> = {
+    EU: "icao-passport",
+    GB: "uk-passport",
+    US: "us-passport",
+    IN: "india-passport",
+    FR: "france-passport",
+    DE: "germany-passport",
+    AU: "australia-passport",
+    CA: "canada-passport",
+  };
+  const parts = cleanId.split("-");
+  const countryCodeUpper = parts[0].toUpperCase();
+  if (codeToSpec[countryCodeUpper]) {
+    const foundByCode = allSpecs.find((s) => s.id === codeToSpec[countryCodeUpper]);
+    if (foundByCode) return foundByCode;
+  }
 
   // ---------------------------------------------------------------
   // BUG FIX — Country-name fragment fallback.
-  // If after stripping all known suffixes we still have no match,
-  // the slug might just be the country name (e.g. "nigeria" from
-  // "nigeria-photo"). Search for any spec whose id STARTS WITH the
-  // base fragment, preferring -passport, then -visa, then first hit.
-  // Without this, route.ts gets `undefined` and uses US defaults,
-  // causing hair to be cut on 70-80% head-range country photos.
+  // Search for any spec whose id STARTS WITH the base fragment.
   // ---------------------------------------------------------------
   const passportFallback = allSpecs.find((s) => s.id.startsWith(`${base}-`) && s.id.endsWith("-passport"));
   if (passportFallback) return passportFallback;

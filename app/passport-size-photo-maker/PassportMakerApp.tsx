@@ -432,6 +432,7 @@ export default function PassportMakerApp({
       "document_type",
       selectedDoc.includes("visa") ? "visa" : "passport",
     );
+    formData.append("full_doc_id", isIcaoPage ? "icao-passport" : selectedDoc);
     formData.append("source", "pixpassport_maker");
 
     try {
