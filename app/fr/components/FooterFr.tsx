@@ -32,6 +32,7 @@ export default function FooterFr() {
       items: [
         { label: fr.footer.aboutUs, href: "/about" },
         { label: fr.footer.contactUs, href: "/contact" },
+        { label: "Sécurité des données", href: "/data-security" },
         { label: fr.footer.privacyPolicy, href: "/privacy-policy" },
         { label: fr.footer.terms, href: "/terms" },
         { label: fr.footer.refundPolicy, href: "/refund-policy" },

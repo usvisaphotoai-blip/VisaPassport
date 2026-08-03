@@ -33,6 +33,7 @@ export default function Footer() {
       items: [
         { label: "About Us", href: "/about" },
         { label: "Contact Us", href: "/contact" },
+        { label: "Data Security", href: "/data-security" },
         { label: "Privacy Policy", href: "/privacy-policy" },
         { label: "Terms of Service", href: "/terms" },
         { label: "Refund Policy", href: "/refund-policy" },

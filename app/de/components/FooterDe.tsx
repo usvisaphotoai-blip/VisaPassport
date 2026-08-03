@@ -28,6 +28,7 @@ export default function FooterDe() {
       items: [
         { label: de.footer.aboutUs, href: "/about" },
         { label: de.footer.contactUs, href: "/contact" },
+        { label: "Datensicherheit", href: "/data-security" },
         { label: de.footer.privacyPolicy, href: "/privacy-policy" },
         { label: de.footer.terms, href: "/terms" },
         { label: de.footer.refundPolicy, href: "/refund-policy" },

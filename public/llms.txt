@@ -335,6 +335,7 @@ This system is designed to align with:
 ## Legal & Support
 - [About Us](https://www.pixpassport.com/about)
 - [Contact Support](https://www.pixpassport.com/contact)
+- [Data Security](https://www.pixpassport.com/data-security)
 - [Privacy Policy](https://www.pixpassport.com/privacy-policy)
 - [Terms of Service](https://www.pixpassport.com/terms)
 - [Refund Policy](https://www.pixpassport.com/refund-policy)

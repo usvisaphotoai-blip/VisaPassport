@@ -130,6 +130,14 @@
     <priority>0.4</priority>
   </url>
   <url>
+    <loc>https://www.pixpassport.com/data-security</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/data-security" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/data-security" />
+    <lastmod>2026-08-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://www.pixpassport.com/algeria-passport-photo-editor</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/algeria-passport-photo-editor" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/algeria-passport-photo-editor" />
