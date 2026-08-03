@@ -83,6 +83,25 @@
     "dpi": 300
   },
   {
+    "id": "icao-passport",
+    "name": "ICAO Standard Biometric Photo",
+    "country": "ICAO / EU",
+    "flag": "🌐 🇺🇳 🇪🇺",
+    "width_mm": 35,
+    "height_mm": 45,
+    "width_px": 413,
+    "height_px": 531,
+    "head_min_pct": 70,
+    "head_max_pct": 80,
+    "eye_min_pct": 56,
+    "eye_max_pct": 69,
+    "bg_color": "light-gray",
+    "price": 6.99,
+    "print_size": "A4",
+    "dpi": 300,
+    "hero_photo": "https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/45_35_passport_photo_ogdxnu.jpg"
+  },
+  {
     "id": "schengen-visa",
     "name": "Schengen countries / ICAO standard photo",
     "country": "Schengen",

@@ -243,6 +243,7 @@ export default async function Page({ params }: PageProps) {
   // ── 1. Tool SEO Pages ──────────────────────────────────────────────────────
   const toolPage = toolPages.find((p) => p.slug === slug);
   if (toolPage) {
+    const isIcaoPage = slug === "icao-standard-photograph";
     return (
       <>
         <style dangerouslySetInnerHTML={{ __html: RICH_CONTENT_STYLES }} />
@@ -251,7 +252,14 @@ export default async function Page({ params }: PageProps) {
           <Breadcrumbs />
 
           {/* Tool */}
-          <PassportMakerApp title={toolPage.h1} subtitle={toolPage.metaDescription} img={(toolPage as any).img} />
+          <PassportMakerApp
+            title={toolPage.h1}
+            subtitle={toolPage.metaDescription}
+            img={(toolPage as any).img}
+            defaultDoc={isIcaoPage ? "icao-passport" : "uk-passport"}
+            hideDocSelector={isIcaoPage}
+            isIcaoPage={isIcaoPage}
+          />
 
           {/* Hero */}
           <div className="bg-white border-b border-slate-200">
