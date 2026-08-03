@@ -32,6 +32,10 @@ export function usePayment({
 
   const initializeRazorpay = () =>
     new Promise((resolve) => {
+      if (typeof window !== "undefined" && (window as any).Razorpay) {
+        resolve(true);
+        return;
+      }
       const script = document.createElement("script");
       script.src = "https://checkout.razorpay.com/v1/checkout.js";
       script.onload = () => resolve(true);
@@ -39,8 +43,9 @@ export function usePayment({
       document.body.appendChild(script);
     });
 
-  const handlePayment = async () => {
+  const handlePayment = async (overrideEmail?: string) => {
     setLoading(true);
+    const emailToUse = (overrideEmail !== undefined ? overrideEmail : guestEmail) || "";
     try {
       if (!(await initializeRazorpay())) {
         alert("Razorpay SDK failed to load. Are you online?");
@@ -50,13 +55,17 @@ export function usePayment({
       let gaClientId = "";
       try {
         // @ts-ignore
-        if (typeof window !== "undefined" && window.gtag) {
+        if (typeof window !== "undefined" && typeof window.gtag === "function") {
           await new Promise((resolve) => {
-            // @ts-ignore
-            window.gtag("get", "G-RJFKP2ZXNX", "client_id", (id: string) => {
-              gaClientId = id;
-              resolve(true);
-            });
+            try {
+              // @ts-ignore
+              window.gtag("get", "G-RJFKP2ZXNX", "client_id", (id: string) => {
+                gaClientId = id || "";
+                resolve(true);
+              });
+            } catch {
+              resolve(false);
+            }
             // Timeout after 500ms to avoid blocking payment
             setTimeout(resolve, 500);
           });
@@ -70,14 +79,14 @@ export function usePayment({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           photoId,
-          currencyOverride: localPrice.currency,
+          currencyOverride: localPrice?.currency || "USD",
           isExpert,
-          guestEmail: status === "authenticated" ? undefined : guestEmail,
+          guestEmail: status === "authenticated" ? undefined : emailToUse,
           gaClientId, // Pass it here
         }),
       });
       const orderData = await orderRes.json();
-      if (!orderRes.ok) throw new Error(orderData.error);
+      if (!orderRes.ok) throw new Error(orderData.error || "Failed to create order");
 
       // Log Razorpay open event
       const sid = typeof window !== "undefined" ? sessionStorage.getItem("usvisa_analytics_session") : null;
@@ -90,7 +99,12 @@ export function usePayment({
       }
 
       // @ts-ignore
-      new window.Razorpay({
+      if (typeof window === "undefined" || !window.Razorpay) {
+        throw new Error("Razorpay SDK is not available.");
+      }
+
+      // @ts-ignore
+      const razorpayInstance = new window.Razorpay({
         key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
         amount: orderData.amount,
         currency: orderData.currency,
@@ -99,25 +113,35 @@ export function usePayment({
         image: "https://res.cloudinary.com/ddxu2wqfm/image/upload/v1774782293/logo_evktxq.jpg",
         order_id: orderData.orderId,
         handler: async (response: any) => {
-          const verifyRes = await fetch("/api/payment/verify", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ ...response, photoId }),
-          });
-          if (verifyRes.ok) {
-            status === "authenticated"
-              ? router.push("/dashboard")
-              : setHasPaid(true);
-          } else alert("Payment verification failed");
+          try {
+            const verifyRes = await fetch("/api/payment/verify", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ ...response, photoId }),
+            });
+            if (verifyRes.ok) {
+              status === "authenticated"
+                ? router.push("/dashboard")
+                : setHasPaid(true);
+            } else {
+              alert("Payment verification failed");
+            }
+          } catch (e) {
+            console.error("Verification error:", e);
+            alert("Error verifying payment");
+          }
         },
         prefill: {
           name: session?.user?.name || "",
-          email: session?.user?.email || guestEmail,
+          email: session?.user?.email || emailToUse,
         },
         theme: { color: "#84cc16" },
-      }).open();
-    } catch {
-      alert("Failed to initiate payment");
+      });
+
+      razorpayInstance.open();
+    } catch (err: any) {
+      console.error("Payment initiation error:", err);
+      alert(err?.message || "Failed to initiate payment");
     } finally {
       setLoading(false);
     }

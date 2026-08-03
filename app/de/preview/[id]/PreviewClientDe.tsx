@@ -55,9 +55,23 @@ export default function PreviewClientDe({
   });
 
   const onPaymentClick = () => {
-    const isEmailValid = guestEmail && guestEmail.includes("@") && guestEmail.includes(".");
+    const trimmed = (guestEmail || "").trim();
+    const isEmailValid = !!(trimmed && trimmed.includes("@") && trimmed.includes("."));
     if (status !== "authenticated" && !isEmailValid) { setIsEmailDialogOpen(true); return; }
-    handlePayment();
+    handlePayment(trimmed);
+  };
+
+  const handleDialogSubmit = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    const trimmed = (guestEmail || "").trim();
+    const isEmailValid = !!(trimmed && trimmed.includes("@") && trimmed.includes("."));
+    if (isEmailValid) {
+      setGuestEmail(trimmed);
+      setIsEmailDialogOpen(false);
+      handlePayment(trimmed);
+    } else {
+      alert("Bitte geben Sie eine gültige E-Mail-Adresse ein.");
+    }
   };
 
   useEffect(() => {
@@ -260,17 +274,16 @@ export default function PreviewClientDe({
       {isEmailDialogOpen && (
         <div className="fixed inset-0 z-[150] flex items-center justify-center bg-slate-900/50 backdrop-blur-sm px-4">
           <div className="bg-white rounded-3xl shadow-2xl w-full max-w-sm overflow-hidden">
-            <div className="p-6">
+            <form onSubmit={handleDialogSubmit} className="p-6">
               <div className="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center mb-4 mx-auto"><Icon d={ICONS.mail} size={22} className="text-blue-600" /></div>
               <h3 className="text-xl font-black text-slate-900 mb-2 text-center">{de.payment.whereToSend}</h3>
               <p className="text-sm text-slate-500 mb-5 leading-relaxed text-center">{de.payment.enterEmailForReceipt}</p>
-              <input type="email" value={guestEmail} onChange={(e) => setGuestEmail(e.target.value)} placeholder="sie@beispiel.de" className="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all mb-4" autoFocus />
+              <input type="email" value={guestEmail} onChange={(e) => setGuestEmail(e.target.value)} placeholder="sie@beispiel.de" className="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all mb-4" autoFocus required />
               <div className="flex gap-3">
-                <button onClick={() => setIsEmailDialogOpen(false)} className="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-3.5 rounded-xl text-sm transition-all">{de.payment.cancel}</button>
-                <button onClick={() => { const valid = guestEmail && guestEmail.includes("@") && guestEmail.includes("."); if (valid) { setIsEmailDialogOpen(false); handlePayment(); } else alert("Bitte geben Sie eine gültige E-Mail-Adresse ein."); }}
-                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl text-sm transition-all shadow-lg shadow-blue-500/20">{de.buttons.continue} →</button>
+                <button type="button" onClick={() => setIsEmailDialogOpen(false)} className="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-3.5 rounded-xl text-sm transition-all">{de.payment.cancel}</button>
+                <button type="submit" className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl text-sm transition-all shadow-lg shadow-blue-500/20">{de.buttons.continue} →</button>
               </div>
-            </div>
+            </form>
           </div>
         </div>
       )}

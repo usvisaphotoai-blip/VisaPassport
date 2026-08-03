@@ -568,12 +568,26 @@ export default function PreviewClient({
   });
 
   const onPaymentClick = () => {
-    const isEmailValid = guestEmail && guestEmail.includes("@") && guestEmail.includes(".");
+    const trimmed = (guestEmail || "").trim();
+    const isEmailValid = !!(trimmed && trimmed.includes("@") && trimmed.includes("."));
     if (status !== "authenticated" && !isEmailValid) {
       setIsEmailDialogOpen(true);
       return;
     }
-    handlePayment();
+    handlePayment(trimmed);
+  };
+
+  const handleDialogSubmit = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    const trimmed = (guestEmail || "").trim();
+    const isEmailValid = !!(trimmed && trimmed.includes("@") && trimmed.includes("."));
+    if (isEmailValid) {
+      setGuestEmail(trimmed);
+      setIsEmailDialogOpen(false);
+      handlePayment(trimmed);
+    } else {
+      alert("Please enter a valid email address.");
+    }
   };
 
   useEffect(() => {
@@ -685,7 +699,7 @@ export default function PreviewClient({
       {isEmailDialogOpen && (
         <div className="fixed inset-0 z-[150] flex items-center justify-center bg-slate-900/50 px-4">
           <div className="bg-white rounded-2xl w-full max-w-sm overflow-hidden border border-slate-200">
-            <div className="p-6">
+            <form onSubmit={handleDialogSubmit} className="p-6">
               <div className="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center mb-4 mx-auto">
                 <Icon d={ICONS.mail} size={22} className="text-lime-600" />
               </div>
@@ -700,26 +714,24 @@ export default function PreviewClient({
                 placeholder="you@example.com"
                 className="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all mb-4"
                 autoFocus
+                required
               />
               <div className="flex gap-3">
                 <button
+                  type="button"
                   onClick={() => setIsEmailDialogOpen(false)}
                   className="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-3.5 rounded-xl text-sm transition-colors"
                 >
                   Cancel
                 </button>
                 <button
-                  onClick={() => {
-                    const valid = guestEmail && guestEmail.includes("@") && guestEmail.includes(".");
-                    if (valid) { setIsEmailDialogOpen(false); handlePayment(); }
-                    else alert("Please enter a valid email address.");
-                  }}
+                  type="submit"
                   className="flex-1 bg-lime-600 hover:bg-lime-700 text-white font-bold py-3.5 rounded-xl text-sm transition-colors"
                 >
                   Continue →
                 </button>
               </div>
-            </div>
+            </form>
           </div>
         </div>
       )}
