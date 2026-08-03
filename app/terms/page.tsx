@@ -70,9 +70,8 @@ export default async function TermsPage() {
                 </p>
               </div>
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-600">
-                <li>To request a refund, contact us at <strong>usvisaphotoai@gmail.com</strong> within <strong>30 days</strong> of purchase</li>
+                <li>To request a refund, contact us at <a href="mailto:refund@pixpassport.com" className="font-semibold text-slate-900 underline">refund@pixpassport.com</a> within <strong>30 days</strong> of purchase</li>
                 <li>You must provide your transaction ID and evidence of photo rejection (screenshot of rejection notice)</li>
-                <li>Refunds are limited to <strong>50% of the original purchase price</strong> due to non-recoverable server processing and infrastructure costs incurred during photo generation</li>
                 <li>Refunds are issued to the original payment method within 5–10 business days</li>
                 <li>For more details, please see our <Link href="/refund-policy" className="text-blue-600 underline">Refund Policy</Link> page.</li>
               </ul>
@@ -138,7 +137,7 @@ export default async function TermsPage() {
             <div>
               <h2 className="text-xl font-bold text-slate-900 mb-3">13. Contact</h2>
               <p className="text-sm text-gray-600 leading-relaxed">
-                For questions about these Terms, contact us at <strong>usvisaphotoai@gmail.com</strong>.
+                For questions about these Terms, contact us at <a href="mailto:support@pixpassport.com" className="font-semibold text-slate-900 underline">support@pixpassport.com</a>.
               </p>
             </div>
           </div>

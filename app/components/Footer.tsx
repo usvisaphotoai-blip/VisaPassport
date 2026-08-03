@@ -113,8 +113,8 @@ export default function Footer() {
           <p>&copy; {new Date().getFullYear()} PixPassport. All rights reserved.</p>
           <div className="flex flex-col md:flex-row gap-4 md:gap-6 items-center">
             <p>Disclaimer: This site is not affiliated with any government agency.</p>
-            <Link href="mailto:usvisaphotoai@gmail.com" className="hover:text-white transition-colors">
-              usvisaphotoai@gmail.com
+            <Link href="mailto:support@pixpassport.com" className="hover:text-white transition-colors">
+              support@pixpassport.com
             </Link>
           </div>
         </div>

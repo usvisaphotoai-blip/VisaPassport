@@ -339,7 +339,7 @@ export default function DataSecurityPage() {
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link
-              href="mailto:usvisaphotoai@gmail.com"
+              href="mailto:support@pixpassport.com"
               className="inline-flex items-center gap-2 bg-lime-500 hover:bg-lime-400 text-slate-950 px-6 py-3 rounded-xl font-bold text-sm transition-colors  shadow-lime-500/20"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>

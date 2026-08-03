@@ -124,7 +124,7 @@ export default function PrivacyPolicyPage() {
             <div>
               <h2 className="text-xl font-bold text-slate-900 mb-3">10. Contact Us</h2>
               <p className="text-sm text-gray-600 leading-relaxed">
-                For privacy-related questions, data deletion requests, or GDPR/CCPA inquiries, contact us at <strong>usvisaphotoai@gmail.com</strong>.
+                For privacy-related questions, data deletion requests, or GDPR/CCPA inquiries, contact us at <a href="mailto:support@pixpassport.com" className="font-semibold text-slate-900 underline">support@pixpassport.com</a>.
               </p>
               <p className="text-sm text-gray-600 leading-relaxed mt-2">
                 Business Address: Varanasi, Uttar Pradesh, India

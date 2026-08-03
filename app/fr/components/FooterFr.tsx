@@ -85,8 +85,8 @@ export default function FooterFr() {
           <p>&copy; {new Date().getFullYear()} PixPassport. {fr.footer.copyright}</p>
           <div className="flex flex-col md:flex-row gap-4 md:gap-6 items-center">
             <p>{fr.footer.disclaimer}</p>
-            <Link href="mailto:usvisaphotoai@gmail.com" className="hover:text-white transition-colors">
-              usvisaphotoai@gmail.com
+            <Link href="mailto:support@pixpassport.com" className="hover:text-white transition-colors">
+              support@pixpassport.com
             </Link>
           </div>
         </div>

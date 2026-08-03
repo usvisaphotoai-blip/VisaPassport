@@ -65,7 +65,7 @@ export default function RefundPolicyPage() {
             <div>
               <h2 className="text-xl font-bold text-slate-900 mb-3">6. How to Request a Refund</h2>
               <p className="text-sm text-gray-600 leading-relaxed">
-                To start a refund request, email our support team at <strong>usvisaphotoai@gmail.com</strong> with your transaction details and proof of photo rejection. We aim to respond quickly and make the process as painless as possible.
+                To start a refund request, email our team at <a href="mailto:refund@pixpassport.com" className="font-semibold text-slate-900 underline">refund@pixpassport.com</a> or <a href="mailto:support@pixpassport.com" className="font-semibold text-slate-900 underline">support@pixpassport.com</a> with your transaction details and proof of photo rejection. We aim to respond quickly and make the process as painless as possible.
               </p>
             </div>
           </div>

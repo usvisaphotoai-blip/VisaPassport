@@ -349,9 +349,9 @@ function OrderPanel({
                   </p>
                   <p className="mt-1">
                     For any questions, feel free to contact us at{" "}
-                    <span className="font-medium text-emerald-700">
-                      usvisaphotoai@gmail.com
-                    </span>
+                    <a href="mailto:support@pixpassport.com" className="font-medium text-emerald-700 underline">
+                      support@pixpassport.com
+                    </a>
                   </p>
                 </div>
               </div>
