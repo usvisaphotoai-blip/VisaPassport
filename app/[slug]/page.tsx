@@ -172,6 +172,39 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
 
+  const toolPage = toolPages.find((p) => p.slug === slug);
+  if (toolPage) {
+    return {
+      title: toolPage.title,
+      description: toolPage.metaDescription,
+      alternates: { canonical: `https://www.pixpassport.com/${slug}` },
+      openGraph: { title: toolPage.title, description: toolPage.metaDescription, url: `https://www.pixpassport.com/${slug}`, type: "website" },
+    };
+  }
+
+  const moneyPage = moneyPages.find((p) => p.slug === slug);
+  if (moneyPage) {
+    return {
+      title: moneyPage.title,
+      description: moneyPage.metaDescription,
+      alternates: { canonical: `https://www.pixpassport.com/${slug}` },
+      openGraph: { title: moneyPage.title, description: moneyPage.metaDescription, url: `https://www.pixpassport.com/${slug}`, type: "website" },
+    };
+  }
+
+  const specialPage = specialPages.find((p) => p.slug === slug);
+  if (specialPage) {
+    return {
+      title: specialPage.title,
+      description: specialPage.metaDescription,
+      alternates: { canonical: `https://www.pixpassport.com/${slug}` },
+      openGraph: { 
+        ...specialPage.openGraph,
+        url: `https://www.pixpassport.com/${slug}`
+      },
+    };
+  }
+
   const specId = getSpecIdFromSlug(slug);
   const spec = (specs as SpecEntry[]).find((s) => s.id === specId);
   if (spec) {
@@ -201,39 +234,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
-  const moneyPage = moneyPages.find((p) => p.slug === slug);
-  if (moneyPage) {
-    return {
-      title: moneyPage.title,
-      description: moneyPage.metaDescription,
-      alternates: { canonical: `https://www.pixpassport.com/${slug}` },
-      openGraph: { title: moneyPage.title, description: moneyPage.metaDescription, url: `https://www.pixpassport.com/${slug}`, type: "website" },
-    };
-  }
-
-  const toolPage = toolPages.find((p) => p.slug === slug);
-  if (toolPage) {
-    return {
-      title: toolPage.title,
-      description: toolPage.metaDescription,
-      alternates: { canonical: `https://www.pixpassport.com/${slug}` },
-      openGraph: { title: toolPage.title, description: toolPage.metaDescription, url: `https://www.pixpassport.com/${slug}`, type: "website" },
-    };
-  }
-
-  const specialPage = specialPages.find((p) => p.slug === slug);
-  if (specialPage) {
-    return {
-      title: specialPage.title,
-      description: specialPage.metaDescription,
-      alternates: { canonical: `https://www.pixpassport.com/${slug}` },
-      openGraph: { 
-        ...specialPage.openGraph,
-        url: `https://www.pixpassport.com/${slug}`
-      },
-    };
-  }
-
   return {};
 }
 
@@ -243,7 +243,7 @@ export default async function Page({ params }: PageProps) {
   // ── 1. Tool SEO Pages ──────────────────────────────────────────────────────
   const toolPage = toolPages.find((p) => p.slug === slug);
   if (toolPage) {
-    const isIcaoPage = slug === "icao-standard-photograph";
+    const isIcaoPage = slug.startsWith("icao-");
     return (
       <>
         <style dangerouslySetInnerHTML={{ __html: RICH_CONTENT_STYLES }} />

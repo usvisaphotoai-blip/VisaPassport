@@ -121,60 +121,72 @@ export default async function Home() {
         </section>
 
         {/* Dynamic Tool SEO Pages Section */}
-        <section className="bg-slate-50 py-16">
+        <section className="bg-slate-50 py-10 sm:py-12 border-t border-slate-100">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-black text-slate-900 mb-10 text-center">Popular Photo Tools & Guides</h2>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-2">
+              <div>
+                <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">Popular Photo Tools &amp; Guides</h2>
+                <p className="text-xs sm:text-sm text-slate-500 mt-0.5">Instant biometric photo creation and government requirement checkers.</p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
               {toolPages.map((tool) => (
                 <Link 
                   key={tool.slug}
                   href={`/${tool.slug}`}
-                  className="group bg-white p-6 rounded-2xl border border-slate-200 hover:border-lime-400 hover:shadow-xl transition-all"
+                  className="group bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 hover:border-lime-400 hover:shadow-md transition-all flex flex-col justify-between"
                 >
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-10 h-10 bg-lime-100 rounded-lg flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
-                      📸
+                  <div>
+                    <div className="flex items-center gap-2.5 mb-2">
+                      <div className="w-7 h-7 sm:w-8 sm:h-8 bg-lime-100/80 rounded-lg flex items-center justify-center text-sm sm:text-base shrink-0 group-hover:scale-105 transition-transform">
+                        📸
+                      </div>
+                      <h3 className="font-bold text-xs sm:text-sm text-slate-900 group-hover:text-lime-700 transition-colors line-clamp-1 leading-snug">
+                        {tool.h1.split("—")[0].trim()}
+                      </h3>
                     </div>
-                    <h3 className="font-bold text-slate-900 group-hover:text-lime-700 transition-colors">
-                      {tool.h1.split("—")[0].trim()}
-                    </h3>
+                    <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">
+                      {tool.metaDescription}
+                    </p>
                   </div>
-                  <p className="text-sm text-slate-500 line-clamp-2 leading-relaxed">
-                    {tool.metaDescription}
-                  </p>
                 </Link>
               ))}
               <Link 
                 href="/america-visa-size-photo"
-                className="group bg-white p-6 rounded-2xl border border-slate-200 hover:border-lime-400 hover:shadow-xl transition-all"
+                className="group bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 hover:border-lime-400 hover:shadow-md transition-all flex flex-col justify-between"
               >
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="w-10 h-10 bg-lime-100 rounded-lg flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
-                    📸
+                <div>
+                  <div className="flex items-center gap-2.5 mb-2">
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 bg-lime-100/80 rounded-lg flex items-center justify-center text-sm sm:text-base shrink-0 group-hover:scale-105 transition-transform">
+                      📸
+                    </div>
+                    <h3 className="font-bold text-xs sm:text-sm text-slate-900 group-hover:text-lime-700 transition-colors line-clamp-1 leading-snug">
+                      America Visa Size Photo
+                    </h3>
                   </div>
-                  <h3 className="font-bold text-slate-900 group-hover:text-lime-700 transition-colors">
-                    America Visa Size Photo
-                  </h3>
+                  <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">
+                    Upload a selfie and get a properly sized America visa photo — 2 × 2 inches with a white background.
+                  </p>
                 </div>
-                <p className="text-sm text-slate-500 line-clamp-2 leading-relaxed">
-                  Upload a selfie and get a properly sized America visa photo — 2 × 2 inches, correct head size, and a clean white background.
-                </p>
               </Link>
               <Link 
                 href="/uk-passport-size-photo-maker"
-                className="group bg-white p-6 rounded-2xl border border-slate-200 hover:border-lime-400 hover:shadow-xl transition-all"
+                className="group bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 hover:border-lime-400 hover:shadow-md transition-all flex flex-col justify-between"
               >
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="w-10 h-10 bg-lime-100 rounded-lg flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
-                    📸
+                <div>
+                  <div className="flex items-center gap-2.5 mb-2">
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 bg-lime-100/80 rounded-lg flex items-center justify-center text-sm sm:text-base shrink-0 group-hover:scale-105 transition-transform">
+                      📸
+                    </div>
+                    <h3 className="font-bold text-xs sm:text-sm text-slate-900 group-hover:text-lime-700 transition-colors line-clamp-1 leading-snug">
+                      UK Passport Size Photo Maker
+                    </h3>
                   </div>
-                  <h3 className="font-bold text-slate-900 group-hover:text-lime-700 transition-colors">
-                    UK Passport Size Photo Maker
-                  </h3>
+                  <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">
+                    Create a compliant UK passport or visa photo online. Automatic biometric checks and background removal.
+                  </p>
                 </div>
-                <p className="text-sm text-slate-500 line-clamp-2 leading-relaxed">
-                  Create a compliant UK passport or visa photo online. Automatic biometric checks and background removal.
-                </p>
               </Link>
             </div>
           </div>

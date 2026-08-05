@@ -63,6 +63,54 @@
   </url>
 
   <url>
+    <loc>https://www.pixpassport.com/icao-standard-photo</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/icao-standard-photo" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/icao-standard-photo" />
+    <lastmod>2026-08-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1785679206/icao_visa_photo_example_whvfqt.jpg</image:loc>
+    </image:image>
+  </url>
+
+  <!-- <url>
+    <loc>https://www.pixpassport.com/icao-passport-photo</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/icao-passport-photo" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/icao-passport-photo" />
+    <lastmod>2026-08-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1785679205/icao_standard_passport_photo_maker_grjud4.jpg</image:loc>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.pixpassport.com/icao-compliant-photo</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/icao-compliant-photo" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/icao-compliant-photo" />
+    <lastmod>2026-08-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1785679206/icao_standard_photo_ikqyqh.jpg</image:loc>
+    </image:image>
+  </url> -->
+
+  <!-- <url>
+    <loc>https://www.pixpassport.com/icao-standards-photo-online-free</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/icao-standards-photo-online-free" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/icao-standards-photo-online-free" />
+    <lastmod>2026-08-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1785679206/icao_visa_photo_example_whvfqt.jpg</image:loc>
+    </image:image>
+  </url> -->
+
+  <url>
     <loc>https://www.pixpassport.com/visa-photo-validator</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/visa-photo-validator" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/visa-photo-validator" />
