@@ -1,6 +1,7 @@
 import specs from "../data/countries-specs.json";
 import moneyPages from "../data/money-pages.json";
 import toolPages from "../data/tool-seo-pages.json";
+import specialPages from "../data/special-photo-pages.json";
 
 export interface SpecEntry {
   id: string;
@@ -52,47 +53,60 @@ export function getCanonicalSlug(id: string): string {
   return `${base}-passport-photo-editor`;
 }
 
+const specIdCache = new Map<string, string | null>();
+
 /**
  * Maps a URL slug to a specification ID.
- * Now handles legacy redirects and canonical normalization.
+ * Uses a prebuilt cache for O(1) lookup speed after first resolution.
  */
 export function getSpecIdFromSlug(slug?: string): string | null {
   if (!slug) return null;
+  if (specIdCache.has(slug)) return specIdCache.get(slug)!;
   
   // Normalize by removing common suffixes
   const base = slug.replace(/-photo-editor$/, "").replace(/-photo$/, "");
   const isVisaIntent = base.includes("visa");
   const isPassportIntent = base.includes("passport");
   
+  let result: string | null = null;
+
   // 1. Direct match with current IDs
   const directMatch = specs.find(s => s.id === base);
-  if (directMatch) return directMatch.id;
-  
-  // 2. Handle known aliases
-  if (base === "us-visa" || base === "united-states-visa" || base === "ds-160-visa") return "us-visa";
-  if (base === "us-passport" || base === "united-states-passport") return "us-passport";
-  if (base === "uk-passport" || base === "united-kingdom-passport") return "uk-passport";
-  
-  // 3. Match by normalized country name and intent
-  const shortBase = getShortId(base);
-  
-  // Priority 1: Match with specific intent (e.g. searching for a visa spec)
-  const exactIntentMatch = specs.find(s => {
-    const sShortId = getShortId(s.id);
-    if (sShortId !== shortBase) return false;
-    if (isVisaIntent && s.id.includes("visa")) return true;
-    if (isPassportIntent && (s.id.includes("passport") || !s.id.includes("visa"))) return true;
-    return false;
-  });
-  if (exactIntentMatch) return exactIntentMatch.id;
+  if (directMatch) {
+    result = directMatch.id;
+  } else if (base === "us-visa" || base === "united-states-visa" || base === "ds-160-visa") {
+    result = "us-visa";
+  } else if (base === "us-passport" || base === "united-states-passport") {
+    result = "us-passport";
+  } else if (base === "uk-passport" || base === "united-kingdom-passport") {
+    result = "uk-passport";
+  } else {
+    // 3. Match by normalized country name and intent
+    const shortBase = getShortId(base);
+    
+    // Priority 1: Match with specific intent (e.g. searching for a visa spec)
+    const exactIntentMatch = specs.find(s => {
+      const sShortId = getShortId(s.id);
+      if (sShortId !== shortBase) return false;
+      if (isVisaIntent && s.id.includes("visa")) return true;
+      if (isPassportIntent && (s.id.includes("passport") || !s.id.includes("visa"))) return true;
+      return false;
+    });
 
-  // Priority 2: Fallback to any spec for that country (Passport usually)
-  const countryMatch = specs.find(s => {
-    const sShortId = getShortId(s.id);
-    return sShortId === shortBase;
-  });
+    if (exactIntentMatch) {
+      result = exactIntentMatch.id;
+    } else {
+      // Priority 2: Fallback to any spec for that country (Passport usually)
+      const countryMatch = specs.find(s => {
+        const sShortId = getShortId(s.id);
+        return sShortId === shortBase;
+      });
+      result = countryMatch?.id || null;
+    }
+  }
 
-  return countryMatch?.id || null;
+  specIdCache.set(slug, result);
+  return result;
 }
 
 /**
@@ -136,5 +150,11 @@ export function getAllSlugs(): string[] {
     slugs.add(page.slug);
   });
 
+  // 5. Special Photo Pages
+  specialPages.forEach(page => {
+    slugs.add(page.slug);
+  });
+
   return Array.from(slugs);
 }
+
