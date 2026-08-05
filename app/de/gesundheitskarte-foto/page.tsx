@@ -12,13 +12,17 @@ export const metadata: Metadata = {
     "egk foto",
     "krankenkasse foto",
     "aok foto hochladen",
+    "foto für krankenkassenkarte selber machen",
+    "wie muss das foto für die gesundheitskarte aussehen",
+    "selbstgemachte passbilder gesundheitskarte",
+    "wie alt darf das foto für die krankenkasse sein",
   ],
   alternates: {
     canonical: "https://www.pixpassport.com/de/gesundheitskarte-foto",
     languages: {
-      "de": "https://www.pixpassport.com/de/gesundheitskarte-foto",
-      "en": "https://www.pixpassport.com/",
-      "fr": "https://www.pixpassport.com/fr",
+      de: "https://www.pixpassport.com/de/gesundheitskarte-foto",
+      en: "https://www.pixpassport.com/",
+      fr: "https://www.pixpassport.com/fr",
       "x-default": "https://www.pixpassport.com/",
     },
   },
@@ -65,18 +69,18 @@ const Cross = () => (
 const steps = [
   {
     n: "1",
-    title: "Foto hochladen",
-    desc: "Laden Sie ein aktuelles Selfie oder Porträtfoto hoch. Ein Smartphone genügt – kein Fotostudio, kein Termin.",
+    title: "Foto mit dem Smartphone aufnehmen",
+    desc: "Stellen Sie sich vor eine helle Wand. Nutzen Sie Tageslicht aus einem Fenster. Halten Sie das Smartphone auf Augenhöhe und schauen Sie frontal in die Kamera.",
   },
   {
     n: "2",
-    title: "Automatische Anpassung",
-    desc: "Unsere KI schneidet das Bild auf 35×45 mm zu, korrigiert den Hintergrund und prüft Belichtung und Kopfposition.",
+    title: "Automatisch auf 35 × 45 mm zuschneiden",
+    desc: "Unsere KI prüft Kopfposition, Hintergrund und Belichtung. Das Bild wird exakt auf das eGK-Format zugeschnitten und optimiert.",
   },
   {
     n: "3",
-    title: "Download & direkt hochladen",
-    desc: "Laden Sie das fertige Foto als JPEG herunter und reichen Sie es direkt im Online-Portal Ihrer Krankenkasse ein.",
+    title: "Download & direkt bei der Kasse einreichen",
+    desc: "Laden Sie das fertige JPEG herunter und übermitteln Sie es über das Online-Portal Ihrer Krankenkasse – binnen Sekunden.",
   },
 ];
 
@@ -84,7 +88,7 @@ const specs = [
   {
     krit: "Format",
     vorschrift: "35 × 45 mm",
-    hinweis: "Hochformat, ohne Rand – entspricht dem gängigen Passfoto-Standard (AOK)",
+    hinweis: "Hochformat ohne Rand – entspricht dem gängigen Passfoto-Standard (AOK)",
   },
   {
     krit: "Kopfgröße",
@@ -94,7 +98,7 @@ const specs = [
   {
     krit: "Blickrichtung",
     vorschrift: "Frontal, gerade",
-    hinweis: "Direkt in die Kamera, keine Seitenansicht",
+    hinweis: "Direkt in die Kamera, keine Drehung oder Neigung",
   },
   {
     krit: "Hintergrund",
@@ -104,22 +108,22 @@ const specs = [
   {
     krit: "Augen",
     vorschrift: "Geöffnet, sichtbar",
-    hinweis: "Auch bei Brillenträgern müssen die Augen klar erkennbar sein (AOK)",
+    hinweis: "Auch bei Brillenträgern müssen die Augen klar erkennbar sein",
   },
   {
     krit: "Dateiformat",
     vorschrift: "JPEG oder PNG",
-    hinweis: "Max. 5 MB beim digitalen Upload (VIACTIV); die meisten Kassen akzeptieren JPEG",
+    hinweis: "Max. 5 MB beim digitalen Upload (VIACTIV); JPEG wird von allen Kassen akzeptiert",
   },
   {
     krit: "Kopfbedeckung",
     vorschrift: "Grundsätzlich verboten",
-    hinweis: "Ausnahme: religiöse Gründe – Gesicht muss vollständig sichtbar bleiben (AOK)",
+    hinweis: "Ausnahme: religiöse Gründe – Gesicht muss vollständig sichtbar bleiben",
   },
   {
     krit: "Alter des Fotos",
-    vorschrift: "Aktuell",
-    hinweis: "Foto wird nach max. 10 Jahren neu angefordert (§ 291 SGB V / AOK)",
+    vorschrift: "Max. 6 Monate",
+    hinweis: "Wichtig: Sie müssen gut wiedererkennbar sein (AOK)",
   },
 ];
 
@@ -133,51 +137,55 @@ const kassen = [
 ];
 
 const doList = [
-  "Frontale Aufnahme, Kopf gerade und mittig",
-  "Neutraler Gesichtsausdruck, Mund geschlossen",
-  "Heller, einfarbiger Hintergrund ohne Muster",
-  "Augen geöffnet und klar erkennbar",
-  "Gleichmäßige Beleuchtung, kein Gegenlicht",
-  "Aktuelles Foto – sollte Ihr heutiges Erscheinungsbild zeigen",
+  "Frontale Aufnahme, Kopf gerade und mittig positionieren",
+  "Neutraler Gesichtsausdruck mit geschlossenem Mund",
+  "Heller, einfarbiger Hintergrund ohne Muster oder Objekte",
+  "Augen geöffnet und für den Betrachter klar erkennbar",
+  "Gleichmäßige Beleuchtung ohne harte Schatten oder Gegenlicht",
+  "Aktuelles Foto, das Ihr heutiges Erscheinungsbild zeigt",
 ];
 
 const dontList = [
-  "Sonnenbrillen oder stark getönte Gläser",
-  "Mützen, Caps oder Hüte (außer religiöse Kopfbedeckungen)",
-  "Starke Schatten im Gesicht oder auf dem Hintergrund",
-  "Filter, Weichzeichner oder Bildbearbeitungseffekte",
-  "Gemusterter Hintergrund oder andere Personen im Bild",
-  "Veraltete Aufnahmen, die Ihr Aussehen nicht mehr widerspiegeln",
+  "Sonnenbrillen oder stark getönte Brillengläser tragen",
+  "Mützen, Caps oder Hüte aufsetzen (außer religiöse Kopfbedeckungen)",
+  "Starke Schatten im Gesicht oder auf dem Hintergrund erzeugen",
+  "Filter, Weichzeichner oder Bildbearbeitungseffekte anwenden",
+  "Gemusterte Hintergründe oder andere Personen im Bild zeigen",
+  "Veraltete Aufnahmen verwenden, die Ihr Aussehen nicht mehr widerspiegeln",
 ];
 
 const faqs = [
   {
-    q: "Welche Anforderungen hat das Foto für die Gesundheitskarte?",
-    a: "Laut AOK muss das Bild für die elektronische Gesundheitskarte dem gängigen Passfoto-Format entsprechen: 35×45 mm, Frontaufnahme, Kopf 70–80 % der Bildfläche, neutraler Hintergrund, Augen geöffnet. Streng biometrische Anforderungen wie beim Reisepass sind nicht erforderlich.",
+    q: "Wie muss das Foto für die Gesundheitskarte aussehen?",
+    a: "Das Foto für die elektronische Gesundheitskarte entspricht dem gängigen Passbild-Format: 35 × 45 mm, Frontalaufnahme, Kopf füllt 70 bis 80 Prozent der Bildfläche. Der Hintergrund ist neutral und hell. Sie schauen direkt in die Kamera, Ihre Augen sind geöffnet und klar erkennbar. Streng biometrische Vorgaben wie beim Reisepass sind nicht erforderlich.",
+  },
+  {
+    q: "Kann man ein Foto für die Krankenkassenkarte selber machen?",
+    a: "Ja, Sie können das Foto selbst erstellen. Ein Smartphone oder eine Digitalkamera reicht vollkommen aus. Nehmen Sie das Bild bei Tageslicht vor einer hellen Wand auf. Halten Sie die Kamera auf Augenhöhe und schauen Sie frontal hinein. Mit einem Online-Tool schneiden Sie das Bild anschließend automatisch auf das korrekte Format zu.",
+  },
+  {
+    q: "Werden selbstgemachte Passbilder von der Krankenkasse angenommen?",
+    a: "Ja, selbstgemachte Passbilder werden angenommen, sofern sie die offiziellen Vorgaben erfüllen. AOK, TK, Barmer, DAK und alle anderen gesetzlichen Kassen akzeptieren selbst aufgenommene Fotos, wenn diese scharf, gut belichtet und frei von Filtern oder Effekten sind. Entscheidend ist die Einhaltung der Qualitätskriterien, nicht der Ort der Aufnahme.",
+  },
+  {
+    q: "Wie alt darf das Foto für die Krankenkasse sein?",
+    a: "Das Foto sollte idealerweise nicht älter als sechs Monate sein. Wichtig ist, dass Sie gut wiederzuerkennen sind. Die Krankenkassen dürfen das Lichtbild maximal zehn Jahre speichern. Danach erhalten Sie automatisch Post mit der Aufforderung, ein neues Bild einzureichen.",
   },
   {
     q: "Ist das Foto für die Gesundheitskarte Pflicht?",
-    a: "Ja. Laut § 291 SGB V ist die elektronische Gesundheitskarte mit einem Lichtbild des Versicherten auszustatten. Das Foto dient der Identifizierung beim Arztbesuch und verhindert Kartenmissbrauch. Ab dem 15. Geburtstag ist ein Foto verpflichtend.",
+    a: "Ja. Laut § 291 SGB V ist die elektronische Gesundheitskarte mit einem Lichtbild auszustatten. Das Foto dient der Identifizierung beim Arztbesuch und verhindert Kartenmissbrauch. Ab dem 15. Geburtstag ist ein Foto verpflichtend. Kinder unter 15 Jahren sowie pflegebedürftige Personen, die nicht an einer Aufnahme teilnehmen können, benötigen kein Bild.",
   },
   {
     q: "Wie reiche ich das Foto bei meiner Krankenkasse ein?",
-    a: "Die meisten gesetzlichen Krankenkassen (AOK, TK, Barmer, DAK u. a.) bieten einen digitalen Upload im Online-Kundenportal oder per App an. Sie erhalten von Ihrer Kasse ein Schreiben mit einer Auftragsnummer, sobald ein neues Foto benötigt wird. Alternativ ist auch der Postweg möglich.",
-  },
-  {
-    q: "Wie oft muss ich ein neues Foto einreichen?",
-    a: "Krankenkassen sind gesetzlich verpflichtet, das Lichtbild regelmäßig zu aktualisieren. Gemäß AOK und Barmer darf ein Foto maximal 10 Jahre gespeichert werden. Sie erhalten automatisch Post, wenn ein neues Bild benötigt wird.",
-  },
-  {
-    q: "Darf mein Kind eine Gesundheitskarte ohne Foto haben?",
-    a: "Ja. Kinder unter 15 Jahren sind von der Fotopflicht befreit. Erst mit Vollendung des 15. Lebensjahres wird ein aktuelles Foto für die eGK verpflichtend – Sie erhalten dann automatisch eine Benachrichtigung von Ihrer Krankenkasse (Barmer, AOK etc.).",
+    a: "Die meisten gesetzlichen Krankenkassen bieten einen digitalen Upload im Online-Portal oder per App an. Sie erhalten von Ihrer Kasse ein Schreiben mit einer Auftragsnummer, sobald ein neues Foto benötigt wird. Alternativ können Sie das Bild auch per Post einsenden. Papierabzüge werden nach der Digitalisierung datenschutzkonform vernichtet.",
   },
   {
     q: "Welches Dateiformat akzeptieren die Krankenkassen?",
-    a: "Die meisten Kassen akzeptieren JPEG- und PNG-Dateien beim digitalen Upload. VIACTIV gibt eine maximale Dateigröße von 5 MB vor. PixPassport liefert das fertige Foto in einem universell kompatiblen JPEG-Format – direkt bereit für den Upload.",
+    a: "Die meisten Kassen akzeptieren JPEG- und PNG-Dateien. VIACTIV gibt eine maximale Dateigröße von 5 MB vor. PixPassport liefert das fertige Foto in einem universell kompatiblen JPEG-Format – direkt bereit für den Upload in alle gängigen GKV-Portale.",
   },
   {
     q: "Kostet die neue Gesundheitskarte etwas?",
-    a: "Die Herstellung der Karte ist für Versicherte kostenlos. Die Kosten für die Fotoaufnahme selbst tragen die Versicherten (AOK). PixPassport bietet eine günstige digitale Alternative zum Fotostudio.",
+    a: "Nein, die Herstellung der Karte ist für Versicherte kostenlos. Die Kosten für die Fotoaufnahme selbst tragen Sie als Versicherter. PixPassport bietet eine günstige digitale Alternative zum Fotostudio, bei der Sie das Bild bequem von zu Hause aus erstellen.",
   },
 ];
 
@@ -227,88 +235,145 @@ const jsonLd = {
 /* ─── Page ─── */
 export default function GesundheitskarteFotoPage() {
   return (
-    <main className="bg-white text-slate-900  antialiased">
+    <main className="bg-white text-slate-900 antialiased">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* ══════════════ HERO ══════════════ */}
-      <section className="bg-gradient-to-b from-lime-50 via-white to-white pt-10 pb-16 px-4">
-        <div className="max-w-5xl mx-auto flex flex-col items-center text-center gap-5">
-          <span className="inline-flex items-center gap-2 bg-lime-100 text-lime-700 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full">
-            🏥 Für TK · AOK · Barmer · DAK · alle GKV
-          </span>
+      {/* ══════════════ HERO 60/40 SPLIT ══════════════ */}
+        <div className="h-1 bg-lime-700 w-full" />
 
-          <h1 className="text-4xl sm:text-5xl lg:text-[3.25rem] font-black tracking-tight leading-[1.07] text-slate-900 max-w-3xl">
-            Foto für{" "}
-            <span className="text-lime-600">Gesundheitskarte</span>{" "}
-            Online Erstellen
-          </h1>
+      <section className=" pt-16 pb-20 px-4">
+        <div className="max-w-6xl mx-auto grid lg:grid-cols-5 gap-10 items-center">
+          {/* Left: 60% */}
+          <div className="lg:col-span-3 flex flex-col gap-5">
+            <span className="inline-flex items-center gap-2 bg-lime-100 text-lime-700 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full w-fit">
+              Für TK · AOK · Barmer · DAK · alle GKV
+            </span>
 
-          <p className="max-w-2xl text-lg text-slate-600 leading-relaxed">
-            Erstellen Sie Ihr Foto für die <strong>elektronische Gesundheitskarte (eGK)</strong> direkt
-            am Smartphone. Automatische Anpassung auf 35×45 mm, neutraler Hintergrund und
-            korrekte Kopfposition – in unter 30 Sekunden, ohne Fotostudio.
-          </p>
+            <h1 className="text-4xl sm:text-5xl lg:text-[3.25rem] font-black tracking-tight leading-[1.07] text-slate-900">
+              Foto für{" "}
+              <span className="text-lime-600">Gesundheitskarte</span>{" "}
+              online erstellen
+            </h1>
 
-          <div className="flex flex-col sm:flex-row gap-3 mt-2">
-            <Link
-              href={ctaHref}
-              className="inline-flex items-center gap-2 bg-lime-600 hover:bg-lime-700 active:bg-lime-800 text-white font-bold text-lg px-8 py-4 rounded-xl shadow-lg shadow-lime-200 transition-colors"
-            >
-              Foto für eGK erstellen <ArrowRight />
-            </Link>
-            <Link
-              href="#anforderungen"
-              className="inline-flex items-center gap-2 border border-slate-200 hover:border-slate-300 text-slate-700 font-semibold text-base px-6 py-4 rounded-xl bg-white transition-colors"
-            >
-              Alle Anforderungen ansehen
-            </Link>
+            <p className="max-w-xl text-lg text-slate-600 leading-relaxed">
+              Erstellen Sie Ihr Foto für die <strong>elektronische Gesundheitskarte (eGK)</strong> direkt
+              am Smartphone. Automatische Anpassung auf 35 × 45 mm, neutraler Hintergrund und
+              korrekte Kopfposition – in unter 30 Sekunden, ohne Fotostudio.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-3 mt-1">
+              <Link
+                href={ctaHref}
+                className="inline-flex items-center gap-2 bg-lime-700 hover:bg-lime-700 active:bg-lime-800 text-white font-bold text-lg px-7 py-3  shadow-lime-200 transition-colors"
+              >
+                Foto für eGK erstellen <ArrowRight />
+              </Link>
+              <Link
+                href="#anforderungen"
+                className="inline-flex items-center gap-2 border border-slate-200 hover:border-slate-300 text-slate-700 font-semibold text-base px-6 py-4  bg-white transition-colors"
+              >
+                Alle Anforderungen ansehen
+              </Link>
+            </div>
           </div>
 
-          <div className="w-full mt-4 rounded-2xl overflow-hidden shadow-xl border border-slate-100">
-            <Image
-              src="/photo_officielle passeport.jpg"
-              alt="Foto für die elektronische Gesundheitskarte online erstellen – 35x45mm, für alle gesetzlichen Krankenkassen"
-              width={1120}
-              height={480}
-              priority
-              className="w-full h-auto object-cover"
-            />
+          {/* Right: 40% */}
+          <div className="lg:col-span-2">
+            <div className=" overflow-hidden">
+              <Image
+                src="https://res.cloudinary.com/dipzpwbbk/image/upload/v1779008016/c24d89b1-ab0e-4f1d-9035-5814bc7b91ca_preview_ip9ogs.jpg"
+                alt="Foto für die elektronische Gesundheitskarte online erstellen – 35x45mm, für alle gesetzlichen Krankenkassen"
+                width={480}
+                height={640}
+                priority
+                className="w-full h-auto object-cover"
+              />
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ══════════════ WAS IST DIE EGK ══════════════ */}
-      <section className="py-20 px-4 bg-white">
-        <div className="max-w-3xl mx-auto">
+      {/* ══════════════ WIE MUSS DAS FOTO AUSSEHEN? ══════════════ */}
+      <section id="anforderungen" className="py-20 px-4 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <p className="text-lime-600 font-bold text-xs uppercase tracking-widest mb-2">Offizielle Vorgaben</p>
           <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-900 mb-4">
-            Warum braucht die Gesundheitskarte ein Foto?
+            Wie muss das Foto für die Gesundheitskarte aussehen?
           </h2>
           <p className="text-slate-600 leading-relaxed text-lg mb-4">
-            Die <strong>elektronische Gesundheitskarte (eGK)</strong> ist seit dem 1. Oktober 2011
-            der offizielle Versicherungsnachweis aller gesetzlich Versicherten in Deutschland.
-            Gesetzliche Grundlage ist <strong>§ 291 SGB V</strong>, der vorschreibt, dass die
-            Karte mit einem Lichtbild des Versicherten auszustatten ist.
+            Das Foto für die <strong>elektronische Gesundheitskarte (eGK)</strong> folgt dem gängigen Passbild-Standard. Die Krankenkasse benötigt ein Frontalbild im Format <strong>35 × 45 mm</strong>. Ihr Kopf füllt 70 bis 80 Prozent der Bildfläche aus. Sie schauen direkt in die Kamera, der Kopf sitzt mittig und ist nicht geneigt.
           </p>
           <p className="text-slate-600 leading-relaxed text-lg mb-4">
-            Das Foto dient laut AOK der eindeutigen Identifizierung beim Arztbesuch und soll
-            Kartenmissbrauch verhindern. Legt ein Versicherter die eGK vor, ist der Arzt
-            verpflichtet, die Identität anhand von Foto, Name und Geburtsdatum zu prüfen.
+            Der Hintergrund bleibt neutral und hell. Ein weißer oder hellgrauer Hintergrund ohne Muster, Schatten oder störende Elemente ist ideal. Ihre Augen sind geöffnet und klar erkennbar – auch als Brillenträger. Ein neutraler Gesichtsausdruck mit geschlossenem Mund ist ausreichend. Streng biometrische Vorgaben wie beim Reisepass verlangt die Krankenkasse nicht.
           </p>
           <p className="text-slate-600 leading-relaxed text-lg">
-            Krankenkassen sind gesetzlich verpflichtet, das Foto <strong>regelmäßig zu
-            aktualisieren</strong>. Fotos dürfen maximal 10 Jahre gespeichert werden – danach
-            erhalten Versicherte automatisch Post mit der Aufforderung, ein neues Bild
-            einzureichen. <strong>Ab dem 15. Geburtstag</strong> ist ein Foto auf der eGK
-            verpflichtend.
+            Kopfbedeckungen sind grundsätzlich untersagt. Ausnahmen gelten aus religiösen Gründen, sofern das Gesicht vollständig sichtbar bleibt. Die Kassen akzeptieren digitale Uploads meist als JPEG oder PNG mit maximal 5 MB Dateigröße. Die Kosten für die Bildaufnahme tragen Sie selbst – die Herstellung der Karte ist kostenlos.
+          </p>
+        </div>
+      </section>
+
+      {/* ══════════════ SELBER MACHEN ══════════════ */}
+      <section className="py-20 px-4 bg-slate-50 border-y border-slate-100">
+        <div className="max-w-4xl mx-auto">
+          <p className="text-lime-600 font-bold text-xs uppercase tracking-widest mb-2">Ohne Fotostudio</p>
+          <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-900 mb-4">
+            Kann man ein Foto für die Krankenkassenkarte selber machen?
+          </h2>
+          <p className="text-slate-600 leading-relaxed text-lg mb-4">
+            Ja, Sie können das Foto für Ihre Krankenkassenkarte selbst erstellen. Ein Smartphone oder eine Digitalkamera reicht vollkommen aus. Sie benötigen kein teures Fotostudio und keinen Termin. Die Aufnahme gelingt am besten bei Tageslicht vor einem neutralen Hintergrund.
+          </p>
+          <p className="text-slate-600 leading-relaxed text-lg mb-4">
+            Stellen Sie sich vor eine helle Wand oder hängen ein einfarbiges Tuch auf. Tageslicht aus einem Fenster sorgt für eine gleichmäßige Ausleuchtung ohne harte Schatten. Halten Sie die Kamera auf Augenhöhe und schauen Sie frontal hinein. Beide Wangen müssen gleichermaßen sichtbar sein. Vermeiden Sie Gegenlicht und starke Schatten im Gesicht.
+          </p>
+          <p className="text-slate-600 leading-relaxed text-lg">
+            Mit einem Online-Tool wie PixPassport schneiden Sie das Bild anschließend automatisch auf das korrekte Format zu. Die KI korrigiert Hintergrund, Belichtung und Kopfposition. So erhalten Sie ein konformes eGK-Foto in weniger als 30 Sekunden.
+          </p>
+        </div>
+      </section>
+
+      {/* ══════════════ SELBSTEMACHTE PASSBILDER ══════════════ */}
+      <section className="py-20 px-4 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <p className="text-lime-600 font-bold text-xs uppercase tracking-widest mb-2">Annahme & Qualität</p>
+          <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-900 mb-4">
+            Werden selbstgemachte Passbilder angenommen?
+          </h2>
+          <p className="text-slate-600 leading-relaxed text-lg mb-4">
+            Selbstgemachte Passbilder werden von den Krankenkassen angenommen, sofern sie die offiziellen Vorgaben erfüllen. Die AOK, Techniker Krankenkasse, Barmer, DAK und alle anderen gesetzlichen Kassen akzeptieren selbst aufgenommene Fotos, wenn diese die Qualitätskriterien treffen.
+          </p>
+          <p className="text-slate-600 leading-relaxed text-lg mb-4">
+            Entscheidend ist nicht, wer das Foto aufnimmt, sondern ob das Ergebnis den Anforderungen entspricht. Das Bild muss scharf, gut belichtet und frei von Bildbearbeitungseffekten sein. Filter, Weichzeichner oder künstliche Effekte führen zur Ablehnung. Auch ein gemusterter Hintergrund oder andere Personen im Bild verhindern die Annahme.
+          </p>
+          <p className="text-slate-600 leading-relaxed text-lg">
+            Wenn Sie das Foto über das Online-Portal Ihrer Kasse hochladen, prüft das System meist automatisch die grundlegenden Merkmale. Bei PixPassport validieren wir das Bild bereits vor dem Download auf Format, Hintergrund und Kopfgröße. So vermeiden Sie Ablehnungen und sparen Zeit.
+          </p>
+        </div>
+      </section>
+
+      {/* ══════════════ ALTER DES FOTOS ══════════════ */}
+      <section className="py-20 px-4 bg-slate-50 border-y border-slate-100">
+        <div className="max-w-4xl mx-auto">
+          <p className="text-lime-600 font-bold text-xs uppercase tracking-widest mb-2">Gültigkeit & Aktualisierung</p>
+          <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-900 mb-4">
+            Wie alt darf das Foto für die Krankenkasse sein?
+          </h2>
+          <p className="text-slate-600 leading-relaxed text-lg mb-4">
+            Das Foto für die elektronische Gesundheitskarte sollte idealerweise <strong>nicht älter als sechs Monate</strong> sein. Wichtig ist, dass Sie auf dem Bild gut wiederzuerkennen sind. Die Krankenkasse nutzt das Lichtbild zur Identifizierung bei Arztbesuchen. Ein veraltetes Foto erschwert diesen Prozess und kann zur Anforderung eines neuen Bildes führen.
+          </p>
+          <p className="text-slate-600 leading-relaxed text-lg mb-4">
+            Die gesetzlichen Krankenkassen dürfen Ihr Lichtbild maximal zehn Jahre speichern. Nach Ablauf dieser Frist oder bei deutlichen Änderungen Ihres Erscheinungsbildes erhalten Sie automatisch Post mit der Aufforderung, ein aktuelles Foto einzureichen. Das in Papierform eingereichte Foto wird nach der Übernahme in den Datenbestand datenschutzkonform vernichtet.
+          </p>
+          <p className="text-slate-600 leading-relaxed text-lg">
+            Kinder unter 15 Jahren benötigen übrigens kein Foto auf der eGK. Erst mit Vollendung des 15. Lebensjahres wird ein Lichtbild verpflichtend. Die Kasse nimmt rechtzeitig zuvor Kontakt auf, um ein aktuelles Bild anzufordern.
           </p>
         </div>
       </section>
 
       {/* ══════════════ 3 SCHRITTE ══════════════ */}
-      <section className="py-20 px-4 bg-slate-50 border-y border-slate-100">
+      <section className="py-20 px-4 bg-white">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
             <p className="text-lime-600 font-bold text-xs uppercase tracking-widest mb-2">So einfach geht&apos;s</p>
@@ -324,7 +389,7 @@ export default function GesundheitskarteFotoPage() {
           <ol className="grid sm:grid-cols-3 gap-6 list-none p-0">
             {steps.map((s) => (
               <li key={s.n} className="bg-white border border-slate-200 rounded-2xl p-7 flex flex-col gap-3">
-                <span className="w-10 h-10 rounded-xl bg-lime-600 text-white font-black text-lg flex items-center justify-center shadow-md shadow-lime-200">
+                <span className="w-10 h-10 rounded-xl bg-lime-600 text-white font-black text-lg flex items-center justify-center  shadow-lime-200">
                   {s.n}
                 </span>
                 <h3 className="font-bold text-lg text-slate-900">{s.title}</h3>
@@ -336,7 +401,7 @@ export default function GesundheitskarteFotoPage() {
       </section>
 
       {/* ══════════════ ANFORDERUNGEN TABELLE ══════════════ */}
-      <section id="anforderungen" className="py-20 px-4 bg-white">
+      <section className="py-20 px-4 bg-slate-50 border-y border-slate-100">
         <div className="max-w-4xl mx-auto">
           <div className="mb-10">
             <p className="text-lime-600 font-bold text-xs uppercase tracking-widest mb-2">Offizielle Vorgaben (AOK, Barmer, VIACTIV)</p>
@@ -344,13 +409,11 @@ export default function GesundheitskarteFotoPage() {
               Foto-Anforderungen für die eGK
             </h2>
             <p className="text-slate-500 leading-relaxed max-w-2xl">
-              Die Anforderungen basieren auf den Vorgaben der gesetzlichen Krankenkassen (AOK, Barmer,
-              VIACTIV) sowie § 291 SGB V. Alle Punkte werden von PixPassport automatisch
-              geprüft und angepasst.
+              Die Anforderungen basieren auf den Vorgaben der gesetzlichen Krankenkassen sowie § 291 SGB V. Alle Punkte werden von PixPassport automatisch geprüft und angepasst.
             </p>
           </div>
 
-          <div className="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm">
+          <div className="overflow-x-auto rounded-2xl border border-slate-200  bg-white">
             <table className="w-full text-sm text-left">
               <thead>
                 <tr className="bg-slate-50 border-b border-slate-200">
@@ -383,7 +446,7 @@ export default function GesundheitskarteFotoPage() {
       </section>
 
       {/* ══════════════ KRANKENKASSE UPLOAD TABELLE ══════════════ */}
-      <section className="py-20 px-4 bg-slate-50 border-y border-slate-100">
+      <section className="py-20 px-4 bg-white">
         <div className="max-w-4xl mx-auto">
           <div className="mb-10">
             <p className="text-lime-600 font-bold text-xs uppercase tracking-widest mb-2">Foto einreichen</p>
@@ -391,13 +454,13 @@ export default function GesundheitskarteFotoPage() {
               Foto hochladen: So geht&apos;s bei Ihrer Krankenkasse
             </h2>
             <p className="text-slate-500 leading-relaxed max-w-2xl">
-              Nach dem Download bei PixPassport können Sie das Foto direkt im Online-Portal
-              Ihrer Kasse hochladen. Sie benötigen in der Regel Ihre Versichertennummer und
+              Nach dem Download bei PixPassport übermitteln Sie das Foto direkt im Online-Portal
+              Ihrer Kasse. Sie benötigen in der Regel Ihre Versichertennummer und
               die Auftragsnummer aus dem Benachrichtigungsschreiben.
             </p>
           </div>
 
-          <div className="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm">
+          <div className="overflow-x-auto rounded-2xl border border-slate-200  bg-white">
             <table className="w-full text-sm text-left">
               <thead>
                 <tr className="bg-slate-50 border-b border-slate-200">
@@ -427,7 +490,7 @@ export default function GesundheitskarteFotoPage() {
       </section>
 
       {/* ══════════════ DO / DON'T ══════════════ */}
-      <section className="py-20 px-4 bg-white">
+      <section className="py-20 px-4 bg-slate-50 border-y border-slate-100">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
             <p className="text-lime-600 font-bold text-xs uppercase tracking-widest mb-2">Checkliste</p>
@@ -479,7 +542,7 @@ export default function GesundheitskarteFotoPage() {
       </section>
 
       {/* ══════════════ VORTEILE ══════════════ */}
-      <section className="py-20 px-4 bg-slate-50 border-y border-slate-100">
+      <section className="py-20 px-4 bg-white">
         <div className="max-w-5xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
           <div>
             <p className="text-lime-600 font-bold text-xs uppercase tracking-widest mb-2">Warum PixPassport</p>
@@ -512,13 +575,13 @@ export default function GesundheitskarteFotoPage() {
             </ul>
             <Link
               href={ctaHref}
-              className="inline-flex items-center gap-2 bg-lime-600 hover:bg-lime-700 text-white font-bold px-7 py-3.5 rounded-xl shadow-md shadow-lime-200 transition-colors"
+              className="inline-flex items-center gap-2 bg-lime-600 hover:bg-lime-700 text-white font-bold px-7 py-3.5 rounded-xl  shadow-lime-200 transition-colors"
             >
               Jetzt eGK Foto erstellen <ArrowRight />
             </Link>
           </div>
 
-          <div className="bg-gradient-to-br from-lime-50 to-lime-100 border border-lime-200 rounded-2xl p-10 grid grid-cols-2 gap-8">
+          <div className="bg-lime-50 border border-lime-200 rounded-2xl p-10 grid grid-cols-2 gap-8">
             {[
               { val: "35×45 mm", label: "Offizielles Fotoformat (eGK)" },
               { val: "< 30 Sek", label: "Bis zum fertigen Upload-Foto" },
@@ -535,8 +598,8 @@ export default function GesundheitskarteFotoPage() {
       </section>
 
       {/* ══════════════ FAQ ══════════════ */}
-      <section className="py-20 px-4 bg-white">
-        <div className="max-w-3xl mx-auto">
+      <section className="py-20 px-4 bg-slate-50 border-y border-slate-100">
+        <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <p className="text-lime-600 font-bold text-xs uppercase tracking-widest mb-2">Häufige Fragen</p>
             <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-900">
@@ -566,25 +629,7 @@ export default function GesundheitskarteFotoPage() {
         </div>
       </section>
 
-      {/* ══════════════ FINAL CTA ══════════════ */}
-      <section className="py-20 px-4 bg-lime-600">
-        <div className="max-w-3xl mx-auto text-center flex flex-col items-center gap-5">
-          <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
-            Gesundheitskarte Foto jetzt online erstellen
-          </h2>
-          <p className="text-lime-100 text-lg max-w-xl leading-relaxed">
-            Kein Termin, kein Fotostudio. Einfach Foto hochladen und in Sekunden ein
-            konformes eGK-Foto für TK, AOK, Barmer, DAK & alle gesetzlichen
-            Krankenkassen erhalten.
-          </p>
-          <Link
-            href={ctaHref}
-            className="inline-flex items-center gap-2 bg-white text-lime-700 hover:bg-lime-50 font-bold text-lg px-9 py-4 rounded-xl shadow-lg transition-colors"
-          >
-            Jetzt Foto hochladen <ArrowRight />
-          </Link>
-        </div>
-      </section>
+    
 
     </main>
   );
