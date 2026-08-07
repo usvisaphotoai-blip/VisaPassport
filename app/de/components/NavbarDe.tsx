@@ -11,6 +11,7 @@ const navLinks = [
   { href: "/de/fuehrerschein-foto", label: "Führerschein" },
   { href: "/de/visum-foto", label: de.nav.visaPhoto },
   { href: "/de/bewerbungsfoto", label: "Bewerbung" },
+  { href: "/de/guides", label: "Ratgeber" },
 ];
 
 export default function NavbarDe() {

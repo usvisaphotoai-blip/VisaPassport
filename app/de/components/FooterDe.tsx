@@ -18,6 +18,7 @@ export default function FooterDe() {
       title: de.footer.sections.tools,
       items: [
         { label: de.nav.home, href: "/de" },
+        { label: "Ratgeber & Guides", href: "/de/guides" },
         { label: "Foto erstellen", href: "/de/passbild-online" },
         { label: "Drucken bei Rossmann", href: "/de/passbild-online" },
         { label: "Baby Passfotos", href: "/de/biometrisches-passbild" },

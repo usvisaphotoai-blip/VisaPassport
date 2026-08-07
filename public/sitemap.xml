@@ -2110,6 +2110,20 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.pixpassport.com/de/guides</loc>
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://www.pixpassport.com/de/guides" />
+    <lastmod>2026-08-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/de/guides/biometrisches-passfoto-anforderungen-deutschland</loc>
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://www.pixpassport.com/de/guides/biometrisches-passfoto-anforderungen-deutschland" />
+    <lastmod>2026-08-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://www.pixpassport.com/2x2-picture-editor</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/2x2-picture-editor-in-en" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/2x2-picture-editor-in-en" />

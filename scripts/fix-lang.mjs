@@ -75,18 +75,26 @@ function processFile(filePath, targetLang) {
   let content = fs.readFileSync(filePath, 'utf-8');
   let modified = false;
 
-  if (targetLang && content.includes('<html lang="en"')) {
-    content = content.replace(/<html lang="en"/g, `<html lang="${targetLang}"`);
-    modified = true;
+  if (targetLang) {
+    if (/<html([^>]*)\blang=["']en["']/i.test(content)) {
+      content = content.replace(/<html([^>]*)\blang=["']en["']/gi, `<html$1lang="${targetLang}"`);
+      modified = true;
+    }
+    if (content.includes('"lang":"en"')) {
+      content = content.replace(/"lang":"en"/g, `"lang":"${targetLang}"`);
+      modified = true;
+    }
   }
 
-  const route = getRouteFromPath(filePath, NEXT_SERVER_DIR, targetLang);
-  const cleanRoute = route === '/' ? '' : (route.endsWith('/') ? route.slice(0, -1) : route);
-  const hreflangTags = generateHreflangTags(cleanRoute, false);
+  if (filePath.endsWith('.html')) {
+    const route = getRouteFromPath(filePath, NEXT_SERVER_DIR, targetLang);
+    const cleanRoute = route === '/' ? '' : (route.endsWith('/') ? route.slice(0, -1) : route);
+    const hreflangTags = generateHreflangTags(cleanRoute, false);
 
-  if (hreflangTags && content.includes('</head>') && !content.includes('hreflang="x-default"')) {
-    content = content.replace('</head>', `${hreflangTags}</head>`);
-    modified = true;
+    if (hreflangTags && content.includes('</head>') && !content.includes('hreflang="x-default"')) {
+      content = content.replace('</head>', `${hreflangTags}</head>`);
+      modified = true;
+    }
   }
 
   if (modified) {
@@ -103,7 +111,7 @@ function walkDir(dir, targetLang) {
     const fullPath = path.join(dir, file);
     if (fs.statSync(fullPath).isDirectory()) {
       walkDir(fullPath, targetLang);
-    } else if (fullPath.endsWith('.html')) {
+    } else if (fullPath.endsWith('.html') || fullPath.endsWith('.rsc')) {
       processFile(fullPath, targetLang);
     }
   }
