@@ -12,12 +12,7 @@
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
-  <url>
-    <loc>https://www.pixpassport.com/tool</loc>
-    <lastmod>2026-04-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
+
     <url>
     <loc>https://www.pixpassport.com/passport-photo-maker</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/passport-photo-maker" />
@@ -267,19 +262,7 @@
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
     </image:image>
   </url>
-  
-  <url>
-    <loc>https://www.pixpassport.com/bangladesh-passport-photo-editor</loc>
-    <lastmod>2026-04-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.pixpassport.com/bangladesh-visa-photo-editor</loc>
-    <lastmod>2026-04-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
+
   
   <!-- BELGIUM (Schengen) -->
   <url>
@@ -656,33 +639,6 @@
     </image:image>
   </url>
 
-  <!-- ICELAND (Schengen) -->
-  <url>
-    <loc>https://www.pixpassport.com/iceland-passport-photo-editor</loc>
-    <lastmod>2026-04-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
-    </image:image>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://www.pixpassport.com/iceland-visa-photo-editor</loc>
-    <lastmod>2026-04-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
-    </image:image>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
-    </image:image>
-  </url>
 
   <url>
     <loc>https://www.pixpassport.com/india-passport-photo-editor</loc>
@@ -862,34 +818,7 @@
     </image:image>
   </url>
 
-  <!-- LIECHTENSTEIN (Schengen) -->
-  <url>
-    <loc>https://www.pixpassport.com/liechtenstein-passport-photo-editor</loc>
-    <lastmod>2026-04-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
   
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
-    </image:image>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://www.pixpassport.com/liechtenstein-visa-photo-editor</loc>
-    <lastmod>2026-04-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
-    </image:image>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
-    </image:image>
-  </url>
-
   <!-- LITHUANIA (Schengen) -->
   <url>
     <loc>https://www.pixpassport.com/lithuania-passport-photo-editor</loc>
@@ -1649,18 +1578,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
-  <url>
-    <loc>https://www.pixpassport.com/vietnam-passport-photo-editor</loc>
-    <lastmod>2026-04-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.pixpassport.com/vietnam-visa-photo-editor</loc>
-    <lastmod>2026-04-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
+
   <url>
     <loc>https://www.pixpassport.com/yemen-passport-photo-editor</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/yemen-passport-photo-editor" />
@@ -2123,14 +2041,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
-  <url>
-    <loc>https://www.pixpassport.com/2x2-picture-editor</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/2x2-picture-editor-in-en" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/2x2-picture-editor-in-en" />
-    <lastmod>2026-07-08</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
+
   <url>
     <loc>https://www.pixpassport.com/america-visa-size-photo</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/america-visa-size-photo" />
