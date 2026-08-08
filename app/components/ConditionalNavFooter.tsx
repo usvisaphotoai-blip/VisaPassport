@@ -13,8 +13,8 @@ export default function ConditionalNavFooter({
   footer: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const isFrench = pathname?.startsWith("/fr");
-  const isGerman = pathname?.startsWith("/de");
+  const isFrench = pathname === "/fr" || pathname?.startsWith("/fr/");
+  const isGerman = pathname === "/de" || pathname?.startsWith("/de/");
   const isLocalized = isFrench || isGerman;
 
   useEffect(() => {

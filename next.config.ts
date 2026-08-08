@@ -48,6 +48,17 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // Normalize ICAO slashes
+      {
+        source: "/icao-/-eu-visa-photo-editor",
+        destination: "/icao-visa-photo-editor",
+        permanent: true,
+      },
+      {
+        source: "/icao-/-eu-passport-photo-editor",
+        destination: "/icao-passport-photo-editor",
+        permanent: true,
+      },
       // Normalize United States -> US
       {
         source: "/united-states-passport-photo-editor",

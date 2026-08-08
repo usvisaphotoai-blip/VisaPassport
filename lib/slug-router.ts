@@ -52,7 +52,12 @@ export const getRouteBySlug = cache((slug: string): RouteData | null => {
     const spec = specsMap.get(specId);
     if (spec) {
       const isVisaUrl = slug.includes("visa");
-      const normalizedBase = getShortId(spec.country.toLowerCase().replace(/\s+/g, "-"));
+      const normalizedBase = getShortId(
+        spec.country
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, "-")
+          .replace(/^-+|-+$/g, "")
+      );
       const canonicalSlug = isVisaUrl
         ? `${normalizedBase}-visa-photo-editor`
         : `${normalizedBase}-passport-photo-editor`;

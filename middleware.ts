@@ -2,6 +2,15 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export function middleware(req: NextRequest) {
+  const host = req.headers.get('host') || '';
+  
+  // 301 Redirect non-www to www (pixpassport.com -> www.pixpassport.com)
+  if (host === 'pixpassport.com') {
+    const url = req.nextUrl.clone();
+    url.host = 'www.pixpassport.com';
+    return NextResponse.redirect(url, 301);
+  }
+
   const acceptHeader = req.headers.get('accept') || '';
   
   // If the request accepts text/markdown and is not already an API route

@@ -42,9 +42,12 @@ export default function LanguageSwitcher() {
 
     const googtrans = getCookie("googtrans");
 
-    if (pathname.startsWith("/de")) {
+    const isDeRoute = pathname === "/de" || pathname.startsWith("/de/");
+    const isFrRoute = pathname === "/fr" || pathname.startsWith("/fr/");
+
+    if (isDeRoute) {
       setCurrentLang("de");
-    } else if (pathname.startsWith("/fr")) {
+    } else if (isFrRoute) {
       setCurrentLang("fr");
     } else if (googtrans) {
       // googtrans format: /en/es
@@ -57,7 +60,7 @@ export default function LanguageSwitcher() {
     }
 
     // Only load Google Translate script if non-native translation cookie is active
-    if (googtrans && !pathname.startsWith("/de") && !pathname.startsWith("/fr")) {
+    if (googtrans && !isDeRoute && !isFrRoute) {
       if (!document.getElementById("google-translate-script")) {
         const script = document.createElement("script");
         script.id = "google-translate-script";
@@ -100,7 +103,9 @@ export default function LanguageSwitcher() {
       document.cookie = `googtrans=/en/${lang}; path=/`; // Also set without domain
       
       // Navigate to home page to avoid translating the native localized pages
-      if (pathname.startsWith("/de") || pathname.startsWith("/fr")) {
+      const isDeRoute = pathname === "/de" || pathname.startsWith("/de/");
+      const isFrRoute = pathname === "/fr" || pathname.startsWith("/fr/");
+      if (isDeRoute || isFrRoute) {
         window.location.href = "/";
       } else {
         window.location.reload();

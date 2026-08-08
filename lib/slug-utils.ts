@@ -39,7 +39,9 @@ export function getShortId(id: string): string {
     .replace("ds-160", "us")
     .replace("united-states", "us")
     .replace("united-kingdom", "uk")
-    .replace("united-arab-emirates", "uae");
+    .replace("united-arab-emirates", "uae")
+    .replace("icao-/-eu", "icao")
+    .replace("icao-eu", "icao");
 }
 
 /**
@@ -127,7 +129,7 @@ export function getAllSlugs(): string[] {
   const uniqueCountries = Array.from(new Set(specs.map(s => s.country)));
   
   uniqueCountries.forEach(country => {
-    const base = country.toLowerCase().replace(/\s+/g, "-");
+    const base = country.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
     // Normalize certain country bases to match SEO preferences (e.g. United States -> us)
     const normalizedBase = getShortId(base);
     
