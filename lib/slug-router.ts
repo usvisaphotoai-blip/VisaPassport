@@ -88,7 +88,7 @@ export function createMetadata({
   openGraph,
 }: MetadataOptions): Metadata {
   return {
-    title,
+    title: { absolute: title },
     description,
     ...(keywords && { keywords }),
     alternates: { canonical },

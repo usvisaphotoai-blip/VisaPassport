@@ -405,7 +405,7 @@ export default function HomeHero() {
                 alt: "4x6 print sheet",
                 label: "Print Template",
                 note: "Ready-to-print 4×6 inch sheet with crop guides",
-                href: "https://www.photoresizer.co.in/passport-photo-print-template-generator",
+                href: "https://www.pixpassport.com/passport-photo-print-template-generator",
               },
             ].map((item, i) => (
               <div

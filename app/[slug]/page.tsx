@@ -76,7 +76,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         ? `${spec.country} Visa Photo Online (2026) | ${spec.width_mm}x${spec.height_mm}mm`
         : `${spec.country} Passport Photo Maker (2026) | 100% Approved`;
 
-      const description = `Create your ${spec.country} ${intentLabel.toLowerCase()} photo in 2 mins. Guaranteed acceptance or money back. ${spec.width_mm}x${spec.height_mm}mm requirements with automatic cropping and background checks.`;
+      const description = `Create your ${spec.country} ${intentLabel.toLowerCase()} photo online in 2 mins. ${spec.width_mm}x${spec.height_mm}mm with automatic cropping and background checks.`;
 
       return createMetadata({
         title,

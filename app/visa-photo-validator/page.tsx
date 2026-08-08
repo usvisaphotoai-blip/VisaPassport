@@ -2,8 +2,8 @@ import React from "react";
 import ValidatorClient from "./components/ValidatorClient";
 
 export const metadata = {
-  title: "Visa Photo Validator | Professional Biometric Analysis",
-  description: "Independent embassy-grade visa photo validation system using AI biometric analysis.",
+  title: "Visa Photo Validator – Passport & Biometric Photo Checker",
+  description: "Validate passport and visa photos online with automatic biometric checks for face position, head size, background, lighting and photo requirements.",
 };
 
 export default function VisaPhotoValidatorPage() {

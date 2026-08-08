@@ -7,7 +7,7 @@ import UKBeforeAfterSlider from "./components/UKBeforeAfterSlider";
 export const metadata: Metadata = {
   title: "UK Passport Size Photo Maker & Visa Photo Tool HMPO Compliant",
   description:
-    "Create UK passport, visa, and ID photos online. 100% compliant for HMPO, DVLA Driving Licences, Railcards, and BRP in under a minute.",
+    "Create UK passport, visa and ID photos online with automatic cropping, background checks and UK photo requirements for passports and driving licences.",
   alternates: {
     canonical: "https://www.pixpassport.com/uk",
   },
@@ -88,7 +88,7 @@ const officialUKSources = [
   {
     agency: "International Civil Aviation Org",
     doc: "Doc 9303 Biometric Specifications",
-    url: "https://www.icao.int/publications/pages/publication.aspx?docnum=9303",
+    url: "https://www.icao.int/publications/doc-series/doc-9303",
     note: "Global biometric standard enforced across all UK travel documents.",
     badge: "ICAO",
   },

@@ -4,7 +4,7 @@ import Head from "next/head";
 
 export const metadata: Metadata = {
   title:
-    "Passport Photo Maker & Visa Photo Tool for 50+ Countries | PixPassport",
+    "Passport Size Photo Maker & Visa ID Photo Creator Online",
 
 description:
   "Passport size photo maker for 50+ countries. Create visa, ID, and passport photos with AI biometric validation, background removal, and auto crop.",

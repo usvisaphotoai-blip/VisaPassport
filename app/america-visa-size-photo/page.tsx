@@ -6,9 +6,9 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "America Visa Size Photo – Free Online 2x2 Photo Maker (2026)",
+  title: "US Visa Photo – 2x2 Inch Online Photo Maker",
   description:
-    "Create a compliant America visa size photo online in seconds. Upload a selfie and generate a 2x2 inch US visa photo that meets DS-160 and US passport requirements.",
+    "Create a US visa photo online in seconds. Generate a 2x2 inch photo for US visa and passport applications with automatic cropping and background checks.",
   alternates: {
     canonical: "/america-visa-size-photo",
   },

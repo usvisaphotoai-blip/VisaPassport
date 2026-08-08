@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://www.pixpassport.com/"),
   title: {
     default: "PixPassport | Biometrische Passbilder & Visumfotos Online",
-    template: "%s | PixPassport",
+    template: "%s",
   },
   description:
     "Erstellen Sie biometrische Passbilder, Visumfotos oder Bewerbungsfotos online. KI-gestützte biometrische Prüfung für Deutschland, Österreich, Schweiz und über 50 weitere Länder.",

@@ -122,7 +122,7 @@ const officialSources = [
   {
     agency: "International Civil Aviation Org",
     doc: "Doc 9303 Machine Readable Travel Documents",
-    url: "https://www.icao.int/publications/pages/publication.aspx?docnum=9303",
+    url: "https://www.icao.int/publications/doc-series/doc-9303",
     note: "The global standard for biometric passport photos.",
     badge: "ICAO",
   },
@@ -143,7 +143,7 @@ const officialSources = [
   {
     agency: "EU Commission",
     doc: "Schengen Visa Photo Standards",
-    url: "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en",
+    url: "https://home-affairs.ec.europa.eu/policies/schengen/visa-policy_en",
     note: "European standards for Schengen visa applications.",
     badge: "EU Visa",
   },

@@ -3,17 +3,15 @@ import PrintTemplateApp from "./PrintTemplateApp";
 import { Suspense } from "react";
 
 export const metadata: Metadata = {
-  title: "Passport Photo Print Template Generator – Print at Home",
-  description:
-    "Create a printable passport photo sheet instantly. Upload one passport photo and generate multiple copies on A4, 4×6, or custom paper sizes. Free online template tool.",
+  "title": "Passport Photo Print Template – Print at Home",
+  "description": "Create a passport photo print sheet online. Generate multiple copies on A4, 4×6, or custom paper sizes with an easy print-at-home template.",
   alternates: {
     canonical:
       "https://www.pixpassport.com/passport-photo-print-template-generator",
   },
   openGraph: {
-    title: "Passport Photo Print Template Generator",
-    description:
-      "Create a printable passport photo sheet instantly. Generate multiple copies on A4, 4×6, or custom paper sizes.",
+    "title": "Passport Photo Print Template – Print at Home",
+  "description": "Create a passport photo print sheet online. Generate multiple copies on A4, 4×6, or custom paper sizes with an easy print-at-home template.",
     type: "website",
     url: "https://www.pixpassport.com/passport-photo-print-template-generator",
   },

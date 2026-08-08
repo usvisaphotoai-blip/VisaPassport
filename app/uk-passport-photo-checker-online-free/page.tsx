@@ -6,9 +6,9 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "UK Passport Photo Checker Online Free | Instant GOV.UK Compliance Check",
+  title: "UK Passport Photo Checker – Requirements & Online Check",
   description:
-    "Free UK passport photo checker online. Upload your photo and instantly verify it meets official GOV.UK passport photo requirements — size, background, lighting and more. No sign-up needed.",
+    "Check your UK passport photo online against size, background, lighting and biometric requirements. Instant photo validation with no sign-up required.",
   alternates: {
     canonical: "https://www.pixpassport.com/uk-passport-photo-checker-online-free",
   },
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     apple: "/apple-touch-icon.png",
   },
   openGraph: {
-    title: "UK Passport Photo Checker Online Free | Instant GOV.UK Compliance Check",
+    title: "UK Passport Photo Checker – Requirements & Online Check",
     description:
       "Free UK passport photo checker online. Upload your photo and instantly verify it meets official GOV.UK passport photo requirements.",
     url: "https://www.pixpassport.com/uk-passport-photo-checker-online-free",
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "UK Passport Photo Checker Online Free | Instant GOV.UK Compliance Check",
+    title: "UK Passport Photo Checker – Requirements & Online Check",
     description:
       "Free UK passport photo checker online. Upload your photo and instantly verify GOV.UK passport photo compliance.",
     images: ["https://res.cloudinary.com/dipzpwbbk/image/upload/v1784690540/uk-hero_m4cc8l.webp"],

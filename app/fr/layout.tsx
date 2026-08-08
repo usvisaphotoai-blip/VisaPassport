@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://www.pixpassport.com/"),
   title: {
     default: "PixPassport | Photo Passeport & Visa en Ligne",
-    template: "%s | PixPassport",
+    template: "%s",
   },
   description:
     "Créez une photo passeport, visa ou identité conforme en ligne. Vérification biométrique IA pour plus de 50 pays dont la France, les États-Unis et le Royaume-Uni.",

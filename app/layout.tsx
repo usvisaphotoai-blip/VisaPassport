@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://www.pixpassport.com/"),
   title: {
     default: "PixPassport | Instant Global Passport & Visa Photo Tool",
-    template: "%s | PixPassport",
+    template: "%s",
   },
   description:
     "Global passport Photo Maker, visa, and ID photo tool. Get 100% compliant biometric photos for 50+ countries including US, UK, India, and Australia. Professional-grade background normalization and cropping.",
