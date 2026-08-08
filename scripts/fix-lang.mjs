@@ -60,11 +60,11 @@ function generateHreflangTags(cleanRoute, isSitemap = false) {
   }
   
   if (hasFr) {
-    tags.push(`${prefix} rel="alternate" hreflang="fr-FR" href="${BASE_URL}/fr${cleanRoute}" ${tagEnd}`);
+    tags.push(`${prefix} rel="alternate" hreflang="fr" href="${BASE_URL}/fr${cleanRoute}" ${tagEnd}`);
   }
   
   if (hasDe) {
-    tags.push(`${prefix} rel="alternate" hreflang="de-DE" href="${BASE_URL}/de${cleanRoute}" ${tagEnd}`);
+    tags.push(`${prefix} rel="alternate" hreflang="de" href="${BASE_URL}/de${cleanRoute}" ${tagEnd}`);
   }
 
   // Always emit x-default if any hreflang annotation is present
@@ -112,7 +112,8 @@ function processFile(filePath, targetLang) {
     const cleanRoute = route === '/' ? '' : (route.endsWith('/') ? route.slice(0, -1) : route);
     const hreflangTags = generateHreflangTags(cleanRoute, false);
 
-    if (hreflangTags && content.includes('</head>') && !content.includes('hreflang="x-default"')) {
+    // Only inject if no hreflang tags were rendered by Next.js metadata
+    if (hreflangTags && content.includes('</head>') && !content.includes('hreflang=')) {
       content = content.replace('</head>', `${hreflangTags}</head>`);
       modified = true;
     }

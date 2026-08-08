@@ -9,6 +9,22 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://www.pixpassport.com/about",
   },
+  openGraph: {
+    title: "About Us - PixPassport",
+    description: "Learn about PixPassport's mission, our advanced biometric Compliance Processing technology, and our strict commitment to your data privacy.",
+    url: "https://www.pixpassport.com/about",
+    siteName: "PixPassport",
+    images: [
+      {
+        url: "https://www.pixpassport.com/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "PixPassport - About Us",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
 };
 
 export default function AboutPage() {

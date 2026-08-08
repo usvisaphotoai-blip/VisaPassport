@@ -1,26 +1,11 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display, DM_Sans } from "next/font/google";
+import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import AuthProvider from "./components/AuthProvider";
 import ConditionalNavFooter from "./components/ConditionalNavFooter";
-// import AnalyticsTracker from "./components/AnalyticsTracker";
 import Script from "next/script";
-import { Suspense } from "react";
-// import RecentSaleNotification from "./components/RecentSaleNotification";
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
-  subsets: ["latin"],
-  display: "swap",
-});
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
@@ -90,7 +75,7 @@ export default function RootLayout({
 
       <body
         suppressHydrationWarning
-        className={`${inter.variable} ${playfair.variable} ${dmSans.variable} antialiased bg-white text-slate-900`}
+        className={`${dmSans.variable} antialiased bg-white text-slate-900`}
       >
      
         <AuthProvider>

@@ -11,6 +11,22 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://www.pixpassport.com/visa-photo",
   },
+  openGraph: {
+    title: "Official Visa Photo Requirements & Sizes | International Visa Portal",
+    description: "Explore official visa photo specifications for over 50 countries. Our database includes technical requirements for DS-160, eVisas, and consular submissions.",
+    url: "https://www.pixpassport.com/visa-photo",
+    siteName: "PixPassport",
+    images: [
+      {
+        url: "https://www.pixpassport.com/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "PixPassport - Visa Photo Requirements",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
 };
 
 export default function VisaDirectoryPage() {

@@ -11,6 +11,22 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://www.pixpassport.com/passport-photos",
   },
+  openGraph: {
+    title: "Official Passport Photo Sizes & Requirements by Country | PixPassport",
+    description: "Browse the complete database of 2026 passport photo requirements for over 50 countries. Find dimensions, background rules, and creates compliant photos instantly.",
+    url: "https://www.pixpassport.com/passport-photos",
+    siteName: "PixPassport",
+    images: [
+      {
+        url: "https://www.pixpassport.com/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "PixPassport - Passport Photo Directory",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
 };
 
 export default function PassportDirectoryPage() {

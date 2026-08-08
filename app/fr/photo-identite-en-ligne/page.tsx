@@ -15,9 +15,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://www.pixpassport.com/fr/photo-identite-en-ligne",
     languages: {
-      en: "https://www.pixpassport.com/make-passport-photo-online-free",
+      en: "https://www.pixpassport.com/passport-photo-online",
       fr: "https://www.pixpassport.com/fr/photo-identite-en-ligne",
-      "x-default": "https://www.pixpassport.com/make-passport-photo-online-free",
+      "x-default": "https://www.pixpassport.com/passport-photo-online",
     },
   },
   openGraph: {

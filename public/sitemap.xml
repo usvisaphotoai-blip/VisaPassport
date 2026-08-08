@@ -5,8 +5,8 @@
   <url>
     <loc>https://www.pixpassport.com</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com" />
-    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.pixpassport.com/fr" />
-    <xhtml:link rel="alternate" hreflang="de-DE" href="https://www.pixpassport.com/de" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.pixpassport.com/fr" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.pixpassport.com/de" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com" />
     <lastmod>2026-07-27</lastmod>
     <changefreq>weekly</changefreq>
@@ -1766,8 +1766,8 @@
   <url>
     <loc>https://www.pixpassport.com/fr</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com" />
-    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.pixpassport.com/fr" />
-    <xhtml:link rel="alternate" hreflang="de-DE" href="https://www.pixpassport.com/de" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.pixpassport.com/fr" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.pixpassport.com/de" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com" />
     <lastmod>2026-05-17</lastmod>
     <changefreq>weekly</changefreq>
@@ -1782,7 +1782,7 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/fr/ephoto-ants</loc>
-    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.pixpassport.com/fr/ephoto-ants" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.pixpassport.com/fr/ephoto-ants" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/fr/ephoto-ants" />
     <lastmod>2026-05-17</lastmod>
     <changefreq>weekly</changefreq>
@@ -1797,7 +1797,7 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/fr/photo-carte-identite</loc>
-    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.pixpassport.com/fr/photo-carte-identite" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.pixpassport.com/fr/photo-carte-identite" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/fr/photo-carte-identite" />
     <lastmod>2026-05-17</lastmod>
     <changefreq>weekly</changefreq>
@@ -1812,7 +1812,7 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/fr/photo-identite-en-ligne</loc>
-    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.pixpassport.com/fr/photo-identite-en-ligne" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.pixpassport.com/fr/photo-identite-en-ligne" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/fr/photo-identite-en-ligne" />
     <lastmod>2026-07-27</lastmod>
     <changefreq>weekly</changefreq>
@@ -1820,7 +1820,7 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/fr/photo-identite</loc>
-    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.pixpassport.com/fr/photo-identite" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.pixpassport.com/fr/photo-identite" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/fr/photo-identite" />
     <lastmod>2026-07-27</lastmod>
     <changefreq>weekly</changefreq>
@@ -1835,7 +1835,7 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/fr/photo-passeport</loc>
-    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.pixpassport.com/fr/photo-passeport" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.pixpassport.com/fr/photo-passeport" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/fr/photo-passeport" />
     <lastmod>2026-07-27</lastmod>
     <changefreq>weekly</changefreq>
@@ -1850,7 +1850,7 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/fr/photo-passeport-biometrique</loc>
-    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.pixpassport.com/fr/photo-passeport-biometrique" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.pixpassport.com/fr/photo-passeport-biometrique" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/fr/photo-passeport-biometrique" />
     <lastmod>2026-05-17</lastmod>
     <changefreq>weekly</changefreq>
@@ -1865,7 +1865,7 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/fr/photo-visa</loc>
-    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.pixpassport.com/fr/photo-visa" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.pixpassport.com/fr/photo-visa" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/fr/photo-visa" />
     <lastmod>2026-05-17</lastmod>
     <changefreq>weekly</changefreq>
@@ -1881,7 +1881,7 @@
   <url>
     <loc>https://www.pixpassport.com/passport-photo-online</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/passport-photo-online" />
-    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.pixpassport.com/fr/passport-photo-online" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.pixpassport.com/fr/passport-photo-online" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/passport-photo-online" />
     <lastmod>2026-06-10</lastmod>
     <changefreq>weekly</changefreq>
@@ -1890,7 +1890,7 @@
   <url>
     <loc>https://www.pixpassport.com/fr/passport-photo-online</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/passport-photo-online" />
-    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.pixpassport.com/fr/passport-photo-online" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.pixpassport.com/fr/passport-photo-online" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/passport-photo-online" />
     
     <lastmod>2026-05-17</lastmod>
@@ -1906,8 +1906,8 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/fr/guides</loc>
-    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.pixpassport.com/fr/guides" />
-    <xhtml:link rel="alternate" hreflang="de-DE" href="https://www.pixpassport.com/de/guides" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.pixpassport.com/fr/guides" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.pixpassport.com/de/guides" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/blog" />
     <lastmod>2026-05-17</lastmod>
     <changefreq>weekly</changefreq>
@@ -1922,7 +1922,7 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/fr/guides/how-to-take-passport-photo-at-home</loc>
-    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.pixpassport.com/fr/guides/how-to-take-passport-photo-at-home" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.pixpassport.com/fr/guides/how-to-take-passport-photo-at-home" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/blog" />
     <lastmod>2026-05-17</lastmod>
     <changefreq>weekly</changefreq>
@@ -1937,7 +1937,7 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/fr/guides/passport-photo-background</loc>
-    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.pixpassport.com/fr/guides/passport-photo-background" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.pixpassport.com/fr/guides/passport-photo-background" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/blog" />
     <lastmod>2026-05-17</lastmod>
     <changefreq>weekly</changefreq>
@@ -1952,7 +1952,7 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/fr/guides/passport-photo-size</loc>
-    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.pixpassport.com/fr/guides/passport-photo-size" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.pixpassport.com/fr/guides/passport-photo-size" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/blog" />
     <lastmod>2026-07-27</lastmod>
     <changefreq>weekly</changefreq>
@@ -1967,7 +1967,7 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/fr/guides/photo-identite-france-passeport-cni-ephoto-permis-visa</loc>
-    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.pixpassport.com/fr/guides/photo-identite-france-passeport-cni-ephoto-permis-visa" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.pixpassport.com/fr/guides/photo-identite-france-passeport-cni-ephoto-permis-visa" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/blog" />
     <lastmod>2026-07-27</lastmod>
     <changefreq>weekly</changefreq>
@@ -1987,8 +1987,8 @@
   <url>
     <loc>https://www.pixpassport.com/de</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com" />
-    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.pixpassport.com/fr" />
-    <xhtml:link rel="alternate" hreflang="de-DE" href="https://www.pixpassport.com/de" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.pixpassport.com/fr" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.pixpassport.com/de" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com" />
     <lastmod>2026-06-12</lastmod>
     <changefreq>weekly</changefreq>
@@ -1996,7 +1996,7 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/de/bewerbungsfoto</loc>
-    <xhtml:link rel="alternate" hreflang="de-DE" href="https://www.pixpassport.com/de/bewerbungsfoto" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.pixpassport.com/de/bewerbungsfoto" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/de/bewerbungsfoto" />
    <lastmod>2026-07-23</lastmod>
     <changefreq>weekly</changefreq>
@@ -2004,7 +2004,7 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/de/biometrisches-passbild</loc>
-    <xhtml:link rel="alternate" hreflang="de-DE" href="https://www.pixpassport.com/de/biometrisches-passbild" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.pixpassport.com/de/biometrisches-passbild" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/de/biometrisches-passbild" />
     <lastmod>2026-08-04</lastmod>
     <changefreq>weekly</changefreq>
@@ -2012,7 +2012,7 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/de/fuehrerschein-foto</loc>
-    <xhtml:link rel="alternate" hreflang="de-DE" href="https://www.pixpassport.com/de/fuehrerschein-foto" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.pixpassport.com/de/fuehrerschein-foto" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/de/fuehrerschein-foto" />
    <lastmod>2026-07-23</lastmod>
     <changefreq>weekly</changefreq>
@@ -2020,7 +2020,7 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/de/gesundheitskarte-foto</loc>
-    <xhtml:link rel="alternate" hreflang="de-DE" href="https://www.pixpassport.com/de/gesundheitskarte-foto" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.pixpassport.com/de/gesundheitskarte-foto" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/de/gesundheitskarte-foto" />
    <lastmod>2026-08-05</lastmod>
     <changefreq>weekly</changefreq>
@@ -2028,7 +2028,7 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/de/passbild-online</loc>
-    <xhtml:link rel="alternate" hreflang="de-DE" href="https://www.pixpassport.com/de/passbild-online" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.pixpassport.com/de/passbild-online" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/de/passbild-online" />
    <lastmod>2026-07-23</lastmod>
     <changefreq>weekly</changefreq>
@@ -2036,7 +2036,7 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/de/visum-foto</loc>
-    <xhtml:link rel="alternate" hreflang="de-DE" href="https://www.pixpassport.com/de/visum-foto" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.pixpassport.com/de/visum-foto" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/de/visum-foto" />
     <lastmod>2026-07-23</lastmod>
     <changefreq>weekly</changefreq>
@@ -2044,8 +2044,8 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/de/guides</loc>
-    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.pixpassport.com/fr/guides" />
-    <xhtml:link rel="alternate" hreflang="de-DE" href="https://www.pixpassport.com/de/guides" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.pixpassport.com/fr/guides" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.pixpassport.com/de/guides" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/blog" />
     <lastmod>2026-08-07</lastmod>
     <changefreq>weekly</changefreq>
@@ -2053,7 +2053,7 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/de/guides/biometrisches-passfoto-anforderungen-deutschland</loc>
-    <xhtml:link rel="alternate" hreflang="de-DE" href="https://www.pixpassport.com/de/guides/biometrisches-passfoto-anforderungen-deutschland" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.pixpassport.com/de/guides/biometrisches-passfoto-anforderungen-deutschland" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/blog" />
     <lastmod>2026-08-07</lastmod>
     <changefreq>weekly</changefreq>
