@@ -180,7 +180,7 @@ export default function ProgrammaticLandingPage({ spec, slug }: Props) {
       <section className="py-16 bg-[#f8faf9] border-y border-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl font-bold text-slate-900 text-center mb-10">Explore More Resources</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10">
             <Link href="/passport-photos" className="group bg-white p-6 rounded-2xl border border-slate-100 text-center hover:shadow-lg hover:border-blue-200 transition-all">
               <span className="text-2xl block mb-3">🛂</span>
               <span className="text-sm font-bold text-slate-900 group-hover:text-blue-600 block">Passport Directory</span>
@@ -201,6 +201,22 @@ export default function ProgrammaticLandingPage({ spec, slug }: Props) {
               <span className="text-sm font-bold text-slate-900 group-hover:text-amber-600 block">Blog & Guides</span>
               <p className="text-xs text-slate-500 mt-1">Expert advice</p>
             </Link>
+          </div>
+
+          <div className="pt-8 border-t border-slate-200">
+            <h3 className="text-sm font-bold text-slate-700 mb-4 text-center">Popular Sizing & Photo Checker Tools</h3>
+            <div className="flex flex-wrap justify-center gap-2">
+              <Link href="/america-passport-photo" className="text-xs text-slate-600 hover:text-blue-600 bg-white px-3 py-1.5 rounded-lg border border-slate-200 font-medium">America Passport Photo</Link>
+              <Link href="/photo-for-american-visa" className="text-xs text-slate-600 hover:text-blue-600 bg-white px-3 py-1.5 rounded-lg border border-slate-200 font-medium">Photo for American Visa</Link>
+              <Link href="/america-passport-size" className="text-xs text-slate-600 hover:text-blue-600 bg-white px-3 py-1.5 rounded-lg border border-slate-200 font-medium">America Passport Size</Link>
+              <Link href="/america-passport-size-photo" className="text-xs text-slate-600 hover:text-blue-600 bg-white px-3 py-1.5 rounded-lg border border-slate-200 font-medium">America Passport Size Photo</Link>
+              <Link href="/america-passport-photo-size" className="text-xs text-slate-600 hover:text-blue-600 bg-white px-3 py-1.5 rounded-lg border border-slate-200 font-medium">America Passport Photo Size</Link>
+              <Link href="/american-passport-pic" className="text-xs text-slate-600 hover:text-blue-600 bg-white px-3 py-1.5 rounded-lg border border-slate-200 font-medium">American Passport Pic</Link>
+              <Link href="/american-passport-picture-size" className="text-xs text-slate-600 hover:text-blue-600 bg-white px-3 py-1.5 rounded-lg border border-slate-200 font-medium">American Passport Picture Size</Link>
+              <Link href="/canada-visa-size-photo" className="text-xs text-slate-600 hover:text-blue-600 bg-white px-3 py-1.5 rounded-lg border border-slate-200 font-medium">Canada Visa Size Photo</Link>
+              <Link href="/uk-passport-photo-checker-online-free" className="text-xs text-slate-600 hover:text-blue-600 bg-white px-3 py-1.5 rounded-lg border border-slate-200 font-medium">UK Passport Photo Checker</Link>
+              <Link href="/digital-visa-photo-specs-2026" className="text-xs text-slate-600 hover:text-blue-600 bg-white px-3 py-1.5 rounded-lg border border-slate-200 font-medium">Digital Visa Specs 2026</Link>
+            </div>
           </div>
         </div>
       </section>

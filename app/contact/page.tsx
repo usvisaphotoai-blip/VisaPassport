@@ -45,9 +45,7 @@ export default function ContactPage() {
                         <p className="font-bold text-slate-900">General Support & Inquiries</p>
                         <p className="text-sm text-slate-500">For general questions and assistance</p>
                       </div>
-                      <a href="mailto:support@pixpassport.com" className="font-bold text-lime-600 hover:text-lime-700 text-base transition-colors shrink-0">
-                        support@pixpassport.com
-                      </a>
+                      <span dangerouslySetInnerHTML={{ __html: '<!--email_off--><a href="mailto:support@pixpassport.com" rel="nofollow" class="font-bold text-lime-600 hover:text-lime-700 text-base transition-colors shrink-0">support@pixpassport.com</a><!--/email_off-->' }} />
                     </div>
 
                     <div className="text-gray-600 bg-gray-50 p-5 rounded-xl border border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -55,9 +53,7 @@ export default function ContactPage() {
                         <p className="font-bold text-slate-900">Refunds & Guarantee Requests</p>
                         <p className="text-sm text-slate-500">For 100% money-back guarantee claims</p>
                       </div>
-                      <a href="mailto:refund@pixpassport.com" className="font-bold text-lime-600 hover:text-lime-700 text-base transition-colors shrink-0">
-                        refund@pixpassport.com
-                      </a>
+                      <span dangerouslySetInnerHTML={{ __html: '<!--email_off--><a href="mailto:refund@pixpassport.com" rel="nofollow" class="font-bold text-lime-600 hover:text-lime-700 text-base transition-colors shrink-0">refund@pixpassport.com</a><!--/email_off-->' }} />
                     </div>
 
                     <div className="text-gray-600 bg-gray-50 p-5 rounded-xl border border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -65,9 +61,7 @@ export default function ContactPage() {
                         <p className="font-bold text-slate-900">Photo & Technical Support</p>
                         <p className="text-sm text-slate-500">For photo compliance and technical queries</p>
                       </div>
-                      <a href="mailto:photo@pixpassport.com" className="font-bold text-lime-600 hover:text-lime-700 text-base transition-colors shrink-0">
-                        photo@pixpassport.com
-                      </a>
+                      <span dangerouslySetInnerHTML={{ __html: '<!--email_off--><a href="mailto:photo@pixpassport.com" rel="nofollow" class="font-bold text-lime-600 hover:text-lime-700 text-base transition-colors shrink-0">photo@pixpassport.com</a><!--/email_off-->' }} />
                     </div>
                   </div>
                 </div>

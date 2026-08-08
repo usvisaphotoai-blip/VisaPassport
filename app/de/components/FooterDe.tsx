@@ -83,9 +83,7 @@ export default function FooterDe() {
           <p>&copy; {new Date().getFullYear()} PixPassport. {de.footer.copyright}</p>
           <div className="flex flex-col md:flex-row gap-4 md:gap-6 items-center">
             <p>{de.footer.disclaimer}</p>
-            <Link href="mailto:support@pixpassport.com" className="hover:text-white transition-colors">
-              support@pixpassport.com
-            </Link>
+            <span dangerouslySetInnerHTML={{ __html: '<!--email_off--><a href="mailto:support@pixpassport.com" rel="nofollow" class="hover:text-white transition-colors">support@pixpassport.com</a><!--/email_off-->' }} />
           </div>
         </div>
       </div>

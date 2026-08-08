@@ -15,6 +15,21 @@ export default function Footer() {
       ],
     },
     {
+      title: "US & Global Guides",
+      items: [
+        { label: "America Passport Photo", href: "/america-passport-photo" },
+        { label: "Photo for American Visa", href: "/photo-for-american-visa" },
+        { label: "America Passport Size", href: "/america-passport-size" },
+        { label: "America Passport Size Photo", href: "/america-passport-size-photo" },
+        { label: "America Passport Photo Size", href: "/america-passport-photo-size" },
+        { label: "American Passport Pic Maker", href: "/american-passport-pic" },
+        { label: "American Passport Picture Size", href: "/american-passport-picture-size" },
+        { label: "Canada Visa Size Photo", href: "/canada-visa-size-photo" },
+        { label: "UK Passport Photo Checker", href: "/uk-passport-photo-checker-online-free" },
+        { label: "Digital US Visa Specs 2026", href: "/digital-visa-photo-specs-2026" },
+      ],
+    },
+    {
       title: "Tools & Directories",
       items: [
         { label: "Home", href: "/" },
@@ -23,7 +38,6 @@ export default function Footer() {
         { label: "Print Template Generator", href: "/passport-photo-print-template-generator" },
         { label: "Passport Photo Directory", href: "/passport-photos" },
         { label: "Visa Photo Directory", href: "/visa-photo" },
-
         { label: "Blog & Guides", href: "/blog" },
         { label: "FAQ", href: "/faq" },
       ],
@@ -44,7 +58,7 @@ export default function Footer() {
   return (
     <footer className="bg-slate-900 border-t border-slate-800 text-slate-300 py-16 mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8">
 
           {/* Brand & Concept */}
           <div className="md:col-span-1">
@@ -113,9 +127,7 @@ export default function Footer() {
           <p>&copy; {new Date().getFullYear()} PixPassport. All rights reserved.</p>
           <div className="flex flex-col md:flex-row gap-4 md:gap-6 items-center">
             <p>Disclaimer: This site is not affiliated with any government agency.</p>
-            <Link href="mailto:support@pixpassport.com" className="hover:text-white transition-colors">
-              support@pixpassport.com
-            </Link>
+            <span dangerouslySetInnerHTML={{ __html: '<!--email_off--><a href="mailto:support@pixpassport.com" rel="nofollow" class="hover:text-white transition-colors">support@pixpassport.com</a><!--/email_off-->' }} />
           </div>
         </div>
       </div>

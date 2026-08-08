@@ -50,18 +50,39 @@ function generateHreflangTags(cleanRoute, isSitemap = false) {
   let tags = [];
   const prefix = isSitemap ? '    <xhtml:link' : '<link';
   const tagEnd = isSitemap ? '/>' : '/>';
+
+  const hasEn = validRoutes.en.has(cleanRoute);
+  const hasFr = validRoutes.fr.has(cleanRoute);
+  const hasDe = validRoutes.de.has(cleanRoute);
   
-  if (validRoutes.en.has(cleanRoute)) {
+  if (hasEn) {
     tags.push(`${prefix} rel="alternate" hreflang="en" href="${BASE_URL}${cleanRoute}" ${tagEnd}`);
-    tags.push(`${prefix} rel="alternate" hreflang="x-default" href="${BASE_URL}${cleanRoute}" ${tagEnd}`);
   }
   
-  if (validRoutes.fr.has(cleanRoute)) {
+  if (hasFr) {
     tags.push(`${prefix} rel="alternate" hreflang="fr-FR" href="${BASE_URL}/fr${cleanRoute}" ${tagEnd}`);
   }
   
-  if (validRoutes.de.has(cleanRoute)) {
+  if (hasDe) {
     tags.push(`${prefix} rel="alternate" hreflang="de-DE" href="${BASE_URL}/de${cleanRoute}" ${tagEnd}`);
+  }
+
+  // Always emit x-default if any hreflang annotation is present
+  if (tags.length > 0) {
+    let xDefaultUrl;
+    if (hasEn) {
+      xDefaultUrl = `${BASE_URL}${cleanRoute}`;
+    } else if (cleanRoute.startsWith('/guides') || cleanRoute === '/guides') {
+      xDefaultUrl = `${BASE_URL}/blog`;
+    } else if (hasDe) {
+      xDefaultUrl = `${BASE_URL}/de${cleanRoute}`;
+    } else if (hasFr) {
+      xDefaultUrl = `${BASE_URL}/fr${cleanRoute}`;
+    } else {
+      xDefaultUrl = `${BASE_URL}${cleanRoute}`;
+    }
+    
+    tags.push(`${prefix} rel="alternate" hreflang="x-default" href="${xDefaultUrl}" ${tagEnd}`);
   }
   
   if (tags.length === 0) return ''; 
@@ -157,7 +178,9 @@ function updateSitemap() {
       
       const hreflangTags = generateHreflangTags(cleanRoute, true);
       
-      if (hreflangTags && !part.includes('hreflang=')) {
+      if (hreflangTags) {
+         // Strip old xhtml:link tags to replace with complete tags (including x-default)
+         part = part.replace(/\s*<xhtml:link[^>]*\/>/g, '');
          part = part.replace(/<\/loc>/, `</loc>${hreflangTags}`);
          addedCount++;
       }

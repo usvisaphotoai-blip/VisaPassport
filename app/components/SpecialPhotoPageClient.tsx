@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { compressImage } from "@/lib/compressImage";
 import Image from "next/image";
 
@@ -446,6 +447,44 @@ export default function SpecialPhotoPageClient({
               </div>
             </div>
           )}
+          {/* Section: Related Sizing Tools */}
+          <div className="mt-16 pt-8 border-t border-slate-200">
+            <h2 className="text-xl font-bold text-slate-900 mb-6">
+              Popular Sizing & Photo Checker Tools
+            </h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+              <Link href="/america-passport-photo" className="text-xs font-semibold text-slate-700 hover:text-lime-700 bg-slate-50 p-3 rounded-xl border border-slate-200 transition-colors block text-center">
+                America Passport Photo
+              </Link>
+              <Link href="/photo-for-american-visa" className="text-xs font-semibold text-slate-700 hover:text-lime-700 bg-slate-50 p-3 rounded-xl border border-slate-200 transition-colors block text-center">
+                Photo for American Visa
+              </Link>
+              <Link href="/america-passport-size" className="text-xs font-semibold text-slate-700 hover:text-lime-700 bg-slate-50 p-3 rounded-xl border border-slate-200 transition-colors block text-center">
+                America Passport Size
+              </Link>
+              <Link href="/america-passport-size-photo" className="text-xs font-semibold text-slate-700 hover:text-lime-700 bg-slate-50 p-3 rounded-xl border border-slate-200 transition-colors block text-center">
+                America Passport Size Photo
+              </Link>
+              <Link href="/america-passport-photo-size" className="text-xs font-semibold text-slate-700 hover:text-lime-700 bg-slate-50 p-3 rounded-xl border border-slate-200 transition-colors block text-center">
+                America Passport Photo Size
+              </Link>
+              <Link href="/american-passport-pic" className="text-xs font-semibold text-slate-700 hover:text-lime-700 bg-slate-50 p-3 rounded-xl border border-slate-200 transition-colors block text-center">
+                American Passport Pic
+              </Link>
+              <Link href="/american-passport-picture-size" className="text-xs font-semibold text-slate-700 hover:text-lime-700 bg-slate-50 p-3 rounded-xl border border-slate-200 transition-colors block text-center">
+                American Passport Picture Size
+              </Link>
+              <Link href="/canada-visa-size-photo" className="text-xs font-semibold text-slate-700 hover:text-lime-700 bg-slate-50 p-3 rounded-xl border border-slate-200 transition-colors block text-center">
+                Canada Visa Size Photo
+              </Link>
+              <Link href="/uk-passport-photo-checker-online-free" className="text-xs font-semibold text-slate-700 hover:text-lime-700 bg-slate-50 p-3 rounded-xl border border-slate-200 transition-colors block text-center">
+                UK Photo Checker
+              </Link>
+              <Link href="/digital-visa-photo-specs-2026" className="text-xs font-semibold text-slate-700 hover:text-lime-700 bg-slate-50 p-3 rounded-xl border border-slate-200 transition-colors block text-center">
+                Digital Visa Specs 2026
+              </Link>
+            </div>
+          </div>
         </article>
       </div>
     </div>
