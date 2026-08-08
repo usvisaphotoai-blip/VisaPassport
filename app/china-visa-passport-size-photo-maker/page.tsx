@@ -84,7 +84,11 @@ export const metadata: Metadata = {
   title: pageData.title,
   description: pageData.metaDescription,
   alternates: {
-    canonical: `/${pageData.slug}`,
+    canonical: `https://www.pixpassport.com/${pageData.slug}`,
+    languages: {
+      en: `https://www.pixpassport.com/${pageData.slug}`,
+      "x-default": `https://www.pixpassport.com/${pageData.slug}`,
+    },
   },
   openGraph: {
     title: pageData.title,

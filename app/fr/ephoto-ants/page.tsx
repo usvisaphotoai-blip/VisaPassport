@@ -21,9 +21,8 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://www.pixpassport.com/fr/ephoto-ants",
     languages: {
-      en: "https://www.pixpassport.com/passport-photos",
       fr: "https://www.pixpassport.com/fr/ephoto-ants",
-      "x-default": "https://www.pixpassport.com/passport-photos",
+      "x-default": "https://www.pixpassport.com/fr/ephoto-ants",
     },
   },
   openGraph: {

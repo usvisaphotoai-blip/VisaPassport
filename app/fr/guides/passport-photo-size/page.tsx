@@ -11,9 +11,8 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://www.pixpassport.com/fr/guides/passport-photo-size",
     languages: {
-      en: "https://www.pixpassport.com/blog",
       fr: "https://www.pixpassport.com/fr/guides/passport-photo-size",
-      "x-default": "https://www.pixpassport.com/blog",
+      "x-default": "https://www.pixpassport.com/fr/guides/passport-photo-size",
     },
   },
   openGraph: { title: "Taille Photo Passeport — Dimensions par Pays | PixPassport", url: "https://www.pixpassport.com/fr/guides/passport-photo-size", locale: "fr_FR", type: "article" },

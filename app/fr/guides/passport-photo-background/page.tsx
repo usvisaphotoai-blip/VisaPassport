@@ -11,9 +11,8 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://www.pixpassport.com/fr/guides/passport-photo-background",
     languages: {
-      en: "https://www.pixpassport.com/blog",
       fr: "https://www.pixpassport.com/fr/guides/passport-photo-background",
-      "x-default": "https://www.pixpassport.com/blog",
+      "x-default": "https://www.pixpassport.com/fr/guides/passport-photo-background",
     },
   },
   openGraph: { title: "Fond Photo Passeport : Règles et Astuces | PixPassport", url: "https://www.pixpassport.com/fr/guides/passport-photo-background", locale: "fr_FR", type: "article" },

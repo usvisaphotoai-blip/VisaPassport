@@ -18,9 +18,8 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://www.pixpassport.com/fr/guides/photo-identite-france-passeport-cni-ephoto-permis-visa",
     languages: {
-      en: "https://www.pixpassport.com/blog",
       fr: "https://www.pixpassport.com/fr/guides/photo-identite-france-passeport-cni-ephoto-permis-visa",
-      "x-default": "https://www.pixpassport.com/blog",
+      "x-default": "https://www.pixpassport.com/fr/guides/photo-identite-france-passeport-cni-ephoto-permis-visa",
     },
   },
   openGraph: {

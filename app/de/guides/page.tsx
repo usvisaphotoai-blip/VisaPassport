@@ -16,7 +16,10 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://www.pixpassport.com/de/guides",
     languages: {
+      en: "https://www.pixpassport.com/blog",
+      fr: "https://www.pixpassport.com/fr/guides",
       de: "https://www.pixpassport.com/de/guides",
+      "x-default": "https://www.pixpassport.com/blog",
     },
   },
   openGraph: {

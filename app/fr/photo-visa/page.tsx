@@ -17,6 +17,7 @@ export const metadata: Metadata = {
     languages: {
       en: "https://www.pixpassport.com/visa-photo",
       fr: "https://www.pixpassport.com/fr/photo-visa",
+      de: "https://www.pixpassport.com/de/visum-foto",
       "x-default": "https://www.pixpassport.com/visa-photo",
     },
   },

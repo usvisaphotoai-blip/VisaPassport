@@ -9,85 +9,117 @@ const NEXT_SERVER_DIR = path.join(__dirname, '../.next/server/app');
 const SITEMAP_PATH = path.join(__dirname, '../public/sitemap.xml');
 const BASE_URL = 'https://www.pixpassport.com';
 
-function getRouteFromPath(fullPath, baseDir, lang) {
-  let relative = path.relative(baseDir, fullPath);
-  if (relative.endsWith('.html')) relative = relative.slice(0, -5);
-  if (relative.endsWith('/index')) relative = relative.slice(0, -6);
-  if (relative === 'index') relative = '';
-  
-  if (lang && relative.startsWith(`${lang}/`)) {
-    relative = relative.substring(lang.length + 1);
-  } else if (lang && relative === lang) {
-    relative = '';
+const ROUTE_EQUIVALENTS = [
+  // Homepages
+  {
+    urls: {
+      en: `${BASE_URL}/`,
+      fr: `${BASE_URL}/fr`,
+      de: `${BASE_URL}/de`,
+      'x-default': `${BASE_URL}/`,
+    },
+    paths: ['/', '/fr', '/de', '']
+  },
+  // Online Tool / Editor
+  {
+    urls: {
+      en: `${BASE_URL}/passport-photo-online`,
+      fr: `${BASE_URL}/fr/photo-identite-en-ligne`,
+      de: `${BASE_URL}/de/passbild-online`,
+      'x-default': `${BASE_URL}/passport-photo-online`,
+    },
+    paths: ['/passport-photo-online', '/fr/photo-identite-en-ligne', '/fr/passport-photo-online', '/de/passbild-online']
+  },
+  // Passport Photos Landing
+  {
+    urls: {
+      en: `${BASE_URL}/passport-photos`,
+      fr: `${BASE_URL}/fr/photo-passeport`,
+      de: `${BASE_URL}/de/biometrisches-passbild`,
+      'x-default': `${BASE_URL}/passport-photos`,
+    },
+    paths: ['/passport-photos', '/fr/photo-passeport', '/de/biometrisches-passbild']
+  },
+  // Passport Photo Biometrique (FR variant)
+  {
+    urls: {
+      en: `${BASE_URL}/passport-photos`,
+      fr: `${BASE_URL}/fr/photo-passeport-biometrique`,
+      de: `${BASE_URL}/de/biometrisches-passbild`,
+      'x-default': `${BASE_URL}/passport-photos`,
+    },
+    paths: ['/fr/photo-passeport-biometrique']
+  },
+  // Photo Identite (FR variant)
+  {
+    urls: {
+      en: `${BASE_URL}/passport-photos`,
+      fr: `${BASE_URL}/fr/photo-identite`,
+      de: `${BASE_URL}/de/biometrisches-passbild`,
+      'x-default': `${BASE_URL}/passport-photos`,
+    },
+    paths: ['/fr/photo-identite']
+  },
+  // Photo Carte Identite (FR variant)
+  {
+    urls: {
+      en: `${BASE_URL}/passport-photos`,
+      fr: `${BASE_URL}/fr/photo-carte-identite`,
+      de: `${BASE_URL}/de/biometrisches-passbild`,
+      'x-default': `${BASE_URL}/passport-photos`,
+    },
+    paths: ['/fr/photo-carte-identite']
+  },
+  // Visa Photo Landing
+  {
+    urls: {
+      en: `${BASE_URL}/visa-photo`,
+      fr: `${BASE_URL}/fr/photo-visa`,
+      de: `${BASE_URL}/de/visum-foto`,
+      'x-default': `${BASE_URL}/visa-photo`,
+    },
+    paths: ['/visa-photo', '/fr/photo-visa', '/de/visum-foto']
+  },
+  // Blog / Guides Hub
+  {
+    urls: {
+      en: `${BASE_URL}/blog`,
+      fr: `${BASE_URL}/fr/guides`,
+      de: `${BASE_URL}/de/guides`,
+      'x-default': `${BASE_URL}/blog`,
+    },
+    paths: ['/blog', '/fr/guides', '/de/guides', '/de/ratgeber']
   }
+];
+
+function getSitemapHreflangTags(pathname) {
+  const cleanPath = pathname === '/' ? '' : (pathname.endsWith('/') ? pathname.slice(0, -1) : pathname);
   
-  return `/${relative}`;
-}
-
-const validRoutes = {
-  en: new Set(),
-  fr: new Set(),
-  de: new Set()
-};
-
-function collectRoutes(dir, targetLang) {
-  if (!fs.existsSync(dir)) return;
-  const files = fs.readdirSync(dir);
-  for (const file of files) {
-    if (targetLang === '' && (file === 'fr' || file === 'de' || file === 'fr.html' || file === 'de.html') && dir === NEXT_SERVER_DIR) continue;
-    const fullPath = path.join(dir, file);
-    if (fs.statSync(fullPath).isDirectory()) {
-      collectRoutes(fullPath, targetLang);
-    } else if (fullPath.endsWith('.html')) {
-      const route = getRouteFromPath(fullPath, NEXT_SERVER_DIR, targetLang);
-      const cleanRoute = route === '/' ? '' : (route.endsWith('/') ? route.slice(0, -1) : route);
-      validRoutes[targetLang || 'en'].add(cleanRoute);
-    }
-  }
-}
-
-function generateHreflangTags(cleanRoute, isSitemap = false) {
+  // Find matching equivalent group
+  const group = ROUTE_EQUIVALENTS.find(g => g.paths.includes(cleanPath));
   let tags = [];
-  const prefix = isSitemap ? '    <xhtml:link' : '<link';
-  const tagEnd = isSitemap ? '/>' : '/>';
-
-  const hasEn = validRoutes.en.has(cleanRoute);
-  const hasFr = validRoutes.fr.has(cleanRoute);
-  const hasDe = validRoutes.de.has(cleanRoute);
   
-  if (hasEn) {
-    tags.push(`${prefix} rel="alternate" hreflang="en" href="${BASE_URL}${cleanRoute}" ${tagEnd}`);
-  }
-  
-  if (hasFr) {
-    tags.push(`${prefix} rel="alternate" hreflang="fr" href="${BASE_URL}/fr${cleanRoute}" ${tagEnd}`);
-  }
-  
-  if (hasDe) {
-    tags.push(`${prefix} rel="alternate" hreflang="de" href="${BASE_URL}/de${cleanRoute}" ${tagEnd}`);
-  }
-
-  // Always emit x-default if any hreflang annotation is present
-  if (tags.length > 0) {
-    let xDefaultUrl;
-    if (hasEn) {
-      xDefaultUrl = `${BASE_URL}${cleanRoute}`;
-    } else if (cleanRoute.startsWith('/guides') || cleanRoute === '/guides') {
-      xDefaultUrl = `${BASE_URL}/blog`;
-    } else if (hasDe) {
-      xDefaultUrl = `${BASE_URL}/de${cleanRoute}`;
-    } else if (hasFr) {
-      xDefaultUrl = `${BASE_URL}/fr${cleanRoute}`;
+  if (group) {
+    if (group.urls.en) tags.push(`    <xhtml:link rel="alternate" hreflang="en" href="${group.urls.en}" />`);
+    if (group.urls.fr) tags.push(`    <xhtml:link rel="alternate" hreflang="fr" href="${group.urls.fr}" />`);
+    if (group.urls.de) tags.push(`    <xhtml:link rel="alternate" hreflang="de" href="${group.urls.de}" />`);
+    if (group.urls['x-default']) tags.push(`    <xhtml:link rel="alternate" hreflang="x-default" href="${group.urls['x-default']}" />`);
+  } else {
+    // Standalone page
+    const fullUrl = `${BASE_URL}${cleanPath}`;
+    if (cleanPath.startsWith('/fr')) {
+      tags.push(`    <xhtml:link rel="alternate" hreflang="fr" href="${fullUrl}" />`);
+      tags.push(`    <xhtml:link rel="alternate" hreflang="x-default" href="${fullUrl}" />`);
+    } else if (cleanPath.startsWith('/de')) {
+      tags.push(`    <xhtml:link rel="alternate" hreflang="de" href="${fullUrl}" />`);
+      tags.push(`    <xhtml:link rel="alternate" hreflang="x-default" href="${fullUrl}" />`);
     } else {
-      xDefaultUrl = `${BASE_URL}${cleanRoute}`;
+      tags.push(`    <xhtml:link rel="alternate" hreflang="en" href="${fullUrl}" />`);
+      tags.push(`    <xhtml:link rel="alternate" hreflang="x-default" href="${fullUrl}" />`);
     }
-    
-    tags.push(`${prefix} rel="alternate" hreflang="x-default" href="${xDefaultUrl}" ${tagEnd}`);
   }
   
-  if (tags.length === 0) return ''; 
-  
-  return isSitemap ? '\n' + tags.join('\n') : tags.join('\n') + '\n';
+  return tags.length > 0 ? '\n' + tags.join('\n') : '';
 }
 
 function processFile(filePath, targetLang) {
@@ -107,21 +139,14 @@ function processFile(filePath, targetLang) {
     }
   }
 
-  if (filePath.endsWith('.html')) {
-    const route = getRouteFromPath(filePath, NEXT_SERVER_DIR, targetLang);
-    const cleanRoute = route === '/' ? '' : (route.endsWith('/') ? route.slice(0, -1) : route);
-    const hreflangTags = generateHreflangTags(cleanRoute, false);
-
-    // Only inject if no hreflang tags were rendered by Next.js metadata
-    if (hreflangTags && content.includes('</head>') && !content.includes('hreflang=')) {
-      content = content.replace('</head>', `${hreflangTags}</head>`);
-      modified = true;
-    }
+  if (content.includes('hrefLang=')) {
+    content = content.replace(/hrefLang=/g, 'hreflang=');
+    modified = true;
   }
 
   if (modified) {
     fs.writeFileSync(filePath, content, 'utf-8');
-    console.log(`✅ Fixed lang attribute & injected hreflang to ${targetLang || 'en'} in: ${filePath}`);
+    console.log(`✅ Fixed lang attribute to ${targetLang || 'en'} in: ${filePath}`);
   }
 }
 
@@ -164,23 +189,10 @@ function updateSitemap() {
       const urlObj = new URL(fullUrl);
       const pathname = urlObj.pathname;
       
-      let cleanRoute = pathname;
-      if (pathname.startsWith('/fr/')) {
-         cleanRoute = pathname.slice(3);
-      } else if (pathname === '/fr') {
-         cleanRoute = '';
-      } else if (pathname.startsWith('/de/')) {
-         cleanRoute = pathname.slice(3);
-      } else if (pathname === '/de') {
-         cleanRoute = '';
-      } else {
-         cleanRoute = pathname === '/' ? '' : (pathname.endsWith('/') ? pathname.slice(0, -1) : pathname);
-      }
-      
-      const hreflangTags = generateHreflangTags(cleanRoute, true);
+      const hreflangTags = getSitemapHreflangTags(pathname);
       
       if (hreflangTags) {
-         // Strip old xhtml:link tags to replace with complete tags (including x-default)
+         // Strip old xhtml:link tags to replace with complete tags
          part = part.replace(/\s*<xhtml:link[^>]*\/>/g, '');
          part = part.replace(/<\/loc>/, `</loc>${hreflangTags}`);
          addedCount++;
@@ -190,27 +202,14 @@ function updateSitemap() {
   }
   
   fs.writeFileSync(SITEMAP_PATH, parts.join('<url>'), 'utf-8');
-  console.log(`✅ Updated sitemap with hreflang tags for ${addedCount} translated routes!`);
+  console.log(`✅ Updated sitemap with hreflang tags for ${addedCount} routes!`);
 }
 
 const languages = ['fr', 'de'];
 
-console.log('🔧 Running postbuild script: Fixing HTML lang attributes & injecting hreflang...');
+console.log('🔧 Running postbuild script: Fixing HTML lang attributes & updating sitemap hreflangs...');
 
-// 1. Collect all valid routes first
-const langHomeEn = path.join(NEXT_SERVER_DIR, `index.html`);
-if (fs.existsSync(langHomeEn)) validRoutes.en.add('');
-collectRoutes(NEXT_SERVER_DIR, '');
-
-for (const lang of languages) {
-  const langHome = path.join(NEXT_SERVER_DIR, `${lang}.html`);
-  if (fs.existsSync(langHome)) validRoutes[lang].add('');
-  
-  const langDir = path.join(NEXT_SERVER_DIR, lang);
-  collectRoutes(langDir, lang);
-}
-
-// 2. Process HTML files
+// 1. Process HTML files for lang attribute
 const langHomeEnPath = path.join(NEXT_SERVER_DIR, `index.html`);
 processFile(langHomeEnPath, '');
 walkDir(NEXT_SERVER_DIR, '');
@@ -223,7 +222,7 @@ for (const lang of languages) {
   walkDir(langDir, lang);
 }
 
-// 3. Process sitemap
+// 2. Process sitemap
 updateSitemap();
 
 console.log('✨ Postbuild complete!');

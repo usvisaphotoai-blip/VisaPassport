@@ -7,6 +7,12 @@ export const metadata: Metadata = {
   
   alternates: {
     canonical: "https://www.pixpassport.com/passport-photo-online",
+    languages: {
+      en: "https://www.pixpassport.com/passport-photo-online",
+      fr: "https://www.pixpassport.com/fr/photo-identite-en-ligne",
+      de: "https://www.pixpassport.com/de/passbild-online",
+      "x-default": "https://www.pixpassport.com/passport-photo-online",
+    },
   },
   openGraph: {
     title: "Passport & Visa Photo Tool — Free Validator & Maker",

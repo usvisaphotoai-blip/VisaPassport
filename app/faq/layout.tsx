@@ -5,6 +5,10 @@ export const metadata: Metadata = {
   description: "Find answers to common questions about passport and visa photo requirements, biometric compliance, payment, and privacy.",
   alternates: {
     canonical: "https://www.pixpassport.com/faq",
+    languages: {
+      en: "https://www.pixpassport.com/faq",
+      "x-default": "https://www.pixpassport.com/faq",
+    },
   },
 };
 

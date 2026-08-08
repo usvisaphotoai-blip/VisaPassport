@@ -10,7 +10,13 @@ description:
   "Passport size photo maker for 50+ countries. Create visa, ID, and passport photos with AI biometric validation, background removal, and auto crop.",
 
   alternates: {
-    canonical: "https://www.pixpassport.com",
+    canonical: "https://www.pixpassport.com/",
+    languages: {
+      en: "https://www.pixpassport.com/",
+      fr: "https://www.pixpassport.com/fr",
+      de: "https://www.pixpassport.com/de",
+      "x-default": "https://www.pixpassport.com/",
+    },
   },
 };
 

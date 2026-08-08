@@ -17,6 +17,7 @@ export const metadata: Metadata = {
     languages: {
       en: "https://www.pixpassport.com/passport-photo-online",
       fr: "https://www.pixpassport.com/fr/photo-identite-en-ligne",
+      de: "https://www.pixpassport.com/de/passbild-online",
       "x-default": "https://www.pixpassport.com/passport-photo-online",
     },
   },

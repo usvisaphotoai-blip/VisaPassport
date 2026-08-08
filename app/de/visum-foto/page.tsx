@@ -16,14 +16,20 @@ export const metadata: Metadata = {
     "Passbild Personalausweis",
   ],
   alternates: {
-    canonical: "https://www.pixpassport.com/de/biometrisches-passbild",
+    canonical: "https://www.pixpassport.com/de/visum-foto",
+    languages: {
+      en: "https://www.pixpassport.com/visa-photo",
+      fr: "https://www.pixpassport.com/fr/photo-visa",
+      de: "https://www.pixpassport.com/de/visum-foto",
+      "x-default": "https://www.pixpassport.com/visa-photo",
+    },
   },
   openGraph: {
     title:
       "Biometrisches Passbild online erstellen – ICAO-konform | PixPassport",
     description:
       "Biometrisches Passbild für Reisepass, Personalausweis und ePass online erstellen. Fertig in 30 Sekunden.",
-    url: "https://www.pixpassport.com/de/biometrisches-passbild",
+    url: "https://www.pixpassport.com/de/visum-foto",
     type: "website",
     locale: "de_DE",
   },

@@ -21,9 +21,7 @@ export const metadata: Metadata = {
     canonical: "https://www.pixpassport.com/de/gesundheitskarte-foto",
     languages: {
       de: "https://www.pixpassport.com/de/gesundheitskarte-foto",
-      en: "https://www.pixpassport.com/",
-      fr: "https://www.pixpassport.com/fr",
-      "x-default": "https://www.pixpassport.com/",
+      "x-default": "https://www.pixpassport.com/de/gesundheitskarte-foto",
     },
   },
   openGraph: {

@@ -8,6 +8,10 @@ export const metadata: Metadata = {
   alternates: {
     canonical:
       "https://www.pixpassport.com/passport-photo-print-template-generator",
+    languages: {
+      en: "https://www.pixpassport.com/passport-photo-print-template-generator",
+      "x-default": "https://www.pixpassport.com/passport-photo-print-template-generator",
+    },
   },
   openGraph: {
     "title": "Passport Photo Print Template – Print at Home",

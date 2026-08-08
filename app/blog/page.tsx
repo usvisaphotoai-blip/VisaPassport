@@ -45,6 +45,12 @@ export const metadata = {
   keywords: ['passport photo requirements', 'visa photo guide', 'biometric photo tips', 'passport photo compliance', 'global visa photo requirements', 'UK passport photo', 'India passport photo', 'Schengen visa photo'],
   alternates: {
     canonical: `${APP_URL}/blog`,
+    languages: {
+      en: `${APP_URL}/blog`,
+      fr: `${APP_URL}/fr/guides`,
+      de: `${APP_URL}/de/guides`,
+      "x-default": `${APP_URL}/blog`,
+    },
   },
   openGraph: {
     title: 'Global Passport & Visa Photo Guides | PixPassport Blog',

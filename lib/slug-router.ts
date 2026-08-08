@@ -91,7 +91,13 @@ export function createMetadata({
     title: { absolute: title },
     description,
     ...(keywords && { keywords }),
-    alternates: { canonical },
+    alternates: {
+      canonical,
+      languages: {
+        en: canonical,
+        "x-default": canonical,
+      },
+    },
     openGraph: {
       title,
       description,

@@ -7,6 +7,10 @@ export const metadata: Metadata = {
   description: "Contact PixPassport support team.",
   alternates: {
     canonical: "https://www.pixpassport.com/contact",
+    languages: {
+      en: "https://www.pixpassport.com/contact",
+      "x-default": "https://www.pixpassport.com/contact",
+    },
   },
 };
 

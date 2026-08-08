@@ -10,6 +10,12 @@ export const metadata: Metadata = {
   keywords: ["passport photo size database", "passport photo requirements by country", "global passport photo standards"],
   alternates: {
     canonical: "https://www.pixpassport.com/passport-photos",
+    languages: {
+      en: "https://www.pixpassport.com/passport-photos",
+      fr: "https://www.pixpassport.com/fr/photo-passeport",
+      de: "https://www.pixpassport.com/de/biometrisches-passbild",
+      "x-default": "https://www.pixpassport.com/passport-photos",
+    },
   },
   openGraph: {
     title: "Official Passport Photo Sizes & Requirements by Country | PixPassport",

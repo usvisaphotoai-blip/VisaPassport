@@ -7,7 +7,11 @@ export const metadata: Metadata = {
   description:
     "Create passport size photos online for free. Select your country, upload a photo, remove the background automatically, and download a print-ready photo.",
   alternates: {
-    canonical: "/passport-size-photo-maker",
+    canonical: "https://www.pixpassport.com/passport-size-photo-maker",
+    languages: {
+      en: "https://www.pixpassport.com/passport-size-photo-maker",
+      "x-default": "https://www.pixpassport.com/passport-size-photo-maker",
+    },
   },
   openGraph: {
     title: "Free Passport Photo Maker Online",

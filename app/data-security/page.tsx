@@ -5,6 +5,13 @@ export const metadata: Metadata = {
   title: "Data Security & Privacy Protection | PixPassport",
   description:
     "Learn how PixPassport protects your passport and ID photos with 256-bit SSL encryption, 24-hour auto-deletion, PCI-DSS payment security, and a 100% zero data selling guarantee.",
+  alternates: {
+    canonical: "https://www.pixpassport.com/data-security",
+    languages: {
+      en: "https://www.pixpassport.com/data-security",
+      "x-default": "https://www.pixpassport.com/data-security",
+    },
+  },
 };
 
 export default function DataSecurityPage() {

@@ -4,6 +4,13 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Refund Policy",
   description: "PixPassport refund policy — 100% money-back guarantee on rejected photos.",
+  alternates: {
+    canonical: "https://www.pixpassport.com/refund-policy",
+    languages: {
+      en: "https://www.pixpassport.com/refund-policy",
+      "x-default": "https://www.pixpassport.com/refund-policy",
+    },
+  },
 };
 
 export default function RefundPolicyPage() {

@@ -10,7 +10,11 @@ export const metadata: Metadata = {
   description:
     "Create a US visa photo online in seconds. Generate a 2x2 inch photo for US visa and passport applications with automatic cropping and background checks.",
   alternates: {
-    canonical: "/america-visa-size-photo",
+    canonical: "https://www.pixpassport.com/america-visa-size-photo",
+    languages: {
+      en: "https://www.pixpassport.com/america-visa-size-photo",
+      "x-default": "https://www.pixpassport.com/america-visa-size-photo",
+    },
   },
   icons: {
     apple: "/apple-touch-icon.png",

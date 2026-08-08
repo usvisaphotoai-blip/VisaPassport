@@ -31,10 +31,6 @@ export const metadata: Metadata = {
     description: "Photos passeport et visa professionnelles pour plus de 50 pays. Conformité biométrique garantie.",
     images: ["https://www.pixpassport.com/og-image.jpg"],
   },
-  alternates: {
-    canonical: "https://www.pixpassport.com/fr",
-    languages: { "en": "https://www.pixpassport.com/", "fr": "https://www.pixpassport.com/fr" },
-  },
 };
 
 export default function FrLayout({ children }: { children: React.ReactNode }) {

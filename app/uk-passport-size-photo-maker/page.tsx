@@ -9,7 +9,11 @@ export const metadata: Metadata = {
   title: "UK Passport size photo maker & uk id Photo Maker",
   description: "Create UK passport, visa, and ID photos online. 100% compliant for HMPO, Driving Licences, Railcards, and more in under a minute.",
   alternates: {
-    canonical: "/uk-passport-size-photo-maker",
+    canonical: "https://www.pixpassport.com/uk-passport-size-photo-maker",
+    languages: {
+      en: "https://www.pixpassport.com/uk-passport-size-photo-maker",
+      "x-default": "https://www.pixpassport.com/uk-passport-size-photo-maker",
+    },
   },
   icons: {
     apple: "/apple-touch-icon.png",

@@ -10,6 +10,12 @@ export const metadata: Metadata = {
   keywords: ["visa photo requirements", "visa photo size index", "ds-160 photo standards", "eVisa photo database"],
   alternates: {
     canonical: "https://www.pixpassport.com/visa-photo",
+    languages: {
+      en: "https://www.pixpassport.com/visa-photo",
+      fr: "https://www.pixpassport.com/fr/photo-visa",
+      de: "https://www.pixpassport.com/de/visum-foto",
+      "x-default": "https://www.pixpassport.com/visa-photo",
+    },
   },
   openGraph: {
     title: "Official Visa Photo Requirements & Sizes | International Visa Portal",

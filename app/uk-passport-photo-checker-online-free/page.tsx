@@ -11,6 +11,10 @@ export const metadata: Metadata = {
     "Check your UK passport photo online against size, background, lighting and biometric requirements. Instant photo validation with no sign-up required.",
   alternates: {
     canonical: "https://www.pixpassport.com/uk-passport-photo-checker-online-free",
+    languages: {
+      en: "https://www.pixpassport.com/uk-passport-photo-checker-online-free",
+      "x-default": "https://www.pixpassport.com/uk-passport-photo-checker-online-free",
+    },
   },
   icons: {
     apple: "/apple-touch-icon.png",

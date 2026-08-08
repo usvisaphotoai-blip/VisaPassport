@@ -31,10 +31,6 @@ export const metadata: Metadata = {
     description: "Professionelle Pass- und Visumfotos für über 50 Länder. Biometrische Konformität garantiert.",
     images: ["https://res.cloudinary.com/dipzpwbbk/image/upload/v1779008016/c24d89b1-ab0e-4f1d-9035-5814bc7b91ca_preview_ip9ogs.jpg"],
   },
-  alternates: {
-    canonical: "https://www.pixpassport.com/de",
-    languages: { "en": "https://www.pixpassport.com/", "fr": "https://www.pixpassport.com/fr", "de": "https://www.pixpassport.com/de" },
-  },
 };
 
 export default function DeLayout({ children }: { children: React.ReactNode }) {

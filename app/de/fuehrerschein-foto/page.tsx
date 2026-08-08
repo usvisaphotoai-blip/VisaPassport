@@ -16,10 +16,8 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://www.pixpassport.com/de/fuehrerschein-foto",
     languages: {
-      "de": "https://www.pixpassport.com/de/fuehrerschein-foto",
-      "en": "https://www.pixpassport.com/",
-      "fr": "https://www.pixpassport.com/fr",
-      "x-default": "https://www.pixpassport.com/",
+      de: "https://www.pixpassport.com/de/fuehrerschein-foto",
+      "x-default": "https://www.pixpassport.com/de/fuehrerschein-foto",
     },
   },
   openGraph: {

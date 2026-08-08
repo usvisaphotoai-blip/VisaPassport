@@ -13,6 +13,10 @@ export const metadata: Metadata = {
   ],
   alternates: {
     canonical: "https://www.pixpassport.com/visa-photo-validator",
+    languages: {
+      en: "https://www.pixpassport.com/visa-photo-validator",
+      "x-default": "https://www.pixpassport.com/visa-photo-validator",
+    },
   },
 };
 

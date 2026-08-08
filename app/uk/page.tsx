@@ -10,6 +10,10 @@ export const metadata: Metadata = {
     "Create UK passport, visa and ID photos online with automatic cropping, background checks and UK photo requirements for passports and driving licences.",
   alternates: {
     canonical: "https://www.pixpassport.com/uk",
+    languages: {
+      en: "https://www.pixpassport.com/uk",
+      "x-default": "https://www.pixpassport.com/uk",
+    },
   },
   openGraph: {
     title: "UK Passport & Document Photo Maker | PixPassport",

@@ -5,6 +5,13 @@ import { getLocalPrice } from "@/lib/currency";
 export const metadata: Metadata = {
   title: "Terms of Service",
   description: "PixPassport terms of service. Terms, conditions, and usage policies for our US visa and passport photo validation service.",
+  alternates: {
+    canonical: "https://www.pixpassport.com/terms",
+    languages: {
+      en: "https://www.pixpassport.com/terms",
+      "x-default": "https://www.pixpassport.com/terms",
+    },
+  },
 };
 
 export default async function TermsPage() {

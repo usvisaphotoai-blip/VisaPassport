@@ -4,6 +4,13 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description: "PixPassport privacy policy. Learn how we handle your photos, data, and personal information. GDPR and CCPA compliant.",
+  alternates: {
+    canonical: "https://www.pixpassport.com/privacy-policy",
+    languages: {
+      en: "https://www.pixpassport.com/privacy-policy",
+      "x-default": "https://www.pixpassport.com/privacy-policy",
+    },
+  },
 };
 
 export default function PrivacyPolicyPage() {

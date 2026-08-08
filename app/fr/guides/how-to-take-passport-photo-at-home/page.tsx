@@ -11,9 +11,8 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://www.pixpassport.com/fr/guides/how-to-take-passport-photo-at-home",
     languages: {
-      en: "https://www.pixpassport.com/blog",
       fr: "https://www.pixpassport.com/fr/guides/how-to-take-passport-photo-at-home",
-      "x-default": "https://www.pixpassport.com/blog",
+      "x-default": "https://www.pixpassport.com/fr/guides/how-to-take-passport-photo-at-home",
     },
   },
   openGraph: { title: "Comment Prendre une Photo Passeport à la Maison | PixPassport", url: "https://www.pixpassport.com/fr/guides/how-to-take-passport-photo-at-home", locale: "fr_FR", type: "article" },

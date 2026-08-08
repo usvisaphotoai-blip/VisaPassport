@@ -250,6 +250,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     description: post.description,
     alternates: {
       canonical: `${APP_URL}/blog/${post.slug}`,
+      languages: {
+        en: `${APP_URL}/blog/${post.slug}`,
+        "x-default": `${APP_URL}/blog/${post.slug}`,
+      },
     },
     openGraph: {
       title: post.title,

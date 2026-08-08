@@ -18,10 +18,10 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://www.pixpassport.com/de/biometrisches-passbild",
     languages: {
+      en: "https://www.pixpassport.com/passport-photos",
+      fr: "https://www.pixpassport.com/fr/photo-passeport",
       de: "https://www.pixpassport.com/de/biometrisches-passbild",
-      en: "https://www.pixpassport.com/passport-photo-maker",
-      fr: "https://www.pixpassport.com/fr",
-      "x-default": "https://www.pixpassport.com/passport-photo-maker",
+      "x-default": "https://www.pixpassport.com/passport-photos",
     },
   },
   openGraph: {

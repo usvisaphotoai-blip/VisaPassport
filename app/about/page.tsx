@@ -8,6 +8,10 @@ export const metadata: Metadata = {
   description: "Learn about PixPassport's mission, our advanced biometric Compliance Processing technology, and our strict commitment to your data privacy.",
   alternates: {
     canonical: "https://www.pixpassport.com/about",
+    languages: {
+      en: "https://www.pixpassport.com/about",
+      "x-default": "https://www.pixpassport.com/about",
+    },
   },
   openGraph: {
     title: "About Us - PixPassport",

@@ -16,10 +16,8 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://www.pixpassport.com/de/bewerbungsfoto",
     languages: {
-      "de": "https://www.pixpassport.com/de/bewerbungsfoto",
-      "en": "https://www.pixpassport.com/",
-      "fr": "https://www.pixpassport.com/fr",
-      "x-default": "https://www.pixpassport.com/",
+      de: "https://www.pixpassport.com/de/bewerbungsfoto",
+      "x-default": "https://www.pixpassport.com/de/bewerbungsfoto",
     },
   },
   openGraph: {
