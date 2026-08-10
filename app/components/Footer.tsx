@@ -6,7 +6,9 @@ export default function Footer() {
     {
       title: "Popular Services",
       items: [
+        { label: "passport photo for indian passport", href: "/indian-passport-size-photograph" },
         { label: "India Passport Photo", href: "/india-passport-photo-editor" },
+
         { label: "UK Passport Photo", href: "/uk-passport-photo-editor" },
         { label: "US Visa Photo", href: "/us-visa-photo-editor" },
         { label: "Australia Passport Photo", href: "/australia-passport-photo-editor" },

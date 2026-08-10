@@ -62,7 +62,7 @@ const toolPages = [
     href: "/india-passport-photo-editor",
     title: "India Passport",
     target: "Passport Applicants",
-    desc: "35x45mm, white background. Fully compliant with Indian passport standards.",
+    desc: "45x35mm (630x810px), white background. Fully compliant with Indian passport standards.",
   },
   {
     href: "/uk-passport-photo-editor",
@@ -147,6 +147,14 @@ const officialSources = [
     note: "European standards for Schengen visa applications.",
     badge: "EU Visa",
   },
+  {
+    agency: "Embassy of India, Bern",
+    doc: "Notice on ICAO Photo Requirements",
+    url: "https://www.indembassybern.gov.in/page/notice-reg-icao-photo-requirements/",
+    note: "Official Indian embassy specifications for ICAO compliant photographs.",
+    badge: "India Embassy",
+  },
+  
 ];
 
 const rejectionReasons = [

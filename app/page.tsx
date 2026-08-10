@@ -194,6 +194,24 @@ export default async function Home() {
                   </p>
                 </div>
               </Link>
+              <Link 
+                href="/indian-passport-size-photograph"
+                className="group bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 hover:border-lime-400 hover:shadow-md transition-all flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-center gap-2.5 mb-2">
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 bg-lime-100/80 rounded-lg flex items-center justify-center text-sm sm:text-base shrink-0 group-hover:scale-105 transition-transform">
+                      📸
+                    </div>
+                    <h3 className="font-bold text-xs sm:text-sm text-slate-900 group-hover:text-lime-700 transition-colors line-clamp-1 leading-snug">
+                      Indian Passport Size Photograph
+                    </h3>
+                  </div>
+                  <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">
+                    Official 45 × 35 mm (630 × 810 px) ICAO compliant photo tool for Indian passport applications.
+                  </p>
+                </div>
+              </Link>
             </div>
           </div>
         </section>
