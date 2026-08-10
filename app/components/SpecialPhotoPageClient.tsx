@@ -469,6 +469,9 @@ export default function SpecialPhotoPageClient({
               <Link href="/america-passport-photo" className="text-xs font-semibold text-slate-700 hover:text-lime-700 bg-slate-50 p-3 rounded-xl border border-slate-200 transition-colors block text-center">
                 America Passport Photo
               </Link>
+                <Link href="/indian-passport-size-photograph" className="text-xs font-semibold text-slate-700 hover:text-lime-700 bg-slate-50 p-3 rounded-xl border border-slate-200 transition-colors block text-center">
+                Create inda icao standard photograph
+              </Link>
               <Link href="/photo-for-american-visa" className="text-xs font-semibold text-slate-700 hover:text-lime-700 bg-slate-50 p-3 rounded-xl border border-slate-200 transition-colors block text-center">
                 Photo for American Visa
               </Link>

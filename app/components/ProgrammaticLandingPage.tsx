@@ -216,6 +216,9 @@ export default function ProgrammaticLandingPage({ spec, slug }: Props) {
               <Link href="/canada-visa-size-photo" className="text-xs text-slate-600 hover:text-blue-600 bg-white px-3 py-1.5 rounded-lg border border-slate-200 font-medium">Canada Visa Size Photo</Link>
               <Link href="/uk-passport-photo-checker-online-free" className="text-xs text-slate-600 hover:text-blue-600 bg-white px-3 py-1.5 rounded-lg border border-slate-200 font-medium">UK Passport Photo Checker</Link>
               <Link href="/digital-visa-photo-specs-2026" className="text-xs text-slate-600 hover:text-blue-600 bg-white px-3 py-1.5 rounded-lg border border-slate-200 font-medium">Digital Visa Specs 2026</Link>
+                <Link href="/indian-passport-size-photograph" className="text-xs text-slate-600 hover:text-blue-600 bg-white px-3 py-1.5 rounded-lg border border-slate-200 font-medium">
+                Create inda icao standard photograph
+              </Link>
             </div>
           </div>
         </div>
