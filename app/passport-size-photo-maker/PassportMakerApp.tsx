@@ -392,7 +392,7 @@ export default function PassportMakerApp({
 
   // Ensure selected document is valid when search term changes
   useEffect(() => {
-    if (hideDocSelector || isIcaoPage) return;
+    if (hideDocSelector) return;
     const docs = documentTypes.filter((doc) =>
       `${doc.label} ${doc.country || ""} ${doc.id} ${doc.size}`.toLowerCase().includes(searchTerm.toLowerCase()),
     );
@@ -422,7 +422,8 @@ export default function PassportMakerApp({
       .toLowerCase();
     let countryCode = countryMapping[countrySlug] || "US";
     if (selectedDoc.includes("ds-160")) countryCode = "US";
-    if (isIcaoPage || selectedDoc.includes("schengen") || selectedDoc.includes("icao") || selectedDoc.startsWith("eu")) countryCode = "EU";
+    if (isIcaoPage && selectedDoc === defaultDoc) countryCode = "EU";
+    else if (!isIcaoPage && (selectedDoc.includes("schengen") || selectedDoc.includes("icao") || selectedDoc.startsWith("eu"))) countryCode = "EU";
     if (selectedDoc.startsWith("france-")) countryCode = "FR";
 
     const formData = new FormData();
@@ -432,7 +433,7 @@ export default function PassportMakerApp({
       "document_type",
       selectedDoc.includes("visa") ? "visa" : "passport",
     );
-    formData.append("full_doc_id", isIcaoPage ? "icao-passport" : selectedDoc);
+    formData.append("full_doc_id", isIcaoPage ? (selectedDoc !== defaultDoc ? selectedDoc : "icao-passport") : selectedDoc);
     formData.append("source", "pixpassport_maker");
 
     try {
@@ -661,7 +662,7 @@ export default function PassportMakerApp({
                 <div>
                   <div className="flex items-center gap-2 flex-wrap">
                     <p className="text-sm sm:text-base font-bold text-slate-900">
-                      {hideDocSelector || isIcaoPage ? "ICAO Biometric Specification" : "Select country & document"}
+                      {hideDocSelector || isIcaoPage ? "ICAO Standard Photograph" : "Select country & document"}
                     </p>
                     <span className={`px-2 py-0.5 rounded-full text-[10px] sm:text-[11px] font-bold uppercase tracking-wide ${hideDocSelector || isIcaoPage ? "bg-blue-100 text-blue-700" : "bg-lime-100 text-lime-700"}`}>
                       {hideDocSelector || isIcaoPage ? "Standard Active" : "Required"}
@@ -677,46 +678,48 @@ export default function PassportMakerApp({
 
               <div className="p-4 sm:p-5 space-y-4">
                 {hideDocSelector || isIcaoPage ? (
-                  <div className="space-y-4">
-                    {/* Fixed ICAO Display Badge with ICAO Flags */}
-                    <div className="w-full flex items-center justify-between gap-3 px-3.5 sm:px-4 py-3.5 rounded-xl border border-blue-200 bg-blue-50/60 text-left shadow-xs">
-                      <div className="flex items-center gap-3 min-w-0 flex-1">
-                        <span className="text-xl sm:text-2xl leading-none shrink-0" role="img" aria-label="ICAO Flags">
-                          🌐 🇺🇳 🇪🇺
-                        </span>
-                        <div className="min-w-0 flex-1">
-                          <p className="text-xs sm:text-sm md:text-base font-bold text-slate-900 truncate">
-                            ICAO Standard Photograph
-                          </p>
-                          <p className="text-[11px] sm:text-xs text-blue-700 font-medium truncate mt-0.5">
-                            International Civil Aviation Organization (ICAO Doc 9303 / EU)
-                          </p>
-                        </div>
-                      </div>
-                    </div>
+                  <div className="space-y-3 sm:space-y-4">
+                   
 
-                    {/* Spec pills for ICAO */}
-                    <div className="flex flex-wrap gap-2 pt-1">
-                      <div className="inline-flex items-center gap-1.5 rounded-xl border border-blue-200 bg-blue-50/70 px-3 py-1.5 text-xs font-semibold text-blue-900">
-                        <span>🌐</span>
-                        <span className="text-blue-700">Framework:</span>
-                        <span className="text-slate-900 font-bold">ICAO Doc 9303 / EU</span>
-                      </div>
-                      <div className="inline-flex items-center gap-1.5 rounded-xl border border-lime-200 bg-lime-50/70 px-3 py-1.5 text-xs font-semibold text-lime-800">
-                        <span>📐</span>
-                        <span className="text-lime-700">Size:</span>
-                        <span className="text-slate-900 font-bold">35 × 45 mm (413 × 531 px)</span>
-                      </div>
-                      <div className="inline-flex items-center gap-1.5 rounded-xl border border-lime-200 bg-lime-50/70 px-3 py-1.5 text-xs font-semibold text-lime-800">
-                        <span>🎨</span>
-                        <span className="text-lime-700">Background:</span>
-                        <span className="text-slate-900 font-bold">Light Gray / White</span>
-                      </div>
-                      <div className="inline-flex items-center gap-1.5 rounded-xl border border-purple-200 bg-purple-50/70 px-3 py-1.5 text-xs font-semibold text-purple-800">
-                        <span>👤</span>
-                        <span className="text-purple-700">Biometric Ratio:</span>
-                        <span className="text-slate-900 font-bold">70%–80% chin-to-crown</span>
-                      </div>
+                  
+
+                    {/* Country / Document selector for ICAO page */}
+                    <div className="pt-3 sm:pt-4  border-slate-100 mt-3 sm:mt-4">
+                      <p className="text-xs sm:text-sm font-semibold text-slate-700 mb-2 flex items-center gap-1.5">
+                     
+                       <span>Or select a specific country for ICAO-compliant photo & document requirements</span>
+                        
+                      </p>
+                      <CustomDocumentDropdown
+                        selectedDoc={selectedDoc}
+                        setSelectedDoc={setSelectedDoc}
+                      />
+                      {/* Show selected country doc specs if user picked one */}
+                      {selectedDocSpec && selectedDoc !== defaultDoc && (
+                        <div className="flex flex-wrap gap-2 pt-2 mt-2">
+                          {[
+                            {
+                              label: "Photo Size",
+                              value: selectedDocSpec.size,
+                              icon: "📐",
+                            },
+                            {
+                              label: "Background",
+                              value: selectedDocSpec.bg_color || "White",
+                              icon: "🎨",
+                            },
+                          ].map(({ label, value, icon }) => (
+                            <div
+                              key={label}
+                              className="inline-flex items-center gap-1.5 rounded-xl border border-lime-200 bg-lime-50/70 px-3 py-1.5 text-xs font-semibold text-lime-800"
+                            >
+                              <span>{icon}</span>
+                              <span className="text-lime-700">{label}:</span>
+                              <span className="text-slate-900 font-bold">{value}</span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   </div>
                 ) : (

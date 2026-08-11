@@ -407,10 +407,11 @@ export default function HomeHero() {
                 note: "Ready-to-print 4×6 inch sheet with crop guides",
                 href: "https://www.pixpassport.com/passport-photo-print-template-generator",
               },
+              
             ].map((item, i) => (
               <div
                 key={i}
-                className="border border-slate-200 rounded overflow-hidden bg-white"
+                className="border border-slate-200 rounded overflow-hidden bg-white hover:border-lime-500"
               >
                 <div className="aspect-[3/4] relative bg-slate-100 overflow-hidden">
                   {item.href ? (

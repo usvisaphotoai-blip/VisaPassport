@@ -1,39 +1,62 @@
-import nodemailer from 'nodemailer';
+import { Resend } from 'resend';
 
 interface SendMailOptions {
   to: string;
   subject: string;
   text?: string;
   html?: string;
-  attachments?: any[];
+}
+
+// Validate required environment variables at module load (server-side only)
+function getResendConfig() {
+  const apiKey = process.env.RESEND_API_KEY;
+  const fromEmail = process.env.RESEND_FROM_EMAIL;
+  const replyTo = process.env.RESEND_REPLY_TO;
+
+  if (!apiKey) {
+    throw new Error('[Mail] Missing required environment variable: RESEND_API_KEY');
+  }
+  if (!fromEmail) {
+    throw new Error('[Mail] Missing required environment variable: RESEND_FROM_EMAIL');
+  }
+  if (!replyTo) {
+    throw new Error('[Mail] Missing required environment variable: RESEND_REPLY_TO');
+  }
+
+  return { apiKey, fromEmail, replyTo };
 }
 
 export const sendEmail = async (options: SendMailOptions) => {
-  const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: parseInt(process.env.SMTP_PORT || '587'),
-    secure: process.env.SMTP_SECURE === 'true', // true for 465, false for other ports
-    auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASS,
-    },
-  });
-
-  const mailOptions = {
-    from: `"PixPassport" <${process.env.SMTP_FROM || process.env.SMTP_USER}>`,
-    to: options.to,
-    subject: options.subject,
-    text: options.text,
-    html: options.html,
-    attachments: options.attachments,
-  };
+  const { apiKey, fromEmail, replyTo } = getResendConfig();
+  const resend = new Resend(apiKey);
 
   try {
-    const info = await transporter.sendMail(mailOptions);
-    console.log('Email sent successfully: %s', info.messageId);
-    return { success: true, messageId: info.messageId };
+    // Build payload — Resend SDK uses discriminated unions, so we only include
+    // html/text when they are actually provided to satisfy the type system.
+    const payload: Record<string, unknown> = {
+      from: fromEmail,
+      to: options.to,
+      subject: options.subject,
+      replyTo: replyTo,
+    };
+
+    if (options.html) {
+      payload.html = options.html;
+    } else if (options.text) {
+      payload.text = options.text;
+    }
+
+    const { data, error } = await resend.emails.send(payload as unknown as Parameters<typeof resend.emails.send>[0]);
+
+    if (error) {
+      console.error('[Mail] Resend API error:', error.message);
+      return { success: false, error };
+    }
+
+    console.log('[Mail] Email sent successfully:', data?.id);
+    return { success: true, messageId: data?.id };
   } catch (error) {
-    console.error('Error sending email:', error);
+    console.error('[Mail] Failed to send email:', error);
     return { success: false, error };
   }
 };

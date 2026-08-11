@@ -94,7 +94,7 @@ export async function POST(req: Request) {
                   </ul>
                 `;
 
-                const adminEmail = process.env.ADMIN_EMAIL || process.env.SMTP_USER;
+                const adminEmail = process.env.ADMIN_EMAILS || process.env.RESEND_REPLY_TO;
                 if (adminEmail) {
                   await sendEmail({
                     to: adminEmail,
@@ -216,7 +216,7 @@ export async function POST(req: Request) {
             `;
 
             // Notify Admin
-            const adminEmail = process.env.ADMIN_EMAIL || process.env.SMTP_USER;
+            const adminEmail = process.env.ADMIN_EMAILS || process.env.RESEND_REPLY_TO;
             if (adminEmail) {
               await sendEmail({
                 to: adminEmail,
@@ -255,16 +255,57 @@ export async function POST(req: Request) {
             const spec = getSafeSpec(photo.documentType);
             const documentName = spec.name || "Passport Photo";
             const countryName = spec.country || spec.name || "Passport Photo";
+            const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://pixpassport.com';
+            const previewLink = `${appUrl}/preview/${photoId}`;
+            const previewImageUrl = photo.secureUrl || photo.previewUrl || '';
+
             try {
               await sendEmail({
                 to: userEmail,
-                subject: "Payment Failed — PixPassport",
+                subject: `Payment Failed — Your ${countryName} Photo is Waiting! 📸`,
                 html: `
-                  <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; color: #333;">
-                    <h2 style="color: #dc2626;">Payment Failed</h2>
-                    <p>Hi there,</p>
-                    <p>We noticed your recent payment attempt for your <strong>${countryName} (${documentName})</strong> failed. Your order has not been completed.</p>
-                    <p>Please try checking out again or contact support if you need assistance.</p>
+                  <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; color: #1e293b; background: #f8fafc; padding: 32px; border-radius: 16px;">
+                    <div style="text-align: center; margin-bottom: 24px;">
+                      <div style="display: inline-block; background: #fef2f2; border-radius: 50%; width: 56px; height: 56px; line-height: 56px; font-size: 28px; margin-bottom: 12px;">⚠️</div>
+                      <h1 style="font-size: 22px; color: #0f172a; margin: 0 0 8px;">Payment Could Not Be Processed</h1>
+                      <p style="color: #64748b; font-size: 14px; margin: 0;">Don't worry — your photo is saved and ready!</p>
+                    </div>
+
+                    ${previewImageUrl ? `
+                    <div style="background: white; border-radius: 12px; padding: 16px; border: 1px solid #e2e8f0; margin-bottom: 20px; text-align: center;">
+                      <p style="margin: 0 0 12px; font-size: 13px; color: #64748b; font-weight: 600;">Your Processed ${countryName} ${documentName}</p>
+                      <img src="${previewImageUrl}" alt="${countryName} ${documentName} Preview" style="max-width: 180px; height: auto; border-radius: 8px; border: 2px solid #e2e8f0; box-shadow: 0 2px 8px rgba(0,0,0,0.08);" />
+                    </div>
+                    ` : ''}
+
+                    <div style="background: white; border-radius: 12px; padding: 24px; border: 1px solid #e2e8f0; margin-bottom: 20px;">
+                      <p style="margin: 0 0 12px; font-size: 15px; color: #334155;">Hi there,</p>
+                      <p style="margin: 0 0 12px; font-size: 14px; color: #475569; line-height: 1.6;">We noticed your recent payment for your <strong>${countryName} (${documentName})</strong> could not be completed. Your photo has been processed and is waiting for you!</p>
+                      <p style="margin: 0 0 20px; font-size: 14px; color: #475569; line-height: 1.6;">Click below to return to your photo and complete your purchase:</p>
+                      
+                      <div style="text-align: center; margin: 24px 0;">
+                        <a href="${previewLink}" style="display: inline-block; background: linear-gradient(135deg, #0f172a 0%, #1e40af 100%); color: white; padding: 14px 32px; border-radius: 10px; text-decoration: none; font-size: 15px; font-weight: 700; box-shadow: 0 4px 14px rgba(15,23,42,0.25);">Complete Your Purchase →</a>
+                      </div>
+                    </div>
+
+                    <div style="background: white; border-radius: 12px; padding: 20px; border: 1px solid #e2e8f0; margin-bottom: 20px;">
+                      <h3 style="margin: 0 0 8px; font-size: 15px; color: #334155;">📋 Your Photo Details</h3>
+                      <table style="width: 100%; font-size: 13px; color: #475569;">
+                        <tr><td style="padding: 4px 0;">Country</td><td style="text-align: right; font-weight: 600;">${countryName}</td></tr>
+                        <tr><td style="padding: 4px 0;">Document</td><td style="text-align: right; font-weight: 600;">${documentName}</td></tr>
+                        <tr><td style="padding: 4px 0;">Size</td><td style="text-align: right; font-weight: 600;">${spec.width_px}×${spec.height_px} px</td></tr>
+                        <tr><td style="padding: 4px 0;">Status</td><td style="text-align: right; font-weight: 600; color: #f59e0b;">⏳ Awaiting Payment</td></tr>
+                      </table>
+                    </div>
+
+                    <div style="text-align: center; padding: 12px 0;">
+                      <p style="font-size: 12px; color: #94a3b8; margin: 0 0 4px;">Direct link to your photo:</p>
+                      <a href="${previewLink}" style="font-size: 12px; color: #2563eb;">${previewLink}</a>
+                    </div>
+
+                    <div style="text-align: center; padding-top: 16px; border-top: 1px solid #e2e8f0;">
+                      <p style="font-size: 11px; color: #cbd5e1; margin: 0;">PixPassport — Professional Visa Photo Processing</p>
+                    </div>
                   </div>
                 `
               });
@@ -282,16 +323,52 @@ export async function POST(req: Request) {
 
           const userEmail = order.email || paymentEntity.email;
           if (userEmail) {
+            const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://pixpassport.com';
+            const retryLink = `${appUrl}/expert-edit`;
+
             try {
               await sendEmail({
                 to: userEmail,
-                subject: "Payment Failed for Expert Edit — PixPassport",
+                subject: "Payment Failed for Expert Edit — Your Photos Are Waiting! 📸",
                 html: `
-                  <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; color: #333;">
-                    <h2 style="color: #dc2626;">Payment Failed</h2>
-                    <p>Hi there,</p>
-                    <p>Unfortunately, your payment for the Expert Photo Edit could not be processed. Your edit request is currently on hold.</p>
-                    <p>Please try again with a different payment method so our team can get started on your photos!</p>
+                  <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; color: #1e293b; background: #f8fafc; padding: 32px; border-radius: 16px;">
+                    <div style="text-align: center; margin-bottom: 24px;">
+                      <div style="display: inline-block; background: #fef2f2; border-radius: 50%; width: 56px; height: 56px; line-height: 56px; font-size: 28px; margin-bottom: 12px;">⚠️</div>
+                      <h1 style="font-size: 22px; color: #0f172a; margin: 0 0 8px;">Expert Edit Payment Failed</h1>
+                      <p style="color: #64748b; font-size: 14px; margin: 0;">Don't worry — your photos are saved!</p>
+                    </div>
+
+                    ${order.photos && order.photos.length > 0 ? `
+                    <div style="background: white; border-radius: 12px; padding: 16px; border: 1px solid #e2e8f0; margin-bottom: 20px; text-align: center;">
+                      <p style="margin: 0 0 12px; font-size: 13px; color: #64748b; font-weight: 600;">Your Uploaded Photos</p>
+                      <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
+                        ${order.photos.slice(0, 3).map((url: string) => `<img src="${url}" alt="Uploaded Photo" style="max-width: 120px; height: auto; border-radius: 8px; border: 2px solid #e2e8f0; box-shadow: 0 2px 8px rgba(0,0,0,0.08);" />`).join('')}
+                      </div>
+                    </div>
+                    ` : ''}
+
+                    <div style="background: white; border-radius: 12px; padding: 24px; border: 1px solid #e2e8f0; margin-bottom: 20px;">
+                      <p style="margin: 0 0 12px; font-size: 15px; color: #334155;">Hi there,</p>
+                      <p style="margin: 0 0 12px; font-size: 14px; color: #475569; line-height: 1.6;">Unfortunately, your payment for the <strong>Expert Photo Edit</strong> could not be processed. Your edit request is currently on hold.</p>
+                      <p style="margin: 0 0 20px; font-size: 14px; color: #475569; line-height: 1.6;">Please try again so our team can get started on your photos right away!</p>
+                      
+                      <div style="text-align: center; margin: 24px 0;">
+                        <a href="${retryLink}" style="display: inline-block; background: linear-gradient(135deg, #0f172a 0%, #1e40af 100%); color: white; padding: 14px 32px; border-radius: 10px; text-decoration: none; font-size: 15px; font-weight: 700; box-shadow: 0 4px 14px rgba(15,23,42,0.25);">Retry Payment →</a>
+                      </div>
+                    </div>
+
+                    <div style="background: white; border-radius: 12px; padding: 20px; border: 1px solid #e2e8f0; margin-bottom: 20px;">
+                      <h3 style="margin: 0 0 8px; font-size: 15px; color: #334155;">📋 Order Details</h3>
+                      <table style="width: 100%; font-size: 13px; color: #475569;">
+                        <tr><td style="padding: 4px 0;">Order ID</td><td style="text-align: right; font-weight: 600;">${order._id}</td></tr>
+                        <tr><td style="padding: 4px 0;">Photos</td><td style="text-align: right; font-weight: 600;">${order.photos?.length || 0} uploaded</td></tr>
+                        <tr><td style="padding: 4px 0;">Status</td><td style="text-align: right; font-weight: 600; color: #f59e0b;">⏳ Awaiting Payment</td></tr>
+                      </table>
+                    </div>
+
+                    <div style="text-align: center; padding-top: 16px; border-top: 1px solid #e2e8f0;">
+                      <p style="font-size: 11px; color: #cbd5e1; margin: 0;">PixPassport — Professional Visa Photo Processing</p>
+                    </div>
                   </div>
                 `
               });

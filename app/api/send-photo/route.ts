@@ -77,7 +77,7 @@ export async function POST(req: Request) {
     if (result.success) {
       return NextResponse.json({ success: true });
     } else {
-      throw new Error("SMTP sending failed");
+      throw new Error("Email sending failed");
     }
   } catch (error: any) {
     console.error("Failed to send photo via email:", error);

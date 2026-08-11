@@ -86,7 +86,7 @@
     "id": "icao-passport",
     "name": "ICAO Standard Biometric Photo",
     "country": "ICAO / EU",
-    "flag": "🌐 🇺🇳 🇪🇺",
+    "flag": "🇺🇳",
     "width_mm": 35,
     "height_mm": 45,
     "width_px": 413,

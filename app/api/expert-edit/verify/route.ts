@@ -47,7 +47,7 @@ export async function POST(req: Request) {
     order.razorpayPaymentId = razorpay_payment_id;
     await order.save();
 
-    // Send confirmation to admin and user via SMTP
+    // Send confirmation to admin and user via email
     try {
       const adminHtml = `
         <h2>New Expert Edit Order</h2>
@@ -60,7 +60,7 @@ export async function POST(req: Request) {
       `;
 
       // Notify Admin
-      const adminEmail = process.env.ADMIN_EMAIL || process.env.SMTP_USER;
+      const adminEmail = process.env.ADMIN_EMAILS || process.env.RESEND_REPLY_TO;
       if (adminEmail) {
         await sendEmail({
           to: adminEmail,
@@ -76,7 +76,7 @@ export async function POST(req: Request) {
         html: `<p>Hi there,</p><p>We have received your payment for the expert photo edit. Our team is working on your photos now and will email them back to you when they are ready.</p><p>Thank you for choosing PixPassport!</p>`,
       });
     } catch (mailError) {
-      console.error("Failed to send SMTP emails for expert edit:", mailError);
+      console.error("Failed to send emails for expert edit:", mailError);
       // We don't fail the complete verification request if the email fails, we still return success.
     }
 

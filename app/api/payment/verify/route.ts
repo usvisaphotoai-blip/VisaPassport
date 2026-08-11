@@ -91,7 +91,7 @@ export async function POST(req: Request) {
             </ul>
           `;
 
-          const adminEmail = process.env.ADMIN_EMAIL || process.env.SMTP_USER;
+          const adminEmail = process.env.ADMIN_EMAILS || process.env.RESEND_REPLY_TO;
           if (adminEmail) {
             await sendEmail({
               to: adminEmail,
