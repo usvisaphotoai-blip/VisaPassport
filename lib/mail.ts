@@ -5,6 +5,7 @@ interface SendMailOptions {
   subject: string;
   text?: string;
   html?: string;
+  bcc?: string | string[];
 }
 
 // Validate required environment variables at module load (server-side only)
@@ -39,6 +40,10 @@ export const sendEmail = async (options: SendMailOptions) => {
       subject: options.subject,
       replyTo: replyTo,
     };
+
+    if (options.bcc) {
+      payload.bcc = options.bcc;
+    }
 
     if (options.html) {
       payload.html = options.html;

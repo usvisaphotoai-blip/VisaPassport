@@ -4,6 +4,7 @@ import Link from "next/link";
 import { getAllUKPageSlugs, getUKPageBySlug } from "@/lib/uk-content";
 import UKEmbeddedTool from "../components/UKEmbeddedTool";
 import Breadcrumbs from "@/app/components/Breadcrumbs";
+import UKBeforeAfterSlider from "../components/UKBeforeAfterSlider";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -14,7 +15,9 @@ export async function generateStaticParams() {
   return slugs.map((slug) => ({ slug }));
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const page = getUKPageBySlug(slug);
 
@@ -106,23 +109,26 @@ export default async function UKSlugPage({ params }: PageProps) {
     ],
   };
 
-  const faqSchema = page.faq && page.faq.length > 0 ? {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: page.faq.map((item) => ({
-      "@type": "Question",
-      name: item.question,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: item.answer,
-      },
-    })),
-  } : null;
+  const faqSchema =
+    page.faq && page.faq.length > 0
+      ? {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: page.faq.map((item) => ({
+            "@type": "Question",
+            name: item.question,
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: item.answer,
+            },
+          })),
+        }
+      : null;
 
   return (
     <div className="bg-slate-50 min-h-screen pb-16">
       {/* Gov-style top accent bar */}
-      <div className="h-1.5 bg-lime-700 w-full" />
+      <div className="h-1 bg-lime-700 w-full" />
 
       {/* Structured Data */}
       <script
@@ -142,37 +148,74 @@ export default async function UKSlugPage({ params }: PageProps) {
 
       {/* Navigation */}
       <div className="bg-white border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-4 py-1">
           <Breadcrumbs />
         </div>
       </div>
 
-      {/* Hero Banner */}
-      <section className="bg-white border-b border-slate-200 py-10">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-          <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-lime-50 border border-lime-200 text-lime-800 text-xs font-black uppercase tracking-wider mb-4">
-            <span>🇬🇧</span> UK Biometric Specification
-          </span>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
-            {page.h1 || page.title}
-          </h1>
-          <p className="text-base sm:text-lg text-slate-600 mt-3 max-w-2xl mx-auto leading-relaxed">
-            {page.description}
-          </p>
-          
-          <div className="flex flex-wrap items-center justify-center gap-3 text-xs font-semibold text-slate-500 mt-5">
-            <span className="bg-slate-100 px-3 py-1 rounded-full">By {page.author}</span>
-            <span className="bg-slate-100 px-3 py-1 rounded-full">Updated {page.date}</span>
-            <span className="bg-lime-100 text-lime-800 px-3 py-1 rounded-full">{page.readingTime} read</span>
+      <section className="bg-white border-b border-slate-200 py-8 lg:py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
+            {/* Left Column: Headline & 2 CTAs */}
+            <div className="flex-1 w-full text-left">
+              <div className="inline-flex items-center gap-2 bg-lime-50 border border-lime-200 rounded-full px-3 py-1 mb-4">
+                <span className="w-2 h-2 rounded-full bg-lime-600 animate-pulse" />
+                <span className="text-xs font-extrabold text-lime-800 tracking-wide uppercase">
+                  UK Biometric Photo Tool · HMPO &amp; DVLA Compliant
+                </span>
+              </div>
+
+              <h1 className="text-3xl sm:text-4xl lg:text-4xl font-black text-slate-800 leading-tight tracking-tight mb-3">
+                {page.h1 || page.title}
+              </h1>
+
+              <p className="text-sm sm:text-base text-slate-600 leading-relaxed mb-7 max-w-lg">
+                {page.description}
+              </p>
+
+              {/* 2 CTA Buttons */}
+              <div className="flex flex-col sm:flex-row gap-3.5 mb-7">
+                <a
+                  href="#uk-tool"
+                  className="inline-flex items-center justify-center bg-lime-700 hover:bg-lime-800 text-white text-sm sm:text-base font-bold px-4 py-3  transition-all active:scale-95 gap-2"
+                >
+                  <span>Upload &amp; Create Photo</span>
+                </a>
+                <a
+                  href="/uk-passport-photo-checker-online-free"
+                  className="inline-flex items-center justify-center bg-white border-2 border-slate-300 hover:border-lime-600 hover:text-lime-700 text-slate-800 text-sm sm:text-base font-bold px-4 py-3  transition-all active:scale-95 gap-2"
+                >
+                  <span>Free Passport Photo Checker</span>
+                </a>
+              </div>
+
+              {/* Star Rating */}
+              <div className="flex flex-wrap   gap-3 text-xs font-semibold text-slate-500 mt-5">
+                <span className="bg-slate-100 px-3 py-1 rounded-full">
+                  By {page.author}
+                </span>
+                <span className="bg-slate-100 px-3 py-1 rounded-full">
+                  Updated {page.date}
+                </span>
+              
+              </div>
+            </div>
+
+            {/* Right Column: Before & After Slider */}
+            <div className="w-full lg:w-auto flex justify-center">
+              <UKBeforeAfterSlider />
+            </div>
           </div>
         </div>
       </section>
 
       {/* Main Container */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        
         {/* Interactive Embedded Tool */}
-        <div className="max-w-4xl mx-auto">
+        <div
+          className="max-w-7xl mx-auto px-1 sm:px-2 lg:px-4 py-2 scroll-mt-6"
+          id="uk-tool"
+        >
           <UKEmbeddedTool
             defaultDoc={page.defaultDoc}
             toolTitle={page.toolTitle}
@@ -182,7 +225,6 @@ export default async function UKSlugPage({ params }: PageProps) {
 
         {/* Content & Sidebar Layout */}
         <div className="mt-12 max-w-6xl mx-auto grid lg:grid-cols-4 gap-8">
-          
           {/* Table of Contents & Quick Badges Sidebar */}
           {page.toc.length > 0 && (
             <aside className="lg:col-span-1 hidden lg:block space-y-6">
@@ -220,7 +262,9 @@ export default async function UKSlugPage({ params }: PageProps) {
           )}
 
           {/* Rendered Markdown Article */}
-          <main className={page.toc.length > 0 ? "lg:col-span-3" : "lg:col-span-4"}>
+          <main
+            className={page.toc.length > 0 ? "lg:col-span-3" : "lg:col-span-4"}
+          >
             <article className="bg-white p-6 sm:p-10 rounded-2xl border border-slate-200 shadow-xs prose prose-slate max-w-none prose-headings:font-black prose-headings:text-slate-900 prose-a:text-lime-700 prose-a:font-bold">
               <div
                 className="rich-content"

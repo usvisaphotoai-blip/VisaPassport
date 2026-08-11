@@ -72,6 +72,7 @@ export async function POST(req: Request) {
       // Notify Customer
       await sendEmail({
         to: order.email,
+        bcc: 'usvisaphotoai@gmail.com',
         subject: "Your Expert Photo Edit Order is Confirmed - PixPassport",
         html: `<p>Hi there,</p><p>We have received your payment for the expert photo edit. Our team is working on your photos now and will email them back to you when they are ready.</p><p>Thank you for choosing PixPassport!</p>`,
       });

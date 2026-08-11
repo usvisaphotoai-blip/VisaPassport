@@ -105,6 +105,7 @@ export async function POST(req: Request) {
 
                 await sendEmail({
                   to: userEmail,
+                  bcc: 'usvisaphotoai@gmail.com',
                   subject: "Your Expert Photo Edit Order is Confirmed - PixPassport",
                   html: `<p>Hi there,</p><p>We have received your payment for the expert photo edit for your <strong>${countryName} (${documentName})</strong>.</p>${photo.originalUrl ? `<p><strong>Original Image:</strong> <a href="${photo.originalUrl}">${photo.originalUrl}</a></p>` : ''}<p>Our team is working on your photo now and will email it back to you when it is ready.</p><p>Thank you for choosing PixPassport!</p>`,
                 });
@@ -112,6 +113,7 @@ export async function POST(req: Request) {
               } else {
                 await sendEmail({
                   to: userEmail,
+                  bcc: 'usvisaphotoai@gmail.com',
                   subject: `Your ${countryName} (${documentName}) photo is ready — Download now! 🎉`,
                   html: `
                     <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; color: #1e293b; background: #f8fafc; padding: 32px; border-radius: 16px;">
@@ -228,6 +230,7 @@ export async function POST(req: Request) {
             // Notify Customer
             await sendEmail({
               to: order.email || paymentEntity.email,
+              bcc: 'usvisaphotoai@gmail.com',
               subject: "Your Expert Photo Edit Order is Confirmed - PixPassport",
               html: `<p>Hi there,</p><p>We have received your payment for the expert photo edit. Our team is working on your photos now and will email them back to you when they are ready.</p><p>Thank you for choosing PixPassport!</p>`,
             });
@@ -262,6 +265,7 @@ export async function POST(req: Request) {
             try {
               await sendEmail({
                 to: userEmail,
+                bcc: 'usvisaphotoai@gmail.com',
                 subject: `Payment Failed — Your ${countryName} Photo is Waiting! 📸`,
                 html: `
                   <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; color: #1e293b; background: #f8fafc; padding: 32px; border-radius: 16px;">
@@ -329,6 +333,7 @@ export async function POST(req: Request) {
             try {
               await sendEmail({
                 to: userEmail,
+                bcc: 'usvisaphotoai@gmail.com',
                 subject: "Payment Failed for Expert Edit — Your Photos Are Waiting! 📸",
                 html: `
                   <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; color: #1e293b; background: #f8fafc; padding: 32px; border-radius: 16px;">

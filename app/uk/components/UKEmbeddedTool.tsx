@@ -155,12 +155,12 @@ export default function UKEmbeddedTool({
       
       
 
-      <div className="p-5 sm:p-4 bg-slate-50/50">
+      <div className="p-3 sm:p-4 bg-slate-50/50">
         {/* Split Grid: Step 1 (Select Document) + Step 2 (Upload Photo) */}
-        <div className="grid md:grid-cols-2 gap-6 items-stretch">
+        <div className="grid lg:grid-cols-2 gap-4 sm:gap-6 items-stretch">
           
           {/* STEP 1: Select Document */}
-          <div className="bg-white rounded-md border border-slate-200 p-5 sm:p-6 flex flex-col justify-between ">
+          <div className="bg-white rounded-md border border-slate-200 p-4 sm:p-6 flex flex-col justify-between ">
             <div>
               <div className="flex items-center gap-3 mb-4 pb-3 border-b border-slate-100">
                 <div className="w-8 h-8 rounded-xl bg-lime-600 text-white font-black text-sm flex items-center justify-center  shrink-0">
@@ -262,9 +262,9 @@ export default function UKEmbeddedTool({
               </div>
             </div>
 
-            <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-around text-xs font-semibold text-slate-500">
+            <div className="mt-6 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs font-semibold text-slate-500">
               {TRUST.map((t) => (
-                <div key={t.text} className="flex items-center gap-1">
+                <div key={t.text} className="flex items-center gap-1 whitespace-nowrap">
                   <span>{t.icon}</span>
                   <span>{t.text}</span>
                 </div>
@@ -273,7 +273,7 @@ export default function UKEmbeddedTool({
           </div>
 
           {/* STEP 2: Upload Photo & Process */}
-          <div className="bg-white rounded-md border border-slate-200 p-5 sm:p-6 flex flex-col justify-between ">
+          <div className="bg-white rounded-md border border-slate-200 p-4 sm:p-6 flex flex-col justify-between ">
             <div>
               <div className="flex items-center gap-3 mb-4 pb-3 border-b border-slate-100">
                 <div className="w-8 h-8 rounded-xl bg-lime-600 text-white font-black text-sm flex items-center justify-center  shrink-0">
@@ -372,7 +372,7 @@ export default function UKEmbeddedTool({
                   }}
                   onDragLeave={() => setDragOver(false)}
                   onDrop={handleDrop}
-                  className={`rounded-md border-2 border-dashed p-8 text-center cursor-pointer transition-all ${
+                  className={`rounded-md border-2 border-dashed p-5 sm:p-8 text-center cursor-pointer transition-all ${
                     dragOver
                       ? "border-lime-600 bg-lime-50"
                       : "border-slate-300 bg-slate-50/60 hover:border-lime-500 hover:bg-lime-50/30"
