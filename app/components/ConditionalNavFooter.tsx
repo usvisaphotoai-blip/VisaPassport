@@ -23,8 +23,10 @@ export default function ConditionalNavFooter({
     else document.documentElement.lang = "en";
   }, [isFrench, isGerman]);
 
-  if (isLocalized) {
-    // Localized layouts render their own Navbar / Footer
+  const isGallery = pathname === "/cloudinary-gallery" || pathname?.startsWith("/cloudinary-gallery");
+
+  if (isLocalized || isGallery) {
+    // Localized layouts or standalone gallery render without global navbar/footer
     return <>{children}</>;
   }
 
