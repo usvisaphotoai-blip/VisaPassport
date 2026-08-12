@@ -235,7 +235,7 @@ export const de = {
   stats: [
     { stat: "12.000+", label: "Fotos verarbeitet" },
     { stat: "99,8%", label: "Akzeptanzrate" },
-    { stat: "120+", label: "Unterstützte Länder" },
+    { stat: "50+", label: "Unterstützte Länder" },
     { stat: "30s", label: "Fertig in Sekunden" },
     { stat: "Offiziell", label: "ICAO Konform" },
   ],

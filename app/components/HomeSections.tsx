@@ -246,19 +246,7 @@ const expertTips = [
   },
 ];
 
-const comparisonRows = [
-  ["Price", "$6.99 one-time", "$15–$25 + travel", "$3–$15 per photo"],
-  ["DS-160 Upload Ready", "✅ Yes", "⚠️ Not always digital", "⚠️ Varies"],
-  ["Eye Position Check (56–69%)", "✅ Biometric-measured", "❌ Human eye only", "⚠️ Basic only"],
-  ["Head Size Check (50–69%)", "✅ Pixel-precise", "❌ Not measured", "⚠️ Crop only"],
-  ["Background RGB Validation", "✅ 9-zone analysis", "❌ Visual only", "⚠️ Basic removal"],
-  ["Glasses Detection", "✅ Auto-detected", "❌ Manual reminder", "⚠️ Not always"],
-  ["Free Validation Before Paying", "✅ Always free", "❌ Pay upfront", "❌ Pay upfront"],
-  ["A4 Print Sheet (20 photos)", "✅ Included", "✅ Printed for you", "❌ Extra cost"],
-  ["24-Hour Photo Deletion", "✅ Auto-deleted", "⚠️ May retain copies", "⚠️ Unknown"],
-  ["Processing Time", "Under 30 seconds", "15–30 minutes", "1–5 minutes"],
-  ["Available 24/7", "✅ Yes", "❌ Business hours", "✅ Yes"],
-];
+
 
 export default function HomeSections({
   basePrice = 6.99,
@@ -322,53 +310,75 @@ export default function HomeSections({
       </div>
       <div className="hc-seo-text">
         <h2 className="hc-seo-h2">
-          Official Global Document Photo Requirements: Why Biometric Precision is Necessary
+          Passport &amp; Visa Photo Size Guide: ICAO Standards for 50+ Countries
         </h2>
         <p className="hc-seo-p">
-          Securing an international passport, navigating a Schengen Visa application,
-          or applying for residency are life-changing milestones for millions. However,
-          a single non-compliant photograph is often the hidden culprit behind sudden
-          rejections or long administrative delays. At{" "}
-          <strong>PixPassport</strong>, we've bridged the gap between amateur
-          smartphone photography and the rigorous ICAO biometric standards demanded
-          by immigration agencies worldwide. Check your photo instantly with our{" "}
-          <a href="/visa-photo-validator" style={{ color: "#3d8c6e", fontWeight: 600 }}>free photo validator</a>.
+          Every year, thousands of passport and visa applications are delayed
+          because of a photo that doesn't meet size or background rules.
+          <strong> PixPassport</strong> is a free online passport photo checker
+          that crops, resizes, and validates your photo against official{" "}
+          <a href="/icao-compliant-photo" style={{ color: "#3d8c6e", fontWeight: 600 }}>
+            ICAO standard photo
+          </a>{" "}
+          requirements in seconds — no photo studio needed. Not sure if your
+          photo will pass? Run it through our{" "}
+          <a href="/visa-photo-validator" style={{ color: "#3d8c6e", fontWeight: 600 }}>
+            free ICAO photo validator
+          </a>{" "}
+          before you submit anything.
         </p>
         <p className="hc-seo-p">
-          <strong>Why Biometric Accuracy is Non-Negotiable:</strong> Modern
-          embassy systems use advanced facial recognition algorithms to verify
-          identities. These systems aren't just looking for a "good" picture;
-          they require specific geometry. Your eyes must be positioned between{" "}
-          <strong>56% and 69%</strong> from the bottom edge of the image, and
-          the head must fill exactly 50% to 69% of the height. Even a 1%
-          deviation can trigger an automatic system flag. Our system-driven
-          validator scans <strong>64 unique facial landmarks</strong> in under
-          five seconds.
+          <strong>Passport photo size by country:</strong> requirements vary
+          more than most applicants expect. A UK passport photo must be
+          35x45mm, a US passport photo is 2x2in (600x600px), and the{" "}
+          <strong>Sri Lanka passport photo size</strong> follows the standard
+          45x35mm ICAO format. We also support exact specs for{" "}
+          <strong>New Zealand visa photos</strong>,{" "}
+          <strong>France visa photos (updated for 2026)</strong>, China visa
+          photo crops, and Schengen visa applications — so you don't have to
+          dig through embassy PDFs to find the right dimensions.
         </p>
         <p className="hc-seo-p">
-          <strong>Common Pitfalls:</strong> While most applicants know they need
-          a white background, "pure white" (RGB 255,255,255) is harder to
-          achieve than it looks. Shadows behind the ears, "hot spots" from
-          camera flashes, or subtle tints from indoor lighting are common
-          reasons for failure. Furthermore, the universal "No Glasses" biometric policy is
-          strictly enforced by most nations. Our tool doesn't just crop; it performs a
-          deep-level luminance analysis to ensure your background is truly
-          neutral.
+          <strong>UK applicants:</strong> use our{" "}
+          <a href="/uk-passport-photo-requirements-tool" style={{ color: "#3d8c6e", fontWeight: 600 }}>
+            UK passport photo checker
+          </a>{" "}
+          to confirm your photo meets HMPO rules before you upload it to the
+          gov.uk service — see our{" "}
+          <a href="/blog/uk-visa-photo-requirements" style={{ color: "#3d8c6e", fontWeight: 600 }}>
+            UK visa photo requirements guide
+          </a>{" "}
+          for a full breakdown. Applying from China? Our{" "}
+          <a href="/china-visa-photo-editor" style={{ color: "#3d8c6e", fontWeight: 600 }}>
+            China visa photo editor
+          </a>{" "}
+          crops your image to the exact required ratio automatically.
         </p>
         <p className="hc-seo-p">
-          We believe that high-stakes applications shouldn't require
-          professional photography equipment. Whether you're applying for a{" "}
-          <a href="/france-visa-photo-editor" style={{ color: "#3d8c6e", fontWeight: 600 }}><strong>Schengen Visa</strong></a>, an{" "}
-          <a href="/australia-passport-photo-editor" style={{ color: "#3d8c6e", fontWeight: 600 }}>Australian passport</a>, or renewing your{" "}
-          <a href="/uk-passport-photo-editor" style={{ color: "#3d8c6e", fontWeight: 600 }}>UK</a> or{" "}
-          <a href="/india-passport-photo-editor" style={{ color: "#3d8c6e", fontWeight: 600 }}>Indian Passport</a>, our platform empowers you to take a compliant photo
-          from home. Browse our full{" "}
-          <a href="/passport-photos" style={{ color: "#3d8c6e", fontWeight: 600 }}>passport photo directory</a>{" "}or{" "}
-          <a href="/visa-photo" style={{ color: "#3d8c6e", fontWeight: 600 }}>visa photo directory</a>{" "}
-          for country-specific requirements, or read our{" "}
-          <a href="/blog" style={{ color: "#3d8c6e", fontWeight: 600 }}>expert guides</a>{" "}
-          for step-by-step instructions. Have questions? Visit our{" "}
-          <a href="/faq" style={{ color: "#3d8c6e", fontWeight: 600 }}>FAQ</a>.
+          Once your photo passes, you can download a print-ready file or use
+          our{" "}
+          <a href="/passport-photo-print-template-generator" style={{ color: "#3d8c6e", fontWeight: 600 }}>
+            passport photo print template
+          </a>{" "}
+          to print multiple copies of your passport photo on a single A4
+          sheet at any pharmacy or print shop. Explore country-specific tools
+          in our{" "}
+          <a href="/india-passport-photo-editor" style={{ color: "#3d8c6e", fontWeight: 600 }}>
+            India
+          </a>{" "}
+          and{" "}
+          <a href="/uk-passport-photo-editor" style={{ color: "#3d8c6e", fontWeight: 600 }}>
+            UK
+          </a>{" "}
+          passport photo editors, or read more in our{" "}
+          <a href="/blog" style={{ color: "#3d8c6e", fontWeight: 600 }}>
+            guides
+          </a>{" "}
+          and{" "}
+          <a href="/faq" style={{ color: "#3d8c6e", fontWeight: 600 }}>
+            FAQ
+          </a>
+          .
         </p>
       </div>
     </div>
@@ -400,7 +410,7 @@ export default function HomeSections({
           {[
             { stat: "12,000+", label: "Photos Processed" },
             { stat: "99.8%", label: "Acceptance Rate" },
-            { stat: "120+", label: "Countries Supported" },
+            { stat: "50+", label: "Countries Supported" },
             { stat: "30s", label: "Ready in Seconds" },
             { stat: "Official", label: "ICAO Compliant" },
           ].map((s, i) => (
@@ -451,12 +461,14 @@ export default function HomeSections({
       </section>
 
       {/* ────────── SPECS ────────── */}
-      <section className="hc-sec">
+      <section className="hc-sec" style={{ padding: "32px 20px" }}>
         <div className="hc-sec-in">
-          <div className="hc-head">
+          <div className="hc-head" style={{ marginBottom: "16px" }}>
             <span className="hc-label">Official Requirements</span>
-            <h2 className="hc-h2">Official 2026 Global Document Photo Specifications</h2>
-            <p className="hc-sub">
+            <h2 className="hc-h2" style={{ fontSize: "clamp(20px, 3.5vw, 26px)", marginBottom: "6px" }}>
+              Official 2026 Global Document Photo Specifications
+            </h2>
+            <p className="hc-sub" style={{ fontSize: "13px", marginBottom: "0" }}>
               Every photo is validated against official ICAO and government-specific
               biometric requirements.
             </p>
@@ -473,14 +485,8 @@ export default function HomeSections({
           <div className="hc-spec-note">
             <div className="hc-spec-note-icon">ℹ️</div>
             <div>
-              <div className="hc-spec-note-t">
-                Biometric Requirements are Critical
-              </div>
               <div className="hc-spec-note-p">
-                The most common rejection reasons are incorrect eye position
-                and head size. Your face must be centered, looking directly at
-                the camera with a neutral expression. No glasses, head
-                coverings (except religious/medical), or shadows on the face.
+                <strong style={{ color: "#0f1e2d", fontWeight: 700 }}>Biometric Requirements:</strong> Face centered, looking directly at camera with neutral expression. No glasses, head coverings (except religious/medical), or face shadows.
               </div>
             </div>
           </div>
@@ -488,23 +494,24 @@ export default function HomeSections({
       </section>
 
       {/* ────────── OFFICIAL SOURCES ────────── */}
-      <section className="hc-sec hc-sec-alt">
+      <section className="hc-sec hc-sec-alt" style={{ padding: "32px 20px" }}>
         <div className="hc-sec-in">
-          <div className="hc-head">
+          <div className="hc-head" style={{ marginBottom: "16px" }}>
             <span className="hc-label">Verified by Official Sources</span>
-            <h2 className="hc-h2">Straight from Official Government Sources</h2>
-            <p className="hc-sub">
+            <h2 className="hc-h2" style={{ fontSize: "clamp(20px, 3.5vw, 26px)", marginBottom: "6px" }}>
+              Straight from Official Government Sources
+            </h2>
+            <p className="hc-sub" style={{ fontSize: "13px", marginBottom: "0" }}>
               Every requirement we enforce comes directly from official global publications,
               including the European Commission, HMPO, and the Department of State.
-              No guesswork — only authoritative specifications.
             </p>
           </div>
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-              gap: "20px",
-              marginTop: "32px",
+              gridTemplateColumns: "repeat(auto-fit, minmax(190px, 1fr))",
+              gap: "10px",
+              marginTop: "16px",
             }}
           >
             {officialSources.map((src, i) => (
@@ -514,61 +521,68 @@ export default function HomeSections({
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
-                  display: "block",
-                  padding: "24px",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  padding: "12px 14px",
                   background: "#f0faf6",
                   border: "1px solid #b2dfdb",
-                  borderRadius: "16px",
+                  borderRadius: "12px",
                   textDecoration: "none",
-                  transition: "box-shadow 0.2s",
+                  transition: "all 0.2s ease",
                 }}
               >
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "flex-start",
-                    marginBottom: "10px",
-                  }}
-                >
-                  <span
+                <div>
+                  <div
                     style={{
-                      fontSize: "11px",
-                      fontWeight: 800,
-                      color: "#2d6a4f",
-                      background: "#d8f3dc",
-                      padding: "3px 10px",
-                      borderRadius: "999px",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.05em",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      marginBottom: "6px",
                     }}
                   >
-                    {src.badge}
-                  </span>
-                  <span style={{ fontSize: "13px", color: "#3d8c6e" }}>↗</span>
+                    <span
+                      style={{
+                        fontSize: "10px",
+                        fontWeight: 800,
+                        color: "#2d6a4f",
+                        background: "#d8f3dc",
+                        padding: "2px 8px",
+                        borderRadius: "999px",
+                        textTransform: "uppercase",
+                        letterSpacing: "0.04em",
+                      }}
+                    >
+                      {src.badge}
+                    </span>
+                    <span style={{ fontSize: "12px", color: "#3d8c6e", fontWeight: 700 }}>↗</span>
+                  </div>
+                  <div
+                    style={{
+                      fontSize: "11px",
+                      fontWeight: 700,
+                      color: "#1b4332",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.03em",
+                      marginBottom: "2px",
+                    }}
+                  >
+                    {src.agency}
+                  </div>
+                  <div
+                    style={{
+                      fontSize: "13px",
+                      fontWeight: 700,
+                      color: "#2d6a4f",
+                      lineHeight: "1.25",
+                      marginBottom: "4px",
+                    }}
+                  >
+                    {src.doc}
+                  </div>
                 </div>
                 <div
-                  style={{
-                    fontSize: "13px",
-                    fontWeight: 700,
-                    color: "#1b4332",
-                    marginBottom: "4px",
-                  }}
-                >
-                  {src.agency}
-                </div>
-                <div
-                  style={{
-                    fontSize: "15px",
-                    fontWeight: 600,
-                    color: "#2d6a4f",
-                    marginBottom: "8px",
-                  }}
-                >
-                  {src.doc}
-                </div>
-                <div
-                  style={{ fontSize: "13px", color: "#4a5568", lineHeight: "1.5" }}
+                  style={{ fontSize: "11.5px", color: "#4a5568", lineHeight: "1.35", marginTop: "2px" }}
                 >
                   {src.note}
                 </div>
@@ -577,14 +591,13 @@ export default function HomeSections({
           </div>
           <p
             style={{
-              marginTop: "24px",
+              marginTop: "14px",
               textAlign: "center",
-              fontSize: "13px",
+              fontSize: "12px",
               color: "#718096",
             }}
           >
             PixPassport automatically adjusts your images to comply with the global specifications above.
-            When in doubt, always refer to your country's official passport or visa agency portal.
           </p>
         </div>
       </section>

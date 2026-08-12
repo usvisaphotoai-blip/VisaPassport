@@ -221,7 +221,7 @@ export const fr = {
   stats: [
     { stat: "12 000+", label: "Photos traitées" },
     { stat: "99,8%", label: "Taux d'acceptation" },
-    { stat: "120+", label: "Pays supportés" },
+    { stat: "50+", label: "Pays supportés" },
     { stat: "30s", label: "Prêt en secondes" },
     { stat: "Officiel", label: "Conforme OACI" },
   ],

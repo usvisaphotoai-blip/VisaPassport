@@ -166,7 +166,7 @@ const jsonLd = {
       operatingSystem: "All",
       inLanguage: "fr",
       offers: { "@type": "Offer", price: "6.99", priceCurrency: "EUR" },
-      aggregateRating: { "@type": "AggregateRating", ratingValue: "4.9", ratingCount: "17000" },
+      aggregateRating: { "@type": "AggregateRating", ratingValue: "4.9", ratingCount: "170" },
     },
     {
       "@type": "FAQPage",

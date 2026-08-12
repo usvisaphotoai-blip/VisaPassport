@@ -418,17 +418,31 @@ body {
 }
 
 .prose-premium thead {
-  background: #0f172a;
+  background-color: #0f172a !important;
 }
+
+.prose-premium thead tr {
+  background-color: #0f172a !important;
+}
+
+/* Explicit dark background accent overrides for header rows */
+.prose-premium thead tr[class*="bg-orange"],
+.prose-premium thead tr[class*="bg-amber"] { background-color: #c2410c !important; }
+.prose-premium thead tr[class*="bg-green"] { background-color: #15803d !important; }
+.prose-premium thead tr[class*="bg-blue"] { background-color: #1d4ed8 !important; }
+.prose-premium thead tr[class*="bg-red"] { background-color: #b91c1c !important; }
+.prose-premium thead tr[class*="bg-slate-800"],
+.prose-premium thead tr[class*="bg-slate-900"] { background-color: #0f172a !important; }
 
 .prose-premium th {
   text-align: left;
-  color: #ffffff;
+  color: #ffffff !important;
   font-weight: 700;
   padding: 0.9rem 1.1rem;
   font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.03em;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .prose-premium td {

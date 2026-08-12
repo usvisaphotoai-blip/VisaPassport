@@ -102,11 +102,11 @@ export default function HomeHero() {
                 </span>
               </div>
 
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 leading-tight tracking-tight mb-3">
-                Passport &amp; Visa Photo Maker
+              <h1 className="text-3xl sm:text-4xl lg:text-4xl font-bold text-slate-900 leading-tight tracking-tight mb-3">
+             Create Passport &amp; Visa Photo Online
               </h1>
               <p className="text-lg sm:text-xl text-slate-500 font-normal mb-5 leading-snug">
-                Get a compliant biometric photo in 30 seconds
+                Create ICAO compliant passport size biometric photo in 30 seconds
               </p>
 
               <p className="text-sm sm:text-base text-slate-600 leading-relaxed mb-7 max-w-lg">

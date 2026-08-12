@@ -35,7 +35,7 @@ export default function LiveActivityChip() {
             <div className="flex items-center gap-2 shrink-0 opacity-0">
               <span className="relative flex h-2 w-2"></span>
               <span className="font-bold uppercase tracking-wider text-[11px] sm:text-xs">
-                Live: 85,432 photos processed
+                Live: 12,000+ photos processed
               </span>
             </div>
           </div>
