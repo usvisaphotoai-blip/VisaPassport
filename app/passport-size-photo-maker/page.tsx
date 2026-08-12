@@ -328,29 +328,7 @@ export default function PassportSizePhotoMakerPage() {
 
       
 
-        {/* ── Trust badges ── */}
-        <div className="bg-slate-50 border-b border-slate-200 py-6">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6">
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              {TRUST_ITEMS.map(({ icon, title, desc }) => (
-                <div
-                  key={title}
-                  className="trust-badge bg-white rounded-xl p-3 sm:p-4 border border-slate-100 text-left"
-                >
-                  <span className="text-xl sm:text-2xl block mb-1.5" role="img" aria-hidden>
-                    {icon}
-                  </span>
-                  <p className="text-xs sm:text-sm font-semibold text-slate-800 leading-tight">
-                    {title}
-                  </p>
-                  <p className="text-xs text-slate-500 mt-0.5 leading-snug hidden sm:block">
-                    {desc}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+       
 
         {/* ── SEO rich content ── */}
         <div className="bg-white border-t border-slate-100 py-14 sm:py-20 mt-6 sm:mt-8">

@@ -139,27 +139,11 @@ export default async function Page({ params }: PageProps) {
             </div>
           </div>
 
-          {/* Trust badges */}
-          <div className="bg-slate-50 border-b border-slate-200 py-5 sm:py-6">
-            <div className="max-w-4xl mx-auto px-4 sm:px-6">
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                {TRUST_ITEMS.map(({ icon, title, desc }) => (
-                  <div
-                    key={title}
-                    className="bg-white rounded-xl p-3 sm:p-4 border border-slate-100 text-left transition-all hover:-translate-y-0.5 hover:shadow-md hover:shadow-blue-100"
-                  >
-                    <span className="text-xl sm:text-2xl block mb-1.5" role="img" aria-hidden="true">{icon}</span>
-                    <p className="text-xs sm:text-sm font-semibold text-slate-800 leading-tight">{title}</p>
-                    <p className="text-xs text-slate-500 mt-0.5 leading-snug hidden sm:block">{desc}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+        
 
           {/* SEO rich content */}
-          <div className="bg-white border-t border-slate-100 py-12 sm:py-20 mt-6 sm:mt-8">
-            <div className="max-w-3xl mx-auto px-4 sm:px-6">
+          <div className="bg-white  py-1 sm:py-20 mt-6 sm:mt-8">
+            <div className="max-w-5xl mx-auto px-4 sm:px-6">
               <div className="text-center mb-10 sm:mb-14">
                 <span className="inline-block px-3 py-1 rounded-full bg-blue-50 text-blue-600 text-xs font-bold uppercase tracking-wider mb-3">
                   Complete Guide
