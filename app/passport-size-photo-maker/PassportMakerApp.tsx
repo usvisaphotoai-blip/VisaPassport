@@ -368,6 +368,12 @@ export default function PassportMakerApp({
   const uploadSectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (defaultDoc) {
+      setSelectedDoc(defaultDoc);
+    }
+  }, [defaultDoc]);
+
+  useEffect(() => {
     if (!selectedFile) return setPreviewUrl(null);
     const url = URL.createObjectURL(selectedFile);
     setPreviewUrl(url);

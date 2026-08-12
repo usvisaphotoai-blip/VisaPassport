@@ -105,6 +105,15 @@ export default async function Page({ params }: PageProps) {
     case "tool": {
       const toolPage = route.data;
       const isIcaoPage = slug.startsWith("icao-");
+      let defaultDoc = (toolPage as any).defaultDoc;
+      if (!defaultDoc) {
+        if (isIcaoPage) defaultDoc = "icao-passport";
+        else if (slug.includes("china")) defaultDoc = "china-passport";
+        else if (slug.includes("dubai")) defaultDoc = "uae-passport";
+        else if (slug.includes("uk")) defaultDoc = "uk-passport";
+        else defaultDoc = "uk-passport";
+      }
+
       return (
         <div className="bg-slate-50 min-h-screen">
           <Breadcrumbs />
@@ -114,7 +123,7 @@ export default async function Page({ params }: PageProps) {
             title={toolPage.h1}
             subtitle={toolPage.metaDescription}
             img={(toolPage as any).img}
-            defaultDoc={isIcaoPage ? "icao-passport" : "uk-passport"}
+            defaultDoc={defaultDoc}
             hideDocSelector={isIcaoPage}
             isIcaoPage={isIcaoPage}
           />
