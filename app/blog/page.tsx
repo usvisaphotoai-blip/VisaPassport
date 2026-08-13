@@ -37,6 +37,25 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
   }
 }
 
+// Helper to compute reading time dynamically from word count
+function getReadingTime(content: string): string {
+  const words = content.replace(/<[^>]*>/g, '').trim().split(/\s+/).length;
+  const minutes = Math.max(3, Math.ceil(words / 225));
+  return `${minutes} min read`;
+}
+
+// Helper to determine category tag
+function getPostCategory(slug: string, title: string): string {
+  const lower = (slug + ' ' + title).toLowerCase();
+  if (lower.includes('us-visa') || lower.includes('us visa') || lower.includes('ds-160') || lower.includes('green card') || lower.includes('dv-lottery') || lower.includes('h1b')) return 'US Visas & Passports';
+  if (lower.includes('schengen') || lower.includes('france') || lower.includes('germany') || lower.includes('europe')) return 'Schengen & Europe';
+  if (lower.includes('uk-') || lower.includes('uk visa') || lower.includes('uk digital')) return 'UK Visas & Passports';
+  if (lower.includes('australia') || lower.includes('new zealand') || lower.includes('zealand')) return 'Australia & Pacific';
+  if (lower.includes('india')) return 'India e-Visa';
+  if (lower.includes('baby') || lower.includes('infant') || lower.includes('child')) return 'Baby & Child Photos';
+  return 'Compliance Guides';
+}
+
 const APP_URL = 'https://www.pixpassport.com';
 
 export const metadata = {
@@ -124,168 +143,258 @@ export default async function BlogIndex() {
       />
 
       <div className="min-h-screen bg-slate-50/50">
-        <header className="bg-white border-b border-slate-100 pt-32 pb-16 px-4 md:px-8 overflow-hidden relative">
-          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-lime-500/5 rounded-full blur-[100px] -mr-48 -mt-48" />
-          
+        {/* Compact Dark Hero Header */}
+        <header className="relative bg-slate-950 pt-20 pb-10 sm:pt-24 sm:pb-12 px-4 sm:px-6 lg:px-8 overflow-hidden border-b border-slate-800">
+          <div className="absolute inset-0 z-0 opacity-25 pointer-events-none">
+            <div className="absolute top-0 left-1/4 w-60 h-60 sm:w-96 sm:h-96 bg-lime-500 rounded-full blur-[100px] animate-pulse" />
+            <div className="absolute bottom-0 right-1/4 w-60 h-60 sm:w-96 sm:h-96 bg-emerald-600 rounded-full blur-[120px] animate-pulse delay-700" />
+          </div>
+
           <div className="max-w-7xl mx-auto relative z-10">
-            <nav aria-label="Breadcrumb" className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-6">
+            <nav aria-label="Breadcrumb" className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-4">
               <ol className="flex items-center space-x-2">
                 <li>
-                  <Link href="/" className="hover:text-lime-600 transition-colors">Home</Link>
+                  <Link href="/" className="hover:text-lime-400 transition-colors">Home</Link>
                 </li>
-                <li aria-hidden="true" className="opacity-30">/</li>
-                <li className="text-slate-900">Blog</li>
+                <li aria-hidden="true" className="opacity-40">/</li>
+                <li className="text-slate-200 font-black">Blog</li>
               </ol>
             </nav>
 
-            <div className="max-w-3xl">
-              <h1 className="text-4xl sm:text-6xl font-black text-slate-900 tracking-tight leading-[1.1] mb-6">
-                Global Photo <span className="gradient-text">Compliance Guides</span>
+            <div className="max-w-2xl">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-lime-500/10 border border-lime-500/20 text-lime-400 text-[10px] sm:text-xs font-extrabold uppercase tracking-wider mb-4">
+                <span className="w-1.5 h-1.5 rounded-full bg-lime-400 animate-pulse" />
+                2026 Biometric Photo Knowledge Hub
+              </div>
+              <h1 className="text-2xl sm:text-4xl font-black text-white tracking-tight leading-tight mb-3">
+                Official Photo <span className="bg-gradient-to-r from-lime-400 via-emerald-400 to-teal-300 bg-clip-text text-transparent">Compliance Guides</span>
               </h1>
-              <p className="text-xl text-slate-600 leading-relaxed font-medium">
-                Expert tips, official requirements, and step-by-step guides for perfect passport, visa, and ID photographs for 50+ countries.
+              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-normal max-w-xl">
+                Expert advice, government-verified specifications, and step-by-step guides for passport, visa, and ID photographs across 50+ countries.
               </p>
             </div>
           </div>
         </header>
 
-        <main className="max-w-7xl mx-auto px-4 md:px-8 py-16 md:py-24">
-          {/* Featured Post */}
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+          {/* Compact Featured Article */}
           {featuredPost && (
-            <article className="mb-20">
-              <Link href={`/blog/${featuredPost.slug}`} className="group relative block bg-white rounded-[2.5rem] overflow-hidden border border-slate-200 blog-card-shadow transition-all duration-500 hover:-translate-y-2">
-                <div className="grid grid-cols-1 lg:grid-cols-2">
-                  <div className="aspect-16/10 lg:aspect-auto relative overflow-hidden">
+            <section aria-label="Featured Article" className="mb-10 sm:mb-12">
+              <Link
+                href={`/blog/${featuredPost.slug}`}
+                className="group relative block bg-white rounded-xl sm:rounded-2xl overflow-hidden border border-slate-200/90 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1"
+              >
+                <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch">
+                  <div className="lg:col-span-5 aspect-[16/9] lg:aspect-auto relative min-h-[180px] sm:min-h-[220px] overflow-hidden bg-slate-900 flex items-center justify-center">
                     {featuredPost.featuredImage ? (
                       <Image
                         src={featuredPost.featuredImage}
                         alt={featuredPost.title}
                         fill
-                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                        priority
+                        sizes="(max-width: 1024px) 100vw, 40vw"
+                        className="object-contain p-3 transition-transform duration-500 group-hover:scale-105"
                       />
                     ) : (
-                      <div className="absolute inset-0 bg-slate-900 flex items-center justify-center">
-                        <span className="text-lime-500 font-black text-4xl">PixPassport</span>
+                      <div className="absolute inset-0 bg-gradient-to-br from-slate-900 to-slate-800 flex flex-col items-center justify-center p-4 text-center">
+                        <span className="text-lime-400 font-bold text-xl tracking-tight mb-1">PixPassport</span>
+                        <span className="text-slate-400 text-xs font-medium">Official Biometric Guide</span>
                       </div>
                     )}
-                    <div className="absolute top-6 left-6 z-10">
-                      <span className="bg-lime-500 text-slate-950 text-xs font-black px-4 py-1.5 rounded-full uppercase tracking-widest shadow-xl">
+                    <div className="absolute top-3 left-3 z-10 flex items-center gap-2">
+                      <span className="bg-lime-500 text-slate-950 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider shadow-md">
                         Featured Guide
                       </span>
                     </div>
                   </div>
                   
-                  <div className="p-8 md:p-12 lg:p-16 flex flex-col justify-center">
-                    <div className="flex items-center gap-4 text-slate-400 text-sm font-bold mb-6">
-                      <time dateTime={featuredPost.date}>
-                        {new Date(featuredPost.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
-                      </time>
-                      <span className="w-1.5 h-1.5 bg-slate-200 rounded-full" />
-                      <span>{featuredPost.author}</span>
+                  <div className="lg:col-span-7 p-5 sm:p-6 lg:p-7 flex flex-col justify-between bg-white">
+                    <div>
+                      <div className="flex items-center gap-2 text-slate-500 text-xs font-semibold mb-2.5 flex-wrap">
+                        <span className="px-2 py-0.5 rounded bg-slate-100 text-slate-700 font-bold text-[11px]">
+                          {getPostCategory(featuredPost.slug, featuredPost.title)}
+                        </span>
+                        <span className="w-1 h-1 bg-slate-300 rounded-full" />
+                        <time dateTime={featuredPost.date} className="text-slate-400">
+                          {new Date(featuredPost.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                        </time>
+                        <span className="w-1 h-1 bg-slate-300 rounded-full" />
+                        <span className="text-lime-700 font-bold">{getReadingTime(featuredPost.content)}</span>
+                      </div>
+                      
+                      <h2 className="text-lg sm:text-xl font-black text-slate-900 mb-2 group-hover:text-lime-600 transition-colors leading-snug tracking-tight">
+                        {featuredPost.title}
+                      </h2>
+                      
+                      <p className="text-slate-600 text-xs sm:text-sm mb-4 line-clamp-2 font-normal leading-relaxed">
+                        {featuredPost.description}
+                      </p>
                     </div>
                     
-                    <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-6 group-hover:text-lime-600 transition-colors leading-tight">
-                      {featuredPost.title}
-                    </h2>
-                    
-                    <p className="text-lg text-slate-600 mb-10 line-clamp-3 font-medium leading-relaxed">
-                      {featuredPost.description}
-                    </p>
-                    
-                    <div className="mt-auto flex items-center text-lime-600 font-bold text-lg">
-                      Read Full Article
-                      <svg className="w-6 h-6 ml-2 group-hover:translate-x-2 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                      </svg>
+                    <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
+                      <div className="flex items-center gap-2 text-slate-600 text-xs font-semibold">
+                        <div className="w-6 h-6 rounded-full bg-slate-900 text-lime-400 flex items-center justify-center font-bold text-[10px]">
+                          {featuredPost.author.charAt(0)}
+                        </div>
+                        <span>{featuredPost.author}</span>
+                      </div>
+                      <span className="inline-flex items-center text-lime-600 font-bold text-xs uppercase tracking-wider group-hover:translate-x-1 transition-transform">
+                        Read Guide →
+                      </span>
                     </div>
                   </div>
                 </div>
               </Link>
-            </article>
+            </section>
           )}
 
-          {/* Grid Section */}
-          <div className="flex items-center gap-4 mb-12">
-            <div className="w-1 h-8 bg-lime-500 rounded-full" />
-            <h3 className="text-2xl font-black text-slate-900 uppercase tracking-tighter">
-              Latest Articles
-            </h3>
+          {/* Section Divider & Compact Grid Title */}
+          <div className="flex items-center justify-between gap-3 mb-6 pb-3 border-b border-slate-200">
+            <div className="flex items-center gap-2.5">
+              <div className="w-1 h-5 bg-lime-500 rounded-full" />
+              <h2 className="text-base sm:text-lg font-black text-slate-900 tracking-tight uppercase">
+                All Published Guides
+              </h2>
+            </div>
+            <span className="text-xs font-semibold text-slate-500">
+              {remainingPosts.length + (featuredPost ? 1 : 0)} Articles
+            </span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-14">
-            {remainingPosts.map((post) => (
-              <article key={post.slug} className="group">
-                <Link href={`/blog/${post.slug}`} className="flex flex-col h-full">
-                  <div className="aspect-16/10 relative rounded-4xl overflow-hidden mb-8 border border-slate-200 blog-card-shadow transition-all duration-500 group-hover:-translate-y-2 group-hover:shadow-2xl">
-                    {post.featuredImage ? (
-                      <Image
-                        src={post.featuredImage}
-                        alt={post.title}
-                        fill
-                        className="object-cover transition-transform duration-700 group-hover:scale-105"
-                      />
-                    ) : (
-                      <div className="absolute inset-0 bg-slate-900 flex items-center justify-center">
-                        <span className="text-lime-500 font-black text-2xl">PixPassport</span>
+          {/* Compact Articles Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+            {remainingPosts.map((post) => {
+              const category = getPostCategory(post.slug, post.title);
+              const readTime = getReadingTime(post.content);
+              return (
+                <article key={post.slug} className="group flex flex-col">
+                  <Link
+                    href={`/blog/${post.slug}`}
+                    className="flex flex-col h-full bg-white rounded-xl overflow-hidden border border-slate-200/90 shadow-xs hover:shadow-md transition-all duration-300 hover:-translate-y-1"
+                  >
+                    <div className="aspect-[16/9] relative overflow-hidden bg-slate-900 border-b border-slate-100 flex items-center justify-center">
+                      {post.featuredImage ? (
+                        <Image
+                          src={post.featuredImage}
+                          alt={post.title}
+                          fill
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                          className="object-contain p-2 transition-transform duration-500 group-hover:scale-105"
+                        />
+                      ) : (
+                        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 to-slate-800 flex items-center justify-center p-4 text-center">
+                          <span className="text-lime-400 font-bold text-sm tracking-tight">PixPassport Guide</span>
+                        </div>
+                      )}
+                      <div className="absolute top-3 left-3 z-10">
+                        <span className="bg-slate-950/85 backdrop-blur-md text-white text-[9px] font-bold px-2.5 py-0.5 rounded-md uppercase tracking-wider border border-white/10 shadow-xs">
+                          {category}
+                        </span>
                       </div>
-                    )}
-                    <div className="absolute bottom-6 left-6 z-10">
-                      <span className="bg-white/90 backdrop-blur-md text-slate-900 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest shadow-sm">
-                        Guide
-                      </span>
                     </div>
-                  </div>
-                  
-                  <div className="flex items-center gap-3 text-slate-400 text-[11px] font-black uppercase tracking-widest mb-4">
-                    <time dateTime={post.date}>
-                      {new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-                    </time>
-                    <span className="w-1 h-1 bg-slate-200 rounded-full" />
-                    <span>8 Min Read</span>
-                  </div>
-                  
-                  <h2 className="text-2xl font-black text-slate-900 mb-4 group-hover:text-lime-600 transition-colors line-clamp-2 leading-tight">
-                    {post.title}
-                  </h2>
-                  
-                  <p className="text-slate-600 mb-8 line-clamp-3 font-medium leading-relaxed">
-                    {post.description}
-                  </p>
-                  
-                  <div className="mt-auto flex items-center text-lime-600 font-black text-sm uppercase tracking-widest">
-                    Read Story
-                    <svg className="w-4 h-4 ml-1.5 group-hover:translate-x-1.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                    </svg>
-                  </div>
-                </Link>
-              </article>
-            ))}
+                    
+                    <div className="p-4 sm:p-5 flex flex-col flex-grow">
+                      <div className="flex items-center gap-2 text-slate-400 text-[11px] font-semibold uppercase tracking-wider mb-2">
+                        <time dateTime={post.date}>
+                          {new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                        </time>
+                        <span className="w-1 h-1 bg-slate-300 rounded-full" />
+                        <span className="text-lime-700">{readTime}</span>
+                      </div>
+                      
+                      <h3 className="text-sm sm:text-base font-bold text-slate-900 mb-2 group-hover:text-lime-600 transition-colors line-clamp-2 leading-snug tracking-tight">
+                        {post.title}
+                      </h3>
+                      
+                      <p className="text-slate-600 text-xs mb-4 line-clamp-2 font-normal leading-relaxed">
+                        {post.description}
+                      </p>
+                      
+                      <div className="mt-auto pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] font-semibold">
+                        <span className="text-slate-500">By {post.author}</span>
+                        <span className="text-lime-600 group-hover:translate-x-1 transition-transform flex items-center gap-1">
+                          Read
+                          <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                          </svg>
+                        </span>
+                      </div>
+                    </div>
+                  </Link>
+                </article>
+              );
+            })}
           </div>
 
-          {/* Internal Link Section */}
-          <section className="mt-20 pt-16 border-t border-slate-200">
-            <h3 className="text-2xl font-black text-slate-900 mb-8 text-center">Explore More Tools & Resources</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              <Link href="/passport-photo-online" className="group bg-white rounded-2xl border border-slate-200 p-6 hover:border-lime-300 hover:shadow-lg transition-all">
-                <span className="text-2xl mb-3 block">📸</span>
-                <span className="text-base font-bold text-slate-900 group-hover:text-lime-600 block mb-2">Create Photo</span>
-                <p className="text-xs text-slate-500">Upload & get a compliant biometric photo instantly</p>
+          {/* Compact Photo Tool CTA Banner */}
+          <section aria-label="Photo Creation CTA" className="mt-12 sm:mt-16 p-6 sm:p-8 lg:p-10 bg-slate-950 rounded-2xl text-center relative overflow-hidden group border border-lime-500/20 shadow-xl">
+            <div className="absolute top-0 right-0 w-48 h-48 bg-lime-500/10 rounded-full blur-2xl group-hover:scale-125 transition-transform duration-700" />
+            <div className="absolute bottom-0 left-0 w-48 h-48 bg-emerald-600/10 rounded-full blur-2xl group-hover:scale-125 transition-transform duration-700" />
+
+            <div className="relative z-10 max-w-xl mx-auto">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-lime-500/10 text-lime-400 text-[10px] font-bold uppercase tracking-wider mb-3 border border-lime-500/20">
+                ⚡ Instant Biometric Tool
+              </span>
+              <h2 className="text-xl sm:text-2xl font-black text-white mb-2 leading-tight tracking-tight">
+                Need a Compliant Passport or Visa Photo?
+              </h2>
+              <p className="text-slate-300 text-xs sm:text-sm leading-relaxed mb-6 font-normal">
+                Upload your selfie. Our AI crops to exact millimeter size, removes background shadows, and guarantees 100% acceptance.
+              </p>
+              <Link
+                href="/passport-photo-online"
+                className="inline-flex items-center justify-center bg-lime-500 hover:bg-lime-400 text-slate-950 font-black text-xs sm:text-sm py-3 px-6 sm:px-8 rounded-xl transition-all shadow-lg shadow-lime-500/20 group/btn"
+              >
+                Create My Photo Now
+                <svg className="w-4 h-4 ml-1.5 group-hover/btn:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
               </Link>
-              <Link href="/visa-photo-validator" className="group bg-white rounded-2xl border border-slate-200 p-6 hover:border-lime-300 hover:shadow-lg transition-all">
-                <span className="text-2xl mb-3 block">✅</span>
-                <span className="text-base font-bold text-slate-900 group-hover:text-lime-600 block mb-2">Free Validator</span>
-                <p className="text-xs text-slate-500">Check compliance before submitting</p>
+            </div>
+          </section>
+
+          {/* Compact Directory Links Footer Section */}
+          <section aria-label="Official Tools and Resources" className="mt-12 sm:mt-16 pt-12 border-t border-slate-200">
+            <div className="text-center max-w-xl mx-auto mb-8">
+              <h2 className="text-xl font-black text-slate-900 tracking-tight mb-2">
+                Official Photo Tools & Directories
+              </h2>
+              <p className="text-slate-600 text-xs font-medium">
+                Verify compliance or generate ready-to-print photos instantly using our online tools.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <Link href="/passport-photo-online" className="group bg-white rounded-xl border border-slate-200/90 p-4 hover:border-lime-400 hover:shadow-sm transition-all">
+                <div className="w-9 h-9 rounded-lg bg-lime-50 text-lime-600 flex items-center justify-center text-xl mb-3 group-hover:scale-105 transition-transform">
+                  📸
+                </div>
+                <span className="text-sm font-bold text-slate-900 group-hover:text-lime-600 block mb-1">Create Photo Online</span>
+                <p className="text-[11px] text-slate-500 leading-relaxed">Upload selfie & get 2026 biometric photo</p>
               </Link>
-              <Link href="/passport-photos" className="group bg-white rounded-2xl border border-slate-200 p-6 hover:border-lime-300 hover:shadow-lg transition-all">
-                <span className="text-2xl mb-3 block">🛂</span>
-                <span className="text-base font-bold text-slate-900 group-hover:text-lime-600 block mb-2">Passport Directory</span>
-                <p className="text-xs text-slate-500">Official passport photo sizes for 50+ countries</p>
+
+              <Link href="/visa-photo-validator" className="group bg-white rounded-xl border border-slate-200/90 p-4 hover:border-lime-400 hover:shadow-sm transition-all">
+                <div className="w-9 h-9 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl mb-3 group-hover:scale-105 transition-transform">
+                  ✅
+                </div>
+                <span className="text-sm font-bold text-slate-900 group-hover:text-lime-600 block mb-1">Free Photo Validator</span>
+                <p className="text-[11px] text-slate-500 leading-relaxed">Check size, head ratio, & background rules</p>
               </Link>
-              <Link href="/visa-photo" className="group bg-white rounded-2xl border border-slate-200 p-6 hover:border-lime-300 hover:shadow-lg transition-all">
-                <span className="text-2xl mb-3 block">🌐</span>
-                <span className="text-base font-bold text-slate-900 group-hover:text-lime-600 block mb-2">Visa Photo Directory</span>
-                <p className="text-xs text-slate-500">International visa photo specifications</p>
+
+              <Link href="/passport-photos" className="group bg-white rounded-xl border border-slate-200/90 p-4 hover:border-lime-400 hover:shadow-sm transition-all">
+                <div className="w-9 h-9 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-xl mb-3 group-hover:scale-105 transition-transform">
+                  🛂
+                </div>
+                <span className="text-sm font-bold text-slate-900 group-hover:text-lime-600 block mb-1">Passport Specs Directory</span>
+                <p className="text-[11px] text-slate-500 leading-relaxed">Official photo sizes for 50+ countries</p>
+              </Link>
+
+              <Link href="/visa-photo" className="group bg-white rounded-xl border border-slate-200/90 p-4 hover:border-lime-400 hover:shadow-sm transition-all">
+                <div className="w-9 h-9 rounded-lg bg-teal-50 text-teal-600 flex items-center justify-center text-xl mb-3 group-hover:scale-105 transition-transform">
+                  🌐
+                </div>
+                <span className="text-sm font-bold text-slate-900 group-hover:text-lime-600 block mb-1">Visa Specs Directory</span>
+                <p className="text-[11px] text-slate-500 leading-relaxed">International visa photo specifications</p>
               </Link>
             </div>
           </section>
@@ -294,3 +403,4 @@ export default async function BlogIndex() {
     </>
   );
 }
+

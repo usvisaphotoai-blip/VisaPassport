@@ -14,7 +14,7 @@ export default function FaqAccordion({ faqs }: { faqs: { q: string; a: string }[
   return (
     <div className="space-y-3 sm:space-y-4">
       {faqs.map((faq, i) => (
-        <div key={i} className="border border-slate-100 rounded-2xl sm:rounded-3xl overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow">
+        <div key={i} className="border border-slate-100 rounded-xl sm:rounded-xl overflow-hidden bg-white shadow-xs hover:shadow-sm transition-shadow">
           <button
             onClick={() => toggle(i)}
             className="w-full flex items-center justify-between p-4 sm:p-5 lg:p-6 text-left focus:outline-none group"

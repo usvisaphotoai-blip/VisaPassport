@@ -59,11 +59,17 @@ export default function TocSidebar({ headings }: { headings: TOCPageHeading[] })
               key={heading.id}
               href={`#${heading.id}`}
               onClick={(e) => handleClick(e, heading.id)}
-              className={`block text-xs sm:text-sm py-1.5 sm:py-2 px-2 sm:px-3 rounded-lg transition-all border-l-2 ${
+              className={`block py-1.5 px-2.5 rounded-lg transition-all border-l-2 ${
                 activeId === heading.id
                   ? "text-lime-700 bg-lime-50 border-lime-600 font-bold"
                   : "text-slate-500 border-transparent hover:text-slate-900 hover:bg-slate-50"
-              } ${heading.level === 3 ? "ml-3 sm:ml-4" : ""}`}
+              } ${
+                heading.level === 4
+                  ? "ml-6 text-[11px] sm:text-xs"
+                  : heading.level === 3
+                  ? "ml-3 text-xs sm:text-sm font-medium"
+                  : "text-xs sm:text-sm font-semibold"
+              }`}
             >
               {heading.text}
             </a>
