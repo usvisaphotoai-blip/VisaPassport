@@ -22,6 +22,8 @@ export interface BlogPost {
 
 const APP_URL = 'https://www.pixpassport.com';
 
+export const revalidate = 3600;
+
 // Helper to get ALL posts
 async function getAllPosts(): Promise<BlogPost[]> {
   try {

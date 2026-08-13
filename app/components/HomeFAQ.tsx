@@ -1,6 +1,4 @@
-"use client";
-
-import { useState } from "react";
+import HomeFaqList from "./HomeFaqList";
 
 interface FAQ {
   q: string;
@@ -75,8 +73,6 @@ const visaFaqs: FAQ[] = [
 ];
 
 export default function HomeFAQ({ type, customFaqs }: { type?: "passport" | "visa", customFaqs?: FAQ[] }) {
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
-
   const displayFaqs = customFaqs || (type === "visa" ? visaFaqs : (type === "passport" ? passportFaqs : defaultFaqs));
 
   return (
@@ -86,31 +82,7 @@ export default function HomeFAQ({ type, customFaqs }: { type?: "passport" | "vis
           <span className="hc-label">Common Questions</span>
           <h2 className="hc-h2">Frequently Asked Questions</h2>
         </div>
-        <div>
-          {displayFaqs.map((f, i) => (
-            <div
-              key={i}
-              className={`hc-faq ${openFaq === i ? "hc-faq-open" : ""}`}
-            >
-              <button
-                className="hc-faq-btn"
-                onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                aria-expanded={openFaq === i}
-              >
-                <span className="hc-faq-q">{f.q}</span>
-                <span className={`hc-faq-icon ${openFaq === i ? "hc-faq-open" : ""}`}>
-                  +
-                </span>
-              </button>
-              <div
-                className="hc-faq-body"
-                style={{ maxHeight: openFaq === i ? "300px" : "0px" }}
-              >
-                <p className="hc-faq-txt">{f.a}</p>
-              </div>
-            </div>
-          ))}
-        </div>
+        <HomeFaqList faqs={displayFaqs} />
       </div>
     </section>
   );

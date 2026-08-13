@@ -58,6 +58,8 @@ function getPostCategory(slug: string, title: string): string {
 
 const APP_URL = 'https://www.pixpassport.com';
 
+export const revalidate = 3600;
+
 export const metadata = {
   title: 'Passport & Visa Photo Requirements Blog | Expert Guides 2026',
   description: 'Expert advice on global passport, visa, and ID photo requirements. Get 2026 compliance guidelines, biometric tips, and step-by-step guides for 50+ countries including US, UK, India, and Schengen.',
