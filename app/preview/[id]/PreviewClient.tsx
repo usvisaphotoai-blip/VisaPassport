@@ -1,7 +1,7 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback, startTransition, memo } from "react";
 import { getClientTimezoneCurrency } from "@/lib/currency";
 import { getSpecById } from "@/lib/specs";
 import { usePayment, LocalPrice } from "./hooks/usePayment";
@@ -364,9 +364,11 @@ function OrderPanel({
                     onClick={(e) => {
                       e.stopPropagation();
                       setIsExpertPlan(true);
-                      if (onOpenFixModal) onOpenFixModal();
+                      startTransition(() => {
+                        if (onOpenFixModal) onOpenFixModal();
+                      });
                     }}
-                    className="bg-indigo-50/70 border border-indigo-200/80 rounded-xl p-3.5 flex items-center justify-between gap-3 group/fix hover:bg-lime-100/60 transition-colors"
+                    className="bg-lime-50/80 border border-lime-200/90 rounded-xl p-3.5 flex items-center justify-between gap-3 group/fix hover:bg-lime-100/70 transition-colors cursor-pointer"
                   >
                     <div className="space-y-2">
                       <div>
@@ -541,7 +543,109 @@ function OrderPanel({
   );
 }
 
-function ExpertsFixModal({
+const BEFORE_AFTER_PAIRS = [
+  {
+    title: "Wall Shadow Removal & Background Calibration",
+    beforeImg:
+      "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786628280/before_uk_f24dre.jpg",
+    afterImg:
+      "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786627664/eu_pixpassport.com_ppfhlr.jpg",
+    beforeTag: "Original: Wall Shadow & Yellow Tint",
+    afterTag: "Expert Fixed: 100% Compliant White BG",
+  },
+  {
+    title: "Biometric Eye Level & Face Centering",
+    beforeImg:
+      "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786630383/1000383324_bxx77h.jpg",
+    afterImg:
+      "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786630498/597e95e4-676d-41dd-be79-c45be7e07b04_photo_zm53xt.jpg",
+    beforeTag: "Original: Head Tilted & Off-Center",
+    afterTag: "Expert Fixed: Aligned Biometric Crop",
+  },
+  {
+    title: "Glare & Reflection Reduction on Glasses",
+    beforeImg:
+      "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786628395/before_us_phel7i.jpg",
+    afterImg:
+      "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786628788/ulape_c0dexm.jpg",
+    beforeTag: "Original: Harsh Lighting & Glare",
+    afterTag: "Expert Fixed: Clear Biometric Visibility",
+  },
+  {
+    title: "Head Tilt Correction & Alignment",
+    beforeImg:
+      "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786628855/bef_d5mwgy.jpg",
+    afterImg:
+      "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786628853/ff150d13-c01a-418a-8e26-9483f3a7907c_photo_pttp0l.jpg",
+    beforeTag: "Original: Tilted Angle & Exposure",
+    afterTag: "Expert Fixed: Perfectly Straight Head",
+  },
+  {
+    title: "Lighting & Contrast Balancing",
+    beforeImg:
+      "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786629026/1000378632_1_g13xko.jpg",
+    afterImg:
+      "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786629107/ebec124b-38dd-44b9-8b2b-5a11972d15c2_photo_ukzvse.jpg",
+    beforeTag: "Original: Dim Lighting & Underexposed",
+    afterTag: "Expert Fixed: Studio-Quality Illumination",
+  },
+  {
+    title: "Background Uniformity & Noise Removal",
+    beforeImg:
+      "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786629172/Minimal_studio_portrait_of_young_man_wpjxdp.png",
+    afterImg:
+      "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786629173/file_ge84gv_fhqvi2.png",
+    beforeTag: "Original: Textured Background",
+    afterTag: "Expert Fixed: Pure Plain White Surface",
+  },
+  {
+    title: "Official Passport Aspect Ratio & Crop",
+    beforeImg:
+      "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786629405/A_passport_e4y2u3.jpg",
+    afterImg:
+      "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786629172/pix_passport_y4bjki.jpg",
+    beforeTag: "Original: Incorrect Crop Ratio",
+    afterTag: "Expert Fixed: Exact Embassy Dimensions",
+  },
+  {
+    title: "Color Balance & Tone Normalization",
+    beforeImg:
+      "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786629541/1000379376_1_d2ibas.jpg",
+    afterImg:
+      "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786629817/cropped-tttt_vpemzs.jpg",
+    beforeTag: "Original: Color Cast & Shadows",
+    afterTag: "Expert Fixed: Natural Skin Tone",
+  },
+  {
+    title: "Shoulder Leveling & Posture Balance",
+    beforeImg:
+      "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786629895/1000368998_1_mmnu84.jpg",
+    afterImg:
+      "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786629988/98411d2e-09fd-4d93-9fa7-cbe7e6db2460_photo_qrmwty.jpg",
+    beforeTag: "Original: Uneven Shoulder Height",
+    afterTag: "Expert Fixed: Balanced Posture",
+  },
+  {
+    title: "Sharpness Enhancement & Blur Correction",
+    beforeImg:
+      "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786630037/jia6lx858xnimc2w6ypn_fcjvj0.jpg",
+    afterImg:
+      "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786630035/c869b2b2-f238-4151-b480-6a08ba0cbe24_photo_upfgcd.jpg",
+    beforeTag: "Original: Slightly Soft Focus",
+    afterTag: "Expert Fixed: High-Definition Clarity",
+  },
+  {
+    title: "Full ICAO Standard Compliance Verification",
+    beforeImg:
+      "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786630292/1000383509_ffkmf2.jpg",
+    afterImg:
+      "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786630114/3606955d-8470-4d49-a65d-7425be0b182f_photo_qsbsbu.jpg",
+    beforeTag: "Original: Non-Standard Photo",
+    afterTag: "Expert Fixed: 100% Embassy Approved",
+  },
+];
+
+const ExpertsFixModal = memo(function ExpertsFixModal({
   isOpen,
   onClose,
   onContinue,
@@ -567,15 +671,21 @@ function ExpertsFixModal({
   }, [guestEmail]);
 
   useEffect(() => {
+    if (!isOpen) return;
+
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
-    if (isOpen) {
-      window.addEventListener("keydown", handleKeyDown);
+
+    window.addEventListener("keydown", handleKeyDown, { passive: true });
+
+    const rafId = requestAnimationFrame(() => {
       document.body.style.overflow = "hidden";
-    }
+    });
+
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
+      cancelAnimationFrame(rafId);
       document.body.style.overflow = "auto";
     };
   }, [isOpen, onClose]);
@@ -596,171 +706,59 @@ function ExpertsFixModal({
     onContinue(trimmed);
   };
 
-  const beforeAfterPairs = [
-    {
-      title: "Wall Shadow Removal & Background Calibration",
-      beforeImg:
-        "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786628280/before_uk_f24dre.jpg",
-      afterImg:
-        "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786627664/eu_pixpassport.com_ppfhlr.jpg",
-      beforeTag: "Original: Wall Shadow & Yellow Tint",
-      afterTag: "Expert Fixed: 100% Compliant White BG",
-    },
-      {
-      title: "Biometric Eye Level & Framing Crosshairs",
-      beforeImg:
-        "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786630383/1000383324_bxx77h.jpg",
-      afterImg:
-        "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786630498/597e95e4-676d-41dd-be79-c45be7e07b04_photo_zm53xt.jpg",
-      beforeTag: "Original: Head Tilted & Off-Center",
-      afterTag: "Expert Fixed: Aligned Biometric Crop",
-    },
-    {
-      title: "Biometric Eye Level & Framing Crosshairs",
-      beforeImg:
-        "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786628395/before_us_phel7i.jpg",
-      afterImg:
-        "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786628788/ulape_c0dexm.jpg",
-      beforeTag: "Original: Head Tilted & Off-Center",
-      afterTag: "Expert Fixed: Aligned Biometric Crop",
-    },
-    {
-      title: "Biometric Eye Level & Framing Crosshairs",
-      beforeImg:
-        "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786628855/bef_d5mwgy.jpg",
-      afterImg:
-        "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786628853/ff150d13-c01a-418a-8e26-9483f3a7907c_photo_pttp0l.jpg",
-      beforeTag: "Original: Head Tilted & Off-Center",
-      afterTag: "Expert Fixed: Aligned Biometric Crop",
-    },
-    {
-      title: "Biometric Eye Level & Framing Crosshairs",
-      beforeImg:
-        "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786629026/1000378632_1_g13xko.jpg",
-      afterImg:
-        "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786629107/ebec124b-38dd-44b9-8b2b-5a11972d15c2_photo_ukzvse.jpg",
-      beforeTag: "Original: Head Tilted & Off-Center",
-      afterTag: "Expert Fixed: Aligned Biometric Crop",
-    },
-    {
-      title: "Biometric Eye Level & Framing Crosshairs",
-      beforeImg:
-        "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786629172/Minimal_studio_portrait_of_young_man_wpjxdp.png",
-      afterImg:
-        "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786629173/file_ge84gv_fhqvi2.png",
-      beforeTag: "Original: Head Tilted & Off-Center",
-      afterTag: "Expert Fixed: Aligned Biometric Crop",
-    },
-    {
-      title: "Biometric Eye Level & Framing Crosshairs",
-      beforeImg:
-        "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786629405/A_passport_e4y2u3.jpg",
-      afterImg:
-        "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786629172/pix_passport_y4bjki.jpg",
-      beforeTag: "Original: Head Tilted & Off-Center",
-      afterTag: "Expert Fixed: Aligned Biometric Crop",
-    },
-    {
-      title: "Biometric Eye Level & Framing Crosshairs",
-      beforeImg:
-        "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786629541/1000379376_1_d2ibas.jpg",
-      afterImg:
-        "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786629817/cropped-tttt_vpemzs.jpg",
-      beforeTag: "Original: Head Tilted & Off-Center",
-      afterTag: "Expert Fixed: Aligned Biometric Crop",
-    },
-    {
-      title: "Biometric Eye Level & Framing Crosshairs",
-      beforeImg:
-        "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786629895/1000368998_1_mmnu84.jpg",
-      afterImg:
-        "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786629988/98411d2e-09fd-4d93-9fa7-cbe7e6db2460_photo_qrmwty.jpg",
-      beforeTag: "Original: Head Tilted & Off-Center",
-      afterTag: "Expert Fixed: Aligned Biometric Crop",
-    },
-    {
-      title: "Biometric Eye Level & Framing Crosshairs",
-      beforeImg:
-        "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786630037/jia6lx858xnimc2w6ypn_fcjvj0.jpg",
-      afterImg:
-        "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786630035/c869b2b2-f238-4151-b480-6a08ba0cbe24_photo_upfgcd.jpg",
-      beforeTag: "Original: Head Tilted & Off-Center",
-      afterTag: "Expert Fixed: Aligned Biometric Crop",
-    },
-    {
-      title: "Biometric Eye Level & Framing Crosshairs",
-      beforeImg:
-        "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786630292/1000383509_ffkmf2.jpg",
-      afterImg:
-        "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786630114/3606955d-8470-4d49-a65d-7425be0b182f_photo_qsbsbu.jpg",
-      beforeTag: "Original: Head Tilted & Off-Center",
-      afterTag: "Expert Fixed: Aligned Biometric Crop",
-    },
-    {
-      title: "Biometric Eye Level & Framing Crosshairs",
-      beforeImg:
-        "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786630383/1000383324_bxx77h.jpg",
-      afterImg:
-        "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786630498/597e95e4-676d-41dd-be79-c45be7e07b04_photo_zm53xt.jpg",
-      beforeTag: "Original: Head Tilted & Off-Center",
-      afterTag: "Expert Fixed: Aligned Biometric Crop",
-    },
-  ];
-
   return (
     <div
-      className="fixed inset-0 z-[250] flex items-center justify-center p-2.5 sm:p-4 md:p-6 bg-slate-950/70 backdrop-blur-md animate-fadeIn"
+      className="fixed inset-0 z-[250] flex items-end sm:items-center justify-center p-0 sm:p-4 md:p-6 bg-slate-950/75 backdrop-blur-md animate-fadeIn"
       onClick={onClose}
     >
       <div
-        className="bg-white rounded-xl shadow-2xl w-full max-w-sm sm:max-w-xl md:max-w-2xl lg:max-w-4xl xl:max-w-5xl overflow-hidden border border-slate-200/80 relative max-h-[92vh] flex flex-col transition-all duration-200"
+        className="bg-white rounded-t-2xl sm:rounded-2xl shadow-2xl w-full max-w-full sm:max-w-xl md:max-w-2xl lg:max-w-4xl xl:max-w-5xl overflow-hidden border-t sm:border border-slate-200/80 relative h-[94dvh] sm:h-auto max-h-[94dvh] sm:max-h-[88vh] flex flex-col transition-all duration-200"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Compact Light Header */}
-        <div className="px-4 py-3.5 sm:px-6 sm:py-4 bg-white border-b border-slate-200/80 relative shrink-0">
+        <div className="px-4 py-3 sm:px-6 sm:py-4 bg-white border-b border-slate-200/80 relative shrink-0">
           <button
             onClick={onClose}
-            className="absolute top-3.5 right-4 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center transition-colors cursor-pointer"
+            className="absolute top-3 sm:top-4 right-3.5 sm:right-5 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition-colors cursor-pointer z-10"
             aria-label="Close modal"
           >
             <Icon d={ICONS.close} size={15} />
           </button>
 
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pr-10">
-            <div>
-              <div className="flex items-center gap-2 mb-0.5">
-                <span className="bg-emerald-100 text-emerald-800 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
-                  Human Expert Review
-                </span>
-                <span className="text-[11px] text-slate-500 font-medium hidden sm:inline">
-                  • 100% Acceptance Guaranteed
-                </span>
-              </div>
-              <h3 className="text-lg sm:text-xl font-bold text-slate-900 leading-tight">
-                See What Our Experts Fix
-              </h3>
+          <div className="pr-10 sm:pr-12">
+            <div className="flex items-center gap-2 mb-0.5 flex-wrap">
+              <span className="bg-emerald-100 text-emerald-800 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                Human Expert Review
+              </span>
+              <span className="text-[11px] text-slate-500 font-medium hidden sm:inline">
+                • 100% Acceptance Guaranteed
+              </span>
             </div>
+            <h3 className="text-base sm:text-xl font-bold text-slate-900 leading-tight">
+              See What Our Experts Fix
+            </h3>
           </div>
         </div>
 
         {/* Modal Body */}
-        <div className="p-4 sm:p-6 overflow-y-auto space-y-4 grow bg-slate-50/50">
+        <div className="p-3.5 sm:p-6 overflow-y-auto space-y-3.5 sm:space-y-4 grow bg-slate-50/60">
           {/* User Confirmation Note Banner */}
-          <div className="bg-purple-50/90 border border-purple-200/80 rounded-md p-3.5 text-xs text-purple-900 font-medium flex items-center gap-3 shadow-xs">
-            <div className="w-7 h-7 rounded-lg bg-purple-100 text-purple-700 flex items-center justify-center shrink-0">
+          <div className="bg-purple-50/90 border border-purple-200/80 rounded-xl p-3 sm:p-3.5 text-xs text-purple-900 font-medium flex items-start sm:items-center gap-2.5 sm:gap-3 shadow-2xs">
+            <div className="w-7 h-7 rounded-lg bg-purple-100 text-purple-700 flex items-center justify-center shrink-0 mt-0.5 sm:mt-0">
               <Icon d={ICONS.shield} size={15} stroke={2.5} />
             </div>
-            <span>
+            <span className="leading-snug">
               This information and customer feedback is added based on user
               confirmation &amp; verified submission results.
             </span>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            {beforeAfterPairs.map((pair, idx) => (
+          {/* Transformation Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+            {BEFORE_AFTER_PAIRS.map((pair, idx) => (
               <div
                 key={idx}
-                className="bg-gray-100 rounded-md p-4 sm:p-5 space-y-3 flex flex-col justify-between"
+                className="bg-white border border-slate-200/80 rounded-xl p-3 sm:p-4.5 space-y-2.5 sm:space-y-3 flex flex-col justify-between shadow-2xs"
               >
                 <div className="flex items-center justify-between gap-2">
                   <h4 className="text-xs sm:text-sm font-bold text-slate-900 leading-snug">
@@ -769,28 +767,36 @@ function ExpertsFixModal({
                 </div>
 
                 {/* Images Grid */}
-                <div className="grid grid-cols-2 gap-3.5">
-                  <div className="space-y-2">
-                    <div className="relative rounded-xl overflow-hidden bg-slate-100 border border-slate-200 aspect-[4/5] flex items-center justify-center group/img">
+                <div className="grid grid-cols-2 gap-2.5 sm:gap-3.5">
+                  <div className="space-y-1.5">
+                    <div className="relative rounded-lg sm:rounded-xl overflow-hidden bg-slate-100 border border-slate-200 aspect-[4/5] flex items-center justify-center group/img">
                       <img
                         src={pair.beforeImg}
                         alt="Before expert fix"
+                        loading="lazy"
+                        decoding="async"
+                        width={180}
+                        height={225}
                         className="w-full h-full object-cover"
                       />
-                      <span className="absolute top-2 left-2 bg-rose-500/90 text-white text-[9px] font-extrabold px-2.5 py-0.5 rounded-full uppercase shadow-xs">
+                      <span className="absolute top-1.5 left-1.5 sm:top-2 sm:left-2 bg-rose-500/95 text-white text-[8.5px] sm:text-[9.5px] font-black px-2 py-0.5 rounded-md sm:rounded-full uppercase tracking-wider shadow-xs">
                         Before
                       </span>
                     </div>
                   </div>
 
-                  <div className="space-y-2">
-                    <div className="relative rounded-xl overflow-hidden bg-slate-50 border-2 border-emerald-500/80 aspect-[4/5] flex items-center justify-center shadow-xs group/img">
+                  <div className="space-y-1.5">
+                    <div className="relative rounded-lg sm:rounded-xl overflow-hidden bg-slate-50 border-2 border-emerald-500/80 aspect-[4/5] flex items-center justify-center shadow-xs group/img">
                       <img
                         src={pair.afterImg}
                         alt="After expert fix"
+                        loading="lazy"
+                        decoding="async"
+                        width={180}
+                        height={225}
                         className="w-full h-full object-cover"
                       />
-                      <span className="absolute top-2 left-2 bg-emerald-600/90 text-white text-[9px] font-extrabold px-2.5 py-0.5 rounded-full uppercase shadow-xs">
+                      <span className="absolute top-1.5 left-1.5 sm:top-2 sm:left-2 bg-emerald-600/95 text-white text-[8.5px] sm:text-[9.5px] font-black px-2 py-0.5 rounded-md sm:rounded-full uppercase tracking-wider shadow-xs">
                         After
                       </span>
                     </div>
@@ -801,13 +807,13 @@ function ExpertsFixModal({
           </div>
         </div>
 
-        {/* Footer */}
+        {/* Responsive Footer */}
         <form
           onSubmit={handleSubmit}
-          className="px-4 py-4 sm:px-6 sm:py-4.5 bg-white border-t border-slate-200/80 shrink-0 shadow-[0_-4px_16px_rgba(0,0,0,0.06)] z-10"
+          className="px-4 py-3.5 sm:px-6 sm:py-4 bg-white border-t border-slate-200/80 shrink-0 shadow-[0_-4px_20px_rgba(0,0,0,0.06)] z-20"
         >
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4">
-            <div className="shrink-0 flex items-center justify-between sm:block">
+            <div className="shrink-0 flex items-center justify-between sm:flex-col sm:items-start sm:justify-center">
               <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider block">
                 Premium Pack
               </span>
@@ -816,12 +822,12 @@ function ExpertsFixModal({
               </span>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 grow max-w-xl">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3 grow max-w-xl">
               {status !== "authenticated" && (
                 <div className="relative grow">
                   <Icon
                     d={ICONS.mail}
-                    size={16}
+                    size={15}
                     className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"
                   />
                   <input
@@ -829,14 +835,14 @@ function ExpertsFixModal({
                     value={emailInput}
                     onChange={(e) => setEmailInput(e.target.value)}
                     placeholder="Enter email address for delivery"
-                    className="w-full pl-10 pr-3.5 py-2.5 sm:py-3 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm font-medium text-slate-900 focus:bg-white focus:ring-2 focus:ring-lime-500 focus:border-transparent outline-none transition-all"
+                    className="w-full pl-9 pr-3 py-2.5 sm:py-3 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm font-medium text-slate-900 focus:bg-white focus:ring-2 focus:ring-lime-500 focus:border-transparent outline-none transition-all"
                     required
                   />
                 </div>
               )}
               <button
                 type="submit"
-                className="bg-lime-600 hover:bg-lime-700 active:scale-[0.99] text-white font-bold px-6 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm transition-all shadow-md shadow-lime-600/25 flex items-center justify-center gap-2 shrink-0 cursor-pointer min-h-[44px]"
+                className="bg-lime-600 hover:bg-lime-700 active:scale-[0.99] text-white font-bold px-6 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm transition-all shadow-md shadow-lime-600/25 flex items-center justify-center gap-2 shrink-0 cursor-pointer min-h-[42px] sm:min-h-[44px]"
               >
                 <span>Continue</span>
                 <Icon d={ICONS.arrowRight} size={16} stroke={2.5} />
@@ -847,7 +853,7 @@ function ExpertsFixModal({
       </div>
     </div>
   );
-}
+});
 
 function ZoomOverlay({
   url,
