@@ -96,7 +96,7 @@ export default function PreviewClientFr({
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col">
+    <div className="min-h-screen bg-slate-200/70 flex flex-col">
       <div className="flex-1 flex items-start justify-center px-4 py-6 sm:py-8">
         <div className="w-full max-w-6xl">
           <div className="mb-3 text-center lg:text-left">
@@ -108,7 +108,7 @@ export default function PreviewClientFr({
           <div className="flex flex-col lg:flex-row gap-5">
             {/* Left — Photo */}
             <div className="w-full lg:w-[62%] space-y-4">
-              <div className="bg-white rounded-3xl border border-slate-100 overflow-hidden shadow-sm">
+              <div className="bg-white rounded-md border border-slate-100 overflow-hidden ">
                 <div className="px-5 pt-5 pb-3 flex items-center justify-between">
                   <p className="text-sm font-bold text-slate-900 mt-0.5 flex items-center gap-1.5"><span>{spec?.flag || "📄"}</span> {spec?.country || "Photo document"}</p>
                 </div>
@@ -122,7 +122,7 @@ export default function PreviewClientFr({
               </div>
               {/* What we fixed */}
               {metrics && !hasPaid && (
-                <div className="bg-white rounded-3xl border border-slate-100 p-5 shadow-sm">
+                <div className="bg-white rounded-md border border-slate-100 p-5 ">
                   <div className="flex items-center gap-2 mb-4">
                     <div className="w-7 h-7 bg-lime-100 rounded-lg flex items-center justify-center"><Icon d={ICONS.photo} size={14} className="text-lime-600" /></div>
                     <p className="text-sm font-bold text-slate-900">{fr.preview.whatWeFixed}</p>
@@ -141,7 +141,7 @@ export default function PreviewClientFr({
 
             {/* Right — Order Panel */}
             <div className="w-full lg:w-[38%] space-y-4">
-              <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden lg:sticky lg:top-6">
+              <div className="bg-white rounded-md border border-slate-100  overflow-hidden lg:sticky lg:top-6">
                 <div className="p-5 sm:p-6">
                   {!hasPaid ? (
                     <div className="space-y-4">
@@ -277,7 +277,7 @@ export default function PreviewClientFr({
       {/* Email dialog */}
       {isEmailDialogOpen && (
         <div className="fixed inset-0 z-[150] flex items-center justify-center bg-slate-900/50 backdrop-blur-sm px-4">
-          <div className="bg-white rounded-3xl shadow-2xl w-full max-w-sm overflow-hidden">
+          <div className="bg-white rounded-md shadow-2xl w-full max-w-sm overflow-hidden">
             <form onSubmit={handleDialogSubmit} className="p-6">
               <div className="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center mb-4 mx-auto"><Icon d={ICONS.mail} size={22} className="text-blue-600" /></div>
               <h3 className="text-xl font-black text-slate-900 mb-2 text-center">{fr.payment.whereToSend}</h3>

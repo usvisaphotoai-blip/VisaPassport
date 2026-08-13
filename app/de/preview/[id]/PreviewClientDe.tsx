@@ -104,7 +104,7 @@ export default function PreviewClientDe({
           <div className="flex flex-col lg:flex-row gap-5">
             {/* Left — Photo */}
             <div className="w-full lg:w-[62%] space-y-4">
-              <div className="bg-white rounded-3xl border border-slate-100 overflow-hidden shadow-sm">
+              <div className="bg-white rounded-md border border-slate-100 overflow-hidden ">
                 <div className="px-5 pt-5 pb-3 flex items-center justify-between">
                   <p className="text-sm font-bold text-slate-900 mt-0.5 flex items-center gap-1.5"><span>{spec?.flag || "📄"}</span> {spec?.country || "Dokumentfoto"}</p>
                 </div>
@@ -118,7 +118,7 @@ export default function PreviewClientDe({
               </div>
               {/* What we fixed */}
               {metrics && !hasPaid && (
-                <div className="bg-white rounded-3xl border border-slate-100 p-5 shadow-sm">
+                <div className="bg-white rounded-md border border-slate-100 p-5 ">
                   <div className="flex items-center gap-2 mb-4">
                     <div className="w-7 h-7 bg-lime-100 rounded-lg flex items-center justify-center"><Icon d={ICONS.photo} size={14} className="text-lime-600" /></div>
                     <p className="text-sm font-bold text-slate-900">{de.preview.whatWeFixed}</p>
@@ -137,7 +137,7 @@ export default function PreviewClientDe({
 
             {/* Right — Order Panel */}
             <div className="w-full lg:w-[38%] space-y-4">
-              <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden lg:sticky lg:top-6">
+              <div className="bg-white rounded-md border border-slate-100  overflow-hidden lg:sticky lg:top-6">
                 <div className="p-5 sm:p-6">
                   {!hasPaid ? (
                     <div className="space-y-4">
@@ -154,7 +154,7 @@ export default function PreviewClientDe({
                       </button>
                       {/* Expert plan */}
                       <button onClick={() => setIsExpertPlan(true)} className={cx("w-full text-left rounded-2xl border-2 p-4 transition-all duration-200 relative", isExpertPlan ? "border-blue-500 bg-blue-50/40 shadow-[0_0_0_3px_rgba(59,91,219,0.08)]" : "border-slate-100 bg-white hover:border-slate-200")}>
-                        <div className="absolute -top-2.5 right-4 bg-amber-500 text-white text-[9px] font-black px-2.5 py-0.5 rounded-full shadow-md">{de.payment.mostPopular}</div>
+                        <div className="absolute -top-2.5 right-4 bg-amber-500 text-white text-[9px] font-black px-2.5 py-0.5 rounded-full ">{de.payment.mostPopular}</div>
                         <div className="flex justify-between items-start mb-2">
                           <div>
                             <span className={cx("text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-widest", isExpertPlan ? "bg-blue-600 text-white" : "bg-slate-100 text-slate-500")}>{de.payment.expertReview}</span>
@@ -232,7 +232,7 @@ export default function PreviewClientDe({
         <div className="fixed inset-0 z-[200] flex items-center justify-center p-4" style={{ background: "rgba(4,4,10,0.96)" }} onClick={() => setIsZoomOpen(false)}>
           <button onClick={() => setIsZoomOpen(false)} className="absolute top-5 right-5 w-9 h-9 rounded-full border border-white/15 bg-white/8 flex items-center justify-center hover:bg-white/15 transition-all"><Icon d={ICONS.close} size={16} className="text-white/70" /></button>
           <div onClick={(e) => e.stopPropagation()} style={{ animation: "zoomIn 250ms cubic-bezier(0.22,1,0.36,1) forwards" }}>
-            <div className="rounded-lg overflow-hidden shadow-2xl">
+            <div className="rounded-lg overflow-hidden ">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={previewUrl} alt="Vorschau komplett" draggable={false} onContextMenu={(e) => e.preventDefault()} className="w-full h-auto block" />
             </div>
@@ -273,7 +273,7 @@ export default function PreviewClientDe({
       {/* Email dialog */}
       {isEmailDialogOpen && (
         <div className="fixed inset-0 z-[150] flex items-center justify-center bg-slate-900/50 backdrop-blur-sm px-4">
-          <div className="bg-white rounded-3xl shadow-2xl w-full max-w-sm overflow-hidden">
+          <div className="bg-white rounded-md  w-full max-w-sm overflow-hidden">
             <form onSubmit={handleDialogSubmit} className="p-6">
               <div className="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center mb-4 mx-auto"><Icon d={ICONS.mail} size={22} className="text-blue-600" /></div>
               <h3 className="text-xl font-black text-slate-900 mb-2 text-center">{de.payment.whereToSend}</h3>

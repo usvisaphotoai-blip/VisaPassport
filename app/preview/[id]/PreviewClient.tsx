@@ -8,8 +8,28 @@ import { usePayment, LocalPrice } from "./hooks/usePayment";
 import { ComplianceCheck } from "./types";
 
 // ─── Icons ────────────────────────────────────────────────────────────────────
-const Icon = ({ d, size = 16, stroke = 2, className = "" }: { d: string; size?: number; stroke?: number; className?: string }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={stroke} strokeLinecap="round" strokeLinejoin="round" className={className}>
+const Icon = ({
+  d,
+  size = 16,
+  stroke = 2,
+  className = "",
+}: {
+  d: string;
+  size?: number;
+  stroke?: number;
+  className?: string;
+}) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth={stroke}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
     <path d={d} />
   </svg>
 );
@@ -22,19 +42,27 @@ const ICONS = {
   zoom: "M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z",
   mail: "M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z",
   close: "M18 6L6 18M6 6l12 12",
-  clock: "M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zM12 6v6l4 2",
+  clock:
+    "M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zM12 6v6l4 2",
   lock: "M19 11H5a2 2 0 00-2 2v7a2 2 0 002 2h14a2 2 0 002-2v-7a2 2 0 00-2-2zM7 11V7a5 5 0 0110 0v4",
   warn: "M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z",
   eye: "M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8zM12 9a3 3 0 100 6 3 3 0 000-6z",
-  photo: "M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2zM12 17a4 4 0 100-8 4 4 0 000 8",
-  person: "M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2M12 11a4 4 0 100-8 4 4 0 000 8",
-  refresh: "M1 4v6h6M23 20v-6h-6M20.49 9A9 9 0 005.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 013.51 15",
+  photo:
+    "M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2zM12 17a4 4 0 100-8 4 4 0 000 8",
+  person:
+    "M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2M12 11a4 4 0 100-8 4 4 0 000 8",
+  refresh:
+    "M1 4v6h6M23 20v-6h-6M20.49 9A9 9 0 005.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 013.51 15",
+  arrowRight: "M5 12h14M12 5l7 7-7 7",
 };
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
-const cx = (...c: (string | false | undefined | null)[]) => c.filter(Boolean).join(" ");
+const cx = (...c: (string | false | undefined | null)[]) =>
+  c.filter(Boolean).join(" ");
 
 const METRIC_FIXES = [
+  { key: "gov12", label: "ICAO Standard photo", icon: "✓" },
+
   { key: "gov", label: "Government compliant photo", icon: "✓" },
   { key: "gov5", label: "AI biometric validation", icon: "✓" },
   { key: "gov2", label: "100% acceptance guarantee", icon: "✓" },
@@ -42,13 +70,20 @@ const METRIC_FIXES = [
   { key: "gov3", label: "Instant download + print sheet", icon: "✓" },
 ];
 
-function MetricFix({ metric }: { metric: typeof METRIC_FIXES[0] }) {
+function MetricFix({ metric }: { metric: (typeof METRIC_FIXES)[0] }) {
   return (
     <div className="flex items-center gap-2.5 py-2.5 border-b border-slate-100 last:border-0">
       <div className="w-5 h-5 rounded-full bg-lime-100 flex items-center justify-center shrink-0">
-        <Icon d={ICONS.check} size={11} className="text-lime-600" stroke={2.5} />
+        <Icon
+          d={ICONS.check}
+          size={11}
+          className="text-lime-600"
+          stroke={2.5}
+        />
       </div>
-      <span className="text-[13px] text-slate-700 font-medium">{metric.label}</span>
+      <span className="text-[13px] text-slate-700 font-medium">
+        {metric.label}
+      </span>
     </div>
   );
 }
@@ -65,7 +100,9 @@ function TrustBadges({ from }: { from?: string }) {
       {from === "uk-passport" && (
         <div className="flex items-center gap-1.5 text-slate-500">
           <span className="text-[14px]">🇬🇧</span>
-          <span className="text-[11px] font-semibold text-slate-700">UK Gov Compliant</span>
+          <span className="text-[11px] font-semibold text-slate-700">
+            UK Gov Compliant
+          </span>
         </div>
       )}
       {badges.map((b, i) => (
@@ -107,7 +144,8 @@ function PhotoPanel({
         <div className="px-5 pt-5 pb-3 flex items-center justify-between">
           <div>
             <p className="text-sm font-bold text-slate-900 flex items-center gap-1.5">
-              <span>{spec?.flag || "📄"}</span> {spec?.country || "Document Photo"}
+              <span>{spec?.flag || "📄"}</span>{" "}
+              {spec?.country || "Document Photo"}
             </p>
           </div>
           {allPass && (
@@ -148,13 +186,21 @@ function PhotoPanel({
             <div className="w-7 h-7 bg-lime-100 rounded-lg flex items-center justify-center">
               <Icon d={ICONS.photo} size={14} className="text-lime-600" />
             </div>
-            <p className="text-sm font-bold text-slate-900">Your Photo Meets Official Requirements</p>
+            <p className="text-sm font-bold text-slate-900">
+              Your Photo Meets Official Requirements
+            </p>
           </div>
           <div className="space-y-0">
-            {METRIC_FIXES.map((m) => <MetricFix key={m.key} metric={m} />)}
+            {METRIC_FIXES.map((m) => (
+              <MetricFix key={m.key} metric={m} />
+            ))}
           </div>
           <div className="mt-4 rounded-xl bg-lime-50 border border-lime-200 px-3 py-2.5 flex items-start gap-2">
-            <Icon d={ICONS.star} size={13} className="text-lime-600 shrink-0 mt-0.5" />
+            <Icon
+              d={ICONS.star}
+              size={13}
+              className="text-lime-600 shrink-0 mt-0.5"
+            />
             <p className="text-[11px] text-lime-700 font-medium leading-relaxed">
               ✓ Background professionally corrected to official requirements
             </p>
@@ -185,6 +231,7 @@ function OrderPanel({
   handleEmailPhoto,
   spec,
   from,
+  onOpenFixModal,
 }: any) {
   return (
     <div className="w-full lg:w-[38%] space-y-4">
@@ -194,7 +241,11 @@ function OrderPanel({
             <div className="space-y-4">
               {/* Header */}
               <div className="flex items-center gap-2">
-                <Icon d={ICONS.shield} size={14} className="text-emerald-600 shrink-0" />
+                <Icon
+                  d={ICONS.shield}
+                  size={14}
+                  className="text-emerald-600 shrink-0"
+                />
                 <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
                   Order Summary - Accepted for passport &amp; visa applications
                 </p>
@@ -209,76 +260,152 @@ function OrderPanel({
                     "w-full text-left rounded-xl border-2 p-4 transition-colors duration-150 relative",
                     !isExpertPlan
                       ? "border-emerald-500 bg-emerald-50/60"
-                      : "border-slate-200 bg-white hover:border-slate-300"
+                      : "border-slate-200 bg-white hover:border-slate-300",
                   )}
                 >
                   <div className="flex justify-between items-start mb-2">
                     <div>
-                      <h4 className="text-sm font-bold text-slate-900">Standard Pack</h4>
+                      <h4 className="text-sm font-bold text-slate-900">
+                        Standard Pack
+                      </h4>
                     </div>
                     <div className="text-right">
-                      <p className="text-xl font-black text-slate-900">{localPrice?.formatted}</p>
+                      <p className="text-xl font-black text-slate-900">
+                        {localPrice?.formatted}
+                      </p>
                     </div>
                   </div>
                   <ul className="space-y-1.5">
-                    {[" AI Biometric Check", "Instant digital download", " Official A4 print sheet", "100% acceptance guarantee"].map(f => (
-                      <li key={f} className="flex items-center gap-2 text-[13px] text-slate-600 font-medium">
-                        <Icon d={ICONS.check} size={12} className={!isExpertPlan ? "text-emerald-600" : "text-slate-300"} stroke={2.5} />
+                    {[
+                      " AI Biometric Check",
+                      "Instant digital download",
+                      " Official A4 print sheet",
+                      "100% acceptance guarantee",
+                    ].map((f) => (
+                      <li
+                        key={f}
+                        className="flex items-center gap-2 text-[13px] text-slate-600 font-medium"
+                      >
+                        <Icon
+                          d={ICONS.check}
+                          size={12}
+                          className={
+                            !isExpertPlan
+                              ? "text-emerald-600"
+                              : "text-slate-300"
+                          }
+                          stroke={2.5}
+                        />
                         {f}
                       </li>
                     ))}
                   </ul>
                 </button>
 
-                {/* Expert */}
-                <button
+                {/* Expert Review / Premium Pack Card */}
+                <div
                   onClick={() => setIsExpertPlan(true)}
                   className={cx(
-                    "w-full text-left rounded-xl border-2 p-4 transition-colors duration-150 relative",
+                    "w-full text-left rounded-2xl border-2 p-4 sm:p-5 transition-all duration-200 relative cursor-pointer",
                     isExpertPlan
-                      ? "border-blue-500 bg-blue-50/60"
-                      : "border-slate-200 bg-white hover:border-slate-300"
+                      ? "border-lime-500 bg-lime-50/30 shadow-[0_0_0_1px_rgba(132,204,22,0.2)]"
+                      : "border-slate-200 bg-white hover:border-lime-300",
                   )}
                 >
-                  <div className="absolute -top-2.5 right-4 bg-amber-500 text-white text-[9px] font-black px-2.5 py-0.5 rounded-full">
+                  {/* Floating MOST POPULAR Badge */}
+                  <div className="absolute -top-3 right-5 bg-[#ff9500] text-white text-[10px] font-extrabold px-3 py-0.5 rounded-full uppercase tracking-wider shadow-xs z-10">
                     MOST POPULAR
                   </div>
-                  <div className="flex justify-between items-start mb-2">
+
+                  {/* Header: Tag, Title & Price */}
+                  <div className="flex justify-between items-start mb-3">
                     <div>
-                      <span className={cx(
-                        "text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-widest",
-                        isExpertPlan ? "bg-blue-600 text-white" : "bg-slate-100 text-slate-500"
-                      )}>
-                        Expert Review
+                      <span className="inline-block bg-lime-100 text-lime-800 text-[10px] font-extrabold px-2.5 py-0.5 rounded uppercase tracking-wider">
+                        EXPERT REVIEW
                       </span>
-                      <h4 className="text-sm font-bold text-slate-900 mt-1">Premium Pack</h4>
+                      <h4 className="text-lg font-bold text-slate-900 mt-1">
+                        Premium Pack
+                      </h4>
                     </div>
                     <div className="text-right">
-                      <p className="text-xl font-black text-slate-900">{expertPrice?.formatted}</p>
+                      <p className="text-2xl font-black text-slate-900">
+                        {expertPrice?.formatted || "₹599"}
+                      </p>
                     </div>
                   </div>
-                  <ul className="space-y-1.5">
+
+                  {/* Features List with Green Checkmarks */}
+                  <ul className="space-y-2 mb-4">
                     {[
                       "Everything in Standard",
                       "Human expert review in <15 min",
                       "Extra compliance verifications",
                       "Priority processing",
                       "Email support",
-                      "Reduced rejection risk"
-                    ].map(f => (
-                      <li key={f} className="flex items-center gap-2 text-[14px] text-slate-600 font-medium">
-                        <Icon d={ICONS.check} size={12} className={isExpertPlan ? "text-blue-600" : "text-slate-300"} stroke={2.5} />
-                        {f}
+                      "Reduced rejection risk",
+                    ].map((f) => (
+                      <li
+                        key={f}
+                        className="flex items-center gap-2.5 text-[13.5px] text-slate-700 font-medium leading-snug"
+                      >
+                        <Icon
+                          d={ICONS.check}
+                          size={14}
+                          className="text-emerald-500 shrink-0"
+                          stroke={3}
+                        />
+                        <span>{f}</span>
                       </li>
                     ))}
                   </ul>
-                  {isExpertPlan && (
-                    <div className="mt-3 bg-blue-50 border border-blue-200 rounded-xl px-3 py-2 text-[11px] text-blue-800 font-semibold flex items-center gap-1.5">
-                      <Icon d={ICONS.shield} size={12} className="text-blue-600 shrink-0" />
-                      100% money-back if your photo gets rejected
+
+                  {/* Sub-Card: See What Our Experts Fix */}
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setIsExpertPlan(true);
+                      if (onOpenFixModal) onOpenFixModal();
+                    }}
+                    className="bg-indigo-50/70 border border-indigo-200/80 rounded-xl p-3.5 flex items-center justify-between gap-3 group/fix hover:bg-lime-100/60 transition-colors"
+                  >
+                    <div className="space-y-2">
+                      <div>
+                        <h5 className="text-sm font-bold text-slate-900 leading-tight group-hover/fix:text-lime-700 transition-colors">
+                          See What Our Experts Fix
+                        </h5>
+                        
+                      </div>
+
+                      {/* Avatars + Count */}
+                      <div className="flex items-center">
+                        <div className="flex -space-x-2 overflow-hidden py-0.5">
+                          {[
+                            "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80",
+                            "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80",
+                            "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80",
+                            "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=80",
+                            "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&auto=format&fit=crop&q=80",
+                          ].map((src, idx) => (
+                            <img
+                              key={idx}
+                              src={src}
+                              alt="Customer avatar"
+                              className="inline-block h-6 w-6 rounded-full ring-2 ring-white object-cover"
+                            />
+                          ))}
+                        </div>
+                        <span className="text-xs font-semibold text-slate-600 ml-2.5">
+                          +2.7k
+                        </span>
+                      </div>
                     </div>
-                  )}
-                </button>
+
+                    {/* Green Action Button */}
+                    <div className="w-9 h-9 rounded-full bg-emerald-500 group-hover/fix:bg-emerald-600 text-white flex items-center justify-center transition-transform group-hover/fix:scale-105 shrink-0 shadow-xs">
+                      <Icon d={ICONS.arrowRight} size={16} stroke={2.5} />
+                    </div>
+                  </div>
+                </div>
               </div>
 
               {/* Guest Email */}
@@ -292,7 +419,7 @@ function OrderPanel({
                     value={guestEmail}
                     onChange={(e: any) => setGuestEmail(e.target.value)}
                     placeholder="Enter your email"
-                    className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                    className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-lime-500 focus:border-transparent outline-none transition-all"
                   />
                 </div>
               )}
@@ -305,8 +432,8 @@ function OrderPanel({
                   className={cx(
                     "w-full font-bold py-4 rounded-xl transition-colors text-sm tracking-wide flex items-center justify-center gap-2.5 disabled:opacity-50",
                     isExpertPlan
-                      ? "bg-blue-600 hover:bg-blue-700 text-white"
-                      : "bg-slate-900 hover:bg-black text-white"
+                      ? "bg-lime-600 hover:bg-lime-700 text-white shadow-md shadow-lime-600/20"
+                      : "bg-slate-900 hover:bg-black text-white",
                   )}
                 >
                   {loading ? (
@@ -314,7 +441,12 @@ function OrderPanel({
                   ) : (
                     <>
                       <Icon d={ICONS.lock} size={15} className="shrink-0" />
-                      {isExpertPlan ? "Get Expert Review" : "Download Now"} — {isExpertPlan ? expertPrice?.formatted : localPrice?.formatted}
+                      {isExpertPlan
+                        ? "Get Expert Review"
+                        : "Download Now"} —{" "}
+                      {isExpertPlan
+                        ? expertPrice?.formatted
+                        : localPrice?.formatted}
                     </>
                   )}
                 </button>
@@ -322,8 +454,17 @@ function OrderPanel({
                 <TrustBadges from={from} />
 
                 <div className="flex justify-center pt-1">
-                  <a href="https://razorpay.com/" target="_blank" rel="noopener noreferrer">
-                    <img referrerPolicy="origin" src="https://badges.razorpay.com/badge-dark.png" style={{ height: 40, width: 100 }} alt="Razorpay | Payment Gateway | Neobank" />
+                  <a
+                    href="https://razorpay.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img
+                      referrerPolicy="origin"
+                      src="https://badges.razorpay.com/badge-dark.png"
+                      style={{ height: 40, width: 100 }}
+                      alt="Razorpay | Payment Gateway | Neobank"
+                    />
                   </a>
                 </div>
               </div>
@@ -342,14 +483,19 @@ function OrderPanel({
 
                 <div className="mt-3 text-emerald-600 text-sm leading-relaxed">
                   <p>
-                    Every ID photo is carefully reviewed by our experts to ensure it meets all requirements.
+                    Every ID photo is carefully reviewed by our experts to
+                    ensure it meets all requirements.
                   </p>
                   <p className="mt-1">
-                    If we find any issues, we’ll notify you via email with your photo.
+                    If we find any issues, we’ll notify you via email with your
+                    photo.
                   </p>
                   <p className="mt-1">
                     For any questions, feel free to contact us at{" "}
-                    <a href="mailto:support@pixpassport.com" className="font-medium text-emerald-700 underline">
+                    <a
+                      href="mailto:support@pixpassport.com"
+                      className="font-medium text-emerald-700 underline"
+                    >
                       support@pixpassport.com
                     </a>
                   </p>
@@ -391,15 +537,331 @@ function OrderPanel({
           )}
         </div>
       </div>
-
-
     </div>
   );
 }
 
-function ZoomOverlay({ url, hasPaid, onClose }: { url: string; hasPaid: boolean; onClose: () => void }) {
+function ExpertsFixModal({
+  isOpen,
+  onClose,
+  onContinue,
+  expertPrice,
+  previewUrl,
+  guestEmail,
+  setGuestEmail,
+  status,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  onContinue: (email: string) => void;
+  expertPrice?: string;
+  previewUrl?: string;
+  guestEmail: string;
+  setGuestEmail: (email: string) => void;
+  status?: string;
+}) {
+  const [emailInput, setEmailInput] = useState(guestEmail || "");
+
   useEffect(() => {
-    const h = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    setEmailInput(guestEmail || "");
+  }, [guestEmail]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    if (isOpen) {
+      window.addEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "hidden";
+    }
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "auto";
+    };
+  }, [isOpen, onClose]);
+
+  if (!isOpen) return null;
+
+  const handleSubmit = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    const trimmed = (emailInput || "").trim();
+    if (
+      status !== "authenticated" &&
+      (!trimmed || !trimmed.includes("@") || !trimmed.includes("."))
+    ) {
+      alert("Please enter a valid email address to continue.");
+      return;
+    }
+    setGuestEmail(trimmed);
+    onContinue(trimmed);
+  };
+
+  const beforeAfterPairs = [
+    {
+      title: "Wall Shadow Removal & Background Calibration",
+      beforeImg:
+        "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786628280/before_uk_f24dre.jpg",
+      afterImg:
+        "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786627664/eu_pixpassport.com_ppfhlr.jpg",
+      beforeTag: "Original: Wall Shadow & Yellow Tint",
+      afterTag: "Expert Fixed: 100% Compliant White BG",
+    },
+      {
+      title: "Biometric Eye Level & Framing Crosshairs",
+      beforeImg:
+        "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786630383/1000383324_bxx77h.jpg",
+      afterImg:
+        "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786630498/597e95e4-676d-41dd-be79-c45be7e07b04_photo_zm53xt.jpg",
+      beforeTag: "Original: Head Tilted & Off-Center",
+      afterTag: "Expert Fixed: Aligned Biometric Crop",
+    },
+    {
+      title: "Biometric Eye Level & Framing Crosshairs",
+      beforeImg:
+        "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786628395/before_us_phel7i.jpg",
+      afterImg:
+        "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786628788/ulape_c0dexm.jpg",
+      beforeTag: "Original: Head Tilted & Off-Center",
+      afterTag: "Expert Fixed: Aligned Biometric Crop",
+    },
+    {
+      title: "Biometric Eye Level & Framing Crosshairs",
+      beforeImg:
+        "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786628855/bef_d5mwgy.jpg",
+      afterImg:
+        "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786628853/ff150d13-c01a-418a-8e26-9483f3a7907c_photo_pttp0l.jpg",
+      beforeTag: "Original: Head Tilted & Off-Center",
+      afterTag: "Expert Fixed: Aligned Biometric Crop",
+    },
+    {
+      title: "Biometric Eye Level & Framing Crosshairs",
+      beforeImg:
+        "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786629026/1000378632_1_g13xko.jpg",
+      afterImg:
+        "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786629107/ebec124b-38dd-44b9-8b2b-5a11972d15c2_photo_ukzvse.jpg",
+      beforeTag: "Original: Head Tilted & Off-Center",
+      afterTag: "Expert Fixed: Aligned Biometric Crop",
+    },
+    {
+      title: "Biometric Eye Level & Framing Crosshairs",
+      beforeImg:
+        "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786629172/Minimal_studio_portrait_of_young_man_wpjxdp.png",
+      afterImg:
+        "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786629173/file_ge84gv_fhqvi2.png",
+      beforeTag: "Original: Head Tilted & Off-Center",
+      afterTag: "Expert Fixed: Aligned Biometric Crop",
+    },
+    {
+      title: "Biometric Eye Level & Framing Crosshairs",
+      beforeImg:
+        "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786629405/A_passport_e4y2u3.jpg",
+      afterImg:
+        "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786629172/pix_passport_y4bjki.jpg",
+      beforeTag: "Original: Head Tilted & Off-Center",
+      afterTag: "Expert Fixed: Aligned Biometric Crop",
+    },
+    {
+      title: "Biometric Eye Level & Framing Crosshairs",
+      beforeImg:
+        "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786629541/1000379376_1_d2ibas.jpg",
+      afterImg:
+        "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786629817/cropped-tttt_vpemzs.jpg",
+      beforeTag: "Original: Head Tilted & Off-Center",
+      afterTag: "Expert Fixed: Aligned Biometric Crop",
+    },
+    {
+      title: "Biometric Eye Level & Framing Crosshairs",
+      beforeImg:
+        "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786629895/1000368998_1_mmnu84.jpg",
+      afterImg:
+        "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786629988/98411d2e-09fd-4d93-9fa7-cbe7e6db2460_photo_qrmwty.jpg",
+      beforeTag: "Original: Head Tilted & Off-Center",
+      afterTag: "Expert Fixed: Aligned Biometric Crop",
+    },
+    {
+      title: "Biometric Eye Level & Framing Crosshairs",
+      beforeImg:
+        "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786630037/jia6lx858xnimc2w6ypn_fcjvj0.jpg",
+      afterImg:
+        "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786630035/c869b2b2-f238-4151-b480-6a08ba0cbe24_photo_upfgcd.jpg",
+      beforeTag: "Original: Head Tilted & Off-Center",
+      afterTag: "Expert Fixed: Aligned Biometric Crop",
+    },
+    {
+      title: "Biometric Eye Level & Framing Crosshairs",
+      beforeImg:
+        "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786630292/1000383509_ffkmf2.jpg",
+      afterImg:
+        "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786630114/3606955d-8470-4d49-a65d-7425be0b182f_photo_qsbsbu.jpg",
+      beforeTag: "Original: Head Tilted & Off-Center",
+      afterTag: "Expert Fixed: Aligned Biometric Crop",
+    },
+    {
+      title: "Biometric Eye Level & Framing Crosshairs",
+      beforeImg:
+        "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786630383/1000383324_bxx77h.jpg",
+      afterImg:
+        "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786630498/597e95e4-676d-41dd-be79-c45be7e07b04_photo_zm53xt.jpg",
+      beforeTag: "Original: Head Tilted & Off-Center",
+      afterTag: "Expert Fixed: Aligned Biometric Crop",
+    },
+  ];
+
+  return (
+    <div
+      className="fixed inset-0 z-[250] flex items-center justify-center p-2.5 sm:p-4 md:p-6 bg-slate-950/70 backdrop-blur-md animate-fadeIn"
+      onClick={onClose}
+    >
+      <div
+        className="bg-white rounded-xl shadow-2xl w-full max-w-sm sm:max-w-xl md:max-w-2xl lg:max-w-4xl xl:max-w-5xl overflow-hidden border border-slate-200/80 relative max-h-[92vh] flex flex-col transition-all duration-200"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Compact Light Header */}
+        <div className="px-4 py-3.5 sm:px-6 sm:py-4 bg-white border-b border-slate-200/80 relative shrink-0">
+          <button
+            onClick={onClose}
+            className="absolute top-3.5 right-4 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center transition-colors cursor-pointer"
+            aria-label="Close modal"
+          >
+            <Icon d={ICONS.close} size={15} />
+          </button>
+
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pr-10">
+            <div>
+              <div className="flex items-center gap-2 mb-0.5">
+                <span className="bg-emerald-100 text-emerald-800 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                  Human Expert Review
+                </span>
+                <span className="text-[11px] text-slate-500 font-medium hidden sm:inline">
+                  • 100% Acceptance Guaranteed
+                </span>
+              </div>
+              <h3 className="text-lg sm:text-xl font-bold text-slate-900 leading-tight">
+                See What Our Experts Fix
+              </h3>
+            </div>
+          </div>
+        </div>
+
+        {/* Modal Body */}
+        <div className="p-4 sm:p-6 overflow-y-auto space-y-4 grow bg-slate-50/50">
+          {/* User Confirmation Note Banner */}
+          <div className="bg-purple-50/90 border border-purple-200/80 rounded-md p-3.5 text-xs text-purple-900 font-medium flex items-center gap-3 shadow-xs">
+            <div className="w-7 h-7 rounded-lg bg-purple-100 text-purple-700 flex items-center justify-center shrink-0">
+              <Icon d={ICONS.shield} size={15} stroke={2.5} />
+            </div>
+            <span>
+              This information and customer feedback is added based on user
+              confirmation &amp; verified submission results.
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            {beforeAfterPairs.map((pair, idx) => (
+              <div
+                key={idx}
+                className="bg-gray-100 rounded-md p-4 sm:p-5 space-y-3 flex flex-col justify-between"
+              >
+                <div className="flex items-center justify-between gap-2">
+                  <h4 className="text-xs sm:text-sm font-bold text-slate-900 leading-snug">
+                    {pair.title}
+                  </h4>
+                </div>
+
+                {/* Images Grid */}
+                <div className="grid grid-cols-2 gap-3.5">
+                  <div className="space-y-2">
+                    <div className="relative rounded-xl overflow-hidden bg-slate-100 border border-slate-200 aspect-[4/5] flex items-center justify-center group/img">
+                      <img
+                        src={pair.beforeImg}
+                        alt="Before expert fix"
+                        className="w-full h-full object-cover"
+                      />
+                      <span className="absolute top-2 left-2 bg-rose-500/90 text-white text-[9px] font-extrabold px-2.5 py-0.5 rounded-full uppercase shadow-xs">
+                        Before
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <div className="relative rounded-xl overflow-hidden bg-slate-50 border-2 border-emerald-500/80 aspect-[4/5] flex items-center justify-center shadow-xs group/img">
+                      <img
+                        src={pair.afterImg}
+                        alt="After expert fix"
+                        className="w-full h-full object-cover"
+                      />
+                      <span className="absolute top-2 left-2 bg-emerald-600/90 text-white text-[9px] font-extrabold px-2.5 py-0.5 rounded-full uppercase shadow-xs">
+                        After
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Footer */}
+        <form
+          onSubmit={handleSubmit}
+          className="px-4 py-4 sm:px-6 sm:py-4.5 bg-white border-t border-slate-200/80 shrink-0 shadow-[0_-4px_16px_rgba(0,0,0,0.06)] z-10"
+        >
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4">
+            <div className="shrink-0 flex items-center justify-between sm:block">
+              <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider block">
+                Premium Pack
+              </span>
+              <span className="text-base sm:text-xl font-black text-slate-900 leading-tight">
+                {expertPrice || "₹599"}
+              </span>
+            </div>
+
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 grow max-w-xl">
+              {status !== "authenticated" && (
+                <div className="relative grow">
+                  <Icon
+                    d={ICONS.mail}
+                    size={16}
+                    className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"
+                  />
+                  <input
+                    type="email"
+                    value={emailInput}
+                    onChange={(e) => setEmailInput(e.target.value)}
+                    placeholder="Enter email address for delivery"
+                    className="w-full pl-10 pr-3.5 py-2.5 sm:py-3 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm font-medium text-slate-900 focus:bg-white focus:ring-2 focus:ring-lime-500 focus:border-transparent outline-none transition-all"
+                    required
+                  />
+                </div>
+              )}
+              <button
+                type="submit"
+                className="bg-lime-600 hover:bg-lime-700 active:scale-[0.99] text-white font-bold px-6 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm transition-all shadow-md shadow-lime-600/25 flex items-center justify-center gap-2 shrink-0 cursor-pointer min-h-[44px]"
+              >
+                <span>Continue</span>
+                <Icon d={ICONS.arrowRight} size={16} stroke={2.5} />
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+function ZoomOverlay({
+  url,
+  hasPaid,
+  onClose,
+}: {
+  url: string;
+  hasPaid: boolean;
+  onClose: () => void;
+}) {
+  useEffect(() => {
+    const h = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
     window.addEventListener("keydown", h);
     return () => window.removeEventListener("keydown", h);
   }, [onClose]);
@@ -428,7 +890,10 @@ function ZoomOverlay({ url, hasPaid, onClose }: { url: string; hasPaid: boolean;
           />
           {!hasPaid && (
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <span className="text-white/15 text-xs font-bold tracking-[0.3em] uppercase select-none" style={{ transform: "rotate(-30deg)" }}>
+              <span
+                className="text-white/15 text-xs font-bold tracking-[0.3em] uppercase select-none"
+                style={{ transform: "rotate(-30deg)" }}
+              >
                 Preview Only
               </span>
             </div>
@@ -442,7 +907,17 @@ function ZoomOverlay({ url, hasPaid, onClose }: { url: string; hasPaid: boolean;
   );
 }
 
-function MobileCTA({ productName, localPrice, expertPrice, isExpertPlan, loading, handlePayment, status, guestEmail, setGuestEmail }: any) {
+function MobileCTA({
+  productName,
+  localPrice,
+  expertPrice,
+  isExpertPlan,
+  loading,
+  handlePayment,
+  status,
+  guestEmail,
+  setGuestEmail,
+}: any) {
   const price = isExpertPlan ? expertPrice : localPrice;
   return (
     <>
@@ -461,8 +936,12 @@ function MobileCTA({ productName, localPrice, expertPrice, isExpertPlan, loading
           )}
           <div className="flex items-center gap-3">
             <div className="shrink-0">
-              <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">{productName}</p>
-              <p className="text-lg font-black text-slate-900 leading-tight">{price?.formatted || "..."}</p>
+              <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">
+                {productName}
+              </p>
+              <p className="text-lg font-black text-slate-900 leading-tight">
+                {price?.formatted || "..."}
+              </p>
             </div>
             <div className="w-px h-8 bg-slate-200 shrink-0" />
             <button
@@ -481,8 +960,14 @@ function MobileCTA({ productName, localPrice, expertPrice, isExpertPlan, loading
             </button>
           </div>
           <div className="flex items-center justify-center gap-1.5 mt-2.5">
-            <Icon d={ICONS.shield} size={12} className="text-emerald-600 shrink-0" />
-            <p className="text-center text-[11px] text-slate-500 font-semibold">Secure · Refund if rejected · No subscription</p>
+            <Icon
+              d={ICONS.shield}
+              size={12}
+              className="text-emerald-600 shrink-0"
+            />
+            <p className="text-center text-[11px] text-slate-500 font-semibold">
+              Secure · Refund if rejected · No subscription
+            </p>
           </div>
         </div>
       </div>
@@ -517,13 +1002,17 @@ export default function PreviewClient({
   const [guestEmail, setGuestEmail] = useState("");
   const [timeLeft, setTimeLeft] = useState(20 * 60);
   const [localPrice, setLocalPrice] = useState<LocalPrice>(initialLocalPrice);
-  const [expertPrice, setExpertPrice] = useState<LocalPrice>(initialExpertPrice);
+  const [expertPrice, setExpertPrice] =
+    useState<LocalPrice>(initialExpertPrice);
   const [isExpertPlan, setIsExpertPlan] = useState(false);
   const [isZoomOpen, setIsZoomOpen] = useState(false);
   const [isEmailDialogOpen, setIsEmailDialogOpen] = useState(false);
+  const [isFixModalOpen, setIsFixModalOpen] = useState(false);
 
   const spec = getSpecById(documentType);
-  const isVisa = spec?.name?.toLowerCase().includes("visa") || documentType.toLowerCase().includes("visa");
+  const isVisa =
+    spec?.name?.toLowerCase().includes("visa") ||
+    documentType.toLowerCase().includes("visa");
   const docCategory = isVisa ? "Visa" : "Passport";
   const productName = spec?.name || `${docCategory} Photo`;
 
@@ -532,7 +1021,12 @@ export default function PreviewClient({
     const results: ComplianceCheck[] = [];
     let hasWarn = false;
 
-    const push = (name: string, s: "PASS" | "WARN" | "FAIL", value: string, detail: string) => {
+    const push = (
+      name: string,
+      s: "PASS" | "WARN" | "FAIL",
+      value: string,
+      detail: string,
+    ) => {
       results.push({ name, status: s, value, detail });
       if (s === "WARN" || s === "FAIL") hasWarn = true;
     };
@@ -542,34 +1036,58 @@ export default function PreviewClient({
     const eyePct = metrics.eyeLevelPct || 0;
     const minEye = Number(spec?.eye_min_pct) || 56;
     const maxEye = Number(spec?.eye_max_pct) || 69;
-    push("Eye Level", eyePct >= minEye && eyePct <= maxEye ? "PASS" : "WARN", `${eyePct.toFixed(1)}%`, `Target: ${minEye}–${maxEye}%`);
+    push(
+      "Eye Level",
+      eyePct >= minEye && eyePct <= maxEye ? "PASS" : "WARN",
+      `${eyePct.toFixed(1)}%`,
+      `Target: ${minEye}–${maxEye}%`,
+    );
 
     const headPct = metrics.headSizePct || 0;
     const minHead = Number(spec?.head_min_pct) || 50;
     const maxHead = Number(spec?.head_max_pct) || 69;
-    push("Head Size", headPct >= minHead && headPct <= maxHead ? "PASS" : "WARN", `${headPct.toFixed(1)}%`, `Target: ${minHead}–${maxHead}%`);
+    push(
+      "Head Size",
+      headPct >= minHead && headPct <= maxHead ? "PASS" : "WARN",
+      `${headPct.toFixed(1)}%`,
+      `Target: ${minHead}–${maxHead}%`,
+    );
 
     const bgValid = metrics.backgroundValid || metrics.backgroundCorrected;
-    push("Background", bgValid ? "PASS" : "WARN", bgValid ? "Corrected ✓" : "Review Needed", bgValid ? "Auto-corrected to white" : "Needs correction");
+    push(
+      "Background",
+      bgValid ? "PASS" : "WARN",
+      bgValid ? "Corrected ✓" : "Review Needed",
+      bgValid ? "Auto-corrected to white" : "Needs correction",
+    );
 
     return { verifying: false, checks: results, overallPass: !hasWarn };
   }, [metrics, spec]);
 
-  const passCount = checks.filter(c => c.status === "PASS").length;
+  const passCount = checks.filter((c) => c.status === "PASS").length;
 
   const { loading, handlePayment } = usePayment({
     photoId,
     localPrice: isExpertPlan ? expertPrice : localPrice,
     isExpert: isExpertPlan,
     guestEmail,
-    status: status === "authenticated" ? "authenticated" : status === "loading" ? "loading" : "unauthenticated",
+    status:
+      status === "authenticated"
+        ? "authenticated"
+        : status === "loading"
+          ? "loading"
+          : "unauthenticated",
     session,
     setHasPaid,
   });
 
   const onPaymentClick = () => {
     const trimmed = (guestEmail || "").trim();
-    const isEmailValid = !!(trimmed && trimmed.includes("@") && trimmed.includes("."));
+    const isEmailValid = !!(
+      trimmed &&
+      trimmed.includes("@") &&
+      trimmed.includes(".")
+    );
     if (status !== "authenticated" && !isEmailValid) {
       setIsEmailDialogOpen(true);
       return;
@@ -580,7 +1098,11 @@ export default function PreviewClient({
   const handleDialogSubmit = (e?: React.FormEvent) => {
     if (e) e.preventDefault();
     const trimmed = (guestEmail || "").trim();
-    const isEmailValid = !!(trimmed && trimmed.includes("@") && trimmed.includes("."));
+    const isEmailValid = !!(
+      trimmed &&
+      trimmed.includes("@") &&
+      trimmed.includes(".")
+    );
     if (isEmailValid) {
       setGuestEmail(trimmed);
       setIsEmailDialogOpen(false);
@@ -592,40 +1114,75 @@ export default function PreviewClient({
 
   useEffect(() => {
     const tzCurrency = getClientTimezoneCurrency();
-    if (!initialLocalPrice || (tzCurrency !== initialLocalPrice.currency && tzCurrency !== "USD")) {
-      fetch(`/api/currency?currency=${tzCurrency}`).then(r => r.json()).then(d => { if (d?.formatted) setLocalPrice(d); }).catch(console.error);
-      fetch(`/api/currency?currency=${tzCurrency}&isExpert=true`).then(r => r.json()).then(d => { if (d?.formatted) setExpertPrice(d); }).catch(console.error);
+    if (
+      !initialLocalPrice ||
+      (tzCurrency !== initialLocalPrice.currency && tzCurrency !== "USD")
+    ) {
+      fetch(`/api/currency?currency=${tzCurrency}`)
+        .then((r) => r.json())
+        .then((d) => {
+          if (d?.formatted) setLocalPrice(d);
+        })
+        .catch(console.error);
+      fetch(`/api/currency?currency=${tzCurrency}&isExpert=true`)
+        .then((r) => r.json())
+        .then((d) => {
+          if (d?.formatted) setExpertPrice(d);
+        })
+        .catch(console.error);
     }
   }, [initialLocalPrice]);
 
   useEffect(() => {
-    const interval = setInterval(() => setTimeLeft(p => (p > 0 ? p - 1 : 0)), 1000);
+    const interval = setInterval(
+      () => setTimeLeft((p) => (p > 0 ? p - 1 : 0)),
+      1000,
+    );
     return () => clearInterval(interval);
   }, []);
 
   const handleEmailPhoto = async () => {
-    const emailTo = window.prompt("Enter your email address to receive the photo:");
+    const emailTo = window.prompt(
+      "Enter your email address to receive the photo:",
+    );
     if (!emailTo) return;
     try {
       const res = await fetch("/api/send-photo", {
-        method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: emailTo, photoUrl: previewUrl, documentType, photoId }),
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: emailTo,
+          photoUrl: previewUrl,
+          documentType,
+          photoId,
+        }),
       });
-      alert(res.ok ? "Photo sent! Check your inbox." : "Failed to send. Please try again.");
-    } catch { alert("Error sending email."); }
+      alert(
+        res.ok
+          ? "Photo sent! Check your inbox."
+          : "Failed to send. Please try again.",
+      );
+    } catch {
+      alert("Error sending email.");
+    }
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col">
+    <div className="min-h-screen bg-slate-200/40 flex flex-col">
       <div className="flex-1 flex items-start justify-center px-4 py-6 sm:py-8">
         <div className="w-full max-w-6xl">
           {/* Header */}
           <div className="mb-4 text-center lg:text-left">
             <h1 className="text-2xl font-black text-slate-900">
-              Your <span className="text-lime-600">ID Photo</span> Is Ready {spec?.flag || ""} {spec?.country || ""}
+              Your <span className="text-lime-600">ID Photo</span> Is Ready{" "}
+              {spec?.flag || ""} {spec?.country || ""}
             </h1>
             <div className="flex items-center justify-center lg:justify-start gap-1.5 mt-2">
-              <Icon d={ICONS.shield} size={13} className="text-emerald-600 shrink-0" />
+              <Icon
+                d={ICONS.shield}
+                size={13}
+                className="text-emerald-600 shrink-0"
+              />
               <p className="text-[12px] text-slate-500 font-semibold flex items-center gap-1 flex-wrap justify-center lg:justify-start">
                 Secure checkout · 100% acceptance guarantee · Refund if rejected
                 {from === "uk-passport" && (
@@ -666,19 +1223,51 @@ export default function PreviewClient({
               handlePayment={onPaymentClick}
               documentType={documentType}
               photoId={photoId}
-              status={status === "authenticated" ? "authenticated" : status === "loading" ? "loading" : "unauthenticated"}
+              status={
+                status === "authenticated"
+                  ? "authenticated"
+                  : status === "loading"
+                    ? "loading"
+                    : "unauthenticated"
+              }
               guestEmail={guestEmail}
               setGuestEmail={setGuestEmail}
               handleEmailPhoto={handleEmailPhoto}
               spec={spec}
               from={from}
+              onOpenFixModal={() => setIsFixModalOpen(true)}
             />
           </div>
         </div>
       </div>
 
       {/* Zoom */}
-      {isZoomOpen && <ZoomOverlay url={previewUrl} hasPaid={hasPaid} onClose={() => setIsZoomOpen(false)} />}
+      {isZoomOpen && (
+        <ZoomOverlay
+          url={previewUrl}
+          hasPaid={hasPaid}
+          onClose={() => setIsZoomOpen(false)}
+        />
+      )}
+
+      {/* Experts Fix Modal */}
+      <ExpertsFixModal
+        isOpen={isFixModalOpen}
+        onClose={() => setIsFixModalOpen(false)}
+        onContinue={(email: string) => {
+          setIsExpertPlan(true);
+          setIsFixModalOpen(false);
+          if (email) setGuestEmail(email);
+          handlePayment(email || guestEmail);
+        }}
+        expertPrice={expertPrice?.formatted}
+        previewUrl={previewUrl}
+        guestEmail={guestEmail}
+        setGuestEmail={setGuestEmail}
+        status={
+          status === "authenticated" ? "authenticated" : "unauthenticated"
+        }
+      />
 
       {/* Mobile CTA */}
       {!hasPaid && !verifying && (
@@ -689,7 +1278,9 @@ export default function PreviewClient({
           isExpertPlan={isExpertPlan}
           loading={loading}
           handlePayment={onPaymentClick}
-          status={status === "authenticated" ? "authenticated" : "unauthenticated"}
+          status={
+            status === "authenticated" ? "authenticated" : "unauthenticated"
+          }
           guestEmail={guestEmail}
           setGuestEmail={setGuestEmail}
         />
@@ -703,7 +1294,9 @@ export default function PreviewClient({
               <div className="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center mb-4 mx-auto">
                 <Icon d={ICONS.mail} size={22} className="text-lime-600" />
               </div>
-              <h3 className="text-xl font-black text-slate-900 mb-2 text-center">Where should we send it?</h3>
+              <h3 className="text-xl font-black text-slate-900 mb-2 text-center">
+                Where should we send it?
+              </h3>
               <p className="text-sm text-slate-500 mb-5 leading-relaxed text-center">
                 Enter your email to receive your processed photo and receipt.
               </p>

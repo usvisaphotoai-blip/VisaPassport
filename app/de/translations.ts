@@ -152,16 +152,7 @@ export const de = {
     "Dateigröße innerhalb des zulässigen Limits komprimiert",
     "Auflösung für Botschaftsanforderungen verifiziert",
     "Standard-Druck-DPI für offiziellen Druck",
-    "Foto in konformes JPEG-Format konvertiert",
-    "Gesicht im Rahmen zentriert",
-    "Augenhöhe horizontal ausgeglichen",
-    "Kinnabstand gemäß Spezifikationen angepasst",
-    "Beleuchtung für Gesichtssichtbarkeit ausgeglichen",
-    "Farbabgleich normalisiert",
-    "Bildschärfe verbessert",
-    "Hintergrund bereinigt und normalisiert",
-    "Druckbogen in offiziellem Format erstellt",
-    "Foto angepasst, um staatliche Konformitätsprüfungen zu bestehen",
+   
   ],
 
   // ── Hero Sections ───────────────────────────────────────────────────────────
