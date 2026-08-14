@@ -103,7 +103,7 @@ export interface LocalPrice {
 
 const EXPERT_PRICES: Record<string, { amount: number; symbol: string; decimals: number }> = {
   // Scaling roughly 1.6x - 2x from standard
-  USD: { amount: 9.99, symbol: "$", decimals: 2 },
+  USD: { amount: 14.99, symbol: "$", decimals: 2 },
   EUR: { amount: 9.99, symbol: "€", decimals: 2 },
   GBP: { amount: 9.99, symbol: "£", decimals: 2 },
   CHF: { amount: 10.99, symbol: "CHF", decimals: 2 },
