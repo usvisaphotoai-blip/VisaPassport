@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import PassportMakerApp from "./PassportMakerApp";
 import toolPages from "../../data/tool-seo-pages.json";
+import ToolPageRenderer from "../components/ToolPageRenderer";
 
 export const metadata: Metadata = {
   title: "Free Passport Photo Maker Online | Official Passport Standards",
@@ -20,27 +21,6 @@ export const metadata: Metadata = {
     type: "website",
   },
 };
-
-// ─── Rich content renderer (replaces dangerouslySetInnerHTML) ───────────────
-// Converts an HTML string to styled JSX using a simple parser.
-// Handles: h2, h3, h4, p, strong, a, ul/ol/li, blockquote, hr, br
-// Keeps SEO semantic structure intact.
-
-function RichContent({ html }: { html: string }) {
-  if (!html) return null;
-
-  // We still need dangerouslySetInnerHTML for arbitrary HTML from CMS,
-  // but we wrap it in a heavily-styled <div> with a sophisticated CSS class
-  // that makes every element look polished.
-  return (
-    <div
-      className="rich-content"
-      dangerouslySetInnerHTML={{ __html: html }}
-    />
-  );
-}
-
-
 
 // ─── Trust badges ────────────────────────────────────────────────────────────
 const TRUST_ITEMS = [
@@ -331,24 +311,23 @@ export default function PassportSizePhotoMakerPage() {
        
 
         {/* ── SEO rich content ── */}
-        <div className="bg-white border-t border-slate-100 py-14 sm:py-20 mt-6 sm:mt-8">
-          <div className="max-w-3xl mx-auto px-4 sm:px-6">
-
+        <div className="bg-white border-t border-slate-200/80 py-12 sm:py-16 mt-6 sm:mt-8">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6">
             {/* Section header */}
-            <div className="text-center mb-10 sm:mb-14">
-              <span className="inline-block px-3 py-1 rounded-full bg-blue-50 text-blue-600 text-xs font-bold uppercase tracking-wider mb-3">
-                Complete Guide
+            <div className="text-center mb-8 sm:mb-12">
+              <span className="inline-block px-3.5 py-1.5 rounded-full bg-lime-50 border border-lime-200 text-lime-700 text-xs font-extrabold uppercase tracking-wider mb-3">
+                Complete Biometric Guide
               </span>
-              <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+              <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight">
                 Detailed Guide &amp; Frequently Asked Questions
               </h2>
-              <p className="text-slate-500 mt-2 text-sm sm:text-base max-w-md mx-auto">
+              <p className="text-slate-500 mt-2 text-sm sm:text-base max-w-md mx-auto font-medium">
                 Everything you need to know about creating a compliant passport photo.
               </p>
             </div>
 
             {/* Rich HTML content */}
-            <RichContent html={toolPage?.content || ""} />
+            <ToolPageRenderer html={toolPage?.content || ""} />
           </div>
         </div>
 

@@ -79,7 +79,7 @@ export default function TocSidebar({ headings }: { headings: TOCPageHeading[] })
 
       <div className="p-4 sm:p-5 lg:p-6 bg-slate-950 rounded-2xl sm:rounded-3xl text-white shadow-2xl relative overflow-hidden group">
         <div className="absolute top-0 right-0 w-24 h-24 sm:w-32 sm:h-32 lg:w-32 lg:h-32 bg-lime-500/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700" />
-        <h4 className="font-bold text-base sm:text-lg lg:text-xl mb-2 sm:mb-3 relative z-10">DS-160 Portal Error?</h4>
+        <h4 className="font-bold text-base sm:text-lg lg:text-xl mb-2 sm:mb-3 relative z-10">Create passport Size photo </h4>
         <p className="text-slate-400 text-xs sm:text-sm mb-4 sm:mb-6 leading-relaxed relative z-10 font-medium">
           Fix hair edges, remove background shadows, and validate 600x600 size instantly.
         </p>
@@ -87,7 +87,7 @@ export default function TocSidebar({ headings }: { headings: TOCPageHeading[] })
           href="/passport-photo-online"
           className="relative z-10 flex items-center justify-center w-full bg-lime-500 text-slate-950 font-bold py-2.5 sm:py-3 lg:py-3.5 rounded-xl sm:rounded-2xl hover:bg-lime-400 transition-colors shadow-lg shadow-lime-500/20 text-xs sm:text-sm"
         >
-          Check Photo Free →
+          Make Photo Now 
         </a>
       </div>
     </div>

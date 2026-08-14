@@ -7,6 +7,7 @@ import PassportMakerApp from "../passport-size-photo-maker/PassportMakerApp";
 import SpecialPhotoPageClient from "../components/SpecialPhotoPageClient";
 import { getLocalPrice } from "@/lib/currency";
 import Breadcrumbs from "../components/Breadcrumbs";
+import ToolPageRenderer from "../components/ToolPageRenderer";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -151,24 +152,21 @@ export default async function Page({ params }: PageProps) {
         
 
           {/* SEO rich content */}
-          <div className="bg-white  py-1 sm:py-20 mt-6 sm:mt-8">
-            <div className="max-w-5xl mx-auto px-4 sm:px-6">
-              <div className="text-center mb-10 sm:mb-14">
-                <span className="inline-block px-3 py-1 rounded-full bg-blue-50 text-blue-600 text-xs font-bold uppercase tracking-wider mb-3">
-                  Complete Guide
+          <div className="bg-white border-t border-slate-200/80 py-12 sm:py-16 mt-6 sm:mt-8">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6">
+              <div className="text-center mb-8 sm:mb-12">
+                <span className="inline-block px-3.5 py-1.5 rounded-full bg-lime-50 border border-lime-200 text-lime-700 text-xs font-extrabold uppercase tracking-wider mb-3">
+                  Complete Biometric Guide
                 </span>
-                <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+                <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight">
                   Detailed Guide &amp; Frequently Asked Questions
                 </h2>
-                <p className="text-slate-500 mt-2 text-sm sm:text-base max-w-md mx-auto">
+                <p className="text-slate-500 mt-2 text-sm sm:text-base max-w-md mx-auto font-medium">
                   Everything you need to know about creating a compliant passport photo.
                 </p>
               </div>
 
-              <div
-                className="rich-content"
-                dangerouslySetInnerHTML={{ __html: toolPage.content }}
-              />
+              <ToolPageRenderer html={toolPage.content} />
             </div>
           </div>
         </div>
