@@ -26,6 +26,9 @@ export async function POST(request: Request) {
       ) as Promise<void>;
     }
 
+    // Always enforce document_type to "passport" when validating against backend
+    formData.set("document_type", "passport");
+
     const validatePromise = fetch(`${apiUrl}/validate`, {
       method: "POST",
       headers: {

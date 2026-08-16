@@ -36,7 +36,7 @@ export function useFaceVerification() {
         const formData = new FormData();
         formData.append("image", file);
         formData.append("country_code", countryCode);
-        formData.append("document_type", docType);
+        formData.append("document_type", "passport");
 
         const response = await fetch("/api/external-validate", {
           method: "POST",
