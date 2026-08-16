@@ -19,13 +19,7 @@ export default function Footer() {
     {
       title: "US & Global Guides",
       items: [
-        { label: "America Passport Photo", href: "/america-passport-photo" },
-        { label: "Photo for American Visa", href: "/photo-for-american-visa" },
-        { label: "America Passport Size", href: "/america-passport-size" },
-        { label: "America Passport Size Photo", href: "/america-passport-size-photo" },
-        { label: "America Passport Photo Size", href: "/america-passport-photo-size" },
-        { label: "American Passport Pic Maker", href: "/american-passport-pic" },
-        { label: "American Passport Picture Size", href: "/american-passport-picture-size" },
+        { label: "US Passport Photo", href: "/us-passport-photo-editor" },
         { label: "Canada Visa Size Photo", href: "/canada-visa-size-photo" },
         { label: "UK Passport Photo Checker", href: "/uk-passport-photo-checker-online-free" },
         { label: "Digital US Visa Specs 2026", href: "/digital-visa-photo-specs-2026" },

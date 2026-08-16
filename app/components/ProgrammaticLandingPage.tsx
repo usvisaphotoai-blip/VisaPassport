@@ -204,17 +204,12 @@ export default function ProgrammaticLandingPage({ spec, slug }: Props) {
           <div className="pt-8 border-t border-slate-200">
             <h3 className="text-sm font-bold text-slate-700 mb-4 text-center">Popular Sizing & Photo Checker Tools</h3>
             <div className="flex flex-wrap justify-center gap-2">
-              <Link href="/america-passport-photo" className="text-xs text-slate-600 hover:text-blue-600 bg-white px-3 py-1.5 rounded-lg border border-slate-200 font-medium">America Passport Photo</Link>
-              <Link href="/photo-for-american-visa" className="text-xs text-slate-600 hover:text-blue-600 bg-white px-3 py-1.5 rounded-lg border border-slate-200 font-medium">Photo for American Visa</Link>
-              <Link href="/america-passport-size" className="text-xs text-slate-600 hover:text-blue-600 bg-white px-3 py-1.5 rounded-lg border border-slate-200 font-medium">America Passport Size</Link>
-              <Link href="/america-passport-size-photo" className="text-xs text-slate-600 hover:text-blue-600 bg-white px-3 py-1.5 rounded-lg border border-slate-200 font-medium">America Passport Size Photo</Link>
-              <Link href="/america-passport-photo-size" className="text-xs text-slate-600 hover:text-blue-600 bg-white px-3 py-1.5 rounded-lg border border-slate-200 font-medium">America Passport Photo Size</Link>
-              <Link href="/american-passport-pic" className="text-xs text-slate-600 hover:text-blue-600 bg-white px-3 py-1.5 rounded-lg border border-slate-200 font-medium">American Passport Pic</Link>
-              <Link href="/american-passport-picture-size" className="text-xs text-slate-600 hover:text-blue-600 bg-white px-3 py-1.5 rounded-lg border border-slate-200 font-medium">American Passport Picture Size</Link>
+              <Link href="/us-passport-photo-editor" className="text-xs text-slate-600 hover:text-blue-600 bg-white px-3 py-1.5 rounded-lg border border-slate-200 font-medium">US Passport Photo Editor</Link>
+              <Link href="/us-visa-photo-editor" className="text-xs text-slate-600 hover:text-blue-600 bg-white px-3 py-1.5 rounded-lg border border-slate-200 font-medium">US Visa Photo Editor</Link>
               <Link href="/canada-visa-size-photo" className="text-xs text-slate-600 hover:text-blue-600 bg-white px-3 py-1.5 rounded-lg border border-slate-200 font-medium">Canada Visa Size Photo</Link>
               <Link href="/uk-passport-photo-checker-online-free" className="text-xs text-slate-600 hover:text-blue-600 bg-white px-3 py-1.5 rounded-lg border border-slate-200 font-medium">UK Passport Photo Checker</Link>
               <Link href="/digital-visa-photo-specs-2026" className="text-xs text-slate-600 hover:text-blue-600 bg-white px-3 py-1.5 rounded-lg border border-slate-200 font-medium">Digital Visa Specs 2026</Link>
-                <Link href="/indian-passport-size-photograph" className="text-xs text-slate-600 hover:text-blue-600 bg-white px-3 py-1.5 rounded-lg border border-slate-200 font-medium">
+              <Link href="/indian-passport-size-photograph" className="text-xs text-slate-600 hover:text-blue-600 bg-white px-3 py-1.5 rounded-lg border border-slate-200 font-medium">
                 Create inda icao standard photograph
               </Link>
             </div>

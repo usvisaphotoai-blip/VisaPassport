@@ -78,35 +78,23 @@ export default function PassportDirectoryPage() {
         <div className="bg-slate-50 rounded-3xl p-8 border border-slate-200">
           <h3 className="text-xl font-bold text-slate-900 mb-6">Popular Photo Sizing Tools & Specs</h3>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-            <Link href="/america-passport-photo" className="text-xs font-semibold text-slate-700 hover:text-blue-600 bg-white p-3 rounded-xl border border-slate-200 shadow-xs transition-colors">
-              America Passport Photo
+            <Link href="/us-passport-photo-editor" className="text-xs font-semibold text-slate-700 hover:text-blue-600 bg-white p-3 rounded-xl border border-slate-200 shadow-xs transition-colors">
+              US Passport Photo Editor
             </Link>
-            <Link href="/photo-for-american-visa" className="text-xs font-semibold text-slate-700 hover:text-blue-600 bg-white p-3 rounded-xl border border-slate-200 shadow-xs transition-colors">
-              Photo for American Visa
-            </Link>
-            <Link href="/america-passport-size" className="text-xs font-semibold text-slate-700 hover:text-blue-600 bg-white p-3 rounded-xl border border-slate-200 shadow-xs transition-colors">
-              America Passport Size
-            </Link>
-            <Link href="/america-passport-size-photo" className="text-xs font-semibold text-slate-700 hover:text-blue-600 bg-white p-3 rounded-xl border border-slate-200 shadow-xs transition-colors">
-              America Passport Size Photo
-            </Link>
-            <Link href="/america-passport-photo-size" className="text-xs font-semibold text-slate-700 hover:text-blue-600 bg-white p-3 rounded-xl border border-slate-200 shadow-xs transition-colors">
-              America Passport Photo Size
-            </Link>
-            <Link href="/american-passport-pic" className="text-xs font-semibold text-slate-700 hover:text-blue-600 bg-white p-3 rounded-xl border border-slate-200 shadow-xs transition-colors">
-              American Passport Pic
-            </Link>
-            <Link href="/american-passport-picture-size" className="text-xs font-semibold text-slate-700 hover:text-blue-600 bg-white p-3 rounded-xl border border-slate-200 shadow-xs transition-colors">
-              American Passport Picture Size
+            <Link href="/us-visa-photo-editor" className="text-xs font-semibold text-slate-700 hover:text-blue-600 bg-white p-3 rounded-xl border border-slate-200 shadow-xs transition-colors">
+              US Visa Photo Editor
             </Link>
             <Link href="/canada-visa-size-photo" className="text-xs font-semibold text-slate-700 hover:text-blue-600 bg-white p-3 rounded-xl border border-slate-200 shadow-xs transition-colors">
               Canada Visa Size Photo
             </Link>
-            <Link href="/uk-passport-photo-checker-online-free" className="text-xs font-semibold text-slate-700 hover:text-blue-600 bg-white p-3 rounded-xl border border-slate-200 shadow-xs transition-colors">
-              UK Photo Checker
+            <Link href="/indian-passport-size-photograph" className="text-xs font-semibold text-slate-700 hover:text-blue-600 bg-white p-3 rounded-xl border border-slate-200 shadow-xs transition-colors">
+              India ICAO Standard Photo
             </Link>
             <Link href="/digital-visa-photo-specs-2026" className="text-xs font-semibold text-slate-700 hover:text-blue-600 bg-white p-3 rounded-xl border border-slate-200 shadow-xs transition-colors">
               Digital Visa Specs 2026
+            </Link>
+            <Link href="/uk-passport-photo-checker-online-free" className="text-xs font-semibold text-slate-700 hover:text-blue-600 bg-white p-3 rounded-xl border border-slate-200 shadow-xs transition-colors">
+              UK Photo Checker
             </Link>
           </div>
         </div>

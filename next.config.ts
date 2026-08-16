@@ -93,6 +93,42 @@ const nextConfig: NextConfig = {
         destination: "/us-visa-photo-editor",
         permanent: true,
       },
+      // Legacy American photo pages -> /us-passport-photo-editor
+      {
+        source: "/photo-for-american-visa",
+        destination: "/us-passport-photo-editor",
+        permanent: true,
+      },
+      {
+        source: "/america-passport-photo",
+        destination: "/us-passport-photo-editor",
+        permanent: true,
+      },
+      {
+        source: "/america-passport-photo-size",
+        destination: "/us-passport-photo-editor",
+        permanent: true,
+      },
+      {
+        source: "/america-passport-size",
+        destination: "/us-passport-photo-editor",
+        permanent: true,
+      },
+      {
+        source: "/america-passport-size-photo",
+        destination: "/us-passport-photo-editor",
+        permanent: true,
+      },
+      {
+        source: "/american-passport-pic",
+        destination: "/us-passport-photo-editor",
+        permanent: true,
+      },
+      {
+        source: "/american-passport-picture-size",
+        destination: "/us-passport-photo-editor",
+        permanent: true,
+      },
     ];
   },
 };

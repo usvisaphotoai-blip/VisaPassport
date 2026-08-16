@@ -466,29 +466,14 @@ export default function SpecialPhotoPageClient({
               Popular Sizing & Photo Checker Tools
             </h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-3">
-              <Link href="/america-passport-photo" className="text-xs font-semibold text-slate-700 hover:text-lime-700 bg-slate-50 p-3 rounded-xl border border-slate-200 transition-colors block text-center">
-                America Passport Photo
+              <Link href="/us-passport-photo-editor" className="text-xs font-semibold text-slate-700 hover:text-lime-700 bg-slate-50 p-3 rounded-xl border border-slate-200 transition-colors block text-center">
+                US Passport Photo Editor
               </Link>
-                <Link href="/indian-passport-size-photograph" className="text-xs font-semibold text-slate-700 hover:text-lime-700 bg-slate-50 p-3 rounded-xl border border-slate-200 transition-colors block text-center">
-                Create inda icao standard photograph
+              <Link href="/us-visa-photo-editor" className="text-xs font-semibold text-slate-700 hover:text-lime-700 bg-slate-50 p-3 rounded-xl border border-slate-200 transition-colors block text-center">
+                US Visa Photo Editor
               </Link>
-              <Link href="/photo-for-american-visa" className="text-xs font-semibold text-slate-700 hover:text-lime-700 bg-slate-50 p-3 rounded-xl border border-slate-200 transition-colors block text-center">
-                Photo for American Visa
-              </Link>
-              <Link href="/america-passport-size" className="text-xs font-semibold text-slate-700 hover:text-lime-700 bg-slate-50 p-3 rounded-xl border border-slate-200 transition-colors block text-center">
-                America Passport Size
-              </Link>
-              <Link href="/america-passport-size-photo" className="text-xs font-semibold text-slate-700 hover:text-lime-700 bg-slate-50 p-3 rounded-xl border border-slate-200 transition-colors block text-center">
-                America Passport Size Photo
-              </Link>
-              <Link href="/america-passport-photo-size" className="text-xs font-semibold text-slate-700 hover:text-lime-700 bg-slate-50 p-3 rounded-xl border border-slate-200 transition-colors block text-center">
-                America Passport Photo Size
-              </Link>
-              <Link href="/american-passport-pic" className="text-xs font-semibold text-slate-700 hover:text-lime-700 bg-slate-50 p-3 rounded-xl border border-slate-200 transition-colors block text-center">
-                American Passport Pic
-              </Link>
-              <Link href="/american-passport-picture-size" className="text-xs font-semibold text-slate-700 hover:text-lime-700 bg-slate-50 p-3 rounded-xl border border-slate-200 transition-colors block text-center">
-                American Passport Picture Size
+              <Link href="/indian-passport-size-photograph" className="text-xs font-semibold text-slate-700 hover:text-lime-700 bg-slate-50 p-3 rounded-xl border border-slate-200 transition-colors block text-center">
+                India ICAO Standard Photo
               </Link>
               <Link href="/canada-visa-size-photo" className="text-xs font-semibold text-slate-700 hover:text-lime-700 bg-slate-50 p-3 rounded-xl border border-slate-200 transition-colors block text-center">
                 Canada Visa Size Photo

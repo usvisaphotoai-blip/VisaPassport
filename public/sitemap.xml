@@ -1532,7 +1532,7 @@
     <loc>https://www.pixpassport.com/us-passport-photo-editor</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/us-passport-photo-editor" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/us-passport-photo-editor" />
-    <lastmod>2026-08-07</lastmod>
+    <lastmod>2026-08-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -2119,30 +2119,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.pixpassport.com/photo-for-american-visa</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/photo-for-american-visa" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/photo-for-american-visa" />
-    <lastmod>2026-07-29</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.pixpassport.com/america-passport-photo</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/america-passport-photo" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/america-passport-photo" />
-    <lastmod>2026-07-29</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.pixpassport.com/america-passport-photo-size</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/america-passport-photo-size" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/america-passport-photo-size" />
-    <lastmod>2026-07-29</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-    <url>
     <loc>https://www.pixpassport.com/indian-passport-size-photograph</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/indian-passport-size-photograph" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/indian-passport-size-photograph" />
@@ -2150,37 +2126,4 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
-  <url>
-    <loc>https://www.pixpassport.com/america-passport-size</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/america-passport-size" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/america-passport-size" />
-    <lastmod>2026-07-29</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.pixpassport.com/america-passport-size-photo</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/america-passport-size-photo" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/america-passport-size-photo" />
-    <lastmod>2026-07-29</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.pixpassport.com/american-passport-pic</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/american-passport-pic" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/american-passport-pic" />
-    <lastmod>2026-07-29</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.pixpassport.com/american-passport-picture-size</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/american-passport-picture-size" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/american-passport-picture-size" />
-    <lastmod>2026-07-29</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
 </urlset>
