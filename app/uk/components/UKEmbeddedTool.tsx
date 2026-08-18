@@ -16,6 +16,8 @@ export const ukDocumentsList = [
   { id: "uk-bno", label: "UK BNO Passport", size: "35 × 45 mm", bg: "Light Grey / White", head: "29–34 mm" },
   { id: "uk-seamans-card", label: "British Seaman's Card", size: "35 × 45 mm", bg: "Light Grey", head: "Centered" },
   { id: "uk-firearms", label: "UK BASC Firearms Licence", size: "35 × 45 mm", bg: "Light Grey / White", head: "Centered" },
+  { id: "uk-arc", label: "UK Application Registration Card (ARC)", size: "35 × 45 mm", bg: "Light Grey / White", head: "Centered" },
+
 ];
 
 const STAGES = [

@@ -49,6 +49,29 @@ export const allSpecs = specsData as CountrySpec[];
 //     Prefers -passport over -visa over anything else.
 //  4. Special hardcoded overrides (unchanged + extended)
 // ---------------------------------------------------------------
+export const UK_DOC_NAMES: Record<string, string> = {
+  "uk-passport": "United Kingdom Passport",
+  "uk-passport-online": "UK Passport (Digital Upload)",
+  "uk-passport-offline": "UK Passport (Paper / Printed)",
+  "uk-driving": "UK Driving Licence (DVLA)",
+  "uk-driving-licence": "UK Driving Licence (DVLA)",
+  "uk-visa": "UK Visa / Residence Permit (BRP)",
+  "uk-oyster": "Oyster Photocard",
+  "uk-railcard": "UK Railcard",
+  "uk-bus": "UK Bus Pass",
+  "uk-bno": "UK BNO Passport",
+  "uk-seamans-card": "British Seaman's Card",
+  "uk-seamans-discharge": "British Seaman's Discharge Book",
+  "uk-london-freedom": "London Freedom Pass",
+  "uk-firearms": "UK BASC Firearms Licence",
+  "uk-basc": "UK BASC Firearms Licence",
+  "uk-arc": "UK Application Registration Card (ARC)",
+  "uk-boat": "UK Boat Licence",
+  "uk-id": "UK ID / Residence Card",
+  "uk-leisure": "UK Leisure Pass",
+  "uk-school": "UK School Card",
+};
+
 export function getSpecById(id: string): CountrySpec | undefined {
   if (!id) return undefined;
   const cleanId = id.toLowerCase().trim();
@@ -57,6 +80,19 @@ export function getSpecById(id: string): CountrySpec | undefined {
   if (cleanId.startsWith("france-")) {
     const franceSpec = allSpecs.find((s) => s.id === "france-passport");
     if (franceSpec) return franceSpec;
+  }
+
+  // 0.1 UK custom options override
+  if (cleanId.startsWith("uk-") || cleanId.startsWith("gb-") || cleanId === "uk" || cleanId === "gb") {
+    const ukSpec = allSpecs.find((s) => s.id === "uk-passport");
+    if (ukSpec) {
+      const customName = UK_DOC_NAMES[cleanId];
+      return {
+        ...ukSpec,
+        id: cleanId,
+        name: customName || ukSpec.name,
+      };
+    }
   }
 
   // 1. Direct match (case-insensitive)
@@ -93,6 +129,7 @@ export function getSpecById(id: string): CountrySpec | undefined {
   const codeToSpec: Record<string, string> = {
     EU: "icao-passport",
     GB: "uk-passport",
+    UK: "uk-passport",
     US: "us-passport",
     IN: "india-passport",
     FR: "france-passport",

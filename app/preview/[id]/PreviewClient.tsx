@@ -89,7 +89,23 @@ function MetricFix({ metric }: { metric: (typeof METRIC_FIXES)[0] }) {
 }
 
 // Flat trust strip — the thing that should make someone feel safe paying
-function TrustBadges({ from }: { from?: string }) {
+function TrustBadges({
+  from,
+  spec,
+  documentType,
+}: {
+  from?: string;
+  spec?: any;
+  documentType?: string;
+}) {
+  const isUK =
+    from === "uk" ||
+    from === "uk-passport" ||
+    from?.startsWith("uk") ||
+    spec?.country === "United Kingdom" ||
+    documentType?.toLowerCase().startsWith("uk") ||
+    documentType?.toLowerCase().startsWith("gb");
+
   const badges = [
     { icon: ICONS.shield, text: "Secure Checkout" },
     { icon: ICONS.refresh, text: "Refund if Rejected" },
@@ -97,7 +113,7 @@ function TrustBadges({ from }: { from?: string }) {
   ];
   return (
     <div className="flex items-center justify-center gap-x-5 gap-y-1.5 py-3 flex-wrap border-t border-slate-100 mt-3">
-      {from === "uk-passport" && (
+      {isUK && (
         <div className="flex items-center gap-1.5 text-slate-500">
           <span className="text-[14px]">🇬🇧</span>
           <span className="text-[11px] font-semibold text-slate-700">
@@ -145,7 +161,7 @@ function PhotoPanel({
           <div>
             <p className="text-sm font-bold text-slate-900 flex items-center gap-1.5">
               <span>{spec?.flag || "📄"}</span>{" "}
-              {spec?.country || "Document Photo"}
+              {spec?.name || spec?.country || "Document Photo"}
             </p>
           </div>
           {allPass && (
@@ -453,7 +469,7 @@ function OrderPanel({
                   )}
                 </button>
 
-                <TrustBadges from={from} />
+                <TrustBadges from={from} spec={spec} documentType={documentType} />
 
                 <div className="flex justify-center pt-1">
                   <a
@@ -1016,6 +1032,13 @@ export default function PreviewClient({
   const [isFixModalOpen, setIsFixModalOpen] = useState(false);
 
   const spec = getSpecById(documentType);
+  const isUK =
+    from === "uk" ||
+    from === "uk-passport" ||
+    from?.startsWith("uk") ||
+    spec?.country === "United Kingdom" ||
+    documentType?.toLowerCase().startsWith("uk") ||
+    documentType?.toLowerCase().startsWith("gb");
   const isVisa =
     spec?.name?.toLowerCase().includes("visa") ||
     documentType.toLowerCase().includes("visa");
@@ -1181,7 +1204,7 @@ export default function PreviewClient({
           <div className="mb-4 text-center lg:text-left">
             <h1 className="text-2xl font-black text-slate-900">
               Your <span className="text-lime-600">ID Photo</span> Is Ready{" "}
-              {spec?.flag || ""} {spec?.country || ""}
+              {spec?.flag || (isUK ? "🇬🇧" : "")} {spec?.name || spec?.country || (isUK ? "United Kingdom" : "")}
             </h1>
             <div className="flex items-center justify-center lg:justify-start gap-1.5 mt-2">
               <Icon
@@ -1191,7 +1214,7 @@ export default function PreviewClient({
               />
               <p className="text-[12px] text-slate-500 font-semibold flex items-center gap-1 flex-wrap justify-center lg:justify-start">
                 Secure checkout · 100% acceptance guarantee · Refund if rejected
-                {from === "uk-passport" && (
+                {isUK && (
                   <span className="ml-1 md:ml-2 font-bold text-slate-700 flex items-center gap-1">
                     <span className="text-xl">🇬🇧</span> UK Gov Compliant
                   </span>
