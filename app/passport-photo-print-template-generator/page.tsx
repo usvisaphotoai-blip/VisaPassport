@@ -145,6 +145,27 @@ export default function PrintTemplateGeneratorPage() {
           </div>
         </div>
 
+  <div className="grid sm:grid-cols-2 py-5 lg:grid-cols-3 gap-3 max-w-4xl mx-auto ">
+            {[
+              { href: "/icao-standard-photo", label: "ICAO Standard Photo Tool" },
+              { href: "/uk-passport-size-photo-maker", label: "UK Passport Size Photo Maker" },
+              { href: "/passport-size-photo-maker", label: "Passport Size Photo Maker" },
+              { href: "/us-passport-photo-editor", label: "US Passport Photo Editor" },
+              { href: "/us-visa-photo-editor", label: "US Visa Photo Editor" },
+            ].map(({ href, label }) => (
+              <a
+                key={href}
+                href={href}
+              
+                className="flex items-center justify-between gap-3 bg-red-300 hover:bg-lime-50 border border-slate-100 hover:border-lime-200 rounded-xl px-5 py-4 text-sm font-bold text-slate-700 hover:text-lime-700 transition-colors"
+              >
+                {label}
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
+                  <line x1="7" y1="17" x2="17" y2="7" /><polyline points="7 7 17 7 17 17" />
+                </svg>
+              </a>
+            ))}
+          </div>
         {/* Trust Badges */}
         <div className="bg-slate-50 border-b border-slate-200 py-6">
           <div className="max-w-4xl mx-auto px-4 sm:px-6">
