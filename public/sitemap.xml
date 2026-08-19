@@ -62,6 +62,15 @@
     <priority>0.8</priority>
    
   </url>
+       <url>
+    <loc>https://www.pixpassport.com/uk/passport-photos-london</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/uk/passport-photos-london" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/uk/passport-photos-london" />
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+   
+  </url>
 
   <url>
     <loc>https://www.pixpassport.com/icao-standard-photograph</loc>
