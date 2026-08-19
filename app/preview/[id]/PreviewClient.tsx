@@ -106,6 +106,13 @@ function TrustBadges({
     documentType?.toLowerCase().startsWith("uk") ||
     documentType?.toLowerCase().startsWith("gb");
 
+  const isCanada =
+    from === "canada" ||
+    from === "canada-passport" ||
+    from?.startsWith("canada") ||
+    spec?.country === "Canada" ||
+    documentType?.toLowerCase().startsWith("canada") ||
+    documentType?.toLowerCase().startsWith("ca");
   const badges = [
     { icon: ICONS.shield, text: "Secure Checkout" },
     { icon: ICONS.refresh, text: "Refund if Rejected" },
@@ -118,6 +125,14 @@ function TrustBadges({
           <span className="text-[14px]">🇬🇧</span>
           <span className="text-[11px] font-semibold text-slate-700">
             UK Gov Compliant
+          </span>
+        </div>
+      )}
+      {isCanada && (
+        <div className="flex items-center gap-1.5 text-slate-500">
+          <span className="text-[14px]">🇨🇦</span>
+          <span className="text-[11px] font-semibold text-slate-700">
+            IRCC &amp; Passport Program Compliant
           </span>
         </div>
       )}

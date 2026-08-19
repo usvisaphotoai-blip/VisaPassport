@@ -8,8 +8,8 @@ export default function Footer() {
       items: [
         { label: "passport photo for indian passport", href: "/indian-passport-size-photograph" },
         { label: "India Passport Photo", href: "/india-passport-photo-editor" },
-
-        { label: "UK Passport Photo", href: "/uk-passport-photo-editor" },
+        { label: "Canada Passport Photo", href: "/ca" },
+        { label: "UK Passport Photo", href: "/uk" },
         { label: "US Visa Photo", href: "/us-visa-photo-editor" },
         { label: "Australia Passport Photo", href: "/australia-passport-photo-editor" },
         { label: "Germany Visa Photo", href: "/germany-visa-photo-editor" },
@@ -20,7 +20,8 @@ export default function Footer() {
       title: "US & Global Guides",
       items: [
         { label: "US Passport Photo", href: "/us-passport-photo-editor" },
-        { label: "Canada Visa Size Photo", href: "/canada-visa-size-photo" },
+        { label: "Canada Visa Size Photo", href: "/ca" },
+        { label: "Canada Passport & Visa Hub", href: "/ca" },
         { label: "UK Passport Photo Checker", href: "/uk-passport-photo-checker-online-free" },
         { label: "Digital US Visa Specs 2026", href: "/digital-visa-photo-specs-2026" },
       ],

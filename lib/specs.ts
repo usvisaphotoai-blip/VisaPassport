@@ -3,7 +3,7 @@ import { DocumentType } from "@/app/passport-photo-online/types";
 import { countryMapping } from "./external-api";
 
 export const SUPPORTED_COUNTRIES = [
-  "DZ", "AU", "AT", "BE", "BG", "BT", "CN", "HR", "CZ", "DK", "EE",
+  "DZ", "AU", "AT", "BE", "BG", "BT", "CA", "CN", "HR", "CZ", "DK", "EE",
   "FI", "FR", "DE", "GR", "HU", "IN", "ID", "IR", "IQ", "IT",
   "JP", "KZ", "LV", "LT", "LU", "MW", "MT", "MX", "NP", "NL", "NZ", "NO", "PL",
   "PT", "RO", "RU", "SA", "EU", "SG", "SK", "SI", "KR", "ES", "LK", "SE", "CHE",
@@ -72,6 +72,21 @@ export const UK_DOC_NAMES: Record<string, string> = {
   "uk-school": "UK School Card",
 };
 
+export const CA_DOC_NAMES: Record<string, string> = {
+  "canada-passport": "Canada Passport (50x70 mm)",
+  "canada-passport-online": "Canada Passport (Digital Upload)",
+  "canada-passport-offline": "Canada Passport (Paper / Printed 50x70 mm)",
+  "canada-visa": "Canada Visa (35x45 mm)",
+  "canada-visa-online": "Canada Visa / Study / Work Permit (IRCC 35x45 mm)",
+  "canada-pr-card": "Canada Permanent Resident (PR) Card (50x70 mm)",
+  "canada-citizenship": "Canada Citizenship (50x70 mm)",
+  "canada-firearms": "Canada PAL Firearms Licence (RCMP)",
+  "canada-super-visa": "Canada Super Visa (35x45 mm)",
+  "canada-express-entry": "Canada Express Entry Digital Photo",
+  "canada-driving": "Canada Driving Licence / Provincial ID",
+  "canada-security": "Canada Security Guard Licence",
+};
+
 export function getSpecById(id: string): CountrySpec | undefined {
   if (!id) return undefined;
   const cleanId = id.toLowerCase().trim();
@@ -91,6 +106,21 @@ export function getSpecById(id: string): CountrySpec | undefined {
         ...ukSpec,
         id: cleanId,
         name: customName || ukSpec.name,
+      };
+    }
+  }
+
+  // 0.2 Canada custom options override
+  if (cleanId.startsWith("canada-") || cleanId.startsWith("ca-") || cleanId === "canada" || cleanId === "ca") {
+    const isVisaDoc = cleanId.includes("visa") || cleanId.includes("study") || cleanId.includes("work") || cleanId.includes("super-visa") || cleanId.includes("express-entry");
+    const targetSpecId = isVisaDoc ? "canada-visa" : "canada-passport";
+    const caSpec = allSpecs.find((s) => s.id === targetSpecId) || allSpecs.find((s) => s.id === "canada-passport");
+    if (caSpec) {
+      const customName = CA_DOC_NAMES[cleanId];
+      return {
+        ...caSpec,
+        id: cleanId,
+        name: customName || caSpec.name,
       };
     }
   }

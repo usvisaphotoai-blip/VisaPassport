@@ -84,7 +84,7 @@ export default function PassportDirectoryPage() {
             <Link href="/us-visa-photo-editor" className="text-xs font-semibold text-slate-700 hover:text-blue-600 bg-white p-3 rounded-xl border border-slate-200 shadow-xs transition-colors">
               US Visa Photo Editor
             </Link>
-            <Link href="/canada-visa-size-photo" className="text-xs font-semibold text-slate-700 hover:text-blue-600 bg-white p-3 rounded-xl border border-slate-200 shadow-xs transition-colors">
+            <Link href="/ca" className="text-xs font-semibold text-slate-700 hover:text-blue-600 bg-white p-3 rounded-xl border border-slate-200 shadow-xs transition-colors">
               Canada Visa Size Photo
             </Link>
             <Link href="/indian-passport-size-photograph" className="text-xs font-semibold text-slate-700 hover:text-blue-600 bg-white p-3 rounded-xl border border-slate-200 shadow-xs transition-colors">

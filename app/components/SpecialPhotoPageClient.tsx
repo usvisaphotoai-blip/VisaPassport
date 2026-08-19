@@ -475,7 +475,7 @@ export default function SpecialPhotoPageClient({
               <Link href="/indian-passport-size-photograph" className="text-xs font-semibold text-slate-700 hover:text-lime-700 bg-slate-50 p-3 rounded-xl border border-slate-200 transition-colors block text-center">
                 India ICAO Standard Photo
               </Link>
-              <Link href="/canada-visa-size-photo" className="text-xs font-semibold text-slate-700 hover:text-lime-700 bg-slate-50 p-3 rounded-xl border border-slate-200 transition-colors block text-center">
+              <Link href="/ca" className="text-xs font-semibold text-slate-700 hover:text-lime-700 bg-slate-50 p-3 rounded-xl border border-slate-200 transition-colors block text-center">
                 Canada Visa Size Photo
               </Link>
               <Link href="/uk-passport-photo-checker-online-free" className="text-xs font-semibold text-slate-700 hover:text-lime-700 bg-slate-50 p-3 rounded-xl border border-slate-200 transition-colors block text-center">
