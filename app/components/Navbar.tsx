@@ -11,6 +11,7 @@ const navLinks = [
   { href: "/visa-photo-validator", label: "Free Validator" },
   { href: "/passport-photos", label: "Passport Sizes" },
   { href: "/blog", label: "Blog & Guides" },
+  { href: "/support", label: "Support" },
 ];
 
 export default function Navbar() {

@@ -210,6 +210,14 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://www.pixpassport.com/support</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/support" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/support" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.pixpassport.com/algeria-passport-photo-editor</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/algeria-passport-photo-editor" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/algeria-passport-photo-editor" />

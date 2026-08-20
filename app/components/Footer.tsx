@@ -44,6 +44,7 @@ export default function Footer() {
       items: [
         { label: "About Us", href: "/about" },
         { label: "Contact Us", href: "/contact" },
+        { label: "Support Hub", href: "/support" },
         { label: "Data Security", href: "/data-security" },
         { label: "Privacy Policy", href: "/privacy-policy" },
         { label: "Terms of Service", href: "/terms" },
