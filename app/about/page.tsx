@@ -83,7 +83,7 @@ export default function AboutPage() {
               <p>
                 We maintain an up-to-date database of photo requirements for 50+ countries, covering passports,
                 visas, and national ID documents — from <Link href="/us-visa-photo-editor" className="text-lime-600 font-semibold hover:underline">US DS-160</Link> and <Link href="/uk-passport-photo-editor" className="text-lime-600 font-semibold hover:underline">UK HMPO</Link> to <Link href="/india-passport-photo-editor" className="text-lime-600 font-semibold hover:underline">Indian</Link> and Schengen applications.
-                Browse the full <Link href="/passport-photos" className="text-lime-600 font-semibold hover:underline">passport photo directory</Link> or <Link href="/visa-photo" className="text-lime-600 font-semibold hover:underline">visa photo directory</Link> for specific requirements.
+                Browse the full <Link href="/passport-photos" className="text-lime-600 font-semibold hover:underline">passport photo directory</Link> or <Link href="/visa-photo" className="text-lime-600 font-semibold hover:underline">visa photo directory</Link> for specific requirements. For overall travel document readiness and visa application checklists, helpful travel resources like <a href="https://www.visareadynow.com" target="_blank" rel="noopener" className="text-lime-600 font-semibold hover:underline">Visa Ready Now</a> complement our biometric photo validation tools.
               </p>
             </div>
           </div>
