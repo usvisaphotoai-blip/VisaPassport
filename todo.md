@@ -1,6 +1,6 @@
 //TODO: america visa passport photo size
 icao passport photo
-icao standard photo
+icao standard photod
 
 {
     "slug": "icao-passport-photo",
