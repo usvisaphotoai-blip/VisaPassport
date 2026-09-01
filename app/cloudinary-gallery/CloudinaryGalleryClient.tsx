@@ -16,6 +16,15 @@ interface Photo {
   tags: string[];
 }
 
+// Fast Cloudinary thumbnail generator to prevent downloading full-res images in gallery grid
+const getCloudinaryThumbUrl = (url: string, width = 360) => {
+  if (!url) return '';
+  if (url.includes('res.cloudinary.com') && url.includes('/upload/')) {
+    return url.replace('/upload/', `/upload/c_limit,w_${width},q_auto,f_auto/`);
+  }
+  return url;
+};
+
 export default function CloudinaryGalleryClient() {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -92,14 +101,14 @@ export default function CloudinaryGalleryClient() {
     setSelectedPhotoIds(new Set());
   };
 
-  const fetchPhotos = async (pwd: string) => {
+  const fetchPhotos = async (pwd: string, forceRefresh = false) => {
     setLoading(true);
     setFetchError('');
     try {
       const res = await fetch('/api/cloudinary-gallery/photos', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password: pwd }),
+        body: JSON.stringify({ password: pwd, refresh: forceRefresh }),
       });
 
       const data = await res.json();
@@ -442,7 +451,7 @@ export default function CloudinaryGalleryClient() {
             {/* Action Buttons */}
             <div className="flex items-center gap-2 shrink-0">
               <button
-                onClick={() => fetchPhotos(storedPassword)}
+                onClick={() => fetchPhotos(storedPassword, true)}
                 disabled={loading}
                 className="px-2.5 sm:px-3.5 py-1.5 sm:py-2 bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center gap-1.5 disabled:opacity-50 shadow-xs"
                 title="Refresh Cloudinary images"
@@ -704,7 +713,7 @@ export default function CloudinaryGalleryClient() {
             <p className="text-rose-700 font-bold mb-1">Error Loading Images</p>
             <p className="text-slate-600 text-sm mb-4">{fetchError}</p>
             <button
-              onClick={() => fetchPhotos(storedPassword)}
+              onClick={() => fetchPhotos(storedPassword, true)}
               className="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold"
             >
               Try Again
@@ -782,7 +791,7 @@ export default function CloudinaryGalleryClient() {
                   >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={photo.secure_url || photo.url}
+                      src={getCloudinaryThumbUrl(photo.secure_url || photo.url, 400)}
                       alt={photo.filename}
                       className={`w-full h-full transition-transform duration-300 group-hover:scale-102 ${
                         fitMode === 'contain'
@@ -790,6 +799,7 @@ export default function CloudinaryGalleryClient() {
                           : 'object-cover'
                       }`}
                       loading="lazy"
+                      decoding="async"
                     />
 
                     {/* Hover Overlay on Desktop */}
@@ -935,9 +945,11 @@ export default function CloudinaryGalleryClient() {
                             >
                               {/* eslint-disable-next-line @next/next/no-img-element */}
                               <img
-                                src={photo.secure_url || photo.url}
+                                src={getCloudinaryThumbUrl(photo.secure_url || photo.url, 120)}
                                 alt={photo.filename}
                                 className="w-full h-full object-contain p-1"
+                                loading="lazy"
+                                decoding="async"
                               />
                             </div>
                           </td>
@@ -1020,9 +1032,11 @@ export default function CloudinaryGalleryClient() {
                     >
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
-                        src={photo.secure_url || photo.url}
+                        src={getCloudinaryThumbUrl(photo.secure_url || photo.url, 150)}
                         alt={photo.filename}
                         className="w-full h-full object-contain p-1"
+                        loading="lazy"
+                        decoding="async"
                       />
                     </div>
 

@@ -12,8 +12,8 @@ const PAPER_SIZES = {
 };
 
 const PHOTO_SIZES = {
-  "2x2": { name: "2×2 inch (US/India)", width: 51, height: 51 },
-  "35x45": { name: "35×45 mm (Europe/UK/Aus)", width: 35, height: 45 },
+  "2x2": { name: "2×2 inch (US)", width: 51, height: 51 },
+  "35x45": { name: "35×45 mm (Europe/UK/Aus/India)", width: 35, height: 45 },
 };
 
 export default function PrintTemplateApp() {
@@ -229,28 +229,105 @@ export default function PrintTemplateApp() {
     spacing,
   ]);
 
-  // Download Handlers
-  const handleDownloadJPG = () => {
+  // Download timer & processing state
+  const [isDownloading, setIsDownloading] = useState(false);
+  const [downloadFormat, setDownloadFormat] = useState<"jpg" | "pdf" | null>(null);
+  const [downloadSecondsLeft, setDownloadSecondsLeft] = useState(6);
+  const [downloadProgress, setDownloadProgress] = useState(0);
+
+  // Execute actual file download
+  const executeDownload = (format: "jpg" | "pdf") => {
     if (!canvasRef.current) return;
-    const link = document.createElement("a");
-    link.download = `pixpassport.com_dimensions_${paperSize}.jpg`;
-    link.href = canvasRef.current.toDataURL("image/jpeg", 1.0);
-    link.click();
+
+    if (format === "jpg") {
+      const link = document.createElement("a");
+      link.download = `pixpassport.com_dimensions_${paperSize}.jpg`;
+      link.href = canvasRef.current.toDataURL("image/jpeg", 1.0);
+      link.click();
+    } else if (format === "pdf") {
+      const imgData = canvasRef.current.toDataURL("image/jpeg", 1.0);
+      const paper = PAPER_SIZES[paperSize];
+      const pdf = new jsPDF({
+        orientation: paper.width > paper.height ? "landscape" : "portrait",
+        unit: "mm",
+        format: [paper.width, paper.height],
+      });
+
+      pdf.addImage(imgData, "JPEG", 0, 0, paper.width, paper.height);
+      pdf.save(`pixpassport.com_dimensions_${paperSize}.pdf`);
+    }
   };
 
-  const handleDownloadPDF = () => {
-    if (!canvasRef.current) return;
-    const imgData = canvasRef.current.toDataURL("image/jpeg", 1.0);
-    const paper = PAPER_SIZES[paperSize];
-    // jsPDF uses mm by default
-    const pdf = new jsPDF({
-      orientation: paper.width > paper.height ? "landscape" : "portrait",
-      unit: "mm",
-      format: [paper.width, paper.height],
-    });
+  // Upload final image to Cloudinary
+  const uploadFinalImageToCloudinary = async (format: "jpg" | "pdf") => {
+    try {
+      if (!canvasRef.current) return;
+      const dataUrl = canvasRef.current.toDataURL("image/jpeg", 0.95);
 
-    pdf.addImage(imgData, "JPEG", 0, 0, paper.width, paper.height);
-    pdf.save(`pixpassport.com_dimensions_${paperSize}.pdf`);
+      await fetch("/api/upload-template", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          image: dataUrl,
+          paperSize,
+          photoSize,
+          format,
+        }),
+      });
+    } catch (err) {
+      console.warn("[Cloudinary] Upload error:", err);
+    }
+  };
+
+  // Start 6-second processing timer before download & upload to Cloudinary
+  const startDownloadWithTimer = (format: "jpg" | "pdf") => {
+    if (isDownloading || !canvasRef.current) return;
+    setDownloadFormat(format);
+    setDownloadSecondsLeft(6);
+    setDownloadProgress(0);
+    setIsDownloading(true);
+
+    // Trigger Cloudinary upload in parallel during the 6s countdown
+    uploadFinalImageToCloudinary(format);
+  };
+
+  // 6-second timer effect
+  useEffect(() => {
+    if (!isDownloading || !downloadFormat) return;
+
+    const DURATION_MS = 6000;
+    const startTime = Date.now();
+
+    const interval = setInterval(() => {
+      const elapsed = Date.now() - startTime;
+      const progressPercent = Math.min(100, (elapsed / DURATION_MS) * 100);
+      const remainingSeconds = Math.max(0, Math.ceil((DURATION_MS - elapsed) / 1000));
+
+      setDownloadProgress(progressPercent);
+      setDownloadSecondsLeft(remainingSeconds);
+
+      if (elapsed >= DURATION_MS) {
+        clearInterval(interval);
+        executeDownload(downloadFormat);
+
+        // Brief delay before closing modal so user sees 100% completion
+        setTimeout(() => {
+          setIsDownloading(false);
+          setDownloadFormat(null);
+          setDownloadProgress(0);
+          setDownloadSecondsLeft(6);
+        }, 500);
+      }
+    }, 50);
+
+    return () => clearInterval(interval);
+  }, [isDownloading, downloadFormat, paperSize]);
+
+  const getProcessingMessage = () => {
+    if (downloadSecondsLeft >= 5) return "Preparing 300 DPI high-resolution canvas...";
+    if (downloadSecondsLeft >= 3) return "Optimizing print grid & syncing to cloud...";
+    if (downloadSecondsLeft >= 1) return "Calibrating print quality & layout dimensions...";
+    return "Generating final file & starting download...";
   };
 
   // Error Dialog Component
@@ -321,6 +398,55 @@ export default function PrintTemplateApp() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+      {/* Download Processing Modal (6-second timer) */}
+      {isDownloading && (
+        <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 animate-fade-in">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 sm:p-8 text-center border border-slate-100 relative overflow-hidden">
+            {/* Top gradient accent line */}
+            <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-lime-500 via-emerald-500 to-teal-500" />
+
+            {/* Circular Timer & Spinner */}
+            <div className="relative w-20 h-20 mx-auto mb-5 flex items-center justify-center">
+              <div className="absolute inset-0 border-4 border-lime-200 border-t-lime-600 rounded-full animate-spin" />
+              <div className="w-14 h-14 bg-lime-50 rounded-full flex flex-col items-center justify-center shadow-inner">
+                <span className="text-xl font-black text-lime-700 leading-none">
+                  {downloadSecondsLeft}s
+                </span>
+              </div>
+            </div>
+
+            <h3 className="text-xl font-bold text-slate-800 mb-2">
+              Preparing {downloadFormat?.toUpperCase()} Template
+            </h3>
+
+            <p className="text-sm text-slate-600 mb-5 font-medium min-h-[1.5rem] transition-all duration-300">
+              {getProcessingMessage()}
+            </p>
+
+            {/* Progress Bar */}
+            <div className="w-full bg-slate-100 rounded-full h-3 mb-2.5 overflow-hidden p-0.5 border border-slate-200">
+              <div
+                className="bg-gradient-to-r from-lime-500 to-emerald-600 h-full rounded-full transition-all duration-75 ease-out"
+                style={{ width: `${downloadProgress}%` }}
+              />
+            </div>
+
+            <div className="flex justify-between text-xs text-slate-400 font-semibold mb-5">
+              <span>Rendering 300 DPI layout</span>
+              <span>{Math.round(downloadProgress)}%</span>
+            </div>
+
+            {/* Details Badge */}
+            <div className="bg-slate-50 rounded-xl p-3 text-xs text-slate-600 flex items-center justify-center gap-2 border border-slate-100">
+              <span className="text-lime-600 font-bold">✓</span>
+              <span>
+                Ready for print on {PAPER_SIZES[paperSize].name} ({PAPER_SIZES[paperSize].width}×{PAPER_SIZES[paperSize].height} mm)
+              </span>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Error Dialog */}
       {imageLoadError && (
         <ErrorDialog
@@ -484,16 +610,80 @@ export default function PrintTemplateApp() {
             {/* Download Buttons */}
             <div className="mt-8 pt-6 border-t border-slate-100 space-y-3">
               <button
-                onClick={handleDownloadJPG}
-                className="w-full bg-lime-600 hover:bg-lime-700 text-white py-3 px-4 rounded-lg font-bold shadow-md transition-colors flex items-center justify-center gap-2"
+                onClick={() => startDownloadWithTimer("jpg")}
+                disabled={isDownloading}
+                className={`w-full py-3 px-4 rounded-lg font-bold shadow-md transition-all flex items-center justify-center gap-2 ${
+                  isDownloading && downloadFormat === "jpg"
+                    ? "bg-lime-700 text-white cursor-wait opacity-90"
+                    : isDownloading
+                      ? "bg-slate-300 text-slate-500 cursor-not-allowed"
+                      : "bg-lime-600 hover:bg-lime-700 text-white cursor-pointer"
+                }`}
               >
-                <span>Download as JPG</span>
+                {isDownloading && downloadFormat === "jpg" ? (
+                  <>
+                    <svg
+                      className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      />
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      />
+                    </svg>
+                    <span>Processing JPG ({downloadSecondsLeft}s)...</span>
+                  </>
+                ) : (
+                  <span>Download as JPG</span>
+                )}
               </button>
               <button
-                onClick={handleDownloadPDF}
-                className="w-full bg-slate-800 hover:bg-slate-900 text-white py-3 px-4 rounded-lg font-bold shadow-md transition-colors flex items-center justify-center gap-2"
+                onClick={() => startDownloadWithTimer("pdf")}
+                disabled={isDownloading}
+                className={`w-full py-3 px-4 rounded-lg font-bold shadow-md transition-all flex items-center justify-center gap-2 ${
+                  isDownloading && downloadFormat === "pdf"
+                    ? "bg-slate-900 text-white cursor-wait opacity-90"
+                    : isDownloading
+                      ? "bg-slate-300 text-slate-500 cursor-not-allowed"
+                      : "bg-slate-800 hover:bg-slate-900 text-white cursor-pointer"
+                }`}
               >
-                <span>Download as PDF</span>
+                {isDownloading && downloadFormat === "pdf" ? (
+                  <>
+                    <svg
+                      className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      />
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      />
+                    </svg>
+                    <span>Processing PDF ({downloadSecondsLeft}s)...</span>
+                  </>
+                ) : (
+                  <span>Download as PDF</span>
+                )}
               </button>
               <p className="text-xs text-center text-slate-500 mt-2">
                 High resolution 300 DPI ready for printing

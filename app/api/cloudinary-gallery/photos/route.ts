@@ -5,11 +5,23 @@ export const revalidate = 0; // Disable caching to fetch fresh images every time
 
 const EXPECTED_PASSWORD = 'ypqb4zzehy';
 
+// In-memory cache to avoid repeated slow Cloudinary Search API roundtrips
+interface CachedGallery {
+  timestamp: number;
+  count: number;
+  totalBytes: number;
+  photos: any[];
+}
+
+let galleryCache: CachedGallery | null = null;
+const CACHE_TTL_MS = 60 * 1000; // 60 seconds TTL
+
 export async function POST(request: Request) {
   try {
     const body = await request.json().catch(() => ({}));
     const authHeader = request.headers.get('x-gallery-password');
     const providedPassword = body.password || authHeader;
+    const forceRefresh = body.refresh === true;
 
     if (providedPassword !== EXPECTED_PASSWORD) {
       return NextResponse.json(
@@ -18,8 +30,21 @@ export async function POST(request: Request) {
       );
     }
 
+    // Return from cache if fresh and not forced refresh
+    if (!forceRefresh && galleryCache && Date.now() - galleryCache.timestamp < CACHE_TTL_MS) {
+      return NextResponse.json({
+        success: true,
+        cached: true,
+        count: galleryCache.count,
+        totalBytes: galleryCache.totalBytes,
+        photos: galleryCache.photos,
+      });
+    }
+
     let allResources: any[] = [];
     let nextCursor: string | undefined = undefined;
+    let pageCount = 0;
+    const MAX_PAGES = 3; // Fetch up to 1500 most recent items to keep response fast
 
     // First attempt: Use Cloudinary Search API (returns detailed metadata like tags, folder, etc.)
     try {
@@ -38,11 +63,13 @@ export async function POST(request: Request) {
           allResources.push(...result.resources);
         }
         nextCursor = result.next_cursor;
-      } while (nextCursor);
+        pageCount++;
+      } while (nextCursor && pageCount < MAX_PAGES);
     } catch (searchError) {
       console.warn('[Cloudinary Gallery] Search API fallback to resources API:', searchError);
       // Fallback: Use Admin API resources
       let cursor: string | undefined = undefined;
+      let fallbackPages = 0;
       do {
         const res: any = await cloudinary.api.resources({
           type: 'upload',
@@ -55,7 +82,8 @@ export async function POST(request: Request) {
           allResources.push(...res.resources);
         }
         cursor = res.next_cursor;
-      } while (cursor);
+        fallbackPages++;
+      } while (cursor && fallbackPages < MAX_PAGES);
     }
 
     // Transform resources into structured payload
@@ -75,8 +103,17 @@ export async function POST(request: Request) {
 
     const totalBytes = photos.reduce((acc, curr) => acc + (curr.bytes || 0), 0);
 
+    // Update in-memory cache
+    galleryCache = {
+      timestamp: Date.now(),
+      count: photos.length,
+      totalBytes,
+      photos,
+    };
+
     return NextResponse.json({
       success: true,
+      cached: false,
       count: photos.length,
       totalBytes,
       photos,
@@ -89,3 +126,4 @@ export async function POST(request: Request) {
     );
   }
 }
+
