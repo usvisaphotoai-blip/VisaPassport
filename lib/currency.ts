@@ -60,8 +60,8 @@ const FIXED_PRICES: Record<string, { amount: number; symbol: string; decimals: n
   AUD: { amount: 9.99, symbol: "A$", decimals: 2 },
   NZD: { amount: 9.99, symbol: "NZ$", decimals: 2 },
   JPY: { amount: 6.99, symbol: "$", decimals: 0 },
-  SGD: { amount: 4.99, symbol: "S$", decimals: 2 },
-  HKD: { amount: 59, symbol: "HK$", decimals: 0 },
+  SGD: { amount: 6.99, symbol: "S$", decimals: 2 },
+  HKD: { amount: 49, symbol: "HK$", decimals: 0 },
   
   // Tier 2: ~20-30% Discount
   KRW: { amount: 6900, symbol: "₩", decimals: 0 },
@@ -103,9 +103,9 @@ export interface LocalPrice {
 
 const EXPERT_PRICES: Record<string, { amount: number; symbol: string; decimals: number }> = {
   // Scaling roughly 1.6x - 2x from standard
-  USD: { amount: 11.99, symbol: "$", decimals: 2 },
-  EUR: { amount: 9.99, symbol: "€", decimals: 2 },
-  GBP: { amount: 9.99, symbol: "£", decimals: 2 },
+  USD: { amount: 13.99, symbol: "$", decimals: 2 },
+  EUR: { amount: 11.99, symbol: "€", decimals: 2 },
+  GBP: { amount: 11.99, symbol: "£", decimals: 2 },
   CHF: { amount: 10.99, symbol: "CHF", decimals: 2 },
   CAD: { amount: 12.99, symbol: "C$", decimals: 2 },
   AUD: { amount: 12.99, symbol: "A$", decimals: 2 },
