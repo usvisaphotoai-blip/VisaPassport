@@ -130,106 +130,190 @@ export default function SupportContent() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          {/* Card 1: General Support */}
-          <div className="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm hover:shadow-md transition-all flex flex-col justify-between group">
-            <div>
-              <div className="w-12 h-12 rounded-xl bg-lime-100 text-lime-700 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
-                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
+        <div className="max-w-5xl mx-auto space-y-6">
+          {/* Highlighted Support Desks */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Desk 1: General Support */}
+            <div className="bg-gradient-to-br from-white to-slate-50/70 rounded-2xl p-6 border-2 border-slate-900 shadow-sm hover:shadow-md transition-all flex flex-col justify-between relative overflow-hidden group">
+              <div className="absolute top-0 right-0 bg-slate-900 text-white text-[9px] font-black uppercase tracking-wider px-3 py-1 rounded-bl-xl">
+                Priority Queue
               </div>
-              <div className="inline-block px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-100 text-slate-700 mb-2">
-                Response: &lt; 2 hours
+              <div>
+                <div className="w-12 h-12 rounded-xl bg-slate-900 text-lime-400 flex items-center justify-center mb-4 shadow-sm">
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <div className="inline-flex items-center gap-1.5 text-[10px] font-black uppercase tracking-wider text-emerald-700 bg-emerald-50 border border-emerald-200/80 px-2.5 py-1 rounded-full mb-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                  &lt; 2hr Response
+                </div>
+                <h3 className="text-xl font-black text-slate-900 mt-1 mb-2">General Support</h3>
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-5">
+                  General inquiries, download link renewals, or website troubleshooting.
+                </p>
               </div>
-              <h3 className="text-lg font-bold text-slate-900 mb-2">General Inquiries &amp; Help</h3>
-              <p className="text-xs sm:text-sm text-slate-600 mb-4 leading-relaxed">
-                Questions about passport sizing, order downloads, photo delivery, or system features.
-              </p>
+              <div className="pt-4 border-t border-slate-100">
+                <a
+                  href="mailto:support@pixpassport.com"
+                  className="w-full inline-flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs sm:text-sm py-2.5 px-4 rounded-xl transition-colors shadow-sm"
+                >
+                  <span>support@pixpassport.com</span>
+                  <svg className="w-4 h-4 text-lime-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </a>
+              </div>
             </div>
-            <div className="pt-4 border-t border-slate-100">
-              <a
-                href="mailto:support@pixpassport.com"
-                className="w-full inline-flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs sm:text-sm py-2.5 px-4 rounded-xl transition-colors"
-              >
-                <span>support@pixpassport.com</span>
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
-              </a>
+
+            {/* Desk 2: Manual Review / Photo Specs Review */}
+            <div className="bg-gradient-to-br from-lime-50/40 via-white to-white rounded-2xl p-6 border-2 border-lime-500 shadow-sm hover:shadow-md transition-all flex flex-col justify-between relative overflow-hidden group">
+              <div className="absolute top-0 right-0 bg-lime-500 text-slate-950 text-[9px] font-black uppercase tracking-wider px-3 py-1 rounded-bl-xl">
+                Biometric Specialists
+              </div>
+              <div>
+                <div className="w-12 h-12 rounded-xl bg-lime-500 text-slate-950 flex items-center justify-center mb-4 shadow-sm shadow-lime-500/30">
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                </div>
+                <div className="inline-flex items-center gap-1.5 text-[10px] font-black uppercase tracking-wider text-lime-900 bg-lime-100 border border-lime-300/80 px-2.5 py-1 rounded-full mb-2">
+                  <svg className="w-3 h-3 text-lime-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  Manual Review
+                </div>
+                <h3 className="text-xl font-black text-slate-900 mt-1 mb-2">Photo Specs Review</h3>
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-5">
+                  Baby photos, complex lighting, headwear, or custom country dimensions.
+                </p>
+              </div>
+              <div className="pt-4 border-t border-slate-100">
+                <a
+                  href="mailto:photo@pixpassport.com"
+                  className="w-full inline-flex items-center justify-center gap-2 bg-lime-600 hover:bg-lime-700 text-white font-bold text-xs sm:text-sm py-2.5 px-4 rounded-xl transition-colors shadow-sm"
+                >
+                  <span>photo@pixpassport.com</span>
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </a>
+              </div>
             </div>
           </div>
 
-          {/* Card 2: 100% Refund Desk */}
-          <div className="bg-white rounded-2xl p-6 border-2 border-lime-500 shadow-sm hover:shadow-md transition-all flex flex-col justify-between group relative overflow-hidden">
-            <div className="absolute top-0 right-0 bg-lime-500 text-slate-950 text-[10px] font-black uppercase tracking-wider px-3 py-1 rounded-bl-xl">
-              100% Guaranteed
-            </div>
-            <div>
-              <div className="w-12 h-12 rounded-xl bg-lime-500 text-slate-950 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform shadow-sm shadow-lime-500/30">
-                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+          {/* Guidance: What If Your ICAO Standard Photo Is Rejected? */}
+          <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
+            <div className="flex items-start gap-3.5">
+              <div className="w-10 h-10 rounded-xl bg-amber-50 border border-amber-200 text-amber-600 flex items-center justify-center shrink-0 mt-0.5">
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                 </svg>
               </div>
-              <div className="inline-block px-2.5 py-0.5 rounded-full text-xs font-bold bg-lime-100 text-lime-900 mb-2">
-                Fast Rejection Claim
-              </div>
-              <h3 className="text-lg font-bold text-slate-900 mb-2">Refunds &amp; Guarantee</h3>
-              <p className="text-xs sm:text-sm text-slate-600 mb-4 leading-relaxed">
-                Submit government rejection proof for a hassle-free 100% refund or free re-processing.
-              </p>
-            </div>
-            <div className="pt-4 border-t border-slate-100 space-y-2">
-              <a
-                href="mailto:refund@pixpassport.com"
-                className="w-full inline-flex items-center justify-center gap-2 bg-lime-600 hover:bg-lime-700 text-white font-bold text-xs sm:text-sm py-2.5 px-4 rounded-xl transition-colors"
-              >
-                <span>refund@pixpassport.com</span>
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
-              </a>
-              <div className="text-center">
-                <Link href="/refund-policy" className="text-[11px] font-bold text-lime-700 hover:underline">
-                  Read 100% Refund Policy &rarr;
-                </Link>
+              <div>
+                <h3 className="text-base sm:text-lg font-bold text-slate-900">
+                  If your ICAO standard photo is rejected, then:
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-500 mt-1 leading-relaxed">
+                  PixPassport photos are calculated to strictly comply with international <strong>ICAO Doc 9303</strong> biometric specifications. Government rejections are rare and almost always due to specific embassy print scale variances, local margin preferences, or source capture angles. Follow these resolution steps:
+                </p>
               </div>
             </div>
-          </div>
 
-          {/* Card 3: Photo Compliance Desk */}
-          <div className="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm hover:shadow-md transition-all flex flex-col justify-between group">
-            <div>
-              <div className="w-12 h-12 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
-                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
+            {/* Resolution Steps */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 pt-2">
+              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/80 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-[10px] font-black uppercase tracking-wider text-blue-700 bg-blue-100 px-2 py-0.5 rounded">
+                      Step 1 · Recommended
+                    </span>
+                    <span className="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">
+                      100% Free
+                    </span>
+                  </div>
+                  <h4 className="text-xs sm:text-sm font-bold text-slate-900 mb-1">
+                    Manual Biometric Re-adjustment
+                  </h4>
+                  <p className="text-xs text-slate-600 leading-relaxed mb-3">
+                    Email our biometric compliance team at{" "}
+                    <a href="mailto:photo@pixpassport.com" className="font-bold text-lime-700 hover:underline">
+                      photo@pixpassport.com
+                    </a>{" "}
+                    with your order ID, the rejection notice from the authority, and <strong>attach a proper photo taken by your phone from 1.5 meter distance</strong>.
+                  </p>
+                  <div className="p-2.5 bg-white rounded-lg border border-slate-200 text-[11px] text-slate-600 space-y-1">
+                    <p className="font-semibold text-slate-800">📸 Phone Capture Guidelines:</p>
+                    <ul className="list-disc pl-4 space-y-0.5 text-slate-500">
+                      <li>Stand approximately <strong>1.5 meters (5 feet)</strong> away from the camera.</li>
+                      <li>Ensure even lighting on both sides of the face (no shadows).</li>
+                      <li>Keep a neutral facial expression, eyes open, mouth closed.</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
-              <div className="inline-block px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-100 text-slate-700 mb-2">
-                Expert Review
+
+              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/80 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-[10px] font-black uppercase tracking-wider text-slate-700 bg-slate-200 px-2 py-0.5 rounded">
+                      Step 2 · Format Check
+                    </span>
+                    <span className="text-[10px] font-bold text-slate-600 bg-slate-200/60 px-2 py-0.5 rounded">
+                      Instant Fix
+                    </span>
+                  </div>
+                  <h4 className="text-xs sm:text-sm font-bold text-slate-900 mb-1">
+                    Verify Digital vs. Print Template
+                  </h4>
+                  <p className="text-xs text-slate-600 leading-relaxed mb-3">
+                    Confirm if the embassy required an online digital upload (e.g. 600×600 px for US DS-160, 413×531 px for UK HMPO) or physical cut-outs from the 4×6 inch print sheet.
+                  </p>
+                  <div className="p-2.5 bg-white rounded-lg border border-slate-200 text-[11px] text-slate-600 space-y-1">
+                    <p className="font-semibold text-slate-800">🖨️ Printing Guidelines:</p>
+                    <p className="text-slate-500">
+                      When printing at CVS, Walgreens, or Walmart, ensure &quot;Do Not Crop&quot; or &quot;Fit to Page&quot; is selected so millimeter dimensions remain exact.
+                    </p>
+                  </div>
+                </div>
               </div>
-              <h3 className="text-lg font-bold text-slate-900 mb-2">Photo Compliance &amp; Specs</h3>
-              <p className="text-xs sm:text-sm text-slate-600 mb-4 leading-relaxed">
-                Need help with baby photos, special headwear requirements, or custom country dimensions?
-              </p>
             </div>
-            <div className="pt-4 border-t border-slate-100 space-y-2">
-              <a
-                href="mailto:photo@pixpassport.com"
-                className="w-full inline-flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs sm:text-sm py-2.5 px-4 rounded-xl transition-colors"
-              >
-                <span>photo@pixpassport.com</span>
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+
+            {/* Hard to Find Guarantee Desk & Rejection Claims */}
+            <details className="mt-4 pt-3 border-t border-slate-100 group">
+              <summary className="text-[11px] text-slate-400 hover:text-slate-600 cursor-pointer font-medium select-none flex items-center gap-1.5 transition-colors">
+                <svg
+                  className="w-3.5 h-3.5 transition-transform group-open:rotate-90 text-slate-400"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                 </svg>
-              </a>
-              <div className="text-center">
-                <Link href="/visa-photo-validator" className="text-[11px] font-bold text-slate-600 hover:underline">
-                  Try Free Photo Validator &rarr;
-                </Link>
+                <span>Still unresolved? Guarantee Desk &amp; Rejection Claims</span>
+              </summary>
+              <div className="mt-3 p-3.5 bg-slate-50/80 rounded-xl border border-slate-200 text-xs text-slate-600">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div>
+                    <span className="text-[9px] font-bold uppercase tracking-wider text-slate-500 bg-slate-200/80 px-2 py-0.5 rounded">
+                      Guarantee Desk
+                    </span>
+                    <h5 className="text-xs font-bold text-slate-900 mt-1">Rejection Claims</h5>
+                    <p className="text-[11px] text-slate-500 mt-0.5 leading-relaxed">
+                      Submit government rejection proof for a hassle-free 100% full refund.
+                    </p>
+                  </div>
+                  <a
+                    href="mailto:refund@pixpassport.com"
+                    className="text-xs font-semibold text-slate-700 hover:text-slate-900 underline py-1 shrink-0"
+                  >
+                    refund@pixpassport.com
+                  </a>
+                </div>
               </div>
-            </div>
+            </details>
           </div>
         </div>
       </section>
