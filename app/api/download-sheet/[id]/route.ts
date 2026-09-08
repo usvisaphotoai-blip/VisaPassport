@@ -29,9 +29,13 @@ export async function GET(
       return new NextResponse("Payment required", { status: 402 });
     }
 
-    // Fetch image from Cloudinary to hide the URL from the user (Reverse Proxy)
-    if (!photo.printSheetUrl || !photo.printSheetUrl.startsWith("http")) {
-      return new NextResponse("Print sheet not found in database", { status: 404 });
+    // Check 24-hour ephemeral retention expiry
+    const isExpired = photo.isExpired || (Date.now() - new Date(photo.createdAt).getTime() > 24 * 60 * 60 * 1000);
+    if (isExpired || !photo.printSheetUrl || !photo.printSheetUrl.startsWith("http")) {
+      return new NextResponse(
+        "This print sheet has expired. Under our privacy protection policy, biometric photos are permanently deleted after 24 hours.",
+        { status: 410 }
+      );
     }
 
     try {
@@ -41,12 +45,33 @@ export async function GET(
       const buffer = await response.arrayBuffer();
       const contentType = response.headers.get('content-type') || 'image/jpeg';
       const ext = contentType === 'image/png' ? '.png' : '.jpeg';
+      const fileName = `studio-photo-${photo.documentType}-print-sheet-A4${ext}`;
+
+      const customerEmail = session?.user?.email || (photo as any).guestEmail || "";
+
+      const { logAuditEvent, getClientMetadata } = await import("@/lib/audit");
+      const clientMeta = getClientMetadata(req);
+      await logAuditEvent({
+        eventType: "download",
+        photoId: photo._id,
+        orderId: photo.orderId,
+        actor: customerEmail || (session?.user ? "user" : "guest"),
+        ipAddress: clientMeta.ipAddress,
+        userAgent: clientMeta.userAgent,
+        metadata: {
+          fileType: "print_sheet",
+          email: customerEmail || undefined,
+          documentType: photo.documentType,
+          fileName,
+          fileSizeBytes: buffer.byteLength,
+        },
+      });
 
       return new NextResponse(buffer, {
         status: 200,
         headers: {
           "Content-Type": contentType,
-          "Content-Disposition": `attachment; filename="studio-photo-${photo.documentType}-print-sheet-A4${ext}"`,
+          "Content-Disposition": `attachment; filename="${fileName}"`,
         },
       });
     } catch (fetchError) {

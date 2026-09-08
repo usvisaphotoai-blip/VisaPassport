@@ -66,6 +66,27 @@ export async function POST(req: NextRequest) {
       },
     });
 
+    const { logAuditEvent, getClientMetadata } = await import("@/lib/audit");
+    const clientMeta = getClientMetadata(req);
+    await logAuditEvent({
+      eventType: "processing",
+      photoId: photoRecord._id,
+      actor: "user",
+      ipAddress: clientMeta.ipAddress,
+      userAgent: clientMeta.userAgent,
+      metadata: {
+        engine: "external_api",
+        documentType: photoRecord.documentType,
+        externalResultId: result.result_id,
+        dimensions: result.dimensions,
+        format: result.format,
+        sizeKb: result.size_kb,
+        headSizePct: result.metrics.head_height_pct,
+        eyeLevelPct: result.metrics.eye_position_pct,
+        status: "success",
+      },
+    });
+
     return NextResponse.json({
       success: true,
       photoId: photoRecord._id.toString(),

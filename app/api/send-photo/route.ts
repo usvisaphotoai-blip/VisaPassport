@@ -74,6 +74,20 @@ export async function POST(req: Request) {
       html: htmlContent,
     });
 
+    const { logAuditEvent } = await import("@/lib/audit");
+    await logAuditEvent({
+      eventType: "email_sent",
+      photoId: photo._id,
+      orderId: photo.orderId,
+      actor: "user",
+      metadata: {
+        recipient: email,
+        subject: `Your ${docName} Delivery - PixPassport`,
+        template: "direct_delivery",
+        status: result.success ? "sent" : "failed",
+      },
+    });
+
     if (result.success) {
       return NextResponse.json({ success: true });
     } else {

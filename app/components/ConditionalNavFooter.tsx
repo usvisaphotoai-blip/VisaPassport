@@ -24,9 +24,10 @@ export default function ConditionalNavFooter({
   }, [isFrench, isGerman]);
 
   const isGallery = pathname === "/cloudinary-gallery" || pathname?.startsWith("/cloudinary-gallery");
+  const isAdmin = pathname === "/admin" || pathname?.startsWith("/admin/") || pathname?.startsWith("/admin");
 
-  if (isLocalized || isGallery) {
-    // Localized layouts or standalone gallery render without global navbar/footer
+  if (isLocalized || isGallery || isAdmin) {
+    // Localized layouts, standalone gallery, and admin portal render without global navbar/footer
     return <>{children}</>;
   }
 

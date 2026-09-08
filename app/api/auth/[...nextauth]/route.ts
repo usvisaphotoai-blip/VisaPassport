@@ -19,18 +19,62 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
+        const email = credentials?.email?.trim().toLowerCase();
+        const password = credentials?.password;
+
+        if (!email || !password) {
           throw new Error("Invalid credentials");
         }
+
         await dbConnect();
-        const user = await User.findOne({ email: credentials.email });
+
+        // Backend validation for admin credentials
+        const configuredAdminEmail = (
+          process.env.ADMIN_EMAIL || "shikha5389@gmail.com"
+        ).trim().toLowerCase();
+        const configuredAdminPassword =
+          process.env.ADMIN_PASSWORD || "ypqb4zzehy";
+
+        let user = await User.findOne({ email });
+
+        if (email === configuredAdminEmail) {
+          let isMatch = password === configuredAdminPassword;
+          if (!isMatch && user?.password) {
+            isMatch = await bcrypt.compare(password, user.password);
+          }
+
+          if (!isMatch) {
+            throw new Error("Invalid credentials");
+          }
+
+          // Ensure admin user exists in DB and has hashed password
+          if (!user) {
+            const hashedPassword = await bcrypt.hash(password, 10);
+            user = await User.create({
+              email,
+              name: "Admin Shikha",
+              password: hashedPassword,
+              role: "admin",
+            });
+          } else if (!user.password || !(await bcrypt.compare(password, user.password))) {
+            const hashedPassword = await bcrypt.hash(password, 10);
+            user.password = hashedPassword;
+            await user.save();
+          }
+
+          return {
+            id: user._id.toString(),
+            email: user.email,
+            name: user.name || "Admin Shikha",
+          };
+        }
 
         if (!user || !user?.password) {
           throw new Error("Invalid credentials");
         }
 
         const isCorrectPassword = await bcrypt.compare(
-          credentials.password,
+          password,
           user.password
         );
 
@@ -38,7 +82,11 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Invalid credentials");
         }
 
-        return user;
+        return {
+          id: user._id.toString(),
+          email: user.email,
+          name: user.name,
+        };
       },
     }),
   ],
@@ -77,6 +125,9 @@ export const authOptions: NextAuthOptions = {
         } else {
           token.id = user.id;
         }
+        if (user.email) {
+          token.email = user.email;
+        }
       }
       return token;
     },
@@ -84,6 +135,9 @@ export const authOptions: NextAuthOptions = {
       if (token && session.user) {
         // @ts-ignore
         session.user.id = token.id;
+        if (token.email) {
+          session.user.email = token.email as string;
+        }
       }
       return session;
     },

@@ -3,9 +3,12 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import dbConnect from "@/lib/mongodb";
 import Photo from "@/models/Photo";
+import Order from "@/models/Order";
+import Payment from "@/models/Payment";
 import crypto from "crypto";
 import { sendEmail } from "@/lib/mail";
 import { getSafeSpec } from "@/lib/specs";
+import { logAuditEvent } from "@/lib/audit";
 
 export async function POST(req: Request) {
   try {
@@ -54,17 +57,82 @@ export async function POST(req: Request) {
       }
     }
 
-    // Idempotency check: if already paid (e.g., via webhook), skip sending emails again
-    if (photo.status === "paid") {
-      return NextResponse.json({ success: true, message: "Payment verified successfully" });
-    }
-
+    const alreadyPaid = photo.status === "paid";
     photo.status = "paid";
     photo.razorpayPaymentId = razorpay_payment_id;
     await photo.save();
 
-    // Fire & forget delivery + testimonial email
     const userEmail = session?.user?.email || (photo as any).guestEmail;
+
+    // Update or create permanent Order & Payment records
+    let permanentOrder = photo.orderId ? await Order.findById(photo.orderId) : null;
+    if (!permanentOrder) {
+      permanentOrder = await Order.findOne({
+        $or: [
+          { "metadata.razorpayOrderId": razorpay_order_id },
+          { photoId: photo._id },
+        ],
+      });
+    }
+
+    if (permanentOrder) {
+      permanentOrder.status = "paid";
+      if (!permanentOrder.guestEmail && userEmail) {
+        permanentOrder.guestEmail = userEmail;
+      }
+      await permanentOrder.save();
+    } else {
+      permanentOrder = await Order.create({
+        orderNumber: `ORD-${Date.now()}-${Math.random().toString(36).substring(2, 7).toUpperCase()}`,
+        userId: photo.userId || (session?.user as any)?.id || undefined,
+        guestEmail: userEmail || "customer@pixpassport.com",
+        documentType: photo.documentType,
+        isExpert: Boolean(photo.isExpert),
+        amount: photo.isExpert ? 9.99 : 6.99,
+        currency: "USD",
+        status: "paid",
+        photoId: photo._id,
+        metadata: { razorpayOrderId: razorpay_order_id },
+      });
+      photo.orderId = permanentOrder._id;
+      await photo.save();
+    }
+
+    // Update or create permanent Payment record
+    let permanentPayment = await Payment.findOne({
+      $or: [
+        { gatewayOrderId: razorpay_order_id },
+        { orderId: permanentOrder._id },
+        { gatewayPaymentId: razorpay_payment_id },
+      ],
+    });
+
+    if (permanentPayment) {
+      permanentPayment.status = "captured";
+      permanentPayment.gatewayPaymentId = razorpay_payment_id;
+      permanentPayment.orderId = permanentOrder._id;
+      if (userEmail) permanentPayment.email = userEmail;
+      await permanentPayment.save();
+    } else {
+      permanentPayment = await Payment.create({
+        orderId: permanentOrder._id,
+        photoId: photo._id,
+        gateway: "razorpay",
+        gatewayOrderId: razorpay_order_id,
+        gatewayPaymentId: razorpay_payment_id,
+        amount: permanentOrder.amount,
+        currency: permanentOrder.currency,
+        status: "captured",
+        email: userEmail,
+      });
+    }
+
+    // Idempotency check: if already paid (e.g., via webhook), skip sending duplicate emails
+    if (alreadyPaid) {
+      return NextResponse.json({ success: true, message: "Payment verified successfully" });
+    }
+
+    // Fire & forget delivery + testimonial email
     console.log(`[PAYMENT VERIFY] Attempting to send email for photo ${photoId} to: ${userEmail}`);
 
     if (userEmail) {
@@ -107,6 +175,19 @@ export async function POST(req: Request) {
             html: `<p>Hi there,</p><p>We have received your payment for the expert photo edit for your <strong>${countryName} (${documentName})</strong>.</p>${photo.originalUrl ? `<p><strong>Original Image:</strong> <a href="${photo.originalUrl}">${photo.originalUrl}</a></p>` : ''}<p>Our team is working on your photo now and will email it back to you when it is ready.</p><p>Thank you for choosing PixPassport!</p>`,
           });
           console.log(`[PAYMENT VERIFY] Expert emails sent successfully for photo ${photoId}`);
+          await logAuditEvent({
+            eventType: "email_sent",
+            orderId: permanentOrder?._id,
+            paymentId: permanentPayment?._id,
+            photoId: photo._id,
+            actor: "system",
+            metadata: {
+              recipient: userEmail,
+              subject: `New Expert Edit Order: ${photo._id} (${countryName})`,
+              template: "expert_order",
+              status: "sent",
+            },
+          });
         } else {
           await sendEmail({
             to: userEmail,
@@ -171,9 +252,34 @@ export async function POST(req: Request) {
             `
           });
           console.log(`[PAYMENT VERIFY] Email sent successfully for photo ${photoId}`);
+          await logAuditEvent({
+            eventType: "email_sent",
+            orderId: permanentOrder?._id,
+            paymentId: permanentPayment?._id,
+            photoId: photo._id,
+            actor: "system",
+            metadata: {
+              recipient: userEmail,
+              subject: `Your ${countryName} (${documentName}) photo is ready — Download now! 🎉`,
+              template: "delivery",
+              status: "sent",
+            },
+          });
         }
       } catch (err) {
         console.error(`[PAYMENT VERIFY] Failed to send email for photo ${photoId}:`, err);
+        await logAuditEvent({
+          eventType: "email_sent",
+          orderId: permanentOrder?._id,
+          paymentId: permanentPayment?._id,
+          photoId: photo._id,
+          actor: "system",
+          metadata: {
+            recipient: userEmail,
+            status: "failed",
+            error: String(err),
+          },
+        });
       }
     } else {
       console.warn(`[PAYMENT VERIFY] No email found for photo ${photoId}, skipping gift delivery email.`);

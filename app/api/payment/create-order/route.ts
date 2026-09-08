@@ -4,6 +4,8 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import Razorpay from "razorpay";
 import dbConnect from "@/lib/mongodb";
 import Photo from "@/models/Photo";
+import Order from "@/models/Order";
+import Payment from "@/models/Payment";
 
 export async function POST(req: Request) {
   try {
@@ -71,12 +73,47 @@ export async function POST(req: Request) {
 
     const order = await razorpay.orders.create(options);
 
+    const customerEmail = (session?.user?.email || guestEmail || "").trim();
+
+    // Create permanent Order record
+    const permanentOrder = await Order.create({
+      orderNumber: `ORD-${Date.now()}-${Math.random().toString(36).substring(2, 7).toUpperCase()}`,
+      userId: (session?.user as any)?.id || undefined,
+      guestEmail: customerEmail || "guest@pixpassport.com",
+      documentType: photo.documentType,
+      isExpert: Boolean(isExpert),
+      amount: amount / amountUnit,
+      currency: currency,
+      status: "pending",
+      photoId: photo._id,
+      metadata: {
+        razorpayOrderId: order.id,
+        receipt: options.receipt,
+        gaClientId,
+      },
+    });
+
+    // Create permanent Payment record
+    await Payment.create({
+      orderId: permanentOrder._id,
+      photoId: photo._id,
+      gateway: "razorpay",
+      gatewayOrderId: order.id,
+      amount: amount / amountUnit,
+      currency: currency,
+      status: "created",
+      email: customerEmail,
+      metadata: {
+        notes: options.notes,
+      },
+    });
+
     // Update photo with order ID and link to user or email
     photo.razorpayOrderId = order.id;
+    photo.orderId = permanentOrder._id;
     if (session && session.user) {
       // @ts-ignore
       photo.userId = session.user.id;
-      // Store user email as guestEmail for reliable delivery fallback
       if (session.user.email) {
         photo.guestEmail = session.user.email;
       }

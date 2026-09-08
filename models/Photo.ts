@@ -21,11 +21,11 @@ const PhotoSchema = new Schema(
     },
     secureUrl: {
       type: String,
-      required: true,
+      required: false,
     },
     previewUrl: {
       type: String,
-      required: true,
+      required: false,
     },
     printSheetUrl: {
       type: String,
@@ -34,6 +34,20 @@ const PhotoSchema = new Schema(
     originalUrl: {
       type: String,
       required: false,
+    },
+    isExpired: {
+      type: Boolean,
+      default: false,
+      index: true,
+    },
+    purgedAt: {
+      type: Date,
+      required: false,
+    },
+    orderId: {
+      type: Schema.Types.Mixed,
+      required: false,
+      index: true,
     },
     metrics: {
       headSizePct: Schema.Types.Mixed,

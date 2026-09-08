@@ -539,6 +539,26 @@ export async function POST(req: NextRequest) {
 
     console.log("Saved photoRecord:", photoRecord._id);
 
+    const { logAuditEvent, getClientMetadata } = await import("@/lib/audit");
+    const clientMeta = getClientMetadata(req);
+    await logAuditEvent({
+      eventType: "processing",
+      photoId: photoRecord._id,
+      actor: "user",
+      ipAddress: clientMeta.ipAddress,
+      userAgent: clientMeta.userAgent,
+      metadata: {
+        engine: "internal_sharp_mediapipe",
+        documentType: photoRecord.documentType,
+        dimensions: `${targetW}×${targetH}`,
+        format: filenameExt.toUpperCase(),
+        sizeKb: Math.round(processedBuffer.length / 1024),
+        headSizePct: finalHeadPct.toFixed(1),
+        eyeLevelPct: finalEyeFromBottomPct.toFixed(1),
+        status: "success",
+      },
+    });
+
     return NextResponse.json({
       success: true,
       photoId: photoRecord._id.toString(),

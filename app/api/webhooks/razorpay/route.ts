@@ -3,9 +3,13 @@ import crypto from "crypto";
 import dbConnect from "@/lib/mongodb";
 import Photo from "@/models/Photo";
 import ExpertOrder from "@/models/ExpertOrder";
+import Order from "@/models/Order";
+import Payment from "@/models/Payment";
+import Dispute from "@/models/Dispute";
 import { sendEmail } from "@/lib/mail";
 import { getSafeSpec } from "@/lib/specs";
 import { sendGA4PurchaseEvent } from "@/lib/ga4";
+import { logAuditEvent } from "@/lib/audit";
 
 export async function POST(req: Request) {
   try {
@@ -47,7 +51,69 @@ export async function POST(req: Request) {
         if (photo && photo.status !== "paid") {
           photo.status = "paid";
           photo.razorpayPaymentId = paymentEntity.id;
+
+          const userEmail = (photo as any).guestEmail || paymentEntity.email;
+
+          // Update or create permanent Order record
+          let permanentOrder = photo.orderId ? await Order.findById(photo.orderId) : null;
+          if (!permanentOrder) {
+            permanentOrder = await Order.findOne({
+              $or: [
+                { "metadata.razorpayOrderId": paymentEntity.order_id },
+                { photoId: photo._id },
+              ],
+            });
+          }
+
+          if (permanentOrder) {
+            permanentOrder.status = "paid";
+            await permanentOrder.save();
+          } else {
+            permanentOrder = await Order.create({
+              orderNumber: `ORD-${Date.now()}-${Math.random().toString(36).substring(2, 7).toUpperCase()}`,
+              userId: photo.userId,
+              guestEmail: userEmail || paymentEntity.email || "customer@pixpassport.com",
+              documentType: photo.documentType,
+              isExpert: Boolean(photo.isExpert),
+              amount: paymentEntity.amount ? paymentEntity.amount / 100 : (photo.isExpert ? 9.99 : 6.99),
+              currency: paymentEntity.currency || "USD",
+              status: "paid",
+              photoId: photo._id,
+              metadata: { razorpayOrderId: paymentEntity.order_id },
+            });
+          }
+
+          photo.orderId = permanentOrder._id;
           await photo.save();
+
+          // Update or create permanent Payment record
+          let permanentPayment = await Payment.findOne({ gatewayPaymentId: paymentEntity.id });
+          if (!permanentPayment && paymentEntity.order_id) {
+            permanentPayment = await Payment.findOne({ gatewayOrderId: paymentEntity.order_id });
+          }
+
+          if (permanentPayment) {
+            permanentPayment.status = "captured";
+            permanentPayment.gatewayPaymentId = paymentEntity.id;
+            permanentPayment.orderId = permanentOrder._id;
+            if (paymentEntity.method) permanentPayment.method = paymentEntity.method;
+            if (userEmail) permanentPayment.email = userEmail;
+            await permanentPayment.save();
+          } else {
+            permanentPayment = await Payment.create({
+              orderId: permanentOrder._id,
+              photoId: photo._id,
+              gateway: "razorpay",
+              gatewayOrderId: paymentEntity.order_id || `order_${photo._id}`,
+              gatewayPaymentId: paymentEntity.id,
+              amount: paymentEntity.amount ? paymentEntity.amount / 100 : permanentOrder.amount,
+              currency: paymentEntity.currency || permanentOrder.currency,
+              status: "captured",
+              method: paymentEntity.method,
+              email: userEmail || paymentEntity.email,
+              metadata: paymentEntity,
+            });
+          }
 
           // Fire GA4 Purchase Event
           if (notes.gaClientId) {
@@ -69,7 +135,6 @@ export async function POST(req: Request) {
             });
           }
 
-          const userEmail = (photo as any).guestEmail || paymentEntity.email;
           if (userEmail) {
             const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://pixpassport.com';
             const photoDownloadUrl = photo.secureUrl || '';
@@ -173,10 +238,35 @@ export async function POST(req: Request) {
                     </div>
                   `
                 });
-                console.log(`[WEBHOOK] Email sent successfully for photo ${photoId}`);
-              }
-            } catch (err) {
-              console.error(`[WEBHOOK] Failed to send email for photo ${photoId}:`, err);
+                  console.log(`[WEBHOOK] Email sent successfully for photo ${photoId}`);
+                  await logAuditEvent({
+                    eventType: "email_sent",
+                    orderId: permanentOrder?._id,
+                    paymentId: permanentPayment?._id,
+                    photoId: photo._id,
+                    actor: "webhook",
+                    metadata: {
+                      recipient: userEmail,
+                      subject: `Your ${countryName} (${documentName}) photo is ready — Download now! 🎉`,
+                      template: "delivery",
+                      status: "sent",
+                    },
+                  });
+                }
+              } catch (err) {
+                console.error(`[WEBHOOK] Failed to send email for photo ${photoId}:`, err);
+              await logAuditEvent({
+                eventType: "email_sent",
+                orderId: permanentOrder?._id,
+                paymentId: permanentPayment?._id,
+                photoId: photo._id,
+                actor: "webhook",
+                metadata: {
+                  recipient: userEmail,
+                  status: "failed",
+                  error: String(err),
+                },
+              });
             }
           }
         }
@@ -186,6 +276,56 @@ export async function POST(req: Request) {
           order.status = "paid";
           order.razorpayPaymentId = paymentEntity.id;
           await order.save();
+
+          const customerEmail = order.email || paymentEntity.email || "customer@pixpassport.com";
+
+          // Permanent Order record for Expert Order
+          let permanentOrder = await Order.findOne({
+            $or: [
+              { "metadata.expertOrderId": expertOrderId },
+              { "metadata.razorpayOrderId": paymentEntity.order_id },
+            ],
+          });
+
+          if (permanentOrder) {
+            permanentOrder.status = "paid";
+            await permanentOrder.save();
+          } else {
+            permanentOrder = await Order.create({
+              orderNumber: `ORD-${Date.now()}-${Math.random().toString(36).substring(2, 7).toUpperCase()}`,
+              guestEmail: customerEmail,
+              documentType: "expert-photo-edit",
+              isExpert: true,
+              amount: paymentEntity.amount ? paymentEntity.amount / 100 : 9.99,
+              currency: paymentEntity.currency || "USD",
+              status: "paid",
+              metadata: {
+                expertOrderId,
+                razorpayOrderId: paymentEntity.order_id,
+              },
+            });
+          }
+
+          // Permanent Payment record
+          let permanentPayment = await Payment.findOne({ gatewayPaymentId: paymentEntity.id });
+          if (permanentPayment) {
+            permanentPayment.status = "captured";
+            permanentPayment.orderId = permanentOrder._id;
+            await permanentPayment.save();
+          } else {
+            permanentPayment = await Payment.create({
+              orderId: permanentOrder._id,
+              gateway: "razorpay",
+              gatewayOrderId: paymentEntity.order_id || `expert_${expertOrderId}`,
+              gatewayPaymentId: paymentEntity.id,
+              amount: paymentEntity.amount ? paymentEntity.amount / 100 : permanentOrder.amount,
+              currency: paymentEntity.currency || permanentOrder.currency,
+              status: "captured",
+              method: paymentEntity.method,
+              email: customerEmail,
+              metadata: paymentEntity,
+            });
+          }
 
           // Fire GA4 Purchase Event
           if (notes.gaClientId) {
@@ -210,7 +350,7 @@ export async function POST(req: Request) {
             const adminHtml = `
               <h2>New Expert Edit Order (Webhook Verified)</h2>
               <p><strong>Order ID:</strong> ${order._id}</p>
-              <p><strong>Customer Email:</strong> ${order.email || paymentEntity.email}</p>
+              <p><strong>Customer Email:</strong> ${customerEmail}</p>
               <p><strong>Photos to Edit:</strong></p>
               <ul>
                 ${order.photos.map((url: string) => `<li><a href="${url}">${url}</a></li>`).join("")}
@@ -229,14 +369,38 @@ export async function POST(req: Request) {
 
             // Notify Customer
             await sendEmail({
-              to: order.email || paymentEntity.email,
+              to: customerEmail,
               bcc: 'usvisaphotoai@gmail.com',
               subject: "Your Expert Photo Edit Order is Confirmed - PixPassport",
               html: `<p>Hi there,</p><p>We have received your payment for the expert photo edit. Our team is working on your photos now and will email them back to you when they are ready.</p><p>Thank you for choosing PixPassport!</p>`,
             });
             console.log(`[WEBHOOK] Emails sent successfully for expert order ${expertOrderId}`);
+
+            await logAuditEvent({
+              eventType: "email_sent",
+              orderId: permanentOrder._id,
+              paymentId: permanentPayment._id,
+              actor: "webhook",
+              metadata: {
+                recipient: customerEmail,
+                subject: "Your Expert Photo Edit Order is Confirmed - PixPassport",
+                template: "expert_confirmation",
+                status: "sent",
+              },
+            });
           } catch (mailError) {
             console.error(`[WEBHOOK] Failed to send emails for expert edit ${expertOrderId}:`, mailError);
+            await logAuditEvent({
+              eventType: "email_sent",
+              orderId: permanentOrder._id,
+              paymentId: permanentPayment._id,
+              actor: "webhook",
+              metadata: {
+                recipient: customerEmail,
+                status: "failed",
+                error: String(mailError),
+              },
+            });
           }
         }
       }
@@ -261,6 +425,14 @@ export async function POST(req: Request) {
             const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://pixpassport.com';
             const previewLink = `${appUrl}/preview/${photoId}`;
             const previewImageUrl = photo.secureUrl || photo.previewUrl || '';
+
+            // Update permanent Order & Payment status
+            if (photo.orderId) {
+              await Order.findByIdAndUpdate(photo.orderId, { status: "failed" });
+            }
+            if (paymentEntity.order_id) {
+              await Payment.findOneAndUpdate({ gatewayOrderId: paymentEntity.order_id }, { status: "failed" });
+            }
 
             try {
               await sendEmail({
@@ -314,6 +486,18 @@ export async function POST(req: Request) {
                 `
               });
               console.log(`[WEBHOOK] Payment failed email sent for photo ${photoId}`);
+              await logAuditEvent({
+                eventType: "email_sent",
+                photoId: photo._id,
+                orderId: photo.orderId,
+                actor: "webhook",
+                metadata: {
+                  recipient: userEmail,
+                  subject: `Payment Failed — Your ${countryName} Photo is Waiting! 📸`,
+                  template: "payment_failed",
+                  status: "sent",
+                },
+              });
             } catch (err) {
               console.error(`[WEBHOOK] Failed to send payment failed email for photo ${photoId}:`, err);
             }
@@ -324,6 +508,11 @@ export async function POST(req: Request) {
         if (order && order.status !== "paid") {
           order.status = "payment_failed";
           await order.save();
+
+          await Order.findOneAndUpdate({ "metadata.expertOrderId": expertOrderId }, { status: "failed" });
+          if (paymentEntity.order_id) {
+            await Payment.findOneAndUpdate({ gatewayOrderId: paymentEntity.order_id }, { status: "failed" });
+          }
 
           const userEmail = order.email || paymentEntity.email;
           if (userEmail) {
@@ -378,12 +567,107 @@ export async function POST(req: Request) {
                 `
               });
               console.log(`[WEBHOOK] Payment failed email sent for expert order ${expertOrderId}`);
+              await logAuditEvent({
+                eventType: "email_sent",
+                actor: "webhook",
+                metadata: {
+                  recipient: userEmail,
+                  expertOrderId,
+                  subject: "Payment Failed for Expert Edit — Your Photos Are Waiting! 📸",
+                  template: "expert_payment_failed",
+                  status: "sent",
+                },
+              });
             } catch (err) {
               console.error(`[WEBHOOK] Failed to send payment failed email for expert order ${expertOrderId}:`, err);
             }
           }
         }
       }
+    } else if (event.event === "refund.created" || event.event === "refund.processed" || event.event === "payment.refunded") {
+      const refundEntity = event.payload?.refund?.entity || {};
+      const paymentEntity = event.payload?.payment?.entity || {};
+      const paymentId = refundEntity.payment_id || paymentEntity.id;
+
+      await dbConnect();
+      if (paymentId) {
+        const payment = await Payment.findOne({ gatewayPaymentId: paymentId });
+        if (payment) {
+          payment.status = "refunded";
+          await payment.save();
+
+          if (payment.orderId) {
+            await Order.findByIdAndUpdate(payment.orderId, { status: "refunded" });
+          }
+        }
+
+        // Permanent Audit Event for Refund
+        await logAuditEvent({
+          eventType: "refund",
+          paymentId: payment?._id,
+          orderId: payment?.orderId,
+          photoId: payment?.photoId,
+          actor: "webhook",
+          metadata: {
+            gatewayRefundId: refundEntity.id,
+            gatewayPaymentId: paymentId,
+            amount: refundEntity.amount ? refundEntity.amount / 100 : undefined,
+            currency: refundEntity.currency,
+            reason: refundEntity.notes?.reason || "Refund processed via Razorpay",
+            status: refundEntity.status || "processed",
+          },
+        });
+        console.log(`[WEBHOOK] Processed refund for payment ${paymentId}`);
+      }
+    } else if (event.event?.startsWith("dispute.")) {
+      const disputeEntity = event.payload?.dispute?.entity || {};
+      const paymentId = disputeEntity.payment_id;
+
+      await dbConnect();
+      let payment = null;
+      let order = null;
+      if (paymentId) {
+        payment = await Payment.findOne({ gatewayPaymentId: paymentId });
+        if (payment && payment.orderId) {
+          order = await Order.findById(payment.orderId);
+          if (order) {
+            order.status = "disputed";
+            await order.save();
+          }
+        }
+      }
+
+      const disputeStatus = event.event === "dispute.won" ? "won" : event.event === "dispute.lost" ? "lost" : event.event === "dispute.closed" ? "closed" : "open";
+
+      // Permanent Dispute record
+      const dispute = await Dispute.create({
+        orderId: order?._id,
+        paymentId: payment?._id,
+        gatewayDisputeId: disputeEntity.id,
+        amount: disputeEntity.amount ? disputeEntity.amount / 100 : 0,
+        currency: disputeEntity.currency || "USD",
+        reason: disputeEntity.reason_code || disputeEntity.reason_description || "Dispute received",
+        status: disputeStatus,
+        evidence: disputeEntity,
+      });
+
+      // Permanent Audit Event for Dispute
+      await logAuditEvent({
+        eventType: "dispute",
+        disputeId: dispute._id,
+        orderId: order?._id,
+        paymentId: payment?._id,
+        photoId: payment?.photoId,
+        actor: "webhook",
+        metadata: {
+          gatewayDisputeId: disputeEntity.id,
+          event: event.event,
+          status: disputeStatus,
+          amount: disputeEntity.amount ? disputeEntity.amount / 100 : undefined,
+          reason: disputeEntity.reason_code || disputeEntity.reason_description,
+        },
+      });
+      console.log(`[WEBHOOK] Processed dispute ${disputeEntity.id} for payment ${paymentId}`);
     }
 
     return NextResponse.json({ success: true });
