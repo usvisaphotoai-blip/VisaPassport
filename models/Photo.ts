@@ -69,7 +69,12 @@ const PhotoSchema = new Schema(
     isExpert: {
       type: Boolean,
       default: false,
-    }
+    },
+    downloadToken: {
+      type: String,
+      required: false,
+      index: true,
+    },
   },
   { timestamps: true }
 );

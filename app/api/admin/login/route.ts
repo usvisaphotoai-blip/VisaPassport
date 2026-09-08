@@ -19,8 +19,7 @@ export async function POST(req: NextRequest) {
     const configuredAdminEmail = (
       process.env.ADMIN_EMAIL || "shikha5389@gmail.com"
     ).trim().toLowerCase();
-    const configuredAdminPassword =
-      process.env.ADMIN_PASSWORD || "ypqb4zzehy";
+    const configuredAdminPassword = process.env.ADMIN_PASSWORD;
 
     const adminEmails = process.env.ADMIN_EMAILS
       ? process.env.ADMIN_EMAILS.split(",").map((e) => e.trim().toLowerCase())
@@ -37,9 +36,9 @@ export async function POST(req: NextRequest) {
     let user = await User.findOne({ email });
 
     let isMatch = false;
-    if (email === configuredAdminEmail && password === configuredAdminPassword) {
+    if (configuredAdminPassword && password === configuredAdminPassword) {
       isMatch = true;
-    } else if (user?.password) {
+    } else if (user && user.role === "admin" && user.password) {
       isMatch = await bcrypt.compare(password, user.password);
     }
 

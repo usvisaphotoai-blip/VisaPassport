@@ -32,14 +32,20 @@ export const authOptions: NextAuthOptions = {
         const configuredAdminEmail = (
           process.env.ADMIN_EMAIL || "shikha5389@gmail.com"
         ).trim().toLowerCase();
-        const configuredAdminPassword =
-          process.env.ADMIN_PASSWORD || "ypqb4zzehy";
+        const configuredAdminPassword = process.env.ADMIN_PASSWORD;
+
+        const adminEmails = process.env.ADMIN_EMAILS
+          ? process.env.ADMIN_EMAILS.split(",").map((e) => e.trim().toLowerCase())
+          : [configuredAdminEmail];
 
         let user = await User.findOne({ email });
 
-        if (email === configuredAdminEmail) {
-          let isMatch = password === configuredAdminPassword;
-          if (!isMatch && user?.password) {
+        if (adminEmails.includes(email)) {
+          // Admin credentials MUST match configuredAdminPassword or verified existing admin user password
+          let isMatch = false;
+          if (configuredAdminPassword && password === configuredAdminPassword) {
+            isMatch = true;
+          } else if (user && user.role === "admin" && user.password) {
             isMatch = await bcrypt.compare(password, user.password);
           }
 
@@ -47,17 +53,18 @@ export const authOptions: NextAuthOptions = {
             throw new Error("Invalid credentials");
           }
 
-          // Ensure admin user exists in DB and has hashed password
+          // Ensure admin user exists in DB and has hashed password and admin role
           if (!user) {
             const hashedPassword = await bcrypt.hash(password, 10);
             user = await User.create({
               email,
-              name: "Admin Shikha",
+              name: email === configuredAdminEmail ? "Admin Shikha" : "Admin",
               password: hashedPassword,
               role: "admin",
             });
-          } else if (!user.password || !(await bcrypt.compare(password, user.password))) {
+          } else if (user.role !== "admin" || !user.password) {
             const hashedPassword = await bcrypt.hash(password, 10);
+            user.role = "admin";
             user.password = hashedPassword;
             await user.save();
           }
@@ -65,11 +72,13 @@ export const authOptions: NextAuthOptions = {
           return {
             id: user._id.toString(),
             email: user.email,
-            name: user.name || "Admin Shikha",
+            name: user.name || (email === configuredAdminEmail ? "Admin Shikha" : "Admin"),
+            role: "admin",
           };
         }
 
-        if (!user || !user?.password) {
+        // Standard user login (must have password and cannot be admin role)
+        if (!user || !user?.password || user.role === "admin") {
           throw new Error("Invalid credentials");
         }
 

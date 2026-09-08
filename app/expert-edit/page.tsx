@@ -1,15 +1,25 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 export default function ExpertEditPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [photos, setPhotos] = useState<File[]>([]);
+  const [previewUrls, setPreviewUrls] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
+
+  // Manage object URLs safely to avoid browser memory leaks
+  useEffect(() => {
+    const urls = photos.map((file) => URL.createObjectURL(file));
+    setPreviewUrls(urls);
+    return () => {
+      urls.forEach((url) => URL.revokeObjectURL(url));
+    };
+  }, [photos]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -201,10 +211,10 @@ export default function ExpertEditPage() {
                 <p className="text-xs text-slate-500 mb-4">White, green, or any background is fine. We will securely process them.</p>
                 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
-                  {photos.map((photo, index) => (
+                  {previewUrls.map((url, index) => (
                     <div key={index} className="relative group rounded-xl overflow-hidden border border-slate-200 aspect-square">
                       <img
-                        src={URL.createObjectURL(photo)}
+                        src={url}
                         alt={`Upload ${index + 1}`}
                         className="w-full h-full object-cover"
                       />

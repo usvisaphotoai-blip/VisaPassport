@@ -24,7 +24,13 @@ export async function POST(req: Request) {
     hmac.update(`${razorpay_order_id}|${razorpay_payment_id}`);
     const generated_signature = hmac.digest("hex");
 
-    if (generated_signature !== razorpay_signature) {
+    const expectedSignBuf = Buffer.from(generated_signature, "hex");
+    const signatureBuf = Buffer.from(razorpay_signature, "hex");
+
+    if (
+      expectedSignBuf.length !== signatureBuf.length ||
+      !crypto.timingSafeEqual(expectedSignBuf, signatureBuf)
+    ) {
       return NextResponse.json({ error: "Invalid payment signature" }, { status: 400 });
     }
 
@@ -35,6 +41,20 @@ export async function POST(req: Request) {
 
     if (!order) {
       return NextResponse.json({ error: "Expert Order not found" }, { status: 404 });
+    }
+
+    // Verify order linkage
+    if (order.razorpayOrderId && order.razorpayOrderId !== razorpay_order_id) {
+      return NextResponse.json({ error: "Payment does not match this expert order" }, { status: 400 });
+    }
+
+    // Replay attack guard
+    const existingOrderWithPayment = await ExpertOrder.findOne({
+      razorpayPaymentId: razorpay_payment_id,
+      _id: { $ne: order._id },
+    });
+    if (existingOrderWithPayment) {
+      return NextResponse.json({ error: "This payment has already been redeemed" }, { status: 400 });
     }
 
     // Idempotency check: if already paid (e.g., via webhook), skip sending emails again

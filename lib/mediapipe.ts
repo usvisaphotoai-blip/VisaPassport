@@ -38,23 +38,18 @@ export async function getMediaPipeLandmarker(): Promise<FaceLandmarker> {
       );
 
       // Console capture handles to ensure they're always restorable
-      const _warn = console.warn;
-      const _error = console.error;
-      const _log = console.log;
       const _info = console.info;
+      const _warn = console.warn;
       try {
         // Suppress the internal WASM "INFO: Created TensorFlow Lite XNNPACK
-        // delegate for CPU" log — it's emitted by the TFLite binary and cannot
-        // be disabled via any API option.
-        const suppress = (...args: unknown[]) => {
+        // delegate for CPU" log — it's emitted by the TFLite binary.
+        const suppress = (origFn: Function) => (...args: unknown[]) => {
           const msg = String(args[0] ?? "");
           if (msg.includes("TensorFlow Lite") || msg.includes("XNNPACK")) return;
-          _warn.apply(console, args as Parameters<typeof console.warn>);
+          origFn.apply(console, args);
         };
-        console.warn = suppress as typeof console.warn;
-        console.error = suppress as typeof console.error;
-        console.log = suppress as typeof console.log;
-        console.info = suppress as typeof console.info;
+        console.info = suppress(_info) as typeof console.info;
+        console.warn = suppress(_warn) as typeof console.warn;
 
         const landmarkerInstPromise = FaceLandmarker.createFromOptions(vision, {
           baseOptions: {
@@ -77,10 +72,8 @@ export async function getMediaPipeLandmarker(): Promise<FaceLandmarker> {
         return await Promise.race([landmarkerInstPromise, timeoutPromise]);
       } finally {
         // Always restore original console methods
-        console.warn = _warn;
-        console.error = _error;
-        console.log = _log;
         console.info = _info;
+        console.warn = _warn;
       }
     })().catch((err) => {
       landmarkerPromise = null;

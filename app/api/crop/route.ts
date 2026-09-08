@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import crypto from "crypto";
 import sharp from "sharp";
 import { uploadBufferToCloudinary } from "@/lib/cloudinary";
 import { HEAD_TOP_MULTIPLIER } from "@/lib/mediapipe";
@@ -525,12 +526,15 @@ export async function POST(req: NextRequest) {
     const Photo = (await import("@/models/Photo")).default;
     await dbConnect();
 
+    const downloadToken = crypto.randomBytes(24).toString("hex");
+
     const photoRecord = await Photo.create({
       documentType: formData.get("type") as string || "general",
       secureUrl,
       previewUrl,
       printSheetUrl,
       originalUrl,
+      downloadToken,
       metrics: {
         headSizePct: finalHeadPct.toFixed(1),
         eyeLevelPct: finalEyeFromBottomPct.toFixed(1),
@@ -562,6 +566,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       success: true,
       photoId: photoRecord._id.toString(),
+      downloadToken,
       processedImageUrl: previewUrl,
       dimensions: `${targetW}×${targetH}`,
       format: filenameExt.toUpperCase(),

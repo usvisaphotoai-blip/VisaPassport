@@ -34,19 +34,59 @@ export async function POST(req: Request) {
       .update(sign.toString())
       .digest("hex");
 
-    if (razorpay_signature !== expectedSign) {
+    const expectedSignBuf = Buffer.from(expectedSign, "hex");
+    const signatureBuf = Buffer.from(razorpay_signature, "hex");
+
+    if (
+      expectedSignBuf.length !== signatureBuf.length ||
+      !crypto.timingSafeEqual(expectedSignBuf, signatureBuf)
+    ) {
       return NextResponse.json(
         { error: "Invalid signature" },
         { status: 400 }
       );
     }
 
-    // Payment is valid, update photo status
+    // Payment signature is valid, fetch photo and verify order linkage
     await dbConnect();
     const photo = await Photo.findById(photoId);
 
     if (!photo) {
       return NextResponse.json({ error: "Photo not found" }, { status: 404 });
+    }
+
+    // Ensure the verified order ID matches the order created for this photo
+    if (photo.razorpayOrderId && photo.razorpayOrderId !== razorpay_order_id) {
+      return NextResponse.json(
+        { error: "Payment does not correspond to this photo order" },
+        { status: 400 }
+      );
+    }
+
+    // Replay attack guard: Ensure this payment ID was not already redeemed for another photo
+    const existingPhotoWithPayment = await Photo.findOne({
+      razorpayPaymentId: razorpay_payment_id,
+      _id: { $ne: photo._id },
+    });
+    if (existingPhotoWithPayment) {
+      return NextResponse.json(
+        { error: "This payment transaction has already been redeemed" },
+        { status: 400 }
+      );
+    }
+
+    const existingPaymentRecord = await Payment.findOne({
+      razorpayPaymentId: razorpay_payment_id,
+    });
+    if (
+      existingPaymentRecord &&
+      existingPaymentRecord.photoId &&
+      existingPaymentRecord.photoId.toString() !== photo._id.toString()
+    ) {
+      return NextResponse.json(
+        { error: "This payment transaction has already been redeemed for another order" },
+        { status: 400 }
+      );
     }
 
     // If photo is linked to a user account, enforce access control
@@ -60,6 +100,9 @@ export async function POST(req: Request) {
     const alreadyPaid = photo.status === "paid";
     photo.status = "paid";
     photo.razorpayPaymentId = razorpay_payment_id;
+    if (!photo.downloadToken) {
+      photo.downloadToken = crypto.randomBytes(24).toString("hex");
+    }
     await photo.save();
 
     const userEmail = session?.user?.email || (photo as any).guestEmail;
@@ -285,7 +328,11 @@ export async function POST(req: Request) {
       console.warn(`[PAYMENT VERIFY] No email found for photo ${photoId}, skipping gift delivery email.`);
     }
 
-    return NextResponse.json({ success: true, message: "Payment verified successfully" });
+    return NextResponse.json({
+      success: true,
+      message: "Payment verified successfully",
+      downloadToken: photo.downloadToken,
+    });
   } catch (error: any) {
     console.error("Payment Verification Error:", error);
     return NextResponse.json(

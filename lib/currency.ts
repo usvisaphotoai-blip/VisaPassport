@@ -59,7 +59,7 @@ const FIXED_PRICES: Record<string, { amount: number; symbol: string; decimals: n
   CAD: { amount: 8.99, symbol: "C$", decimals: 2 },
   AUD: { amount: 9.99, symbol: "A$", decimals: 2 },
   NZD: { amount: 9.99, symbol: "NZ$", decimals: 2 },
-  JPY: { amount: 6.99, symbol: "$", decimals: 0 },
+  JPY: { amount: 1100, symbol: "¥", decimals: 0 },
   SGD: { amount: 6.99, symbol: "S$", decimals: 2 },
   HKD: { amount: 49, symbol: "HK$", decimals: 0 },
   
@@ -124,7 +124,7 @@ const EXPERT_PRICES: Record<string, { amount: number; symbol: string; decimals: 
   NOK: { amount: 99, symbol: "kr", decimals: 0 },
   DKK: { amount: 69, symbol: "kr", decimals: 0 },
   
-  INR: { amount: 599, symbol: "₹", decimals: 0 },
+  INR: { amount: 699, symbol: "₹", decimals: 0 },
   CNY: { amount: 49, symbol: "¥", decimals: 0 },
   BRL: { amount: 45, symbol: "R$", decimals: 0 },
   MXN: { amount: 149, symbol: "$", decimals: 0 },

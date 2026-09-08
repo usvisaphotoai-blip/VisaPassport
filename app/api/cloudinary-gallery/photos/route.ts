@@ -3,7 +3,7 @@ import cloudinary from '@/lib/cloudinary';
 
 export const revalidate = 0; // Disable caching to fetch fresh images every time
 
-const EXPECTED_PASSWORD = 'ypqb4zzehy';
+const EXPECTED_PASSWORD = process.env.ADMIN_PASSWORD || process.env.CLOUDINARY_GALLERY_SECRET;
 
 // In-memory cache to avoid repeated slow Cloudinary Search API roundtrips
 interface CachedGallery {
@@ -23,7 +23,7 @@ export async function POST(request: Request) {
     const providedPassword = body.password || authHeader;
     const forceRefresh = body.refresh === true;
 
-    if (providedPassword !== EXPECTED_PASSWORD) {
+    if (!EXPECTED_PASSWORD || providedPassword !== EXPECTED_PASSWORD) {
       return NextResponse.json(
         { success: false, error: 'Invalid password' },
         { status: 401 }

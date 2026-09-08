@@ -13,9 +13,9 @@ export async function GET(request: Request) {
 
     console.log('[Cloudinary Cleanup] Starting cleanup job...');
 
-    // Search for images with the specific tag uploaded more than 1 day ago
+    // Search for images with the specific tag uploaded more than 1 day ago (older than 24 hours)
     const result = await cloudinary.search
-      .expression('tags:us-visa-photo AND uploaded_at>1d')
+      .expression('tags:us-visa-photo AND uploaded_at<1d')
       .max_results(500)
       .execute();
 

@@ -19,9 +19,22 @@ export async function GET(
       return new NextResponse("Photo not found", { status: 404 });
     }
 
+    const { searchParams } = new URL(req.url);
+    const providedToken = searchParams.get("token");
+
+    // Access Control: Protect against IDOR
     if (photo.userId) {
-      if (!session || !session.user || photo.userId.toString() !== (session.user as any).id) {
+      const isOwnerSession = session?.user && photo.userId.toString() === (session.user as any).id;
+      const isValidToken = photo.downloadToken && providedToken === photo.downloadToken;
+      if (!isOwnerSession && !isValidToken) {
         return new NextResponse("Unauthorized photo access", { status: 403 });
+      }
+    } else {
+      // Guest order access control
+      const isOwnerEmail = session?.user?.email && photo.guestEmail && session.user.email.toLowerCase() === photo.guestEmail.toLowerCase();
+      const isValidToken = photo.downloadToken && providedToken === photo.downloadToken;
+      if (!isOwnerEmail && !isValidToken) {
+        return new NextResponse("Unauthorized photo access: valid download token required", { status: 403 });
       }
     }
 

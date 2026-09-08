@@ -78,6 +78,28 @@ export async function GET(req: Request) {
       photosPurgedCount++;
     }
 
+    // 1b. Find expired validation images older than 24 hours
+    try {
+      const ValidationRecord = (await import("@/models/ValidationRecord")).default;
+      const expiredValidations = await ValidationRecord.find({
+        createdAt: { $lt: cutoff },
+        imageUrl: { $exists: true, $ne: "" },
+      }).limit(100);
+
+      for (const valRecord of expiredValidations) {
+        if (valRecord.imageUrl) {
+          const publicId = extractCloudinaryPublicId(valRecord.imageUrl);
+          if (publicId && !publicIdsToDelete.includes(publicId)) {
+            publicIdsToDelete.push(publicId);
+          }
+          valRecord.imageUrl = undefined;
+          await valRecord.save();
+        }
+      }
+    } catch (valErr) {
+      console.warn("[cron/cleanup] Error querying validation records:", valErr);
+    }
+
     // 2. Delete remote image assets from Cloudinary
     let cloudinaryDeletedCount = 0;
     if (publicIdsToDelete.length > 0 && process.env.CLOUDINARY_API_KEY) {

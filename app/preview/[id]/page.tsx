@@ -25,13 +25,9 @@ export default async function PreviewPage(props: { params: Promise<{ id: string 
   const session = await getServerSession(authOptions);
   const isPaid = photoRecord.status === "paid";
 
-  // Only redirect to dashboard if they are logged in and it's paid
-  if (isPaid && session?.user) {
-    redirect("/dashboard");
-  }
-
   const localPrice = await getLocalPrice(6.99);
   const expertPrice = await getLocalPrice(9.99, undefined, true);
+  const downloadToken = photoRecord.downloadToken || (searchParams.token as string) || "";
 
   return (
     <PreviewClient
@@ -43,6 +39,7 @@ export default async function PreviewPage(props: { params: Promise<{ id: string 
       expertPrice={expertPrice}
       initialIsPaid={isPaid}
       from={searchParams.from as string}
+      downloadToken={downloadToken}
     />
   );
 }

@@ -9,7 +9,15 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
-    const docName = documentType ? documentType.split('-').join(' ').toUpperCase() : 'Photo';
+    const emailStr = String(email).trim().toLowerCase();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(emailStr)) {
+      return NextResponse.json({ error: "Invalid email address format" }, { status: 400 });
+    }
+
+    const { getSpecById } = await import("@/lib/specs");
+    const spec = documentType ? getSpecById(documentType) : null;
+    const docName = spec?.name || (documentType ? String(documentType).slice(0, 50).replace(/[^a-zA-Z0-9\s-]/g, '').toUpperCase() : 'Photo');
     
     // Calculate passing/failing checks
     const passed = checks.filter(c => c.status === "PASS").length;
@@ -62,7 +70,7 @@ export async function POST(req: Request) {
 
     const htmlContent = `
       <div style="font-family: sans-serif; max-w: 600px; margin: 0 auto; color: #333;">
-        <h2 style="color: #4f46e5;">Validation Report: ${docName}</h2>
+        <h2 style="color: #4f46e5;">Validation Report: ${escapeHtml(docName)}</h2>
         <p>Hi there,</p>
         <p>Here is your free validation report from PixPassport for the photo you just uploaded.</p>
         
@@ -80,7 +88,7 @@ export async function POST(req: Request) {
     `;
 
     const result = await sendEmail({
-      to: email,
+      to: emailStr,
       subject: `${failed === 0 ? '✅ Passed' : '❌ Failed'} Validation Report: ${docName}`,
       html: htmlContent,
     });

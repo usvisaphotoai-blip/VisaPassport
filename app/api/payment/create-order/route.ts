@@ -46,9 +46,12 @@ export async function POST(req: Request) {
     const spec = getSpecById(photo.documentType);
     const basePrice = isExpert ? 9.99 : (spec?.price || 6.99);
 
-    // Get localized price (Allows client override for currency)
+    // Get localized price (Allows validated client override for currency)
     const { getLocalPrice } = await import("@/lib/currency");
-    const localPrice = await getLocalPrice(basePrice, currencyOverride, isExpert);
+    const validatedOverride = typeof currencyOverride === "string" && currencyOverride.trim().length === 3
+      ? currencyOverride.trim().toUpperCase()
+      : undefined;
+    const localPrice = await getLocalPrice(basePrice, validatedOverride, isExpert);
 
     // Razorpay expects amount in smallest currency unit (e.g. cents, paise)
     // Most currencies use 2 decimal places, but some like JPY don't.

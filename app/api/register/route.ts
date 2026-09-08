@@ -14,9 +14,27 @@ export async function POST(req: Request) {
       );
     }
 
+    const normalizedEmail = email.trim().toLowerCase();
+
+    // Prevent unauthorized registration of administrative accounts
+    const adminEmails = process.env.ADMIN_EMAILS
+      ? process.env.ADMIN_EMAILS.split(",").map((e) => e.trim().toLowerCase())
+      : [];
+    const configuredAdminEmail = (process.env.ADMIN_EMAIL || "").trim().toLowerCase();
+
+    if (
+      adminEmails.includes(normalizedEmail) ||
+      (configuredAdminEmail && normalizedEmail === configuredAdminEmail)
+    ) {
+      return NextResponse.json(
+        { error: "Registration is not permitted for this email address." },
+        { status: 403 }
+      );
+    }
+
     await dbConnect();
 
-    const existingUser = await User.findOne({ email });
+    const existingUser = await User.findOne({ email: normalizedEmail });
 
     if (existingUser) {
       return NextResponse.json(
@@ -28,8 +46,8 @@ export async function POST(req: Request) {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     await User.create({
-      name,
-      email,
+      name: name.trim(),
+      email: normalizedEmail,
       password: hashedPassword,
     });
 

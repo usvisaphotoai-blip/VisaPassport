@@ -263,6 +263,7 @@ function OrderPanel({
   spec,
   from,
   onOpenFixModal,
+  downloadToken,
 }: any) {
   return (
     <div className="w-full lg:w-[38%] space-y-4">
@@ -536,7 +537,7 @@ function OrderPanel({
               </div>
 
               <a
-                href={`/api/download/${photoId}`}
+                href={`/api/download/${photoId}${downloadToken ? `?token=${encodeURIComponent(downloadToken)}` : ""}`}
                 download={`studio-photo-${documentType}.jpeg`}
                 className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2.5 transition-colors text-sm"
               >
@@ -545,7 +546,7 @@ function OrderPanel({
               </a>
 
               <a
-                href={`/passport-photo-print-template-generator?imageUrl=${encodeURIComponent(`/api/download/${photoId}`)}&width=${spec?.width_mm || ""}&height=${spec?.height_mm || ""}&name=${encodeURIComponent(spec?.name || "")}`}
+                href={`/passport-photo-print-template-generator?imageUrl=${encodeURIComponent(`/api/download/${photoId}${downloadToken ? `?token=${encodeURIComponent(downloadToken)}` : ""}`)}&width=${spec?.width_mm || ""}&height=${spec?.height_mm || ""}&name=${encodeURIComponent(spec?.name || "")}`}
                 className="w-full bg-lime-600 hover:bg-lime-700 text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2.5 transition-colors text-sm"
               >
                 <Icon d={ICONS.photo} size={16} className="shrink-0" />
@@ -1024,6 +1025,7 @@ export default function PreviewClient({
   expertPrice: initialExpertPrice,
   initialIsPaid,
   from,
+  downloadToken: initialDownloadToken,
 }: {
   photoId: string;
   previewUrl: string;
@@ -1033,9 +1035,11 @@ export default function PreviewClient({
   expertPrice: LocalPrice;
   initialIsPaid?: boolean;
   from?: string;
+  downloadToken?: string;
 }) {
   const { data: session, status } = useSession();
   const [hasPaid, setHasPaid] = useState(initialIsPaid || false);
+  const [downloadToken, setDownloadToken] = useState(initialDownloadToken || "");
   const [guestEmail, setGuestEmail] = useState("");
   const [timeLeft, setTimeLeft] = useState(20 * 60);
   const [localPrice, setLocalPrice] = useState<LocalPrice>(initialLocalPrice);
@@ -1123,6 +1127,11 @@ export default function PreviewClient({
           : "unauthenticated",
     session,
     setHasPaid,
+    onSuccess: (data) => {
+      if (data?.downloadToken) {
+        setDownloadToken(data.downloadToken);
+      }
+    },
   });
 
   const onPaymentClick = () => {
@@ -1280,6 +1289,7 @@ export default function PreviewClient({
               spec={spec}
               from={from}
               onOpenFixModal={() => setIsFixModalOpen(true)}
+              downloadToken={downloadToken}
             />
           </div>
         </div>

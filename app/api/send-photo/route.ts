@@ -1,4 +1,6 @@
 import { NextResponse } from "next/server";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { sendEmail } from "@/lib/mail";
 import dbConnect from "@/lib/mongodb";
 import Photo from "@/models/Photo";
@@ -6,6 +8,7 @@ import { getSafeSpec } from "@/lib/specs";
 
 export async function POST(req: Request) {
   try {
+    const session = await getServerSession(authOptions);
     const { email, photoUrl, documentType, photoId } = await req.json();
 
     if (!email || !photoId) {
@@ -21,6 +24,21 @@ export async function POST(req: Request) {
 
     if (photo.status !== "paid") {
       return NextResponse.json({ error: "Payment required before sending photo" }, { status: 402 });
+    }
+
+    const requestedEmail = email.trim().toLowerCase();
+    const photoGuestEmail = photo.guestEmail ? photo.guestEmail.trim().toLowerCase() : "";
+    const sessionEmail = session?.user?.email ? session.user.email.trim().toLowerCase() : "";
+
+    // Security check: email must match photo's registered guest email OR logged-in user email
+    const isAuthorizedRecipient = (photoGuestEmail && requestedEmail === photoGuestEmail) ||
+      (sessionEmail && requestedEmail === sessionEmail);
+
+    if (!isAuthorizedRecipient && (photoGuestEmail || sessionEmail)) {
+      return NextResponse.json(
+        { error: "Photos can only be delivered to the verified email address associated with the order." },
+        { status: 403 }
+      );
     }
 
     const verifiedPhotoUrl = photo.secureUrl || photo.previewUrl;
@@ -55,7 +73,7 @@ export async function POST(req: Request) {
           ${photoId ? `
           <div style="border-top: 1px solid #f1f5f9; margin-top: 16px; padding-top: 12px;">
             <p style="margin: 0; font-size: 12px; color: #94a3b8;">You can also access your photo anytime at:<br/>
-            <a href="${appUrl}/preview/${photoId}" style="color: #2563eb;">${appUrl}/preview/${photoId}</a></p>
+            <a href="${appUrl}/preview/${photoId}${photo.downloadToken ? `?token=${photo.downloadToken}` : ''}" style="color: #2563eb;">${appUrl}/preview/${photoId}</a></p>
           </div>
           ` : ''}
         </div>

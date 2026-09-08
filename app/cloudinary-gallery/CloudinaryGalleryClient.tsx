@@ -59,8 +59,7 @@ export default function CloudinaryGalleryClient() {
   // Check sessionStorage on mount
   useEffect(() => {
     const savedPwd = sessionStorage.getItem('cloudinary_gallery_auth');
-    if (savedPwd === 'ypqb4zzehy') {
-      setIsAuthenticated(true);
+    if (savedPwd) {
       setStoredPassword(savedPwd);
       fetchPhotos(savedPwd);
     }
@@ -76,20 +75,37 @@ export default function CloudinaryGalleryClient() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setAuthError('');
-    if (!password.trim()) {
+    const trimmed = password.trim();
+    if (!trimmed) {
       setAuthError('Please enter password');
       return;
     }
 
-    if (password.trim() !== 'ypqb4zzehy') {
-      setAuthError('Incorrect password. Please try again.');
-      return;
-    }
+    setLoading(true);
+    try {
+      const res = await fetch('/api/cloudinary-gallery/photos', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: trimmed }),
+      });
 
-    sessionStorage.setItem('cloudinary_gallery_auth', password.trim());
-    setIsAuthenticated(true);
-    setStoredPassword(password.trim());
-    fetchPhotos(password.trim());
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        setAuthError(data.error || 'Incorrect password. Please try again.');
+        setLoading(false);
+        return;
+      }
+
+      sessionStorage.setItem('cloudinary_gallery_auth', trimmed);
+      setIsAuthenticated(true);
+      setStoredPassword(trimmed);
+      setPhotos(data.photos || []);
+      setTotalBytes(data.totalBytes || 0);
+    } catch (err: any) {
+      setAuthError(err.message || 'Authentication failed. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleLogout = () => {

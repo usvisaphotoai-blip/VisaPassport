@@ -28,19 +28,24 @@ export async function POST(req: Request) {
   try {
     const { name, text, rating, country } = await req.json();
 
-    if (!name || !text) {
+    const cleanName = String(name || "").slice(0, 100).trim();
+    const cleanText = String(text || "").slice(0, 1000).trim();
+    const cleanCountry = country ? String(country).slice(0, 50).trim() : "USA";
+    const numericRating = Math.min(5, Math.max(1, Number(rating) || 5));
+
+    if (!cleanName || !cleanText) {
       return NextResponse.json({ success: false, error: "Name and review text are required" }, { status: 400 });
     }
 
     await connectMongo();
     
-    // Auto-approve reviews for now. You can change `isApproved` to false if moderation is needed.
+    // Default isApproved to false so reviews require admin moderation before going live
     const newReview = await Review.create({
-      name,
-      text,
-      rating: rating || 5,
-      country: country || "USA",
-      isApproved: true 
+      name: cleanName,
+      text: cleanText,
+      rating: numericRating,
+      country: cleanCountry,
+      isApproved: false 
     });
 
     const formattedReview = {

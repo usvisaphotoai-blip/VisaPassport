@@ -49,6 +49,8 @@ export async function POST(req: NextRequest) {
     await dbConnect();
 
     const fullDocId = formData.get("full_doc_id") as string;
+    const crypto = await import("crypto");
+    const downloadToken = crypto.randomBytes(24).toString("hex");
     
     const photoRecord = await Photo.create({
       documentType: fullDocId || `${countryCode}-${documentType}`,
@@ -56,6 +58,7 @@ export async function POST(req: NextRequest) {
       previewUrl: result.preview_url,
       printSheetUrl: result.print_sheet_url,
       originalUrl,
+      downloadToken,
       externalResultId: result.result_id,
       metrics: {
         headSizePct: result.metrics.head_height_pct,
@@ -90,6 +93,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       success: true,
       photoId: photoRecord._id.toString(),
+      downloadToken,
       processedImageUrl: result.preview_url,
       dimensions: result.dimensions,
       format: result.format,

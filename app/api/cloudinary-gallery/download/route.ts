@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-const EXPECTED_PASSWORD = 'ypqb4zzehy';
+const EXPECTED_PASSWORD = process.env.ADMIN_PASSWORD || process.env.CLOUDINARY_GALLERY_SECRET;
 
 export async function GET(request: Request) {
   try {
@@ -10,7 +10,7 @@ export async function GET(request: Request) {
     const pwdParam = searchParams.get('pwd');
     const authHeader = request.headers.get('x-gallery-password');
 
-    if (pwdParam !== EXPECTED_PASSWORD && authHeader !== EXPECTED_PASSWORD) {
+    if (!EXPECTED_PASSWORD || (pwdParam !== EXPECTED_PASSWORD && authHeader !== EXPECTED_PASSWORD)) {
       return NextResponse.json(
         { error: 'Unauthorized download request' },
         { status: 401 }
@@ -20,6 +20,25 @@ export async function GET(request: Request) {
     if (!imageUrl) {
       return NextResponse.json(
         { error: 'Missing image URL parameter' },
+        { status: 400 }
+      );
+    }
+
+    // Enforce SSRF protection: validate that URL is https and belongs to Cloudinary
+    try {
+      const parsedUrl = new URL(imageUrl);
+      if (
+        parsedUrl.protocol !== 'https:' ||
+        !(parsedUrl.hostname === 'res.cloudinary.com' || parsedUrl.hostname.endsWith('.cloudinary.com'))
+      ) {
+        return NextResponse.json(
+          { error: 'Invalid or untrusted image domain' },
+          { status: 400 }
+        );
+      }
+    } catch {
+      return NextResponse.json(
+        { error: 'Malformed image URL' },
         { status: 400 }
       );
     }

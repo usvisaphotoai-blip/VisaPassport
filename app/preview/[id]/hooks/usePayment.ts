@@ -16,6 +16,7 @@ interface PaymentOptions {
   status: "authenticated" | "loading" | "unauthenticated";
   session: any;
   setHasPaid: (paid: boolean) => void;
+  onSuccess?: (data: any) => void;
 }
 
 export function usePayment({
@@ -26,6 +27,7 @@ export function usePayment({
   status,
   session,
   setHasPaid,
+  onSuccess,
 }: PaymentOptions) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -119,12 +121,14 @@ export function usePayment({
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ ...response, photoId }),
             });
+            const verifyData = await verifyRes.json().catch(() => ({}));
             if (verifyRes.ok) {
+              onSuccess?.(verifyData);
               status === "authenticated"
                 ? router.push("/dashboard")
                 : setHasPaid(true);
             } else {
-              alert("Payment verification failed");
+              alert(verifyData?.error || "Payment verification failed");
             }
           } catch (e) {
             console.error("Verification error:", e);
