@@ -48,6 +48,27 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // Checker subpath redirects to canonical routes
+      {
+        source: "/visa-photo-validator/australian-passport-photo-checker",
+        destination: "/australian-passport-photo-checker",
+        permanent: true,
+      },
+      {
+        source: "/visa-photo-validator/diversity-visa-lottery-photo-checker",
+        destination: "/diversity-visa-lottery-photo-checker",
+        permanent: true,
+      },
+      {
+        source: "/visa-photo-validator/passport-photo-checker",
+        destination: "/passport-photo-checker",
+        permanent: true,
+      },
+      {
+        source: "/visa-photo-validator/online-passport-photo-checker",
+        destination: "/online-passport-photo-checker",
+        permanent: true,
+      },
       // Normalize ICAO slashes
       {
         source: "/icao-/-eu-visa-photo-editor",

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useCallback, useEffect } from "react";
+import Link from "next/link";
 import { AnimatePresence } from "framer-motion";
 import { useFaceVerification } from "@/hooks/useFaceVerification";
 import ValidationReportView from "@/app/visa-photo-validator/components/ValidationReport";
@@ -387,24 +388,26 @@ export default function ValidatorClient() {
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 max-w-4xl mx-auto ">
             {[
-              { href: "https://www.pixpassport.com/icao-standard-photo", label: "ICAO Standard Photo Tool" },
-              { href: "https://www.pixpassport.com/uk-passport-size-photo-maker", label: "UK Passport Size Photo Maker" },
-              { href: "https://www.pixpassport.com/passport-size-photo-maker", label: "Passport Size Photo Maker" },
-              { href: "https://www.pixpassport.com/us-passport-photo-editor", label: "US Passport Photo Editor" },
-              { href: "https://www.pixpassport.com/us-visa-photo-editor", label: "US Visa Photo Editor" },
+              { href: "/passport-photo-checker", label: "Passport Photo Checker" },
+              { href: "/online-passport-photo-checker", label: "Online Passport Photo Checker" },
+              { href: "/australian-passport-photo-checker", label: "Australian Passport Photo Checker" },
+              { href: "/diversity-visa-lottery-photo-checker", label: "DV Lottery Photo Checker" },
+              { href: "/uk-passport-photo-checker-online-free", label: "UK Passport Photo Checker" },
+              { href: "/passport-size-photo-maker", label: "Passport Size Photo Maker" },
+              { href: "/us-passport-photo-editor", label: "US Passport Photo Editor" },
+              { href: "/us-visa-photo-editor", label: "US Visa Photo Editor" },
+              { href: "/icao-standard-photo", label: "ICAO Standard Photo Tool" },
             ].map(({ href, label }) => (
-              <a
+              <Link
                 key={href}
                 href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-between gap-3 bg-red-300 hover:bg-lime-50 border border-slate-100 hover:border-lime-200 rounded-xl px-5 py-4 text-sm font-bold text-slate-700 hover:text-lime-700 transition-colors"
+                className="flex items-center justify-between gap-3 bg-white hover:bg-lime-50/80 border border-slate-200 hover:border-lime-300 rounded-xl px-5 py-4 text-sm font-bold text-slate-700 hover:text-lime-700 transition-all shadow-xs"
               >
                 {label}
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 text-slate-400">
                   <line x1="7" y1="17" x2="17" y2="7" /><polyline points="7 7 17 7 17 17" />
                 </svg>
-              </a>
+              </Link>
             ))}
           </div>
         </div>

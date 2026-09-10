@@ -14,6 +14,15 @@ const navLinks = [
   { href: "/support", label: "Support" },
 ];
 
+const checkerLinks = [
+  { href: "/visa-photo-validator", label: "Free Photo Validator", desc: "Universal ICAO compliance checker for 50+ countries" },
+  { href: "/passport-photo-checker", label: "Passport Photo Checker", desc: "Global biometric passport photo validation" },
+  { href: "/online-passport-photo-checker", label: "Online Photo Checker", desc: "Instant in-browser check without app installation" },
+  { href: "/australian-passport-photo-checker", label: "Australian Photo Checker", desc: "DFAT & APO 35×45mm compliance checker" },
+  { href: "/diversity-visa-lottery-photo-checker", label: "DV Lottery Photo Checker", desc: "Green card lottery 600×600 px photo test" },
+  { href: "/uk-passport-photo-checker-online-free", label: "UK Photo Checker", desc: "HMPO 35×45mm compliance checker" },
+];
+
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -68,15 +77,51 @@ export default function Navbar() {
             {/* ── Desktop nav links ── */}
             <div className="hidden lg:flex items-center gap-0.5 flex-1 ml-10">
               {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  prefetch={true}
-                  className="relative px-3.5 py-2 text-sm font-medium text-slate-600 hover:text-lime-700 rounded-lg hover:bg-lime-50/80 transition-all duration-150 whitespace-nowrap group"
-                >
-                  {link.label}
-                  <span className="absolute bottom-1 left-3.5 right-3.5 h-px bg-lime-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left rounded-full" />
-                </Link>
+                link.href === "/visa-photo-validator" ? (
+                  <div key={link.href} className="relative group">
+                    <Link
+                      href={link.href}
+                      prefetch={true}
+                      className="relative px-3.5 py-2 text-sm font-medium text-slate-600 hover:text-lime-700 rounded-lg hover:bg-lime-50/80 transition-all duration-150 whitespace-nowrap flex items-center gap-1.5"
+                    >
+                      {link.label}
+                      <svg className="w-3.5 h-3.5 text-slate-400 group-hover:text-lime-600 transition-transform duration-150 group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                      </svg>
+                      <span className="absolute bottom-1 left-3.5 right-3.5 h-px bg-lime-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left rounded-full" />
+                    </Link>
+                    {/* Dropdown Menu */}
+                    <div className="invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-200 absolute top-full left-0 pt-2 w-80 z-50">
+                      <div className="bg-white rounded-2xl shadow-xl shadow-slate-900/10 border border-slate-100 p-2 space-y-1">
+                        {checkerLinks.map((item) => (
+                          <Link
+                            key={item.href}
+                            href={item.href}
+                            prefetch={true}
+                            className="flex flex-col px-3.5 py-2.5 rounded-xl hover:bg-lime-50/70 transition-colors group/item"
+                          >
+                            <span className="text-xs font-bold text-slate-800 group-hover/item:text-lime-700 transition-colors">
+                              {item.label}
+                            </span>
+                            <span className="text-[11px] text-slate-500 line-clamp-1">
+                              {item.desc}
+                            </span>
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    prefetch={true}
+                    className="relative px-3.5 py-2 text-sm font-medium text-slate-600 hover:text-lime-700 rounded-lg hover:bg-lime-50/80 transition-all duration-150 whitespace-nowrap group"
+                  >
+                    {link.label}
+                    <span className="absolute bottom-1 left-3.5 right-3.5 h-px bg-lime-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left rounded-full" />
+                  </Link>
+                )
               ))}
             </div>
 
@@ -182,19 +227,44 @@ export default function Navbar() {
           {/* ── Mobile menu ── */}
           <div
             className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${
-              mobileOpen ? "max-h-[420px] opacity-100" : "max-h-0 opacity-0"
+              mobileOpen ? "max-h-[640px] opacity-100" : "max-h-0 opacity-0"
             }`}
           >
             <div className="border-t border-gray-100 pt-3 pb-5 flex flex-col gap-0.5">
               {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setMobileOpen(false)}
-                  className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-slate-700 hover:text-lime-700 hover:bg-lime-50 rounded-xl transition-all duration-150"
-                >
-                  {link.label}
-                </Link>
+                link.href === "/visa-photo-validator" ? (
+                  <div key={link.href} className="flex flex-col">
+                    <Link
+                      href={link.href}
+                      onClick={() => setMobileOpen(false)}
+                      className="flex items-center justify-between px-4 py-3 text-sm font-medium text-slate-700 hover:text-lime-700 hover:bg-lime-50 rounded-xl transition-all duration-150"
+                    >
+                      <span>{link.label}</span>
+                      <span className="text-[10px] font-bold text-lime-700 bg-lime-100/80 px-2 py-0.5 rounded-full">6 Checkers</span>
+                    </Link>
+                    <div className="pl-4 pr-2 pb-2 grid grid-cols-2 gap-1.5">
+                      {checkerLinks.slice(1).map((sub) => (
+                        <Link
+                          key={sub.href}
+                          href={sub.href}
+                          onClick={() => setMobileOpen(false)}
+                          className="px-2.5 py-1.5 text-xs font-semibold text-slate-600 hover:text-lime-700 hover:bg-lime-50 rounded-lg transition-colors border border-slate-100 bg-slate-50/60"
+                        >
+                          {sub.label}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                ) : (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setMobileOpen(false)}
+                    className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-slate-700 hover:text-lime-700 hover:bg-lime-50 rounded-xl transition-all duration-150"
+                  >
+                    {link.label}
+                  </Link>
+                )
               ))}
 
               <div className="h-px bg-gray-100 my-2 mx-1" />

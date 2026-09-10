@@ -195,6 +195,78 @@ export default async function Home() {
                 </div>
               </Link>
               <Link 
+                href="/passport-photo-checker"
+                className="group bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 hover:border-lime-400 hover:shadow-md transition-all flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-center gap-2.5 mb-2">
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 bg-lime-100/80 rounded-lg flex items-center justify-center text-sm sm:text-base shrink-0 group-hover:scale-105 transition-transform">
+                      🌍
+                    </div>
+                    <h3 className="font-bold text-xs sm:text-sm text-slate-900 group-hover:text-lime-700 transition-colors line-clamp-1 leading-snug">
+                      Passport Photo Checker
+                    </h3>
+                  </div>
+                  <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">
+                    Universal compliance validator for 50+ countries. Instant biometric PASS/FAIL report.
+                  </p>
+                </div>
+              </Link>
+              <Link 
+                href="/online-passport-photo-checker"
+                className="group bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 hover:border-lime-400 hover:shadow-md transition-all flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-center gap-2.5 mb-2">
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 bg-lime-100/80 rounded-lg flex items-center justify-center text-sm sm:text-base shrink-0 group-hover:scale-105 transition-transform">
+                      ⚡
+                    </div>
+                    <h3 className="font-bold text-xs sm:text-sm text-slate-900 group-hover:text-lime-700 transition-colors line-clamp-1 leading-snug">
+                      Online Passport Photo Checker
+                    </h3>
+                  </div>
+                  <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">
+                    Test your photo in-browser in under 3 seconds. No app download or account registration needed.
+                  </p>
+                </div>
+              </Link>
+              <Link 
+                href="/australian-passport-photo-checker"
+                className="group bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 hover:border-lime-400 hover:shadow-md transition-all flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-center gap-2.5 mb-2">
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 bg-lime-100/80 rounded-lg flex items-center justify-center text-sm sm:text-base shrink-0 group-hover:scale-105 transition-transform">
+                      🇦🇺
+                    </div>
+                    <h3 className="font-bold text-xs sm:text-sm text-slate-900 group-hover:text-lime-700 transition-colors line-clamp-1 leading-snug">
+                      Australian Passport Photo Checker
+                    </h3>
+                  </div>
+                  <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">
+                    Verify DFAT &amp; APO rules: 35×45mm, 32–36mm face height, plain white background, and no glasses.
+                  </p>
+                </div>
+              </Link>
+              <Link 
+                href="/diversity-visa-lottery-photo-checker"
+                className="group bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 hover:border-lime-400 hover:shadow-md transition-all flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-center gap-2.5 mb-2">
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 bg-lime-100/80 rounded-lg flex items-center justify-center text-sm sm:text-base shrink-0 group-hover:scale-105 transition-transform">
+                      🎟️
+                    </div>
+                    <h3 className="font-bold text-xs sm:text-sm text-slate-900 group-hover:text-lime-700 transition-colors line-clamp-1 leading-snug">
+                      DV Lottery Photo Checker
+                    </h3>
+                  </div>
+                  <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">
+                    Official US Green Card lottery 600×600 px photo validation: 50–69% head ratio, zero eyewear.
+                  </p>
+                </div>
+              </Link>
+              <Link 
                 href="/indian-passport-size-photograph"
                 className="group bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 hover:border-lime-400 hover:shadow-md transition-all flex flex-col justify-between"
               >

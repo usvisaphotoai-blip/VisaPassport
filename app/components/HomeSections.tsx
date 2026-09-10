@@ -315,13 +315,20 @@ export default function HomeSections({
         <p className="hc-seo-p">
           Every year, thousands of passport and visa applications are delayed
           because of a photo that doesn't meet size or background rules.
-          <strong> PixPassport</strong> is a free online passport photo checker
+          <strong> PixPassport</strong> is a free{" "}
+          <a href="/online-passport-photo-checker" style={{ color: "#3d8c6e", fontWeight: 600 }}>
+            online passport photo checker
+          </a>{" "}
           that crops, resizes, and validates your photo against official{" "}
           <a href="/icao-compliant-photo" style={{ color: "#3d8c6e", fontWeight: 600 }}>
             ICAO standard photo
           </a>{" "}
           requirements in seconds — no photo studio needed. Not sure if your
-          photo will pass? Run it through our{" "}
+          photo will pass? Run it through our universal{" "}
+          <a href="/passport-photo-checker" style={{ color: "#3d8c6e", fontWeight: 600 }}>
+            passport photo checker
+          </a>{" "}
+          or our{" "}
           <a href="/visa-photo-validator" style={{ color: "#3d8c6e", fontWeight: 600 }}>
             free ICAO photo validator
           </a>{" "}
@@ -330,8 +337,19 @@ export default function HomeSections({
         <p className="hc-seo-p">
           <strong>Passport photo size by country:</strong> requirements vary
           more than most applicants expect. A UK passport photo must be
-          35x45mm, a US passport photo is 2x2in (600x600px), and the{" "}
-          <strong>Sri Lanka passport photo size</strong> follows the standard
+          35x45mm (test it with our{" "}
+          <a href="/uk-passport-photo-checker-online-free" style={{ color: "#3d8c6e", fontWeight: 600 }}>
+            UK passport photo checker
+          </a>
+          ), Australian applications require 35x45mm with strict 32–36mm face height (verify with our{" "}
+          <a href="/australian-passport-photo-checker" style={{ color: "#3d8c6e", fontWeight: 600 }}>
+            Australian passport photo checker
+          </a>
+          ), US Green Card applicants need exact 600x600 px digital squares (use our{" "}
+          <a href="/diversity-visa-lottery-photo-checker" style={{ color: "#3d8c6e", fontWeight: 600 }}>
+            DV lottery photo checker
+          </a>
+          ), and the <strong>Sri Lanka passport photo size</strong> follows the standard
           45x35mm ICAO format. We also support exact specs for{" "}
           <strong>New Zealand visa photos</strong>,{" "}
           <strong>France visa photos (updated for 2026)</strong>, China visa

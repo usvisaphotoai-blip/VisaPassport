@@ -96,6 +96,18 @@ export default function PassportDirectoryPage() {
             <Link href="/uk-passport-photo-checker-online-free" className="text-xs font-semibold text-slate-700 hover:text-blue-600 bg-white p-3 rounded-xl border border-slate-200 shadow-xs transition-colors">
               UK Photo Checker
             </Link>
+            <Link href="/passport-photo-checker" className="text-xs font-semibold text-slate-700 hover:text-blue-600 bg-white p-3 rounded-xl border border-slate-200 shadow-xs transition-colors">
+              Passport Photo Checker
+            </Link>
+            <Link href="/online-passport-photo-checker" className="text-xs font-semibold text-slate-700 hover:text-blue-600 bg-white p-3 rounded-xl border border-slate-200 shadow-xs transition-colors">
+              Online Photo Checker
+            </Link>
+            <Link href="/australian-passport-photo-checker" className="text-xs font-semibold text-slate-700 hover:text-blue-600 bg-white p-3 rounded-xl border border-slate-200 shadow-xs transition-colors">
+              Australian Photo Checker
+            </Link>
+            <Link href="/diversity-visa-lottery-photo-checker" className="text-xs font-semibold text-slate-700 hover:text-blue-600 bg-white p-3 rounded-xl border border-slate-200 shadow-xs transition-colors">
+              DV Lottery Checker
+            </Link>
           </div>
         </div>
       </section>

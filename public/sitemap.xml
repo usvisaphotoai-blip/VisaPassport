@@ -2182,6 +2182,36 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/indian-passport-size-photograph" />
     <lastmod>2026-08-10</lastmod>
     <changefreq>weekly</changefreq>
+  <url>
+    <loc>https://www.pixpassport.com/australian-passport-photo-checker</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/australian-passport-photo-checker" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/australian-passport-photo-checker" />
+    <lastmod>2026-09-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/diversity-visa-lottery-photo-checker</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/diversity-visa-lottery-photo-checker" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/diversity-visa-lottery-photo-checker" />
+    <lastmod>2026-09-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/passport-photo-checker</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/passport-photo-checker" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/passport-photo-checker" />
+    <lastmod>2026-09-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/online-passport-photo-checker</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/online-passport-photo-checker" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/online-passport-photo-checker" />
+    <lastmod>2026-09-10</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 </urlset>

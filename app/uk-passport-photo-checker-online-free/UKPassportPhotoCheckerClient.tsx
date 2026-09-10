@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useCallback, useEffect } from "react";
+import Link from "next/link";
 import { useFaceVerification } from "@/hooks/useFaceVerification";
 import ValidationReportView from "@/app/visa-photo-validator/components/ValidationReport";
 
@@ -836,8 +837,80 @@ export default function UKPassportPhotoCheckerClient() {
           </h3>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             
-            <a
-              href="https://www.pixpassport.com/uk-passport-size-photo-maker"
+            <Link
+              href="/passport-photo-checker"
+              className="bg-white p-4 rounded-xl border border-slate-200 hover:border-lime-400 hover:shadow-md transition-all flex flex-col justify-between group"
+            >
+              <div>
+                <span className="text-base mb-1.5 block">🌍</span>
+                <h4 className="font-bold text-sm text-slate-900 group-hover:text-lime-700 transition-colors">
+                  Passport Photo Checker
+                </h4>
+                <p className="text-xs text-slate-500 font-medium mt-1">
+                  Universal biometric compliance validator for 50+ countries.
+                </p>
+              </div>
+              <span className="text-xs font-bold text-lime-600 mt-3 flex items-center gap-1">
+                Check Passport Photo →
+              </span>
+            </Link>
+
+            <Link
+              href="/online-passport-photo-checker"
+              className="bg-white p-4 rounded-xl border border-slate-200 hover:border-lime-400 hover:shadow-md transition-all flex flex-col justify-between group"
+            >
+              <div>
+                <span className="text-base mb-1.5 block">⚡</span>
+                <h4 className="font-bold text-sm text-slate-900 group-hover:text-lime-700 transition-colors">
+                  Online Photo Checker
+                </h4>
+                <p className="text-xs text-slate-500 font-medium mt-1">
+                  Free instant in-browser test with zero downloads or accounts.
+                </p>
+              </div>
+              <span className="text-xs font-bold text-lime-600 mt-3 flex items-center gap-1">
+                Open Online Checker →
+              </span>
+            </Link>
+
+            <Link
+              href="/australian-passport-photo-checker"
+              className="bg-white p-4 rounded-xl border border-slate-200 hover:border-lime-400 hover:shadow-md transition-all flex flex-col justify-between group"
+            >
+              <div>
+                <span className="text-base mb-1.5 block">🇦🇺</span>
+                <h4 className="font-bold text-sm text-slate-900 group-hover:text-lime-700 transition-colors">
+                  Australian Photo Checker
+                </h4>
+                <p className="text-xs text-slate-500 font-medium mt-1">
+                  Verify 35×45mm, 32–36mm face height, and DFAT &amp; APO standards.
+                </p>
+              </div>
+              <span className="text-xs font-bold text-lime-600 mt-3 flex items-center gap-1">
+                Check Australian Photo →
+              </span>
+            </Link>
+
+            <Link
+              href="/diversity-visa-lottery-photo-checker"
+              className="bg-white p-4 rounded-xl border border-slate-200 hover:border-lime-400 hover:shadow-md transition-all flex flex-col justify-between group"
+            >
+              <div>
+                <span className="text-base mb-1.5 block">🎟️</span>
+                <h4 className="font-bold text-sm text-slate-900 group-hover:text-lime-700 transition-colors">
+                  DV Lottery Photo Checker
+                </h4>
+                <p className="text-xs text-slate-500 font-medium mt-1">
+                  Validate 600×600 px digital requirements for US Green Card.
+                </p>
+              </div>
+              <span className="text-xs font-bold text-lime-600 mt-3 flex items-center gap-1">
+                Check DV Lottery Photo →
+              </span>
+            </Link>
+
+            <Link
+              href="/uk-passport-size-photo-maker"
               className="bg-white p-4 rounded-xl border border-slate-200 hover:border-lime-400 hover:shadow-md transition-all flex flex-col justify-between group"
             >
               <div>
@@ -852,14 +925,32 @@ export default function UKPassportPhotoCheckerClient() {
               <span className="text-xs font-bold text-lime-600 mt-3 flex items-center gap-1">
                 Make UK Photo →
               </span>
-            </a>
+            </Link>
 
-            <a
-              href="https://www.pixpassport.com/passport-size-photo-maker"
+            <Link
+              href="/visa-photo-validator"
               className="bg-white p-4 rounded-xl border border-slate-200 hover:border-lime-400 hover:shadow-md transition-all flex flex-col justify-between group"
             >
               <div>
-                <span className="text-base mb-1.5 block">🌐</span>
+                <span className="text-base mb-1.5 block">🛡️</span>
+                <h4 className="font-bold text-sm text-slate-900 group-hover:text-lime-700 transition-colors">
+                  Free Photo Validator
+                </h4>
+                <p className="text-xs text-slate-500 font-medium mt-1">
+                  Biometric compliance scan for passports and visas for 50+ countries.
+                </p>
+              </div>
+              <span className="text-xs font-bold text-lime-600 mt-3 flex items-center gap-1">
+                Open Validator →
+              </span>
+            </Link>
+
+            <Link
+              href="/passport-size-photo-maker"
+              className="bg-white p-4 rounded-xl border border-slate-200 hover:border-lime-400 hover:shadow-md transition-all flex flex-col justify-between group"
+            >
+              <div>
+                <span className="text-base mb-1.5 block">📸</span>
                 <h4 className="font-bold text-sm text-slate-900 group-hover:text-lime-700 transition-colors">
                   Global Passport Size Photo Maker
                 </h4>
@@ -870,10 +961,10 @@ export default function UKPassportPhotoCheckerClient() {
               <span className="text-xs font-bold text-lime-600 mt-3 flex items-center gap-1">
                 Create Global Photo →
               </span>
-            </a>
+            </Link>
 
-            <a
-              href="https://www.pixpassport.com/fr"
+            <Link
+              href="/fr"
               className="bg-white p-4 rounded-xl border border-slate-200 hover:border-lime-400 hover:shadow-md transition-all flex flex-col justify-between group"
             >
               <div>
@@ -888,25 +979,7 @@ export default function UKPassportPhotoCheckerClient() {
               <span className="text-xs font-bold text-lime-600 mt-3 flex items-center gap-1">
                 Voir en français →
               </span>
-            </a>
-
-            <a
-              href="https://www.pixpassport.com/de"
-              className="bg-white p-4 rounded-xl border border-slate-200 hover:border-lime-400 hover:shadow-md transition-all flex flex-col justify-between group"
-            >
-              <div>
-                <span className="text-base mb-1.5 block">🇩🇪</span>
-                <h4 className="font-bold text-sm text-slate-900 group-hover:text-lime-700 transition-colors">
-                  PixPassport Deutschland (Passbild)
-                </h4>
-                <p className="text-xs text-slate-500 font-medium mt-1">
-                  Erstellen Sie Ihr biometrisches Passbild online für Deutschland.
-                </p>
-              </div>
-              <span className="text-xs font-bold text-lime-600 mt-3 flex items-center gap-1">
-                Auf Deutsch ansehen →
-              </span>
-            </a>
+            </Link>
 
           </div>
         </div>
