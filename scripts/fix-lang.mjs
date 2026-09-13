@@ -112,6 +112,9 @@ function getSitemapHreflangTags(pathname) {
       tags.push(`    <xhtml:link rel="alternate" hreflang="x-default" href="${fullUrl}" />`);
     } else if (cleanPath.startsWith('/de')) {
       tags.push(`    <xhtml:link rel="alternate" hreflang="de" href="${fullUrl}" />`);
+      if (cleanPath.includes('schweiz')) {
+        tags.push(`    <xhtml:link rel="alternate" hreflang="de-CH" href="${fullUrl}" />`);
+      }
       tags.push(`    <xhtml:link rel="alternate" hreflang="x-default" href="${fullUrl}" />`);
     } else {
       tags.push(`    <xhtml:link rel="alternate" hreflang="en" href="${fullUrl}" />`);

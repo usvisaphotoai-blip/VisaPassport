@@ -332,7 +332,7 @@ export default function ValidatorClient() {
                       const slug = d.id.replace(/-passport$/, "").replace(/-visa$/, "");
                       const code = countryMapping[slug] || slug.toUpperCase();
                       return code === selectedCountry;
-                    }))?.id || "us-passport"
+                    }))?.id || (selectedCountry === "CHE" || selectedCountry === "CH" ? "switzerland-passport" : selectedCountry === "NI" || selectedCountry === "NI" ? "nigeria-passport" : "us-passport")
                   }
                   selectedDocPrice={
                     (documentTypes.find((d) => {

@@ -6,8 +6,8 @@ export const SUPPORTED_COUNTRIES = [
   "DZ", "AU", "AT", "BE", "BG", "BT", "CA", "CN", "HR", "CZ", "DK", "EE",
   "FI", "FR", "DE", "GR", "HU", "IN", "ID", "IR", "IQ", "IT",
   "JP", "KZ", "LV", "LT", "LU", "MW", "MT", "MX", "NP", "NL", "NZ", "NO", "PL",
-  "PT", "RO", "RU", "SA", "EU", "SG", "SK", "SI", "KR", "ES", "LK", "SE", "CHE",
-  "TJ", "TH", "TR", "AE", "GB", "US"
+  "PT", "RO", "RU", "SA", "EU", "SG", "SK", "SI", "KR", "ES", "LK", "SE", "CHE", "CH",
+  "TJ", "TH", "TR", "AE", "GB", "US", "NI", "NG"
 ];
 
 export interface CountrySpec {
@@ -154,6 +154,8 @@ export function getSpecById(id: string): CountrySpec | undefined {
   if (base === "belguim" || base === "belgium") return allSpecs.find((s) => s.id === "belgium-passport");
   if (base === "uk" || base === "united-kingdom" || base === "gb") return allSpecs.find((s) => s.id === "uk-passport");
   if (base === "in" || base === "india") return allSpecs.find((s) => s.id === "india-passport");
+  if (base === "switzerland" || base === "che" || base === "ch" || base === "swiss") return allSpecs.find((s) => s.id === "switzerland-passport");
+  if (base === "nigeria" || base === "ni" || base === "ng" || base === "nigerian") return allSpecs.find((s) => s.id === "nigeria-passport");
 
   // Country code mappings fallback (e.g., if id is "EU-passport", "IN-passport", "GB-passport", etc.)
   const codeToSpec: Record<string, string> = {
@@ -166,6 +168,10 @@ export function getSpecById(id: string): CountrySpec | undefined {
     DE: "germany-passport",
     AU: "australia-passport",
     CA: "canada-passport",
+    CHE: "switzerland-passport",
+    CH: "switzerland-passport",
+    NI: "nigeria-passport",
+
   };
   const parts = cleanId.split("-");
   const countryCodeUpper = parts[0].toUpperCase();

@@ -3,6 +3,18 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   reactCompiler: true,
+  // Low-RAM optimizations to prevent OOM build failure and server crashes
+  experimental: {
+    cpus: 2,
+    memoryBasedWorkersCount: true,
+    turbopackMemoryLimit: 2048 * 1024 * 1024,
+    webpackMemoryOptimizations: true,
+    parallelServerCompiles: false,
+    parallelServerBuildTraces: false,
+  },
+  turbopack: {
+    root: process.cwd(),
+  },
   allowedDevOrigins: [
     "http://192.168.1.4:3000",
   ],

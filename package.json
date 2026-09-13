@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "NODE_OPTIONS='--max-old-space-size=4096' next build",
     "postbuild": "node scripts/fix-lang.mjs",
-    "start": "next start",
+    "start": "NODE_OPTIONS='--max-old-space-size=3072' next start",
     "lint": "eslint"
   },
   "dependencies": {

@@ -12,6 +12,8 @@ export default function FooterDe() {
         { label: "Führerschein Foto", href: "/de/fuehrerschein-foto" },
         { label: "Visum Foto", href: "/de/visum-foto" },
         { label: "Gesundheitskarte", href: "/de/gesundheitskarte-foto" },
+        { label: "Passfoto Schweiz", href: "/de/passfoto-schweiz-online" },
+        { label: "Dokumentenfoto Schweiz", href: "/de/dokumentenfoto-schweiz" },
       ],
     },
     {
