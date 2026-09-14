@@ -335,15 +335,103 @@ export default function ValidationReportView({ report, onReset, selectedDocId, s
 
         {overall_result === "FAIL" && (
           <div className="mt-6 border-t border-slate-100 pt-6">
-            <button
-              onClick={() => {
-                const url = selectedDocId ? `/passport-photo-online?type=${selectedDocId}` : '/passport-photo-online';
-                window.location.href = url;
-              }}
-              className="w-full h-14 rounded-xl bg-lime-600 text-white font-bold text-sm uppercase tracking-widest hover:bg-lime-700 active:scale-[0.98] transition-all flex items-center justify-center gap-2.5 shadow-lg shadow-lime-500/30"
-            >
-              Create your ID photo
-            </button>
+           
+
+            {/* Animated Button Container */}
+            <div className="relative group">
+              {/* Outer pulsing glow aura */}
+              <motion.div
+                className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-500 to-blue-600 opacity-60 blur-md pointer-events-none"
+                animate={{
+                  opacity: [0.35, 0.8, 0.35],
+                  scale: [0.99, 1.025, 0.99],
+                }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 2,
+                  ease: "easeInOut",
+                }}
+              />
+
+              {/* Main Animated Button */}
+              <motion.button
+                onClick={() => {
+                  const url = selectedDocId ? `/passport-photo-online?type=${selectedDocId}` : '/passport-photo-online';
+                  window.location.href = url;
+                }}
+                animate={{
+                  scale: [1, 1.018, 1],
+                }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 1.8,
+                  ease: "easeInOut",
+                }}
+                whileHover={{ scale: 1.025 }}
+                whileTap={{ scale: 0.97 }}
+                className="relative w-full h-14 rounded-xl bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-600 text-white font-bold text-sm uppercase tracking-widest transition-all flex items-center justify-center gap-2.5 shadow-xl shadow-blue-500/30 overflow-hidden cursor-pointer"
+                aria-label="Create your ID photo"
+              >
+                {/* Continuous Shimmer sweep beam */}
+                <motion.div
+                  className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12 pointer-events-none"
+                  animate={{ x: ["-100%", "250%"] }}
+                  transition={{
+                    repeat: Infinity,
+                    duration: 2.2,
+                    ease: "easeInOut",
+                    repeatDelay: 0.6,
+                  }}
+                />
+
+                {/* Left: Sparkle / Magic icon */}
+                <motion.span
+                  animate={{
+                    rotate: [0, -15, 15, -10, 10, 0],
+                    scale: [1, 1.15, 1],
+                  }}
+                  transition={{
+                    repeat: Infinity,
+                    duration: 2.4,
+                    ease: "easeInOut",
+                  }}
+                  className="relative z-10 text-amber-300 drop-shadow-sm flex items-center"
+                >
+                  <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4L12 2z" />
+                  </svg>
+                </motion.span>
+
+                {/* Button text */}
+                <span className="relative z-10 font-black tracking-widest text-sm drop-shadow-sm">
+                  Create your ID photo
+                </span>
+
+                {/* Right: Bouncing arrow */}
+                <motion.span
+                  className="relative z-10 flex items-center"
+                  animate={{ x: [0, 5, 0] }}
+                  transition={{
+                    repeat: Infinity,
+                    duration: 1.2,
+                    ease: "easeInOut",
+                  }}
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                    <polyline points="12 5 19 12 12 19" />
+                  </svg>
+                </motion.span>
+              </motion.button>
+
+              {/* Animated click / tap pointer guide */}
+            
+            </div>
+
+            {/* Explanatory subtitle */}
+            <p className="mt-4 text-center text-xs text-slate-500 font-medium flex items-center justify-center gap-1.5">
+              <span>✨ Automatically crop, correct background & fix lighting for 100% compliance</span>
+            </p>
           </div>
         )}
       </motion.div>
