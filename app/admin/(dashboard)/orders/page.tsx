@@ -371,17 +371,29 @@ export default async function AdminOrdersPage(props: Props) {
                         )}
                       </td>
 
-                      {/* Modal Action */}
+                      {/* Modal & Invoice Action */}
                       <td className="px-5 py-4 text-right">
-                        <OrderDetailModal
-                          order={order}
-                          payment={payment}
-                          photo={photo}
-                          countryName={countryName}
-                          email={email}
-                          effectiveStatus={effectiveStatus}
-                          paymentId={paymentId}
-                        />
+                        <div className="flex items-center justify-end gap-1.5">
+                          {isPaid && (paymentId || order.orderNumber) && (
+                            <a
+                              href={`/admin/invoices?search=${encodeURIComponent(paymentId || order.orderNumber)}`}
+                              className="px-2 py-1.5 text-xs font-bold text-slate-700 bg-slate-100 hover:bg-lime-300 rounded-xl transition-colors flex items-center gap-1 shadow-2xs"
+                              title="View Invoice in Billing Center"
+                            >
+                              <span>🧾</span>
+                              <span className="hidden sm:inline">Invoice</span>
+                            </a>
+                          )}
+                          <OrderDetailModal
+                            order={order}
+                            payment={payment}
+                            photo={photo}
+                            countryName={countryName}
+                            email={email}
+                            effectiveStatus={effectiveStatus}
+                            paymentId={paymentId}
+                          />
+                        </div>
                       </td>
                     </tr>
                   );

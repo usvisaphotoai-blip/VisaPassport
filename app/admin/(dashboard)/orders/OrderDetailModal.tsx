@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import InvoicePreviewModal from "../invoices/InvoicePreviewModal";
 
 interface OrderDetailModalProps {
   order: any;
@@ -25,6 +26,8 @@ export default function OrderDetailModal({
   const [isOpen, setIsOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<"overview" | "payment" | "biometrics" | "json">("overview");
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
+  const [previewInvoice, setPreviewInvoice] = useState<any | null>(null);
+  const [isGeneratingInvoice, setIsGeneratingInvoice] = useState(false);
 
   // Close on escape key and lock body scroll
   useEffect(() => {
@@ -45,6 +48,37 @@ export default function OrderDetailModal({
     navigator.clipboard.writeText(text);
     setCopiedKey(key);
     setTimeout(() => setCopiedKey(null), 1800);
+  };
+
+  const handleOpenInvoice = async () => {
+    const targetPaymentId = payment?.gatewayPaymentId || paymentId || order?.metadata?.razorpayOrderId;
+    if (!targetPaymentId) {
+      alert("No payment reference found for this order");
+      return;
+    }
+
+    try {
+      setIsGeneratingInvoice(true);
+      const res = await fetch("/api/admin/invoices/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          gatewayPaymentId: targetPaymentId,
+          paymentId: payment?._id,
+        }),
+      });
+
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.error || "Failed to retrieve or generate invoice");
+      }
+
+      setPreviewInvoice(data.invoice);
+    } catch (err: any) {
+      alert("Invoice Error: " + err.message);
+    } finally {
+      setIsGeneratingInvoice(false);
+    }
   };
 
   // Retention calculation
@@ -628,6 +662,16 @@ export default function OrderDetailModal({
                 <span className="truncate max-w-[140px] sm:max-w-xs">{order._id.toString()}</span>
               </div>
               <div className="flex items-center gap-2">
+                {effectiveStatus === "paid" && (
+                  <button
+                    onClick={handleOpenInvoice}
+                    disabled={isGeneratingInvoice}
+                    className="px-3 py-1.5 bg-lime-500 hover:bg-lime-400 text-slate-950 text-xs font-black rounded-xl transition-all cursor-pointer flex items-center gap-1.5 shadow-2xs disabled:opacity-50"
+                  >
+                    <span>{isGeneratingInvoice ? "⏳" : "🧾"}</span>
+                    <span>{isGeneratingInvoice ? "Loading..." : "Invoice"}</span>
+                  </button>
+                )}
                 <button
                   onClick={() => copyToClipboard(JSON.stringify(fullData, null, 2), "footerJson")}
                   className="px-3 py-1.5 bg-white hover:bg-slate-100 border border-slate-200 text-slate-700 text-xs font-bold rounded-xl transition-colors cursor-pointer"
@@ -644,6 +688,15 @@ export default function OrderDetailModal({
             </div>
           </div>
         </div>
+      )}
+
+      {/* Invoice Preview Modal */}
+      {previewInvoice && (
+        <InvoicePreviewModal
+          invoice={previewInvoice}
+          isOpen={Boolean(previewInvoice)}
+          onClose={() => setPreviewInvoice(null)}
+        />
       )}
     </>
   );

@@ -1,11 +1,19 @@
 import { Resend } from 'resend';
 
+export interface EmailAttachment {
+  filename: string;
+  content?: Buffer | string;
+  path?: string;
+  contentType?: string;
+}
+
 interface SendMailOptions {
   to: string;
   subject: string;
   text?: string;
   html?: string;
   bcc?: string | string[];
+  attachments?: EmailAttachment[];
 }
 
 // Validate required environment variables at module load (server-side only)
@@ -43,6 +51,10 @@ export const sendEmail = async (options: SendMailOptions) => {
 
     if (options.bcc) {
       payload.bcc = options.bcc;
+    }
+
+    if (options.attachments && options.attachments.length > 0) {
+      payload.attachments = options.attachments;
     }
 
     if (options.html) {

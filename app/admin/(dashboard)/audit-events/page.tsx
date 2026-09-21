@@ -1,10 +1,16 @@
+import mongoose from "mongoose";
 import dbConnect from "@/lib/mongodb";
 import AuditEvent, { AuditEventType } from "@/models/AuditEvent";
 import Order from "@/models/Order";
 import Photo from "@/models/Photo";
+import Payment from "@/models/Payment";
+import Invoice from "@/models/Invoice";
 import User from "@/models/User";
-import AuditEventFilters from "./AuditEventFilters";
-import AuditDetailModal from "./AuditDetailModal";
+import AuditEventsClientPage, {
+  AuditEventItem,
+  PhotoGroup,
+  UserTreeGroup,
+} from "./AuditEventsClientPage";
 
 export const revalidate = 0;
 
@@ -28,7 +34,7 @@ export default async function AdminAuditEventsPage(props: Props) {
 
   await dbConnect();
 
-  // Counts by type across all events
+  // 1. Total & type-based counts across entire collection
   const countsRaw = await AuditEvent.aggregate([
     { $group: { _id: "$eventType", count: { $sum: 1 } } },
   ]);
@@ -36,18 +42,30 @@ export default async function AdminAuditEventsPage(props: Props) {
     acc[c._id] = c.count;
     return acc;
   }, {});
-  const totalCount = Object.values(countsMap).reduce((a: number, b: any) => a + Number(b), 0);
+  const totalCount = Object.values(countsMap).reduce(
+    (a: number, b: any) => a + Number(b),
+    0
+  );
 
-  // Date range timestamps calculation
+  // 2. Date range timestamps calculation
   let minDateTimestamp: number | null = null;
   let maxDateTimestamp: number | null = null;
   const now = new Date();
 
   if (filterDatePreset === "today") {
-    minDateTimestamp = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+    minDateTimestamp = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate()
+    ).getTime();
   } else if (filterDatePreset === "yesterday") {
-    minDateTimestamp = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1).getTime();
-    maxDateTimestamp = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime() - 1;
+    minDateTimestamp = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate() - 1
+    ).getTime();
+    maxDateTimestamp =
+      new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime() - 1;
   } else if (filterDatePreset === "7d") {
     minDateTimestamp = now.getTime() - 7 * 24 * 60 * 60 * 1000;
   } else if (filterDatePreset === "30d") {
@@ -61,306 +79,511 @@ export default async function AdminAuditEventsPage(props: Props) {
     }
   }
 
-  // Fetch events based on query
+  // 3. Query AuditEvents from DB with high limit to include all download and payment events
   const query: any = {};
-  if (filterType) query.eventType = filterType;
+  if (filterType && filterType !== ("all" as any)) query.eventType = filterType;
   if (minDateTimestamp || maxDateTimestamp) {
     query.createdAt = {};
     if (minDateTimestamp) query.createdAt.$gte = new Date(minDateTimestamp);
     if (maxDateTimestamp) query.createdAt.$lte = new Date(maxDateTimestamp);
   }
 
-  const rawEventsList = await AuditEvent.find(query).sort({ createdAt: -1 }).limit(200).lean();
+  // Fetch up to 2500 events to ensure all recent downloads and customer sessions are captured
+  let rawEventsList = await AuditEvent.find(query)
+    .sort({ createdAt: -1 })
+    .limit(2500)
+    .lean();
 
-  // Resolve customer emails across associated orders and photos
-  const orderIds = rawEventsList.map((e: any) => e.orderId).filter(Boolean);
-  const photoIds = rawEventsList.map((e: any) => e.photoId).filter(Boolean);
+  // If a specific filter (like type=download) was applied, also fetch the full sibling lifecycle events
+  // for those matching photos so the complete commit graph (init -> processing -> payment -> email -> download) is visible
+  if (filterType && filterType !== ("all" as any)) {
+    const matchedPhotoIds = Array.from(
+      new Set(
+        rawEventsList
+          .map((e: any) =>
+            e.photoId
+              ? String(e.photoId)
+              : e.metadata?.photoId
+              ? String(e.metadata.photoId)
+              : null
+          )
+          .filter(Boolean) as string[]
+      )
+    );
 
-  const [orders, photos] = await Promise.all([
-    Order.find({ _id: { $in: orderIds } }).select("_id guestEmail userId").lean(),
-    Photo.find({ _id: { $in: photoIds } }).select("_id guestEmail userId").lean(),
+    if (matchedPhotoIds.length > 0) {
+      const siblingEvents = await AuditEvent.find({
+        $or: [
+          { photoId: { $in: matchedPhotoIds } },
+          { "metadata.photoId": { $in: matchedPhotoIds } },
+        ],
+      })
+        .sort({ createdAt: -1 })
+        .lean();
+
+      // Merge and deduplicate by _id
+      const eventMap = new Map<string, any>();
+      rawEventsList.forEach((e: any) => eventMap.set(e._id.toString(), e));
+      siblingEvents.forEach((e: any) => eventMap.set(e._id.toString(), e));
+      rawEventsList = Array.from(eventMap.values()).sort(
+        (a: any, b: any) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      );
+    }
+  }
+
+  // 4. Collect referenced IDs
+  const photoIds = Array.from(
+    new Set(
+      rawEventsList
+        .map((e: any) =>
+          e.photoId
+            ? String(e.photoId)
+            : e.metadata?.photoId
+            ? String(e.metadata.photoId)
+            : null
+        )
+        .filter(Boolean) as string[]
+    )
+  );
+
+  const orderIds = Array.from(
+    new Set(
+      rawEventsList
+        .map((e: any) => (e.orderId ? String(e.orderId) : null))
+        .filter(Boolean) as string[]
+    )
+  );
+
+  const paymentIds = Array.from(
+    new Set(
+      rawEventsList
+        .map((e: any) => (e.paymentId ? String(e.paymentId) : null))
+        .filter(Boolean) as string[]
+    )
+  );
+
+  const photoObjectIds = photoIds
+    .map((id) => {
+      try {
+        return new mongoose.Types.ObjectId(id);
+      } catch {
+        return null;
+      }
+    })
+    .filter(Boolean) as mongoose.Types.ObjectId[];
+
+  const orderObjectIds = orderIds
+    .map((id) => {
+      try {
+        return new mongoose.Types.ObjectId(id);
+      } catch {
+        return null;
+      }
+    })
+    .filter(Boolean) as mongoose.Types.ObjectId[];
+
+  const paymentObjectIds = paymentIds
+    .map((id) => {
+      try {
+        return new mongoose.Types.ObjectId(id);
+      } catch {
+        return null;
+      }
+    })
+    .filter(Boolean) as mongoose.Types.ObjectId[];
+
+  // 5. Query associated Photos, Orders, Payments, Invoices, Users
+  const [photos, orders, payments] = await Promise.all([
+    Photo.find({ _id: { $in: photoObjectIds } }).lean(),
+    Order.find({
+      $or: [
+        { _id: { $in: orderObjectIds } },
+        { photoId: { $in: photoObjectIds } },
+      ],
+    }).lean(),
+    Payment.find({
+      $or: [
+        { photoId: { $in: photoIds } },
+        { "metadata.notes.photoId": { $in: photoIds } },
+        { _id: { $in: paymentObjectIds } },
+        { gatewayPaymentId: { $in: paymentIds } },
+      ],
+    }).lean(),
   ]);
 
-  // Convert to plain serializable objects for Client Components (removes BSON ObjectIds and toJSON methods)
-  const rawEvents = JSON.parse(JSON.stringify(rawEventsList));
+  const gatewayPaymentIds = payments
+    .map((p: any) => p.gatewayPaymentId)
+    .filter(Boolean);
 
-  const userIds = Array.from(new Set([
-    ...orders.map((o: any) => o.userId).filter(Boolean),
-    ...photos.map((p: any) => p.userId).filter(Boolean),
-  ]));
-  const users = await User.find({ _id: { $in: userIds } }).select("_id email").lean();
-  const userMap = users.reduce((acc: any, u: any) => {
-    acc[u._id.toString()] = u.email;
-    return acc;
-  }, {});
+  const invoices = await Invoice.find({
+    $or: [
+      { photoId: { $in: photoIds } },
+      { gatewayPaymentId: { $in: gatewayPaymentIds } },
+      { orderId: { $in: orderIds } },
+    ],
+  }).lean();
 
-  const orderMap = orders.reduce((acc: any, o: any) => {
-    acc[o._id.toString()] = o.guestEmail || (o.userId && userMap[o.userId.toString()]);
-    return acc;
-  }, {});
+  const userIds = Array.from(
+    new Set([
+      ...orders.map((o: any) => (o.userId ? String(o.userId) : null)),
+      ...photos.map((p: any) => (p.userId ? String(p.userId) : null)),
+      ...invoices.map((i: any) => (i.userId ? String(i.userId) : null)),
+    ])
+  )
+    .filter(Boolean)
+    .map((id) => {
+      try {
+        return new mongoose.Types.ObjectId(id as string);
+      } catch {
+        return null;
+      }
+    })
+    .filter(Boolean);
 
-  const photoMap = photos.reduce((acc: any, p: any) => {
-    acc[p._id.toString()] = p.guestEmail || (p.userId && userMap[p.userId.toString()]);
-    return acc;
-  }, {});
+  const users = await User.find({ _id: { $in: userIds } })
+    .select("_id email name")
+    .lean();
 
-  // Apply search query and date filters
-  const events = rawEvents.filter((event: any) => {
-    const eventTime = new Date(event.createdAt).getTime();
-    if (minDateTimestamp && eventTime < minDateTimestamp) return false;
-    if (maxDateTimestamp && eventTime > maxDateTimestamp) return false;
+  // 6. Build lookup maps
+  const userMap = new Map<string, any>();
+  users.forEach((u: any) => userMap.set(u._id.toString(), u));
 
-    if (!filterSearch) return true;
+  const photoMap = new Map<string, any>();
+  photos.forEach((p: any) => photoMap.set(p._id.toString(), p));
 
-    const email = (
-      (event.actor && event.actor.includes("@") ? event.actor : null) ||
-      event.metadata?.email ||
-      (event.orderId && orderMap[event.orderId.toString()]) ||
-      (event.photoId && photoMap[event.photoId.toString()]) ||
-      ""
-    ).toLowerCase();
-
-    const actor = (event.actor || "").toLowerCase();
-    const photoId = (event.photoId?.toString() || "").toLowerCase();
-    const orderId = (event.orderId?.toString() || "").toLowerCase();
-    const ip = (event.ipAddress || "").toLowerCase();
-    const fileName = (event.metadata?.fileName || "").toLowerCase();
-
-    return (
-      email.includes(filterSearch) ||
-      actor.includes(filterSearch) ||
-      photoId.includes(filterSearch) ||
-      orderId.includes(filterSearch) ||
-      ip.includes(filterSearch) ||
-      fileName.includes(filterSearch)
-    );
+  const orderMap = new Map<string, any>();
+  orders.forEach((o: any) => {
+    orderMap.set(o._id.toString(), o);
+    if (o.photoId) orderMap.set(`photo_${String(o.photoId)}`, o);
   });
 
-  const eventBadgeStyles: Record<AuditEventType, { badge: string; icon: string; label: string }> = {
-    processing: {
-      badge: "bg-blue-50 text-blue-700 border-blue-200",
-      icon: "⚙️",
-      label: "Processing",
-    },
-    email_sent: {
-      badge: "bg-emerald-50 text-emerald-700 border-emerald-200",
-      icon: "📧",
-      label: "Email sent",
-    },
-    download: {
-      badge: "bg-amber-50 text-amber-700 border-amber-200",
-      icon: "📥",
-      label: "Download",
-    },
-    refund: {
-      badge: "bg-purple-50 text-purple-700 border-purple-200",
-      icon: "💸",
-      label: "Refund",
-    },
-    dispute: {
-      badge: "bg-red-50 text-red-700 border-red-200",
-      icon: "⚖️",
-      label: "Dispute",
-    },
-  };
+  const paymentMap = new Map<string, any>();
+  payments.forEach((p: any) => {
+    paymentMap.set(p._id.toString(), p);
+    if (p.gatewayPaymentId) paymentMap.set(p.gatewayPaymentId, p);
+    if (p.photoId) paymentMap.set(`photo_${String(p.photoId)}`, p);
+    if (p.metadata?.notes?.photoId) {
+      paymentMap.set(`photo_${String(p.metadata.notes.photoId)}`, p);
+    }
+  });
+
+  const invoiceMap = new Map<string, any>();
+  invoices.forEach((inv: any) => {
+    if (inv.photoId) invoiceMap.set(String(inv.photoId), inv);
+    if (inv.gatewayPaymentId) invoiceMap.set(inv.gatewayPaymentId, inv);
+    if (inv.orderId) invoiceMap.set(String(inv.orderId), inv);
+  });
+
+  // 7. Process and build hierarchical tree & flat events
+  const emailMap: Record<string, string> = {};
+  const userGroupMap = new Map<string, UserTreeGroup>();
+  const filteredFlatEvents: AuditEventItem[] = [];
+
+  for (const rawEvt of rawEventsList) {
+    const photoIdStr = rawEvt.photoId
+      ? String(rawEvt.photoId)
+      : rawEvt.metadata?.photoId
+      ? String(rawEvt.metadata.photoId)
+      : null;
+
+    const photoDoc = photoIdStr ? photoMap.get(photoIdStr) : null;
+    const orderDoc =
+      (rawEvt.orderId ? orderMap.get(String(rawEvt.orderId)) : null) ||
+      (photoIdStr ? orderMap.get(`photo_${photoIdStr}`) : null);
+    const paymentDoc =
+      (rawEvt.paymentId ? paymentMap.get(String(rawEvt.paymentId)) : null) ||
+      (photoIdStr ? paymentMap.get(`photo_${photoIdStr}`) : null) ||
+      (orderDoc ? paymentMap.get(String(orderDoc._id)) : null);
+    const invoiceDoc =
+      (photoIdStr ? invoiceMap.get(photoIdStr) : null) ||
+      (paymentDoc?.gatewayPaymentId
+        ? invoiceMap.get(paymentDoc.gatewayPaymentId)
+        : null) ||
+      (orderDoc ? invoiceMap.get(String(orderDoc._id)) : null);
+
+    const userEmail =
+      (rawEvt.actor && rawEvt.actor.includes("@") ? rawEvt.actor : null) ||
+      rawEvt.metadata?.email ||
+      rawEvt.metadata?.recipient ||
+      invoiceDoc?.customerEmail ||
+      paymentDoc?.email ||
+      orderDoc?.guestEmail ||
+      photoDoc?.guestEmail ||
+      (rawEvt.ipAddress ? `Guest (${rawEvt.ipAddress})` : "System Operations");
+
+    if (photoIdStr) emailMap[photoIdStr] = userEmail;
+    if (rawEvt.orderId) emailMap[String(rawEvt.orderId)] = userEmail;
+
+    // Filter by search string
+    if (filterSearch) {
+      const matchTarget = [
+        userEmail,
+        invoiceDoc?.customerName,
+        invoiceDoc?.gatewayDetails?.cardHolderName,
+        invoiceDoc?.invoiceNumber,
+        invoiceDoc?.gatewayDetails?.bankRrn,
+        invoiceDoc?.gatewayDetails?.authCode,
+        paymentDoc?.gatewayPaymentId,
+        paymentDoc?.gatewayOrderId,
+        orderDoc?.orderNumber,
+        photoIdStr,
+        rawEvt.actor,
+        rawEvt.ipAddress,
+        rawEvt.eventType,
+        rawEvt.metadata?.fileName,
+        rawEvt.metadata?.documentType,
+        rawEvt.metadata?.template,
+      ]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
+
+      if (!matchTarget.includes(filterSearch)) {
+        continue;
+      }
+    }
+
+    const eventItem: AuditEventItem = {
+      _id: String(rawEvt._id),
+      eventType: rawEvt.eventType,
+      actor: rawEvt.actor,
+      ipAddress: rawEvt.ipAddress,
+      userAgent: rawEvt.userAgent,
+      photoId: photoIdStr || undefined,
+      orderId: rawEvt.orderId ? String(rawEvt.orderId) : undefined,
+      paymentId: rawEvt.paymentId ? String(rawEvt.paymentId) : undefined,
+      disputeId: rawEvt.disputeId ? String(rawEvt.disputeId) : undefined,
+      metadata: rawEvt.metadata,
+      createdAt: new Date(rawEvt.createdAt).toISOString(),
+    };
+
+    filteredFlatEvents.push(eventItem);
+
+    // Grouping by User
+    if (!userGroupMap.has(userEmail)) {
+      userGroupMap.set(userEmail, {
+        userEmail,
+        customerName:
+          invoiceDoc?.customerName ||
+          invoiceDoc?.gatewayDetails?.cardHolderName ||
+          (photoDoc?.userId && userMap.get(String(photoDoc.userId))?.name) ||
+          null,
+        customerPhone:
+          invoiceDoc?.customerPhone ||
+          invoiceDoc?.gatewayDetails?.contact ||
+          paymentDoc?.contact ||
+          null,
+        photos: [],
+        generalEvents: [],
+      });
+    }
+
+    const uGroup = userGroupMap.get(userEmail)!;
+
+    if (photoIdStr) {
+      let pGroup = uGroup.photos.find((p) => p.photoId === photoIdStr);
+      if (!pGroup) {
+        pGroup = {
+          photoId: photoIdStr,
+          photoDoc: photoDoc
+            ? {
+                _id: String(photoDoc._id),
+                documentType: photoDoc.documentType,
+                guestEmail: photoDoc.guestEmail,
+                status: photoDoc.status,
+                createdAt: photoDoc.createdAt
+                  ? new Date(photoDoc.createdAt).toISOString()
+                  : undefined,
+                isExpert: photoDoc.isExpert,
+                previewUrl: photoDoc.previewUrl,
+                secureUrl: photoDoc.secureUrl,
+              }
+            : null,
+          orderDoc: orderDoc
+            ? {
+                _id: String(orderDoc._id),
+                orderNumber: orderDoc.orderNumber,
+                guestEmail: orderDoc.guestEmail,
+                amount: orderDoc.amount,
+                currency: orderDoc.currency,
+                status: orderDoc.status,
+                documentType: orderDoc.documentType,
+                createdAt: orderDoc.createdAt
+                  ? new Date(orderDoc.createdAt).toISOString()
+                  : undefined,
+              }
+            : null,
+          paymentDoc: paymentDoc
+            ? {
+                _id: String(paymentDoc._id),
+                gatewayPaymentId: paymentDoc.gatewayPaymentId,
+                gatewayOrderId: paymentDoc.gatewayOrderId,
+                amount: paymentDoc.amount,
+                currency: paymentDoc.currency,
+                method: paymentDoc.method,
+                status: paymentDoc.status,
+                email: paymentDoc.email,
+                contact: paymentDoc.contact,
+                createdAt: paymentDoc.createdAt
+                  ? new Date(paymentDoc.createdAt).toISOString()
+                  : undefined,
+              }
+            : null,
+          invoiceDoc: invoiceDoc
+            ? {
+                _id: String(invoiceDoc._id),
+                invoiceNumber: invoiceDoc.invoiceNumber,
+                customerName: invoiceDoc.customerName,
+                customerEmail: invoiceDoc.customerEmail,
+                customerPhone: invoiceDoc.customerPhone,
+                total: invoiceDoc.total,
+                currency: invoiceDoc.currency,
+                paymentMethod: invoiceDoc.paymentMethod,
+                gatewayDetails: invoiceDoc.gatewayDetails,
+                createdAt: invoiceDoc.createdAt
+                  ? new Date(invoiceDoc.createdAt).toISOString()
+                  : undefined,
+              }
+            : null,
+          events: [],
+        };
+        uGroup.photos.push(pGroup);
+      }
+
+      pGroup.events.push(eventItem);
+      if (!pGroup.photoDoc && photoDoc) {
+        pGroup.photoDoc = {
+          _id: String(photoDoc._id),
+          documentType: photoDoc.documentType,
+          guestEmail: photoDoc.guestEmail,
+          status: photoDoc.status,
+          createdAt: photoDoc.createdAt
+            ? new Date(photoDoc.createdAt).toISOString()
+            : undefined,
+        };
+      }
+      if (!pGroup.orderDoc && orderDoc) {
+        pGroup.orderDoc = {
+          _id: String(orderDoc._id),
+          orderNumber: orderDoc.orderNumber,
+          guestEmail: orderDoc.guestEmail,
+          amount: orderDoc.amount,
+          currency: orderDoc.currency,
+          status: orderDoc.status,
+          documentType: orderDoc.documentType,
+        };
+      }
+      if (!pGroup.paymentDoc && paymentDoc) {
+        pGroup.paymentDoc = {
+          _id: String(paymentDoc._id),
+          gatewayPaymentId: paymentDoc.gatewayPaymentId,
+          gatewayOrderId: paymentDoc.gatewayOrderId,
+          amount: paymentDoc.amount,
+          currency: paymentDoc.currency,
+          method: paymentDoc.method,
+          status: paymentDoc.status,
+        };
+      }
+      if (!pGroup.invoiceDoc && invoiceDoc) {
+        pGroup.invoiceDoc = {
+          _id: String(invoiceDoc._id),
+          invoiceNumber: invoiceDoc.invoiceNumber,
+          customerName: invoiceDoc.customerName,
+          customerEmail: invoiceDoc.customerEmail,
+          customerPhone: invoiceDoc.customerPhone,
+          total: invoiceDoc.total,
+          currency: invoiceDoc.currency,
+          paymentMethod: invoiceDoc.paymentMethod,
+          gatewayDetails: invoiceDoc.gatewayDetails,
+        };
+      }
+    } else {
+      uGroup.generalEvents.push(eventItem);
+    }
+  }
+
+  // Convert to serializable array and sort users with high priority for paid and downloaded sessions
+  const userTreeGroups = Array.from(userGroupMap.values()).map((ug) => {
+    // Sort photo groups: photos with downloads or payments first, then newest event
+    ug.photos.sort((a, b) => {
+      const aDownloads = a.events.filter((e) => e.eventType === "download").length;
+      const bDownloads = b.events.filter((e) => e.eventType === "download").length;
+      if (aDownloads !== bDownloads) return bDownloads - aDownloads;
+
+      const aPaid = a.paymentDoc ? 1 : 0;
+      const bPaid = b.paymentDoc ? 1 : 0;
+      if (aPaid !== bPaid) return bPaid - aPaid;
+
+      const aTime = a.events[0] ? new Date(a.events[0].createdAt).getTime() : 0;
+      const bTime = b.events[0] ? new Date(b.events[0].createdAt).getTime() : 0;
+      return bTime - aTime;
+    });
+    return ug;
+  });
+
+  // Sort Users:
+  // 1. Users with Download Events
+  // 2. Users with Paid Payments / Invoices
+  // 3. Followed by latest activity timestamp
+  userTreeGroups.sort((a, b) => {
+    const aDownloads = a.photos.reduce(
+      (acc, p) => acc + p.events.filter((e) => e.eventType === "download").length,
+      0
+    );
+    const bDownloads = b.photos.reduce(
+      (acc, p) => acc + p.events.filter((e) => e.eventType === "download").length,
+      0
+    );
+
+    const aPaid = a.photos.some((p) => p.paymentDoc || p.invoiceDoc) ? 1 : 0;
+    const bPaid = b.photos.some((p) => p.paymentDoc || p.invoiceDoc) ? 1 : 0;
+
+    // Highest priority: downloaded customers
+    if (aDownloads > 0 || bDownloads > 0) {
+      if (aDownloads !== bDownloads) return bDownloads - aDownloads;
+    }
+
+    // Next priority: paid customers
+    if (aPaid !== bPaid) return bPaid - aPaid;
+
+    // Then latest activity timestamp
+    const aLatest = Math.max(
+      ...a.photos.flatMap((p) =>
+        p.events.map((e) => new Date(e.createdAt).getTime())
+      ),
+      ...a.generalEvents.map((e) => new Date(e.createdAt).getTime()),
+      0
+    );
+    const bLatest = Math.max(
+      ...b.photos.flatMap((p) =>
+        p.events.map((e) => new Date(e.createdAt).getTime())
+      ),
+      ...b.generalEvents.map((e) => new Date(e.createdAt).getTime()),
+      0
+    );
+    return bLatest - aLatest;
+  });
+
+  const serializedUserTreeGroups = JSON.parse(
+    JSON.stringify(userTreeGroups)
+  ) as UserTreeGroup[];
+  const serializedFlatEvents = JSON.parse(
+    JSON.stringify(filteredFlatEvents)
+  ) as AuditEventItem[];
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <header className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <div>
-          <div className="flex items-center gap-3 mb-1.5">
-            <div className="w-10 h-10 rounded-2xl bg-lime-500/10 border border-lime-500/30 flex items-center justify-center text-lime-600 text-lg shadow-xs">
-              🛡️
-            </div>
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-                Permanent Audit Events Log
-              </h1>
-              <p className="text-xs text-slate-500 mt-0.5">
-                Immutable operational log for biometric processing, customer downloads, and gateway events
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Quick Count Metric */}
-        <div className="bg-white border border-slate-200/80 rounded-2xl px-4 py-2 text-center shadow-xs">
-          <div className="text-[10px] uppercase font-bold text-slate-400">Total Audit Events</div>
-          <div className="text-base font-black text-slate-900">{totalCount}</div>
-        </div>
-      </header>
-
-      {/* Advanced Filter Suite with Date Range */}
-      <AuditEventFilters
-        currentType={filterType}
-        currentSearch={filterSearch}
-        currentDatePreset={filterDatePreset}
-        currentStartDate={filterStartDate}
-        currentEndDate={filterEndDate}
-        counts={countsMap}
-        totalCount={totalCount}
-      />
-
-      {/* Audit Events Table */}
-      <div className="bg-white border border-slate-200/80 rounded-3xl shadow-xs overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
-            <thead>
-              <tr className="bg-slate-50/80 border-b border-slate-100">
-                <th className="px-5 py-3.5 text-[11px] font-bold text-slate-500 uppercase tracking-wider">Event Type</th>
-                <th className="px-5 py-3.5 text-[11px] font-bold text-slate-500 uppercase tracking-wider">Date &amp; Time</th>
-                <th className="px-5 py-3.5 text-[11px] font-bold text-slate-500 uppercase tracking-wider">Actor &amp; Network</th>
-                <th className="px-5 py-3.5 text-[11px] font-bold text-slate-500 uppercase tracking-wider">References</th>
-                <th className="px-5 py-3.5 text-[11px] font-bold text-slate-500 uppercase tracking-wider">Details Summary</th>
-                <th className="px-5 py-3.5 text-[11px] font-bold text-slate-500 uppercase tracking-wider text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100 text-xs">
-              {events.length === 0 ? (
-                <tr>
-                  <td colSpan={6} className="px-6 py-16 text-center text-slate-400">
-                    <div className="text-3xl mb-2">🔍</div>
-                    <div className="font-bold text-slate-700">No audit events match your filter criteria</div>
-                    <p className="text-xs text-slate-400 mt-1">Try clearing your date range, search query, or event type filters.</p>
-                  </td>
-                </tr>
-              ) : (
-                events.map((event: any) => {
-                  const conf = eventBadgeStyles[event.eventType as AuditEventType] || {
-                    badge: "bg-slate-100 text-slate-700 border-slate-200",
-                    icon: "📌",
-                    label: event.eventType,
-                  };
-
-                  const email =
-                    (event.actor && event.actor.includes("@") ? event.actor : null) ||
-                    event.metadata?.email ||
-                    (event.orderId && orderMap[event.orderId.toString()]) ||
-                    (event.photoId && photoMap[event.photoId.toString()]) ||
-                    null;
-
-                  return (
-                    <tr key={event._id.toString()} className="hover:bg-slate-50/70 transition-colors">
-                      {/* Event Type */}
-                      <td className="px-5 py-4">
-                        <span
-                          className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold border ${conf.badge}`}
-                        >
-                          <span>{conf.icon}</span>
-                          <span>{conf.label}</span>
-                        </span>
-                      </td>
-
-                      {/* Timestamp */}
-                      <td className="px-5 py-4 whitespace-nowrap">
-                        <div className="font-medium text-slate-900">
-                          {new Date(event.createdAt).toLocaleDateString(undefined, {
-                            month: "short",
-                            day: "numeric",
-                            year: "numeric",
-                          })}
-                        </div>
-                        <div className="text-[11px] text-slate-400 font-mono">
-                          {new Date(event.createdAt).toLocaleTimeString([], {
-                            hour: "2-digit",
-                            minute: "2-digit",
-                            second: "2-digit",
-                          })}
-                        </div>
-                      </td>
-
-                      {/* Actor & IP */}
-                      <td className="px-5 py-4">
-                        <div className="flex flex-col">
-                          {email ? (
-                            <>
-                              <span className="font-bold text-slate-900 truncate max-w-[220px]" title={email}>
-                                {email}
-                              </span>
-                              <div className="flex items-center gap-1.5 mt-0.5">
-                                <span className="text-[10px] text-lime-700 font-semibold bg-lime-50 border border-lime-200/80 px-1.5 py-0.2 rounded">
-                                  Customer
-                                </span>
-                                {event.actor && !event.actor.includes("@") && (
-                                  <span className="text-[9px] text-slate-400 capitalize">({event.actor})</span>
-                                )}
-                              </div>
-                            </>
-                          ) : (
-                            <span className="font-semibold text-slate-800 capitalize">
-                              {event.actor || "system"}
-                            </span>
-                          )}
-                          {event.ipAddress && (
-                            <code className="text-[10px] text-slate-400 font-mono mt-0.5">
-                              {event.ipAddress}
-                            </code>
-                          )}
-                        </div>
-                      </td>
-
-                      {/* References */}
-                      <td className="px-5 py-4">
-                        <div className="flex flex-col gap-1 text-[11px] font-mono text-slate-600">
-                          {event.photoId && (
-                            <div className="flex items-center gap-1">
-                              <span className="text-slate-400 text-[10px]">Photo:</span>
-                              <code className="bg-slate-100 px-1 py-0.2 rounded border border-slate-200">
-                                {event.photoId.toString().slice(-8)}
-                              </code>
-                            </div>
-                          )}
-                          {event.orderId && (
-                            <div className="flex items-center gap-1">
-                              <span className="text-slate-400 text-[10px]">Order:</span>
-                              <code className="bg-slate-100 px-1 py-0.2 rounded border border-slate-200">
-                                {event.orderId.toString().slice(-8)}
-                              </code>
-                            </div>
-                          )}
-                          {!event.photoId && !event.orderId && (
-                            <span className="text-slate-400 text-xs italic font-sans">System Level</span>
-                          )}
-                        </div>
-                      </td>
-
-                      {/* Details Summary */}
-                      <td className="px-5 py-4">
-                        <div className="max-w-xs text-xs text-slate-600 truncate">
-                          {event.metadata?.fileName && (
-                            <div className="font-mono text-[11px] text-slate-800 truncate" title={event.metadata.fileName}>
-                              📄 {event.metadata.fileName}
-                            </div>
-                          )}
-                          {event.metadata?.documentType && (
-                            <div className="text-[11px] text-slate-500 mt-0.5">
-                              Spec: <span className="font-semibold text-slate-700">{event.metadata.documentType}</span>
-                            </div>
-                          )}
-                          {event.metadata?.template && (
-                            <div className="text-[11px] text-slate-500">
-                              Template: <span className="font-semibold">{event.metadata.template}</span>
-                            </div>
-                          )}
-                          {!event.metadata?.fileName && !event.metadata?.documentType && !event.metadata?.template && (
-                            <span className="text-slate-400 italic">Metadata recorded</span>
-                          )}
-                        </div>
-                      </td>
-
-                      {/* Modal Action */}
-                      <td className="px-5 py-4 text-right">
-                        <AuditDetailModal event={event} email={email} conf={conf} />
-                      </td>
-                    </tr>
-                  );
-                })
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
+    <AuditEventsClientPage
+      userTreeGroups={serializedUserTreeGroups}
+      flatEvents={serializedFlatEvents}
+      emailMap={emailMap}
+      countsMap={countsMap}
+      totalCount={totalCount}
+      filterType={filterType}
+      filterSearch={filterSearch}
+      filterDatePreset={filterDatePreset}
+      filterStartDate={filterStartDate}
+      filterEndDate={filterEndDate}
+    />
   );
 }

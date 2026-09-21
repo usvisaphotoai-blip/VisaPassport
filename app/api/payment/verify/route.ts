@@ -9,6 +9,9 @@ import crypto from "crypto";
 import { sendEmail } from "@/lib/mail";
 import { getSafeSpec } from "@/lib/specs";
 import { logAuditEvent } from "@/lib/audit";
+import AuditEvent from "@/models/AuditEvent";
+import { autoGenerateAndStoreInvoice } from "@/lib/invoice-automation";
+import { formatCurrency } from "@/lib/currency-formatter";
 
 export async function POST(req: Request) {
   try {
@@ -170,9 +173,42 @@ export async function POST(req: Request) {
       });
     }
 
-    // Idempotency check: if already paid (e.g., via webhook), skip sending duplicate emails
-    if (alreadyPaid) {
-      return NextResponse.json({ success: true, message: "Payment verified successfully" });
+    // Always auto-generate invoice silently in background and upload to Cloudinary
+    let invoiceData: any = null;
+    let invoicePdfBuffer: Buffer | undefined = undefined;
+    let invoiceCloudinaryUrl: string | undefined = undefined;
+
+    try {
+      const invoiceAutoRes = await autoGenerateAndStoreInvoice({
+        paymentIdOrGatewayId: permanentPayment._id.toString(),
+        userEmail,
+        actor: "system",
+      });
+
+      if (invoiceAutoRes.success && invoiceAutoRes.invoice) {
+        invoiceData = invoiceAutoRes.invoice;
+        invoicePdfBuffer = invoiceAutoRes.pdfBuffer;
+        invoiceCloudinaryUrl = invoiceAutoRes.cloudinaryUrl;
+        console.log(`[PAYMENT VERIFY] Background invoice created: ${invoiceData.invoiceNumber}, Cloudinary: ${invoiceCloudinaryUrl || "Local"}`);
+      }
+    } catch (invErr) {
+      console.error("[PAYMENT VERIFY] Background invoice generation warning (non-fatal):", invErr);
+    }
+
+    // Check if delivery email was already sent successfully for this photo
+    const emailAlreadySent = await AuditEvent.findOne({
+      photoId: photo._id,
+      eventType: "email_sent",
+      "metadata.status": "sent",
+    });
+
+    // Idempotency check: if photo was marked paid and email was already sent, avoid duplicate emails
+    if (alreadyPaid && emailAlreadySent) {
+      return NextResponse.json({
+        success: true,
+        message: "Payment verified successfully",
+        downloadToken: photo.downloadToken,
+      });
     }
 
     // Fire & forget delivery + testimonial email
@@ -186,6 +222,7 @@ export async function POST(req: Request) {
       const spec = getSafeSpec(photo.documentType);
       const documentName = spec.name || "Passport Photo";
       const countryName = spec.country || spec.name || "Passport Photo";
+      const invoicePdfDownloadUrl = invoiceCloudinaryUrl || (invoiceData ? `${appUrl}/api/admin/invoices/${invoiceData._id}/pdf` : "");
 
       try {
         if (photo.isExpert) {
@@ -195,6 +232,7 @@ export async function POST(req: Request) {
             <p><strong>Customer Email:</strong> ${userEmail}</p>
             <p><strong>Selected Country:</strong> ${countryName}</p>
             <p><strong>Document Type:</strong> ${documentName}</p>
+            ${invoiceData ? `<p><strong>Tax Invoice:</strong> ${invoiceData.invoiceNumber} (${invoiceData.currency} ${invoiceData.total})</p>` : ''}
             <p><strong>Photos:</strong></p>
             <ul>
               ${photo.originalUrl ? `<li><strong>Original Image:</strong> <a href="${photo.originalUrl}">${photo.originalUrl}</a></li>` : ''}
@@ -215,7 +253,45 @@ export async function POST(req: Request) {
             to: userEmail,
             bcc: 'usvisaphotoai@gmail.com',
             subject: "Your Expert Photo Edit Order is Confirmed - PixPassport",
-            html: `<p>Hi there,</p><p>We have received your payment for the expert photo edit for your <strong>${countryName} (${documentName})</strong>.</p>${photo.originalUrl ? `<p><strong>Original Image:</strong> <a href="${photo.originalUrl}">${photo.originalUrl}</a></p>` : ''}<p>Our team is working on your photo now and will email it back to you when it is ready.</p><p>Thank you for choosing PixPassport!</p>`,
+            html: `
+              <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #1e293b; background: #f8fafc; padding: 32px 24px; border-radius: 16px;">
+                <div style="text-align: center; margin-bottom: 24px;">
+                  <img src="https://res.cloudinary.com/ddxu2wqfm/image/upload/v1774782293/logo_evktxq.jpg" alt="PixPassport" style="width: 54px; height: 54px; border-radius: 12px; margin-bottom: 12px; display: inline-block; object-fit: contain;" />
+                  <h2 style="font-size: 22px; font-weight: 800; color: #0f172a; margin: 0 0 6px;">Your Expert Edit Order is Confirmed! 🌟</h2>
+                  <p style="color: #64748b; font-size: 14px; margin: 0;">Order for ${countryName} (${documentName})</p>
+                </div>
+
+                <div style="background: #ffffff; border-radius: 12px; padding: 24px; border: 1px solid #e2e8f0; margin-bottom: 20px;">
+                  <p style="margin: 0 0 12px; font-size: 15px; color: #334155;">Hi there,</p>
+                  <p style="margin: 0 0 16px; font-size: 14px; color: #475569; line-height: 1.6;">We have received your payment for the expert photo edit for your <strong>${countryName} (${documentName})</strong>. Our biometric team is working on your photo now and will email it back to you as soon as it is perfected.</p>
+                  ${photo.originalUrl ? `<p style="margin: 0 0 12px; font-size: 13px;"><strong>Original Uploaded Image:</strong> <a href="${photo.originalUrl}" style="color: #2563eb; text-decoration: underline;">View Upload</a></p>` : ''}
+                </div>
+
+                ${invoiceData ? `
+                <div style="background: #ffffff; border-radius: 12px; padding: 20px; border: 1px solid #e2e8f0; margin-bottom: 20px;">
+                  <h3 style="margin: 0 0 10px; font-size: 15px; font-weight: 700; color: #0f172a;">🧾 Tax Invoice & Payment Receipt</h3>
+                  <table style="width: 100%; font-size: 13px; color: #475569; margin-bottom: 12px; border-collapse: collapse;">
+                    <tr><td style="padding: 5px 0; color: #64748b;">Invoice Number:</td><td style="padding: 5px 0; text-align: right; font-weight: 700; color: #0f172a;">${invoiceData.invoiceNumber}</td></tr>
+                    <tr><td style="padding: 5px 0; color: #64748b;">Amount Paid:</td><td style="padding: 5px 0; text-align: right; font-weight: 700; color: #059669;">${formatCurrency(invoiceData.total, invoiceData.currency)} (PAID ✓)</td></tr>
+                    <tr><td style="padding: 5px 0; color: #64748b;">Payment Method:</td><td style="padding: 5px 0; text-align: right; font-weight: 600;">${invoiceData.paymentMethod || "UPI / Card"}</td></tr>
+                  </table>
+                  <p style="margin: 0 0 14px; font-size: 12px; color: #64748b;">Your official Tax Invoice PDF is attached to this email.</p>
+                  ${invoicePdfDownloadUrl ? `<div style="text-align: center;"><a href="${invoicePdfDownloadUrl}" style="display: inline-block; background: #0f172a; color: #ffffff; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-size: 12px; font-weight: 700;">⬇ Download Tax Invoice PDF</a></div>` : ''}
+                </div>
+                ` : ''}
+
+                <div style="text-align: center; padding-top: 16px; border-top: 1px solid #e2e8f0;">
+                  <p style="font-size: 11px; color: #94a3b8; margin: 0;">PixPassport — Professional Visa Photo Processing</p>
+                </div>
+              </div>
+            `,
+            attachments: invoicePdfBuffer && invoiceData ? [
+              {
+                filename: `Tax-Invoice-${invoiceData.invoiceNumber}.pdf`,
+                content: invoicePdfBuffer,
+                contentType: "application/pdf",
+              }
+            ] : undefined,
           });
           console.log(`[PAYMENT VERIFY] Expert emails sent successfully for photo ${photoId}`);
           await logAuditEvent({
@@ -228,6 +304,7 @@ export async function POST(req: Request) {
               recipient: userEmail,
               subject: `New Expert Edit Order: ${photo._id} (${countryName})`,
               template: "expert_order",
+              invoiceNumber: invoiceData?.invoiceNumber,
               status: "sent",
             },
           });
@@ -237,49 +314,63 @@ export async function POST(req: Request) {
             bcc: 'usvisaphotoai@gmail.com',
             subject: `Your ${countryName} (${documentName}) photo is ready — Download now! 🎉`,
             html: `
-              <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; color: #1e293b; background: #f8fafc; padding: 32px; border-radius: 16px;">
+              <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #1e293b; background: #f8fafc; padding: 32px 24px; border-radius: 16px;">
                 <div style="text-align: center; margin-bottom: 24px;">
-                  <h1 style="font-size: 22px; color: #0f172a; margin: 0 0 8px;">Your ${countryName} (${documentName}) is Ready! ✅</h1>
-                  <p style="color: #64748b; font-size: 14px; margin: 0;">Thank you for your purchase</p>
+                  <img src="https://res.cloudinary.com/ddxu2wqfm/image/upload/v1774782293/logo_evktxq.jpg" alt="PixPassport" style="width: 54px; height: 54px; border-radius: 12px; margin-bottom: 12px; display: inline-block; object-fit: contain;" />
+                  <h1 style="font-size: 22px; font-weight: 800; color: #0f172a; margin: 0 0 6px;">Your ${countryName} (${documentName}) is Ready! ✅</h1>
+                  <p style="color: #64748b; font-size: 14px; margin: 0;">Thank you for choosing PixPassport</p>
                 </div>
 
-                <div style="background: white; border-radius: 12px; padding: 24px; border: 1px solid #e2e8f0; margin-bottom: 20px;">
-                  <h3 style="margin: 0 0 16px; font-size: 15px; color: #334155;">📸 Your Downloads</h3>
+                <div style="background: #ffffff; border-radius: 12px; padding: 24px; border: 1px solid #e2e8f0; margin-bottom: 20px;">
+                  <h3 style="margin: 0 0 16px; font-size: 15px; font-weight: 700; color: #0f172a;">📸 Your Downloads</h3>
 
                   <div style="margin-bottom: 16px;">
-                    <p style="margin: 0 0 6px; font-size: 13px; color: #64748b; font-weight: 600;">Digital Photo (${spec.width_px}×${spec.height_px}, ${countryName} ${documentName} Ready)</p>
-                    <a href="${photoDownloadUrl}" style="display: inline-block; background: #0f172a; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 700;">⬇ Download Photo</a>
+                    <p style="margin: 0 0 6px; font-size: 13px; color: #64748b; font-weight: 600;">Digital Photo (${spec.width_px}×${spec.height_px} px, ${countryName} Compliant)</p>
+                    <a href="${photoDownloadUrl}" style="display: inline-block; background: #0f172a; color: #ffffff; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 700;">⬇ Download Photo</a>
                   </div>
 
                   ${photo.originalUrl ? `
                   <div style="margin-bottom: 16px;">
                     <p style="margin: 0 0 6px; font-size: 13px; color: #64748b; font-weight: 600;">Original Uploaded Image</p>
-                    <a href="${photo.originalUrl}" style="display: inline-block; background: #475569; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 700;">⬇ Download Original Image</a>
+                    <a href="${photo.originalUrl}" style="display: inline-block; background: #475569; color: #ffffff; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 700;">⬇ Download Original Image</a>
                   </div>
                   ` : ''}
 
                   ${printSheetDownloadUrl ? `
                   <div style="margin-bottom: 16px;">
-                    <p style="margin: 0 0 6px; font-size: 13px; color: #64748b; font-weight: 600;">A4 Print Sheet (20 photos, ready to cut)</p>
-                    <a href="${printSheetDownloadUrl}" style="display: inline-block; background: #166534; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 700;">⬇ Download Print Sheet</a>
+                    <p style="margin: 0 0 6px; font-size: 13px; color: #64748b; font-weight: 600;">A4 Print Sheet (Ready to Print & Cut)</p>
+                    <a href="${printSheetDownloadUrl}" style="display: inline-block; background: #166534; color: #ffffff; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 700;">⬇ Download Print Sheet</a>
                   </div>
                   ` : ''}
 
                   <div style="border-top: 1px solid #f1f5f9; margin-top: 16px; padding-top: 12px;">
                     <p style="margin: 0; font-size: 12px; color: #94a3b8;">You can also access your photo anytime at:<br/>
-                    <a href="${previewLink}" style="color: #2563eb;">${previewLink}</a></p>
+                    <a href="${previewLink}" style="color: #2563eb; text-decoration: underline;">${previewLink}</a></p>
                   </div>
                 </div>
 
-                <div style="background: white; border-radius: 12px; padding: 20px; border: 1px solid #e2e8f0; margin-bottom: 20px;">
-                  <h3 style="margin: 0 0 8px; font-size: 15px; color: #334155;">📋 Photo Specifications</h3>
-                  <table style="width: 100%; font-size: 13px; color: #475569;">
-                    <tr><td style="padding: 4px 0;">Selected Country</td><td style="text-align: right; font-weight: 600;">${countryName}</td></tr>
-                    <tr><td style="padding: 4px 0;">Document Type</td><td style="text-align: right; font-weight: 600;">${documentName}</td></tr>
-                    <tr><td style="padding: 4px 0;">Size</td><td style="text-align: right; font-weight: 600;">${spec.width_px}×${spec.height_px} px ${spec.width_mm !== "unspecified" ? `(${spec.width_mm}×${spec.height_mm} mm)` : ""}</td></tr>
-                    <tr><td style="padding: 4px 0;">Resolution</td><td style="text-align: right; font-weight: 600;">${spec.dpi || 300} DPI</td></tr>
-                    <tr><td style="padding: 4px 0;">Format</td><td style="text-align: right; font-weight: 600;">JPEG, sRGB</td></tr>
-                    <tr><td style="padding: 4px 0;">Background</td><td style="text-align: right; font-weight: 600;">${spec.bg_color.charAt(0).toUpperCase() + spec.bg_color.slice(1)}</td></tr>
+                ${invoiceData ? `
+                <div style="background: #ffffff; border-radius: 12px; padding: 20px; border: 1px solid #e2e8f0; margin-bottom: 20px;">
+                  <h3 style="margin: 0 0 10px; font-size: 15px; font-weight: 700; color: #0f172a;">🧾 Tax Invoice & Payment Receipt</h3>
+                  <table style="width: 100%; font-size: 13px; color: #475569; margin-bottom: 12px; border-collapse: collapse;">
+                    <tr><td style="padding: 5px 0; color: #64748b;">Invoice Number:</td><td style="padding: 5px 0; text-align: right; font-weight: 700; color: #0f172a;">${invoiceData.invoiceNumber}</td></tr>
+                    <tr><td style="padding: 5px 0; color: #64748b;">Amount Paid:</td><td style="padding: 5px 0; text-align: right; font-weight: 700; color: #059669;">${formatCurrency(invoiceData.total, invoiceData.currency)} (PAID ✓)</td></tr>
+                    <tr><td style="padding: 5px 0; color: #64748b;">Payment Method:</td><td style="padding: 5px 0; text-align: right; font-weight: 600;">${invoiceData.paymentMethod || "UPI / Card"}</td></tr>
+                  </table>
+                  <p style="margin: 0 0 14px; font-size: 12px; color: #64748b;">Your official tax invoice PDF is attached to this email for your accounting records.</p>
+                  ${invoicePdfDownloadUrl ? `<div style="text-align: center;"><a href="${invoicePdfDownloadUrl}" style="display: inline-block; background: #0f172a; color: #ffffff; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-size: 12px; font-weight: 700;">⬇ Download Invoice PDF</a></div>` : ''}
+                </div>
+                ` : ''}
+
+                <div style="background: #ffffff; border-radius: 12px; padding: 20px; border: 1px solid #e2e8f0; margin-bottom: 20px;">
+                  <h3 style="margin: 0 0 8px; font-size: 15px; font-weight: 700; color: #0f172a;">📋 Photo Specifications</h3>
+                  <table style="width: 100%; font-size: 13px; color: #475569; border-collapse: collapse;">
+                    <tr><td style="padding: 4px 0; color: #64748b;">Selected Country:</td><td style="padding: 4px 0; text-align: right; font-weight: 600;">${countryName}</td></tr>
+                    <tr><td style="padding: 4px 0; color: #64748b;">Document Type:</td><td style="padding: 4px 0; text-align: right; font-weight: 600;">${documentName}</td></tr>
+                    <tr><td style="padding: 4px 0; color: #64748b;">Size:</td><td style="padding: 4px 0; text-align: right; font-weight: 600;">${spec.width_px}×${spec.height_px} px ${spec.width_mm !== "unspecified" ? `(${spec.width_mm}×${spec.height_mm} mm)` : ""}</td></tr>
+                    <tr><td style="padding: 4px 0; color: #64748b;">Resolution:</td><td style="padding: 4px 0; text-align: right; font-weight: 600;">${spec.dpi || 300} DPI</td></tr>
+                    <tr><td style="padding: 4px 0; color: #64748b;">Format:</td><td style="padding: 4px 0; text-align: right; font-weight: 600;">JPEG, sRGB</td></tr>
+                    <tr><td style="padding: 4px 0; color: #64748b;">Background:</td><td style="padding: 4px 0; text-align: right; font-weight: 600;">${spec.bg_color.charAt(0).toUpperCase() + spec.bg_color.slice(1)}</td></tr>
                   </table>
                 </div>
 
@@ -292,9 +383,16 @@ export async function POST(req: Request) {
                   <p style="font-size: 11px; color: #cbd5e1; margin: 0;">PixPassport — Professional Visa Photo Processing</p>
                 </div>
               </div>
-            `
+            `,
+            attachments: invoicePdfBuffer && invoiceData ? [
+              {
+                filename: `Tax-Invoice-${invoiceData.invoiceNumber}.pdf`,
+                content: invoicePdfBuffer,
+                contentType: "application/pdf",
+              }
+            ] : undefined,
           });
-          console.log(`[PAYMENT VERIFY] Email sent successfully for photo ${photoId}`);
+          console.log(`[PAYMENT VERIFY] Email with invoice attached sent successfully for photo ${photoId}`);
           await logAuditEvent({
             eventType: "email_sent",
             orderId: permanentOrder?._id,
@@ -305,6 +403,7 @@ export async function POST(req: Request) {
               recipient: userEmail,
               subject: `Your ${countryName} (${documentName}) photo is ready — Download now! 🎉`,
               template: "delivery",
+              invoiceNumber: invoiceData?.invoiceNumber,
               status: "sent",
             },
           });

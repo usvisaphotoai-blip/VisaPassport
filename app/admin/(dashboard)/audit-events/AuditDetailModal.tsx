@@ -98,6 +98,7 @@ export default function AuditDetailModal({
                   <div className="font-mono text-[11px] text-slate-600">
                     {event.photoId && <div>Photo: {event.photoId.toString().slice(-8)}</div>}
                     {event.orderId && <div>Order: {event.orderId.toString().slice(-8)}</div>}
+                    {event.paymentId && <div>Payment: {event.paymentId.toString().slice(-8)}</div>}
                   </div>
                 </div>
               </div>
