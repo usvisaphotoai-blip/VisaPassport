@@ -130,7 +130,7 @@ export async function sendOfficialInvoiceEmail({
     }
 
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://pixpassport.com";
-    const downloadPdfUrl = cloudinaryUrl || invoice.cloudinaryUrl || `${appUrl}/api/admin/invoices/${invoice._id}/pdf`;
+    const downloadPdfUrl = cloudinaryUrl || invoice.cloudinaryUrl || `${appUrl}/api/invoices/${invoice._id}/download`;
     const invoiceNumber = invoice.invoiceNumber;
     const customerName = invoice.customerName || "Valued Customer";
     const amountFormatted = `${invoice.currency} ${Number(invoice.total).toFixed(2)}`;

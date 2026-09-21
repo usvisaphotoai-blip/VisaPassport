@@ -4,6 +4,10 @@ import AnalyticsEvent from "@/models/AnalyticsEvent";
 import Order from "@/models/Order";
 import Photo from "@/models/Photo";
 import AnalyticsPeriodFilter from "./AnalyticsPeriodFilter";
+import {
+  aggregateCurrencyAmounts,
+  formatMultiCurrency,
+} from "@/lib/currency-formatter";
 
 export const revalidate = 0;
 
@@ -38,7 +42,7 @@ export default async function AdminDashboardPage(props: Props) {
     { $group: { _id: null, total: { $sum: "$pageViews" } } },
   ]);
   const avgDuration = await AnalyticsSession.aggregate([
-    { $match: dateFilter },
+    { $match: { ...dateFilter, duration: { $gt: 0 } } },
     { $group: { _id: null, avg: { $avg: "$duration" } } },
   ]);
 
@@ -49,19 +53,15 @@ export default async function AdminDashboardPage(props: Props) {
     ...dateFilter,
   });
 
-  // 3. Paid Orders & Revenue
+  // 3. Paid Orders & Multi-Currency Revenue
   const paidOrders = await Order.find({
     status: "paid",
     ...dateFilter,
   }).lean();
 
   const totalPaidOrdersCount = paidOrders.length;
-  const revenueUSD = paidOrders
-    .filter((o: any) => o.currency === "USD" || !o.currency)
-    .reduce((sum: number, o: any) => sum + (Number(o.amount) || 0), 0);
-  const revenueINR = paidOrders
-    .filter((o: any) => o.currency === "INR")
-    .reduce((sum: number, o: any) => sum + (Number(o.amount) || 0), 0);
+  const revenueTotals = aggregateCurrencyAmounts(paidOrders);
+  const revenueFormatted = formatMultiCurrency(revenueTotals, { fallback: "$0.00" });
 
   // 4. Country distribution
   const countryStatsRaw = await AnalyticsSession.aggregate([
@@ -99,7 +99,7 @@ export default async function AdminDashboardPage(props: Props) {
       {/* KPI Cards Strip */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <KPI
-          value={revenueINR > 0 ? `₹${revenueINR}${revenueUSD > 0 ? ` + $${revenueUSD.toFixed(2)}` : ""}` : `$${revenueUSD.toFixed(2)}`}
+          value={revenueFormatted}
           label="Paid Revenue"
           icon="💰"
           highlight

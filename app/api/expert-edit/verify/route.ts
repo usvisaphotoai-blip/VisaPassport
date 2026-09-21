@@ -6,6 +6,7 @@ import { sendEmail } from "@/lib/mail";
 import { autoGenerateAndStoreInvoice } from "@/lib/invoice-automation";
 import { logAuditEvent, claimEmailSend, releaseEmailClaim } from "@/lib/audit";
 import { formatCurrency } from "@/lib/currency-formatter";
+import { sendGA4PurchaseEvent } from "@/lib/ga4";
 
 export async function POST(req: Request) {
   try {
@@ -14,6 +15,7 @@ export async function POST(req: Request) {
       razorpay_order_id,
       razorpay_signature,
       expertOrderId,
+      gaClientId,
     } = await req.json();
 
     const secret = process.env.RAZORPAY_KEY_SECRET;
@@ -65,6 +67,29 @@ export async function POST(req: Request) {
     order.razorpayPaymentId = razorpay_payment_id;
     await order.save();
 
+    // Fire GA4 Purchase Event via Measurement Protocol as server backup
+    try {
+      const expertAmount = (order as any).amount || 9.99;
+      const expertCurrency = (order as any).currency || "USD";
+      sendGA4PurchaseEvent({
+        clientId: gaClientId,
+        transactionId: razorpay_payment_id,
+        amount: Number(expertAmount) || 9.99,
+        currency: expertCurrency,
+        items: [
+          {
+            item_id: order._id.toString(),
+            item_name: "Expert Manual Photo Review & Enhancement",
+            price: Number(expertAmount) || 9.99,
+            quantity: 1,
+            item_category: "Expert Edit",
+          },
+        ],
+      }).catch((gaErr) => console.error("[EXPERT VERIFY] GA4 event warning:", gaErr));
+    } catch (gaErr) {
+      console.error("[EXPERT VERIFY] GA4 dispatch error:", gaErr);
+    }
+
     // Always auto-generate invoice silently in background and upload to Cloudinary
     let invoiceData: any = null;
     let invoicePdfBuffer: Buffer | undefined = undefined;
@@ -93,7 +118,7 @@ export async function POST(req: Request) {
     }
 
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://pixpassport.com";
-    const invoicePdfDownloadUrl = invoiceCloudinaryUrl || (invoiceData ? `${appUrl}/api/admin/invoices/${invoiceData._id}/pdf` : "");
+    const invoicePdfDownloadUrl = invoiceCloudinaryUrl || (invoiceData ? `${appUrl}/api/invoices/${invoiceData._id}/download` : "");
 
     // Bug 5 fix: atomic email claim — prevents duplicate emails from concurrent verify + webhook
     const expertEmailTemplate = "expert_confirmation";

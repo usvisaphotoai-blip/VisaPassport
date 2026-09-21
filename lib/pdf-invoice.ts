@@ -1,9 +1,9 @@
 import { jsPDF } from "jspdf";
 import { IInvoice } from "@/models/Invoice";
 import { APP_LOGO_BASE64 } from "@/lib/logo-base64";
-import { formatCurrency } from "@/lib/currency-formatter";
+import { formatCurrency, sanitizePdfText } from "@/lib/currency-formatter";
 
-export { formatCurrency };
+export { formatCurrency, sanitizePdfText };
 
 /**
  * Generates an official server-side A4 PDF Invoice using jsPDF with responsive flat UI layout and app logo.
@@ -133,17 +133,19 @@ export function generateInvoicePdfBuffer(invoice: Partial<IInvoice>): Buffer {
   const cardInnerWidth = colWidth - 8;
 
   // Extract Customer and Gateway Data
-  const photoIdStr = invoice.photoId ? String(invoice.photoId) : "";
-  const phoneStr = invoice.customerPhone || invoice.gatewayDetails?.contact || "";
-  const authCode = invoice.gatewayDetails?.authCode || "";
-  const rrn = invoice.gatewayDetails?.bankRrn || "";
-  const cardHolderName = invoice.gatewayDetails?.cardHolderName || invoice.customerName || "Customer";
+  const photoIdStr = sanitizePdfText(invoice.photoId ? String(invoice.photoId) : "");
+  const phoneStr = sanitizePdfText(invoice.customerPhone || invoice.gatewayDetails?.contact || "");
+  const authCode = sanitizePdfText(invoice.gatewayDetails?.authCode || "");
+  const rrn = sanitizePdfText(invoice.gatewayDetails?.bankRrn || "");
+  const cardHolderName = sanitizePdfText(invoice.gatewayDetails?.cardHolderName || invoice.customerName || "Customer");
+  const customerEmail = sanitizePdfText(invoice.customerEmail || "customer@pixpassport.com");
+  const customerCountry = sanitizePdfText(invoice.customerCountry || "");
 
   // Calculate dynamic line heights for Billed To & Payment Cards
   const custNameLines = doc.splitTextToSize(cardHolderName, cardInnerWidth);
-  const custEmailLines = doc.splitTextToSize(invoice.customerEmail || "customer@pixpassport.com", cardInnerWidth);
+  const custEmailLines = doc.splitTextToSize(customerEmail, cardInnerWidth);
   const payIdLines = doc.splitTextToSize(`Payment ID: ${invoice.gatewayPaymentId || "N/A"}`, cardInnerWidth);
-  const orderRef = invoice.gatewayOrderId || invoice.orderNumber || "N/A";
+  const orderRef = sanitizePdfText(invoice.gatewayOrderId || invoice.orderNumber || "N/A");
   const orderLines = doc.splitTextToSize(`Order ID: ${orderRef}`, cardInnerWidth);
 
   const cardLeftLinesCount =

@@ -88,26 +88,37 @@ export async function GET(req: NextRequest) {
       .limit(limit)
       .lean();
 
-    // Summary KPIs across all invoices
-    const allInvoices = await Invoice.find().select("amount currency status").lean();
-    const totalRevenueUSD = allInvoices
-      .filter((inv) => (inv.currency === "USD" || !inv.currency) && inv.status === "PAID")
-      .reduce((sum, inv) => sum + (Number(inv.amount) || 0), 0);
+    // Summary KPIs across all invoices with multi-currency support
+    const allInvoices = await Invoice.find().select("amount total currency status").lean();
+    const paidInvoices = allInvoices.filter((inv) => inv.status === "PAID");
+    const paidCount = paidInvoices.length;
 
-    const totalRevenueINR = allInvoices
-      .filter((inv) => inv.currency === "INR" && inv.status === "PAID")
-      .reduce((sum, inv) => sum + (Number(inv.amount) || 0), 0);
+    const revenueByCurrency: Record<string, number> = {};
+    for (const inv of paidInvoices) {
+      const amt = Number(inv.total !== undefined ? inv.total : inv.amount) || 0;
+      const curr = (inv.currency || "USD").toUpperCase().trim();
+      revenueByCurrency[curr] = (revenueByCurrency[curr] || 0) + amt;
+    }
 
-    const paidCount = allInvoices.filter((inv) => inv.status === "PAID").length;
+    const totalRevenueUSD = revenueByCurrency["USD"] || 0;
+    const totalRevenueINR = revenueByCurrency["INR"] || 0;
 
-    // Count uninvoiced captured payments
-    const invoicedPaymentIds = (
-      await Invoice.find().select("paymentId gatewayPaymentId").lean()
-    ).map((inv) => inv.gatewayPaymentId || inv.paymentId?.toString());
+    // Count uninvoiced captured payments accurately
+    const existingInvoices = await Invoice.find()
+      .select("paymentId gatewayPaymentId")
+      .lean();
+
+    const existingPaymentObjIds = existingInvoices
+      .map((inv) => inv.paymentId)
+      .filter(Boolean);
+    const existingGatewayPaymentIds = existingInvoices
+      .map((inv) => inv.gatewayPaymentId)
+      .filter(Boolean);
 
     const uninvoicedPaymentsCount = await Payment.countDocuments({
       status: "captured",
-      gatewayPaymentId: { $nin: invoicedPaymentIds },
+      _id: { $nin: existingPaymentObjIds },
+      gatewayPaymentId: { $nin: existingGatewayPaymentIds },
     });
 
     return NextResponse.json({
@@ -123,6 +134,7 @@ export async function GET(req: NextRequest) {
         paidCount,
         totalRevenueUSD,
         totalRevenueINR,
+        revenueByCurrency,
         uninvoicedPaymentsCount,
       },
     });

@@ -2,8 +2,9 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
 import InvoicePreviewModal from "./InvoicePreviewModal";
-import { formatCurrency } from "@/lib/currency-formatter";
+import { formatCurrency, formatMultiCurrency } from "@/lib/currency-formatter";
 
 interface InvoicesClientPageProps {
   initialInvoices: any[];
@@ -12,6 +13,7 @@ interface InvoicesClientPageProps {
     paidCount: number;
     totalRevenueUSD: number;
     totalRevenueINR: number;
+    revenueByCurrency?: Record<string, number>;
     uninvoicedPaymentsCount: number;
   };
   initialUninvoicedPayments: any[];
@@ -22,17 +24,25 @@ export default function InvoicesClientPage({
   initialStats,
   initialUninvoicedPayments,
 }: InvoicesClientPageProps) {
+  const urlSearchParams = useSearchParams();
+  const initialSearchParam = urlSearchParams ? (urlSearchParams.get("search") || urlSearchParams.get("q") || "") : "";
+
   const [activeTab, setActiveTab] = useState<"invoices" | "uninvoiced">("invoices");
 
-  // Invoices list state
+  // Invoices list state & pagination
   const [invoices, setInvoices] = useState<any[]>(initialInvoices);
   const [stats, setStats] = useState(initialStats);
   const [uninvoicedPayments, setUninvoicedPayments] = useState<any[]>(
     initialUninvoicedPayments
   );
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(
+    Math.ceil((initialStats?.totalInvoices || 1) / 50) || 1
+  );
+  const [totalCount, setTotalCount] = useState(initialStats?.totalInvoices || initialInvoices.length);
 
   // Filter States
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(initialSearchParam);
   const [statusFilter, setStatusFilter] = useState("all");
   const [currencyFilter, setCurrencyFilter] = useState("all");
   const [datePreset, setDatePreset] = useState("all");
@@ -69,7 +79,7 @@ export default function InvoicesClientPage({
   };
 
   // Fetch updated invoices from API
-  const refreshInvoices = async () => {
+  const refreshInvoices = async (targetPage = page) => {
     try {
       setIsLoading(true);
       const params = new URLSearchParams();
@@ -79,6 +89,8 @@ export default function InvoicesClientPage({
       if (datePreset !== "all") params.set("datePreset", datePreset);
       if (datePreset === "custom" && startDate) params.set("startDate", startDate);
       if (datePreset === "custom" && endDate) params.set("endDate", endDate);
+      params.set("page", targetPage.toString());
+      params.set("limit", "50");
 
       const [invRes, uninvRes] = await Promise.all([
         fetch(`/api/admin/invoices?${params.toString()}`),
@@ -91,6 +103,11 @@ export default function InvoicesClientPage({
       if (invData.invoices) {
         setInvoices(invData.invoices);
         setStats(invData.stats);
+        if (invData.pagination) {
+          setPage(invData.pagination.page);
+          setTotalPages(invData.pagination.totalPages);
+          setTotalCount(invData.pagination.total);
+        }
       }
       if (uninvData.payments) {
         setUninvoicedPayments(uninvData.payments);
@@ -102,10 +119,11 @@ export default function InvoicesClientPage({
     }
   };
 
-  // Refetch when filters change
+  // Refetch when filters change (reset to page 1)
   useEffect(() => {
     const timer = setTimeout(() => {
-      refreshInvoices();
+      setPage(1);
+      refreshInvoices(1);
     }, 250);
     return () => clearTimeout(timer);
   }, [search, statusFilter, currencyFilter, datePreset, startDate, endDate]);
@@ -319,13 +337,13 @@ export default function InvoicesClientPage({
               Invoiced Volume
             </div>
             <div className="text-base font-black text-slate-900 mt-0.5">
-              {stats.totalRevenueINR > 0 ? `₹${stats.totalRevenueINR.toFixed(2)}` : ""}
-              {stats.totalRevenueINR > 0 && stats.totalRevenueUSD > 0 ? " + " : ""}
-              {stats.totalRevenueUSD > 0
-                ? `$${stats.totalRevenueUSD.toFixed(2)}`
-                : stats.totalRevenueINR === 0
-                ? "$0.00"
-                : ""}
+              {formatMultiCurrency(
+                stats.revenueByCurrency || {
+                  USD: stats.totalRevenueUSD,
+                  INR: stats.totalRevenueINR,
+                },
+                { fallback: "$0.00" }
+              )}
             </div>
           </div>
 
@@ -801,6 +819,72 @@ export default function InvoicesClientPage({
               </tbody>
             </table>
           </div>
+
+          {/* Pagination Controls */}
+          {totalPages > 1 && (
+            <div className="px-5 py-3.5 bg-slate-50 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+              <div className="text-slate-500 font-medium">
+                Showing <span className="font-bold text-slate-800">{(page - 1) * 50 + 1}</span> to{" "}
+                <span className="font-bold text-slate-800">{Math.min(page * 50, totalCount)}</span> of{" "}
+                <span className="font-bold text-slate-800">{totalCount}</span> invoices
+              </div>
+
+              <div className="flex items-center gap-1.5">
+                <button
+                  onClick={() => {
+                    if (page > 1) {
+                      setPage(page - 1);
+                      refreshInvoices(page - 1);
+                    }
+                  }}
+                  disabled={page <= 1 || isLoading}
+                  className="px-3 py-1.5 rounded-lg border border-slate-200 bg-white font-bold text-slate-700 hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+                >
+                  ← Previous
+                </button>
+
+                <div className="flex items-center gap-1">
+                  {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                    let pageNum = i + 1;
+                    if (totalPages > 5 && page > 3) {
+                      pageNum = page - 2 + i;
+                      if (pageNum > totalPages) pageNum = totalPages - 4 + i;
+                    }
+                    return (
+                      <button
+                        key={pageNum}
+                        onClick={() => {
+                          setPage(pageNum);
+                          refreshInvoices(pageNum);
+                        }}
+                        disabled={isLoading}
+                        className={`w-8 h-8 rounded-lg font-bold transition-all ${
+                          page === pageNum
+                            ? "bg-slate-900 text-lime-400"
+                            : "border border-slate-200 bg-white text-slate-700 hover:bg-slate-100"
+                        }`}
+                      >
+                        {pageNum}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                <button
+                  onClick={() => {
+                    if (page < totalPages) {
+                      setPage(page + 1);
+                      refreshInvoices(page + 1);
+                    }
+                  }}
+                  disabled={page >= totalPages || isLoading}
+                  className="px-3 py-1.5 rounded-lg border border-slate-200 bg-white font-bold text-slate-700 hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+                >
+                  Next →
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       ) : (
         /* Uninvoiced Payments Table (Flat Design) */

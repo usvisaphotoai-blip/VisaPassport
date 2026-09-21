@@ -8,6 +8,10 @@ import path from "path";
 import Image from "next/image";
 import OrderFilters from "./OrderFilters";
 import OrderDetailModal from "./OrderDetailModal";
+import {
+  aggregateCurrencyAmounts,
+  formatMultiCurrency,
+} from "@/lib/currency-formatter";
 
 export const revalidate = 0;
 
@@ -121,22 +125,14 @@ export default async function AdminOrdersPage(props: Props) {
     disputed: allOrders.filter((o: any) => o.status === "disputed").length,
   };
 
-  // Calculate revenue totals
-  const revenueUSD = allOrders
-    .filter((o: any) => {
-      const p = photoMap[o.photoId?.toString()];
-      const pay = paymentMap[o._id.toString()];
-      return (o.status === "paid" || p?.status === "paid" || pay?.status === "captured") && (o.currency === "USD" || !o.currency);
-    })
-    .reduce((sum: number, o: any) => sum + (Number(o.amount) || 0), 0);
-
-  const revenueINR = allOrders
-    .filter((o: any) => {
-      const p = photoMap[o.photoId?.toString()];
-      const pay = paymentMap[o._id.toString()];
-      return (o.status === "paid" || p?.status === "paid" || pay?.status === "captured") && o.currency === "INR";
-    })
-    .reduce((sum: number, o: any) => sum + (Number(o.amount) || 0), 0);
+  // Calculate multi-currency revenue totals for all paid orders
+  const paidOrdersList = allOrders.filter((o: any) => {
+    const p = photoMap[o.photoId?.toString()];
+    const pay = paymentMap[o._id.toString()];
+    return o.status === "paid" || p?.status === "paid" || pay?.status === "captured";
+  });
+  const revenueTotals = aggregateCurrencyAmounts(paidOrdersList);
+  const revenueFormatted = formatMultiCurrency(revenueTotals, { fallback: "$0.00" });
 
   // Apply search, status, country, and date filters
   const filteredOrders = allOrders.filter((order: any) => {
@@ -223,7 +219,7 @@ export default async function AdminOrdersPage(props: Props) {
           <div className="bg-white border border-slate-200/80 rounded-2xl px-4 py-2 shadow-xs">
             <div className="text-[10px] uppercase font-bold text-lime-600">Total Revenue</div>
             <div className="text-base font-black text-slate-900">
-              {revenueINR > 0 ? `₹${revenueINR}` : ""}{revenueINR > 0 && revenueUSD > 0 ? " + " : ""}{revenueUSD > 0 ? `$${revenueUSD.toFixed(2)}` : (revenueINR === 0 ? "$0.00" : "")}
+              {revenueFormatted}
             </div>
           </div>
           <div className="bg-white border border-slate-200/80 rounded-2xl px-4 py-2 shadow-xs">

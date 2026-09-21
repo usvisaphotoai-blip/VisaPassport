@@ -1,6 +1,7 @@
 import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { getAdminEmails } from "@/lib/admin-auth";
 import AdminSidebar from "./AdminSidebar";
 
 export default async function AdminDashboardLayout({
@@ -9,12 +10,8 @@ export default async function AdminDashboardLayout({
   children: React.ReactNode;
 }) {
   const session = await getServerSession(authOptions);
-
-  const adminEmails = process.env.ADMIN_EMAILS
-    ? process.env.ADMIN_EMAILS.split(",").map((e) => e.trim().toLowerCase())
-    : [];
-
-  const userEmail = session?.user?.email?.toLowerCase() || "";
+  const adminEmails = getAdminEmails();
+  const userEmail = session?.user?.email?.toLowerCase().trim() || "";
 
   if (!session || !adminEmails.includes(userEmail)) {
     redirect("/admin/login");

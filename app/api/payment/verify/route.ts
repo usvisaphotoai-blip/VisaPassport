@@ -11,6 +11,7 @@ import { getSafeSpec } from "@/lib/specs";
 import { logAuditEvent, claimEmailSend, releaseEmailClaim } from "@/lib/audit";
 import { autoGenerateAndStoreInvoice } from "@/lib/invoice-automation";
 import { formatCurrency } from "@/lib/currency-formatter";
+import { sendGA4PurchaseEvent } from "@/lib/ga4";
 
 export async function POST(req: Request) {
   try {
@@ -21,6 +22,7 @@ export async function POST(req: Request) {
       razorpay_payment_id,
       razorpay_signature,
       photoId,
+      gaClientId,
     } = await req.json();
 
     if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature || !photoId) {
@@ -172,6 +174,29 @@ export async function POST(req: Request) {
       });
     }
 
+    // Fire GA4 Purchase Event via Measurement Protocol as server backup
+    try {
+      const spec = getSafeSpec(photo.documentType);
+      sendGA4PurchaseEvent({
+        clientId: gaClientId,
+        userId: photo.userId ? photo.userId.toString() : undefined,
+        transactionId: razorpay_payment_id,
+        amount: Number(permanentPayment.amount) || Number(permanentOrder.amount) || 0,
+        currency: permanentPayment.currency || permanentOrder.currency || "USD",
+        items: [
+          {
+            item_id: photo._id.toString(),
+            item_name: `${spec.name || "Passport Photo"} ${photo.isExpert ? "(Expert Review)" : "(Standard)"}`,
+            price: Number(permanentPayment.amount) || Number(permanentOrder.amount) || 0,
+            quantity: 1,
+            item_category: photo.isExpert ? "Expert Edit" : "Standard Photo",
+          },
+        ],
+      }).catch((gaErr) => console.error("[PAYMENT VERIFY] GA4 event warning:", gaErr));
+    } catch (gaErr) {
+      console.error("[PAYMENT VERIFY] GA4 dispatch error:", gaErr);
+    }
+
     // Always auto-generate invoice silently in background and upload to Cloudinary
     let invoiceData: any = null;
     let invoicePdfBuffer: Buffer | undefined = undefined;
@@ -222,7 +247,7 @@ export async function POST(req: Request) {
       const spec = getSafeSpec(photo.documentType);
       const documentName = spec.name || "Passport Photo";
       const countryName = spec.country || spec.name || "Passport Photo";
-      const invoicePdfDownloadUrl = invoiceCloudinaryUrl || (invoiceData ? `${appUrl}/api/admin/invoices/${invoiceData._id}/pdf` : "");
+      const invoicePdfDownloadUrl = invoiceCloudinaryUrl || (invoiceData ? `${appUrl}/api/invoices/${invoiceData._id}/download` : "");
 
       try {
         if (photo.isExpert) {

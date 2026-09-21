@@ -17,18 +17,21 @@ export default async function AdminInvoicesPage() {
     .lean();
 
   const allInvoicesSummary = await Invoice.find()
-    .select("amount currency status")
+    .select("amount total currency status")
     .lean();
 
-  const totalRevenueUSD = allInvoicesSummary
-    .filter((inv) => (inv.currency === "USD" || !inv.currency) && inv.status === "PAID")
-    .reduce((sum, inv) => sum + (Number(inv.amount) || 0), 0);
+  const paidInvoices = allInvoicesSummary.filter((inv) => inv.status === "PAID");
+  const paidCount = paidInvoices.length;
 
-  const totalRevenueINR = allInvoicesSummary
-    .filter((inv) => inv.currency === "INR" && inv.status === "PAID")
-    .reduce((sum, inv) => sum + (Number(inv.amount) || 0), 0);
+  const revenueByCurrency: Record<string, number> = {};
+  for (const inv of paidInvoices) {
+    const amt = Number(inv.total !== undefined ? inv.total : inv.amount) || 0;
+    const curr = (inv.currency || "USD").toUpperCase().trim();
+    revenueByCurrency[curr] = (revenueByCurrency[curr] || 0) + amt;
+  }
 
-  const paidCount = allInvoicesSummary.filter((inv) => inv.status === "PAID").length;
+  const totalRevenueUSD = revenueByCurrency["USD"] || 0;
+  const totalRevenueINR = revenueByCurrency["INR"] || 0;
 
   // 2. Fetch uninvoiced captured payments
   const existingInvoices = await Invoice.find()
@@ -104,6 +107,7 @@ export default async function AdminInvoicesPage() {
     paidCount,
     totalRevenueUSD,
     totalRevenueINR,
+    revenueByCurrency,
     uninvoicedPaymentsCount: enrichedUninvoiced.length,
   };
 

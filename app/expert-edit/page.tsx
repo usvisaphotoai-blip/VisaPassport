@@ -95,6 +95,27 @@ export default function ExpertEditPage() {
 
       setMessage("Opening payment gateway...");
 
+      // Fire GA4 begin_checkout
+      if (typeof window !== "undefined" && typeof (window as any).gtag === "function") {
+        try {
+          (window as any).gtag("event", "begin_checkout", {
+            value: (data.amount || 0) / 100,
+            currency: (data.currency || "USD").toUpperCase(),
+            items: [
+              {
+                item_id: data.expertOrderId || "expert_edit",
+                item_name: "Expert Manual Photo Review & Enhancement",
+                price: (data.amount || 0) / 100,
+                quantity: 1,
+                item_category: "Expert Edit",
+              },
+            ],
+          });
+        } catch (gaErr) {
+          console.warn("[GA4] Failed to dispatch begin_checkout event:", gaErr);
+        }
+      }
+
       const options = {
         key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
         amount: data.amount,
@@ -113,10 +134,34 @@ export default function ExpertEditPage() {
               razorpay_order_id: response.razorpay_order_id,
               razorpay_signature: response.razorpay_signature,
               expertOrderId: data.expertOrderId,
+              gaClientId,
             }),
           });
 
           if (verifyRes.ok) {
+            // Fire GA4 purchase event in browser
+            if (typeof window !== "undefined" && typeof (window as any).gtag === "function") {
+              try {
+                (window as any).gtag("event", "purchase", {
+                  transaction_id: response.razorpay_payment_id || data.orderId,
+                  value: (data.amount || 0) / 100,
+                  currency: (data.currency || "USD").toUpperCase(),
+                  items: [
+                    {
+                      item_id: data.expertOrderId || "expert_edit",
+                      item_name: "Expert Manual Photo Review & Enhancement",
+                      price: (data.amount || 0) / 100,
+                      quantity: 1,
+                      item_category: "Expert Edit",
+                    },
+                  ],
+                });
+                console.log("[GA4] Client-side expert purchase event dispatched:", response.razorpay_payment_id);
+              } catch (gaErr) {
+                console.warn("[GA4] Failed to dispatch expert purchase event:", gaErr);
+              }
+            }
+
             setIsSuccess(true);
             setMessage("Payment successful! Our team will process your photos shortly.");
           } else {

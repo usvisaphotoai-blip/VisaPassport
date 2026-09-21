@@ -1,5 +1,6 @@
 import { jsPDF } from "jspdf";
 import { APP_LOGO_BASE64 } from "@/lib/logo-base64";
+import { formatCurrency, sanitizePdfText } from "@/lib/currency-formatter";
 import { UserTreeGroup, PhotoGroup, AuditEventItem } from "@/app/admin/(dashboard)/audit-events/AuditEventsClientPage";
 
 function formatBytes(bytes?: number): string {
@@ -12,13 +13,7 @@ function formatBytes(bytes?: number): string {
 
 function formatPdfCurrency(amount?: number, currency: string = "USD"): string {
   if (amount === undefined || amount === null) return "";
-  const num = Number(amount) || 0;
-  const curr = (currency || "USD").toUpperCase();
-  if (curr === "USD") return `$${num.toFixed(2)}`;
-  if (curr === "EUR") return `EUR ${num.toFixed(2)}`;
-  if (curr === "GBP") return `GBP ${num.toFixed(2)}`;
-  if (curr === "INR") return `INR ${num.toFixed(2)}`;
-  return `${curr} ${num.toFixed(2)}`;
+  return formatCurrency(amount, currency);
 }
 
 interface PdfCommitNode {
@@ -429,16 +424,19 @@ export function generateAuditTrailPdfBuffer(userGroup: UserTreeGroup): Buffer {
   doc.setFont("helvetica", "bold");
   doc.setFontSize(10.5);
   doc.setTextColor(255, 255, 255);
-  doc.text(userGroup.customerName || userGroup.userEmail, margin + 4, y + 6);
+  const cleanCustomerName = sanitizePdfText(userGroup.customerName || userGroup.userEmail);
+  const cleanUserEmail = sanitizePdfText(userGroup.userEmail);
+  const cleanPhone = sanitizePdfText(userGroup.customerPhone || "");
+  doc.text(cleanCustomerName, margin + 4, y + 6);
 
   doc.setFontSize(8);
   doc.setTextColor(limeAccent[0], limeAccent[1], limeAccent[2]);
-  doc.text(`Customer Email: ${userGroup.userEmail}`, margin + 4, y + 11.5);
+  doc.text(`Customer Email: ${cleanUserEmail}`, margin + 4, y + 11.5);
 
   doc.setFont("helvetica", "normal");
   doc.setFontSize(7.5);
   doc.setTextColor(lightSlate[0], lightSlate[1], lightSlate[2]);
-  const phoneText = userGroup.customerPhone ? `Contact Phone: ${userGroup.customerPhone} • ` : "";
+  const phoneText = cleanPhone ? `Contact Phone: ${cleanPhone} • ` : "";
   const totalEvents = userGroup.photos.reduce((acc, p) => acc + p.events.length, 0) + userGroup.generalEvents.length;
   const totalDownloads = userGroup.photos.reduce(
     (acc, p) => acc + p.events.filter((e) => e.eventType === "download").length,

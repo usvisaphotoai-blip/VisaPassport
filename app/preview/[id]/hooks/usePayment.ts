@@ -100,6 +100,27 @@ export function usePayment({
         }).catch(() => {});
       }
 
+      // Fire GA4 begin_checkout
+      if (typeof window !== "undefined" && typeof (window as any).gtag === "function") {
+        try {
+          (window as any).gtag("event", "begin_checkout", {
+            value: (orderData.amount || 0) / 100,
+            currency: (orderData.currency || "USD").toUpperCase(),
+            items: [
+              {
+                item_id: photoId,
+                item_name: isExpert ? "Passport Photo (Expert Review)" : "Passport Photo (Standard)",
+                price: (orderData.amount || 0) / 100,
+                quantity: 1,
+                item_category: isExpert ? "Expert Edit" : "Standard Photo",
+              },
+            ],
+          });
+        } catch (gaErr) {
+          console.warn("[GA4] Failed to dispatch begin_checkout event:", gaErr);
+        }
+      }
+
       // @ts-ignore
       if (typeof window === "undefined" || !window.Razorpay) {
         throw new Error("Razorpay SDK is not available.");
@@ -119,10 +140,33 @@ export function usePayment({
             const verifyRes = await fetch("/api/payment/verify", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ ...response, photoId }),
+              body: JSON.stringify({ ...response, photoId, gaClientId }),
             });
             const verifyData = await verifyRes.json().catch(() => ({}));
             if (verifyRes.ok) {
+              // Fire GA4 purchase event in browser
+              if (typeof window !== "undefined" && typeof (window as any).gtag === "function") {
+                try {
+                  (window as any).gtag("event", "purchase", {
+                    transaction_id: response.razorpay_payment_id || orderData.orderId,
+                    value: (orderData.amount || 0) / 100,
+                    currency: (orderData.currency || "USD").toUpperCase(),
+                    items: [
+                      {
+                        item_id: photoId,
+                        item_name: isExpert ? "Passport Photo (Expert Review)" : "Passport Photo (Standard)",
+                        price: (orderData.amount || 0) / 100,
+                        quantity: 1,
+                        item_category: isExpert ? "Expert Edit" : "Standard Photo",
+                      },
+                    ],
+                  });
+                  console.log("[GA4] Client-side purchase event dispatched:", response.razorpay_payment_id);
+                } catch (gaErr) {
+                  console.warn("[GA4] Failed to dispatch purchase event:", gaErr);
+                }
+              }
+
               onSuccess?.(verifyData);
               status === "authenticated"
                 ? router.push("/dashboard")

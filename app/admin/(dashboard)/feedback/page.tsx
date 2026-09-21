@@ -1,5 +1,6 @@
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { getAdminEmails } from "@/lib/admin-auth";
 import { redirect } from "next/navigation";
 import dbConnect from "@/lib/mongodb";
 import Feedback from "@/models/Feedback";
@@ -14,7 +15,12 @@ interface Props {
 
 export default async function FeedbackPage(props: Props) {
   const session = await getServerSession(authOptions);
-  if (!session) redirect("/admin/login");
+  const adminEmails = getAdminEmails();
+  const userEmail = session?.user?.email?.toLowerCase().trim() || "";
+
+  if (!session || !adminEmails.includes(userEmail)) {
+    redirect("/admin/login");
+  }
 
   const searchParams = await props.searchParams;
   const filterSearch = (searchParams?.q || "").trim().toLowerCase();

@@ -111,3 +111,73 @@ export function getCurrencyPrefix(currency: string = "USD"): string {
   const currCode = (currency || "USD").toUpperCase().trim();
   return SUPPORTED_CURRENCIES[currCode]?.prefix || `${currCode} `;
 }
+
+/**
+ * Aggregates an array of items with amount and currency into a totals record.
+ */
+export function aggregateCurrencyAmounts(
+  items: Array<{ amount?: number; total?: number; currency?: string }>
+): Record<string, number> {
+  const totals: Record<string, number> = {};
+  for (const item of items) {
+    const rawAmt = item.total !== undefined ? item.total : item.amount;
+    const amt = Number(rawAmt) || 0;
+    if (amt <= 0) continue;
+    const curr = (item.currency || "USD").toUpperCase().trim();
+    totals[curr] = (totals[curr] || 0) + amt;
+  }
+  return totals;
+}
+
+/**
+ * Formats a map/record of currencies and totals into a clean, combined multi-currency string.
+ * Example: { "INR": 49500, "USD": 120, "EUR": 45 } -> "INR 49,500.00 + $120.00 + EUR 45.00"
+ */
+export function formatMultiCurrency(
+  totalsMap: Record<string, number> | Map<string, number> | undefined,
+  options: { joinWith?: string; fallback?: string } = {}
+): string {
+  if (!totalsMap) return options.fallback || "$0.00";
+
+  const entries: [string, number][] =
+    totalsMap instanceof Map
+      ? Array.from(totalsMap.entries())
+      : Object.entries(totalsMap);
+
+  const activeEntries = entries.filter(([_, amt]) => Number(amt) > 0);
+
+  if (activeEntries.length === 0) {
+    return options.fallback || "$0.00";
+  }
+
+  // Sort: USD and INR first if present, then alphabetical
+  activeEntries.sort(([currA], [currB]) => {
+    const priority: Record<string, number> = { USD: 1, INR: 2, EUR: 3, GBP: 4, CAD: 5, AUD: 6 };
+    const pA = priority[currA] || 99;
+    const pB = priority[currB] || 99;
+    if (pA !== pB) return pA - pB;
+    return currA.localeCompare(currB);
+  });
+
+  const parts = activeEntries.map(([curr, amt]) => {
+    return formatCurrency(amt, curr);
+  });
+
+  return parts.join(options.joinWith || " + ");
+}
+
+/**
+ * Sanitizes input string to ensure compatibility with jsPDF standard WinAnsi / ASCII fonts.
+ * Transliterates accented characters (e.g. é -> e, ü -> u) and strips unsupported unicode symbols.
+ */
+export function sanitizePdfText(text: string | null | undefined): string {
+  if (!text) return "";
+  return String(text)
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "") // Strip diacritics
+    .replace(/[^\x20-\x7E\n\r\t]/g, " ") // Replace non-ASCII printable chars with space
+    .replace(/ +/g, " ")
+    .trim();
+}
+
+

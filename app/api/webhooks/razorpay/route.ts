@@ -186,7 +186,7 @@ export async function POST(req: Request) {
             const spec = getSafeSpec(photo.documentType);
             const documentName = spec.name || "Passport Photo";
             const countryName = spec.country || spec.name || "Passport Photo";
-            const invoicePdfDownloadUrl = invoiceCloudinaryUrl || (invoiceData ? `${appUrl}/api/admin/invoices/${invoiceData._id}/pdf` : "");
+            const invoicePdfDownloadUrl = invoiceCloudinaryUrl || (invoiceData ? `${appUrl}/api/invoices/${invoiceData._id}/download` : "");
             
             try {
               if (photo.isExpert) {
@@ -526,7 +526,7 @@ export async function POST(req: Request) {
           }
 
           const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://pixpassport.com';
-          const expertInvoicePdfDownloadUrl = expertInvoiceCloudinaryUrl || (expertInvoiceData ? `${appUrl}/api/admin/invoices/${expertInvoiceData._id}/pdf` : "");
+          const expertInvoicePdfDownloadUrl = expertInvoiceCloudinaryUrl || (expertInvoiceData ? `${appUrl}/api/invoices/${expertInvoiceData._id}/download` : "");
 
           // Bug 6 fix: add atomic email dedup for expert order path (was completely missing)
           const expertEmailTemplate = "expert_confirmation";
