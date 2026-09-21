@@ -405,13 +405,13 @@ function ToolForm() {
 
 export default function ToolPage() {
   return (
-    <div className="bg-slate-50 min-h-screen ">
+    <div className="bg-slate-50 min-h-screen">
       <div className="max-w-xl mx-auto px-4 pt-2 sm:pt-2 text-center">
         <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
-          Passport size photo maker  & Visa Photo maker
+          Passport size photo maker &amp; Visa Photo maker
         </h1>
         <h2 className="mt-1.5 text-sm text-slate-500 font-normal">
-          Free visa photo Validator & Maker for 50+ Countries
+          Free visa photo Validator &amp; Maker for 50+ Countries
         </h2>
       </div>
       <div className="py-4">
@@ -419,6 +419,29 @@ export default function ToolPage() {
           <ToolForm />
         </Suspense>
       </div>
+
+      {/* Passport & Visa Photo Maker Information Section */}
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 py-10 sm:py-12">
+        <div className="bg-white border border-slate-200/80 rounded-xl p-6 sm:p-10 ">
+          <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight mb-5">
+            Passport size photo &amp; Visa Photo Maker Online
+          </h2>
+          <div className="space-y-4 text-slate-600 text-sm sm:text-base leading-relaxed">
+            <p>
+              Create a passport size photo and check visa photo requirements online with an easy-to-use passport and visa photo maker. Upload your existing photo and select the country or document type you need. The tool is designed to help prepare photos according to the selected requirements, including photo size, background, head positioning, and other biometric checks.
+            </p>
+            <p>
+              Whether you need a <strong className="font-semibold text-slate-900">passport photo, icao standard photo, icao compliant photo, india passport size photo, visa photo, US visa photo, Schengen visa photo, France visa photo, or another country-specific document photo</strong>, you can prepare your image online without visiting a photo studio. The photo maker automatically processes your uploaded image and provides a ready-to-use result based on the selected document requirements.
+            </p>
+            <p>
+              Use the <strong className="font-semibold text-slate-900">visa photo validator</strong> to identify potential issues before submitting your application. The processing workflow checks facial positioning, eye level, head size, background appearance, and other photo criteria.
+            </p>
+            <p>
+              If you are applying for a passport or visa and need a compliant digital photo quickly, upload your photo, choose your document type, and start the photo preparation process online.
+            </p>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
