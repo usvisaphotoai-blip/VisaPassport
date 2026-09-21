@@ -8,8 +8,7 @@ import Payment from "@/models/Payment";
 import crypto from "crypto";
 import { sendEmail } from "@/lib/mail";
 import { getSafeSpec } from "@/lib/specs";
-import { logAuditEvent } from "@/lib/audit";
-import AuditEvent from "@/models/AuditEvent";
+import { logAuditEvent, claimEmailSend, releaseEmailClaim } from "@/lib/audit";
 import { autoGenerateAndStoreInvoice } from "@/lib/invoice-automation";
 import { formatCurrency } from "@/lib/currency-formatter";
 
@@ -195,15 +194,16 @@ export async function POST(req: Request) {
       console.error("[PAYMENT VERIFY] Background invoice generation warning (non-fatal):", invErr);
     }
 
-    // Check if delivery email was already sent successfully for this photo
-    const emailAlreadySent = await AuditEvent.findOne({
-      photoId: photo._id,
-      eventType: "email_sent",
-      "metadata.status": "sent",
-    });
+    // Bug 1 fix: atomic email claim — prevents duplicate emails from concurrent verify + webhook
+    const emailTemplate = photo.isExpert ? "expert_order" : "delivery";
+    const canSendEmail = await claimEmailSend(
+      { photoId: photo._id.toString() },
+      emailTemplate,
+      "system"
+    );
 
-    // Idempotency check: if photo was marked paid and email was already sent, avoid duplicate emails
-    if (alreadyPaid && emailAlreadySent) {
+    if (!canSendEmail) {
+      console.log(`[PAYMENT VERIFY] Email already claimed for photo ${photoId}, skipping duplicate`);
       return NextResponse.json({
         success: true,
         message: "Payment verified successfully",
@@ -243,13 +243,13 @@ export async function POST(req: Request) {
           const adminEmail = process.env.ADMIN_EMAILS || process.env.RESEND_REPLY_TO;
           if (adminEmail) {
             await sendEmail({
-              to: adminEmail,
-              subject: `New Expert Edit Order: ${photo._id} (${countryName})`,
-              html: adminHtml,
-            });
+            to: adminEmail,
+            subject: `New Expert Edit Order: ${photo._id} (${countryName})`,
+            html: adminHtml,
+          }).catch((err: any) => console.error('[PAYMENT VERIFY] Admin email error (non-fatal):', err));
           }
 
-          await sendEmail({
+          const mailRes = await sendEmail({
             to: userEmail,
             bcc: 'usvisaphotoai@gmail.com',
             subject: "Your Expert Photo Edit Order is Confirmed - PixPassport",
@@ -275,7 +275,7 @@ export async function POST(req: Request) {
                     <tr><td style="padding: 5px 0; color: #64748b;">Amount Paid:</td><td style="padding: 5px 0; text-align: right; font-weight: 700; color: #059669;">${formatCurrency(invoiceData.total, invoiceData.currency)} (PAID ✓)</td></tr>
                     <tr><td style="padding: 5px 0; color: #64748b;">Payment Method:</td><td style="padding: 5px 0; text-align: right; font-weight: 600;">${invoiceData.paymentMethod || "UPI / Card"}</td></tr>
                   </table>
-                  <p style="margin: 0 0 14px; font-size: 12px; color: #64748b;">Your official Tax Invoice PDF is attached to this email.</p>
+                  <p style="margin: 0 0 14px; font-size: 12px; color: #64748b;">${invoicePdfBuffer ? 'Your official Tax Invoice PDF is attached to this email.' : 'Download your official Tax Invoice PDF using the button below.'}</p>
                   ${invoicePdfDownloadUrl ? `<div style="text-align: center;"><a href="${invoicePdfDownloadUrl}" style="display: inline-block; background: #0f172a; color: #ffffff; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-size: 12px; font-weight: 700;">⬇ Download Tax Invoice PDF</a></div>` : ''}
                 </div>
                 ` : ''}
@@ -293,23 +293,42 @@ export async function POST(req: Request) {
               }
             ] : undefined,
           });
-          console.log(`[PAYMENT VERIFY] Expert emails sent successfully for photo ${photoId}`);
-          await logAuditEvent({
-            eventType: "email_sent",
-            orderId: permanentOrder?._id,
-            paymentId: permanentPayment?._id,
-            photoId: photo._id,
-            actor: "system",
-            metadata: {
-              recipient: userEmail,
-              subject: `New Expert Edit Order: ${photo._id} (${countryName})`,
-              template: "expert_order",
-              invoiceNumber: invoiceData?.invoiceNumber,
-              status: "sent",
-            },
-          });
+          // Bug 8/9 fix: check sendEmail return value; Bug 10 fix: log correct customer subject
+          if (mailRes.success) {
+            console.log(`[PAYMENT VERIFY] Expert emails sent successfully for photo ${photoId}`);
+            await logAuditEvent({
+              eventType: "email_sent",
+              orderId: permanentOrder?._id,
+              paymentId: permanentPayment?._id,
+              photoId: photo._id,
+              actor: "system",
+              metadata: {
+                recipient: userEmail,
+                subject: "Your Expert Photo Edit Order is Confirmed - PixPassport",
+                template: "expert_order",
+                invoiceNumber: invoiceData?.invoiceNumber,
+                status: "sent",
+              },
+            });
+          } else {
+            console.error(`[PAYMENT VERIFY] Expert email send returned failure for photo ${photoId}:`, mailRes.error);
+            await releaseEmailClaim({ photoId: photo._id.toString() }, emailTemplate);
+            await logAuditEvent({
+              eventType: "email_sent",
+              orderId: permanentOrder?._id,
+              paymentId: permanentPayment?._id,
+              photoId: photo._id,
+              actor: "system",
+              metadata: {
+                recipient: userEmail,
+                template: "expert_order",
+                status: "failed",
+                error: String(mailRes.error),
+              },
+            });
+          }
         } else {
-          await sendEmail({
+          const stdMailRes = await sendEmail({
             to: userEmail,
             bcc: 'usvisaphotoai@gmail.com',
             subject: `Your ${countryName} (${documentName}) photo is ready — Download now! 🎉`,
@@ -357,7 +376,7 @@ export async function POST(req: Request) {
                     <tr><td style="padding: 5px 0; color: #64748b;">Amount Paid:</td><td style="padding: 5px 0; text-align: right; font-weight: 700; color: #059669;">${formatCurrency(invoiceData.total, invoiceData.currency)} (PAID ✓)</td></tr>
                     <tr><td style="padding: 5px 0; color: #64748b;">Payment Method:</td><td style="padding: 5px 0; text-align: right; font-weight: 600;">${invoiceData.paymentMethod || "UPI / Card"}</td></tr>
                   </table>
-                  <p style="margin: 0 0 14px; font-size: 12px; color: #64748b;">Your official tax invoice PDF is attached to this email for your accounting records.</p>
+                  <p style="margin: 0 0 14px; font-size: 12px; color: #64748b;">${invoicePdfBuffer ? 'Your official tax invoice PDF is attached to this email for your accounting records.' : 'Download your official tax invoice PDF for your accounting records using the button below.'}</p>
                   ${invoicePdfDownloadUrl ? `<div style="text-align: center;"><a href="${invoicePdfDownloadUrl}" style="display: inline-block; background: #0f172a; color: #ffffff; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-size: 12px; font-weight: 700;">⬇ Download Invoice PDF</a></div>` : ''}
                 </div>
                 ` : ''}
@@ -392,24 +411,44 @@ export async function POST(req: Request) {
               }
             ] : undefined,
           });
-          console.log(`[PAYMENT VERIFY] Email with invoice attached sent successfully for photo ${photoId}`);
-          await logAuditEvent({
-            eventType: "email_sent",
-            orderId: permanentOrder?._id,
-            paymentId: permanentPayment?._id,
-            photoId: photo._id,
-            actor: "system",
-            metadata: {
-              recipient: userEmail,
-              subject: `Your ${countryName} (${documentName}) photo is ready — Download now! 🎉`,
-              template: "delivery",
-              invoiceNumber: invoiceData?.invoiceNumber,
-              status: "sent",
-            },
-          });
+          // Bug 8/9 fix: check sendEmail return value
+          if (stdMailRes.success) {
+            console.log(`[PAYMENT VERIFY] Email with invoice attached sent successfully for photo ${photoId}`);
+            await logAuditEvent({
+              eventType: "email_sent",
+              orderId: permanentOrder?._id,
+              paymentId: permanentPayment?._id,
+              photoId: photo._id,
+              actor: "system",
+              metadata: {
+                recipient: userEmail,
+                subject: `Your ${countryName} (${documentName}) photo is ready — Download now! 🎉`,
+                template: "delivery",
+                invoiceNumber: invoiceData?.invoiceNumber,
+                status: "sent",
+              },
+            });
+          } else {
+            console.error(`[PAYMENT VERIFY] Delivery email returned failure for photo ${photoId}:`, stdMailRes.error);
+            await releaseEmailClaim({ photoId: photo._id.toString() }, emailTemplate);
+            await logAuditEvent({
+              eventType: "email_sent",
+              orderId: permanentOrder?._id,
+              paymentId: permanentPayment?._id,
+              photoId: photo._id,
+              actor: "system",
+              metadata: {
+                recipient: userEmail,
+                template: "delivery",
+                status: "failed",
+                error: String(stdMailRes.error),
+              },
+            });
+          }
         }
       } catch (err) {
         console.error(`[PAYMENT VERIFY] Failed to send email for photo ${photoId}:`, err);
+        await releaseEmailClaim({ photoId: photo._id.toString() }, emailTemplate);
         await logAuditEvent({
           eventType: "email_sent",
           orderId: permanentOrder?._id,

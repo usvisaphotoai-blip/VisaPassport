@@ -4,6 +4,7 @@ import dbConnect from "@/lib/mongodb";
 import ExpertOrder from "@/models/ExpertOrder";
 import { sendEmail } from "@/lib/mail";
 import { autoGenerateAndStoreInvoice } from "@/lib/invoice-automation";
+import { logAuditEvent, claimEmailSend, releaseEmailClaim } from "@/lib/audit";
 import { formatCurrency } from "@/lib/currency-formatter";
 
 export async function POST(req: Request) {
@@ -94,7 +95,18 @@ export async function POST(req: Request) {
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://pixpassport.com";
     const invoicePdfDownloadUrl = invoiceCloudinaryUrl || (invoiceData ? `${appUrl}/api/admin/invoices/${invoiceData._id}/pdf` : "");
 
-    // Send confirmation to admin and user via email
+    // Bug 5 fix: atomic email claim — prevents duplicate emails from concurrent verify + webhook
+    const expertEmailTemplate = "expert_confirmation";
+    const canSendEmail = await claimEmailSend(
+      { expertOrderId },
+      expertEmailTemplate,
+      "system"
+    );
+
+    if (!canSendEmail) {
+      console.log(`[EXPERT VERIFY] Email already claimed for order ${expertOrderId}, skipping duplicate`);
+      return NextResponse.json({ success: true, message: "Payment verified successfully" });
+    }
     try {
       const adminHtml = `
         <h2>New Expert Edit Order</h2>
@@ -114,11 +126,11 @@ export async function POST(req: Request) {
           to: adminEmail,
           subject: `New Expert Edit Order: ${order._id}`,
           html: adminHtml,
-        });
+        }).catch((err: any) => console.error('[EXPERT VERIFY] Admin email error (non-fatal):', err));
       }
 
       // Notify Customer
-      await sendEmail({
+      const mailRes = await sendEmail({
         to: order.email,
         bcc: 'usvisaphotoai@gmail.com',
         subject: "Your Expert Photo Edit Order is Confirmed - PixPassport",
@@ -143,7 +155,7 @@ export async function POST(req: Request) {
                 <tr><td style="padding: 5px 0; color: #64748b;">Amount Paid:</td><td style="padding: 5px 0; text-align: right; font-weight: 700; color: #059669;">${formatCurrency(invoiceData.total, invoiceData.currency)} (PAID ✓)</td></tr>
                 <tr><td style="padding: 5px 0; color: #64748b;">Payment Method:</td><td style="padding: 5px 0; text-align: right; font-weight: 600;">${invoiceData.paymentMethod || "UPI / Card"}</td></tr>
               </table>
-              <p style="margin: 0 0 14px; font-size: 12px; color: #64748b;">Your official Tax Invoice PDF is attached to this email.</p>
+              <p style="margin: 0 0 14px; font-size: 12px; color: #64748b;">${invoicePdfBuffer ? 'Your official Tax Invoice PDF is attached to this email.' : 'Download your official Tax Invoice PDF using the button below.'}</p>
               ${invoicePdfDownloadUrl ? `<div style="text-align: center;"><a href="${invoicePdfDownloadUrl}" style="display: inline-block; background: #0f172a; color: #ffffff; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-size: 12px; font-weight: 700;">⬇ Download Tax Invoice PDF</a></div>` : ''}
             </div>
             ` : ''}
@@ -161,8 +173,39 @@ export async function POST(req: Request) {
           }
         ] : undefined,
       });
+
+      // Bug 8 fix: check sendEmail return value and log accurate audit
+      if (mailRes.success) {
+        await logAuditEvent({
+          eventType: "email_sent",
+          actor: "system",
+          metadata: {
+            recipient: order.email,
+            subject: "Your Expert Photo Edit Order is Confirmed - PixPassport",
+            template: "expert_confirmation",
+            invoiceNumber: invoiceData?.invoiceNumber,
+            expertOrderId,
+            status: "sent",
+          },
+        });
+      } else {
+        console.error(`[EXPERT VERIFY] Customer email returned failure for order ${expertOrderId}:`, mailRes.error);
+        await releaseEmailClaim({ expertOrderId }, expertEmailTemplate);
+        await logAuditEvent({
+          eventType: "email_sent",
+          actor: "system",
+          metadata: {
+            recipient: order.email,
+            template: "expert_confirmation",
+            expertOrderId,
+            status: "failed",
+            error: String(mailRes.error),
+          },
+        });
+      }
     } catch (mailError) {
       console.error("Failed to send emails for expert edit:", mailError);
+      await releaseEmailClaim({ expertOrderId }, expertEmailTemplate);
     }
 
     return NextResponse.json({ success: true, message: "Payment verified successfully" });

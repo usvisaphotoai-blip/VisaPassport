@@ -16,6 +16,9 @@ interface SendMailOptions {
   attachments?: EmailAttachment[];
 }
 
+// Lazy singleton — avoid creating a new Resend client per request (Bug 7 fix)
+let _resendInstance: Resend | null = null;
+
 // Validate required environment variables at module load (server-side only)
 function getResendConfig() {
   const apiKey = process.env.RESEND_API_KEY;
@@ -37,7 +40,8 @@ function getResendConfig() {
 
 export const sendEmail = async (options: SendMailOptions) => {
   const { apiKey, fromEmail, replyTo } = getResendConfig();
-  const resend = new Resend(apiKey);
+  if (!_resendInstance) _resendInstance = new Resend(apiKey);
+  const resend = _resendInstance;
 
   try {
     // Build payload — Resend SDK uses discriminated unions, so we only include

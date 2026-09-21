@@ -553,20 +553,7 @@ function OrderPanel({
                 Customize &amp; Print Sheet (A4 / 4×6 / 5×7)
               </a>
 
-              <div className="grid grid-cols-2 gap-3">
-                <button
-                  onClick={handleEmailPhoto}
-                  className="bg-slate-50 hover:bg-slate-100 text-slate-700 font-bold py-3 px-4 rounded-xl text-xs flex items-center justify-center gap-1.5 border border-slate-200"
-                >
-                  <Icon d={ICONS.mail} size={14} /> Email Me
-                </button>
-                <a
-                  href="#"
-                  className="bg-amber-50 hover:bg-amber-100 text-amber-700 font-bold py-3 px-4 rounded-xl text-xs flex items-center justify-center gap-1.5 border border-amber-200"
-                >
-                  <Icon d={ICONS.star} size={14} /> Rate Us
-                </a>
-              </div>
+             
             </div>
           )}
         </div>

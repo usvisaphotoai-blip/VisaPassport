@@ -122,14 +122,29 @@ export async function sendOfficialInvoiceEmail({
       return { success: false, error: "No recipient email provided" };
     }
 
+    // Bug 11 fix: reject placeholder email — invoices should not be emailed to generic addresses
+    const PLACEHOLDER_EMAIL = "customer@pixpassport.com";
+    if (to.toLowerCase() === PLACEHOLDER_EMAIL) {
+      console.warn(`[INVOICE EMAIL] Skipping send to placeholder email: ${PLACEHOLDER_EMAIL}`);
+      return { success: false, error: "Cannot send invoice to placeholder email — no real customer email available" };
+    }
+
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://pixpassport.com";
     const downloadPdfUrl = cloudinaryUrl || invoice.cloudinaryUrl || `${appUrl}/api/admin/invoices/${invoice._id}/pdf`;
     const invoiceNumber = invoice.invoiceNumber;
     const customerName = invoice.customerName || "Valued Customer";
     const amountFormatted = `${invoice.currency} ${Number(invoice.total).toFixed(2)}`;
 
-    // Generate buffer if not passed
-    const bufferToSend = pdfBuffer || generateInvoicePdfBuffer(invoice);
+    // Bug 4 fix: wrap fallback PDF generation in try/catch
+    let bufferToSend = pdfBuffer;
+    if (!bufferToSend) {
+      try {
+        bufferToSend = generateInvoicePdfBuffer(invoice);
+      } catch (pdfErr: any) {
+        console.error("[INVOICE EMAIL] Fallback PDF generation failed:", pdfErr);
+        return { success: false, error: "Failed to generate invoice PDF: " + pdfErr?.message };
+      }
+    }
 
     const emailHtml = `
       <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #1e293b; background: #f8fafc; padding: 32px 24px; border-radius: 16px;">

@@ -9,8 +9,7 @@ import Dispute from "@/models/Dispute";
 import { sendEmail } from "@/lib/mail";
 import { getSafeSpec } from "@/lib/specs";
 import { sendGA4PurchaseEvent } from "@/lib/ga4";
-import { logAuditEvent } from "@/lib/audit";
-import AuditEvent from "@/models/AuditEvent";
+import { logAuditEvent, claimEmailSend, releaseEmailClaim } from "@/lib/audit";
 import { autoGenerateAndStoreInvoice } from "@/lib/invoice-automation";
 import { formatCurrency } from "@/lib/currency-formatter";
 
@@ -166,15 +165,16 @@ export async function POST(req: Request) {
             console.error("[WEBHOOK] Background invoice generation warning (non-fatal):", invErr);
           }
 
-          // Avoid duplicate email if client endpoint already sent delivery email
-          const emailAlreadySent = await AuditEvent.findOne({
-            photoId: photo._id,
-            eventType: "email_sent",
-            "metadata.status": "sent",
-          });
+          // Bug 1 fix: atomic email claim — prevents duplicate emails from concurrent verify + webhook
+          const emailTemplate = photo.isExpert ? "expert_order" : "delivery";
+          const canSendEmail = await claimEmailSend(
+            { photoId: photo._id.toString() },
+            emailTemplate,
+            "webhook"
+          );
 
-          if (emailAlreadySent) {
-            console.log(`[WEBHOOK] Email already sent for photo ${photoId}, skipping duplicate email.`);
+          if (!canSendEmail) {
+            console.log(`[WEBHOOK] Email already claimed for photo ${photoId}, skipping duplicate`);
             return NextResponse.json({ success: true });
           }
 
@@ -213,7 +213,7 @@ export async function POST(req: Request) {
                   });
                 }
 
-                await sendEmail({
+                const mailRes = await sendEmail({
                   to: userEmail,
                   bcc: 'usvisaphotoai@gmail.com',
                   subject: "Your Expert Photo Edit Order is Confirmed - PixPassport",
@@ -239,7 +239,7 @@ export async function POST(req: Request) {
                           <tr><td style="padding: 5px 0; color: #64748b;">Amount Paid:</td><td style="padding: 5px 0; text-align: right; font-weight: 700; color: #059669;">${formatCurrency(invoiceData.total, invoiceData.currency)} (PAID ✓)</td></tr>
                           <tr><td style="padding: 5px 0; color: #64748b;">Payment Method:</td><td style="padding: 5px 0; text-align: right; font-weight: 600;">${invoiceData.paymentMethod || "UPI / Card"}</td></tr>
                         </table>
-                        <p style="margin: 0 0 14px; font-size: 12px; color: #64748b;">Your official Tax Invoice PDF is attached to this email.</p>
+                        <p style="margin: 0 0 14px; font-size: 12px; color: #64748b;">${invoicePdfBuffer ? 'Your official Tax Invoice PDF is attached to this email.' : 'Download your official Tax Invoice PDF using the button below.'}</p>
                         ${invoicePdfDownloadUrl ? `<div style="text-align: center;"><a href="${invoicePdfDownloadUrl}" style="display: inline-block; background: #0f172a; color: #ffffff; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-size: 12px; font-weight: 700;">⬇ Download Tax Invoice PDF</a></div>` : ''}
                       </div>
                       ` : ''}
@@ -257,9 +257,41 @@ export async function POST(req: Request) {
                     }
                   ] : undefined,
                 });
-                console.log(`[WEBHOOK] Expert emails sent successfully for photo ${photoId}`);
+                if (mailRes.success) {
+                  console.log(`[WEBHOOK] Expert emails sent successfully for photo ${photoId}`);
+                  await logAuditEvent({
+                    eventType: "email_sent",
+                    orderId: permanentOrder?._id,
+                    paymentId: permanentPayment?._id,
+                    photoId: photo._id,
+                    actor: "webhook",
+                    metadata: {
+                      recipient: userEmail,
+                      subject: "Your Expert Photo Edit Order is Confirmed - PixPassport",
+                      template: "expert_order",
+                      invoiceNumber: invoiceData?.invoiceNumber,
+                      status: "sent",
+                    },
+                  });
+                } else {
+                  console.error(`[WEBHOOK] Expert email returned failure for photo ${photoId}:`, mailRes.error);
+                  await releaseEmailClaim({ photoId: photo._id.toString() }, emailTemplate);
+                  await logAuditEvent({
+                    eventType: "email_sent",
+                    orderId: permanentOrder?._id,
+                    paymentId: permanentPayment?._id,
+                    photoId: photo._id,
+                    actor: "webhook",
+                    metadata: {
+                      recipient: userEmail,
+                      template: "expert_order",
+                      status: "failed",
+                      error: String(mailRes.error),
+                    },
+                  });
+                }
               } else {
-                await sendEmail({
+                const deliveryMailRes = await sendEmail({
                   to: userEmail,
                   bcc: 'usvisaphotoai@gmail.com',
                   subject: `Your ${countryName} (${documentName}) photo is ready — Download now! 🎉`,
@@ -307,7 +339,7 @@ export async function POST(req: Request) {
                           <tr><td style="padding: 5px 0; color: #64748b;">Amount Paid:</td><td style="padding: 5px 0; text-align: right; font-weight: 700; color: #059669;">${formatCurrency(invoiceData.total, invoiceData.currency)} (PAID ✓)</td></tr>
                           <tr><td style="padding: 5px 0; color: #64748b;">Payment Method:</td><td style="padding: 5px 0; text-align: right; font-weight: 600;">${invoiceData.paymentMethod || "UPI / Card"}</td></tr>
                         </table>
-                        <p style="margin: 0 0 14px; font-size: 12px; color: #64748b;">Your official tax invoice PDF is attached to this email for your accounting records.</p>
+                        <p style="margin: 0 0 14px; font-size: 12px; color: #64748b;">${invoicePdfBuffer ? 'Your official tax invoice PDF is attached to this email for your accounting records.' : 'Download your official tax invoice PDF for your accounting records using the button below.'}</p>
                         ${invoicePdfDownloadUrl ? `<div style="text-align: center;"><a href="${invoicePdfDownloadUrl}" style="display: inline-block; background: #0f172a; color: #ffffff; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-size: 12px; font-weight: 700;">⬇ Download Invoice PDF</a></div>` : ''}
                       </div>
                       ` : ''}
@@ -342,24 +374,44 @@ export async function POST(req: Request) {
                     }
                   ] : undefined,
                 });
-                console.log(`[WEBHOOK] Email with invoice attached sent successfully for photo ${photoId}`);
-                await logAuditEvent({
-                  eventType: "email_sent",
-                  orderId: permanentOrder?._id,
-                  paymentId: permanentPayment?._id,
-                  photoId: photo._id,
-                  actor: "webhook",
-                  metadata: {
-                    recipient: userEmail,
-                    subject: `Your ${countryName} (${documentName}) photo is ready — Download now! 🎉`,
-                    template: "delivery",
-                    invoiceNumber: invoiceData?.invoiceNumber,
-                    status: "sent",
-                  },
-                });
+                // Bug 8/9 fix: check sendEmail return value before logging "sent"
+                if (deliveryMailRes.success) {
+                  console.log(`[WEBHOOK] Email with invoice attached sent successfully for photo ${photoId}`);
+                  await logAuditEvent({
+                    eventType: "email_sent",
+                    orderId: permanentOrder?._id,
+                    paymentId: permanentPayment?._id,
+                    photoId: photo._id,
+                    actor: "webhook",
+                    metadata: {
+                      recipient: userEmail,
+                      subject: `Your ${countryName} (${documentName}) photo is ready — Download now! 🎉`,
+                      template: "delivery",
+                      invoiceNumber: invoiceData?.invoiceNumber,
+                      status: "sent",
+                    },
+                  });
+                } else {
+                  console.error(`[WEBHOOK] Delivery email returned failure for photo ${photoId}:`, deliveryMailRes.error);
+                  await releaseEmailClaim({ photoId: photo._id.toString() }, emailTemplate);
+                  await logAuditEvent({
+                    eventType: "email_sent",
+                    orderId: permanentOrder?._id,
+                    paymentId: permanentPayment?._id,
+                    photoId: photo._id,
+                    actor: "webhook",
+                    metadata: {
+                      recipient: userEmail,
+                      template: "delivery",
+                      status: "failed",
+                      error: String(deliveryMailRes.error),
+                    },
+                  });
+                }
               }
             } catch (err) {
               console.error(`[WEBHOOK] Failed to send email for photo ${photoId}:`, err);
+              await releaseEmailClaim({ photoId: photo._id.toString() }, emailTemplate);
               await logAuditEvent({
                 eventType: "email_sent",
                 orderId: permanentOrder?._id,
@@ -476,7 +528,20 @@ export async function POST(req: Request) {
           const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://pixpassport.com';
           const expertInvoicePdfDownloadUrl = expertInvoiceCloudinaryUrl || (expertInvoiceData ? `${appUrl}/api/admin/invoices/${expertInvoiceData._id}/pdf` : "");
 
+          // Bug 6 fix: add atomic email dedup for expert order path (was completely missing)
+          const expertEmailTemplate = "expert_confirmation";
           try {
+            const canSendExpertEmail = await claimEmailSend(
+              { expertOrderId },
+              expertEmailTemplate,
+              "webhook"
+            );
+
+            if (!canSendExpertEmail) {
+              console.log(`[WEBHOOK] Expert email already claimed for order ${expertOrderId}, skipping`);
+              return NextResponse.json({ success: true });
+            }
+
             const adminHtml = `
               <h2>New Expert Edit Order (Webhook Verified)</h2>
               <p><strong>Order ID:</strong> ${order._id}</p>
@@ -499,7 +564,7 @@ export async function POST(req: Request) {
             }
 
             // Notify Customer
-            await sendEmail({
+            const expertMailRes = await sendEmail({
               to: customerEmail,
               bcc: 'usvisaphotoai@gmail.com',
               subject: "Your Expert Photo Edit Order is Confirmed - PixPassport",
@@ -513,7 +578,7 @@ export async function POST(req: Request) {
                   <div style="background: white; border-radius: 12px; padding: 20px; border: 1px solid #e2e8f0; margin: 20px 0;">
                     <h3 style="margin: 0 0 8px; font-size: 15px; color: #334155;">🧾 Tax Invoice & Payment Receipt</h3>
                     <p style="margin: 0 0 12px; font-size: 13px; color: #64748b;">Invoice No: <strong>${expertInvoiceData.invoiceNumber}</strong> • Total: <strong>${expertInvoiceData.currency} ${expertInvoiceData.total}</strong> (PAID ✓)</p>
-                    <p style="margin: 0 0 12px; font-size: 13px; color: #64748b;">Your official Tax Invoice PDF is attached to this email.</p>
+                    <p style="margin: 0 0 12px; font-size: 13px; color: #64748b;">${expertInvoicePdfBuffer ? 'Your official Tax Invoice PDF is attached to this email.' : 'Download your official Tax Invoice PDF using the button below.'}</p>
                     ${expertInvoicePdfDownloadUrl ? `<a href="${expertInvoicePdfDownloadUrl}" style="display: inline-block; background: #0f172a; color: white; padding: 10px 18px; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 700;">⬇ Download Invoice PDF</a>` : ''}
                   </div>
                   ` : ''}
@@ -529,23 +594,43 @@ export async function POST(req: Request) {
                 }
               ] : undefined,
             });
-            console.log(`[WEBHOOK] Emails sent successfully for expert order ${expertOrderId}`);
-
-            await logAuditEvent({
-              eventType: "email_sent",
-              orderId: permanentOrder._id,
-              paymentId: permanentPayment._id,
-              actor: "webhook",
-              metadata: {
-                recipient: customerEmail,
-                subject: "Your Expert Photo Edit Order is Confirmed - PixPassport",
-                template: "expert_confirmation",
-                invoiceNumber: expertInvoiceData?.invoiceNumber,
-                status: "sent",
-              },
-            });
+            // Bug 8/9 fix: check sendEmail return value
+            if (expertMailRes.success) {
+              console.log(`[WEBHOOK] Emails sent successfully for expert order ${expertOrderId}`);
+              await logAuditEvent({
+                eventType: "email_sent",
+                orderId: permanentOrder._id,
+                paymentId: permanentPayment._id,
+                actor: "webhook",
+                metadata: {
+                  recipient: customerEmail,
+                  subject: "Your Expert Photo Edit Order is Confirmed - PixPassport",
+                  template: "expert_confirmation",
+                  invoiceNumber: expertInvoiceData?.invoiceNumber,
+                  expertOrderId,
+                  status: "sent",
+                },
+              });
+            } else {
+              console.error(`[WEBHOOK] Expert email returned failure for order ${expertOrderId}:`, expertMailRes.error);
+              await releaseEmailClaim({ expertOrderId }, expertEmailTemplate);
+              await logAuditEvent({
+                eventType: "email_sent",
+                orderId: permanentOrder._id,
+                paymentId: permanentPayment._id,
+                actor: "webhook",
+                metadata: {
+                  recipient: customerEmail,
+                  template: "expert_confirmation",
+                  expertOrderId,
+                  status: "failed",
+                  error: String(expertMailRes.error),
+                },
+              });
+            }
           } catch (mailError) {
             console.error(`[WEBHOOK] Failed to send emails for expert edit ${expertOrderId}:`, mailError);
+            await releaseEmailClaim({ expertOrderId }, expertEmailTemplate);
             await logAuditEvent({
               eventType: "email_sent",
               orderId: permanentOrder._id,

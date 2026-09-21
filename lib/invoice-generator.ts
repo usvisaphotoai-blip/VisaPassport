@@ -332,38 +332,55 @@ export async function generateInvoiceForPayment(
       existingInvoice.paymentMethod = paymentMethodDisplay;
       invoice = await existingInvoice.save();
     } else {
-      invoice = await Invoice.create({
-        invoiceNumber,
-        paymentId: payment._id,
-        gatewayPaymentId,
-        gatewayOrderId: payment.gatewayOrderId || rzDetails?.order_id,
-        orderId: order?._id,
-        orderNumber: order?.orderNumber || `ORD-${payment._id}`,
-        photoId: resolvedPhotoId,
-        userId: userId || undefined,
-        customerName,
-        customerEmail,
-        customerPhone,
-        customerCountry: countryName,
-        amount: total,
-        currency,
-        subtotal,
-        tax,
-        discount,
-        total,
-        status: "PAID",
-        paymentGateway: "razorpay",
-        paymentMethod: paymentMethodDisplay,
-        paymentDate,
-        invoiceDate: new Date(),
-        lineItems,
-        businessDetails,
-        gatewayDetails,
-        fulfillmentEvidence,
-        pdfMetadata: {
-          downloadCount: 0,
-        },
-      });
+      try {
+        invoice = await Invoice.create({
+          invoiceNumber,
+          paymentId: payment._id,
+          gatewayPaymentId,
+          gatewayOrderId: payment.gatewayOrderId || rzDetails?.order_id,
+          orderId: order?._id,
+          orderNumber: order?.orderNumber || `ORD-${payment._id}`,
+          photoId: resolvedPhotoId,
+          userId: userId || undefined,
+          customerName,
+          customerEmail,
+          customerPhone,
+          customerCountry: countryName,
+          amount: total,
+          currency,
+          subtotal,
+          tax,
+          discount,
+          total,
+          status: "PAID",
+          paymentGateway: "razorpay",
+          paymentMethod: paymentMethodDisplay,
+          paymentDate,
+          invoiceDate: new Date(),
+          lineItems,
+          businessDetails,
+          gatewayDetails,
+          fulfillmentEvidence,
+          pdfMetadata: {
+            downloadCount: 0,
+          },
+        });
+      } catch (createErr: any) {
+        // Bug 2 fix: handle race condition where another process already created the invoice
+        if (createErr?.code === 11000) {
+          console.warn("[INVOICE GENERATOR] Duplicate invoice detected (race condition), fetching existing");
+          const raceInvoice = await Invoice.findOne({
+            $or: [
+              { paymentId: payment._id },
+              { gatewayPaymentId: gatewayPaymentId },
+            ],
+          });
+          if (raceInvoice) {
+            return { success: true, invoice: raceInvoice, isExisting: true };
+          }
+        }
+        throw createErr;
+      }
     }
 
     // 14. Record Audit Event for Invoice Generation

@@ -23,6 +23,7 @@ export const uploadBufferToCloudinary = async (
     };
     if (publicId) {
       uploadOptions.public_id = publicId;
+      uploadOptions.overwrite = true;
     }
 
     const uploadStream = cloudinary.uploader.upload_stream(
