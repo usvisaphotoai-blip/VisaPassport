@@ -17,6 +17,7 @@ const navLinks = [
 const checkerLinks = [
   { href: "/visa-photo-validator", label: "Free Photo Validator", desc: "Universal ICAO compliance checker for 50+ countries" },
   { href: "/passport-photo-checker", label: "Passport Photo Checker", desc: "Global biometric passport photo validation" },
+  { href: "/us-check-photo-green-card", label: "Green Card Photo Checker", desc: "USCIS Form I-485 & DV 2×2 in photo test" },
   { href: "/online-passport-photo-checker", label: "Online Photo Checker", desc: "Instant in-browser check without app installation" },
   { href: "/australian-passport-photo-checker", label: "Australian Photo Checker", desc: "DFAT & APO 35×45mm compliance checker" },
   { href: "/diversity-visa-lottery-photo-checker", label: "DV Lottery Photo Checker", desc: "Green card lottery 600×600 px photo test" },

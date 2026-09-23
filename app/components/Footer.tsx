@@ -22,6 +22,7 @@ export default function Footer() {
         { label: "Free Photo Validator", href: "/visa-photo-validator" },
         { label: "Passport Photo Checker", href: "/passport-photo-checker" },
         { label: "Online Passport Photo Checker", href: "/online-passport-photo-checker" },
+        { label: "Green Card Photo Checker", href: "/us-check-photo-green-card" },
         { label: "Australian Passport Photo Checker", href: "/australian-passport-photo-checker" },
         { label: "DV Lottery Photo Checker", href: "/diversity-visa-lottery-photo-checker" },
         { label: "UK Passport Photo Checker", href: "/uk-passport-photo-checker-online-free" },
@@ -33,6 +34,9 @@ export default function Footer() {
       items: [
         { label: "Home", href: "/" },
         { label: "Create Photo Online", href: "/passport-photo-online" },
+        { label: "Driving Licence Photo", href: "/driving-licence-photograph" },
+        { label: "USA Driver License Editor", href: "/usa-driver-license-photo-editor" },
+      
         { label: "US Passport Photo", href: "/us-passport-photo-editor" },
         { label: "Canada Visa Size Photo", href: "/ca" },
         { label: "Print Template Generator", href: "/passport-photo-print-template-generator" },

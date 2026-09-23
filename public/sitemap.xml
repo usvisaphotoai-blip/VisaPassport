@@ -2236,4 +2236,37 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://www.pixpassport.com/us-check-photo-green-card</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/us-check-photo-green-card" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/us-check-photo-green-card" />
+    <lastmod>2026-09-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/driving-licence-photograph</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/driving-licence-photograph" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/driving-licence-photograph" />
+    <lastmod>2026-09-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/usa-driver-license-photo-editor</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/usa-driver-license-photo-editor" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/usa-driver-license-photo-editor" />
+    <lastmod>2026-09-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/usa-dmv-picture</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/usa-dmv-picture" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/usa-dmv-picture" />
+    <lastmod>2026-09-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+ 
 </urlset>
