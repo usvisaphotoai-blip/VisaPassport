@@ -8,7 +8,7 @@ const ctaHref = "/de/passbild-online?type=switzerland-passport";
 export const metadata: Metadata = {
   title: "Passfoto Schweiz: Format, Anforderungen & online vorbereiten",
   description:
-    "Passfoto Schweiz vorbereiten: 35 × 45 mm, biometrische Anforderungen und praktische Tipps für ein Schweizer Passfoto mit dem Smartphone.",
+    "Passfoto Schweiz: 35 × 45 mm, biometrische Anforderungen nach fedpol-Fotomustertafel, Brillen- und Kopfbedeckungsregeln sowie praktische Tipps fürs Smartphone.",
   alternates: {
     canonical: "https://www.pixpassport.com/de/passfoto-schweiz-online",
     languages: {
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Passfoto Schweiz: Format & Anforderungen",
     description:
-      "35 × 45 mm, 29–34 mm Gesichtshöhe und die wichtigsten Aufnahmehinweise für Schweizer Passfotos.",
+      "35 × 45 mm, 29–34 mm Gesichtshöhe und die wichtigsten Aufnahmehinweise für Schweizer Passfotos nach der fedpol-Fotomustertafel.",
     url: "https://www.pixpassport.com/de/passfoto-schweiz-online",
     locale: "de_CH",
     type: "website",
@@ -43,66 +43,70 @@ export const metadata: Metadata = {
 };
 
 const specifications = [
-  ["Format", "35 × 45 mm", "Hochformat und ohne Rand"],
-  ["Gesichtshöhe", "29–34 mm", "Von Kinn bis Schädeldecke"],
-  ["Hintergrund", "Neutral", "Einfarbig und ohne Schatten"],
-  ["Alter des Fotos", "Max. 1 Jahr", "Soll das aktuelle Aussehen zeigen"],
+  ["Format", "35 × 45 mm", "Hochformat, ohne Rand, randscharf zugeschnitten"],
+  ["Gesichtshöhe", "29–34 mm", "Von der Kinnspitze bis zur Schädeldecke"],
+  ["Fotoalter", "Max. 12 Monate", "Muss das aktuelle Aussehen zeigen"],
+  ["Hintergrund", "Hell & einfarbig", "Ohne Schatten, Muster oder Gegenstände"],
 ];
 
 const requirements = [
   {
     title: "Gerade & frontal",
-    text: "Schultern und Kopf stehen gerade. Blicken Sie direkt in die Kamera; beide Augen sind offen und auf gleicher Höhe sichtbar.",
+    text: "Kopf und Schultern stehen gerade zur Kamera. Beide Augen sind offen, auf gleicher Höhe sichtbar und blicken direkt ins Objektiv.",
   },
   {
     title: "Neutraler Ausdruck",
-    text: "Der Mund bleibt geschlossen. Ein natürlicher, ruhiger Ausdruck hilft, die Gesichtsmerkmale klar erkennbar zu halten.",
+    text: "Der Mund bleibt geschlossen, das Gesicht wirkt entspannt. Ein neutraler Ausdruck hält alle Gesichtsmerkmale klar erkennbar.",
+  },
+  {
+    title: "Keine Brille",
+    text: "Seit 2010 sind Brillen auf Schweizer Passfotos grundsätzlich nicht mehr zulässig, da Fassung und Reflexionen die Augen verdecken können. Nur bei zwingender medizinischer Notwendigkeit ist eine Ausnahme möglich.",
+  },
+  {
+    title: "Kopf frei sichtbar",
+    text: "Mützen, Kappen und Hüte sind nicht erlaubt. Religiöse oder medizinisch begründete Kopfbedeckungen sind zulässig, sofern das Gesicht von Kinn bis Stirn und von Ohr zu Ohr vollständig sichtbar bleibt.",
   },
   {
     title: "Gleichmässiges Licht",
-    text: "Vermeiden Sie Schatten im Gesicht und auf dem Hintergrund, Hautreflexionen sowie rote Augen. Weiches Licht von vorne ist ideal.",
+    text: "Weiches Licht von vorne vermeidet Schatten im Gesicht und auf dem Hintergrund sowie störende Hautreflexionen und rote Augen.",
   },
   {
     title: "Scharf & unverfälscht",
-    text: "Nutzen Sie das hochauflösende Original ohne Filter. Das Foto muss scharf, kontrastreich und frei von sichtbarer Pixelstruktur sein.",
-  },
-  {
-    title: "Augen frei sichtbar",
-    text: "Haare oder Accessoires dürfen die Augen nicht verdecken. Bei Brillen dürfen Fassung und Spiegelung die Augen nicht beeinträchtigen.",
-  },
-  {
-    title: "Ruhiger Hintergrund",
-    text: "Wählen Sie einen einfarbigen, neutralen Hintergrund mit klarer Trennung zwischen Kopf und Hintergrund – ohne Gegenstände oder Muster.",
+    text: "Verwenden Sie die hochauflösende Originalaufnahme ohne Filter oder Bildbearbeitung. Das Foto muss scharf und kontrastreich sein und darf keine sichtbare Pixelstruktur zeigen.",
   },
 ];
 
 const steps = [
-  ["Kamera aufstellen", "Stellen Sie das Handy auf Augenhöhe. Für eine natürliche Perspektive eignet sich ein Stativ oder eine zweite Person besser als ein nahes Selfie."],
-  ["Ruhig positionieren", "Treten Sie mit etwas Abstand vor eine helle, ungemusterte Wand. Lassen Sie oberhalb des Kopfes und um die Schultern genug Platz."],
-  ["Bei weichem Licht aufnehmen", "Nutzen Sie Licht von vorne und prüfen Sie die Aufnahme auf harte Schatten, Spiegelungen und Unschärfe."],
-  ["Format prüfen", "Bereiten Sie das Originalfoto im gewünschten Seitenverhältnis vor und vergleichen Sie es vor der Einreichung mit den zuständigen Vorgaben."],
+  ["Kamera aufstellen", "Positionieren Sie das Handy auf Augenhöhe. Ein Stativ oder eine zweite Person sorgt für eine natürlichere Perspektive als ein nahes Selfie."],
+  ["Ruhig positionieren", "Stellen Sie sich mit etwas Abstand vor eine helle, ungemusterte Wand. Lassen Sie oberhalb des Kopfes und um die Schultern ausreichend Platz."],
+  ["Bei weichem Licht aufnehmen", "Nutzen Sie Tageslicht oder eine Lichtquelle von vorne. Prüfen Sie die Aufnahme direkt auf harte Schatten, Spiegelungen und Unschärfe."],
+  ["Format vorbereiten", "Bereiten Sie das Originalfoto im Seitenverhältnis 35 × 45 mm vor und vergleichen Sie es vor der Einreichung mit den Vorgaben Ihrer zuständigen Stelle."],
 ];
 
 const faqs = [
   {
     q: "Wie gross muss ein Passfoto in der Schweiz sein?",
-    a: "Für Schweizer Pässe und Identitätskarten beträgt das Fotoformat 35 × 45 mm ohne Rand. Die Gesichtshöhe von der Kinnspitze bis zur Schädeldecke liegt bei Erwachsenen zwischen 29 und 34 mm. Für Kinder gelten teils abweichende Werte.",
+    a: "Für Schweizer Pässe und Identitätskarten gilt laut fedpol-Fotomustertafel das Format 35 × 45 mm ohne Rand. Die Gesichtshöhe von der Kinnspitze bis zur Schädeldecke liegt bei Erwachsenen zwischen 29 und 34 mm. Für Säuglinge und Kinder bis 11 Jahre gelten bei Kopfhaltung und Ausdruck teils gelockerte Vorgaben.",
   },
   {
     q: "Kann ich das Schweizer Passfoto online vorbereiten?",
-    a: "Sie können eine geeignete Datei online aus einem sauberen Originalfoto vorbereiten. Ob ein eigenes Foto für Ihren Antrag akzeptiert wird, hängt jedoch von Dokument und Kanton ab. Bei biometrischen Terminen wird das Foto häufig vor Ort erfasst.",
-  },
-  {
-    q: "Welcher Hintergrund ist für ein Schweizer Passfoto geeignet?",
-    a: "Der Hintergrund soll einfarbig, einheitlich und neutral sein. Er darf keine Schatten oder Gegenstände enthalten und muss sich klar von Kopf und Haaren abheben.",
+    a: "Sie können eine geeignete Datei online aus einem sauberen Originalfoto vorbereiten. Ob ein eigenes Foto für Ihren Antrag akzeptiert wird, hängt jedoch von Dokument und Kanton ab: Für den biometrischen Pass nehmen die meisten Passbüros das Foto vor Ort auf, da gleichzeitig Fingerabdrücke erfasst werden. Für die Identitätskarte akzeptieren viele Gemeinden ein mitgebrachtes Foto, sofern es der Fotomustertafel entspricht.",
   },
   {
     q: "Darf ich auf dem Schweizer Passfoto eine Brille tragen?",
-    a: "Die Augen müssen vollständig sichtbar sein. Die Fassung darf sie nicht verdecken und die Gläser dürfen nicht spiegeln; getönte Gläser und Sonnenbrillen sind nicht zulässig. Bei Unsicherheit ist ein Foto ohne Brille meist die unkompliziertere Wahl.",
+    a: "Nein. Seit 2010 sind Brillen auf Passfotos in der Schweiz grundsätzlich verboten, weil Fassung und Glasreflexionen die Augenpartie verdecken können. Nur bei zwingender medizinischer Notwendigkeit ist eine Ausnahme möglich, wobei die Augen dabei vollständig und ohne Spiegelung sichtbar bleiben müssen.",
+  },
+  {
+    q: "Sind Kopftuch, Kippa oder Turban auf dem Foto erlaubt?",
+    a: "Religiös oder medizinisch begründete Kopfbedeckungen sind zulässig. Voraussetzung ist, dass das Gesicht von der Kinnspitze bis zum Haaransatz und von Ohr zu Ohr vollständig sichtbar bleibt, damit die Gesichtserkennung nicht beeinträchtigt wird.",
+  },
+  {
+    q: "Welcher Hintergrund ist für ein Schweizer Passfoto geeignet?",
+    a: "Der Hintergrund muss hell, einfarbig und gleichmässig ausgeleuchtet sein. Er darf keine Schatten, Muster oder Gegenstände enthalten und muss sich klar von Kopf und Haaren abheben.",
   },
   {
     q: "Wie aktuell muss das Passfoto sein?",
-    a: "Die fedpol-Fotomustertafel nennt ein Höchstalter von einem Jahr. Praktisch sollte das Foto Ihr aktuelles Erscheinungsbild eindeutig zeigen.",
+    a: "Gemäss fedpol-Fotomustertafel darf das Foto bei der Antragstellung höchstens 12 Monate alt sein. Bei Kindern empfiehlt fedpol ein besonders frisches Foto, weil sich das Erscheinungsbild schnell verändert.",
   },
 ];
 
@@ -113,7 +117,7 @@ const jsonLd = {
       "@type": "WebPage",
       name: "Passfoto Schweiz: Format, Anforderungen & online vorbereiten",
       description:
-        "Leitfaden zu Format und Fotoanforderungen für Schweizer Passfotos.",
+        "Leitfaden zu Format und Fotoanforderungen für Schweizer Passfotos gemäss fedpol-Fotomustertafel.",
       inLanguage: "de-CH",
       url: "https://www.pixpassport.com/de/passfoto-schweiz-online",
       primaryImageOfPage: {
@@ -191,7 +195,7 @@ export default function PassfotoSchweizPage() {
                 Passfoto Schweiz: richtiges Format, klarer Ablauf.
               </h1>
               <p className="mt-6 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg sm:leading-8">
-                Die wichtigsten Anforderungen für ein Schweizer Passfoto – <strong className="font-semibold text-slate-900">35 × 45 mm, frontal, scharf und neutral ausgeleuchtet</strong>. Bereiten Sie eine saubere Ausgangsaufnahme vor und prüfen Sie den Einreichungsweg bei Ihrer kantonalen Stelle.
+                Die fedpol-Fotomustertafel schreibt für Schweizer Pass und Identitätskarte ein Format von <strong className="font-semibold text-slate-900">35 × 45 mm</strong> vor: frontal, ohne Brille und mit hellem, gleichmässigem Hintergrund. Bereiten Sie eine saubere Ausgangsaufnahme vor und klären Sie den Einreichungsweg vorab mit Ihrer kantonalen Stelle.
               </p>
 
               <div className="mt-7 flex flex-col gap-3 sm:flex-row">
@@ -204,7 +208,7 @@ export default function PassfotoSchweizPage() {
               </div>
 
               <p className="mt-6 max-w-xl border-l-2 border-red-700 pl-4 text-sm leading-6 text-slate-600">
-                Wichtig: Bei vielen biometrischen Pass-Terminen wird das Foto vor Ort aufgenommen. Eigene Fotos werden je nach Kanton und Dokument unterschiedlich behandelt.
+                Wichtig: Beim biometrischen Pass nimmt das Passbüro das Foto meist vor Ort auf, da gleichzeitig Fingerabdrücke erfasst werden. Für die Identitätskarte akzeptieren viele Gemeinden ein mitgebrachtes Foto.
               </p>
             </div>
 
@@ -239,7 +243,9 @@ export default function PassfotoSchweizPage() {
                 <p className="text-xs font-bold uppercase tracking-[0.18em] text-red-800">Die Masse im Überblick</p>
                 <h2 className="mt-3 text-3xl font-semibold tracking-[-0.035em] text-slate-950 sm:text-4xl">Was Ihr Passfoto erfüllen muss.</h2>
               </div>
-              <p className="border-l-2 border-red-700 pl-5 text-base leading-7 text-slate-700 sm:text-lg">Die Schweizer Fotomustertafel definiert Format, Grösse des Gesichts und die grundlegende Bildqualität. Bei Kindern sowie bei medizinischen oder religiösen Ausnahmen können besondere Regeln gelten.</p>
+              <p className="border-l-2 border-red-700 pl-5 text-base leading-7 text-slate-700 sm:text-lg">
+                Die fedpol-Fotomustertafel definiert Format, Gesichtsgrösse, Fotoalter und die grundlegende Bildqualität für Pass und Identitätskarte. Bei Kindern sowie bei medizinischen oder religiösen Ausnahmen gelten teils abweichende Regeln, die Ihre Wohngemeinde oder das Passbüro im Einzelfall bestätigt.
+              </p>
             </div>
             <dl className="mt-9 grid border-l border-t border-slate-300 sm:grid-cols-2 lg:grid-cols-4">
               {specifications.map(([label, value, detail]) => (
@@ -258,7 +264,9 @@ export default function PassfotoSchweizPage() {
             <div className="max-w-2xl">
               <p className="text-xs font-bold uppercase tracking-[0.18em] text-red-800">Biometrische Anforderungen</p>
               <h2 className="mt-3 text-3xl font-semibold tracking-[-0.035em] text-slate-950 sm:text-4xl">Sechs Merkmale eines guten Ausgangsfotos.</h2>
-              <p className="mt-4 text-base leading-7 text-slate-600">Diese Punkte helfen bei der Aufnahme zu Hause. Die zuständige Behörde entscheidet abschliessend über die Annahme.</p>
+              <p className="mt-4 text-base leading-7 text-slate-600">
+                Diese Punkte orientieren sich an der fedpol-Fotomustertafel und dem internationalen ICAO-9303-Standard. Sie helfen bei der Aufnahme zu Hause – über die endgültige Annahme entscheidet stets die zuständige Behörde.
+              </p>
             </div>
             <div className="mt-9 grid border-l border-t border-slate-300 md:grid-cols-2 lg:grid-cols-3">
               {requirements.map((requirement, index) => (
@@ -302,13 +310,14 @@ export default function PassfotoSchweizPage() {
             <div>
               <p className="text-xs font-bold uppercase tracking-[0.18em] text-red-800">Für die Einreichung</p>
               <h2 className="mt-3 text-3xl font-semibold tracking-[-0.035em] text-slate-950 sm:text-4xl">Vor dem Termin prüfen.</h2>
-              <p className="mt-4 text-base leading-7 text-slate-600">Speichern Sie Ihre Originaldatei. Prüfen Sie danach, ob Ihre Behörde einen Ausdruck, eine digitale Datei oder die Aufnahme vor Ort verlangt.</p>
+              <p className="mt-4 text-base leading-7 text-slate-600">Speichern Sie Ihre Originaldatei in hoher Auflösung. Klären Sie danach, ob Ihre Behörde einen Ausdruck, eine digitale Datei oder die Aufnahme vor Ort verlangt.</p>
               <Link href="/de/dokumentenfoto-schweiz" className="mt-6 inline-flex items-center gap-2 border-b-2 border-red-700 pb-1 text-sm font-semibold text-slate-900 hover:text-red-800">Guide für weitere Dokumentenfotos <ArrowRight /></Link>
             </div>
             <ul className="border-y border-slate-300">
-              <li className="flex gap-3 border-b border-slate-300 py-4 text-sm leading-6 text-slate-700"><Tick /> Termin- oder Einreichungshinweise der zuständigen Stelle lesen.</li>
-              <li className="flex gap-3 border-b border-slate-300 py-4 text-sm leading-6 text-slate-700"><Tick /> Nur die scharfe Originaldatei verwenden; nicht aus einem Messenger oder Screenshot weiterleiten.</li>
-              <li className="flex gap-3 border-b border-slate-300 py-4 text-sm leading-6 text-slate-700"><Tick /> Bei Ausdruck: Papier, Anzahl der Bilder und ungerundete Ecken nach Vorgabe prüfen.</li>
+              <li className="flex gap-3 border-b border-slate-300 py-4 text-sm leading-6 text-slate-700"><Tick /> Termin- oder Einreichungshinweise der zuständigen Stelle vorab lesen.</li>
+              <li className="flex gap-3 border-b border-slate-300 py-4 text-sm leading-6 text-slate-700"><Tick /> Nur die scharfe Originaldatei verwenden, nicht aus einem Messenger oder Screenshot weiterleiten.</li>
+              <li className="flex gap-3 border-b border-slate-300 py-4 text-sm leading-6 text-slate-700"><Tick /> Brille abnehmen und Kopfbedeckung nur bei religiösem oder medizinischem Grund tragen.</li>
+              <li className="flex gap-3 border-b border-slate-300 py-4 text-sm leading-6 text-slate-700"><Tick /> Bei Ausdruck: Fotopapier, Anzahl der Bilder und rechtwinklige Ecken nach Vorgabe prüfen.</li>
               <li className="flex gap-3 py-4 text-sm leading-6 text-slate-700"><Tick /> Bei Unsicherheit vor dem Termin direkt beim Passbüro oder der Einwohnerstelle nachfragen.</li>
             </ul>
           </div>

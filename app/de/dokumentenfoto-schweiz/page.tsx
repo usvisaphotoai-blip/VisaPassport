@@ -8,7 +8,7 @@ const ctaHref = "/de/passbild-online?type=switzerland-passport";
 export const metadata: Metadata = {
   title: "Dokumentenfoto Schweiz: online für ID, Führerausweis & Visum",
   description:
-    "Dokumentenfoto für die Schweiz online vorbereiten: Anforderungen, Formate und Tipps für ID, Führerausweis, Aufenthaltsbewilligung und Visum.",
+    "Dokumentenfoto für die Schweiz online vorbereiten: Anforderungen nach fedpol-Fotomustertafel für ID, Führerausweis, Aufenthaltsbewilligung und Visum.",
   alternates: {
     canonical: "https://www.pixpassport.com/de/dokumentenfoto-schweiz",
     languages: {
@@ -46,59 +46,63 @@ const documents = [
   {
     code: "01",
     title: "Identitätskarte",
-    format: "Meist 35 × 45 mm",
-    text: "Für eine Identitätskarte kann je nach Kanton ein eigenes Foto möglich sein. Klären Sie die Annahme vor dem Termin mit Ihrer zuständigen Stelle.",
+    format: "35 × 45 mm",
+    text: "Viele Gemeinden akzeptieren ein mitgebrachtes Foto auf Fotopapier nach fedpol-Fotomustertafel. Manche erstellen es auch direkt am Schalter. Fragen Sie vor dem Termin bei Ihrer Einwohnerkontrolle nach.",
   },
   {
     code: "02",
     title: "Führerausweis",
-    format: "Kantonale Vorgaben",
-    text: "Strassenverkehrsämter können eigene Anforderungen an Format, Alter und Einreichung festlegen. Prüfen Sie deshalb die Vorgaben Ihres Wohnkantons.",
+    format: "35 × 45 mm, farbig",
+    text: "Das Strassenverkehrsamt verlangt ein aktuelles Farbfoto nach denselben Kriterien wie beim Pass: gerader Blick, neutraler Hintergrund, keine getönten Gläser. Das gedruckte Foto auf dem Ausweis erscheint schwarzweiss.",
   },
   {
     code: "03",
     title: "Aufenthaltsbewilligung",
-    format: "Biometrisch, häufig 35 × 45 mm",
-    text: "Für Ausländerausweise zählt eine klare, aktuelle und biometrisch verwertbare Aufnahme. Das Migrationsamt gibt den verbindlichen Weg vor.",
+    format: "Vor Ort erfasst",
+    text: "Für die Ausweise B, C, Ci, L und G werden Foto, Unterschrift und bei Personen ausserhalb EU/EFTA auch Fingerabdrücke persönlich in einem kantonalen Ausweiszentrum erfasst. Ein eigenes Foto lässt sich hier nicht einreichen.",
   },
   {
     code: "04",
     title: "Visumfoto",
     format: "Je nach Zielland",
-    text: "Schengen, USA und weitere Zielländer verwenden unterschiedliche Masse. Wählen Sie immer die Anforderungen der Botschaft oder des Konsulats.",
+    text: "Ein Schengen-Visum folgt in der Regel dem Format 35 × 45 mm nach ICAO-Norm. Andere Zielländer wie die USA verlangen abweichende Masse. Massgebend sind stets die Vorgaben der Botschaft oder des Konsulats.",
   },
 ];
 
 const checklist = [
-  ["Frontal aufnehmen", "Kopf gerade, Schultern gerade und Blick direkt in die Kamera."],
-  ["Neutral ausleuchten", "Weiches Licht von vorne; keine Schatten, Reflexionen oder roten Augen."],
-  ["Hintergrund ruhig halten", "Einfarbig, neutral und klar vom Kopf getrennt – ohne Muster oder Gegenstände."],
-  ["Ohne Filter speichern", "Verwenden Sie das scharfe Original ohne Beauty-Filter, digitale Retusche oder Screenshot."],
+  ["Frontal aufnehmen", "Kopf gerade, Schultern gerade, Blick direkt in die Kamera und beide Augen offen."],
+  ["Neutral ausleuchten", "Weiches Licht von vorne; keine Schatten im Gesicht, keine Reflexionen und keine roten Augen."],
+  ["Hintergrund ruhig halten", "Einfarbig, hell und klar vom Kopf getrennt – ohne Muster, Gegenstände oder andere Personen."],
+  ["Ohne Filter speichern", "Verwenden Sie das scharfe Original ohne Beauty-Filter, digitale Retusche oder Screenshot eines Fotos."],
 ];
 
 const steps = [
   ["Aufnehmen", "Stellen Sie das Smartphone auf Augenhöhe. Bitten Sie möglichst eine zweite Person um das Foto oder verwenden Sie ein Stativ."],
-  ["Dokument wählen", "Wählen Sie ID, Führerausweis, Aufenthalt oder ein bestimmtes Visum, bevor Sie die Masse prüfen."],
+  ["Dokument wählen", "Wählen Sie ID, Führerausweis oder Visum, bevor Sie die passenden Masse prüfen. Für Aufenthaltsbewilligungen entfällt dieser Schritt."],
   ["Ausgerichtet vorbereiten", "Laden Sie das Original hoch und richten Sie den Bildausschnitt nachvollziehbar auf das benötigte Format aus."],
-  ["Stelle prüfen", "Vergleichen Sie Datei, Ausdruck und Einreichung mit den aktuellen Hinweisen der zuständigen Behörde."],
+  ["Stelle prüfen", "Vergleichen Sie Datei, Ausdruck und Einreichungsweg mit den aktuellen Hinweisen der zuständigen Behörde."],
 ];
 
 const faqs = [
   {
     q: "Was ist ein Dokumentenfoto?",
-    a: "Ein Dokumentenfoto ist ein Porträt für einen Ausweis, einen Führerausweis, eine Bewilligung oder ein Visum. Je nach Dokument gelten Vorgaben zu Format, Blickrichtung, Bildqualität, Hintergrund und Einreichungsweg.",
+    a: "Ein Dokumentenfoto ist ein Porträt für einen Ausweis, einen Führerausweis, eine Bewilligung oder ein Visum. Je nach Dokument gelten Vorgaben zu Format, Blickrichtung, Bildqualität, Hintergrund und Einreichungsweg, meist gestützt auf die fedpol-Fotomustertafel.",
   },
   {
     q: "Kann ich ein Dokumentenfoto mit dem Handy machen?",
-    a: "Ja. Mit einer aktuellen Smartphone-Kamera gelingt eine scharfe Ausgangsaufnahme, wenn die Kamera auf Augenhöhe steht und das Licht gleichmässig von vorne kommt. Verwenden Sie die Originaldatei statt eines Screenshots und verzichten Sie auf Filter.",
+    a: "Ja, für Dokumente, bei denen ein eigenes Foto zulässig ist. Mit einer aktuellen Smartphone-Kamera gelingt eine scharfe Ausgangsaufnahme, wenn die Kamera auf Augenhöhe steht und das Licht gleichmässig von vorne kommt. Verwenden Sie die Originaldatei statt eines Screenshots und verzichten Sie auf Filter.",
   },
   {
     q: "Gilt 35 × 45 mm für jedes Schweizer Dokument?",
-    a: "Nein. 35 × 45 mm ist ein häufiges Format für Schweizer Ausweisfotos, aber Dokumente und Stellen können abweichende oder zusätzliche Anforderungen haben. Für Visa gelten insbesondere die Regeln des Ziellands.",
+    a: "Für Pass, Identitätskarte und Führerausweis ja. Bei Aufenthaltsbewilligungen für ausländische Staatsangehörige wird das Foto dagegen persönlich in einem Ausweiszentrum erfasst, ein eigenes Foto ist dort nicht vorgesehen. Bei Visa gelten zusätzlich die Regeln des Ziellands.",
   },
   {
     q: "Darf ich ein selbst erstelltes Foto für den Schweizer Pass einreichen?",
-    a: "Die biometrischen Daten und das Foto werden häufig beim Termin erfasst. Ob ein eigenes Foto angenommen wird, unterscheidet sich nach Kanton und Dokument. Prüfen Sie dies vor dem Termin direkt bei der zuständigen Pass- oder Einwohnerstelle.",
+    a: "Beim biometrischen Pass nimmt das kantonale Passbüro das Foto meist direkt beim Termin auf, da gleichzeitig Fingerabdrücke erfasst werden. Für die Identitätskarte akzeptieren dagegen viele Gemeinden ein mitgebrachtes Foto. Prüfen Sie dies vor dem Termin bei Ihrer zuständigen Pass- oder Einwohnerstelle.",
+  },
+  {
+    q: "Darf ich auf dem Foto eine Brille tragen?",
+    a: "Für Pass, Identitätskarte und Führerausweis grundsätzlich nicht: Seit 2010 sind Brillen auf Schweizer Ausweisfotos verboten, weil Fassung und Reflexionen die Augen verdecken können. Eine Ausnahme gilt nur bei zwingender medizinischer Notwendigkeit.",
   },
 ];
 
@@ -182,7 +186,7 @@ export default function DokumentenfotoSchweizPage() {
                 Dokumentenfoto Schweiz, klar vorbereitet.
               </h1>
               <p className="mt-6 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg sm:leading-8">
-                Bereiten Sie ein passendes Foto für <strong className="font-semibold text-slate-900">ID, Führerausweis, Aufenthaltsbewilligung oder Visum</strong> direkt mit dem Smartphone vor. Die verbindlichen Anforderungen kommen immer von der ausstellenden Stelle.
+                Bereiten Sie ein passendes Foto für <strong className="font-semibold text-slate-900">ID, Führerausweis oder Visum</strong> direkt mit dem Smartphone vor. Für Aufenthaltsbewilligungen gilt eine Ausnahme: Dort erfasst ein kantonales Zentrum das Foto persönlich. Verbindlich ist stets die ausstellende Stelle.
               </p>
 
               <div className="mt-7 flex flex-col gap-3 sm:flex-row">
@@ -242,7 +246,7 @@ export default function DokumentenfotoSchweizPage() {
                 <h2 className="mt-3 text-3xl font-semibold tracking-[-0.035em] text-slate-950 sm:text-4xl">Ein Foto, mehrere Regeln.</h2>
               </div>
               <div className="border-l-2 border-red-700 pl-5 text-base leading-7 text-slate-700 sm:text-lg">
-                Ein Dokumentenfoto ist keine Einheitslösung: Format, Dateivorgaben und Annahmeprozess richten sich nach Dokument, Kanton oder Botschaft. Mit einer sauberen Ausgangsaufnahme sparen Sie Zeit bei der Vorbereitung – die finale Prüfung liegt bei der zuständigen Behörde.
+                Ein Dokumentenfoto ist keine Einheitslösung. Pass, Identitätskarte und Führerausweis folgen der fedpol-Fotomustertafel mit dem Format 35 × 45 mm. Aufenthaltsbewilligungen für ausländische Staatsangehörige werden dagegen persönlich in einem kantonalen Ausweiszentrum erfasst, und Visa richten sich nach den Vorgaben des Ziellands. Mit einer sauberen Ausgangsaufnahme sparen Sie überall dort Zeit, wo ein eigenes Foto zulässig ist.
               </div>
             </div>
           </div>
@@ -253,7 +257,7 @@ export default function DokumentenfotoSchweizPage() {
             <div className="max-w-2xl">
               <p className="text-xs font-bold uppercase tracking-[0.18em] text-red-800">Dokument wählen</p>
               <h2 className="mt-3 text-3xl font-semibold tracking-[-0.035em] text-slate-950 sm:text-4xl">Welches Foto benötigen Sie?</h2>
-              <p className="mt-4 text-base leading-7 text-slate-600">Starten Sie mit dem Verwendungszweck. So vermeiden Sie ein passendes Foto im falschen Format.</p>
+              <p className="mt-4 text-base leading-7 text-slate-600">Starten Sie mit dem Verwendungszweck. So vermeiden Sie ein passendes Foto im falschen Format oder eine unnötige Aufnahme.</p>
             </div>
             <div className="mt-9 grid border-l border-t border-slate-300 sm:grid-cols-2">
               {documents.map((document) => (
@@ -276,7 +280,7 @@ export default function DokumentenfotoSchweizPage() {
               <div>
                 <p className="text-xs font-bold uppercase tracking-[0.18em] text-red-300">Vor der Aufnahme</p>
                 <h2 className="mt-3 text-3xl font-semibold tracking-[-0.035em] sm:text-4xl">Vier Punkte, die fast immer zählen.</h2>
-                <p className="mt-4 max-w-md text-sm leading-6 text-slate-300">Diese Grundregeln helfen bei einer brauchbaren Ausgangsaufnahme. Spezifische Vorgaben haben immer Vorrang.</p>
+                <p className="mt-4 max-w-md text-sm leading-6 text-slate-300">Diese Grundregeln stammen aus der fedpol-Fotomustertafel und helfen bei jeder Ausgangsaufnahme. Spezifische Vorgaben der Behörde haben immer Vorrang.</p>
               </div>
               <ul className="grid gap-px border border-slate-600 bg-slate-600 sm:grid-cols-2">
                 {checklist.map(([title, text]) => (
