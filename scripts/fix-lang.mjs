@@ -182,6 +182,37 @@ function updateSitemap() {
     );
   }
 
+  // 1. Auto-discover Visa Checklist routes
+  const CHECKLIST_DIR = path.join(__dirname, '../content/visa-checklist');
+  const checklistUrls = ['/visa-checklist'];
+
+  if (fs.existsSync(CHECKLIST_DIR)) {
+    const countries = fs.readdirSync(CHECKLIST_DIR, { withFileTypes: true })
+      .filter(d => d.isDirectory())
+      .map(d => d.name);
+
+    for (const c of countries) {
+      checklistUrls.push(`/visa-checklist/${c}`);
+      const countryDir = path.join(CHECKLIST_DIR, c);
+      const files = fs.readdirSync(countryDir).filter(f => f.endsWith('.md'));
+      for (const f of files) {
+        const slug = f.replace(/\.md$/, '');
+        checklistUrls.push(`/visa-checklist/${c}/${slug}`);
+      }
+    }
+  }
+
+  // Inject any missing checklist URLs before closing </urlset>
+  const today = new Date().toISOString().split('T')[0];
+  for (const urlPath of checklistUrls) {
+    const fullUrl = `${BASE_URL}${urlPath}`;
+    if (!sitemapContent.includes(`<loc>${fullUrl}</loc>`)) {
+      const priority = urlPath === '/visa-checklist' ? '0.9' : '0.8';
+      const newEntry = `  <url>\n    <loc>${fullUrl}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>${priority}</priority>\n  </url>\n`;
+      sitemapContent = sitemapContent.replace('</urlset>', `${newEntry}</urlset>`);
+    }
+  }
+
   const parts = sitemapContent.split('<url>');
   let addedCount = 0;
   for (let i = 1; i < parts.length; i++) {
@@ -205,7 +236,7 @@ function updateSitemap() {
   }
   
   fs.writeFileSync(SITEMAP_PATH, parts.join('<url>'), 'utf-8');
-  console.log(`✅ Updated sitemap with hreflang tags for ${addedCount} routes!`);
+  console.log(`✅ Updated sitemap with hreflang tags and visa checklists for ${addedCount} routes!`);
 }
 
 const languages = ['fr', 'de'];

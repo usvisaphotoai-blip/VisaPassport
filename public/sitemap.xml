@@ -2269,4 +2269,68 @@
     <priority>0.8</priority>
   </url>
  
+  <url>
+    <loc>https://www.pixpassport.com/visa-checklist</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/visa-checklist" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/visa-checklist" />
+    <lastmod>2026-09-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/visa-checklist/canada</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/visa-checklist/canada" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/visa-checklist/canada" />
+    <lastmod>2026-09-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/visa-checklist/canada/canada-student-visa-checklist</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/visa-checklist/canada/canada-student-visa-checklist" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/visa-checklist/canada/canada-student-visa-checklist" />
+    <lastmod>2026-09-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/visa-checklist/canada/canada-tourist-visa-checklist</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/visa-checklist/canada/canada-tourist-visa-checklist" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/visa-checklist/canada/canada-tourist-visa-checklist" />
+    <lastmod>2026-09-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/visa-checklist/united-kingdom</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/visa-checklist/united-kingdom" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/visa-checklist/united-kingdom" />
+    <lastmod>2026-09-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/visa-checklist/united-kingdom/uk-standard-visitor-visa-checklist</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/visa-checklist/united-kingdom/uk-standard-visitor-visa-checklist" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/visa-checklist/united-kingdom/uk-standard-visitor-visa-checklist" />
+    <lastmod>2026-09-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/visa-checklist/united-states</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/visa-checklist/united-states" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/visa-checklist/united-states" />
+    <lastmod>2026-09-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/visa-checklist/united-states/us-b1-b2-tourist-visa-checklist</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/visa-checklist/united-states/us-b1-b2-tourist-visa-checklist" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/visa-checklist/united-states/us-b1-b2-tourist-visa-checklist" />
+    <lastmod>2026-09-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>

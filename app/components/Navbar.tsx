@@ -9,6 +9,7 @@ import LanguageSwitcher from "./LanguageSwitcher";
 const navLinks = [
   { href: "/passport-photo-online", label: "Create Photo" },
   { href: "/visa-photo-validator", label: "Free Validator" },
+  { href: "/visa-checklist", label: "Visa Checklists" },
   { href: "/passport-photos", label: "Passport Sizes" },
   { href: "/blog", label: "Blog & Guides" },
   { href: "/support", label: "Support" },

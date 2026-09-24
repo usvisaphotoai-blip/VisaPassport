@@ -33,10 +33,14 @@ export default function Footer() {
       title: "Tools & Directories",
       items: [
         { label: "Home", href: "/" },
+        { label: "Visa Checklists 2026", href: "/visa-checklist" },
+        { label: "Canada Visa Checklist", href: "/visa-checklist/canada" },
+        { label: "US Visa Checklist", href: "/visa-checklist/united-states" },
+        { label: "UK Visa Checklist", href: "/visa-checklist/united-kingdom" },
+        { label: "Schengen Visa Checklist", href: "/visa-checklist/schengen" },
         { label: "Create Photo Online", href: "/passport-photo-online" },
         { label: "Driving Licence Photo", href: "/driving-licence-photograph" },
         { label: "USA Driver License Editor", href: "/usa-driver-license-photo-editor" },
-      
         { label: "US Passport Photo", href: "/us-passport-photo-editor" },
         { label: "Canada Visa Size Photo", href: "/ca" },
         { label: "Print Template Generator", href: "/passport-photo-print-template-generator" },

@@ -1,0 +1,15 @@
+{
+  "name": "Canada",
+  "slug": "canada",
+  "code": "CA",
+  "flag": "🇨🇦",
+  "region": "North America",
+  "popular": true,
+  "authorityName": "Immigration, Refugees and Citizenship Canada (IRCC)",
+  "authorityUrl": "https://www.canada.ca/en/immigration-refugees-citizenship.html",
+  "photoSize": "35x45 mm",
+  "photoToolSlug": "/ca",
+  "description": "Comprehensive IRCC document checklists, biometric photo requirements (35x45mm), processing times, and financial eligibility guides for all Canadian visas in 2026.",
+  "processingOverview": "Standard visitor visas take 15 to 45 days. Biometrics appointment at VFS Global required.",
+  "heroImage": "https://images.unsplash.com/photo-1517935703635-2717090c2210?auto=format&fit=crop&w=1200&q=80"
+}
