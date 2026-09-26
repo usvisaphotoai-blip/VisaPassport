@@ -28,10 +28,14 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Email and at least one image are required" }, { status: 400 });
     }
 
-    // Convert local price $10 USD (we'll just use currency logic similar to the preview page, or fixed $10)
+    const basePriceStr = formData.get("basePrice") as string;
+    const basePrice = basePriceStr ? parseFloat(basePriceStr) : 10.00;
+    const currencyOverride = (formData.get("currency") as string) || undefined;
+    const country = (formData.get("country") as string) || undefined;
+
+    // Convert local price using country-wise pricing
     const { getLocalPrice } = await import("@/lib/currency");
-    // $10 fixed price for expert edit
-    const localPrice = await getLocalPrice(10.00, undefined);
+    const localPrice = await getLocalPrice(basePrice, currencyOverride);
     
     let amountUnit = 100;
     if (localPrice.currency === 'JPY') amountUnit = 1;
@@ -51,7 +55,10 @@ export async function POST(req: NextRequest) {
     const expertOrder = await ExpertOrder.create({
       email,
       photos: photoUrls,
-      status: "pending_payment"
+      status: "pending_payment",
+      amount: localPrice.amount,
+      currency: localPrice.currency,
+      country: country || "",
     });
 
     const options = {
@@ -61,6 +68,7 @@ export async function POST(req: NextRequest) {
       notes: {
         expertOrderId: expertOrder._id.toString(),
         email: email,
+        country: country || "",
         ...(gaClientId ? { gaClientId } : {}),
       },
     };

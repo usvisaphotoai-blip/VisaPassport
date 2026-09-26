@@ -162,6 +162,12 @@ const nextConfig: NextConfig = {
         destination: "/us-passport-photo-editor",
         permanent: true,
       },
+      // Singapore pixel dimension consolidation
+      {
+        source: "/singapore-passport-photo-pixels",
+        destination: "/resize-passport-photo-singapore",
+        permanent: true,
+      },
     ];
   },
 };

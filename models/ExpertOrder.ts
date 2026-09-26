@@ -6,6 +6,9 @@ export interface IExpertOrder extends Document {
   status: 'pending_payment' | 'paid' | 'completed' | 'payment_failed';
   razorpayOrderId?: string;
   razorpayPaymentId?: string;
+  amount?: number;
+  currency?: string;
+  country?: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -21,6 +24,9 @@ const ExpertOrderSchema: Schema = new Schema(
     },
     razorpayOrderId: { type: String },
     razorpayPaymentId: { type: String },
+    amount: { type: Number },
+    currency: { type: String },
+    country: { type: String },
   },
   { timestamps: true }
 );

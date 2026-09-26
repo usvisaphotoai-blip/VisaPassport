@@ -109,6 +109,7 @@ const privacyItems = [
 
 const docPills = [
   "India Passport",
+  "Singapore Passport",
   "UK Passport",
   "US Visa",
   "Schengen Visa",
@@ -125,6 +126,13 @@ const officialSources = [
     url: "https://www.icao.int/publications/doc-series/doc-9303",
     note: "The global standard for biometric passport photos.",
     badge: "ICAO",
+  },
+  {
+    agency: "Singapore ICA",
+    doc: "Passport & Biometric Photo Standards",
+    url: "https://www.ica.gov.sg",
+    note: "Official 35×45 mm (413×531 px) specifications for MyICA e-Services.",
+    badge: "SG ICA",
   },
   {
     agency: "U.S. Department of State",
@@ -154,7 +162,6 @@ const officialSources = [
     note: "Official Indian embassy specifications for ICAO compliant photographs.",
     badge: "India Embassy",
   },
-  
 ];
 
 const rejectionReasons = [
@@ -373,6 +380,25 @@ export default function HomeSections({
           crops your image to the exact required ratio automatically.
         </p>
         <p className="hc-seo-p">
+          <strong>Singapore &amp; Asia-Pacific applicants:</strong> prepare your MyICA submissions with our dedicated{" "}
+          <a href="/singapore-passport-photo" style={{ color: "#3d8c6e", fontWeight: 600 }}>
+            Singapore passport photo maker
+          </a>
+          , resize any selfie with our{" "}
+          <a href="/resize-passport-photo-singapore" style={{ color: "#3d8c6e", fontWeight: 600 }}>
+            Singapore photo resizer
+          </a>
+          , or inspect exact specifications with our{" "}
+          <a href="/resize-passport-photo-singapore#specifications" style={{ color: "#3d8c6e", fontWeight: 600 }}>
+            413x531 pixel dimension guide
+          </a>{" "}
+          and{" "}
+          <a href="/singapore-ica-photo" style={{ color: "#3d8c6e", fontWeight: 600 }}>
+            ICA photo requirements
+          </a>
+          .
+        </p>
+        <p className="hc-seo-p">
           Once your photo passes, you can download a print-ready file or use
           our{" "}
           <a href="/passport-photo-print-template-generator" style={{ color: "#3d8c6e", fontWeight: 600 }}>
@@ -381,6 +407,10 @@ export default function HomeSections({
           to print multiple copies of your passport photo on a single A4
           sheet at any pharmacy or print shop. Explore country-specific tools
           in our{" "}
+          <a href="/singapore-passport-photo-editor" style={{ color: "#3d8c6e", fontWeight: 600 }}>
+            Singapore
+          </a>
+          ,{" "}
           <a href="/india-passport-photo-editor" style={{ color: "#3d8c6e", fontWeight: 600 }}>
             India
           </a>{" "}

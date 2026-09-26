@@ -7,6 +7,7 @@ export default function Footer() {
       title: "Popular Services",
       items: [
         { label: "passport photo for indian passport", href: "/indian-passport-size-photograph" },
+        { label: "Singapore Passport Photo", href: "/singapore-passport-photo" },
         { label: "India Passport Photo", href: "/india-passport-photo-editor" },
         { label: "Canada Passport Photo", href: "/ca" },
         { label: "UK Passport Photo", href: "/uk" },
@@ -33,11 +34,13 @@ export default function Footer() {
       title: "Tools & Directories",
       items: [
         { label: "Home", href: "/" },
+        { label: "Resize Singapore Photo", href: "/resize-passport-photo-singapore" },
+        { label: "Singapore ICA Photo", href: "/singapore-ica-photo" },
+        { label: "Singapore Passport Photo", href: "/singapore-passport-photo" },
         { label: "Visa Checklists 2026", href: "/visa-checklist" },
         { label: "Canada Visa Checklist", href: "/visa-checklist/canada" },
         { label: "US Visa Checklist", href: "/visa-checklist/united-states" },
         { label: "UK Visa Checklist", href: "/visa-checklist/united-kingdom" },
-        { label: "Schengen Visa Checklist", href: "/visa-checklist/schengen" },
         { label: "Create Photo Online", href: "/passport-photo-online" },
         { label: "Driving Licence Photo", href: "/driving-licence-photograph" },
         { label: "USA Driver License Editor", href: "/usa-driver-license-photo-editor" },

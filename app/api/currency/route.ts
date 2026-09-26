@@ -7,7 +7,11 @@ export async function GET(req: Request) {
     const currency = searchParams.get("currency") || "USD";
     const isExpert = searchParams.get("isExpert") === "true";
     
-    const localPrice = await getLocalPrice(isExpert ? 9.99 : 6.99, currency, isExpert);
+    const basePriceParam = searchParams.get("basePrice");
+    const defaultBasePrice = isExpert ? 9.99 : 6.99;
+    const basePrice = basePriceParam ? parseFloat(basePriceParam) : defaultBasePrice;
+    
+    const localPrice = await getLocalPrice(basePrice, currency, isExpert);
     
     return NextResponse.json(localPrice);
   } catch (error) {
