@@ -71,6 +71,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <meta name="yandex-verification" content="0483efdc76375d14" />
       </head>
 
       <body
