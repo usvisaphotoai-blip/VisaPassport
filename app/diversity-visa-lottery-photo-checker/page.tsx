@@ -6,9 +6,9 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "DV Lottery Photo Checker – Free Green Card Photo Validator 2026/2027",
+  title: "DV Lottery Photo Checker – Free Diversity Visa & Green Card Photo Validator",
   description:
-    "Free DV Lottery photo checker for the 2026/2027 Diversity Visa program. Instantly verify the 600×600px square size, 50–69% head height, 240KB file limit, and every US Department of State requirement before you submit.",
+    "Free DV Lottery photo checker for the Diversity Visa program. Instantly verify the 600×600px square size, 50–69% head height, 240KB file limit, and every US Department of State requirement before you submit.",
   keywords: [
   
   ],
@@ -188,7 +188,7 @@ export default function DVLotteryPhotoCheckerPage() {
         countryName="United States (DV / Green Card)"
         countryFlag="🇺🇸"
         initialDocType="passport"
-        badgeText="🇺🇸 Built on the Official DV-2027 State Dept Spec · Free & Instant"
+        badgeText="🇺🇸 Official U.S. State Department DV Photo Standards · Free & Instant"
         title="DV Lottery Photo Checker"
         highlightTitle="Free Green Card Photo Validator"
         subtitle="One bad photo is enough to get a Diversity Visa entry thrown out with no warning. Upload yours here first and see exactly whether it meets the 600×600px square size, 50–69% head height, 240KB file cap, and every other rule the dvprogram.state.gov portal checks for."

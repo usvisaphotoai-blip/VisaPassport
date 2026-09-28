@@ -159,20 +159,20 @@ export default async function Home() {
                 </Link>
               ))}
               <Link 
-                href="/america-visa-size-photo"
+                href="/us-passport-photo-editor"
                 className="group bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 hover:border-lime-400 hover:shadow-md transition-all flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center gap-2.5 mb-2">
                     <div className="w-7 h-7 sm:w-8 sm:h-8 bg-lime-100/80 rounded-lg flex items-center justify-center text-sm sm:text-base shrink-0 group-hover:scale-105 transition-transform">
-                      📸
+                      🇺🇸
                     </div>
                     <h3 className="font-bold text-xs sm:text-sm text-slate-900 group-hover:text-lime-700 transition-colors line-clamp-1 leading-snug">
-                      America Visa Size Photo
+                      US Passport Photo Checker & 2×2 Maker
                     </h3>
                   </div>
                   <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">
-                    Upload a selfie and get a properly sized America visa photo — 2 × 2 inches with a white background.
+                    Convert any selfie to official 2 × 2 inch (51 × 51 mm) US passport and visa photos with instant rejection checks.
                   </p>
                 </div>
               </Link>

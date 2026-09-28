@@ -153,6 +153,26 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        source: "/america-visa-size-photo",
+        destination: "/us-passport-photo-editor",
+        permanent: true,
+      },
+      {
+        source: "/america-visa-photo",
+        destination: "/us-passport-photo-editor",
+        permanent: true,
+      },
+      {
+        source: "/america-visa-photo-size",
+        destination: "/us-passport-photo-editor",
+        permanent: true,
+      },
+      {
+        source: "/america-visa-size",
+        destination: "/us-passport-photo-editor",
+        permanent: true,
+      },
+      {
         source: "/american-passport-pic",
         destination: "/us-passport-photo-editor",
         permanent: true,
@@ -160,6 +180,58 @@ const nextConfig: NextConfig = {
       {
         source: "/american-passport-picture-size",
         destination: "/us-passport-photo-editor",
+        permanent: true,
+      },
+      {
+        source: "/american-passport-photo",
+        destination: "/us-passport-photo-editor",
+        permanent: true,
+      },
+      {
+        source: "/american-passport-photo-size",
+        destination: "/us-passport-photo-editor",
+        permanent: true,
+      },
+      {
+        source: "/american-passport-size",
+        destination: "/us-passport-photo-editor",
+        permanent: true,
+      },
+      {
+        source: "/american-passport-size-photo",
+        destination: "/us-passport-photo-editor",
+        permanent: true,
+      },
+      {
+        source: "/american-visa-photo",
+        destination: "/us-passport-photo-editor",
+        permanent: true,
+      },
+      {
+        source: "/american-visa-size-photo",
+        destination: "/us-passport-photo-editor",
+        permanent: true,
+      },
+      {
+        source: "/american-visa-picture-size",
+        destination: "/us-passport-photo-editor",
+        permanent: true,
+      },
+      // DMV and Driver's License Consolidation -> /usa-driver-license-photo-editor
+     
+      {
+        source: "/usa-dmv-photo",
+        destination: "/usa-driver-license-photo-editor",
+        permanent: true,
+      },
+      {
+        source: "/dmv-photo-editor",
+        destination: "/usa-driver-license-photo-editor",
+        permanent: true,
+      },
+      {
+        source: "/dmv-picture",
+        destination: "/usa-driver-license-photo-editor",
         permanent: true,
       },
       // Singapore pixel dimension consolidation

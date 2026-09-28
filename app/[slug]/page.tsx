@@ -73,22 +73,38 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       const intentLabel = isVisaUrl ? "Visa" : "Passport";
       const baseUrl = `https://www.pixpassport.com/${canonicalSlug}`;
 
-      const title = isVisaUrl
+      let title = isVisaUrl
         ? `${spec.country} Visa Photo Online (2026) | ${spec.width_mm}x${spec.height_mm}mm`
         : `${spec.country} Passport Photo Maker (2026) | 100% Approved`;
 
-      const description = `Create your ${spec.country} ${intentLabel.toLowerCase()} photo online in 2 mins. ${spec.width_mm}x${spec.height_mm}mm with automatic cropping and background checks.`;
+      let description = `Create your ${spec.country} ${intentLabel.toLowerCase()} photo online in 2 mins. ${spec.width_mm}x${spec.height_mm}mm with automatic cropping and background checks.`;
+
+      let keywords = [
+        `${spec.country} ${intentLabel.toLowerCase()} photo online`,
+        `${intentLabel} photo editor`,
+        `online ${spec.country} ${intentLabel.toLowerCase()} maker`,
+        `${spec.width_mm}x${spec.height_mm}mm photo online`,
+      ];
+
+      if (canonicalSlug === "us-passport-photo-editor") {
+        title = "US Passport Photo Checker & 2x2 Maker Online Free | 51x51mm Tool";
+        description = "Consolidated US passport photo checker and 2×2 maker. Convert selfies to official 2×2 inch / 51×51 mm (600×600 px) US passport photos with biometric check, 240KB limit, and rejection checklist.";
+        keywords = [
+          "us passport photo tool",
+          "2x2 picture size online free",
+          "2x2 photo maker",
+          "us passport photo checker",
+          "us passport photo size",
+          "america passport photo size",
+          "american passport picture size",
+        ];
+      }
 
       return createMetadata({
         title,
         description,
         canonical: baseUrl,
-        keywords: [
-          `${spec.country} ${intentLabel.toLowerCase()} photo online`,
-          `${intentLabel} photo editor`,
-          `online ${spec.country} ${intentLabel.toLowerCase()} maker`,
-          `${spec.width_mm}x${spec.height_mm}mm photo online`,
-        ],
+        keywords,
       });
     }
   }
