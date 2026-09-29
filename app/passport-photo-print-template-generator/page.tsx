@@ -3,8 +3,8 @@ import PrintTemplateApp from "./PrintTemplateApp";
 import { Suspense } from "react";
 
 export const metadata: Metadata = {
-  "title": "Passport Photo Print Template – Print at Home",
-  "description": "Create a passport photo print sheet online. Generate multiple copies on A4, 4×6, or custom paper sizes with an easy print-at-home template.",
+  title: "Passport Photo Print Template – Print at Home",
+  description: "Create a passport photo print sheet online. Generate multiple copies on A4, 4×6, or custom paper sizes with an easy print-at-home template.",
   alternates: {
     canonical:
       "https://www.pixpassport.com/passport-photo-print-template-generator",
@@ -14,10 +14,24 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    "title": "Passport Photo Print Template – Print at Home",
-  "description": "Create a passport photo print sheet online. Generate multiple copies on A4, 4×6, or custom paper sizes with an easy print-at-home template.",
+    title: "Passport Photo Print Template – Print at Home",
+    description: "Create a passport photo print sheet online. Generate multiple copies on A4, 4×6, or custom paper sizes with an easy print-at-home template.",
     type: "website",
     url: "https://www.pixpassport.com/passport-photo-print-template-generator",
+    images: [
+      {
+        url: "https://res.cloudinary.com/dipzpwbbk/image/upload/v1785679205/MakePassportPhoto_ph2uog_ryefxt.webp",
+        width: 1200,
+        height: 630,
+        alt: "Passport Photo Print Template Generator",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Passport Photo Print Template – Print at Home",
+    description: "Create a passport photo print sheet online. Generate multiple copies on A4, 4×6, or custom paper sizes with an easy print-at-home template.",
+    images: ["https://res.cloudinary.com/dipzpwbbk/image/upload/v1785679205/MakePassportPhoto_ph2uog_ryefxt.webp"],
   },
 };
 
@@ -83,6 +97,7 @@ const jsonLd = {
       name: "PixPassport — Passport Photo Print Template Generator",
       applicationCategory: "DesignApplication",
       operatingSystem: "All",
+      image: "https://res.cloudinary.com/dipzpwbbk/image/upload/v1785679205/MakePassportPhoto_ph2uog_ryefxt.webp",
       offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
     },
     {
@@ -145,7 +160,7 @@ export default function PrintTemplateGeneratorPage() {
           </div>
         </div>
 
-  <div className="grid sm:grid-cols-2 py-5 lg:grid-cols-3 gap-3 max-w-4xl mx-auto ">
+  <div className="grid sm:grid-cols-2 py-5 lg:grid-cols-3 gap-3 max-w-4xl mx-auto px-4">
             {[
               { href: "/icao-standard-photo", label: "ICAO Standard Photo Tool" },
               { href: "/uk-passport-size-photo-maker", label: "UK Passport Size Photo Maker" },
@@ -156,8 +171,7 @@ export default function PrintTemplateGeneratorPage() {
               <a
                 key={href}
                 href={href}
-              
-                className="flex items-center justify-between gap-3 bg-red-300 hover:bg-lime-50 border border-slate-100 hover:border-lime-200 rounded-xl px-5 py-4 text-sm font-bold text-slate-700 hover:text-lime-700 transition-colors"
+                className="flex items-center justify-between gap-3 bg-white hover:bg-lime-50 border border-slate-200 hover:border-lime-200 rounded-xl px-5 py-4 text-sm font-bold text-slate-700 hover:text-lime-700 transition-colors shadow-2xs"
               >
                 {label}
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">

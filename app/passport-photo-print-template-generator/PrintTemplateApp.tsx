@@ -794,31 +794,136 @@ export default function PrintTemplateApp() {
         />
       )}
       {!imageSrc ? (
-        <div
-          className="border-2 border-dashed border-slate-300 rounded-2xl p-6 sm:p-12 text-center bg-white hover:bg-slate-50 transition-colors cursor-pointer"
-          onDragOver={(e) => e.preventDefault()}
-          onDrop={handleDrop}
-          onClick={() => document.getElementById("photo-upload")?.click()}
-        >
-          <div className="mx-auto w-16 h-16 bg-lime-100 text-lime-600 rounded-full flex items-center justify-center text-3xl mb-4">
-            📷
+        <div className="space-y-6">
+          {/* Main 2-Column Hero & Upload Card */}
+          <div className="bg-white rounded-2xl border border-slate-200/90 shadow-sm overflow-hidden">
+            <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch">
+              
+              {/* Left Column: Upload Dropzone & Controls */}
+              <div className="lg:col-span-6 p-6 sm:p-8 lg:p-10 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-slate-100">
+                <div>
+                  <div className="inline-flex items-center gap-2 bg-lime-50 border border-lime-200 rounded-full px-3 py-1 text-xs font-bold text-lime-800 mb-4">
+                    <span className="w-2 h-2 rounded-full bg-lime-500 animate-pulse" />
+                    <span>Free 300 DPI Print Template</span>
+                  </div>
+
+                  <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight leading-snug mb-3">
+                    Upload Your Passport Photo
+                  </h2>
+                  <p className="text-sm sm:text-base text-slate-600 mb-6 leading-relaxed">
+                    Upload a single cropped passport photo. Our generator arranges multiple copies automatically on standard photo paper with precision cutting lines.
+                  </p>
+
+                  {/* Drag and Drop Zone */}
+                  <div
+                    className="border-2 border-dashed border-lime-300 hover:border-lime-500 bg-lime-50/30 hover:bg-lime-50/60 rounded-2xl p-6 sm:p-8 text-center transition-all cursor-pointer group"
+                    onDragOver={(e) => e.preventDefault()}
+                    onDrop={handleDrop}
+                    onClick={() => document.getElementById("photo-upload")?.click()}
+                  >
+                    <div className="mx-auto w-14 h-14 sm:w-16 sm:h-16 bg-white rounded-2xl shadow-sm border border-lime-100 text-lime-600 flex items-center justify-center text-2xl sm:text-3xl mb-4 group-hover:scale-105 transition-transform">
+                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+                        <polyline points="17 8 12 3 7 8" />
+                        <line x1="12" y1="3" x2="12" y2="15" />
+                      </svg>
+                    </div>
+                    <h3 className="text-base sm:text-lg font-bold text-slate-800 mb-1">
+                      Choose a passport photo to arrange
+                    </h3>
+                    <p className="text-xs sm:text-sm text-slate-500 mb-5">
+                      Drag & drop your file here, or click to browse
+                    </p>
+                    <button
+                      type="button"
+                      className="bg-lime-600 hover:bg-lime-700 active:scale-95 text-white px-6 py-3 rounded-xl font-bold text-sm shadow-md shadow-lime-600/20 transition-all inline-flex items-center gap-2 pointer-events-none"
+                    >
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="12" y1="8" x2="12" y2="16" />
+                        <line x1="8" y1="12" x2="16" y2="12" />
+                      </svg>
+                      Select Photo
+                    </button>
+                    <input
+                      type="file"
+                      id="photo-upload"
+                      accept="image/jpeg, image/png, image/webp"
+                      className="hidden"
+                      onChange={handleFileUpload}
+                    />
+                    <p className="text-[11px] text-slate-400 font-medium mt-3">
+                      Supports JPG, PNG, WebP · High Resolution (300 DPI)
+                    </p>
+                  </div>
+                </div>
+
+                {/* Feature Chips */}
+                <div className="grid grid-cols-2 gap-2.5 mt-6 pt-6 border-t border-slate-100">
+                  <div className="flex items-center gap-2 text-xs font-semibold text-slate-700 bg-slate-50 px-3 py-2 rounded-lg border border-slate-100">
+                    <span className="text-lime-600 font-bold">✓</span>
+                    <span>4×6, 5×7, A4 & Letter</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-xs font-semibold text-slate-700 bg-slate-50 px-3 py-2 rounded-lg border border-slate-100">
+                    <span className="text-lime-600 font-bold">✓</span>
+                    <span>Automatic Crop Lines</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-xs font-semibold text-slate-700 bg-slate-50 px-3 py-2 rounded-lg border border-slate-100">
+                    <span className="text-lime-600 font-bold">✓</span>
+                    <span>300 DPI Export (JPG / PDF)</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-xs font-semibold text-slate-700 bg-slate-50 px-3 py-2 rounded-lg border border-slate-100">
+                    <span className="text-lime-600 font-bold">✓</span>
+                    <span>100% Free & Private</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Column: Template Example Photo */}
+              <div className="lg:col-span-6 p-6 sm:p-8 lg:p-10 bg-slate-50/70 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                        Print Sheet Preview
+                      </span>
+                      <span className="bg-emerald-100 text-emerald-800 text-[11px] font-extrabold px-2 py-0.5 rounded-full">
+                        4×6 inch (10×15 cm)
+                      </span>
+                    </div>
+                    <span className="text-xs font-semibold text-lime-700">
+                      300 DPI High-Res
+                    </span>
+                  </div>
+
+                  {/* Photo Mockup Frame */}
+                  <div className="relative rounded-xl overflow-hidden border border-slate-200/90 shadow-md bg-white group">
+                    <img
+                      src="https://res.cloudinary.com/dipzpwbbk/image/upload/v1785679205/MakePassportPhoto_ph2uog_ryefxt.webp"
+                      alt="Passport photo print template generator 4x6 sheet layout"
+                      className="w-full h-auto object-contain max-h-[380px] sm:max-h-[420px] mx-auto block"
+                      loading="eager"
+                    />
+                    {/* Badge Overlay */}
+                    <div className="absolute bottom-3 left-3 right-3 bg-slate-900/85 backdrop-blur-xs text-white px-3.5 py-2 rounded-lg flex items-center justify-between text-xs font-medium shadow-lg">
+                      <span className="flex items-center gap-1.5">
+                        <span className="w-2 h-2 rounded-full bg-lime-400" />
+                        <span>Ready-to-print multi-photo layout</span>
+                      </span>
+                      <span className="font-bold text-lime-400">
+                        6 Copies
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <p className="text-xs text-slate-500 text-center mt-4">
+                  Print this sheet at 100% scale on 4×6 photo paper at home or any local print kiosk (Walgreens, CVS, Boots, etc.)
+                </p>
+              </div>
+
+            </div>
           </div>
-          <h3 className="text-xl font-bold text-slate-800 mb-2">
-            Upload your passport photo
-          </h3>
-          <p className="text-slate-500 mb-6">
-            Drag and drop your image here, or click to browse.
-          </p>
-          <button className="bg-lime-600 hover:bg-lime-700 text-white px-6 py-3 rounded-lg font-semibold  transition-colors">
-            Select Photo
-          </button>
-          <input
-            type="file"
-            id="photo-upload"
-            accept="image/jpeg, image/png, image/webp"
-            className="hidden"
-            onChange={handleFileUpload}
-          />
         </div>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 flex-col-reverse lg:flex-row items-start">
