@@ -115,11 +115,13 @@ export const fr = {
       "Suppression de l'arrière-plan",
       "Photo numérique instantanée",
       "Planche d'impression A4",
+      "Support par email 24/7",
     ],
     premiumFeatures: [
       "Tout le pack Standard inclus",
       "Révisée par un expert photo",
       "Vérifications de conformité supplémentaires",
+      "Support par email 24/7",
       "Réduction des risques de rejet",
       "Acceptation 100% garantie",
       "Livraison par email incluse",

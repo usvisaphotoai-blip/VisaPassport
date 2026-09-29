@@ -309,10 +309,11 @@ function OrderPanel({
                   </div>
                   <ul className="space-y-1.5">
                     {[
-                      " AI Biometric Check",
+                      "AI Biometric Check",
                       "Instant digital download",
-                      " Official A4 print sheet",
+                      "Official A4 print sheet",
                       "100% acceptance guarantee",
+                      "24/7 Email support",
                     ].map((f) => (
                       <li
                         key={f}
@@ -373,7 +374,7 @@ function OrderPanel({
                       "Human expert review in <15 min",
                       "Extra compliance verifications",
                       "Priority processing",
-                      "Email support",
+                      "24/7 Email support",
                       "Reduced rejection risk",
                     ].map((f) => (
                       <li
