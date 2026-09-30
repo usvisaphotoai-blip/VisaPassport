@@ -1,5 +1,22 @@
-const EXTERNAL_API_BASE_URL = process.env.PASSPORT_API_URL;
-const EXTERNAL_API_KEY = process.env.PASSPORT_API_KEY;
+const EXTERNAL_API_BASE_URL = process.env.PASSPORT_API_URL || "https://api.pixpassport.com";
+const EXTERNAL_API_KEY = process.env.PASSPORT_API_KEY || "";
+
+const EXTERNAL_US_API_BASE_URL = process.env.PASSPORT_US_API_URL || "https://api.photoresizer.us";
+const EXTERNAL_US_API_KEY = process.env.PASSPORT_API_KEY || "";
+
+export function getApiConfigForCountry(countryCode: string) {
+  const normalized = countryCode?.toUpperCase();
+  if (normalized === "US" || normalized === "USA") {
+    return {
+      baseUrl: EXTERNAL_US_API_BASE_URL,
+      apiKey: EXTERNAL_US_API_KEY,
+    };
+  }
+  return {
+    baseUrl: EXTERNAL_API_BASE_URL,
+    apiKey: EXTERNAL_API_KEY,
+  };
+}
 
 export interface ExternalCountry {
   country_code: string;
@@ -149,9 +166,11 @@ export async function processExternalPhoto(
   documentType: string = "passport",
   extraFields: Record<string, string> = {}
 ): Promise<ExternalProcessResponse> {
-  if (!EXTERNAL_API_BASE_URL) {
+  const { baseUrl, apiKey } = getApiConfigForCountry(countryCode);
+
+  if (!baseUrl) {
     throw new Error(
-      "External API URL is not configured. Set the PASSPORT_API_URL environment variable. "
+      "External API URL is not configured. Set the PASSPORT_API_URL environment variable."
     );
   }
 
@@ -170,11 +189,11 @@ export async function processExternalPhoto(
   const headers: Record<string, string> = {
     accept: "application/json",
   };
-  if (EXTERNAL_API_KEY) {
-    headers["X-API-Key"] = EXTERNAL_API_KEY;
+  if (apiKey) {
+    headers["X-API-Key"] = apiKey;
   }
 
-  const response = await fetch(`${EXTERNAL_API_BASE_URL}/process`, {
+  const response = await fetch(`${baseUrl}/process`, {
     method: "POST",
     headers,
     body: formData,
@@ -182,8 +201,9 @@ export async function processExternalPhoto(
 
   if (!response.ok) {
     // Try to surface a structured error from the response body.
-    const errorData = await response.json().catch(() => ({})) as Record<string, unknown>;
+    const errorData = (await response.json().catch(() => ({}))) as Record<string, unknown>;
     const message =
+      (typeof errorData.message === "string" && errorData.message) ||
       (typeof errorData.detail === "string" && errorData.detail) ||
       (typeof errorData.error === "string" && errorData.error) ||
       `Processing failed: ${response.status} ${response.statusText}`;
@@ -192,7 +212,7 @@ export async function processExternalPhoto(
     if (countryCode !== "US" && message.includes("No config found for country")) {
       console.warn(`[external-api] ${message} — falling back to country_code "EU"`);
       formData.set("country_code", "EU");
-      const fallbackRes = await fetch(`${EXTERNAL_API_BASE_URL}/process`, {
+      const fallbackRes = await fetch(`${baseUrl}/process`, {
         method: "POST",
         headers,
         body: formData,

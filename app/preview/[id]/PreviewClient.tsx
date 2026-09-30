@@ -885,39 +885,50 @@ function ZoomOverlay({
   onClose: () => void;
 }) {
   useEffect(() => {
-    const h = (e: KeyboardEvent) => {
+    const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
-    window.addEventListener("keydown", h);
-    return () => window.removeEventListener("keydown", h);
+    window.addEventListener("keydown", handleKeyDown);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = prevOverflow;
+    };
   }, [onClose]);
 
   return (
     <div
-      className="fixed inset-0 z-[200] flex items-center justify-center p-4"
-      style={{ background: "rgba(4,4,10,0.96)" }}
+      className="fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 md:p-8 bg-slate-950/85 backdrop-blur-md animate-fadeIn select-none"
       onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Photo preview zoom"
     >
       <button
         onClick={onClose}
-        className="absolute top-5 right-5 w-9 h-9 rounded-full border border-white/15 bg-white/8 flex items-center justify-center hover:bg-white/15 transition-colors"
+        className="absolute top-4 right-4 sm:top-6 sm:right-6 z-30 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 active:bg-white/30 text-white flex items-center justify-center transition-all cursor-pointer backdrop-blur-sm border border-white/15 shadow-lg"
+        aria-label="Close full preview"
       >
-        <Icon d={ICONS.close} size={16} className="text-white/70" />
+        <Icon d={ICONS.close} size={18} className="text-white" />
       </button>
 
-      <div onClick={(e) => e.stopPropagation()}>
-        <div className="rounded-lg overflow-hidden relative">
+      <div
+        className="relative max-w-full max-h-full flex flex-col items-center justify-center"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="relative rounded-2xl overflow-hidden bg-slate-900/90 border border-white/15 shadow-2xl flex items-center justify-center max-w-[92vw] sm:max-w-[80vw] md:max-w-[560px] max-h-[75vh] sm:max-h-[80vh]">
           <img
             src={url}
-            alt="Full preview"
+            alt="Full passport photo preview"
             draggable={false}
             onContextMenu={(e) => e.preventDefault()}
-            className="w-full h-auto block"
+            className="w-auto h-auto max-w-full max-h-[75vh] sm:max-h-[80vh] object-contain block select-none pointer-events-none"
           />
           {!hasPaid && (
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
               <span
-                className="text-white/15 text-xs font-bold tracking-[0.3em] uppercase select-none"
+                className="text-white/20 text-xs sm:text-sm md:text-base font-black tracking-[0.35em] uppercase select-none drop-shadow"
                 style={{ transform: "rotate(-30deg)" }}
               >
                 Preview Only
@@ -925,9 +936,13 @@ function ZoomOverlay({
             </div>
           )}
         </div>
-        <p className="text-center text-white/25 text-[11px] mt-4  tracking-widest uppercase">
-          {hasPaid ? "Full Resolution" : "Watermarked Preview"} · Esc to close
-        </p>
+        <div className="flex items-center gap-2 mt-3 sm:mt-4 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/10 backdrop-blur-sm text-white/80 text-[11px] sm:text-xs font-medium">
+          <span className="w-1.5 h-1.5 rounded-full bg-lime-400 animate-pulse" />
+          <span>{hasPaid ? "Full Resolution" : "Watermarked Preview"}</span>
+          <span className="text-white/40">·</span>
+          <span className="text-white/60 hidden sm:inline">Press Esc or click outside to close</span>
+          <span className="text-white/60 sm:hidden">Tap X to close</span>
+        </div>
       </div>
     </div>
   );

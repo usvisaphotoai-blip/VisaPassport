@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
 
     if (result.status !== "success") {
       return NextResponse.json(
-        { error: "External processing failed", details: result },
+        { error: (result as any).message || "External processing failed", details: result },
         { status: 500 }
       );
     }

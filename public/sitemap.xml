@@ -147,6 +147,17 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://www.pixpassport.com/take-passport-photo-with-iphone</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/take-passport-photo-with-iphone" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/take-passport-photo-with-iphone" />
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1790742513/Passport-Photo-With-iPhone_szopjq.webp</image:loc>
+    </image:image>
+  </url>
 
   <url>
     <loc>https://www.pixpassport.com/visa-photo-validator</loc>
