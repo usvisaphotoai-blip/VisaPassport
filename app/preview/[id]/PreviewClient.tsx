@@ -54,6 +54,8 @@ const ICONS = {
   refresh:
     "M1 4v6h6M23 20v-6h-6M20.49 9A9 9 0 005.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 013.51 15",
   arrowRight: "M5 12h14M12 5l7 7-7 7",
+  externalLink:
+    "M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3",
 };
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -145,6 +147,47 @@ function TrustBadges({
     </div>
   );
 }
+
+function DedicatedSupportBanner() {
+  return (
+    <div className="bg-[#0f172a] border border-slate-800 rounded-2xl p-5 sm:p-6 text-white shadow-md">
+      <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-4.5">
+        <div className="w-12 h-12 rounded-xl bg-lime-950/60 border border-lime-500/30 flex items-center justify-center text-lime-400 shrink-0 shadow-inner">
+          <Icon d={ICONS.mail} size={22} className="text-lime-400" />
+        </div>
+        <div className="space-y-2 flex-1">
+          <div className="flex items-center gap-2.5 flex-wrap">
+            <h3 className="text-base sm:text-lg font-bold text-white tracking-tight">
+              24/7 Dedicated Email Support
+            </h3>
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#134e4a]/70 border border-emerald-500/30 text-emerald-300 text-[11px] font-bold">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              Live 24x7
+            </span>
+          </div>
+          <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl">
+            Questions about embassy requirements, print sizing, or need custom assistance with your photo? Our biometric support team is ready to help 24 hours a day, 7 days a week.
+          </p>
+          <div className="pt-2 flex flex-wrap items-center gap-3.5">
+            <a
+              href="mailto:support@pixpassport.com"
+              className="inline-flex items-center gap-2 bg-[#84cc16] hover:bg-[#74b816] active:scale-[0.98] text-white font-bold px-4 py-2.5 rounded-xl text-xs sm:text-sm transition-all shadow-md shadow-lime-500/20"
+            >
+              <Icon d={ICONS.mail} size={15} className="text-white" />
+              <span>Email support@pixpassport.com</span>
+            </a>
+            <div className="flex items-center gap-1.5 text-xs text-slate-300 font-medium">
+              <Icon d={ICONS.clock} size={14} className="text-lime-400" />
+              <span>Average reply &lt;15 mins</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
 
 // ─── Main Panels ──────────────────────────────────────────────────────────────
 
@@ -238,6 +281,9 @@ function PhotoPanel({
           </div>
         </div>
       )}
+
+      {/* 24/7 Dedicated Email Support Banner */}
+      <DedicatedSupportBanner />
     </div>
   );
 }
@@ -488,7 +534,9 @@ function OrderPanel({
 
                 <TrustBadges from={from} spec={spec} documentType={documentType} />
 
-                <div className="flex justify-center pt-1">
+             
+
+                <div className="flex justify-center pt-2">
                   <a
                     href="https://razorpay.com/"
                     target="_blank"
@@ -1061,6 +1109,13 @@ export default function PreviewClient({
     spec?.country === "United Kingdom" ||
     documentType?.toLowerCase().startsWith("uk") ||
     documentType?.toLowerCase().startsWith("gb");
+  const isCanada =
+    from === "canada" ||
+    from === "canada-passport" ||
+    from?.startsWith("canada") ||
+    spec?.country === "Canada" ||
+    documentType?.toLowerCase().startsWith("canada") ||
+    documentType?.toLowerCase().startsWith("ca");
   const isVisa =
     spec?.name?.toLowerCase().includes("visa") ||
     documentType.toLowerCase().includes("visa");
@@ -1228,25 +1283,45 @@ export default function PreviewClient({
       <div className="flex-1 flex items-start justify-center px-4 py-6 sm:py-8">
         <div className="w-full max-w-6xl">
           {/* Header */}
-          <div className="mb-4 text-center lg:text-left">
-            <h1 className="text-2xl font-black text-slate-900">
+          <div className="mb-5 text-center lg:text-left">
+            <h1 className="text-2xl sm:text-3xl font-black text-slate-900">
               Your <span className="text-lime-600">ID Photo</span> Is Ready{" "}
               {spec?.flag || (isUK ? "🇬🇧" : "")} {spec?.name || spec?.country || (isUK ? "United Kingdom" : "")}
             </h1>
-            <div className="flex items-center justify-center lg:justify-start gap-1.5 mt-2">
-              <Icon
-                d={ICONS.shield}
-                size={13}
-                className="text-emerald-600 shrink-0"
-              />
-              <p className="text-[12px] text-slate-500 font-semibold flex items-center gap-1 flex-wrap justify-center lg:justify-start">
-                Secure checkout · 100% acceptance guarantee · Refund if rejected
-                {isUK && (
-                  <span className="ml-1 md:ml-2 font-bold text-slate-700 flex items-center gap-1">
-                    <span className="text-xl">🇬🇧</span> UK Gov Compliant
-                  </span>
-                )}
-              </p>
+            <div className="flex items-center justify-center lg:justify-start gap-3 mt-2.5 flex-wrap">
+              {/* 24/7 Email Support Pill */}
+              <a
+                href="mailto:support@pixpassport.com"
+                className="inline-flex items-center gap-2 px-3 py-1 bg-[#f4fde6] border border-[#a3e635] rounded-full text-xs font-semibold text-slate-900 hover:bg-[#ecfccb] transition-colors shadow-2xs"
+              >
+                <span className="w-2 h-2 rounded-full bg-[#10b981] animate-pulse" />
+                <Icon d={ICONS.mail} size={13} className="text-lime-700 shrink-0" />
+                <span>
+                  24/7 Email Support: <span className="underline font-bold">support@pixpassport.com</span>
+                </span>
+              </a>
+
+              {/* Guarantee */}
+              <div className="flex items-center gap-1.5 text-slate-600 text-xs sm:text-sm font-semibold">
+                <Icon
+                  d={ICONS.shield}
+                  size={14}
+                  className="text-emerald-600 shrink-0"
+                />
+                <span>100% Acceptance Guarantee • Refund if Rejected</span>
+              </div>
+
+              {/* Country Badges */}
+              {isUK && (
+                <span className="font-bold text-slate-700 flex items-center gap-1 text-xs">
+                  <span className="text-base">🇬🇧</span> UK Gov Compliant
+                </span>
+              )}
+              {isCanada && (
+                <span className="font-bold text-slate-700 flex items-center gap-1 text-xs">
+                  <span className="text-base">🇨🇦</span> IRCC &amp; Passport Program Compliant
+                </span>
+              )}
             </div>
           </div>
 
