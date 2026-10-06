@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
-import passportPhotoHero from "./schweizer-passfoto-beispiel.png";
+import {
+  Hero, Section, SectionHeader, StepsGrid, CardGrid, CheckList, FaqList, CtaBand, JsonLd, Badge, card, textLink,
+} from "../components/ui";
 
 const ctaHref = "/de/passbild-online?type=switzerland-passport";
 
@@ -12,9 +13,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://www.pixpassport.com/de/passfoto-schweiz-online",
     languages: {
-      de: "https://www.pixpassport.com/de/passfoto-schweiz-online",
       "de-CH": "https://www.pixpassport.com/de/passfoto-schweiz-online",
-      "x-default": "https://www.pixpassport.com/de/passfoto-schweiz-online",
     },
   },
   openGraph: {
@@ -22,13 +21,14 @@ export const metadata: Metadata = {
     description:
       "35 × 45 mm, 29–34 mm Gesichtshöhe und die wichtigsten Aufnahmehinweise für Schweizer Passfotos nach der fedpol-Fotomustertafel.",
     url: "https://www.pixpassport.com/de/passfoto-schweiz-online",
+    siteName: "PixPassport",
     locale: "de_CH",
     type: "website",
     images: [
       {
-        url: "/de/passfoto-schweiz-online/schweizer-passfoto-beispiel.png",
-        width: 1024,
-        height: 1536,
+        url: "https://res.cloudinary.com/dipzpwbbk/image/upload/v1779008016/c24d89b1-ab0e-4f1d-9035-5814bc7b91ca_preview_ip9ogs.jpg",
+        width: 843,
+        height: 671,
         alt: "Beispiel eines hell und gleichmässig ausgeleuchteten Schweizer Passfotos",
       },
     ],
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     title: "Passfoto Schweiz: Format & Anforderungen",
     description:
       "Die wichtigsten Anforderungen für ein Schweizer Passfoto, einfach erklärt.",
-    images: ["/de/passfoto-schweiz-online/schweizer-passfoto-beispiel.png"],
+    images: ["https://res.cloudinary.com/dipzpwbbk/image/upload/v1779008016/c24d89b1-ab0e-4f1d-9035-5814bc7b91ca_preview_ip9ogs.jpg"],
   },
 };
 
@@ -122,7 +122,7 @@ const jsonLd = {
       url: "https://www.pixpassport.com/de/passfoto-schweiz-online",
       primaryImageOfPage: {
         "@type": "ImageObject",
-        contentUrl: "https://www.pixpassport.com/de/passfoto-schweiz-online/schweizer-passfoto-beispiel.png",
+        contentUrl: "https://res.cloudinary.com/dipzpwbbk/image/upload/v1779008016/c24d89b1-ab0e-4f1d-9035-5814bc7b91ca_preview_ip9ogs.jpg",
         caption: "Beispiel eines neutral ausgeleuchteten Schweizer Passfotos",
       },
     },
@@ -156,203 +156,114 @@ const jsonLd = {
   ],
 };
 
-function ArrowRight() {
-  return (
-    <svg aria-hidden="true" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14m-6-6 6 6-6 6" />
-    </svg>
-  );
-}
-
-function Tick() {
-  return (
-    <svg aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-red-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-      <path strokeLinecap="round" strokeLinejoin="round" d="m5 12 4 4L19 6" />
-    </svg>
-  );
-}
+const checklist = [
+  "Termin- oder Einreichungshinweise der zuständigen Stelle vorab lesen.",
+  "Nur die scharfe Originaldatei verwenden, nicht aus einem Messenger oder Screenshot weiterleiten.",
+  "Brille abnehmen und Kopfbedeckung nur bei religiösem oder medizinischem Grund tragen.",
+  "Bei Ausdruck: Fotopapier, Anzahl der Bilder und rechtwinklige Ecken nach Vorgabe prüfen.",
+  "Bei Unsicherheit vor dem Termin direkt beim Passbüro oder der Einwohnerkontrolle nachfragen.",
+];
 
 export default function PassfotoSchweizPage() {
   return (
-    <div className="bg-[#fcfcfb] text-slate-950 selection:bg-red-100 selection:text-red-950">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+    <>
+      <JsonLd data={jsonLd} />
 
-      <header className="border-b border-slate-200 bg-white">
-        <div className="h-1 bg-red-700" />
-        <div className="mx-auto max-w-6xl px-4 pb-12 pt-5 sm:px-6 sm:pb-16 lg:px-8">
-          <nav aria-label="Breadcrumb" className="mb-9 text-xs text-slate-500">
-            <Link href="/de" className="hover:text-red-800">Startseite</Link>
-            <span className="mx-2 text-slate-300">/</span>
-            <span>Passfoto Schweiz</span>
-          </nav>
+      <Hero
+        breadcrumb={[{ label: "Startseite", href: "/de" }, { label: "Passfoto Schweiz" }]}
+        eyebrow="Schweizer Passfoto · fedpol-Fotomustertafel"
+        title="Passfoto Schweiz: richtiges Format, klarer Ablauf"
+        intro="Die fedpol-Fotomustertafel schreibt für Schweizer Pass und Identitätskarte ein Format von 35 × 45 mm vor: frontal, ohne Brille und mit hellem, gleichmässigem Hintergrund. Bereiten Sie eine saubere Aufnahme vor und klären Sie den Einreichungsweg vorab mit Ihrer kantonalen Stelle."
+        primary={{ href: ctaHref, label: "Passfoto vorbereiten" }}
+        secondary={{ href: "#anforderungen", label: "Anforderungen ansehen" }}
+        note="Ab CHF 15.99 · Ergebnis vorher kostenlos ansehen"
+        image={{
+          src: "https://res.cloudinary.com/dipzpwbbk/image/upload/v1779008016/c24d89b1-ab0e-4f1d-9035-5814bc7b91ca_preview_ip9ogs.jpg",
+          alt: "Schweizer Passfoto im Format 35 × 45 mm mit Maßlinien für die Gesichtshöhe",
+          width: 843,
+          height: 671,
+        }}
+      >
+        <p className="mt-6 rounded-xl border-2 border-amber-200 bg-amber-50 p-4 text-sm leading-relaxed text-amber-900">
+          <strong>Wichtig:</strong> Beim biometrischen Pass nimmt das Passbüro das Foto meist vor Ort auf, da gleichzeitig
+          Fingerabdrücke erfasst werden. Für die Identitätskarte akzeptieren viele Gemeinden ein mitgebrachtes Foto.
+        </p>
+      </Hero>
 
-          <div className="grid items-center gap-10 lg:grid-cols-[1.07fr_.93fr] lg:gap-16">
-            <div>
-              <p className="mb-4 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-red-800">
-                <span className="h-2 w-2 bg-red-700" /> Schweizer Passfoto-Guide
-              </p>
-              <h1 className="max-w-3xl text-4xl font-semibold leading-[1.04] tracking-[-0.045em] text-slate-950 sm:text-5xl lg:text-6xl">
-                Passfoto Schweiz: richtiges Format, klarer Ablauf.
-              </h1>
-              <p className="mt-6 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg sm:leading-8">
-                Die fedpol-Fotomustertafel schreibt für Schweizer Pass und Identitätskarte ein Format von <strong className="font-semibold text-slate-900">35 × 45 mm</strong> vor: frontal, ohne Brille und mit hellem, gleichmässigem Hintergrund. Bereiten Sie eine saubere Ausgangsaufnahme vor und klären Sie den Einreichungsweg vorab mit Ihrer kantonalen Stelle.
-              </p>
-
-              <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-                <Link href={ctaHref} className="inline-flex items-center justify-center gap-2 bg-red-700 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-red-800">
-                  Passfoto vorbereiten <ArrowRight />
-                </Link>
-                <Link href="#anforderungen" className="inline-flex items-center justify-center border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-800 transition-colors hover:border-slate-900">
-                  Anforderungen ansehen
-                </Link>
-              </div>
-
-              <p className="mt-6 max-w-xl border-l-2 border-red-700 pl-4 text-sm leading-6 text-slate-600">
-                Wichtig: Beim biometrischen Pass nimmt das Passbüro das Foto meist vor Ort auf, da gleichzeitig Fingerabdrücke erfasst werden. Für die Identitätskarte akzeptieren viele Gemeinden ein mitgebrachtes Foto.
-              </p>
+      <Section muted labelledBy="masse-h2">
+        <SectionHeader
+          id="masse-h2"
+          eyebrow="Die Masse im Überblick"
+          title="Was Ihr Passfoto erfüllen muss"
+          intro="Die fedpol-Fotomustertafel definiert Format, Gesichtsgrösse, Fotoalter und Bildqualität für Pass und Identitätskarte. Bei Kindern sowie bei medizinischen oder religiösen Ausnahmen gelten teils abweichende Regeln."
+        />
+        <dl className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {specifications.map(([label, value, detail]) => (
+            <div key={label} className={card}>
+              <dt className="text-xs font-bold uppercase tracking-widest text-lime-700">{label}</dt>
+              <dd className="mt-3">
+                <span className="block text-xl font-extrabold text-slate-900">{value}</span>
+                <span className="mt-1 block text-sm text-slate-600">{detail}</span>
+              </dd>
             </div>
+          ))}
+        </dl>
+      </Section>
 
-            <figure className="mx-auto w-full max-w-sm border border-slate-300 bg-[#f3f5f5] p-3 sm:p-4">
-              <div className="flex items-center justify-between border-b border-slate-300 pb-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-600">
-                <span>Passfoto-Beispiel</span>
-                <span>35 × 45 mm</span>
-              </div>
-              <div className="relative mt-3 aspect-[35/45] overflow-hidden border border-slate-300 bg-slate-200">
-                <Image
-                  src='https://res.cloudinary.com/dipzpwbbk/image/upload/v1789271146/schweizer-passfoto-beispiel_car52l.webp'
-                  alt="Beispiel eines Schweizer Passfotos mit gleichmässigem Licht und hellem Hintergrund"
-                  fill
-                  priority
-                  sizes="(max-width: 640px) 88vw, (max-width: 1024px) 360px, 420px"
-                  className="object-cover"
-                />
-                <span className="absolute left-2 top-2 border border-white/80 bg-white/90 px-2 py-1 font-mono text-[10px] font-semibold text-slate-700">35 × 45 mm</span>
-                <span className="absolute bottom-2 right-2 border border-white/80 bg-white/90 px-2 py-1 text-[10px] font-semibold text-slate-700">gleichmässiges Licht</span>
-              </div>
-              <figcaption className="pt-3 text-xs leading-5 text-slate-600">Beispiel einer Aufnahme zur Orientierung, kein amtliches Musterfoto.</figcaption>
-            </figure>
+      <Section id="anforderungen" labelledBy="req-h2">
+        <SectionHeader
+          id="req-h2"
+          eyebrow="Biometrische Anforderungen"
+          title="Sechs Merkmale eines guten Passfotos"
+          intro="Diese Punkte orientieren sich an der fedpol-Fotomustertafel und dem ICAO-9303-Standard. Über die Annahme entscheidet stets die zuständige Behörde."
+        />
+        <CardGrid items={requirements.map((r) => ({ title: r.title, desc: r.text }))} />
+      </Section>
+
+      <Section muted labelledBy="steps-h2">
+        <SectionHeader
+          id="steps-h2"
+          eyebrow="Mit dem Smartphone"
+          title="In vier Schritten zur passenden Aufnahme"
+          intro="Ein einfacher Ablauf für zu Hause – ohne kompliziertes Setup."
+        />
+        <StepsGrid steps={steps.map(([title, desc]) => ({ title, desc }))} />
+      </Section>
+
+      <Section labelledBy="submit-h2">
+        <div className="grid gap-8 lg:grid-cols-2">
+          <SectionHeader
+            id="submit-h2"
+            eyebrow="Für die Einreichung"
+            title="Vor dem Termin prüfen"
+            intro={
+              <>
+                Speichern Sie Ihre Originaldatei in hoher Auflösung und klären Sie, ob Ihre Behörde einen Ausdruck, eine
+                digitale Datei oder die Aufnahme vor Ort verlangt. Für weitere Ausweise lesen Sie unseren{" "}
+                <Link href="/de/dokumentenfoto-schweiz" className={textLink}>Guide zum Dokumentenfoto Schweiz</Link>.
+              </>
+            }
+          />
+          <div className={card}>
+            <CheckList items={checklist} />
           </div>
         </div>
-      </header>
+      </Section>
 
-      <main>
-        <section className="border-b border-slate-200 bg-[#f7f8f8] py-12 sm:py-16">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-            <div className="grid gap-7 lg:grid-cols-[.8fr_1.2fr] lg:items-start">
-              <div>
-                <p className="text-xs font-bold uppercase tracking-[0.18em] text-red-800">Die Masse im Überblick</p>
-                <h2 className="mt-3 text-3xl font-semibold tracking-[-0.035em] text-slate-950 sm:text-4xl">Was Ihr Passfoto erfüllen muss.</h2>
-              </div>
-              <p className="border-l-2 border-red-700 pl-5 text-base leading-7 text-slate-700 sm:text-lg">
-                Die fedpol-Fotomustertafel definiert Format, Gesichtsgrösse, Fotoalter und die grundlegende Bildqualität für Pass und Identitätskarte. Bei Kindern sowie bei medizinischen oder religiösen Ausnahmen gelten teils abweichende Regeln, die Ihre Wohngemeinde oder das Passbüro im Einzelfall bestätigt.
-              </p>
-            </div>
-            <dl className="mt-9 grid border-l border-t border-slate-300 sm:grid-cols-2 lg:grid-cols-4">
-              {specifications.map(([label, value, detail]) => (
-                <div key={label} className="border-b border-r border-slate-300 bg-white p-5">
-                  <dt className="text-xs font-bold uppercase tracking-[0.14em] text-red-800">{label}</dt>
-                  <dd className="mt-5 text-xl font-semibold tracking-[-0.02em] text-slate-950">{value}</dd>
-                  <p className="mt-2 text-sm text-slate-600">{detail}</p>
-                </div>
-              ))}
-            </dl>
-          </div>
-        </section>
+      <Section muted width="3xl" labelledBy="faq-h2">
+        <SectionHeader id="faq-h2" eyebrow="Häufige Fragen" title="Passfoto Schweiz: FAQ" />
+        <FaqList items={faqs} />
+        <p className="mt-6 text-sm text-slate-600">
+          Format: <Badge>35 × 45 mm</Badge> · Gesichtshöhe: <Badge>29–34 mm</Badge>
+        </p>
+      </Section>
 
-        <section id="anforderungen" className="py-14 sm:py-20">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-            <div className="max-w-2xl">
-              <p className="text-xs font-bold uppercase tracking-[0.18em] text-red-800">Biometrische Anforderungen</p>
-              <h2 className="mt-3 text-3xl font-semibold tracking-[-0.035em] text-slate-950 sm:text-4xl">Sechs Merkmale eines guten Ausgangsfotos.</h2>
-              <p className="mt-4 text-base leading-7 text-slate-600">
-                Diese Punkte orientieren sich an der fedpol-Fotomustertafel und dem internationalen ICAO-9303-Standard. Sie helfen bei der Aufnahme zu Hause – über die endgültige Annahme entscheidet stets die zuständige Behörde.
-              </p>
-            </div>
-            <div className="mt-9 grid border-l border-t border-slate-300 md:grid-cols-2 lg:grid-cols-3">
-              {requirements.map((requirement, index) => (
-                <article key={requirement.title} className="border-b border-r border-slate-300 bg-white p-5 sm:p-6">
-                  <span className="font-mono text-xs font-semibold text-red-800">0{index + 1}</span>
-                  <h3 className="mt-7 text-xl font-semibold tracking-[-0.02em] text-slate-950">{requirement.title}</h3>
-                  <p className="mt-3 text-sm leading-6 text-slate-600">{requirement.text}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="border-y border-slate-200 bg-[#102331] py-14 text-white sm:py-20">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-            <div className="grid gap-8 lg:grid-cols-[.72fr_1.28fr]">
-              <div>
-                <p className="text-xs font-bold uppercase tracking-[0.18em] text-red-300">Mit dem Smartphone</p>
-                <h2 className="mt-3 text-3xl font-semibold tracking-[-0.035em] sm:text-4xl">In vier Schritten zur passenden Aufnahme.</h2>
-                <p className="mt-4 max-w-md text-sm leading-6 text-slate-300">Ein einfacher Ablauf für zu Hause – ohne kompliziertes Setup und ohne das Original vorab zu verändern.</p>
-              </div>
-              <ol className="grid gap-px border border-slate-600 bg-slate-600 sm:grid-cols-2">
-                {steps.map(([title, text], index) => (
-                  <li key={title} className="bg-[#102331] p-5">
-                    <div className="flex items-start gap-3">
-                      <span className="font-mono text-xs font-semibold text-red-300">0{index + 1}</span>
-                      <div>
-                        <h3 className="font-semibold">{title}</h3>
-                        <p className="mt-2 text-sm leading-6 text-slate-300">{text}</p>
-                      </div>
-                    </div>
-                  </li>
-                ))}
-              </ol>
-            </div>
-          </div>
-        </section>
-
-        <section className="py-14 sm:py-20">
-          <div className="mx-auto grid max-w-6xl gap-10 px-4 sm:px-6 lg:grid-cols-[.8fr_1.2fr] lg:px-8">
-            <div>
-              <p className="text-xs font-bold uppercase tracking-[0.18em] text-red-800">Für die Einreichung</p>
-              <h2 className="mt-3 text-3xl font-semibold tracking-[-0.035em] text-slate-950 sm:text-4xl">Vor dem Termin prüfen.</h2>
-              <p className="mt-4 text-base leading-7 text-slate-600">Speichern Sie Ihre Originaldatei in hoher Auflösung. Klären Sie danach, ob Ihre Behörde einen Ausdruck, eine digitale Datei oder die Aufnahme vor Ort verlangt.</p>
-              <Link href="/de/dokumentenfoto-schweiz" className="mt-6 inline-flex items-center gap-2 border-b-2 border-red-700 pb-1 text-sm font-semibold text-slate-900 hover:text-red-800">Guide für weitere Dokumentenfotos <ArrowRight /></Link>
-            </div>
-            <ul className="border-y border-slate-300">
-              <li className="flex gap-3 border-b border-slate-300 py-4 text-sm leading-6 text-slate-700"><Tick /> Termin- oder Einreichungshinweise der zuständigen Stelle vorab lesen.</li>
-              <li className="flex gap-3 border-b border-slate-300 py-4 text-sm leading-6 text-slate-700"><Tick /> Nur die scharfe Originaldatei verwenden, nicht aus einem Messenger oder Screenshot weiterleiten.</li>
-              <li className="flex gap-3 border-b border-slate-300 py-4 text-sm leading-6 text-slate-700"><Tick /> Brille abnehmen und Kopfbedeckung nur bei religiösem oder medizinischem Grund tragen.</li>
-              <li className="flex gap-3 border-b border-slate-300 py-4 text-sm leading-6 text-slate-700"><Tick /> Bei Ausdruck: Fotopapier, Anzahl der Bilder und rechtwinklige Ecken nach Vorgabe prüfen.</li>
-              <li className="flex gap-3 py-4 text-sm leading-6 text-slate-700"><Tick /> Bei Unsicherheit vor dem Termin direkt beim Passbüro oder der Einwohnerstelle nachfragen.</li>
-            </ul>
-          </div>
-        </section>
-
-        <section className="border-y border-slate-200 bg-[#f7f8f8] py-14 sm:py-20">
-          <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-            <p className="text-xs font-bold uppercase tracking-[0.18em] text-red-800">Häufige Fragen</p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-[-0.035em] text-slate-950 sm:text-4xl">Passfoto Schweiz: FAQ</h2>
-            <div className="mt-8 border-t border-slate-300">
-              {faqs.map((faq) => (
-                <details key={faq.q} className="group border-b border-slate-300 py-4">
-                  <summary className="flex cursor-pointer list-none items-center justify-between gap-5 text-base font-semibold text-slate-900 marker:content-none">
-                    {faq.q}
-                    <span className="text-xl font-normal text-red-800 transition-transform group-open:rotate-45">+</span>
-                  </summary>
-                  <p className="max-w-2xl pt-3 text-sm leading-6 text-slate-600">{faq.a}</p>
-                </details>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="bg-red-700 py-12 text-white sm:py-16">
-          <div className="mx-auto flex max-w-6xl flex-col justify-between gap-6 px-4 sm:flex-row sm:items-center sm:px-6 lg:px-8">
-            <div>
-              <p className="text-xs font-bold uppercase tracking-[0.18em] text-red-100">Starten Sie mit dem Originalfoto</p>
-              <h2 className="mt-2 text-2xl font-semibold tracking-[-0.025em] sm:text-3xl">Passfoto online vorbereiten.</h2>
-            </div>
-            <Link href={ctaHref} className="inline-flex items-center justify-center gap-2 border border-white bg-white px-5 py-3 text-sm font-semibold text-red-800 transition-colors hover:bg-red-50">
-              Foto vorbereiten <ArrowRight />
-            </Link>
-          </div>
-        </section>
-      </main>
-    </div>
+      <CtaBand
+        title="Passfoto online vorbereiten"
+        text="Starten Sie mit Ihrem Originalfoto – Format und Hintergrund werden automatisch angepasst."
+        href={ctaHref}
+        label="Foto vorbereiten"
+      />
+    </>
   );
 }

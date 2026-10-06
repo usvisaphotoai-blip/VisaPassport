@@ -88,7 +88,7 @@ const ROUTE_EQUIVALENTS = [
       de: `${BASE_URL}/de/guides`,
       'x-default': `${BASE_URL}/blog`,
     },
-    paths: ['/blog', '/fr/guides', '/de/guides', '/de/ratgeber']
+    paths: ['/blog', '/fr/guides', '/de/guides']
   }
 ];
 

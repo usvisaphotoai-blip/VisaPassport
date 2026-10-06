@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import dbConnect from "@/lib/mongodb";
 import Photo from "@/models/Photo";
@@ -5,6 +6,12 @@ import PreviewClientDe from "./PreviewClientDe";
 import { getLocalPrice } from "@/lib/currency";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+
+// Per-user order page: keep it out of search results
+export const metadata: Metadata = {
+  title: "Ihr Foto – Vorschau & Bestellung | PixPassport",
+  robots: { index: false, follow: false },
+};
 
 export default async function DePreviewPage(props: { params: Promise<{ id: string }> }) {
   const params = await props.params;

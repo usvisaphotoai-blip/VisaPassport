@@ -37,16 +37,16 @@ const translations = {
     subCta: "Prend moins de 30 secondes",
   },
   de: {
-    header: "Laden Sie Bilder wie diese hoch",
+    header: "So sollte Ihr Foto aussehen",
     example: "Beispiel",
     bullets: [
-      "Guter Hintergrund, wir ändern ihn in einen weißen Hintergrund",
-      "Neutraler Gesichtsausdruck & offene Augen",
-      "Gleichmäßige Beleuchtung im Gesicht",
+      "Ruhiger Hintergrund – wir ersetzen ihn automatisch",
+      "Neutraler Gesichtsausdruck, Augen geöffnet",
+      "Gleichmäßiges Licht im Gesicht",
     ],
-    headingRight: "Für bessere Fotoergebnisse...",
-    descRight: "Laden Sie ein klares Foto wie in den Beispielen gezeigt hoch. Vermeiden Sie das Tragen von Hüten oder Brillen und sorgen Sie für eine gute Beleuchtung.",
-    cta: "Jetzt hochladen",
+    headingRight: "Für das beste Ergebnis …",
+    descRight: "Laden Sie ein scharfes Foto wie in den Beispielen hoch. Nehmen Sie Mütze oder Hut ab, vermeiden Sie Spiegelungen in der Brille und sorgen Sie für gutes Licht.",
+    cta: "Jetzt Foto hochladen",
     subCta: "Dauert weniger als 30 Sekunden",
   }
 };

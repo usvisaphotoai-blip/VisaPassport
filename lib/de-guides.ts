@@ -50,6 +50,10 @@ function ensureGuidesDir() {
 function slugify(text: string): string {
   return text
     .toLowerCase()
+    .replace(/ä/g, "ae")
+    .replace(/ö/g, "oe")
+    .replace(/ü/g, "ue")
+    .replace(/ß/g, "ss")
     .replace(/[^\w\s-]/g, "")
     .replace(/[\s_-]+/g, "-")
     .replace(/^-+|-+$/g, "");
@@ -85,12 +89,21 @@ function compileMarkdownToHtml(markdownContent: string): string {
     const id = slugify(rawText);
     
     if (depth === 2 || depth === 3) {
-      return `<h${depth} id="${id}" className="scroll-mt-24">${text}</h${depth}>\n`;
+      return `<h${depth} id="${id}" class="scroll-mt-24">${text}</h${depth}>\n`;
     }
     return `<h${depth}>${text}</h${depth}>\n`;
   };
 
   return marked(markdownContent, { renderer }) as string;
+}
+
+/**
+ * Formats an ISO date ("2026-08-16") as "16. August 2026"
+ */
+export function formatGermanDate(isoDate: string): string {
+  const date = new Date(`${isoDate}T00:00:00Z`);
+  if (Number.isNaN(date.getTime())) return isoDate;
+  return new Intl.DateTimeFormat("de-DE", { dateStyle: "long", timeZone: "UTC" }).format(date);
 }
 
 /**

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Image from "next/image";
-import Link from "next/link";
-import documentPhotoHero from "./schweizer-dokumentenfoto-beispiel.png";
+import {
+  Hero, Section, SectionHeader, StepsGrid, CheckList, FaqList, CtaBand, JsonLd, Badge, Prose, card,
+} from "../components/ui";
 
 const ctaHref = "/de/passbild-online?type=switzerland-passport";
 
@@ -12,9 +12,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://www.pixpassport.com/de/dokumentenfoto-schweiz",
     languages: {
-      de: "https://www.pixpassport.com/de/dokumentenfoto-schweiz",
       "de-CH": "https://www.pixpassport.com/de/dokumentenfoto-schweiz",
-      "x-default": "https://www.pixpassport.com/de/dokumentenfoto-schweiz",
     },
   },
   openGraph: {
@@ -22,13 +20,14 @@ export const metadata: Metadata = {
     description:
       "Die wichtigsten Fotoanforderungen für Schweizer Dokumente – verständlich erklärt und mobil umsetzbar.",
     url: "https://www.pixpassport.com/de/dokumentenfoto-schweiz",
+    siteName: "PixPassport",
     locale: "de_CH",
     type: "website",
     images: [
       {
-        url: "/de/dokumentenfoto-schweiz/schweizer-dokumentenfoto-beispiel.png",
-        width: 1024,
-        height: 1536,
+        url: "https://res.cloudinary.com/dipzpwbbk/image/upload/v1785679205/MakePassportPhoto_ph2uog_ryefxt.webp",
+        width: 600,
+        height: 400,
         alt: "Beispiel eines neutral ausgeleuchteten Schweizer Dokumentenfotos",
       },
     ],
@@ -38,7 +37,7 @@ export const metadata: Metadata = {
     title: "Dokumentenfoto Schweiz: online vorbereiten",
     description:
       "Anforderungen und Tipps für Dokumentenfotos in der Schweiz.",
-    images: ["/de/dokumentenfoto-schweiz/schweizer-dokumentenfoto-beispiel.png"],
+    images: ["https://res.cloudinary.com/dipzpwbbk/image/upload/v1785679205/MakePassportPhoto_ph2uog_ryefxt.webp"],
   },
 };
 
@@ -147,209 +146,94 @@ const jsonLd = {
   ],
 };
 
-function ArrowRight() {
-  return (
-    <svg aria-hidden="true" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14m-6-6 6 6-6 6" />
-    </svg>
-  );
-}
-
-function Check() {
-  return (
-    <svg aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-red-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-      <path strokeLinecap="round" strokeLinejoin="round" d="m5 12 4 4L19 6" />
-    </svg>
-  );
-}
-
 export default function DokumentenfotoSchweizPage() {
   return (
-    <div className="bg-[#fcfcfb] text-slate-950 selection:bg-red-100 selection:text-red-950">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+    <>
+      <JsonLd data={jsonLd} />
 
-      <header className="border-b border-slate-200 bg-white">
-        <div className="h-1 bg-red-700" />
-        <div className="mx-auto max-w-6xl px-4 pb-12 pt-5 sm:px-6 sm:pb-16 lg:px-8">
-          <nav aria-label="Breadcrumb" className="mb-9 text-xs text-slate-500">
-            <Link href="/de" className="hover:text-red-800">Startseite</Link>
-            <span className="mx-2 text-slate-300">/</span>
-            <span>Dokumentenfoto Schweiz</span>
-          </nav>
+      <Hero
+        breadcrumb={[{ label: "Startseite", href: "/de" }, { label: "Dokumentenfoto Schweiz" }]}
+        eyebrow="Foto-Guide Schweiz · ID · Führerausweis · Visum"
+        title="Dokumentenfoto Schweiz, klar vorbereitet"
+        intro="Bereiten Sie ein passendes Foto für ID, Führerausweis oder Visum direkt mit dem Smartphone vor. Für Aufenthaltsbewilligungen gilt eine Ausnahme: Dort erfasst ein kantonales Zentrum das Foto persönlich. Verbindlich ist stets die ausstellende Stelle."
+        primary={{ href: ctaHref, label: "Foto vorbereiten" }}
+        secondary={{ href: "#dokumente", label: "Dokument auswählen" }}
+        note="Ab CHF 15.99 · Ergebnis vorher kostenlos ansehen"
+        image={{
+          src: "https://res.cloudinary.com/dipzpwbbk/image/upload/v1785679205/MakePassportPhoto_ph2uog_ryefxt.webp",
+          alt: "Druckbogen mit mehreren Dokumentenfotos im Format 35 × 45 mm",
+          width: 600,
+          height: 400,
+        }}
+      />
 
-          <div className="grid items-center gap-10 lg:grid-cols-[1.07fr_.93fr] lg:gap-16">
-            <div>
-              <p className="mb-4 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-red-800">
-                <span className="h-2 w-2 bg-red-700" /> Foto-Guide Schweiz
-              </p>
-              <h1 className="max-w-3xl text-4xl font-semibold leading-[1.04] tracking-[-0.045em] text-slate-950 sm:text-5xl lg:text-6xl">
-                Dokumentenfoto Schweiz, klar vorbereitet.
-              </h1>
-              <p className="mt-6 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg sm:leading-8">
-                Bereiten Sie ein passendes Foto für <strong className="font-semibold text-slate-900">ID, Führerausweis oder Visum</strong> direkt mit dem Smartphone vor. Für Aufenthaltsbewilligungen gilt eine Ausnahme: Dort erfasst ein kantonales Zentrum das Foto persönlich. Verbindlich ist stets die ausstellende Stelle.
-              </p>
+      <Section muted width="4xl" labelledBy="short-h2">
+        <SectionHeader id="short-h2" eyebrow="Die kurze Antwort" title="Ein Foto, mehrere Regeln" />
+        <Prose>
+          <p>
+            Ein Dokumentenfoto ist keine Einheitslösung. Pass, Identitätskarte und Führerausweis folgen der
+            fedpol-Fotomustertafel mit dem Format 35 × 45 mm. Aufenthaltsbewilligungen für ausländische Staatsangehörige
+            werden dagegen persönlich in einem kantonalen Ausweiszentrum erfasst, und Visa richten sich nach den Vorgaben
+            des Ziellands. Mit einer sauberen Ausgangsaufnahme sparen Sie überall dort Zeit, wo ein eigenes Foto zulässig
+            ist.
+          </p>
+        </Prose>
+      </Section>
 
-              <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-                <Link href={ctaHref} className="inline-flex items-center justify-center gap-2 bg-red-700 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-red-800">
-                  Foto vorbereiten <ArrowRight />
-                </Link>
-                <Link href="#dokumente" className="inline-flex items-center justify-center border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-800 transition-colors hover:border-slate-900">
-                  Dokument auswählen
-                </Link>
+      <Section id="dokumente" labelledBy="docs-h2">
+        <SectionHeader
+          id="docs-h2"
+          eyebrow="Dokument wählen"
+          title="Welches Foto benötigen Sie?"
+          intro="Starten Sie mit dem Verwendungszweck. So vermeiden Sie ein Foto im falschen Format oder eine unnötige Aufnahme."
+        />
+        <div className="grid gap-5 sm:grid-cols-2">
+          {documents.map((d) => (
+            <article key={d.title} className={card}>
+              <div className="flex items-start justify-between gap-4">
+                <h3 className="text-lg font-bold text-slate-900">{d.title}</h3>
+                <Badge>{d.format}</Badge>
               </div>
-
-              <dl className="mt-9 grid grid-cols-3 border-y border-slate-200 text-sm">
-                <div className="py-3 pr-3">
-                  <dt className="text-slate-500">Für</dt>
-                  <dd className="mt-1 font-semibold text-slate-900">4 Fotoarten</dd>
-                </div>
-                <div className="border-l border-slate-200 px-3 py-3">
-                  <dt className="text-slate-500">Aufnahme</dt>
-                  <dd className="mt-1 font-semibold text-slate-900">mobil möglich</dd>
-                </div>
-                <div className="border-l border-slate-200 pl-3 py-3">
-                  <dt className="text-slate-500">Wichtig</dt>
-                  <dd className="mt-1 font-semibold text-slate-900">Stelle prüfen</dd>
-                </div>
-              </dl>
-            </div>
-
-            <figure className="mx-auto w-full max-w-sm border border-slate-300 bg-[#f3f5f5] p-3 sm:p-4">
-              <div className="flex items-center justify-between border-b border-slate-300 pb-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-600">
-                <span>Beispielaufnahme</span>
-                <span>Porträt · frontal</span>
-              </div>
-              <div className="relative mt-3 aspect-[35/45] overflow-hidden border border-slate-300 bg-slate-200">
-                <Image
-                  src='https://res.cloudinary.com/dipzpwbbk/image/upload/v1789271072/schweizer-dokumentenfoto-beispiel_q1biiv.webp'
-                  alt="Beispiel eines neutral ausgeleuchteten Schweizer Dokumentenfotos mit geradem Blick"
-                  fill
-                  priority
-                  sizes="(max-width: 640px) 88vw, (max-width: 1024px) 360px, 420px"
-                  className="object-cover"
-                />
-                <span className="absolute left-2 top-2 border border-white/80 bg-white/90 px-2 py-1 text-[10px] font-semibold text-slate-700">ruhiger Hintergrund</span>
-                <span className="absolute bottom-2 right-2 border border-white/80 bg-white/90 px-2 py-1 text-[10px] font-semibold text-slate-700">Augen sichtbar</span>
-              </div>
-              <figcaption className="pt-3 text-xs leading-5 text-slate-600">Beispiel einer Aufnahme zur Orientierung, kein amtliches Musterfoto.</figcaption>
-            </figure>
-          </div>
+              <p className="mt-3 text-sm leading-relaxed text-slate-600">{d.text}</p>
+            </article>
+          ))}
         </div>
-      </header>
+      </Section>
 
-      <main>
-        <section className="border-b border-slate-200 bg-[#f7f8f8] py-12 sm:py-16">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-            <div className="grid gap-7 lg:grid-cols-[.8fr_1.2fr] lg:items-start">
-              <div>
-                <p className="text-xs font-bold uppercase tracking-[0.18em] text-red-800">Die kurze Antwort</p>
-                <h2 className="mt-3 text-3xl font-semibold tracking-[-0.035em] text-slate-950 sm:text-4xl">Ein Foto, mehrere Regeln.</h2>
-              </div>
-              <div className="border-l-2 border-red-700 pl-5 text-base leading-7 text-slate-700 sm:text-lg">
-                Ein Dokumentenfoto ist keine Einheitslösung. Pass, Identitätskarte und Führerausweis folgen der fedpol-Fotomustertafel mit dem Format 35 × 45 mm. Aufenthaltsbewilligungen für ausländische Staatsangehörige werden dagegen persönlich in einem kantonalen Ausweiszentrum erfasst, und Visa richten sich nach den Vorgaben des Ziellands. Mit einer sauberen Ausgangsaufnahme sparen Sie überall dort Zeit, wo ein eigenes Foto zulässig ist.
-              </div>
-            </div>
-          </div>
-        </section>
+      <Section muted labelledBy="rules-h2">
+        <SectionHeader
+          id="rules-h2"
+          eyebrow="Vor der Aufnahme"
+          title="Vier Punkte, die fast immer zählen"
+          intro="Diese Grundregeln stammen aus der fedpol-Fotomustertafel. Spezifische Vorgaben der Behörde haben immer Vorrang."
+        />
+        <div className={card}>
+          <CheckList
+            items={checklist.map(([t, d]) => (
+              <>
+                <strong className="text-slate-900">{t}:</strong> {d}
+              </>
+            ))}
+          />
+        </div>
+      </Section>
 
-        <section id="dokumente" className="py-14 sm:py-20">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-            <div className="max-w-2xl">
-              <p className="text-xs font-bold uppercase tracking-[0.18em] text-red-800">Dokument wählen</p>
-              <h2 className="mt-3 text-3xl font-semibold tracking-[-0.035em] text-slate-950 sm:text-4xl">Welches Foto benötigen Sie?</h2>
-              <p className="mt-4 text-base leading-7 text-slate-600">Starten Sie mit dem Verwendungszweck. So vermeiden Sie ein passendes Foto im falschen Format oder eine unnötige Aufnahme.</p>
-            </div>
-            <div className="mt-9 grid border-l border-t border-slate-300 sm:grid-cols-2">
-              {documents.map((document) => (
-                <article key={document.title} className="border-b border-r border-slate-300 bg-white p-5 sm:p-7">
-                  <div className="flex items-start justify-between gap-4">
-                    <span className="font-mono text-xs font-semibold text-red-800">{document.code}</span>
-                    <span className="border border-slate-300 px-2 py-1 text-[11px] font-semibold text-slate-600">{document.format}</span>
-                  </div>
-                  <h3 className="mt-8 text-xl font-semibold tracking-[-0.02em] text-slate-950">{document.title}</h3>
-                  <p className="mt-3 text-sm leading-6 text-slate-600">{document.text}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
+      <Section labelledBy="steps-h2">
+        <SectionHeader id="steps-h2" eyebrow="Mobil vorbereitet" title="Vom Handy zur sauberen Datei" />
+        <StepsGrid steps={steps.map(([title, desc]) => ({ title, desc }))} />
+      </Section>
 
-        <section className="border-y border-slate-200 bg-[#102331] py-14 text-white sm:py-20">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-            <div className="grid gap-8 lg:grid-cols-[.7fr_1.3fr]">
-              <div>
-                <p className="text-xs font-bold uppercase tracking-[0.18em] text-red-300">Vor der Aufnahme</p>
-                <h2 className="mt-3 text-3xl font-semibold tracking-[-0.035em] sm:text-4xl">Vier Punkte, die fast immer zählen.</h2>
-                <p className="mt-4 max-w-md text-sm leading-6 text-slate-300">Diese Grundregeln stammen aus der fedpol-Fotomustertafel und helfen bei jeder Ausgangsaufnahme. Spezifische Vorgaben der Behörde haben immer Vorrang.</p>
-              </div>
-              <ul className="grid gap-px border border-slate-600 bg-slate-600 sm:grid-cols-2">
-                {checklist.map(([title, text]) => (
-                  <li key={title} className="bg-[#102331] p-5">
-                    <div className="flex items-start gap-3">
-                      <Check />
-                      <div>
-                        <h3 className="font-semibold">{title}</h3>
-                        <p className="mt-2 text-sm leading-6 text-slate-300">{text}</p>
-                      </div>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </section>
+      <Section muted width="3xl" labelledBy="faq-h2">
+        <SectionHeader id="faq-h2" eyebrow="Häufige Fragen" title="Dokumentenfoto Schweiz: FAQ" />
+        <FaqList items={faqs} />
+      </Section>
 
-        <section className="py-14 sm:py-20">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
-              <div className="max-w-2xl">
-                <p className="text-xs font-bold uppercase tracking-[0.18em] text-red-800">Mobil vorbereitet</p>
-                <h2 className="mt-3 text-3xl font-semibold tracking-[-0.035em] text-slate-950 sm:text-4xl">Vom Handy zur sauberen Datei.</h2>
-              </div>
-              <Link href={ctaHref} className="inline-flex items-center gap-2 self-start border-b-2 border-red-700 pb-1 text-sm font-semibold text-slate-900 hover:text-red-800 sm:self-auto">Foto starten <ArrowRight /></Link>
-            </div>
-            <ol className="mt-9 grid gap-0 border-l border-t border-slate-300 md:grid-cols-4">
-              {steps.map(([title, text], index) => (
-                <li key={title} className="border-b border-r border-slate-300 bg-[#fcfcfb] p-5 sm:p-6">
-                  <span className="font-mono text-xs font-semibold text-red-800">0{index + 1}</span>
-                  <h3 className="mt-7 text-lg font-semibold text-slate-950">{title}</h3>
-                  <p className="mt-2 text-sm leading-6 text-slate-600">{text}</p>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </section>
-
-        <section className="border-y border-slate-200 bg-[#f7f8f8] py-14 sm:py-20">
-          <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-            <p className="text-xs font-bold uppercase tracking-[0.18em] text-red-800">Häufige Fragen</p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-[-0.035em] text-slate-950 sm:text-4xl">Dokumentenfoto Schweiz: FAQ</h2>
-            <div className="mt-8 border-t border-slate-300">
-              {faqs.map((faq) => (
-                <details key={faq.q} className="group border-b border-slate-300 py-4">
-                  <summary className="flex cursor-pointer list-none items-center justify-between gap-5 text-base font-semibold text-slate-900 marker:content-none">
-                    {faq.q}
-                    <span className="text-xl font-normal text-red-800 transition-transform group-open:rotate-45">+</span>
-                  </summary>
-                  <p className="max-w-2xl pt-3 text-sm leading-6 text-slate-600">{faq.a}</p>
-                </details>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="bg-red-700 py-12 text-white sm:py-16">
-          <div className="mx-auto flex max-w-6xl flex-col justify-between gap-6 px-4 sm:flex-row sm:items-center sm:px-6 lg:px-8">
-            <div>
-              <p className="text-xs font-bold uppercase tracking-[0.18em] text-red-100">Nächster Schritt</p>
-              <h2 className="mt-2 text-2xl font-semibold tracking-[-0.025em] sm:text-3xl">Mit einer klaren Aufnahme beginnen.</h2>
-            </div>
-            <Link href={ctaHref} className="inline-flex items-center justify-center gap-2 border border-white bg-white px-5 py-3 text-sm font-semibold text-red-800 transition-colors hover:bg-red-50">
-              Dokumentenfoto vorbereiten <ArrowRight />
-            </Link>
-          </div>
-        </section>
-      </main>
-    </div>
+      <CtaBand
+        title="Mit einer klaren Aufnahme beginnen"
+        text="Foto hochladen, Format wählen und das Ergebnis vorab kostenlos prüfen."
+        href={ctaHref}
+        label="Dokumentenfoto vorbereiten"
+      />
+    </>
   );
 }

@@ -1,14 +1,17 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
+import {
+  Hero, StatsBand, Section, SectionHeader, StepsGrid, CardGrid, CheckList, DataTable,
+  FaqList, CtaBand, JsonLd, Prose, btnPrimary, textLink, ArrowRight,
+} from "./components/ui";
 
 /* ─────────────────────────────────────────────
    Metadata
 ───────────────────────────────────────────── */
 export const metadata: Metadata = {
-  title: "Passbild Online Erstellen 2026 | Biometrisches Passfoto 35x45 mm",
+  title: "Passbild online erstellen – biometrisch & BMI-konform | PixPassport",
   description:
-    "Passbild Deutschland online erstellen: biometrisches Passfoto nach BMI-Vorgabe (35×45 mm), automatische KI-Prüfung, Hintergrund entfernt, in 30 Sekunden fertig. Passfoto Generator ab 6.99 €.",
+    "Passbild online erstellen: biometrisches Passfoto 35 × 45 mm, automatisch nach BMI-Vorgabe geprüft, in 30 Sekunden fertig. Ergebnis kostenlos ansehen, ab 6,99 €.",
 
   alternates: {
     canonical: "https://www.pixpassport.com/de",
@@ -20,9 +23,9 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "PixPassport — Passbild Online in 30 Sekunden erstellen",
+    title: "Passbild online erstellen – in 30 Sekunden | PixPassport",
     description:
-      "Biometrisches Passbild nach BMI-Vorgabe, automatische KI-Prüfung, Hintergrund entfernt, konform für 50+ Länder. Geld-zurück-Garantie.",
+      "Biometrisches Passbild nach BMI-Vorgabe, automatisch geprüft, Hintergrund ersetzt – für Deutschland und über 50 weitere Länder. Geld zurück bei Ablehnung.",
     url: "https://www.pixpassport.com/de",
     siteName: "PixPassport",
     locale: "de_DE",
@@ -50,12 +53,12 @@ const steps = [
   {
     n: "02",
     title: "KI prüft Ihr Passbild automatisch",
-    desc: "Unser Passfoto Generator entfernt den Hintergrund, schneidet das Bild zu und prüft über 50 biometrische Kriterien nach BMI-Standard in Echtzeit.",
+    desc: "Unser Passfoto-Generator ersetzt den Hintergrund, schneidet das Bild zu und prüft die biometrischen Kriterien nach BMI-Vorgabe – in Echtzeit.",
   },
   {
     n: "03",
     title: "Passbild digital herunterladen",
-    desc: "Sie erhalten sofort Ihr biometrisches Passfoto in hoher Auflösung — bereit für die Übermittlung an die Behörde oder zum Ausdrucken bei Rossmann oder dm.",
+    desc: "Sie erhalten sofort Ihr biometrisches Passfoto in hoher Auflösung – als Datei und als Druckvorlage, z. B. für den Ausdruck bei dm oder Rossmann.",
   },
 ];
 
@@ -63,53 +66,53 @@ const benefits = [
   {
     icon: "🎯",
     title: "Biometrische Konformität garantiert",
-    desc: "Jedes Passbild erfüllt die offiziellen BMI- und ICAO-Kriterien für Deutschland, die EU und 50+ weitere Länder. Bei Ablehnung erstatten wir den vollen Preis.",
+    desc: "Jedes Passbild wird nach den offiziellen BMI- und ICAO-Kriterien für Deutschland, die EU und über 50 weitere Länder geprüft. Bei Ablehnung erstatten wir den vollen Preis.",
   },
   {
     icon: "⚡",
     title: "Fertig in unter 30 Sekunden",
-    desc: "Unser Passfoto Online-Tool arbeitet rund um die Uhr. Sie sparen sich die Fahrt und die Wartezeit beim Fotografen oder in der Apotheke.",
+    desc: "Unser Online-Tool ist rund um die Uhr verfügbar. Sie sparen sich die Fahrt und die Wartezeit beim Fotografen.",
   },
   {
     icon: "🔒",
     title: "Sichere Daten nach DSGVO",
-    desc: "Wir übertragen Ihre Fotos verschlüsselt und löschen sie nach 24 Stunden automatisch. Wir geben Ihre Bilder niemals weiter.",
+    desc: "Wir übertragen Ihre Fotos verschlüsselt und löschen sie spätestens nach 24 Stunden automatisch. Ihre Bilder geben wir niemals weiter.",
   },
   {
     icon: "💶",
-    title: "Passfoto kostenlos testen, ab 5,99 € kaufen",
-    desc: "Sie prüfen Ihr Ergebnis kostenlos, bevor Sie bezahlen. Kein Abonnement, keine versteckten Kosten — günstiger als die Behördengebühr von 6 € am PointID®-Terminal.",
+    title: "Kostenlos prüfen, ab 6,99 € kaufen",
+    desc: "Sie sehen Ihr Ergebnis kostenlos, bevor Sie bezahlen. Kein Abo, keine versteckten Kosten – Sie zahlen nur für das fertige Foto.",
   },
   {
     icon: "🌍",
     title: "50+ Länder und Dokumente",
-    desc: "Deutschland, USA, Kanada, Großbritannien, der gesamte Schengen-Raum: Unsere Formatdatenbank wird laufend aktualisiert.",
+    desc: "Deutschland, Österreich, die Schweiz, die USA, Großbritannien und der gesamte Schengen-Raum: Unsere Formatdatenbank wird laufend aktualisiert.",
   },
   {
     icon: "🖨️",
-    title: "Druckbogen inklusive",
-    desc: "Sie erhalten zusätzlich ein druckfertiges Format für zu Hause oder für Rossmann und dm, das jede Behörde akzeptiert.",
+    title: "Druckvorlage inklusive",
+    desc: "Sie erhalten zusätzlich eine druckfertige A4-Vorlage für zu Hause oder den Fotoservice von dm und Rossmann – ideal für Visa, Führerschein und Unterlagen, die noch Papierfotos annehmen.",
   },
 ];
 
 const docs = [
   {
     icon: "🛂",
-    name: "Deutscher Reisepass Passbild",
-    detail: "ICAO-Format · hellgrauer Hintergrund · 35×45 mm",
+    name: "Reisepass",
+    detail: "ICAO-Format · hellgrauer Hintergrund · 35 × 45 mm",
   },
   {
     icon: "🪪",
     name: "Personalausweis",
-    detail: "Biometrische BMI-Standards 2025",
+    detail: "Biometrisch nach BMI-Vorgabe",
   },
   {
     icon: "✈️",
     name: "Schengen-Visum",
-    detail: "Passfoto Visum Deutschland und ganzer Schengen-Raum",
+    detail: "Visumfoto für Deutschland und den Schengen-Raum",
   },
   { icon: "🚗", name: "Führerschein", detail: "Neuantrag und Verlängerung" },
-  { icon: "🇺🇸", name: "US-Dokumente", detail: "US-Pass · Visum DS-160" },
+  { icon: "🇺🇸", name: "US-Dokumente", detail: "US-Pass · Visum (DS-160) · 51 × 51 mm" },
   {
     icon: "🌐",
     name: "50+ weitere Länder",
@@ -176,29 +179,24 @@ const requirementsTable = [
   },
   {
     param: "Aktualität",
-    value: "Nicht älter als 6 Monate",
-    source: "Passverordnung",
+    value: "Aktuelles Erscheinungsbild (Richtwert: max. 6 Monate)",
+    source: "Passverordnung (PassV)",
   },
   {
     param: "Dateiformat",
-    value: "JPG, PNG, PDF (digital)",
+    value: "Digitale Übermittlung an die Behörde",
     source: "BMI, seit 1. Mai 2025",
-  },
-  {
-    param: "Dateigröße",
-    value: "Empfohlen unter 300 kB",
-    source: "Auswärtiges Amt",
   },
 ];
 
 const faqItems = [
   {
     q: "Was hat sich am 1. Mai 2025 bei Passbildern geändert?",
-    a: "Seit dem 1. Mai 2025 akzeptieren deutsche Behörden für Reisepass, Personalausweis und Aufenthaltstitel ausschließlich digitale biometrische Lichtbilder. Bürgerämter nehmen keine Papierfotos mehr an. Sie übermitteln Ihr Foto entweder über einen registrierten Fotodienstleister per zertifizierter Cloud, oder Sie lassen es direkt im Amt am PointID®-Terminal aufnehmen.",
+    a: "Seit dem 1. Mai 2025 akzeptieren deutsche Behörden für Reisepass, Personalausweis und Aufenthaltstitel nur noch digitale biometrische Lichtbilder; Papierfotos wurden lediglich bis Ende Juli 2025 übergangsweise angenommen. Das Foto wird entweder von einem registrierten Fotodienstleister über eine zertifizierte Cloud übermittelt oder direkt im Amt am PointID®-Terminal aufgenommen. Für Führerschein, Visa und viele andere Dokumente können Sie weiterhin ein ausgedrucktes oder hochgeladenes Foto verwenden.",
   },
   {
     q: "Welche Passbild Größe gilt in Deutschland?",
-    a: "Das offizielle Format ist 35 × 45 mm. Die Gesichtshöhe von Kinn bis Haaransatz muss laut BMI-Lichtbild-Schablone zwischen 32 und 36 mm liegen. PixPassport stellt dieses Maß bei jedem Foto automatisch sicher.",
+    a: "Das offizielle Format ist 35 × 45 mm. Die Gesichtshöhe vom Kinn bis zum Scheitel muss laut BMI-Lichtbild-Schablone bei Personen ab 10 Jahren zwischen 32 und 36 mm liegen. PixPassport stellt dieses Maß bei jedem Foto automatisch sicher.",
   },
   {
     q: "Welcher Hintergrund ist für ein biometrisches Passfoto vorgeschrieben?",
@@ -206,18 +204,18 @@ const faqItems = [
   },
   {
     q: "Kann ich mein Passbild online selbst erstellen?",
-    a: "Ja. Sie nehmen das Foto einfach mit dem Smartphone auf, und unsere KI prüft automatisch alle relevanten biometrischen Kriterien — Gesichtshöhe, Auflösung, Hintergrund, Beleuchtung und Kopfhaltung — nach BMI-Standard.",
+    a: "Ja. Sie nehmen das Foto mit dem Smartphone auf, und unsere Software prüft automatisch die biometrischen Kriterien – Gesichtshöhe, Auflösung, Hintergrund, Beleuchtung und Kopfhaltung – nach BMI-Vorgabe. Beachten Sie: Für Reisepass und Personalausweis verlangt das Bürgeramt seit Mai 2025 die digitale Übermittlung durch einen registrierten Fotodienstleister oder die Aufnahme vor Ort. Klären Sie vorab, welchen Weg Ihr Amt akzeptiert.",
   },
   {
     q: "Was kostet ein Passbild beim Amt mit PointID®?",
-    a: "Nutzt Ihr Amt das PointID®-System der Bundesdruckerei, kostet die Aufnahme vor Ort seit dem 1. Mai 2025 bundeseinheitlich 6,00 €. Mit PixPassport erhalten Sie Ihr konformes Passfoto schon ab 5,99 €, ohne Anfahrt und ohne Wartezeit.",
+    a: "Nutzt Ihr Amt das PointID®-System der Bundesdruckerei, kostet die Aufnahme vor Ort seit dem 1. Mai 2025 bundeseinheitlich 6,00 €. Ein biometrisches Foto von PixPassport kostet ab 6,99 € – Sie prüfen das Ergebnis vorher kostenlos.",
   },
   {
     q: "Darf ich auf dem Passbild lächeln?",
     a: "Nein. Die ICAO-Norm und die BMI-Vorgabe verlangen einen neutralen Gesichtsausdruck mit geschlossenem Mund. Ein Lächeln mit sichtbaren Zähnen führt zur Ablehnung.",
   },
   {
-    q: "Für welche Dokumente kann ich diesen Passfoto Generator nutzen?",
+    q: "Für welche Dokumente kann ich den Passfoto-Generator nutzen?",
     a: "Sie können das Tool für Reisepass, Personalausweis, Führerschein, Schengen-Visum, US-Visum (DS-160) und über 50 weitere internationale Dokumente verwenden. Wir aktualisieren die Formatdatenbank laufend.",
   },
   {
@@ -240,7 +238,7 @@ const jsonLd = {
         "@type": "Offer",
         price: "6.99",
         priceCurrency: "EUR",
-        priceValidUntil: "2027-12-31",
+        availability: "https://schema.org/InStock",
       },
       aggregateRating: {
         "@type": "AggregateRating",
@@ -257,20 +255,42 @@ const jsonLd = {
       })),
     },
     {
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        {
-          "@type": "ListItem",
-          position: 1,
-          name: "Startseite",
-          item: "https://www.pixpassport.com/de",
-        },
-      ],
+      "@type": "WebSite",
+      name: "PixPassport",
+      url: "https://www.pixpassport.com/de",
+      inLanguage: "de-DE",
     },
   ],
 };
 
 const ctaHref = "/de/passbild-online?type=germany-passport";
+
+const rejectionReasons = [
+  ["Lächeln mit sichtbaren Zähnen", "Ist nicht erlaubt. Die ICAO-Norm verlangt einen neutralen Ausdruck mit geschlossenem Mund."],
+  ["Getönte Brillengläser oder Spiegelungen", "Eine Brille ist erlaubt, aber die Augen müssen klar erkennbar sein – ohne Reflexionen, getönte Gläser oder verdeckenden Rahmen."],
+  ["Geneigter oder gedrehter Kopf", "Ihr Kopf muss gerade und frontal zur Kamera ausgerichtet sein."],
+  ["Schatten im Gesicht oder im Hintergrund", "Die Ausleuchtung muss gleichmäßig sein, ohne Über- oder Unterbelichtung."],
+  ["Falscher Hintergrund", "Muster, Farben und Verläufe sind nicht erlaubt – nur ein einfarbig heller, idealerweise hellgrauer Hintergrund."],
+  ["Veraltetes Foto", "Ihr Passbild muss Ihr aktuelles Erscheinungsbild zeigen. Als Richtwert gilt: nicht älter als sechs Monate."],
+  ["Papierfoto für Pass oder Personalausweis", "Wird im Inland seit dem Ende der Übergangsfrist (31. Juli 2025) nicht mehr angenommen."],
+];
+
+const photoTips = [
+  ["Licht von vorn", "Stellen Sie sich vor ein Fenster oder eine helle Lampe, damit Ihr Gesicht gleichmäßig ausgeleuchtet ist. Vermeiden Sie Gegenlicht."],
+  ["Neutraler Hintergrund", "Eine helle, einfarbige Wand reicht aus. PixPassport ersetzt Ihren Hintergrund ohnehin automatisch durch die korrekte Farbe."],
+  ["Richtiger Abstand", "Halten Sie das Smartphone etwa 40 bis 50 cm von Ihrem Gesicht entfernt. Kopf und Schultern müssen vollständig sichtbar sein."],
+  ["Keine Filter", "Verzichten Sie auf Schönheitsfilter, HDR und automatische Weichzeichnung im Porträtmodus."],
+  ["Brille nur ohne Spiegelungen", "Eine Brille ist erlaubt, wenn die Augen klar sichtbar sind. Getönte Gläser und Reflexionen sind nicht zulässig – im Zweifel nehmen Sie die Brille ab."],
+  ["Neutraler Ausdruck", "Blicken Sie direkt in die Kamera, halten Sie den Mund geschlossen und entspannen Sie Ihr Gesicht."],
+  ["Sofort prüfen lassen", "Laden Sie Ihr Foto hoch und lassen Sie alle biometrischen Kriterien automatisch prüfen, bevor Sie es einreichen."],
+];
+
+const labelled = (items: string[][]) =>
+  items.map(([t, d]) => (
+    <>
+      <strong className="text-slate-900">{t}:</strong> {d}
+    </>
+  ));
 
 /* ─────────────────────────────────────────────
    Page
@@ -278,591 +298,182 @@ const ctaHref = "/de/passbild-online?type=germany-passport";
 export default function DeHomePage() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      <JsonLd data={jsonLd} />
+
+      <Hero
+        eyebrow="Biometrisch · 35 × 45 mm · nach BMI-Vorgabe"
+        title="Passbild online erstellen – für Reisepass, Ausweis & Visum"
+        intro="Erstellen Sie Ihr biometrisches Passbild in nur 30 Sekunden. Unsere Software prüft automatisch alle amtlichen Vorgaben: Hintergrund, Format 35 × 45 mm, Gesichtsposition und Belichtung. Ergebnis kostenlos ansehen, erst dann bezahlen."
+        primary={{ href: ctaHref, label: "Jetzt Passbild erstellen" }}
+        secondary={{ href: "#anforderungen", label: "Anforderungen ansehen" }}
+        note="Ab 6,99 € · Kein Abo · Geld zurück bei Ablehnung"
+        image={{
+          src: "https://res.cloudinary.com/dipzpwbbk/image/upload/v1790742513/Passport-Photo-With-iPhone_szopjq.webp",
+          alt: "Biometrisches Passbild mit dem Smartphone selbst aufnehmen",
+          width: 1536,
+          height: 1024,
+        }}
       />
 
-      <main className="bg-white text-slate-900">
-        {/* ══════════════ HERO ══════════════ */}
-        <section aria-labelledby="hero-h1" className="pt-8 md:pt-10">
-          <div className="mx-auto max-w-7xl px-3 py-10 sm:px-4 md:py-10 lg:px-6">
-            <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-12">
-              <div>
-                <p className="mb-4 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-lime-700">
-                  <span
-                    className="h-2 w-2 rounded-full bg-lime-600"
-                    aria-hidden="true"
-                  />
-                  Neu seit Mai 2025 · Digitales Passbild nach BMI-Vorgabe
-                </p>
+      <StatsBand
+        items={[
+          { value: "17.000+", label: "Zufriedene Nutzer" },
+          { value: "4,9 / 5", label: "Nutzerbewertung" },
+          { value: "99,8 %", label: "Akzeptanzrate" },
+          { value: "< 30 s", label: "Bearbeitungszeit" },
+          { value: "50+", label: "Länder unterstützt" },
+        ]}
+      />
 
-                <h1
-                  id="hero-h1"
-                  className="max-w-2xl text-3xl font-extrabold leading-tight tracking-tight text-slate-900 sm:text-4xl"
-                >
-                  Passbild Online für Deutschland
-                </h1>
-
-                <p className="mt-5 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
-                  Erstellen Sie Ihr biometrisches Passbild in nur 30 Sekunden.
-                  Automatische KI-Prüfung nach offiziellen deutschen
-                  Anforderungen Hintergrund, Bildgröße 35×45 mm,
-                  Gesichtsposition und Belichtung.
-                </p>
-
-                <div className="mt-8">
-                  <Link
-                    href={ctaHref}
-                    className="inline-flex items-center justify-center bg-lime-700 hover:bg-lime-800 text-white text-sm font-semibold px-6 py-3 rounded transition-colors"
-                  >
-                    Jetzt Passbild erstellen
-                    <ArrowRight />
-                  </Link>
-                </div>
-              </div>
-
-              <div className="flex justify-center">
-                <Image
-                  src="https://res.cloudinary.com/dipzpwbbk/image/upload/v1779008016/c24d89b1-ab0e-4f1d-9035-5814bc7b91ca_preview_ip9ogs.jpg"
-                  alt="Biometrisches Passbild online per Smartphone erstellen"
-                  width={700}
-                  height={560}
-                  className="w-full h-auto rounded-lg "
-                  priority
-                />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ══════════════ STICKY CTA (mobile) ══════════════ */}
-        <div className="fixed inset-x-0 bottom-0 z-50 border-t border-slate-800 bg-slate-900 p-3 md:hidden">
-          <Link
-            href={ctaHref}
-            className="flex w-full items-center justify-center gap-2 rounded-md bg-lime-600 py-3.5 text-sm font-bold text-white hover:bg-lime-700"
-          >
-            Jetzt Passbild erstellen
-            <ArrowRight />
+      <Section labelledBy="how-h2">
+        <SectionHeader
+          id="how-h2"
+          eyebrow="So funktioniert es"
+          title="In drei Schritten zum digitalen Passbild"
+          intro="Kein Fotostudio, keine Wartezeit. Sie erstellen Ihr biometrisches Passbild online in unter einer Minute."
+        />
+        <StepsGrid steps={steps} />
+        <div className="mt-10">
+          <Link href={ctaHref} className={btnPrimary}>
+            Jetzt starten <ArrowRight />
           </Link>
         </div>
-        <div className="h-20 md:hidden" aria-hidden="true" />
+      </Section>
 
-        {/* ══════════════ STATS BAND ══════════════ */}
-        <div className="bg-slate-900 py-6">
-          <div className="mx-auto flex max-w-5xl flex-wrap justify-around gap-3 px-4 sm:px-6 lg:px-10">
-            {[
-              { v: "17.000+", l: "Zufriedene Nutzer" },
-              { v: "4,9 / 5", l: "Verifizierte Bewertung" },
-              { v: "99,8 %", l: "Akzeptanzrate" },
-              { v: "< 30 s", l: "Bearbeitungszeit" },
-              { v: "50+", l: "Länder unterstützt" },
-            ].map((s) => (
-              <div className="text-center" key={s.v}>
-                <span className="block text-xl font-extrabold text-lime-400 sm:text-2xl">
-                  {s.v}
-                </span>
-                <span className="mt-1 block text-[11px] font-medium uppercase tracking-wide text-slate-400">
-                  {s.l}
-                </span>
+      <Section muted id="anforderungen" labelledBy="req-h2">
+        <SectionHeader
+          id="req-h2"
+          eyebrow="Offizielle Vorgaben"
+          title="Passbildgröße in Deutschland: alle Anforderungen im Überblick"
+          intro="Die folgenden Werte stammen aus der Lichtbild-Schablone des Bundesministeriums des Innern (BMI, Stand Juli 2025), der Passverordnung (PassV) sowie der internationalen ICAO-Norm 9303, die auch das Auswärtige Amt für Visa-Anträge anwendet."
+        />
+        <DataTable
+          caption="Anforderungen an das biometrische Passbild in Deutschland"
+          head={["Merkmal", "Vorgabe", "Quelle"]}
+          rows={requirementsTable.map((r) => [r.param, r.value, r.source])}
+        />
+        <h3 className="mb-4 mt-10 text-lg font-bold text-slate-900">Diese Fehler führen zur Ablehnung</h3>
+        <CheckList variant="dont" items={labelled(rejectionReasons)} />
+        <p className="mt-6 text-sm leading-relaxed text-slate-600">
+          Unser Passfoto-Generator prüft jeden dieser Punkte automatisch und zeigt Ihnen Probleme, bevor Sie bezahlen.
+        </p>
+      </Section>
+
+      <Section labelledBy="why-h2">
+        <SectionHeader
+          id="why-h2"
+          eyebrow="Warum PixPassport"
+          title="Ihre Vorteile auf einen Blick"
+          intro="Jeden Monat vertrauen uns Tausende Nutzerinnen und Nutzer bei ihrem Pass-, Visum- und Ausweisantrag."
+        />
+        <CardGrid items={benefits.map((b) => ({ icon: b.icon, title: b.title, desc: b.desc }))} />
+      </Section>
+
+      <Section muted labelledBy="docs-h2">
+        <SectionHeader
+          id="docs-h2"
+          eyebrow="Unterstützte Dokumente"
+          title="Ein Passfoto-Generator für alle Ausweisdokumente"
+          intro="PixPassport deckt alle gängigen deutschen und internationalen Identitäts- und Reisedokumente ab – immer nach aktueller BMI- und ICAO-Vorgabe."
+        />
+        <CardGrid items={docs.map((d) => ({ icon: d.icon, title: d.name, desc: d.detail }))} />
+        <p className="mt-6 text-sm text-slate-600">
+          Mehr zu einzelnen Dokumenten:{" "}
+          <Link href="/de/fuehrerschein-foto" className={textLink}>Führerscheinfoto</Link>,{" "}
+          <Link href="/de/visum-foto" className={textLink}>Visumfoto</Link>,{" "}
+          <Link href="/de/gesundheitskarte-foto" className={textLink}>Gesundheitskarte</Link>,{" "}
+          <Link href="/de/passfoto-schweiz-online" className={textLink}>Passfoto Schweiz</Link>.
+        </p>
+      </Section>
+
+      <Section width="3xl" labelledBy="prose-h2">
+        <SectionHeader id="prose-h2" title="Biometrisches Passbild selbst erstellen: So gelingt es zu Hause" />
+        <Prose>
+          <p>
+            Seit der Umstellung auf digitale Passbilder am 1. Mai 2025 fragen sich viele Bürgerinnen und Bürger, ob sie
+            ihr Passbild noch selbst aufnehmen dürfen. Für Reisepass und Personalausweis muss das Foto digital über einen
+            registrierten Fotodienstleister an das Bürgeramt gehen oder dort aufgenommen werden. Für Führerschein, Visa,
+            Gesundheitskarte und Bewerbungen können Sie Ihr Foto dagegen weiterhin selbst erstellen – mit dem richtigen
+            Licht, dem richtigen Abstand und einer zuverlässigen Prüfung gelingt das auch mit dem eigenen Smartphone.
+          </p>
+        </Prose>
+        <h3 className="mb-4 mt-8 text-lg font-bold text-slate-900">Sieben Tipps für ein perfektes Passfoto</h3>
+        <CheckList items={labelled(photoTips)} />
+        <h3 className="mb-3 mt-8 text-lg font-bold text-slate-900">Passbild für Kinder: Diese Regeln gelten</h3>
+        <Prose>
+          <p>
+            Bei Kindern bis einschließlich fünf Jahren verzichten die Behörden auf die volle Prüfung der
+            Biometrietauglichkeit: Format, Frontalaufnahme, Schärfe, Ausleuchtung und Hintergrund müssen stimmen, bei
+            Blickrichtung und Mimik gibt es Spielraum. Für Kinder von sechs bis neun Jahren gilt eine eigene
+            Lichtbild-Schablone mit einer Gesichtshöhe von 22 bis 36 mm. Ab zehn Jahren gelten dieselben Vorgaben wie für
+            Erwachsene.
+          </p>
+        </Prose>
+        <h3 className="mb-3 mt-8 text-lg font-bold text-slate-900">Passbild oder Bewerbungsfoto: Der Unterschied zählt</h3>
+        <Prose>
+          <p>
+            Ein biometrisches Passbild folgt strengen staatlichen Normen: 35 × 45 mm, neutraler Ausdruck, hellgrauer
+            Hintergrund. Ein Bewerbungsfoto ist freier gestaltet und darf ein leichtes Lächeln zeigen. Mehr dazu lesen Sie
+            in unserem{" "}
+            <Link href="/de/bewerbungsfoto" className={textLink}>
+              Ratgeber zum Bewerbungsfoto
+            </Link>
+            .
+          </p>
+        </Prose>
+      </Section>
+
+      <Section muted labelledBy="reviews-h2">
+        <SectionHeader
+          id="reviews-h2"
+          eyebrow="Kundenbewertungen"
+          title="Das sagen unsere Nutzer"
+          intro="Über 17.000 Nutzer haben ihr biometrisches Passbild bereits mit PixPassport erstellt."
+        />
+        <div className="grid gap-5 sm:grid-cols-3">
+          {reviews.map((r) => (
+            <figure key={r.name} className="flex flex-col gap-3 rounded-xl border-2 border-slate-200 bg-white p-6">
+              <div className="text-amber-500" role="img" aria-label={`${r.stars} von 5 Sternen`}>
+                <span aria-hidden="true">{"★".repeat(r.stars)}</span>
               </div>
-            ))}
-          </div>
+              <blockquote className="text-sm leading-relaxed text-slate-700">„{r.text}“</blockquote>
+              <figcaption className="mt-auto text-sm text-slate-500">
+                <strong className="font-bold text-slate-900">{r.name}</strong> · {r.city}
+              </figcaption>
+            </figure>
+          ))}
         </div>
+      </Section>
 
-        {/* ══════════════ SO FUNKTIONIERT ES ══════════════ */}
-        <section aria-labelledby="how-h2" className="py-14 sm:py-20">
-          <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-10">
-            <header className="mb-10 max-w-2xl">
-              <span className="inline-block rounded-md border border-lime-200 bg-lime-50 px-3 py-1 text-xs font-bold uppercase tracking-wide text-lime-700">
-                So funktioniert es
-              </span>
-              <h2
-                id="how-h2"
-                className="mt-3 text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl"
-              >
-                In drei Schritten zum digitalen Passbild
-              </h2>
-              <p className="mt-3 text-base leading-relaxed text-slate-600">
-                Kein Fotostudio, keine Wartezeit. Sie erstellen Ihr
-                biometrisches Passbild online in unter einer Minute.
-              </p>
-            </header>
+      <Section width="3xl" labelledBy="faq-h2">
+        <SectionHeader
+          id="faq-h2"
+          eyebrow="FAQ"
+          title="Häufige Fragen zum Passbild online"
+          intro="Alles Wichtige zur BMI-Vorgabe, zum Format und zur Nutzung von PixPassport."
+        />
+        <FaqList items={faqItems} />
+        <p className="mt-8 rounded-xl border-2 border-slate-200 bg-slate-50 p-4 text-xs leading-relaxed text-slate-500" role="note">
+          <strong className="font-semibold text-slate-700">Hinweis:</strong> PixPassport ist ein unabhängiger Service zur
+          Erstellung biometrischer Passbilder und steht in keiner Verbindung zum Bundesministerium des Innern (BMI) oder
+          anderen Behörden. Welche Übermittlungswege Ihre Behörde akzeptiert, erfahren Sie direkt bei Ihrem Bürgeramt.
+        </p>
+      </Section>
 
-            <ol className="grid gap-5 sm:grid-cols-3">
-              {steps.map((s) => (
-                <li
-                  key={s.n}
-                  className="rounded-xl border-2 border-slate-200 p-6"
-                >
-                  <span className="inline-block rounded-md bg-lime-50 px-2.5 py-1 text-[11px] font-extrabold uppercase tracking-wide text-lime-700">
-                    Schritt {s.n}
-                  </span>
-                  <h3 className="mt-4 text-base font-bold text-slate-900">
-                    {s.title}
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-slate-600">
-                    {s.desc}
-                  </p>
-                </li>
-              ))}
-            </ol>
+      <CtaBand
+        title="Ihr Passbild in 30 Sekunden"
+        text="Foto hochladen, Ergebnis kostenlos prüfen – erst dann bezahlen."
+        href={ctaHref}
+        label="Jetzt Passbild erstellen"
+      />
 
-            <div className="mt-10 text-center">
-              <Link
-                href={ctaHref}
-                className="inline-flex items-center gap-2 rounded-md bg-lime-600 px-7 py-3.5 text-base font-bold text-white hover:bg-lime-700"
-              >
-                Jetzt starten
-                <ArrowRight />
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        {/* ══════════════ ANFORDERUNGEN ══════════════ */}
-        <section
-          aria-labelledby="req-h2"
-          className="border-y-2 border-slate-200 bg-slate-50 py-14 sm:py-20"
-        >
-          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-10">
-            <span className="inline-block rounded-md border border-lime-200 bg-lime-50 px-3 py-1 text-xs font-bold uppercase tracking-wide text-lime-700">
-              Offizielle Vorgaben
-            </span>
-            <h2
-              id="req-h2"
-              className="mt-3 text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl"
-            >
-              Passbild Größe Deutschland: Alle Anforderungen im Überblick
-            </h2>
-            <p className="mt-4 text-base leading-relaxed text-slate-700">
-              Die folgenden Werte stammen aus der Lichtbild-Schablone des
-              Bundesministeriums des Innern (BMI, Stand Juli 2025), der
-              Passverordnung (PassV) sowie der internationalen ICAO-Norm 9303,
-              die auch das Auswärtige Amt für Visa-Anträge anwendet.
-            </p>
-
-            <div className="mt-6 overflow-x-auto rounded-xl border-2 border-slate-200">
-              <table className="w-full border-collapse text-left text-sm">
-                <thead className="bg-slate-900 text-white">
-                  <tr>
-                    <th className="px-4 py-3 text-xs font-bold uppercase tracking-wide">
-                      Parameter
-                    </th>
-                    <th className="px-4 py-3 text-xs font-bold uppercase tracking-wide">
-                      Vorgeschriebener Wert
-                    </th>
-                    <th className="px-4 py-3 text-xs font-bold uppercase tracking-wide">
-                      Quelle
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-200 bg-white">
-                  {requirementsTable.map((r) => (
-                    <tr key={r.param}>
-                      <td className="px-4 py-3 font-semibold text-slate-800">
-                        {r.param}
-                      </td>
-                      <td className="px-4 py-3 text-slate-700">{r.value}</td>
-                      <td className="px-4 py-3 text-slate-500">{r.source}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-
-            <h3 className="mt-8 text-lg font-bold text-slate-900">
-              Diese Fehler führen zur Ablehnung
-            </h3>
-            <ul className="mt-4 space-y-3">
-              {[
-                {
-                  t: "Lächeln mit sichtbaren Zähnen",
-                  d: "Ist nicht erlaubt. Die ICAO-Norm verlangt einen neutralen Ausdruck mit geschlossenem Mund.",
-                },
-                {
-                  t: "Getönte Brillengläser oder Reflexionen",
-                  d: "Führen zur sofortigen Ablehnung durch die Behörde.",
-                },
-                {
-                  t: "Geneigter oder gedrehter Kopf",
-                  d: "Ihr Kopf muss gerade und frontal zur Kamera ausgerichtet sein.",
-                },
-                {
-                  t: "Schatten im Gesicht oder im Hintergrund",
-                  d: "Die Ausleuchtung muss gleichmäßig sein, ohne Über- oder Unterbelichtung.",
-                },
-                {
-                  t: "Falscher Hintergrund",
-                  d: "Muster, Farben und Verläufe sind nicht erlaubt, nur ein einfarbiger, hellgrauer Hintergrund.",
-                },
-                {
-                  t: "Foto älter als 6 Monate",
-                  d: "Ihr Passbild muss Ihr aktuelles Erscheinungsbild zeigen.",
-                },
-                {
-                  t: "Papierfoto seit dem 1. Mai 2025",
-                  d: "Ist im Inland für offizielle Ausweisdokumente nicht mehr zulässig.",
-                },
-              ].map((item) => (
-                <li
-                  key={item.t}
-                  className="flex gap-2 text-sm leading-relaxed text-slate-700"
-                >
-                  <span className="mt-0.5 font-bold text-red-500">✕</span>
-                  <span>
-                    <strong className="text-slate-900">{item.t}:</strong>{" "}
-                    {item.d}
-                  </span>
-                </li>
-              ))}
-            </ul>
-            <p className="mt-6 text-sm leading-relaxed text-slate-600">
-              Unser Passfoto Generator prüft jeden dieser Punkte automatisch und
-              zeigt Ihnen Probleme, bevor Sie bezahlen.
-            </p>
-          </div>
-        </section>
-
-        {/* ══════════════ WARUM WIR ══════════════ */}
-        <section aria-labelledby="why-h2" className="py-14 sm:py-20">
-          <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-10">
-            <header className="mb-10 max-w-2xl">
-              <span className="inline-block rounded-md border border-lime-200 bg-lime-50 px-3 py-1 text-xs font-bold uppercase tracking-wide text-lime-700">
-                Warum wir
-              </span>
-              <h2
-                id="why-h2"
-                className="mt-3 text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl"
-              >
-                Warum PixPassport der beste Passfoto Generator ist
-              </h2>
-              <p className="mt-3 text-base leading-relaxed text-slate-600">
-                Jeden Monat vertrauen uns tausende Nutzer für ihren Pass-,
-                Visum- und Ausweisantrag.
-              </p>
-            </header>
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {benefits.map((b) => (
-                <article
-                  key={b.title}
-                  className="rounded-xl border-2 border-slate-200 p-6"
-                >
-                  <span className="block text-2xl" aria-hidden="true">
-                    {b.icon}
-                  </span>
-                  <h3 className="mt-3 text-base font-bold text-slate-900">
-                    {b.title}
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-slate-600">
-                    {b.desc}
-                  </p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ══════════════ DOKUMENTE ══════════════ */}
-        <section
-          aria-labelledby="docs-h2"
-          className="border-y-2 border-slate-200 bg-slate-50 py-14 sm:py-20"
-        >
-          <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-10">
-            <header className="mb-10 max-w-2xl">
-              <span className="inline-block rounded-md border border-lime-200 bg-lime-50 px-3 py-1 text-xs font-bold uppercase tracking-wide text-lime-700">
-                Unterstützte Dokumente
-              </span>
-              <h2
-                id="docs-h2"
-                className="mt-3 text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl"
-              >
-                Ein Passfoto Generator für alle Ausweisdokumente
-              </h2>
-              <p className="mt-3 text-base leading-relaxed text-slate-600">
-                PixPassport deckt alle gängigen deutschen und internationalen
-                Identitäts- und Reisedokumente ab — eine Plattform für jede
-                Anforderung, immer nach aktuellem BMI- und ICAO-Standard.
-              </p>
-            </header>
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
-              {docs.map((d) => (
-                <div
-                  key={d.name}
-                  className="flex flex-col items-center gap-1.5 rounded-xl border-2 border-slate-200 bg-white p-5 text-center"
-                >
-                  <span className="text-2xl" aria-hidden="true">
-                    {d.icon}
-                  </span>
-                  <h3 className="text-sm font-bold text-slate-900">{d.name}</h3>
-                  <p className="text-xs text-slate-500">{d.detail}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ══════════════ SEO PROSE ══════════════ */}
-        <section aria-labelledby="seo-prose-h2" className="py-14 sm:py-20">
-          <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-10">
-            <h2
-              id="seo-prose-h2"
-              className="text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl"
-            >
-              Biometrisches Passbild selbst erstellen: So gelingt es zu Hause
-            </h2>
-            <p className="mt-4 text-base leading-relaxed text-slate-700">
-              Seit der digitalen Passpflicht am 1. Mai 2025 fragen sich viele
-              Bürgerinnen und Bürger, ob sie ihr Passbild noch selbst aufnehmen
-              dürfen. Die Antwort lautet ja, solange das Ergebnis den
-              offiziellen BMI-Vorgaben entspricht und digital über einen
-              registrierten Fotodienstleister an das Bürgeramt geht. Mit dem
-              richtigen Licht, dem richtigen Abstand und der richtigen Prüfung
-              gelingt ein biometrisches Passfoto auch mit dem eigenen
-              Smartphone.
-            </p>
-
-            <h3 className="mt-8 text-lg font-bold text-slate-900">
-              Sieben Tipps für ein perfektes Passfoto online
-            </h3>
-            <ul className="mt-4 space-y-3">
-              {[
-                {
-                  t: "Licht von vorn",
-                  d: "Stellen Sie sich vor ein Fenster oder eine helle Lampe, damit Ihr Gesicht gleichmäßig ausgeleuchtet ist. Vermeiden Sie Gegenlicht.",
-                },
-                {
-                  t: "Neutraler Hintergrund",
-                  d: "Eine helle, einfarbige Wand reicht aus. PixPassport tauscht Ihren Hintergrund ohnehin automatisch gegen die korrekte Farbe aus.",
-                },
-                {
-                  t: "Richtiger Abstand",
-                  d: "Halten Sie das Smartphone etwa 40 bis 50 cm von Ihrem Gesicht entfernt. Kopf und Schultern müssen vollständig sichtbar sein.",
-                },
-                {
-                  t: "Keine Filter",
-                  d: "Verzichten Sie auf Schönheitsfilter, HDR und automatische Weichzeichnung im Portraitmodus.",
-                },
-                {
-                  t: "Brille abnehmen, wenn möglich",
-                  d: "Fotografieren Sie ohne Brille. Getönte Gläser und starke Reflexionen sind grundsätzlich nicht zulässig.",
-                },
-                {
-                  t: "Neutraler Ausdruck",
-                  d: "Blicken Sie direkt in die Kamera, halten Sie den Mund geschlossen und entspannen Sie Ihr Gesicht.",
-                },
-                {
-                  t: "Sofort prüfen lassen",
-                  d: "Laden Sie Ihr Foto hoch und lassen Sie unsere KI alle biometrischen Kriterien prüfen, bevor Sie es einreichen.",
-                },
-              ].map((item) => (
-                <li
-                  key={item.t}
-                  className="flex gap-2 text-sm leading-relaxed text-slate-700"
-                >
-                  <span className="mt-0.5 font-bold text-lime-600">✓</span>
-                  <span>
-                    <strong className="text-slate-900">{item.t}:</strong>{" "}
-                    {item.d}
-                  </span>
-                </li>
-              ))}
-            </ul>
-
-            <h3 className="mt-8 text-lg font-bold text-slate-900">
-              Passbild für Kinder: Diese Regeln gelten
-            </h3>
-            <p className="mt-3 text-base leading-relaxed text-slate-700">
-              Bei Kindern unter fünf Jahren verzichtet das BMI auf die volle
-              Prüfung der Biometrietauglichkeit. Die Augen müssen trotzdem
-              erkennbar geöffnet sein, und das Gesicht muss frontal sichtbar
-              bleiben. Ab fünf Jahren gelten dieselben biometrischen
-              Anforderungen wie für Erwachsene. PixPassport erkennt ein
-              Kinderfoto automatisch und wendet die passenden Toleranzgrenzen
-              an.
-            </p>
-
-            <h3 className="mt-8 text-lg font-bold text-slate-900">
-              Passbild oder Bewerbungsfoto: Der Unterschied zählt
-            </h3>
-            <p className="mt-3 text-base leading-relaxed text-slate-700">
-              Ein biometrisches Passbild folgt strengen staatlichen Normen: 35 ×
-              45 mm, neutraler Ausdruck, hellgrauer Hintergrund. Ein
-              Bewerbungsfoto ist freier gestaltet, darf ein leichtes Lächeln
-              zeigen, professionell retuschiert sein und wird meist im
-              Hochformat 4:5 oder 3:4 geliefert. PixPassport unterstützt beide
-              Formate — wählen Sie beim Erstellen einfach den passenden
-              Dokumenttyp aus.
-            </p>
-          </div>
-        </section>
-
-        {/* ══════════════ BEWERTUNGEN ══════════════ */}
-        <section
-          aria-labelledby="reviews-h2"
-          className="border-y-2 border-slate-200 bg-slate-50 py-14 sm:py-20"
-        >
-          <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-10">
-            <header className="mb-10 max-w-2xl">
-              <span className="inline-block rounded-md border border-lime-200 bg-lime-50 px-3 py-1 text-xs font-bold uppercase tracking-wide text-lime-700">
-                Kundenbewertungen
-              </span>
-              <h2
-                id="reviews-h2"
-                className="mt-3 text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl"
-              >
-                Das sagen unsere Nutzer
-              </h2>
-              <p className="mt-3 text-base leading-relaxed text-slate-600">
-                Über 17.000 Nutzer haben ihr biometrisches Passbild bereits mit
-                PixPassport erstellt.
-              </p>
-            </header>
-            <div className="grid gap-5 sm:grid-cols-3">
-              {reviews.map((r) => (
-                <figure
-                  key={r.name}
-                  className="flex flex-col gap-3 rounded-xl border-2 border-slate-200 bg-white p-6"
-                >
-                  <div
-                    className="text-amber-500"
-                    aria-label={`${r.stars} von 5 Sternen`}
-                  >
-                    {"★".repeat(r.stars)}
-                  </div>
-                  <blockquote className="text-sm italic leading-relaxed text-slate-700">
-                    „{r.text}"
-                  </blockquote>
-                  <figcaption className="flex items-center gap-3 text-sm text-slate-500">
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full border border-lime-200 bg-lime-50 text-sm font-bold text-lime-700">
-                      {r.name.charAt(0)}
-                    </span>
-                    <span>
-                      <strong className="font-bold text-slate-900">
-                        {r.name}
-                      </strong>{" "}
-                      · {r.city}
-                    </span>
-                  </figcaption>
-                </figure>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ══════════════ FAQ ══════════════ */}
-        <section aria-labelledby="faq-h2" className="py-14 sm:py-20">
-          <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-10">
-            <header className="mb-10">
-              <span className="inline-block rounded-md border border-lime-200 bg-lime-50 px-3 py-1 text-xs font-bold uppercase tracking-wide text-lime-700">
-                FAQ
-              </span>
-              <h2
-                id="faq-h2"
-                className="mt-3 text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl"
-              >
-                Häufig gestellte Fragen zum Passbild online
-              </h2>
-              <p className="mt-3 text-base leading-relaxed text-slate-600">
-                Alles Wichtige zur BMI-Vorgabe, zum Format und zur Nutzung von
-                PixPassport.
-              </p>
-            </header>
-            <div className="flex flex-col gap-3">
-              {faqItems.map((f, i) => (
-                <details
-                  key={i}
-                  className="group rounded-xl border-2 border-slate-200 open:border-lime-300"
-                >
-                  <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-5 py-4 text-sm font-semibold text-slate-900 group-hover:bg-lime-50">
-                    <span>{f.q}</span>
-                    <span className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full border border-lime-200 bg-lime-50 text-sm font-bold text-lime-700 group-open:rotate-45 group-open:bg-lime-600 group-open:text-white">
-                      +
-                    </span>
-                  </summary>
-                  <p className="border-t-2 border-slate-200 px-5 pb-5 pt-3 text-sm leading-relaxed text-slate-600">
-                    {f.a}
-                  </p>
-                </details>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ══════════════ DISCLAIMER ══════════════ */}
-        <div
-          role="note"
-          aria-label="Wichtige Information"
-          className="border-y border-slate-200 bg-slate-100 py-4"
-        >
-          <div className="mx-auto flex max-w-5xl items-start gap-3 px-4 sm:px-6 lg:px-10">
-            <InfoIcon />
-            <p className="text-xs leading-relaxed text-slate-500">
-              <strong className="font-semibold text-slate-600">
-                PixPassport
-              </strong>{" "}
-              ist ein unabhängiger Service zur Erstellung konformer Passbilder.
-              Wir sind nicht mit dem BMI (Bundesministerium des Innern) oder
-              anderen Behörden verbunden. Unser Service liefert Ihnen ein
-              digital konformes Passbild nach biometrischen Vorgaben, das Sie
-              für Ihre offiziellen Anträge nutzen können.
-            </p>
-          </div>
-        </div>
-      </main>
+      {/* Sticky CTA on mobile; spacer keeps it from covering the footer */}
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t-2 border-slate-200 bg-white p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] md:hidden">
+        <Link href={ctaHref} className={`${btnPrimary} w-full`}>
+          Jetzt Passbild erstellen <ArrowRight />
+        </Link>
+      </div>
+      <div className="h-20 md:hidden" aria-hidden="true" />
     </>
-  );
-}
-
-/* ─────────────────────────────────────────────
-   Icons
-───────────────────────────────────────────── */
-function ArrowRight() {
-  return (
-    <svg
-      width="16"
-      height="16"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d="M5 12h14M12 5l7 7-7 7" />
-    </svg>
-  );
-}
-function ShieldIcon() {
-  return (
-    <svg
-      width="14"
-      height="14"
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      aria-hidden="true"
-    >
-      <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-    </svg>
-  );
-}
-function InfoIcon() {
-  return (
-    <svg
-      width="16"
-      height="16"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <circle cx="12" cy="12" r="10" />
-      <line x1="12" y1="16" x2="12" y2="12" />
-      <line x1="12" y1="8" x2="12.01" y2="8" />
-    </svg>
   );
 }

@@ -60,6 +60,17 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // German guides hub lives at /de/guides; /de/ratgeber was a duplicate route
+      {
+        source: "/de/ratgeber",
+        destination: "/de/guides",
+        permanent: true,
+      },
+      {
+        source: "/de/ratgeber/:slug",
+        destination: "/de/guides/:slug",
+        permanent: true,
+      },
       // Checker subpath redirects to canonical routes
       {
         source: "/visa-photo-validator/australian-passport-photo-checker",

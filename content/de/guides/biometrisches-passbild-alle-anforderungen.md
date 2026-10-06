@@ -1,17 +1,17 @@
 ---
-title: "Biometrisches Passbild 2026: Alle Anforderungen, Maße & Anleitung"
-description: "Alle Anforderungen an das biometrische Passbild in Deutschland: Maße, Hintergrund, Format und wie Sie es online prüfen, erstellen und drucken lassen."
+title: "Passbild selbst prüfen: Checkliste, Maße & häufige Ablehnungsgründe"
+description: "Mit dieser Checkliste prüfen Sie Ihr Passbild selbst: Maße, Gesichtshöhe, Hintergrund, Kinderregeln und die häufigsten Gründe, warum Bürgerämter Fotos ablehnen."
 slug: "biometrisches-passbild-alle-anforderungen"
 date: "2026-08-16"
-updatedAt: "2026-08-16"
+updatedAt: "2026-10-06"
 author: "PixPassport Redaktion"
 category: "Passfoto & Dokumente"
 readingTime: "6 Min. Lesezeit"
 image: "https://res.cloudinary.com/dipzpwbbk/image/upload/v1779008016/c24d89b1-ab0e-4f1d-9035-5814bc7b91ca_preview_ip9ogs.jpg"
-keywords: "biometrisches passbild, biometrisches passbild online, biometrisches passbild größe, biometrisches passbild erstellen, biometrisches passbild prüfen, biometrisches passbild drucken, passbildgröße, biometrisches passbild maße"
+keywords: "passbild prüfen, passbild checkliste, passbild abgelehnt, biometrisches passbild prüfen, passbild maße, passbild kinder"
 faq:
   - question: "Welche Größe hat ein biometrisches Passbild?"
-    answer: "Das Foto misst 35 x 45 mm im Hochformat. Das Gesicht nimmt davon 70 bis 80 Prozent der Bildhöhe ein, gemessen vom Kinn bis zum Haaransatz."
+    answer: "Das Foto misst 35 x 45 mm im Hochformat. Das Gesicht nimmt davon 70 bis 80 Prozent der Bildhöhe ein, gemessen vom Kinn bis zum Scheitel."
   - question: "Kann ich ein biometrisches Passbild online erstellen?"
     answer: "Ja. Online-Generatoren prüfen Maße, Hintergrund und Position automatisch und liefern eine druckfertige Datei. Für die digitale Übermittlung an das Bürgeramt muss der Anbieter allerdings die technischen Vorgaben der Behörden erfüllen."
   - question: "Wie prüfe ich, ob mein Passbild biometrisch gültig ist?"
@@ -33,8 +33,8 @@ Ein biometrisches Passbild ist mehr als ein gutes Foto. Es folgt der internation
 | Merkmal | Vorgabe |
 |---|---|
 | Format | 35 x 45 mm, Hochformat |
-| Gesichtshöhe (Erwachsene) | 32–36 mm, Kinn bis Haaransatz |
-| Gesichtshöhe (Kinder unter 10) | 27–30 mm |
+| Gesichtshöhe (ab 10 Jahren) | 32–36 mm, Kinn bis Scheitel |
+| Gesichtshöhe (6 bis 9 Jahre) | 22–36 mm |
 | Hintergrund | Einfarbig hellgrau bis weiß, ohne Schatten |
 | Blickrichtung | Frontal in die Kamera, Kopf gerade |
 | Gesichtsausdruck | Neutral, Mund geschlossen |
@@ -43,7 +43,7 @@ Ein biometrisches Passbild ist mehr als ein gutes Foto. Es folgt der internation
 
 ## Maße und Format im Detail
 
-Das Standardformat bleibt bei 35 x 45 mm. Entscheidend ist jedoch nicht nur die Bildgröße, sondern der Anteil, den das Gesicht einnimmt. Bei Erwachsenen liegt die Gesichtshöhe zwischen 32 und 36 Millimetern, gemessen vom Kinn bis zum oberen Haaransatz. Bei Kindern unter zehn Jahren gilt ein kleinerer Bereich von 27 bis 30 Millimetern, da Kinderköpfe proportional anders gebaut sind. Wird dieser Bereich unter- oder überschritten, weist die Software des Bürgeramts das Foto automatisch zurück.
+Das Standardformat bleibt bei 35 x 45 mm. Entscheidend ist jedoch nicht nur die Bildgröße, sondern der Anteil, den das Gesicht einnimmt. Ab zehn Jahren liegt die Gesichtshöhe zwischen 32 und 36 Millimetern, gemessen vom Kinn bis zum Scheitel. Für Kinder von sechs bis neun Jahren gibt es eine eigene Lichtbild-Schablone mit einem größeren Spielraum von 22 bis 36 Millimetern. Wird dieser Bereich unter- oder überschritten, lehnt das Bürgeramt das Foto in der Regel ab.
 
 Der Kopf steht mittig im Bild, die Augenlinie verläuft waagerecht. Eine leichte Neigung nach links oder rechts reicht bereits aus, um das Foto ungültig zu machen.
 
@@ -76,7 +76,7 @@ Bei einem Online-Tool laden Sie ein selbst aufgenommenes Foto hoch, das System p
 
 ## Biometrisches Passbild für Kinder und Babys
 
-Für Kinder gelten dieselben Grundregeln wie für Erwachsene, allerdings mit Anpassungen bei Größe und Mimik. Bei Kindern unter zehn Jahren liegt die Gesichtshöhe zwischen 27 und 30 Millimetern statt 32 bis 36 Millimetern. Ein neutraler Gesichtsausdruck wird bei Babys und Kleinkindern nicht verlangt, solange beide Augen offen sind und der Blick möglichst in Richtung Kamera geht. Wichtig bleibt trotzdem ein einfarbiger Hintergrund ohne Spielzeug, Hände der Eltern oder andere Ablenkungen im Bild. Bei sehr jungen Babys reicht es oft, das Kind auf einer neutralen Unterlage liegend von oben zu fotografieren und den Bildausschnitt anschließend passend zuzuschneiden.
+Für Kinder gelten dieselben Grundregeln wie für Erwachsene, allerdings mit Anpassungen bei Größe und Mimik. Bei Kindern von sechs bis neun Jahren darf die Gesichtshöhe zwischen 22 und 36 Millimetern liegen. Bei Kindern bis einschließlich fünf Jahren wird die Biometrietauglichkeit nicht vollständig geprüft: Abweichungen bei Kopfhaltung, Gesichtsausdruck und Blickrichtung sind zulässig, Format, Schärfe, Ausleuchtung und Hintergrund müssen aber stimmen. Wichtig bleibt trotzdem ein einfarbiger Hintergrund ohne Spielzeug, Hände der Eltern oder andere Ablenkungen im Bild. Bei sehr jungen Babys reicht es oft, das Kind auf einer neutralen Unterlage liegend von oben zu fotografieren und den Bildausschnitt anschließend passend zuzuschneiden.
 
 ## Was kostet ein biometrisches Passbild?
 

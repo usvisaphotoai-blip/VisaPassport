@@ -8,6 +8,8 @@ interface UploadAreaProps {
   setGuidelinesOpen: (open: boolean) => void;
   onShowGuide: () => void;
   locale?: "en" | "fr" | "de";
+  /** "flat" matches the borderless, shadow-free /de design */
+  variant?: "default" | "flat";
 }
 
 const translations = {
@@ -26,11 +28,11 @@ const translations = {
     privacy: "Confidentialité sécurisée : les images sont traitées localement et ne sont jamais stockées.",
   },
   de: {
-    showGuide: "Hochwertige Beispielfotos anzeigen",
-    title: "Foto zur Überprüfung hochladen",
-    subtitle: "Ziehen und ablegen oder klicken, um Dateien zu durchsuchen",
-    buttonText: "Bild auswählen",
-    privacy: "Datenschutz sicher: Bilder werden lokal verarbeitet und niemals gespeichert.",
+    showGuide: "Beispielfotos ansehen",
+    title: "Foto zur Prüfung hochladen",
+    subtitle: "Foto hierher ziehen oder klicken, um eine Datei auszuwählen (JPG, PNG, HEIC)",
+    buttonText: "Foto auswählen",
+    privacy: "Verschlüsselte Übertragung – Ihre Fotos werden nach 24 Stunden automatisch gelöscht.",
   }
 };
 
@@ -40,8 +42,10 @@ const UploadArea: React.FC<UploadAreaProps> = ({
   setGuidelinesOpen,
   onShowGuide,
   locale = "en",
+  variant = "default",
 }) => {
   const t = translations[locale];
+  const flat = variant === "flat";
 
   return (
     <div className="flex-1 flex flex-col gap-3">
@@ -63,8 +67,13 @@ const UploadArea: React.FC<UploadAreaProps> = ({
       {/* Manual Guide Trigger */}
       <div className="flex justify-center -mt-2">
         <button
+          type="button"
           onClick={onShowGuide}
-          className="text-[11px] font-bold text-indigo-600 hover:text-indigo-800 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-indigo-50 hover:bg-indigo-100 transition-colors"
+          className={
+            flat
+              ? "text-xs font-bold text-lime-800 hover:text-lime-900 flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-lime-200 bg-lime-50 hover:bg-lime-100 transition-colors"
+              : "text-[11px] font-bold text-indigo-600 hover:text-indigo-800 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-indigo-50 hover:bg-indigo-100 transition-colors"
+          }
         >
           <CheckIcon className="w-3 h-3" />
           {t.showGuide}
@@ -72,16 +81,23 @@ const UploadArea: React.FC<UploadAreaProps> = ({
       </div>
 
       {/* Upload area */}
-      <div className="relative flex flex-col items-center justify-center border-2 border-dashed border-slate-200 rounded-2xl bg-white/60 hover:bg-white hover:border-lime-400 transition-all duration-300 group cursor-pointer py-6">
+      <div
+        className={`relative flex flex-col items-center justify-center border-2 border-dashed transition-all duration-300 group cursor-pointer py-6 ${
+          flat
+            ? "border-slate-300 rounded-xl bg-white hover:border-lime-600 hover:bg-lime-50/40 focus-within:border-lime-600"
+            : "border-slate-200 rounded-2xl bg-white/60 hover:bg-white hover:border-lime-400"
+        }`}
+      >
         <input
           id="tool-photo-input"
+          aria-label={t.buttonText}
           type="file"
           accept="image/jpeg, image/png, image/heic"
           onChange={onFileChange}
           onClick={(e) => ((e.target as HTMLInputElement).value = "")}
           className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
         />
-        <div className="w-12 h-12 bg-lime-50 rounded-xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300">
+        <div className={`w-12 h-12 bg-lime-50 rounded-xl flex items-center justify-center mb-3 ${flat ? "" : "group-hover:scale-110 transition-transform duration-300"}`}>
           <UploadIcon className="w-6 h-6 text-lime-600" />
         </div>
         <h3 className="text-sm font-bold text-slate-900 mb-0.5">
@@ -91,11 +107,17 @@ const UploadArea: React.FC<UploadAreaProps> = ({
           {t.subtitle}
         </p>
         <div className="flex items-center gap-4">
-          <span className="bg-slate-900 text-white text-xs font-bold px-6 py-2.5 rounded-full shadow-lg group-hover:shadow-lime-900/10 transition-shadow">
+          <span
+            className={
+              flat
+                ? "bg-lime-700 group-hover:bg-lime-800 text-white text-sm font-bold px-6 py-3 rounded-lg transition-colors"
+                : "bg-slate-900 text-white text-xs font-bold px-6 py-2.5 rounded-full shadow-lg group-hover:shadow-lime-900/10 transition-shadow"
+            }
+          >
             {t.buttonText}
           </span>
         </div>
-        <p className="text-[10px] text-slate-400 mt-5 flex items-center gap-2 font-medium">
+        <p className={`mt-5 flex items-center gap-2 font-medium px-4 text-center ${flat ? "text-xs text-slate-500" : "text-[10px] text-slate-400"}`}>
           <LockIcon className="w-3.5 h-3.5" />
           {t.privacy}
         </p>
