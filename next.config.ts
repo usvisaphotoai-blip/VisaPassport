@@ -1,4 +1,15 @@
 import type { NextConfig } from "next";
+import fs from "fs";
+import path from "path";
+
+// Markdown-driven country sections: every content/sites/<code>/_site.md is served at /<code>
+const SITES_DIR = path.join(process.cwd(), "content/sites");
+const countrySites = fs.existsSync(SITES_DIR)
+  ? fs
+      .readdirSync(SITES_DIR, { withFileTypes: true })
+      .filter((d) => d.isDirectory() && fs.existsSync(path.join(SITES_DIR, d.name, "_site.md")))
+      .map((d) => d.name)
+  : [];
 
 const nextConfig: NextConfig = {
   /* config options here */
@@ -58,8 +69,24 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async rewrites() {
+    return {
+      beforeFiles: countrySites.flatMap((code) => [
+        { source: `/${code}`, destination: `/sites/${code}` },
+        { source: `/${code}/:path*`, destination: `/sites/${code}/:path*` },
+      ]),
+      afterFiles: [],
+      fallback: [],
+    };
+  },
   async redirects() {
     return [
+      // Country sections are only reachable through their public prefix (see rewrites)
+      {
+        source: "/sites/:path*",
+        destination: "/:path*",
+        permanent: true,
+      },
       // German guides hub lives at /de/guides; /de/ratgeber was a duplicate route
       {
         source: "/de/ratgeber",

@@ -8,6 +8,35 @@ const __dirname = path.dirname(__filename);
 const NEXT_SERVER_DIR = path.join(__dirname, '../.next/server/app');
 const SITEMAP_PATH = path.join(__dirname, '../public/sitemap.xml');
 const BASE_URL = 'https://www.pixpassport.com';
+const SITES_DIR = path.join(__dirname, '../content/sites');
+
+// Markdown-driven country sections (content/sites/<code>) — see lib/country-sites.ts
+function getCountrySites() {
+  if (!fs.existsSync(SITES_DIR)) return [];
+  return fs.readdirSync(SITES_DIR, { withFileTypes: true })
+    .filter(d => d.isDirectory() && fs.existsSync(path.join(SITES_DIR, d.name, '_site.md')))
+    .map(d => {
+      const config = fs.readFileSync(path.join(SITES_DIR, d.name, '_site.md'), 'utf-8');
+      const lang = (config.match(/^lang:\s*["']?([\w-]+)["']?\s*$/m) || [])[1] || 'en';
+      return { code: d.name, lang, paths: listSitePaths(d.name) };
+    });
+}
+
+function listSitePaths(code, dir = path.join(SITES_DIR, code), prefix = '') {
+  const out = [];
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    if (entry.name.startsWith('_')) continue;
+    const rel = prefix ? `${prefix}/${entry.name}` : entry.name;
+    if (entry.isDirectory()) out.push(...listSitePaths(code, path.join(dir, entry.name), rel));
+    else if (entry.name.endsWith('.md')) {
+      const slug = rel.replace(/\.md$/, '').replace(/(^|\/)index$/, '');
+      out.push(`/${code}${slug ? `/${slug}` : ''}`);
+    }
+  }
+  return out;
+}
+
+const COUNTRY_SITES = getCountrySites();
 
 const ROUTE_EQUIVALENTS = [
   // Homepages
@@ -107,7 +136,10 @@ function getSitemapHreflangTags(pathname) {
   } else {
     // Standalone page
     const fullUrl = `${BASE_URL}${cleanPath}`;
-    if (cleanPath.startsWith('/fr')) {
+    const countrySite = COUNTRY_SITES.find(s => cleanPath === `/${s.code}` || cleanPath.startsWith(`/${s.code}/`));
+    if (countrySite) {
+      tags.push(`    <xhtml:link rel="alternate" hreflang="${countrySite.lang}" href="${fullUrl}" />`);
+    } else if (cleanPath.startsWith('/fr')) {
       tags.push(`    <xhtml:link rel="alternate" hreflang="fr" href="${fullUrl}" />`);
       tags.push(`    <xhtml:link rel="alternate" hreflang="x-default" href="${fullUrl}" />`);
     } else if (cleanPath.startsWith('/de')) {
@@ -202,9 +234,12 @@ function updateSitemap() {
     }
   }
 
-  // Inject any missing checklist URLs before closing </urlset>
+  // 2. Country section pages
+  const countryUrls = COUNTRY_SITES.flatMap(s => s.paths);
+
+  // Inject any missing checklist / country URLs before closing </urlset>
   const today = new Date().toISOString().split('T')[0];
-  for (const urlPath of checklistUrls) {
+  for (const urlPath of [...checklistUrls, ...countryUrls]) {
     const fullUrl = `${BASE_URL}${urlPath}`;
     if (!sitemapContent.includes(`<loc>${fullUrl}</loc>`)) {
       const priority = urlPath === '/visa-checklist' ? '0.9' : '0.8';
@@ -254,6 +289,12 @@ for (const lang of languages) {
   
   processFile(langHome, lang);
   walkDir(langDir, lang);
+}
+
+// Country sections are prerendered under app/sites/<code> and served at /<code> via rewrites
+for (const site of COUNTRY_SITES) {
+  processFile(path.join(NEXT_SERVER_DIR, 'sites', `${site.code}.html`), site.lang);
+  walkDir(path.join(NEXT_SERVER_DIR, 'sites', site.code), site.lang);
 }
 
 // 2. Process sitemap

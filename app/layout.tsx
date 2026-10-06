@@ -6,6 +6,7 @@ import Footer from "./components/Footer";
 import AuthProvider from "./components/AuthProvider";
 import ConditionalNavFooter from "./components/ConditionalNavFooter";
 import Script from "next/script";
+import { getSiteRoutes } from "@/lib/country-sites";
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
@@ -84,6 +85,7 @@ export default function RootLayout({
           <ConditionalNavFooter
             navbar={<Navbar />}
             footer={<Footer />}
+            countrySites={getSiteRoutes()}
           >
       
             {children}
