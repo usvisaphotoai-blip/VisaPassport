@@ -106,6 +106,7 @@ export function usePayment({
           (window as any).gtag("event", "begin_checkout", {
             value: (orderData.amount || 0) / 100,
             currency: (orderData.currency || "USD").toUpperCase(),
+            price_variant: orderData.priceVariant || "A",
             items: [
               {
                 item_id: photoId,
@@ -151,6 +152,7 @@ export function usePayment({
                     transaction_id: response.razorpay_payment_id || orderData.orderId,
                     value: (orderData.amount || 0) / 100,
                     currency: (orderData.currency || "USD").toUpperCase(),
+                    price_variant: orderData.priceVariant || "A",
                     items: [
                       {
                         item_id: photoId,

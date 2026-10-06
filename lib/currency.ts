@@ -1,3 +1,5 @@
+import { PRICE_VARIANT_B_OVERRIDES, getPriceVariant, type PriceVariant } from "@/lib/pricing-ab";
+
 // Map country codes to currencies
 const COUNTRY_TO_CURRENCY: Record<string, string> = {
   // North America
@@ -99,6 +101,7 @@ export interface LocalPrice {
   amount: number; 
   formatted: string; 
   symbol: string;
+  variant?: PriceVariant;
 }
 
 const EXPERT_PRICES: Record<string, { amount: number; symbol: string; decimals: number }> = {
@@ -146,7 +149,8 @@ export async function getLocalPrice(
   baseUsdPrice: number = 6.99,
   forcedCurrency?: string,
   isExpert: boolean = false,
-  skipHeaders: boolean = false
+  skipHeaders: boolean = false,
+  abTest: boolean = true
 ): Promise<LocalPrice> {
   try {
     let currency = "USD";
@@ -182,6 +186,12 @@ export async function getLocalPrice(
       amount = 8.00;
     }
 
+    // Price A/B test (standard plan only; static pages always show control)
+    const variant: PriceVariant = skipHeaders || !abTest ? "A" : await getPriceVariant();
+    if (variant === "B" && !isExpert && PRICE_VARIANT_B_OVERRIDES[currency] !== undefined) {
+      amount = PRICE_VARIANT_B_OVERRIDES[currency];
+    }
+
     // Format currency
     const formatted = decimals === 0 
       ? `${symbol}${amount}`
@@ -192,6 +202,7 @@ export async function getLocalPrice(
       amount,
       formatted,
       symbol,
+      variant,
     };
   } catch (error) {
     console.error("Failed to get local price, falling back to USD", error);

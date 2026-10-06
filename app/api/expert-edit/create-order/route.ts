@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
 
     // Convert local price using country-wise pricing
     const { getLocalPrice } = await import("@/lib/currency");
-    const localPrice = await getLocalPrice(basePrice, currencyOverride);
+    const localPrice = await getLocalPrice(basePrice, currencyOverride, false, false, false);
     
     let amountUnit = 100;
     if (localPrice.currency === 'JPY') amountUnit = 1;

@@ -11,7 +11,7 @@ export async function GET(req: Request) {
     const defaultBasePrice = isExpert ? 9.99 : 6.99;
     const basePrice = basePriceParam ? parseFloat(basePriceParam) : defaultBasePrice;
     
-    const localPrice = await getLocalPrice(basePrice, currency, isExpert);
+    const localPrice = await getLocalPrice(basePrice, currency, isExpert, false, !basePriceParam); // custom base prices (e.g. print template) stay out of the A/B test
     
     return NextResponse.json(localPrice);
   } catch (error) {

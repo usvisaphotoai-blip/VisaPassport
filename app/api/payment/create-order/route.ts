@@ -71,6 +71,7 @@ export async function POST(req: Request) {
         ...((session?.user as any)?.id ? { userId: (session?.user as any).id } : {}),
         ...(guestEmail ? { guestEmail } : {}),
         ...(gaClientId ? { gaClientId } : {}),
+        priceVariant: localPrice.variant || "A",
       },
     };
 
@@ -93,6 +94,7 @@ export async function POST(req: Request) {
         razorpayOrderId: order.id,
         receipt: options.receipt,
         gaClientId,
+        priceVariant: localPrice.variant || "A",
       },
     });
 
@@ -130,6 +132,7 @@ export async function POST(req: Request) {
       orderId: order.id,
       amount: order.amount,
       currency: order.currency,
+      priceVariant: localPrice.variant || "A",
     });
   } catch (error: any) {
     console.error("Payment Order Error:", error);
