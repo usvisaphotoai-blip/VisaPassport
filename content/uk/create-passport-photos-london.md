@@ -21,8 +21,6 @@ faq:
     answer: "Many visa centres accept photos made online, as long as the print or file meets the destination country's size, background and quality rules. Rules differ by country, so check your visa centre's guidance first. Most UK and Schengen visa photos use the 35 x 45 mm size."
 ---
 
-# Passport Photos London: Make Yours Online in Minutes
-
 Need passport photos in London today? You do not have to queue at a booth or book a studio. Our London passport photo maker online turns a phone selfie into a compliant UK passport photo in minutes.
 
 A photo that breaks HM Passport Office rules delays your application. Common problems include the wrong background, poor lighting and an incorrect head size. Our tool removes that risk. It crops, resizes and checks your photo automatically, so you can apply with confidence, whether you live in Camden, Croydon or anywhere in between.

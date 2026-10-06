@@ -91,7 +91,9 @@ function compileMarkdownToHtml(markdownContent: string): string {
     if (depth === 2 || depth === 3) {
       return `<h${depth} id="${id}" class="scroll-mt-24 font-bold text-slate-900 mt-8 mb-4">${text}</h${depth}>\n`;
     }
-    return `<h${depth} class="font-bold text-slate-900 mt-6 mb-3">${text}</h${depth}>\n`;
+    // The page template already renders the frontmatter h1 — never emit a second <h1> from the body
+    const level = depth === 1 ? 2 : depth;
+    return `<h${level} class="font-bold text-slate-900 mt-6 mb-3">${text}</h${level}>\n`;
   };
 
   return marked(markdownContent, { renderer }) as string;

@@ -16,8 +16,6 @@ const newPost = {
   "featuredImage": "https://res.cloudinary.com/dipzpwbbk/image/upload/v1781650000/uk-visa-photo-requirements-by-type_placeholder.webp",
 
   "content": `
-    <h1>UK Visa Photo Requirements: Every Visa Type Explained (Student, Tourist, Spouse)</h1>
-
     <p>Whatever route you're applying under, the photo rules behind a UK visa come from the same place: UK Visas and Immigration (UKVI) biometric enrolment policy. Whether you're searching for <strong>uk student visa photo requirements</strong>, <strong>uk tourist visa photo requirements</strong>, or <strong>uk spouse visa photo requirements</strong>, the underlying photo standard is identical across categories — what changes is how and where that photo gets captured. This guide breaks it down by visa type, using official gov.uk guidance.</p>
 
     <h2>The Standard UK Visa Photo Specification (Applies to All Categories)</h2>

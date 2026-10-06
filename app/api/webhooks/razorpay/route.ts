@@ -11,7 +11,8 @@ import { getSafeSpec } from "@/lib/specs";
 import { sendGA4PurchaseEvent } from "@/lib/ga4";
 import { logAuditEvent, claimEmailSend, releaseEmailClaim } from "@/lib/audit";
 import { autoGenerateAndStoreInvoice } from "@/lib/invoice-automation";
-import { formatCurrency } from "@/lib/currency-formatter";
+import { formatCurrency, SUPPORTED_CURRENCIES } from "@/lib/currency-formatter";
+import { getPaymentFailureInfo, renderPaymentFailedEmail } from "@/lib/payment-failure";
 
 export async function POST(req: Request) {
   try {
@@ -649,6 +650,23 @@ export async function POST(req: Request) {
       const paymentEntity = event.payload?.payment?.entity || {};
       const notes = paymentEntity.notes || {};
       const { photoId, expertOrderId } = notes;
+      const failure = getPaymentFailureInfo(paymentEntity);
+      const currency = String(paymentEntity.currency || "INR").toUpperCase();
+      const amount = typeof paymentEntity.amount === "number"
+        ? formatCurrency(paymentEntity.amount / 10 ** (SUPPORTED_CURRENCIES[currency]?.decimals ?? 2), currency)
+        : undefined;
+      const failureMeta = {
+        razorpayPaymentId: paymentEntity.id,
+        errorCode: paymentEntity.error_code,
+        errorReason: paymentEntity.error_reason,
+        errorSource: paymentEntity.error_source,
+        errorStep: paymentEntity.error_step,
+        errorDescription: paymentEntity.error_description,
+        method: paymentEntity.method,
+      };
+      // One email per failed Razorpay payment attempt (webhooks are retried)
+      const emailTemplate = `payment_failed:${paymentEntity.id || "unknown"}`;
+      const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://pixpassport.com';
 
       await dbConnect();
 
@@ -658,90 +676,59 @@ export async function POST(req: Request) {
           photo.status = "payment_failed";
           await photo.save();
 
+          // Update permanent Order & Payment status
+          if (photo.orderId) {
+            await Order.findByIdAndUpdate(photo.orderId, { status: "failed" });
+          }
+          if (paymentEntity.order_id) {
+            await Payment.findOneAndUpdate({ gatewayOrderId: paymentEntity.order_id }, { status: "failed" });
+          }
+
           const userEmail = (photo as any).guestEmail || paymentEntity.email;
-          if (userEmail) {
+          if (userEmail && await claimEmailSend({ photoId: photo._id.toString() }, emailTemplate, "webhook")) {
             const spec = getSafeSpec(photo.documentType);
             const documentName = spec.name || "Passport Photo";
-            const countryName = spec.country || spec.name || "Passport Photo";
-            const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://pixpassport.com';
-            const previewLink = `${appUrl}/preview/${photoId}`;
-            const previewImageUrl = photo.secureUrl || photo.previewUrl || '';
+            const productLabel = spec.country && !documentName.toLowerCase().includes(spec.country.toLowerCase())
+              ? `${spec.country} ${documentName}`
+              : documentName;
+            const subject = `Payment failed: ${failure.title} — PixPassport`;
 
-            // Update permanent Order & Payment status
-            if (photo.orderId) {
-              await Order.findByIdAndUpdate(photo.orderId, { status: "failed" });
+            const mailRes = await sendEmail({
+              to: userEmail,
+              bcc: 'usvisaphotoai@gmail.com',
+              subject,
+              html: renderPaymentFailedEmail({
+                failure,
+                productLabel,
+                retryUrl: `${appUrl}/preview/${photoId}`,
+                retryLabel: "Retry payment",
+                amount,
+                details: [
+                  ["Photo", productLabel],
+                  ["Size", `${spec.width_px}×${spec.height_px} px`],
+                  ...(paymentEntity.id ? [["Payment ID", String(paymentEntity.id)] as [string, string]] : []),
+                ],
+              }),
+            });
+
+            if (!mailRes.success) {
+              await releaseEmailClaim({ photoId: photo._id.toString() }, emailTemplate);
             }
-            if (paymentEntity.order_id) {
-              await Payment.findOneAndUpdate({ gatewayOrderId: paymentEntity.order_id }, { status: "failed" });
-            }
-
-            try {
-              await sendEmail({
-                to: userEmail,
-                bcc: 'usvisaphotoai@gmail.com',
-                subject: `Payment Failed — Your ${countryName} Photo is Waiting! 📸`,
-                html: `
-                  <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; color: #1e293b; background: #f8fafc; padding: 32px; border-radius: 16px;">
-                    <div style="text-align: center; margin-bottom: 24px;">
-                      <div style="display: inline-block; background: #fef2f2; border-radius: 50%; width: 56px; height: 56px; line-height: 56px; font-size: 28px; margin-bottom: 12px;">⚠️</div>
-                      <h1 style="font-size: 22px; color: #0f172a; margin: 0 0 8px;">Payment Could Not Be Processed</h1>
-                      <p style="color: #64748b; font-size: 14px; margin: 0;">Don't worry — your photo is saved and ready!</p>
-                    </div>
-
-                    ${previewImageUrl ? `
-                    <div style="background: white; border-radius: 12px; padding: 16px; border: 1px solid #e2e8f0; margin-bottom: 20px; text-align: center;">
-                      <p style="margin: 0 0 12px; font-size: 13px; color: #64748b; font-weight: 600;">Your Processed ${countryName} ${documentName}</p>
-                      <img src="${previewImageUrl}" alt="${countryName} ${documentName} Preview" style="max-width: 180px; height: auto; border-radius: 8px; border: 2px solid #e2e8f0; box-shadow: 0 2px 8px rgba(0,0,0,0.08);" />
-                    </div>
-                    ` : ''}
-
-                    <div style="background: white; border-radius: 12px; padding: 24px; border: 1px solid #e2e8f0; margin-bottom: 20px;">
-                      <p style="margin: 0 0 12px; font-size: 15px; color: #334155;">Hi there,</p>
-                      <p style="margin: 0 0 12px; font-size: 14px; color: #475569; line-height: 1.6;">We noticed your recent payment for your <strong>${countryName} (${documentName})</strong> could not be completed. Your photo has been processed and is waiting for you!</p>
-                      <p style="margin: 0 0 20px; font-size: 14px; color: #475569; line-height: 1.6;">Click below to return to your photo and complete your purchase:</p>
-                      
-                      <div style="text-align: center; margin: 24px 0;">
-                        <a href="${previewLink}" style="display: inline-block; background: linear-gradient(135deg, #0f172a 0%, #1e40af 100%); color: white; padding: 14px 32px; border-radius: 10px; text-decoration: none; font-size: 15px; font-weight: 700; box-shadow: 0 4px 14px rgba(15,23,42,0.25);">Complete Your Purchase →</a>
-                      </div>
-                    </div>
-
-                    <div style="background: white; border-radius: 12px; padding: 20px; border: 1px solid #e2e8f0; margin-bottom: 20px;">
-                      <h3 style="margin: 0 0 8px; font-size: 15px; color: #334155;">📋 Your Photo Details</h3>
-                      <table style="width: 100%; font-size: 13px; color: #475569;">
-                        <tr><td style="padding: 4px 0;">Country</td><td style="text-align: right; font-weight: 600;">${countryName}</td></tr>
-                        <tr><td style="padding: 4px 0;">Document</td><td style="text-align: right; font-weight: 600;">${documentName}</td></tr>
-                        <tr><td style="padding: 4px 0;">Size</td><td style="text-align: right; font-weight: 600;">${spec.width_px}×${spec.height_px} px</td></tr>
-                        <tr><td style="padding: 4px 0;">Status</td><td style="text-align: right; font-weight: 600; color: #f59e0b;">⏳ Awaiting Payment</td></tr>
-                      </table>
-                    </div>
-
-                    <div style="text-align: center; padding: 12px 0;">
-                      <p style="font-size: 12px; color: #94a3b8; margin: 0 0 4px;">Direct link to your photo:</p>
-                      <a href="${previewLink}" style="font-size: 12px; color: #2563eb;">${previewLink}</a>
-                    </div>
-
-                    <div style="text-align: center; padding-top: 16px; border-top: 1px solid #e2e8f0;">
-                      <p style="font-size: 11px; color: #cbd5e1; margin: 0;">PixPassport — Professional Visa Photo Processing</p>
-                    </div>
-                  </div>
-                `
-              });
-              console.log(`[WEBHOOK] Payment failed email sent for photo ${photoId}`);
-              await logAuditEvent({
-                eventType: "email_sent",
-                photoId: photo._id,
-                orderId: photo.orderId,
-                actor: "webhook",
-                metadata: {
-                  recipient: userEmail,
-                  subject: `Payment Failed — Your ${countryName} Photo is Waiting! 📸`,
-                  template: "payment_failed",
-                  status: "sent",
-                },
-              });
-            } catch (err) {
-              console.error(`[WEBHOOK] Failed to send payment failed email for photo ${photoId}:`, err);
-            }
+            console.log(`[WEBHOOK] Payment failed email ${mailRes.success ? "sent" : "FAILED"} for photo ${photoId} (${failure.code || "unknown reason"})`);
+            await logAuditEvent({
+              eventType: "email_sent",
+              photoId: photo._id,
+              orderId: photo.orderId,
+              actor: "webhook",
+              metadata: {
+                recipient: userEmail,
+                subject,
+                template: "payment_failed",
+                status: mailRes.success ? "sent" : "failed",
+                ...(mailRes.success ? {} : { error: String(mailRes.error) }),
+                ...failureMeta,
+              },
+            });
           }
         }
       } else if (expertOrderId) {
@@ -756,72 +743,43 @@ export async function POST(req: Request) {
           }
 
           const userEmail = order.email || paymentEntity.email;
-          if (userEmail) {
-            const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://pixpassport.com';
-            const retryLink = `${appUrl}/expert-edit`;
+          if (userEmail && await claimEmailSend({ expertOrderId }, emailTemplate, "webhook")) {
+            const subject = `Payment failed: ${failure.title} — PixPassport Expert Edit`;
 
-            try {
-              await sendEmail({
-                to: userEmail,
-                bcc: 'usvisaphotoai@gmail.com',
-                subject: "Payment Failed for Expert Edit — Your Photos Are Waiting! 📸",
-                html: `
-                  <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; color: #1e293b; background: #f8fafc; padding: 32px; border-radius: 16px;">
-                    <div style="text-align: center; margin-bottom: 24px;">
-                      <div style="display: inline-block; background: #fef2f2; border-radius: 50%; width: 56px; height: 56px; line-height: 56px; font-size: 28px; margin-bottom: 12px;">⚠️</div>
-                      <h1 style="font-size: 22px; color: #0f172a; margin: 0 0 8px;">Expert Edit Payment Failed</h1>
-                      <p style="color: #64748b; font-size: 14px; margin: 0;">Don't worry — your photos are saved!</p>
-                    </div>
+            const mailRes = await sendEmail({
+              to: userEmail,
+              bcc: 'usvisaphotoai@gmail.com',
+              subject,
+              html: renderPaymentFailedEmail({
+                failure,
+                productLabel: "Expert Photo Edit",
+                retryUrl: `${appUrl}/expert-edit`,
+                retryLabel: "Retry payment",
+                amount,
+                details: [
+                  ["Photos uploaded", String(order.photos?.length || 0)],
+                  ...(paymentEntity.id ? [["Payment ID", String(paymentEntity.id)] as [string, string]] : []),
+                ],
+              }),
+            });
 
-                    ${order.photos && order.photos.length > 0 ? `
-                    <div style="background: white; border-radius: 12px; padding: 16px; border: 1px solid #e2e8f0; margin-bottom: 20px; text-align: center;">
-                      <p style="margin: 0 0 12px; font-size: 13px; color: #64748b; font-weight: 600;">Your Uploaded Photos</p>
-                      <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
-                        ${order.photos.slice(0, 3).map((url: string) => `<img src="${url}" alt="Uploaded Photo" style="max-width: 120px; height: auto; border-radius: 8px; border: 2px solid #e2e8f0; box-shadow: 0 2px 8px rgba(0,0,0,0.08);" />`).join('')}
-                      </div>
-                    </div>
-                    ` : ''}
-
-                    <div style="background: white; border-radius: 12px; padding: 24px; border: 1px solid #e2e8f0; margin-bottom: 20px;">
-                      <p style="margin: 0 0 12px; font-size: 15px; color: #334155;">Hi there,</p>
-                      <p style="margin: 0 0 12px; font-size: 14px; color: #475569; line-height: 1.6;">Unfortunately, your payment for the <strong>Expert Photo Edit</strong> could not be processed. Your edit request is currently on hold.</p>
-                      <p style="margin: 0 0 20px; font-size: 14px; color: #475569; line-height: 1.6;">Please try again so our team can get started on your photos right away!</p>
-                      
-                      <div style="text-align: center; margin: 24px 0;">
-                        <a href="${retryLink}" style="display: inline-block; background: linear-gradient(135deg, #0f172a 0%, #1e40af 100%); color: white; padding: 14px 32px; border-radius: 10px; text-decoration: none; font-size: 15px; font-weight: 700; box-shadow: 0 4px 14px rgba(15,23,42,0.25);">Retry Payment →</a>
-                      </div>
-                    </div>
-
-                    <div style="background: white; border-radius: 12px; padding: 20px; border: 1px solid #e2e8f0; margin-bottom: 20px;">
-                      <h3 style="margin: 0 0 8px; font-size: 15px; color: #334155;">📋 Order Details</h3>
-                      <table style="width: 100%; font-size: 13px; color: #475569;">
-                        <tr><td style="padding: 4px 0;">Order ID</td><td style="text-align: right; font-weight: 600;">${order._id}</td></tr>
-                        <tr><td style="padding: 4px 0;">Photos</td><td style="text-align: right; font-weight: 600;">${order.photos?.length || 0} uploaded</td></tr>
-                        <tr><td style="padding: 4px 0;">Status</td><td style="text-align: right; font-weight: 600; color: #f59e0b;">⏳ Awaiting Payment</td></tr>
-                      </table>
-                    </div>
-
-                    <div style="text-align: center; padding-top: 16px; border-top: 1px solid #e2e8f0;">
-                      <p style="font-size: 11px; color: #cbd5e1; margin: 0;">PixPassport — Professional Visa Photo Processing</p>
-                    </div>
-                  </div>
-                `
-              });
-              console.log(`[WEBHOOK] Payment failed email sent for expert order ${expertOrderId}`);
-              await logAuditEvent({
-                eventType: "email_sent",
-                actor: "webhook",
-                metadata: {
-                  recipient: userEmail,
-                  expertOrderId,
-                  subject: "Payment Failed for Expert Edit — Your Photos Are Waiting! 📸",
-                  template: "expert_payment_failed",
-                  status: "sent",
-                },
-              });
-            } catch (err) {
-              console.error(`[WEBHOOK] Failed to send payment failed email for expert order ${expertOrderId}:`, err);
+            if (!mailRes.success) {
+              await releaseEmailClaim({ expertOrderId }, emailTemplate);
             }
+            console.log(`[WEBHOOK] Payment failed email ${mailRes.success ? "sent" : "FAILED"} for expert order ${expertOrderId} (${failure.code || "unknown reason"})`);
+            await logAuditEvent({
+              eventType: "email_sent",
+              actor: "webhook",
+              metadata: {
+                recipient: userEmail,
+                expertOrderId,
+                subject,
+                template: "expert_payment_failed",
+                status: mailRes.success ? "sent" : "failed",
+                ...(mailRes.success ? {} : { error: String(mailRes.error) }),
+                ...failureMeta,
+              },
+            });
           }
         }
       }

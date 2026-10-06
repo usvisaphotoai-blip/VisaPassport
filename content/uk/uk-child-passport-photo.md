@@ -23,8 +23,6 @@ faq:
     answer: "Yes. You can take the photo with a smartphone or camera against a plain, light background, then use a baby passport photo maker online to crop it to the right size. Always check the result against the official GOV.UK rules before you apply."
 ---
 
-# UK Child Passport Photo: Rules, Size & Baby Photo Guide
-
 Getting a **UK child passport photo** right can feel tricky. Children wriggle, babies fall asleep at the wrong moment, and one small mistake can mean your application is sent back. The good news is that the rules for a **UK baby and child passport photo** are simple once you know them, and there is some helpful flexibility for the youngest ones.
 
 This guide explains the size, background and expression rules in plain English. It also gives practical tips for taking a photo at home and shows how a **baby passport photo maker online** can save you time and stress.

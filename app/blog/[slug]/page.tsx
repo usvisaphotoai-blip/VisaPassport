@@ -176,7 +176,13 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const readTime = getReadingTime(post.content);
 
   // Extract FAQs directly from this blog post's content (no static FAQ_MAP used)
-  const { faqs, cleanContent } = extractFaqsFromContent(post.content);
+  const { faqs, cleanContent: rawContent } = extractFaqsFromContent(post.content);
+
+  // The hero already renders post.title as the page's only <h1>: drop a leading <h1> that
+  // repeats it and demote any other <h1> in the body to <h2>
+  const cleanContent = rawContent
+    .replace(/^\s*<h1[^>]*>[\s\S]*?<\/h1>\s*/i, '')
+    .replace(/<h1(\s[^>]*)?>([\s\S]*?)<\/h1>/gi, '<h2$1>$2</h2>');
 
   // Extract headings for Table of Contents (H2, H3, H4)
   const headingMatches = cleanContent.match(/<h[234][^>]*>(.*?)<\/h[234]>/gi) || [];

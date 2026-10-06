@@ -21,8 +21,6 @@ faq:
     answer: "No. The Passport Program requires your photo to be taken in person by a commercial photographer or photo studio and printed on quality photographic paper. Home-printed or selfie-style photos are not accepted for standard applications."
 ---
 
-# Canada Passport Photo: Requirements, Size & Guidelines (2026)
-
 Applying for a new Canadian passport, renewing one, or updating your permanent resident card? Immigration, Refugees and Citizenship Canada (IRCC) enforces detailed photo specifications through the Passport Program, and even a minor error is one of the most common reasons applications get delayed or returned. This guide walks through every current rule so your Canada passport photo, PR card photo, or citizenship photo passes the first time.
 
 ## Canada Passport Photo Size and Dimensions

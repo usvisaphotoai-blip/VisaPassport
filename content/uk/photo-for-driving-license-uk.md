@@ -21,8 +21,6 @@ faq:
     answer: "Often, yes. When you apply online and enter a valid UK passport number, the DVLA service can usually reuse the digital photo held by HM Passport Office. If you have no passport, or want a new photo, you can upload one instead."
 ---
 
-# UK Driving Licence Photo: Make a DVLA-Ready Photo Online
-
 Applying for a provisional licence, renewing your photocard or replacing a lost one? Your photo decides how smoothly the application goes. A shadow, a white background or a badly cropped head can delay your licence by days or weeks.
 
 You do not need a booth or a studio. Our UK driving licence photo maker turns a phone photo into a correctly sized, DVLA-ready image in about a minute. Use the tool above, then upload the file online or print it for a paper D1 form.

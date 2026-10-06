@@ -307,6 +307,15 @@ function ToolFormFr() {
 export default function FrToolPage() {
   return (
     <div className="bg-slate-50 min-h-screen ">
+      {/* Outside <Suspense> so the headings are in the server-rendered HTML */}
+      <div className="max-w-xl mx-auto px-4 pt-2 sm:pt-2 text-center">
+        <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+          Créer une photo passeport &amp; photo visa en ligne
+        </h1>
+        <p className="mt-1.5 text-sm text-slate-500 font-normal">
+          Photo d&apos;identité conforme pour plus de 50 pays, prête en 30 secondes
+        </p>
+      </div>
       <div className="py-4">
         <Suspense fallback={<div className="flex items-center justify-center h-64"><div className="w-8 h-8 border-4 border-lime-500 border-t-transparent rounded-full animate-spin" /></div>}>
           <ToolFormFr />

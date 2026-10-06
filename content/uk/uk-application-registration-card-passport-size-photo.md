@@ -23,8 +23,6 @@ faq:
     answer: "If the photo on your card doesn't match you, you may need to attend a further appointment so Home Office can re-verify your identity using biometric data. Report the issue using the ARC enquiry form on gov.uk."
 ---
 
-# UK Application Registration Card (ARC) Photo: Requirements, Size & Rules
-
 ## What Is a UK Application Registration Card (ARC)?
 
 The Application Registration Card, usually shortened to ARC card, is a credit-card-sized document issued by the Home Office to people who have claimed asylum in the UK, and to their dependants. It shows that you're an asylum claimant while your case is being decided, and it's checked by employers, healthcare staff, educators and Home Office officials to confirm your status. It is not, technically, an identity document — but it is one of the few pieces of paperwork most asylum seekers carry day to day.
