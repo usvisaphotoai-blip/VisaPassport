@@ -35,6 +35,10 @@ export async function generateMetadata({
     keywords: page.keywords,
     alternates: {
       canonical: canonicalUrl,
+      languages: {
+        "en-GB": canonicalUrl,
+        "x-default": canonicalUrl,
+      },
     },
     openGraph: {
       title: page.title,
@@ -43,11 +47,11 @@ export async function generateMetadata({
       siteName: "PixPassport UK",
       locale: "en_GB",
       type: "article",
+      publishedTime: page.date,
+      modifiedTime: page.updatedAt || page.date,
       images: [
         {
           url: page.image,
-          width: 1200,
-          height: 630,
           alt: page.title,
         },
       ],
@@ -109,6 +113,28 @@ export default async function UKSlugPage({ params }: PageProps) {
     ],
   };
 
+  const pageUrl = `https://www.pixpassport.com/uk/${page.slug}`;
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: page.h1 || page.title,
+    description: page.description,
+    image: page.image,
+    inLanguage: "en-GB",
+    datePublished: page.date,
+    dateModified: page.updatedAt || page.date,
+    author: { "@type": "Organization", name: page.author, url: "https://www.pixpassport.com/" },
+    publisher: {
+      "@type": "Organization",
+      name: "PixPassport",
+      logo: { "@type": "ImageObject", url: "https://www.pixpassport.com/logo.png" },
+    },
+    mainEntityOfPage: pageUrl,
+  };
+
+  // Escape "<" so content can never close the surrounding <script> tag
+  const toJsonLd = (data: object) => JSON.stringify(data).replace(/</g, "\\u003c");
+
   const faqSchema =
     page.faq && page.faq.length > 0
       ? {
@@ -133,18 +159,22 @@ export default async function UKSlugPage({ params }: PageProps) {
       {/* Structured Data */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
+        dangerouslySetInnerHTML={{ __html: toJsonLd(softwareSchema) }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+        dangerouslySetInnerHTML={{ __html: toJsonLd(breadcrumbSchema) }}
       />
       {faqSchema && (
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+          dangerouslySetInnerHTML={{ __html: toJsonLd(faqSchema) }}
         />
       )}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: toJsonLd(articleSchema) }}
+      />
 
       {/* Navigation */}
       <div className="bg-white border-b border-slate-200">
@@ -181,12 +211,12 @@ export default async function UKSlugPage({ params }: PageProps) {
                 >
                   <span>Upload &amp; Create Photo</span>
                 </a>
-                <a
+                <Link
                   href="/uk-passport-photo-checker-online-free"
                   className="inline-flex items-center justify-center bg-white border-2 border-slate-300 hover:border-lime-600 hover:text-lime-700 text-slate-800 text-sm sm:text-base font-bold px-4 py-3  transition-all active:scale-95 gap-2"
                 >
                   <span>Free Passport Photo Checker</span>
-                </a>
+                </Link>
               </div>
 
               {/* Star Rating */}
@@ -195,7 +225,7 @@ export default async function UKSlugPage({ params }: PageProps) {
                   By {page.author}
                 </span>
                 <span className="bg-slate-100 px-3 py-1 rounded-full">
-                  Updated {page.date}
+                  Updated <time dateTime={page.updatedAt || page.date}>{page.updatedAt || page.date}</time>
                 </span>
               
               </div>
@@ -229,9 +259,9 @@ export default async function UKSlugPage({ params }: PageProps) {
           {page.toc.length > 0 && (
             <aside className="lg:col-span-1 hidden lg:block space-y-6">
               <div className="sticky top-24 bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
-                <h3 className="text-xs font-black uppercase tracking-wider text-slate-400 mb-3">
+                <p className="text-xs font-black uppercase tracking-wider text-slate-400 mb-3">
                   On this page
-                </h3>
+                </p>
                 <nav className="space-y-2 text-xs font-semibold">
                   {page.toc.map((item) => (
                     <a
@@ -262,7 +292,7 @@ export default async function UKSlugPage({ params }: PageProps) {
           )}
 
           {/* Rendered Markdown Article */}
-          <main
+          <div
             className={page.toc.length > 0 ? "lg:col-span-3" : "lg:col-span-4"}
           >
             <article className="bg-white p-6 sm:p-10 rounded-2xl border border-slate-200 shadow-xs prose prose-slate max-w-none prose-headings:font-black prose-headings:text-slate-900 prose-a:text-lime-700 prose-a:font-bold">
@@ -308,7 +338,7 @@ export default async function UKSlugPage({ params }: PageProps) {
                 ← Explore All UK Passport &amp; Visa Guides
               </Link>
             </div>
-          </main>
+          </div>
         </div>
       </div>
     </div>

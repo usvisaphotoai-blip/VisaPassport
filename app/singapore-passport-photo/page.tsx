@@ -3,86 +3,82 @@ import Link from "next/link";
 import SingaporeHero from "@/app/components/SingaporeHero";
 import FaqAccordion from "@/app/components/FaqAccordion";
 import SingaporeRelatedLinks from "@/app/components/SingaporeRelatedLinks";
+import SingaporeBreadcrumb from "@/app/components/SingaporeBreadcrumb";
+import {
+  ICA_FACTS,
+  ICA_SOURCES,
+  SG_HUB,
+  SG_OG_IMAGE,
+  SG_TOOL_HREF,
+  buildSingaporeJsonLd,
+  toJsonLd,
+} from "@/lib/singapore-photo";
+
+// Owns: "singapore passport photo", "singapore passport photo maker / online / size".
+// ICA rule details live on /singapore-ica-photo; pixel resizing on /resize-passport-photo-singapore.
+const PAGE_URL = SG_HUB.url;
+const TITLE = "Singapore Passport Photo Maker Online – 35×45 mm, Free Preview";
+const DESCRIPTION =
+  "Make your Singapore passport photo online: white background, 35×45 mm print and a digital file for ICA's e-Service. Free preview, ready in under a minute.";
+const DATE_MODIFIED = "2026-10-07";
 
 export const viewport: Viewport = {
   themeColor: "#ffffff",
 };
 
 export const metadata: Metadata = {
-  title: "Singapore Passport Photo Maker Online (Free Preview) – 413x531 px",
-  description:
-    "Create a Singapore passport photo online with free preview. Auto-resize to 35x45mm (413x531 px), pure white background, and 100% ICA compliance for MyICA.",
-  keywords: [
-    "singapore passport photo maker",
-    "singapore passport photo online",
-    "passport photo maker singapore",
-    "passport photo online singapore",
-    "passport photo singapore online",
-    "singapore passport photo editor",
-    "make singapore passport photo online free",
-    "passport size photo maker singapore",
-    "singapore passport size photo maker",
-    "singapore passport photo free preview",
-  ],
+  title: TITLE,
+  description: DESCRIPTION,
   alternates: {
-    canonical: "https://www.pixpassport.com/singapore-passport-photo",
+    canonical: PAGE_URL,
     languages: {
-      en: "https://www.pixpassport.com/singapore-passport-photo",
-      "x-default": "https://www.pixpassport.com/singapore-passport-photo",
+      "en-SG": PAGE_URL,
+      "x-default": PAGE_URL,
     },
   },
   icons: {
     apple: "/apple-touch-icon.png",
   },
   openGraph: {
-    title: "Singapore Passport Photo Maker Online (Free Preview)",
-    description:
-      "Make a 100% compliant Singapore passport photo online. 35x45mm (413x531 px) with a pure white background, ready for MyICA submission.",
-    url: "https://www.pixpassport.com/singapore-passport-photo",
+    title: "Singapore Passport Photo Maker Online | PixPassport",
+    description: DESCRIPTION,
+    url: PAGE_URL,
     siteName: "PixPassport",
     locale: "en_SG",
     type: "website",
-    images: [
-      {
-        url: "https://res.cloudinary.com/dipzpwbbk/image/upload/v1785679206/icao_visa_photo_example_whvfqt.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Singapore Passport Photo Maker Online",
-      },
-    ],
+    images: [{ ...SG_OG_IMAGE, alt: "Singapore passport photo on a white background made with PixPassport" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Singapore Passport Photo Maker Online (Free Preview)",
-    description:
-      "Make a 100% compliant Singapore passport photo online for MyICA renewals and new applications.",
-    images: ["https://res.cloudinary.com/dipzpwbbk/image/upload/v1785679206/icao_visa_photo_example_whvfqt.jpg"],
+    title: "Singapore Passport Photo Maker Online | PixPassport",
+    description: DESCRIPTION,
+    images: [SG_OG_IMAGE.url],
   },
 };
 
 const steps = [
   {
     num: "01",
-    title: "Take a Photo at Home",
-    desc: "Use your smartphone in good natural lighting. Wear dark clothing and keep a neutral expression.",
+    title: "Get Someone to Take Your Photo",
+    desc: "Ask a friend to photograph you at eye level in soft daylight. ICA does not recommend selfies, which tend to distort your face.",
     icon: "📱",
   },
   {
     num: "02",
     title: "Upload to the Maker",
-    desc: "Our AI detects facial landmarks, removes background clutter, and whitens it to pure white (#FFFFFF).",
+    desc: "The tool finds your face, crops to the 35 × 45 mm passport shape, and places you on a plain white background.",
     icon: "⚡",
   },
   {
     num: "03",
-    title: "ICA Biometric Validation",
-    desc: "Automatic checks against the 35 × 45 mm dimensions, 70%–80% face coverage, and eye level alignment.",
+    title: "Check Before You Pay",
+    desc: "Preview the result for free and check framing, lighting and expression before you download anything.",
     icon: "🛡️",
   },
   {
     num: "04",
-    title: "Download for MyICA",
-    desc: "Get your high-res digital JPEG for MyICA online renewal, plus a 4×6 inch multi-photo print template.",
+    title: "Submit or Print",
+    desc: "Upload the digital file in ICA's e-Service, or print the 4×6 inch sheet on matte or semi-matte photo paper.",
     icon: "🖨️",
   },
 ];
@@ -90,218 +86,81 @@ const steps = [
 const whyOnline = [
   {
     title: "Skip the Photo Studio",
-    desc: "A studio visit costs time and $10–$20 per set. This passport photo maker online works from any photo you already have.",
+    desc: "No trip to a studio or booth. Use a photo taken at home and redo it as many times as you like.",
     icon: "🏪",
   },
   {
     title: "Free to Preview",
-    desc: "Upload, crop, and check ICA compliance at no cost. You only pay when you download the final file.",
+    desc: "Upload, crop, and check the result at no cost. You only pay when you download the final file.",
     icon: "🆓",
   },
   {
-    title: "Edit Before You Download",
-    desc: "The built-in passport photo editor lets you re-crop, brighten, or swap the portrait before exporting.",
+    title: "Digital File and Print Sheet",
+    desc: "One purchase gives you the file for the online application and a print-ready sheet for paper forms.",
     icon: "🖌️",
   },
 ];
 
 const faqs = [
   {
-    q: "What is the best Singapore passport photo maker online?",
-    a: "A good Singapore passport photo maker should resize your photo to exactly 413 × 531 pixels (35 × 45 mm), whiten the background to pure white, and check the ICA head-ratio rule automatically. PixPassport does all three in one upload, so you don't need separate cropping or background-removal tools.",
+    q: "What size is a Singapore passport photo?",
+    a: `A printed Singapore passport photo is 35 mm wide by 45 mm high. For uploads through ICA's e-Service, ICA recommends a digital photo of ${ICA_FACTS.uploadPx}.`,
   },
   {
     q: "Can I make a Singapore passport photo online for free?",
-    a: "Yes. You can upload your photo, preview the resized 413 × 531 px result, and check ICA compliance at no cost. You only pay if you choose to download the watermark-free digital file and the printable 4×6 inch sheet.",
-  },
-  {
-    q: "What is the standard Singapore passport photo size?",
-    a: "The standard size is 35 mm wide by 45 mm high (3.5 × 4.5 cm). For MyICA online applications, the digital image must measure exactly 413 × 531 pixels at 300 DPI on a plain white background.",
-  },
-  {
-    q: "How much does it cost to make a passport photo in Singapore?",
-    a: "Traditional photo studios charge $10 to $20 per set and often bill extra for the digital file. This passport photo maker lets you preview for free and download a compliant digital and print-ready file for a fraction of that cost.",
+    a: "You can upload your photo, see the cropped result on a white background, and check it at no cost. You only pay if you download the watermark-free digital file and the printable 4×6 inch sheet.",
   },
   {
     q: "Can I take my own passport photo with my phone?",
-    a: "Yes. Modern phone cameras are sharp enough. Stand about 1.5 metres from natural window light, keep a neutral expression, and wear a dark top. Upload the photo here and the maker formats it to exact ICA standards.",
+    a: "Yes, but have someone else take it. ICA says it does not recommend selfies because the result is usually not ideal. Stand facing soft window light, keep a neutral expression, and keep the camera at eye level.",
+  },
+  {
+    q: "How do I submit my photo for a Singapore passport application?",
+    a: `Singapore citizens apply online by logging in to ICA's e-Service with Singpass and uploading the digital photo. ICA accepts ${ICA_FACTS.fileTypes} files up to ${ICA_FACTS.maxFileSize}. If you need a printed copy, use ${ICA_FACTS.printFinish}.`,
   },
   {
     q: "What should I wear for my Singapore passport photo?",
-    a: "Wear dark or coloured clothing that contrasts clearly with the pure white background. Avoid white, cream, or pale shirts — they blend into the backdrop and are a common cause of rejection.",
+    a: "Wear dark or coloured clothing that stands out against the white background. White or very pale tops blend into the backdrop and make your outline hard to see.",
   },
   {
-    q: "Is this passport photo editor different from a regular photo app?",
-    a: "Yes. A general photo editor lets you crop freely, but it won't lock the 35:45 passport ratio or check ICA's 70%–80% face-height rule. This tool applies the ratio and the compliance checks automatically, so the result is upload-ready.",
+    q: "What happens if ICA rejects my passport photo?",
+    a: "ICA says your application will be delayed if the photo does not meet its requirements, and it will notify you if the photo is rejected. If a photo you bought from PixPassport is rejected, our money-back guarantee applies.",
   },
   {
-    q: "How long does it take to make a Singapore passport photo online?",
-    a: "Under 30 seconds. Upload your image, let the tool handle the cropping and background whitening, and download your compliant file straight away.",
-  },
-  {
-    q: "Can I use this maker for NRIC and visa photos too?",
-    a: "Yes. Singapore NRIC, e-Visa (SAVE), Long-Term Visit Pass, Student's Pass, and MOM Work Pass applications all use the same 35 × 45 mm / 413 × 531 px white-background standard as the passport photo.",
+    q: "Can I use the same photo for my NRIC or other ICA applications?",
+    a: "ICA uses one photo standard across its e-Services, so a compliant passport photo usually works for NRIC registration and other ICA applications too. Our ICA photo requirements guide covers each document in detail.",
   },
 ];
 
-const schemas = [
-  {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    name: "Singapore Passport Photo Maker",
-    url: "https://www.pixpassport.com/singapore-passport-photo",
-    description:
-      "Online Singapore passport photo maker for 35x45mm (413x531 px) biometric photo creation and MyICA compliance verification.",
-    applicationCategory: "UtilitiesApplication",
-    operatingSystem: "Web, iOS, Android, macOS, Windows",
-    image: "https://res.cloudinary.com/dipzpwbbk/image/upload/v1785679206/icao_visa_photo_example_whvfqt.jpg",
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.9",
-      reviewCount: "17450",
-      bestRating: "5",
-      worstRating: "1",
-    },
-    offers: {
-      "@type": "Offer",
-      price: "6.99",
-      priceCurrency: "SGD",
-      priceValidUntil: "2026-12-31",
-      availability: "https://schema.org/InStock",
-    },
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    name: "Singapore Passport Photo Maker Online (Free Preview)",
-    url: "https://www.pixpassport.com/singapore-passport-photo",
-    description:
-      "Complete guide and online maker for Singapore passport photo dimensions, background rules, and ICA compliance.",
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "HowTo",
-    name: "How to Make a Singapore Passport Photo Online",
-    description:
-      "Follow these 4 steps to create an official 35x45mm (413x531 px) Singapore passport photo online with pure white background.",
-    totalTime: "PT1M",
-    supply: [
-      {
-        "@type": "HowToSupply",
-        name: "Frontal smartphone portrait or digital photo",
-      },
-    ],
-    tool: [
-      {
-        "@type": "HowToTool",
-        name: "PixPassport Singapore Passport Photo Maker",
-      },
-    ],
-    step: [
-      {
-        "@type": "HowToStep",
-        position: 1,
-        name: "Take a Photo at Home",
-        text: "Use your smartphone in good natural lighting. Wear dark clothing and keep a neutral expression.",
-      },
-      {
-        "@type": "HowToStep",
-        position: 2,
-        name: "Upload to the Maker",
-        text: "Our AI detects facial landmarks, removes background clutter, and whitens it to pure white (#FFFFFF).",
-      },
-      {
-        "@type": "HowToStep",
-        position: 3,
-        name: "ICA Biometric Validation",
-        text: "Automatic checks against the 35 × 45 mm dimensions, 70%–80% face coverage, and eye level alignment.",
-      },
-      {
-        "@type": "HowToStep",
-        position: 4,
-        name: "Download for MyICA",
-        text: "Get your high-res digital JPEG for MyICA online renewal, plus a 4×6 inch multi-photo print template.",
-      },
-    ],
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: faqs.map((f) => ({
-      "@type": "Question",
-      name: f.q,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: f.a,
-      },
-    })),
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Home",
-        item: "https://www.pixpassport.com/",
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: "Singapore Passport Photo",
-        item: "https://www.pixpassport.com/singapore-passport-photo",
-      },
-    ],
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    name: "PixPassport",
-    url: "https://www.pixpassport.com/",
-    logo: "https://www.pixpassport.com/logo.png",
-  },
-];
+const jsonLd = buildSingaporeJsonLd({
+  url: PAGE_URL,
+  name: TITLE,
+  description: DESCRIPTION,
+  dateModified: DATE_MODIFIED,
+  crumbs: [SG_HUB],
+  faqs,
+  includeTool: true,
+});
 
 export default function SingaporePassportPhotoPage() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas) }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: toJsonLd(jsonLd) }} />
 
-      {/* ── Breadcrumbs ── */}
-      <div className="border-b border-slate-200 px-4 sm:px-6 lg:px-8 py-3 bg-slate-50">
-        <nav aria-label="Breadcrumb" className="max-w-7xl mx-auto">
-          <ol className="flex items-center gap-2 text-xs uppercase tracking-wider text-slate-500 font-medium">
-            <li>
-              <Link href="/" className="hover:text-emerald-700 transition-colors">
-                Home
-              </Link>
-            </li>
-            <li aria-hidden="true" className="text-slate-300">
-              /
-            </li>
-            <li className="text-slate-900 font-semibold" aria-current="page">
-              Singapore Passport Photo Maker
-            </li>
-          </ol>
-        </nav>
-      </div>
+      <SingaporeBreadcrumb trail={[{ label: "Singapore Passport Photo" }]} />
 
       {/* ── HERO ── */}
       <SingaporeHero
-        badgeText="🇸🇬 Free to Preview · 413 × 531 px (35 × 45 mm)"
+        badgeText="🇸🇬 Free to Preview · 35 × 45 mm · White Background"
         h1="Singapore Passport Photo Maker Online"
-        subtitle="Make a Singapore passport photo online, free to preview, ready for MyICA in 30 seconds."
-        description="Upload any photo and this passport photo maker resizes it to 413 × 531 px (35 × 45 mm), replaces the background with pure white, and checks the 70%–80% face-ratio rule for you."
+        subtitle="Make your Singapore passport photo at home, free to preview, ready for ICA's e-Service in under a minute."
+        description="Upload a portrait and the maker crops it to the 35 × 45 mm passport shape, places you on a plain white background, and lets you check the result before you pay."
         primaryCtaText="Make My Photo Now →"
-        primaryCtaHref="/passport-photo-online?type=singapore-passport"
-        secondaryCtaText="View Photo Requirements"
-        secondaryCtaHref="#specifications"
-        imageAltAfter="Compliant Singapore passport photo 35x45mm with pure white background"
-        imageAltBefore="Casual selfie before Singapore passport photo maker conversion"
+        primaryCtaHref={SG_TOOL_HREF}
+        secondaryCtaText="See Photo Size"
+        secondaryCtaHref="#photo-size"
+        imageAltAfter="Finished Singapore passport photo on a plain white background"
+        imageAltBefore="Casual home photo before using the Singapore passport photo maker"
       />
 
       {/* ── DIRECT ANSWER ── */}
@@ -312,10 +171,14 @@ export default function SingaporePassportPhotoPage() {
               Quick Answer: How to Make a Singapore Passport Photo Online
             </h2>
             <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
-              To make a Singapore passport photo online, upload a portrait, crop it to the 35 × 45 mm ratio,
-              and export it at 413 × 531 pixels on a pure white background with your face filling 70% to 80%
-              of the frame. PixPassport is a free passport photo maker for the preview step — upload your
-              photo, let the tool crop, resize, and whiten it, then download a file ready for MyICA.
+              Have someone photograph you against any wall, upload the photo here, and the maker crops it to
+              35 × 45 mm on a plain white background. Preview it for free, then download a digital file for
+              ICA&apos;s e-Service (ICA recommends {ICA_FACTS.uploadPx}) or a sheet to print. The photo must be{" "}
+              {ICA_FACTS.recency}. For every rule ICA checks, see our{" "}
+              <Link href="/singapore-ica-photo" className="text-emerald-700 font-semibold underline">
+                ICA photo requirements guide
+              </Link>
+              .
             </p>
           </div>
         </div>
@@ -329,10 +192,10 @@ export default function SingaporePassportPhotoPage() {
               Fast &amp; Simple
             </span>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-              Make Your Singapore Passport Photo in 4 Easy Steps
+              Make Your Singapore Passport Photo in 4 Steps
             </h2>
             <p className="text-slate-600 text-sm mt-2">
-              Save time and money by making your passport size photo at home without visiting a studio.
+              Make your passport photo at home without visiting a studio.
             </p>
           </div>
 
@@ -344,7 +207,7 @@ export default function SingaporePassportPhotoPage() {
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
-                    <span className="text-2xl">{step.icon}</span>
+                    <span className="text-2xl" aria-hidden="true">{step.icon}</span>
                     <span className="text-xs font-black text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-md">
                       {step.num}
                     </span>
@@ -358,7 +221,7 @@ export default function SingaporePassportPhotoPage() {
 
           <div className="text-center mt-10">
             <Link
-              href="/passport-photo-online?type=singapore-passport"
+              href={SG_TOOL_HREF}
               className="inline-flex items-center justify-center bg-lime-700 hover:bg-lime-800 text-white text-sm font-bold px-7 py-3.5 rounded-xl transition-colors"
             >
               Start Singapore Photo Maker →
@@ -367,8 +230,66 @@ export default function SingaporePassportPhotoPage() {
         </div>
       </section>
 
+      {/* ── PHOTO SIZE SUMMARY (full rules live on /singapore-ica-photo) ── */}
+      <section id="photo-size" className="py-12 lg:py-16 bg-white border-b border-slate-200">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-2xl mb-8">
+            <span className="text-xs font-bold text-emerald-700 uppercase tracking-wider block mb-1">
+              Singapore Passport Photo Size
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+              Print Size vs Digital Size
+            </h2>
+            <p className="text-slate-600 text-sm mt-2">
+              Most Singapore passport applications are made online, so the digital file matters more than the print.
+            </p>
+          </div>
+
+          <div className="overflow-x-auto rounded-2xl border border-slate-200 mb-6 bg-white">
+            <table className="w-full text-left text-xs sm:text-sm">
+              <caption className="sr-only">Singapore passport photo sizes for print and online applications</caption>
+              <thead className="bg-slate-900 text-white">
+                <tr>
+                  <th scope="col" className="p-4 font-bold">Format</th>
+                  <th scope="col" className="p-4 font-bold">Size</th>
+                  <th scope="col" className="p-4 font-bold">When you need it</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                <tr>
+                  <td className="p-4 font-semibold text-slate-900">Digital upload</td>
+                  <td className="p-4 text-slate-600">{ICA_FACTS.uploadPx} (ICA recommendation), up to {ICA_FACTS.maxFileSize}</td>
+                  <td className="p-4 text-slate-600">Online application through ICA&apos;s e-Service with Singpass</td>
+                </tr>
+                <tr className="bg-slate-50">
+                  <td className="p-4 font-semibold text-slate-900">Printed photo</td>
+                  <td className="p-4 text-slate-600">35 × 45 mm on {ICA_FACTS.printFinish}</td>
+                  <td className="p-4 text-slate-600">Hardcopy submissions</td>
+                </tr>
+                <tr>
+                  <td className="p-4 font-semibold text-slate-900">Background</td>
+                  <td className="p-4 text-slate-600">Plain white, no shadows or patterns</td>
+                  <td className="p-4 text-slate-600">Both formats</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p className="text-sm text-slate-600">
+            Need a file at an exact pixel size? Use the{" "}
+            <Link href="/resize-passport-photo-singapore" className="text-emerald-700 font-semibold underline">
+              Singapore photo resizer (400 × 514 px)
+            </Link>
+            . Source:{" "}
+            <a href={ICA_SOURCES.photoGuidelines} target="_blank" rel="noopener noreferrer" className="underline">
+              ICA photo guidelines
+            </a>
+            .
+          </p>
+        </div>
+      </section>
+
       {/* ── WHY USE AN ONLINE MAKER ── */}
-      <section className="py-12 lg:py-16 bg-white border-b border-slate-200">
+      <section className="py-12 lg:py-16 bg-slate-50 border-b border-slate-200">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-10">
             <span className="text-xs font-bold text-emerald-700 uppercase tracking-wider block mb-1">
@@ -378,79 +299,18 @@ export default function SingaporePassportPhotoPage() {
               Why Use a Passport Photo Maker Instead of a Studio
             </h2>
             <p className="text-slate-600 text-sm mt-2">
-              A studio visit works, but an online maker is faster, cheaper, and lets you fix mistakes instantly.
+              A studio visit works, but an online maker is quicker and lets you fix mistakes straight away.
             </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
             {whyOnline.map((item) => (
-              <div key={item.title} className="p-5 rounded-2xl border border-slate-200 bg-slate-50">
-                <div className="text-2xl mb-2">{item.icon}</div>
+              <div key={item.title} className="p-5 rounded-2xl border border-slate-200 bg-white">
+                <div className="text-2xl mb-2" aria-hidden="true">{item.icon}</div>
                 <h3 className="font-bold text-slate-900 text-sm mb-1">{item.title}</h3>
                 <p className="text-xs text-slate-600 leading-relaxed">{item.desc}</p>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── SPECIFICATIONS TABLE ── */}
-      <section id="specifications" className="py-12 lg:py-16 bg-slate-50 border-b border-slate-200">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-2xl mb-8">
-            <span className="text-xs font-bold text-emerald-700 uppercase tracking-wider block mb-1">
-              Official Requirements
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-              Singapore Passport Size Photo Checklist
-            </h2>
-            <p className="text-slate-600 text-sm mt-2">
-              Everything required by the Singapore Immigration &amp; Checkpoints Authority (ICA):
-            </p>
-          </div>
-
-          <div className="overflow-x-auto rounded-2xl border border-slate-200 mb-8 bg-white">
-            <table className="w-full text-left text-xs sm:text-sm">
-              <thead className="bg-slate-900 text-white">
-                <tr>
-                  <th className="p-4 font-bold">Specification</th>
-                  <th className="p-4 font-bold">Standard Requirement</th>
-                  <th className="p-4 font-bold">PixPassport Status</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100">
-                <tr>
-                  <td className="p-4 font-semibold text-slate-900">Physical Print Size</td>
-                  <td className="p-4 text-slate-600">35 × 45 mm (3.5 × 4.5 cm / 1.38 × 1.77 in)</td>
-                  <td className="p-4 text-emerald-700 font-medium">✓ Calibrated for 4×6&quot; sheet</td>
-                </tr>
-                <tr className="bg-slate-50">
-                  <td className="p-4 font-semibold text-slate-900">Digital Upload Pixels</td>
-                  <td className="p-4 text-slate-600">413 × 531 pixels (300 DPI JPEG)</td>
-                  <td className="p-4 text-emerald-700 font-medium">✓ Exact 413 × 531 px</td>
-                </tr>
-                <tr>
-                  <td className="p-4 font-semibold text-slate-900">Background Color</td>
-                  <td className="p-4 text-slate-600">Plain white with no shadows or patterns</td>
-                  <td className="p-4 text-emerald-700 font-medium">✓ Pure white (#FFFFFF)</td>
-                </tr>
-                <tr className="bg-slate-50">
-                  <td className="p-4 font-semibold text-slate-900">Head Proportion</td>
-                  <td className="p-4 text-slate-600">70% to 80% of photo height (25–35 mm)</td>
-                  <td className="p-4 text-emerald-700 font-medium">✓ Biometrically centered (75%)</td>
-                </tr>
-                <tr>
-                  <td className="p-4 font-semibold text-slate-900">File Size</td>
-                  <td className="p-4 text-slate-600">Under 2.0 MB (recommended 150–500 KB)</td>
-                  <td className="p-4 text-emerald-700 font-medium">✓ Under 300 KB</td>
-                </tr>
-                <tr className="bg-slate-50">
-                  <td className="p-4 font-semibold text-slate-900">Photo Recency</td>
-                  <td className="p-4 text-slate-600">Taken within the last 3 months</td>
-                  <td className="p-4 text-emerald-700 font-medium">✓ Instant fresh conversion</td>
-                </tr>
-              </tbody>
-            </table>
           </div>
         </div>
       </section>
@@ -463,11 +323,8 @@ export default function SingaporePassportPhotoPage() {
               Common Questions
             </span>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-              Singapore Passport Photo Maker FAQs
+              Singapore Passport Photo FAQs
             </h2>
-            <p className="text-slate-600 text-sm mt-2">
-              Frequently asked questions about making a passport photo online, pricing, and ICA approval.
-            </p>
           </div>
 
           <FaqAccordion faqs={faqs} />
@@ -480,27 +337,24 @@ export default function SingaporePassportPhotoPage() {
       {/* ── BOTTOM CTA BANNER ── */}
       <section className="bg-slate-900 text-white py-16 lg:py-20 border-t-4 border-emerald-500">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-bold uppercase tracking-wider mb-4 border border-emerald-500/30">
-            🇸🇬 100% ICA Acceptance Guaranteed
-          </span>
+          <Link
+            href="/refund-policy"
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-bold uppercase tracking-wider mb-4 border border-emerald-500/30"
+          >
+            🇸🇬 Money-back guarantee if your photo is rejected
+          </Link>
           <h2 className="text-3xl sm:text-4xl font-black tracking-tight mb-4 max-w-2xl mx-auto">
-            Make Your Singapore Passport Photo in 30 Seconds
+            Make Your Singapore Passport Photo Now
           </h2>
           <p className="text-slate-300 text-base max-w-xl mx-auto mb-8">
-            Upload your photo, get instant background whitening, and download your 413 × 531 px Singapore photo.
+            Upload a photo, preview it on a white background for free, and download it when you&apos;re happy.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              href="/passport-photo-online?type=singapore-passport"
+              href={SG_TOOL_HREF}
               className="inline-flex items-center justify-center bg-lime-600 hover:bg-lime-500 text-white text-base font-bold px-8 py-4 rounded-xl transition-colors active:scale-95"
             >
               Make Singapore Photo Now →
-            </Link>
-            <Link
-              href="/resize-passport-photo-singapore"
-              className="inline-flex items-center justify-center bg-white/10 hover:bg-white/20 border border-white/20 text-white text-sm font-semibold px-6 py-4 rounded-xl transition-colors"
-            >
-              Resize Singapore Photo
             </Link>
           </div>
         </div>

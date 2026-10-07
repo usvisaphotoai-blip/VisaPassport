@@ -407,7 +407,7 @@ export default function HomeSections({
           to print multiple copies of your passport photo on a single A4
           sheet at any pharmacy or print shop. Explore country-specific tools
           in our{" "}
-          <a href="/singapore-passport-photo-editor" style={{ color: "#3d8c6e", fontWeight: 600 }}>
+          <a href="/singapore-passport-photo" style={{ color: "#3d8c6e", fontWeight: 600 }}>
             Singapore
           </a>
           ,{" "}

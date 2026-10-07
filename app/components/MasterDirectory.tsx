@@ -54,7 +54,11 @@ export default function MasterDirectory({ title, subtitle, specs, type }: Master
           const countryBase = spec.country.toLowerCase().replace(/\s+/g, "-");
           const normalizedBase = getShortId(countryBase);
           
-          const href = `/${normalizedBase}-${type}-photo-editor`;
+          // Singapore passport's programmatic page 301s to the hand-built hub (next.config.ts)
+          const href =
+            normalizedBase === "singapore" && type === "passport"
+              ? "/singapore-passport-photo"
+              : `/${normalizedBase}-${type}-photo-editor`;
 
           return (
             <Link 

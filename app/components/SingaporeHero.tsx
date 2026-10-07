@@ -7,7 +7,7 @@ import Link from "next/link";
 const trustBadges = [
   { icon: "🔒", text: "Secure & Private" },
   { icon: "⚡", text: "Results in 30s" },
-  { icon: "🇸🇬", text: "100% ICA Compliant" },
+  { icon: "🇸🇬", text: "Money-back Guarantee" },
   { icon: "🆓", text: "Free Validation" },
 ];
 
@@ -25,14 +25,14 @@ interface SingaporeHeroProps {
 }
 
 export default function SingaporeHero({
-  badgeText = "Official Singapore ICA Standard · 413 × 531 px",
-  h1 = "Resize Singapore Passport Photo Online",
-  subtitle = "Create 100% ICA-compliant 35 × 45 mm (413 × 531 px) biometric photos in 30 seconds.",
-  description = "Automated AI background whitening to pure white, 70%–80% chin-to-crown head ratio, and exact 413 × 531 px dimensions for MyICA, NRIC, MOM Work Passes, and Visas.",
-  primaryCtaText = "Resize Singapore Photo Now →",
+  badgeText = "Singapore ICA Standard · 35 × 45 mm",
+  h1 = "Singapore Passport Photo Online",
+  subtitle = "Create a 35 × 45 mm Singapore passport photo on a white background.",
+  description = "Upload a portrait and get a cropped photo on a plain white background, free to preview.",
+  primaryCtaText = "Make My Photo →",
   primaryCtaHref = "/passport-photo-online?type=singapore-passport",
-  secondaryCtaText = "View ICA Photo Rules",
-  secondaryCtaHref = "/singapore-passport-photo-editor",
+  secondaryCtaText = "ICA Photo Rules",
+  secondaryCtaHref = "/singapore-ica-photo",
   imageAltAfter = "Singapore passport photo with pure white background",
   imageAltBefore = "Original photo before Singapore passport resizing",
 }: SingaporeHeroProps) {
@@ -211,7 +211,7 @@ export default function SingaporeHero({
                   priority
                 />
                 <span className="absolute bottom-3 right-3 bg-emerald-600/90 backdrop-blur-xs text-white text-[11px] font-bold px-2.5 py-1 rounded shadow">
-                  ✓ 413 × 531 px (ICA)
+                  ✓ 35 × 45 mm · White background
                 </span>
               </div>
 
