@@ -359,7 +359,7 @@ export default function HomeHero() {
               </div>
 
               {/* Caption */}
-              <p className="text-xs text-slate-400 text-center max-w-xs">
+              <p className="text-xs text-slate-500 text-center max-w-xs">
                 Processed · White background · Biometric crop · Print-ready
               </p>
             </div>

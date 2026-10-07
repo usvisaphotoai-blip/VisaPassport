@@ -751,6 +751,16 @@ export default function UKPassportPhotoCheckerClient() {
                 <p>
                   Every result is scored against the UK specification, giving you a clear pass, warning, or fail report you can act on before you submit your application.
                 </p>
+                <p>
+                  Applying online through GOV.UK? Get a ready-to-upload{" "}
+                  <a
+                    href="https://pixpassport.uk/tool/digital-passport-photo"
+                    className="text-lime-800 font-bold underline hover:text-lime-900"
+                  >
+                    Digital Photo for Passport
+                  </a>{" "}
+                  that meets HM Passport Office&apos;s digital photo rules.
+                </p>
               </div>
             </div>
             <div className="space-y-2.5">
@@ -893,6 +903,24 @@ export default function UKPassportPhotoCheckerClient() {
                 Make UK Photo →
               </span>
             </Link>
+
+            <a
+              href="https://pixpassport.uk/tool/take-a-passport-photo-on-iphone"
+              className="bg-white p-4 rounded-xl border border-slate-200 hover:border-lime-400 hover:shadow-md transition-all flex flex-col justify-between group"
+            >
+              <div>
+                <span className="text-base mb-1.5 block">📲</span>
+                <h4 className="font-bold text-sm text-slate-900 group-hover:text-lime-700 transition-colors">
+                 How to Take a Passport Photo With an iPhone
+                </h4>
+                <p className="text-xs text-slate-500 font-medium mt-1">
+                  Get a GOV.UK-ready digital passport photo and photo code for online applications.
+                </p>
+              </div>
+              <span className="text-xs font-bold text-lime-600 mt-3 flex items-center gap-1">
+                Get Digital Photo →
+              </span>
+            </a>
 
             <Link
               href="/visa-photo-validator"

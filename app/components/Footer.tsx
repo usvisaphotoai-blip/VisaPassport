@@ -134,7 +134,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom Banner */}
-        <div className="border-t border-slate-800 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-medium text-slate-500">
+        <div className="border-t border-slate-800 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-medium text-slate-400">
           <p>&copy; {new Date().getFullYear()} PixPassport. All rights reserved.</p>
           <div className="flex flex-col md:flex-row gap-4 md:gap-6 items-center">
             <p>Disclaimer: This site is not affiliated with any government agency.</p>

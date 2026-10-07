@@ -176,7 +176,7 @@ export default function Navbar() {
                   <Link
                     href="/passport-photo-online"
                     prefetch={true}
-                    className="bg-lime-600 text-white hover:bg-lime-700 active:bg-lime-800 rounded-xl px-5 py-2.5 text-sm font-bold transition-all duration-150 shadow-sm shadow-lime-600/25 hover:shadow-md hover:shadow-lime-600/30 hover:-translate-y-px whitespace-nowrap"
+                    className="bg-lime-700 text-white hover:bg-lime-800 active:bg-lime-900 rounded-xl px-5 py-2.5 text-sm font-bold transition-all duration-150 shadow-sm shadow-lime-600/25 hover:shadow-md hover:shadow-lime-600/30 hover:-translate-y-px whitespace-nowrap"
                   >
                     Get Approved Photo →
                   </Link>
@@ -193,7 +193,7 @@ export default function Navbar() {
               {status !== "loading" && !session && (
                 <Link
                   href="/passport-photo-online"
-                  className="bg-lime-600 text-white hover:bg-lime-700 rounded-lg px-3.5 py-2 text-xs font-bold transition-colors shadow-sm shadow-lime-600/20"
+                  className="bg-lime-700 text-white hover:bg-lime-800 rounded-lg px-3.5 py-2 text-xs font-bold transition-colors shadow-sm shadow-lime-600/20"
                 >
                   Get Photo
                 </Link>

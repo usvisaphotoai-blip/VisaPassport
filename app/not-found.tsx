@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import ToolPage from "./passport-photo-online/page";
+import NotFoundTool from "./components/NotFoundTool";
 
 export const metadata: Metadata = {
   title: "Create Passport & Visa Photos Online – 50+ Countries | PixPassport",
@@ -12,5 +12,5 @@ export const metadata: Metadata = {
 };
 
 export default function NotFound() {
-  return <ToolPage />;
+  return <NotFoundTool />;
 }

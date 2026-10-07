@@ -277,7 +277,7 @@ export default function HomeSections({
             style={{
               fontSize: "18px",
               fontWeight: 800,
-              color: "#3d8c6e",
+              color: "#2f6f57",
               marginBottom: 16,
             }}
           >
@@ -309,7 +309,7 @@ export default function HomeSections({
                   listStyle: "none",
                 }}
               >
-                <span style={{ color: "#3d8c6e" }}>✓</span> {li}
+                <span style={{ color: "#2f6f57" }}>✓</span> {li}
               </li>
             ))}
           </ul>
@@ -323,20 +323,20 @@ export default function HomeSections({
           Every year, thousands of passport and visa applications are delayed
           because of a photo that doesn't meet size or background rules.
           <strong> PixPassport</strong> is a free{" "}
-          <a href="/passport-photo-checker" style={{ color: "#3d8c6e", fontWeight: 600 }}>
+          <a href="/passport-photo-checker" style={{ color: "#2f6f57", fontWeight: 600 }}>
             online passport photo checker
           </a>{" "}
           that crops, resizes, and validates your photo against official{" "}
-          <a href="/icao-compliant-photo" style={{ color: "#3d8c6e", fontWeight: 600 }}>
+          <a href="/icao-compliant-photo" style={{ color: "#2f6f57", fontWeight: 600 }}>
             ICAO standard photo
           </a>{" "}
           requirements in seconds — no photo studio needed. Not sure if your
           photo will pass? Run it through our universal{" "}
-          <a href="/passport-photo-checker" style={{ color: "#3d8c6e", fontWeight: 600 }}>
+          <a href="/passport-photo-checker" style={{ color: "#2f6f57", fontWeight: 600 }}>
             passport photo checker
           </a>{" "}
           or our{" "}
-          <a href="/visa-photo-validator" style={{ color: "#3d8c6e", fontWeight: 600 }}>
+          <a href="/visa-photo-validator" style={{ color: "#2f6f57", fontWeight: 600 }}>
             free ICAO photo validator
           </a>{" "}
           before you submit anything.
@@ -345,15 +345,15 @@ export default function HomeSections({
           <strong>Passport photo size by country:</strong> requirements vary
           more than most applicants expect. A UK passport photo must be
           35x45mm (test it with our{" "}
-          <a href="/uk-passport-photo-checker-online-free" style={{ color: "#3d8c6e", fontWeight: 600 }}>
+          <a href="/uk-passport-photo-checker-online-free" style={{ color: "#2f6f57", fontWeight: 600 }}>
             UK passport photo checker
           </a>
           ), Australian applications require 35x45mm with strict 32–36mm face height (verify with our{" "}
-          <a href="/australian-passport-photo-checker" style={{ color: "#3d8c6e", fontWeight: 600 }}>
+          <a href="/australian-passport-photo-checker" style={{ color: "#2f6f57", fontWeight: 600 }}>
             Australian passport photo checker
           </a>
           ), US Green Card applicants need exact 600x600 px digital squares (use our{" "}
-          <a href="/diversity-visa-lottery-photo-checker" style={{ color: "#3d8c6e", fontWeight: 600 }}>
+          <a href="/diversity-visa-lottery-photo-checker" style={{ color: "#2f6f57", fontWeight: 600 }}>
             DV lottery photo checker
           </a>
           ), and the <strong>Sri Lanka passport photo size</strong> follows the standard
@@ -365,35 +365,35 @@ export default function HomeSections({
         </p>
         <p className="hc-seo-p">
           <strong>UK applicants:</strong> use our{" "}
-          <a href="/uk-passport-photo-requirements-tool" style={{ color: "#3d8c6e", fontWeight: 600 }}>
+          <a href="/uk-passport-photo-requirements-tool" style={{ color: "#2f6f57", fontWeight: 600 }}>
             UK passport photo checker
           </a>{" "}
           to confirm your photo meets HMPO rules before you upload it to the
           gov.uk service — see our{" "}
-          <a href="/blog/uk-visa-photo-requirements" style={{ color: "#3d8c6e", fontWeight: 600 }}>
+          <a href="/blog/uk-visa-photo-requirements" style={{ color: "#2f6f57", fontWeight: 600 }}>
             UK visa photo requirements guide
           </a>{" "}
           for a full breakdown. Applying from China? Our{" "}
-          <a href="/china-visa-photo-editor" style={{ color: "#3d8c6e", fontWeight: 600 }}>
+          <a href="/china-visa-photo-editor" style={{ color: "#2f6f57", fontWeight: 600 }}>
             China visa photo editor
           </a>{" "}
           crops your image to the exact required ratio automatically.
         </p>
         <p className="hc-seo-p">
           <strong>Singapore &amp; Asia-Pacific applicants:</strong> prepare your MyICA submissions with our dedicated{" "}
-          <a href="/singapore-passport-photo" style={{ color: "#3d8c6e", fontWeight: 600 }}>
+          <a href="/singapore-passport-photo" style={{ color: "#2f6f57", fontWeight: 600 }}>
             Singapore passport photo maker
           </a>
           , resize any selfie with our{" "}
-          <a href="/resize-passport-photo-singapore" style={{ color: "#3d8c6e", fontWeight: 600 }}>
+          <a href="/resize-passport-photo-singapore" style={{ color: "#2f6f57", fontWeight: 600 }}>
             Singapore photo resizer
           </a>
           , or inspect exact specifications with our{" "}
-          <a href="/resize-passport-photo-singapore#specifications" style={{ color: "#3d8c6e", fontWeight: 600 }}>
+          <a href="/resize-passport-photo-singapore#specifications" style={{ color: "#2f6f57", fontWeight: 600 }}>
             413x531 pixel dimension guide
           </a>{" "}
           and{" "}
-          <a href="/singapore-ica-photo" style={{ color: "#3d8c6e", fontWeight: 600 }}>
+          <a href="/singapore-ica-photo" style={{ color: "#2f6f57", fontWeight: 600 }}>
             ICA photo requirements
           </a>
           .
@@ -401,29 +401,29 @@ export default function HomeSections({
         <p className="hc-seo-p">
           Once your photo passes, you can download a print-ready file or use
           our{" "}
-          <a href="/passport-photo-print-template-generator" style={{ color: "#3d8c6e", fontWeight: 600 }}>
+          <a href="/passport-photo-print-template-generator" style={{ color: "#2f6f57", fontWeight: 600 }}>
             passport photo print template
           </a>{" "}
           to print multiple copies of your passport photo on a single A4
           sheet at any pharmacy or print shop. Explore country-specific tools
           in our{" "}
-          <a href="/singapore-passport-photo" style={{ color: "#3d8c6e", fontWeight: 600 }}>
+          <a href="/singapore-passport-photo" style={{ color: "#2f6f57", fontWeight: 600 }}>
             Singapore
           </a>
           ,{" "}
-          <a href="/india-passport-photo-editor" style={{ color: "#3d8c6e", fontWeight: 600 }}>
+          <a href="/india-passport-photo-editor" style={{ color: "#2f6f57", fontWeight: 600 }}>
             India
           </a>{" "}
           and{" "}
-          <a href="/uk-passport-photo-editor" style={{ color: "#3d8c6e", fontWeight: 600 }}>
+          <a href="/uk-passport-photo-editor" style={{ color: "#2f6f57", fontWeight: 600 }}>
             UK
           </a>{" "}
           passport photo editors, or read more in our{" "}
-          <a href="/blog" style={{ color: "#3d8c6e", fontWeight: 600 }}>
+          <a href="/blog" style={{ color: "#2f6f57", fontWeight: 600 }}>
             guides
           </a>{" "}
           and{" "}
-          <a href="/faq" style={{ color: "#3d8c6e", fontWeight: 600 }}>
+          <a href="/faq" style={{ color: "#2f6f57", fontWeight: 600 }}>
             FAQ
           </a>
           .
@@ -485,7 +485,7 @@ export default function HomeSections({
           <div className="hc-steps">
             {steps.map((step, i) => (
               <div key={i} className="hc-step">
-                <div className="hc-step-bg">{step.num}</div>
+                <div className="hc-step-bg hc-deco-num" data-num={step.num} aria-hidden="true" />
                 <div
                   className={`hc-step-icon${i >= 2 ? " hc-step-icon-b" : ""}`}
                 >
@@ -603,7 +603,7 @@ export default function HomeSections({
                     >
                       {src.badge}
                     </span>
-                    <span style={{ fontSize: "12px", color: "#3d8c6e", fontWeight: 700 }}>↗</span>
+                    <span style={{ fontSize: "12px", color: "#2f6f57", fontWeight: 700 }}>↗</span>
                   </div>
                   <div
                     style={{
@@ -642,7 +642,7 @@ export default function HomeSections({
               marginTop: "14px",
               textAlign: "center",
               fontSize: "12px",
-              color: "#718096",
+              color: "#5b6577",
             }}
           >
             PixPassport automatically adjusts your images to comply with the global specifications above.
@@ -692,9 +692,10 @@ export default function HomeSections({
                     color: "#f0faf6",
                     lineHeight: 1,
                   }}
-                >
-                  {r.num}
-                </div>
+                  className="hc-deco-num"
+                  data-num={r.num}
+                  aria-hidden="true"
+                />
                 <div
                   style={{
                     fontSize: "16px",
@@ -718,7 +719,7 @@ export default function HomeSections({
                 <div
                   style={{
                     fontSize: "12px",
-                    color: "#3d8c6e",
+                    color: "#2f6f57",
                     background: "#f0faf6",
                     padding: "8px 12px",
                     borderRadius: "8px",
