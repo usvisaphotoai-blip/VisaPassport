@@ -51,7 +51,33 @@ export interface PhotoCheckerToolProps {
   requirements?: RequirementItem[];
   faqs?: FAQItem[];
   relatedTools?: RelatedToolItem[];
+
+  // Per-page section headings (keeps template sections from being identical across pages)
+  requirementsHeading?: string;
+  requirementsIntro?: string;
+  stepsHeading?: string;
+  steps?: { title: string; desc: string }[];
+  faqHeading?: string;
+  relatedHeading?: string;
+
+  // Page-specific server-rendered content shown between "How it works" and the FAQ
+  children?: React.ReactNode;
 }
+
+const DEFAULT_STEPS = [
+  {
+    title: "Upload Your Photo",
+    desc: "Take a picture on your smartphone facing a window or upload an existing photo. Any clear portrait works.",
+  },
+  {
+    title: "Automated Biometric Scan",
+    desc: "Our engine maps key facial points, evaluates background uniformity, and verifies exact specifications.",
+  },
+  {
+    title: "Review Scored Report",
+    desc: "Get an instant pass/fail report with actionable recommendations before submitting to government portals.",
+  },
+];
 
 // ─── Trust Badges ────────────────────────────────────────────────────────────
 const TRUST_BADGES = [
@@ -285,11 +311,13 @@ function FAQAccordionItem({ item }: { item: FAQItem }) {
           </svg>
         </span>
       </button>
-      {isOpen && (
-        <div className="px-5 pb-5 pt-1 text-sm text-slate-600 leading-relaxed font-normal border-t border-slate-50">
-          {item.answer}
-        </div>
-      )}
+      {/* Always rendered so the answer is in the server HTML; hidden until expanded */}
+      <div
+        hidden={!isOpen}
+        className="px-5 pb-5 pt-1 text-sm text-slate-600 leading-relaxed font-normal border-t border-slate-50"
+      >
+        {item.answer}
+      </div>
     </div>
   );
 }
@@ -311,6 +339,13 @@ export default function PhotoCheckerTool({
   requirements = [],
   faqs = [],
   relatedTools = [],
+  requirementsHeading = "What the Biometric Validator Checks",
+  requirementsIntro = "Every photo undergoes the exact geometric and visual checks enforced by consular offices and automated border e-Gates.",
+  stepsHeading = "How to Validate Your Photo in 3 Steps",
+  steps = DEFAULT_STEPS,
+  faqHeading = "Frequently Asked Questions",
+  relatedHeading = "Related Photo Tools & Creators",
+  children,
 }: PhotoCheckerToolProps) {
   const [selectedCountry, setSelectedCountry] = useState(initialCountry);
   const [selectedDocType, setSelectedDocType] = useState<"passport" | "visa">(initialDocType);
@@ -445,14 +480,26 @@ export default function PhotoCheckerTool({
 
             {/* Document / Country Configuration */}
             <div className="grid sm:grid-cols-2 gap-4 mb-6">
-              <CountrySelector
-                documentTypes={documentTypes}
-                selectedCountry={selectedCountry}
-                onSelect={(code) => {
-                  setSelectedCountry(code);
-                  if (report) setReport(null);
-                }}
-              />
+              {lockCountry ? (
+                <div>
+                  <span className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">
+                    Issuing Authority / Country
+                  </span>
+                  <div className="w-full h-12 bg-slate-50 border border-slate-200 rounded-lg px-3.5 flex items-center gap-2.5 text-sm font-bold text-slate-800">
+                    {countryFlag && <span className="text-xl leading-none">{countryFlag}</span>}
+                    <span className="truncate">{countryName || selectedCountry}</span>
+                  </div>
+                </div>
+              ) : (
+                <CountrySelector
+                  documentTypes={documentTypes}
+                  selectedCountry={selectedCountry}
+                  onSelect={(code) => {
+                    setSelectedCountry(code);
+                    if (report) setReport(null);
+                  }}
+                />
+              )}
 
               <div>
                 <label htmlFor="tool-doc-type" className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">
@@ -618,7 +665,7 @@ export default function PhotoCheckerTool({
 
                 <div className="mt-6 pt-5 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400 font-medium">
                   <span>⚡ Analysis completes in &lt; 3 seconds</span>
-                  <span>🔒 Ephemeral secure session</span>
+                  <span>🔒 Encrypted upload</span>
                 </div>
               </div>
             )}
@@ -635,10 +682,10 @@ export default function PhotoCheckerTool({
                 Official Standards
               </span>
               <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight mt-3 mb-2">
-                What the Biometric Validator Checks
+                {requirementsHeading}
               </h2>
               <p className="text-sm text-slate-500 font-normal">
-                Every photo undergoes the exact geometric and visual checks enforced by consular offices and automated border e-Gates.
+                {requirementsIntro}
               </p>
             </div>
 
@@ -664,34 +711,18 @@ export default function PhotoCheckerTool({
       <section className="py-12 sm:py-16 max-w-6xl mx-auto px-4 sm:px-6">
         <div className="text-center max-w-2xl mx-auto mb-10">
           <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight mb-2">
-            How to Validate Your Photo in 3 Steps
+            {stepsHeading}
           </h2>
           <p className="text-sm text-slate-500 font-normal">
-            No software installation or account creation required. Fast, private, and 100% free.
+            No software installation or account creation required. Fast and 100% free.
           </p>
         </div>
 
         <div className="grid sm:grid-cols-3 gap-6">
-          {[
-            {
-              step: "01",
-              title: "Upload Your Photo",
-              desc: "Take a picture on your smartphone facing a window or upload an existing photo. Any clear portrait works.",
-            },
-            {
-              step: "02",
-              title: "Automated Biometric Scan",
-              desc: "Our engine maps key facial points, evaluates background uniformity, and verifies exact specifications.",
-            },
-            {
-              step: "03",
-              title: "Review Scored Report",
-              desc: "Get an instant pass/fail report with actionable recommendations before submitting to government portals.",
-            },
-          ].map((s) => (
-            <div key={s.step} className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
+          {steps.map((s, i) => (
+            <div key={s.title} className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
               <span className="text-xs font-black text-lime-700 bg-lime-50 px-2.5 py-1 rounded border border-lime-100 inline-block mb-3">
-                STEP {s.step}
+                STEP {String(i + 1).padStart(2, "0")}
               </span>
               <h3 className="text-base font-bold text-slate-900 mb-2">{s.title}</h3>
               <p className="text-xs sm:text-sm text-slate-500 leading-relaxed">{s.desc}</p>
@@ -700,13 +731,15 @@ export default function PhotoCheckerTool({
         </div>
       </section>
 
+      {children}
+
       {/* ── FAQ SECTION ── */}
       {faqs.length > 0 && (
         <section className="bg-white border-t border-slate-200 py-12 sm:py-16">
           <div className="max-w-4xl mx-auto px-4 sm:px-6">
             <div className="text-center max-w-xl mx-auto mb-10">
               <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight mb-2">
-                Frequently Asked Questions
+                {faqHeading}
               </h2>
               <p className="text-sm text-slate-500 font-normal">
                 Everything you need to know about photo compliance and verification rules.
@@ -729,7 +762,7 @@ export default function PhotoCheckerTool({
             <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-2">
               <div>
                 <h2 className="text-xl font-bold text-slate-900 tracking-tight">
-                  Related Photo Tools &amp; Creators
+                  {relatedHeading}
                 </h2>
                 <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
                   Fix, crop, or generate print-ready passport templates.

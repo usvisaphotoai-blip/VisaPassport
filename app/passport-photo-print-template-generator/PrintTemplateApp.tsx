@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect } from "react";
 import jsPDF from "jspdf";
 import { useSearchParams } from "next/navigation";
 import { getClientTimezoneCurrency, LocalPrice } from "@/lib/currency";
+import { trackAdsPurchaseConversion } from "@/lib/ads-conversion";
 
 const PAPER_SIZES = {
   "4x6": { name: "4×6 inch", width: 101.6, height: 152.4 }, // mm
@@ -702,6 +703,11 @@ export default function PrintTemplateApp() {
                   console.warn("[GA4] purchase error:", gaErr);
                 }
               }
+              trackAdsPurchaseConversion({
+                transactionId: response.razorpay_payment_id || data.orderId,
+                value: (data.amount || 0) / 100,
+                currency: data.currency || "USD",
+              });
               setReviewSuccess(true);
               setReviewLoading(false);
               setReviewMessage("");

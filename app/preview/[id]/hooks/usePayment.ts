@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { trackAdsPurchaseConversion } from "@/lib/ads-conversion";
 
 export interface LocalPrice {
   currency: string;
@@ -168,6 +169,11 @@ export function usePayment({
                   console.warn("[GA4] Failed to dispatch purchase event:", gaErr);
                 }
               }
+              trackAdsPurchaseConversion({
+                transactionId: response.razorpay_payment_id || orderData.orderId,
+                value: (orderData.amount || 0) / 100,
+                currency: orderData.currency || "USD",
+              });
 
               onSuccess?.(verifyData);
               status === "authenticated"

@@ -25,10 +25,22 @@ export interface SpecialPhotoPageProps {
   documents: DocumentItem[];
   contentHtml: string;
   faqs: FAQItem[];
+  slug?: string;
+  breadcrumbLabel?: string;
+  relatedLinks?: { href: string; label: string }[];
 }
 
+const DEFAULT_RELATED_LINKS = [
+  { href: "/us-passport-photo-editor", label: "US Passport Photo Editor" },
+  { href: "/us-visa-photo-editor", label: "US Visa Photo Editor" },
+  { href: "/indian-passport-size-photograph", label: "Indian Passport Size Photo" },
+  { href: "/ca", label: "Canada Visa Size Photo" },
+  { href: "/uk-passport-photo-checker-online-free", label: "UK Photo Checker" },
+  { href: "/digital-visa-photo-specs-2026", label: "Digital Visa Specs 2026" },
+];
+
 const TRUST_ITEMS = [
-  { tag: "01", title: "Privacy first", desc: "Photos never stored on our servers" },
+  { tag: "01", title: "Privacy first", desc: "Encrypted uploads, never sold" },
   { tag: "02", title: "ICAO compliant", desc: "Meets 9303 biometric standards" },
   { tag: "03", title: "Instant result", desc: "AI processing in under 10 seconds" },
   { tag: "04", title: "Free preview", desc: "Check before you pay anything" },
@@ -41,6 +53,9 @@ export default function SpecialPhotoPageClient({
   documents,
   contentHtml,
   faqs,
+  slug,
+  breadcrumbLabel,
+  relatedLinks = DEFAULT_RELATED_LINKS,
 }: SpecialPhotoPageProps) {
   const router = useRouter();
   const [selectedDoc, setSelectedDoc] = useState(documents[0]?.id);
@@ -148,7 +163,7 @@ export default function SpecialPhotoPageClient({
           <ol className="flex items-center gap-2 text-xs uppercase tracking-wide text-slate-500">
             <li><a href="/" className="hover:text-lime-700">Home</a></li>
             <li aria-hidden>/</li>
-            <li className="text-slate-900 font-semibold" aria-current="page">{countryCode}</li>
+            <li className="text-slate-900 font-semibold" aria-current="page">{breadcrumbLabel || countryCode}</li>
           </ol>
         </nav>
       </div>
@@ -174,9 +189,9 @@ export default function SpecialPhotoPageClient({
                 <span className="text-xs font-bold w-7 h-7 rounded-lg flex items-center justify-center bg-lime-600 text-white shrink-0">
                   01
                 </span>
-                <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-900">
+                <p className="text-sm font-semibold uppercase tracking-wide text-slate-900">
                   Photo type
-                </h2>
+                </p>
               </div>
 
               <div className="relative" ref={dropdownRef}>
@@ -266,9 +281,9 @@ export default function SpecialPhotoPageClient({
               <span className={`text-xs font-bold w-7 h-7 rounded-lg flex items-center justify-center text-white shrink-0 ${selectedFile ? "bg-lime-600" : "bg-slate-900"}`}>
                 {selectedFile ? "✓" : "02"}
               </span>
-              <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-900">
+              <p className="text-sm font-semibold uppercase tracking-wide text-slate-900">
                 Upload your photo
-              </h2>
+              </p>
             </div>
 
             {!selectedFile ? (
@@ -353,9 +368,9 @@ export default function SpecialPhotoPageClient({
                 <span className="text-xs font-bold w-7 h-7 rounded-lg flex items-center justify-center bg-slate-900 text-white shrink-0">
                   03
                 </span>
-                <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-900">
+                <p className="text-sm font-semibold uppercase tracking-wide text-slate-900">
                   Submit
-                </h2>
+                </p>
               </div>
               <button
                 onClick={processFile}
@@ -463,27 +478,16 @@ export default function SpecialPhotoPageClient({
           {/* Section: Related Sizing Tools */}
           <div className="mt-12 sm:mt-16 pt-8 border-t border-slate-200">
             <h2 className="text-lg sm:text-xl font-bold text-slate-900 mb-5 sm:mb-6">
-              Popular Sizing & Photo Checker Tools
+              Related Photo Tools
             </h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-3">
-              <Link href="/us-passport-photo-editor" className="text-xs font-semibold text-slate-700 hover:text-lime-700 bg-slate-50 p-3 rounded-xl border border-slate-200 transition-colors block text-center">
-                US Passport Photo Editor
-              </Link>
-              <Link href="/us-visa-photo-editor" className="text-xs font-semibold text-slate-700 hover:text-lime-700 bg-slate-50 p-3 rounded-xl border border-slate-200 transition-colors block text-center">
-                US Visa Photo Editor
-              </Link>
-              <Link href="/indian-passport-size-photograph" className="text-xs font-semibold text-slate-700 hover:text-lime-700 bg-slate-50 p-3 rounded-xl border border-slate-200 transition-colors block text-center">
-                India ICAO Standard Photo
-              </Link>
-              <Link href="/ca" className="text-xs font-semibold text-slate-700 hover:text-lime-700 bg-slate-50 p-3 rounded-xl border border-slate-200 transition-colors block text-center">
-                Canada Visa Size Photo
-              </Link>
-              <Link href="/uk-passport-photo-checker-online-free" className="text-xs font-semibold text-slate-700 hover:text-lime-700 bg-slate-50 p-3 rounded-xl border border-slate-200 transition-colors block text-center">
-                UK Photo Checker
-              </Link>
-              <Link href="/digital-visa-photo-specs-2026" className="text-xs font-semibold text-slate-700 hover:text-lime-700 bg-slate-50 p-3 rounded-xl border border-slate-200 transition-colors block text-center">
-                Digital Visa Specs 2026
-              </Link>
+              {relatedLinks
+                .filter((l) => l.href !== `/${slug}`)
+                .map((l) => (
+                  <Link key={l.href} href={l.href} className="text-xs font-semibold text-slate-700 hover:text-lime-700 bg-slate-50 p-3 rounded-xl border border-slate-200 transition-colors block text-center">
+                    {l.label}
+                  </Link>
+                ))}
             </div>
           </div>
         </article>

@@ -7,50 +7,14 @@ import { useFaceVerification } from "@/hooks/useFaceVerification";
 import ValidationReportView from "@/app/visa-photo-validator/components/ValidationReport";
 import { getFilteredDocumentTypes, SUPPORTED_COUNTRIES } from "@/lib/specs";
 import { countryMapping } from "@/lib/external-api";
-
-// ─── FAQ Data ──────────────────────────────────────────────────────────────────
-
-const FAQ_ITEMS = [
-  {
-    q: "How does the biometric photo check work?",
-    a: "The validator runs your photo through MediaPipe's 468-point facial landmark model. It measures head-to-frame ratio, inter-ocular distance, background uniformity, lighting gradients, and expression — the same geometric checks automated embassy kiosks perform at border control.",
-  },
-  {
-    q: "Which countries does this tool support?",
-    a: "It supports 60+ countries including the United States, United Kingdom, India, Canada, all Schengen zone nations, Australia, and China. Each country uses its official ICAO or national embassy specification — not generic estimates.",
-  },
-  {
-    q: "Is this a US visa photo requirements checker for DS-160?",
-    a: "Yes. Select United States and Visa Photo to run a US visa photo test against the same 2×2 inch, plain white background, and head-size rules used on the DS-160 form. It also works as a general US embassy photo tool for other visa categories.",
-  },
-  {
-    q: "Can I use this as a green card or DV lottery (EDV) photo tool?",
-    a: "Yes. The same US specification applies to green card photos and the Electronic Diversity Visa (EDV) lottery, so this also works as a green card photo validator and a DV lottery photo checker before you upload to the official entry system.",
-  },
-  {
-    q: "Does the tool store or share my photo?",
-    a: "No. All processing runs client-side or in an ephemeral secure session. Your photo never touches a permanent server, never gets stored, and is never shared with any third party.",
-  },
-  {
-    q: "What exactly makes a photo 'embassy-grade' compliant?",
-    a: "Compliance means passing every strict criterion: correct pixel dimensions, neutral plain background, even shadow-free lighting, centered face, neutral expression, open eyes, closed mouth, no eyewear, and a head size that fills 70–80% of the frame height — depending on country.",
-  },
-  {
-    q: "Can I submit this report with my visa application?",
-    a: "This tool reduces rejection risk by catching issues before you submit. Always verify the latest photo requirements directly on your target country's official embassy, consulate, or U.S. Department of State website before applying.",
-  },
-  {
-    q: "What file formats and sizes are accepted?",
-    a: "You can upload JPEG, PNG, or WebP files up to 10 MB. The tool works best with high-resolution photos taken against a plain white or off-white background in good natural or studio light.",
-  },
-];
+import { FAQ_ITEMS } from "@/app/visa-photo-validator/content";
 
 // ─── Trust Stats ──────────────────────────────────────────────────────────────
 
 const TRUST_STATS = [
   { value: "60+", label: "Countries Supported" },
   { value: "ICAO", label: "Official Standard" },
-  { value: "99.2%", label: "Accuracy Rate" },
+  { value: "Free", label: "Unlimited Checks" },
   { value: "<3s", label: "Analysis Time" },
 ];
 
@@ -89,45 +53,44 @@ const REQUIREMENTS = [
   },
 ];
 
-// ─── US Immigration & Visa Document Types ─────────────────────────────────────
-
-const US_DOC_USE_CASES = [
-  {
-    icon: "🛂",
-    title: "DS-160 Visa Photo",
-    desc: "Run a DS-160 photo check before you upload to the CEAC portal. This US visa photo requirements checker applies the 2×2 in, plain-white-background, 50–69% head-height rule the State Department uses to accept or reject your file.",
-  },
-  {
-    icon: "🟢",
-    title: "Green Card & Adjustment of Status",
-    desc: "Use it as a green card photo validator for I-485 and immigrant visa submissions. It checks the same head positioning and background rules USCIS applies before you print or upload your photo.",
-  },
-  {
-    icon: "🎓",
-    title: "OPT & Student Visa Photos",
-    desc: "F-1, OPT, and student visa photos follow the identical U.S. Department of State passport photo specification. Run an OPT photo check here before submitting through your school's portal or USCIS.",
-  },
-  {
-    icon: "🎟️",
-    title: "DV Lottery / EDV Photo",
-    desc: "The Diversity Visa (EDV / DV Lottery) program is strict about photo composition — a rejected photo can disqualify an otherwise-winning entry. Use this as a DV lottery photo checker or EDV photo maker reference before you submit at dvprogram.state.gov.",
-  },
+// ─── Visa Photo Use Cases ─────────────────────────────────────────────────────
+const VISA_USE_CASES = [
   {
     icon: "🇺🇸",
-    title: "US Passport & Passport Renewal",
-    desc: "Works as a standalone US passport photo checker and US passport tool for new applications, renewals, and child passports — all of which share the 2×2 inch specification.",
+    title: "US Visa (DS-160)",
+    desc: "2×2 inch framing with the head filling 50–69% of the height and a white background. The CEAC upload needs a square JPEG of 600–1200 px, no larger than 240 KB, and no glasses.",
   },
   {
-    icon: "✂️",
-    title: "Free Online Cropping & Editing",
-    desc: "Beyond validation, use the upload zone as a free US visa photo cropping tool: drop in a phone photo and the report tells you exactly how to crop, resize, or edit the photo for US visa online before you download it.",
+    icon: "🇪🇺",
+    title: "Schengen Visa",
+    desc: "35×45 mm with a 32–36 mm head, neutral expression and a plain light background. The same photo works for most Schengen consulates and visa centres.",
+  },
+  {
+    icon: "🇮🇳",
+    title: "India e-Visa",
+    desc: "A square digital photo with your full face centred against a plain white or light background. Check the size limits shown on the e-Visa form before uploading.",
+  },
+  {
+    icon: "🇨🇳",
+    title: "China Visa",
+    desc: "33×48 mm with a 28–33 mm head height, white background, and ears and eyebrows visible. China is stricter than most countries on framing.",
+  },
+  {
+    icon: "🇨🇦",
+    title: "Canada Visitor Visa",
+    desc: "35×45 mm with a 31–36 mm head — smaller than the 50×70 mm Canadian passport photo — against a plain white or light background.",
+  },
+  {
+    icon: "🇦🇺",
+    title: "Australia Visa (ImmiAccount)",
+    desc: "35×45 mm with a 32–36 mm face height and a plain light background — the same rules as the Australian passport photo.",
   },
 ];
 
 // ─── Main Page ────────────────────────────────────────────────────────────────
 
 export default function ValidatorClient() {
-  const [selectedCountry, setSelectedCountry] = useState("IN");
+  const [selectedCountry, setSelectedCountry] = useState("US");
   const [selectedDocType, setSelectedDocType] = useState("passport");
   const [file, setFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -177,7 +140,7 @@ export default function ValidatorClient() {
   }, [file, selectedCountry, selectedDocType, verifyPhoto]);
 
   return (
-    <main className="min-h-screen bg-slate-100">
+    <div className="min-h-screen bg-slate-100">
 
       {/* ── HERO / TOOL ────────────────────────────────────────────── */}
       <section className="relative overflow-hidden bg-white border-b border-slate-200" aria-labelledby="validator-heading">
@@ -196,16 +159,15 @@ export default function ValidatorClient() {
 
           {/* H1 — primary SEO keyword */}
           <h1 id="validator-heading" className="text-left text-xl sm:text-2xl lg:text-[2rem] font-black text-slate-900 tracking-tight leading-[1.07] mb-5">
-            Passport &amp;  Visa Photo{" "}
+            Visa Photo Checker{" "}
             <span className="relative inline-block">
-              <span className="relative z-10 text-lime-600"> Requirements Checker for 50 countries</span>
-     
+              <span className="relative z-10 text-lime-600">— Free Validator for 60+ Countries</span>
             </span>
           </h1>
 
           {/* Meta description-quality subhead */}
           <p className="text-left text-sm sm:text-base text-slate-500 font-medium max-w-2xl mb-10 leading-relaxed">
-            A free <strong className="text-slate-700">US visa photo checker and cropping tool</strong> for DS-160, green card, OPT, and DV lottery photos — plus official embassy specs for the UK, India, Canada, Schengen, China, and 55+ more countries. Done in under 3 seconds.
+            Check your <strong className="text-slate-700">visa photo</strong> against the destination country&apos;s rules before you apply — US DS-160, Schengen, India, China, Canada, Australia and 55+ more. Results in under 3 seconds.
           </p>
 
           {/* Trust stats */}
@@ -228,7 +190,7 @@ export default function ValidatorClient() {
               <div className=" bg-gray-100 rounded-md p-3 sm:p-4 ">
                 <h2 className="text-base font-black text-slate-900 mb-5 flex items-center gap-3">
                   <span className="w-7 h-7 rounded-lg bg-lime-600 text-white flex items-center justify-center text-xs font-black">1</span>
-                  Choose Country &amp; Document
+                  Choose Destination Country
                 </h2>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <CountrySelector documentTypes={documentTypes} selectedCountry={selectedCountry} onSelect={setSelectedCountry} />
@@ -380,7 +342,7 @@ export default function ValidatorClient() {
           <div className="text-center mb-10">
             <p className="text-[11px] font-bold text-lime-600 uppercase tracking-[0.2em] mb-3">Related tools</p>
             <h2 id="related-heading" className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-              More passport &amp; visa photo tools
+              More photo checkers &amp; editors
             </h2>
             <p className="mt-3 text-sm text-slate-500 font-medium max-w-xl mx-auto leading-relaxed">
               Once your photo passes validation, use these dedicated editors from PixPassport to crop, resize, and export it to the exact spec.
@@ -389,13 +351,14 @@ export default function ValidatorClient() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 max-w-4xl mx-auto ">
             {[
               { href: "/passport-photo-checker", label: "Passport Photo Checker" },
-              { href: "/online-passport-photo-checker", label: "Online Passport Photo Checker" },
+              { href: "/us-check-photo-green-card", label: "Green Card Photo Checker" },
               { href: "/australian-passport-photo-checker", label: "Australian Passport Photo Checker" },
               { href: "/diversity-visa-lottery-photo-checker", label: "DV Lottery Photo Checker" },
               { href: "/uk-passport-photo-checker-online-free", label: "UK Passport Photo Checker" },
               { href: "/passport-size-photo-maker", label: "Passport Size Photo Maker" },
               { href: "/us-passport-photo-editor", label: "US Passport Photo Editor" },
               { href: "/us-visa-photo-editor", label: "US Visa Photo Editor" },
+              { href: "/schengen-visa-photo-editor", label: "Schengen Visa Photo Editor" },
               { href: "/icao-standard-photo", label: "ICAO Standard Photo Tool" },
             ].map(({ href, label }) => (
               <Link
@@ -417,10 +380,10 @@ export default function ValidatorClient() {
         <div className="text-center mb-12">
           <p className="text-[11px] font-bold text-lime-600 uppercase tracking-[0.2em] mb-3">Six-point analysis</p>
           <h2 id="checks-heading" className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
-            What the validator checks
+            What the visa photo checker tests
           </h2>
           <p className="mt-4 text-base text-slate-500 font-medium max-w-xl mx-auto leading-relaxed">
-            Every photo goes through the same geometric checks that automated embassy kiosks run at border control worldwide.
+            Every photo is measured against the biometric photo standard of the country you select.
           </p>
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -438,16 +401,16 @@ export default function ValidatorClient() {
       <section className="bg-white border-y border-slate-100" aria-labelledby="us-uses-heading">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-20 sm:py-24">
           <div className="text-center mb-12">
-            <p className="text-[11px] font-bold text-lime-600 uppercase tracking-[0.2em] mb-3">Built for US immigration paperwork</p>
+            <p className="text-[11px] font-bold text-lime-600 uppercase tracking-[0.2em] mb-3">Popular destinations</p>
             <h2 id="us-uses-heading" className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
-              One US visa photo tool, every document type
+              Visa photo rules for popular destinations
             </h2>
             <p className="mt-4 text-base text-slate-500 font-medium max-w-2xl mx-auto leading-relaxed">
-              The U.S. Department of State and USCIS use the same underlying photo composition rules across almost every visa and immigration form. That means one accurate photo cropping tool for US visa applications can double as a DS-160 photo tool, a green card photo validator, an OPT photo check, and a DV lottery photo checker.
+              Visa photos usually follow the destination&apos;s passport photo standard, but size and upload rules differ. Here&apos;s what the most-requested visas need. Applying for a green card or the DV Lottery? Use our dedicated <Link href="/us-check-photo-green-card" className="text-lime-700 font-bold hover:underline">Green Card Photo Checker</Link> or <Link href="/diversity-visa-lottery-photo-checker" className="text-lime-700 font-bold hover:underline">DV Lottery Photo Checker</Link>.
             </p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {US_DOC_USE_CASES.map(({ icon, title, desc }) => (
+            {VISA_USE_CASES.map(({ icon, title, desc }) => (
               <div key={title} className="bg-slate-50 rounded-xl p-6 border border-slate-100 hover:border-lime-200 hover:bg-white transition-all duration-200">
                 <div className="text-2xl mb-3">{icon}</div>
                 <h3 className="text-sm font-black text-slate-900 mb-2">{title}</h3>
@@ -467,26 +430,26 @@ export default function ValidatorClient() {
             <div>
               <p className="text-[11px] font-bold text-lime-600 uppercase tracking-[0.2em] mb-3">The hidden cost of a bad photo</p>
               <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight leading-tight mb-6">
-                Why embassies reject passport &amp; visa photos
+                Why embassies reject visa photos
               </h2>
               <div className="space-y-4 text-sm text-slate-500 font-medium leading-relaxed">
                 <p>
-                  Passport and visa offices reject millions of photos every year — not because applicants look wrong, but because their photos fail to meet precise technical specifications. A shadow on the background, a head that sits too high in the frame, or a slightly warm background tint are enough to trigger rejection and delay your application by weeks.
+                  Visa photos are rarely rejected because of how applicants look — they&apos;re rejected because they miss a technical rule. A shadow on the background, a head that sits too high in the frame, or a warm colour cast is enough to send an application back.
                 </p>
                 <p>
-                  US visa and immigration photos follow the <strong className="text-slate-700">U.S. Department of State specification</strong>, which mirrors the international ICAO Doc 9303 biometric standard used for machine-readable passports worldwide. It defines exact pixel dimensions, head-to-frame ratios, inter-ocular distances, background luminance, and lighting conditions — the same rules an american visa photo checker needs to apply to be useful.
+                  Most countries base their visa photo rules on the <strong className="text-slate-700">ICAO Doc 9303</strong> biometric standard, which defines head-to-frame ratios, eye position, background and lighting. Each country then adds its own size and upload rules.
                 </p>
                 <p>
-                  Our validator applies those specifications to your photo before you submit — whether you're editing a photo for a US visa online, running a DS-160 photo check, or testing a photo for the DV lottery — so you catch the problem at home, not at the consulate counter.
+                  This checker tests those biometric rules before you submit, so you catch the problem at home rather than at the visa centre.
                 </p>
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
               {[
-                { stat: "35%", label: "of first-time applicants submit a non-compliant photo" },
-                { stat: "14 days", label: "average delay a rejected photo adds to a visa timeline" },
-                { stat: "ICAO 9303", label: "the standard every passport-issuing country follows" },
-                { stat: "468 pts", label: "facial landmarks MediaPipe checks in every scan" },
+                { stat: "35×45 mm", label: "the most common visa photo size worldwide" },
+                { stat: "2×2 in", label: "the US visa photo size (600–1200 px digital)" },
+                { stat: "6 months", label: "the maximum photo age most consulates accept" },
+                { stat: "ICAO 9303", label: "the biometric standard most visa photo rules build on" },
               ].map(({ stat, label }) => (
                 <div key={stat} className="bg-white border border-slate-100 rounded-xl p-5">
                   <div className="text-2xl font-black text-lime-600 mb-1">{stat}</div>
@@ -496,13 +459,13 @@ export default function ValidatorClient() {
             </div>
           </div>
 
-          {/* Block 1b: DS-160 / State Dept / DV lottery deep dive */}
+          {/* Block 1b: Visa vs passport photo differences */}
           <div className="grid lg:grid-cols-2 gap-12 xl:gap-20 items-center mb-20">
             <div className="order-2 lg:order-1 grid grid-cols-1 gap-4">
               {[
-                { title: "DS-160 & nonimmigrant visas", desc: "Applicants filing the DS-160 online often search for a \"ds160 photo tool\" or \"ds-160 photo checker\" only after a photo is rejected on the CEAC upload screen. Running your photo through this US embassy photo tool first — checking size, background, and head position — avoids that resubmission loop." },
-                { title: "State Department photo cropping", desc: "There is no single official \"us department of state photo cropping tool,\" but the department publishes an exact 2×2 inch, 600×600 pixel specification. This validator functions as an unofficial state dept passport photo tool: upload, get scored, then crop to match before you print or upload." },
-                { title: "DV Lottery / EDV submissions", desc: "The Electronic Diversity Visa program is unusually strict — an out-of-spec photo can disqualify an entry outright. Use this page as a dv lottery photo size editor reference or edv photo maker check: it flags head-size, background, and expression issues before you submit at dvprogram.state.gov." },
+                { title: "Same biometric rules", desc: "Head size, eye line, a neutral expression, even lighting and a plain background are required for almost every visa and passport photo. The checker tests all of these." },
+                { title: "Different sizes", desc: "Some countries use a different size for visas than for passports — Canada uses 35×45 mm for visas but 50×70 mm for passports. Check the table below before printing." },
+                { title: "Different upload rules", desc: "Online visa forms often add pixel and file-size limits, such as the US DS-160 (600–1200 px square, max 240 KB) or the India e-Visa's square upload." },
               ].map(({ title, desc }) => (
                 <div key={title} className="bg-white border border-slate-100 rounded-xl p-6 shadow-sm">
                   <h3 className="text-sm font-black text-slate-900 mb-2">{title}</h3>
@@ -511,16 +474,16 @@ export default function ValidatorClient() {
               ))}
             </div>
             <div className="order-1 lg:order-2">
-              <p className="text-[11px] font-bold text-lime-600 uppercase tracking-[0.2em] mb-3">Form-specific guidance</p>
+              <p className="text-[11px] font-bold text-lime-600 uppercase tracking-[0.2em] mb-3">Visa vs passport</p>
               <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight leading-tight mb-6">
-                DS-160, State Department, and DV Lottery photo rules
+                Visa photo vs passport photo: what&apos;s different
               </h2>
               <div className="space-y-4 text-sm text-slate-500 font-medium leading-relaxed">
                 <p>
-                  US visa and lottery photo requirements are published across multiple government portals, which is why so many applicants search separately for a ds 160 photo tool, a us visa photo test, and a us green card lottery photo tool — even though they all check the same underlying spec.
+                  For most destinations, a visa photo follows the same biometric rules as that country&apos;s passport photo. The differences are usually in the print size and in the digital upload limits of online visa forms.
                 </p>
                 <p>
-                  This page consolidates that logic into a single free us visa photo tool: choose "United States" and either Passport or Visa Photo, upload your image, and get a scored, itemized report you can act on immediately — no download, no account, no watermark.
+                  Choose your destination, upload your photo, and get an itemised report on the biometric checks — then confirm the size and file rules for your specific visa form before you submit.
                 </p>
               </div>
             </div>
@@ -531,10 +494,10 @@ export default function ValidatorClient() {
             <div className="text-center mb-10">
               <p className="text-[11px] font-bold text-lime-600 uppercase tracking-[0.2em] mb-3">Country requirements</p>
               <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
-                Passport photo rules by country
+                Visa photo requirements by country
               </h2>
               <p className="mt-4 text-base text-slate-500 font-medium max-w-2xl mx-auto leading-relaxed">
-                Every country sets its own exact photo dimensions and rules. Here are the most common requirements our tool validates against:
+                Every country sets its own photo size and rules. Here are the most-requested visa photo requirements:
               </p>
             </div>
             <div className="overflow-x-auto rounded-xl border border-slate-100 shadow-lg shadow-slate-200/40 bg-white">
@@ -544,20 +507,18 @@ export default function ValidatorClient() {
                     <th className="text-left px-5 py-3.5 text-[10px] font-black text-slate-500 uppercase tracking-widest">Country</th>
                     <th className="text-left px-5 py-3.5 text-[10px] font-black text-slate-500 uppercase tracking-widest">Size</th>
                     <th className="text-left px-5 py-3.5 text-[10px] font-black text-slate-500 uppercase tracking-widest">Background</th>
-                    <th className="text-left px-5 py-3.5 text-[10px] font-black text-slate-500 uppercase tracking-widest">Head coverage</th>
-                    <th className="text-left px-5 py-3.5 text-[10px] font-black text-slate-500 uppercase tracking-widest">Glasses</th>
+                    <th className="text-left px-5 py-3.5 text-[10px] font-black text-slate-500 uppercase tracking-widest">Head height</th>
                   </tr>
                 </thead>
                 <tbody>
                   {[
-                    { flag: "🇺🇸", country: "USA (Passport / Visa / DS-160)", size: "2×2 in (51×51 mm)", bg: "White", head: "50–69% of frame", glasses: "Not permitted" },
-                    { flag: "🇬🇧", country: "UK", size: "35×45 mm", bg: "Cream / light grey", head: "29–34 mm tall", glasses: "Not permitted" },
-                    { flag: "🇮🇳", country: "India", size: "35×35 mm", bg: "White", head: "70–80% of frame", glasses: "Not permitted" },
-                    { flag: "🇨🇦", country: "Canada", size: "50×70 mm", bg: "White", head: "31–36 mm tall", glasses: "Not permitted" },
-                    { flag: "🇩🇪", country: "Germany (Schengen)", size: "35×45 mm", bg: "Light grey / white", head: "70–80% of frame", glasses: "Not permitted" },
-                    { flag: "🇨🇳", country: "China", size: "33×48 mm", bg: "White", head: "28–33 mm tall", glasses: "Not permitted" },
-                    { flag: "🇦🇺", country: "Australia", size: "35×45 mm", bg: "White or off-white", head: "32–36 mm tall", glasses: "Not permitted" },
-                  ].map(({ flag, country, size, bg, head, glasses }) => (
+                    { flag: "🇺🇸", country: "USA (DS-160 visa)", size: "2×2 in / 600–1200 px square", bg: "White", head: "50–69% of frame" },
+                    { flag: "🇪🇺", country: "Schengen", size: "35×45 mm", bg: "Plain light", head: "32–36 mm" },
+                    { flag: "🇮🇳", country: "India (e-Visa)", size: "Square digital photo", bg: "White or light", head: "Full face, centred" },
+                    { flag: "🇨🇳", country: "China", size: "33×48 mm", bg: "White", head: "28–33 mm" },
+                    { flag: "🇨🇦", country: "Canada (visitor visa)", size: "35×45 mm", bg: "White or light", head: "31–36 mm" },
+                    { flag: "🇦🇺", country: "Australia", size: "35×45 mm", bg: "Plain white or light grey", head: "32–36 mm" },
+                  ].map(({ flag, country, size, bg, head }) => (
                     <tr key={country} className="border-b border-slate-50 last:border-0 hover:bg-slate-50/50 transition-colors">
                       <td className="px-5 py-4 font-bold text-slate-800 flex items-center gap-2">
                         <span>{flag}</span>{country}
@@ -565,16 +526,13 @@ export default function ValidatorClient() {
                       <td className="px-5 py-4 text-slate-500 font-medium">{size}</td>
                       <td className="px-5 py-4 text-slate-500 font-medium">{bg}</td>
                       <td className="px-5 py-4 text-slate-500 font-medium">{head}</td>
-                      <td className="px-5 py-4">
-                        <span className="inline-flex items-center gap-1.5 bg-red-50 text-red-600 text-[10px] font-bold px-2.5 py-1 rounded-full border border-red-100">{glasses}</span>
-                      </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
             <p className="text-[11px] text-slate-400 font-medium text-center mt-4">
-              Requirements shown are current as of 2025. Always confirm on the official embassy or U.S. Department of State website before submitting.
+              Requirements shown are current as of 2026. Always confirm on the official embassy, consulate or visa website before submitting.
             </p>
           </div>
 
@@ -583,24 +541,24 @@ export default function ValidatorClient() {
             <div>
               <p className="text-[11px] font-bold text-lime-600 uppercase tracking-[0.2em] mb-3">Under the hood</p>
               <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight leading-tight mb-6">
-                How this passport &amp; visa photo checker works
+                How the visa photo checker works
               </h2>
               <div className="space-y-4 text-sm text-slate-500 font-medium leading-relaxed">
                 <p>
-                  When you upload a photo, <strong className="text-slate-700">Google MediaPipe Face Mesh</strong> detects and maps 468 facial landmarks in real time — key points around your eyes, nose, mouth, jawline, and forehead. From those points, the tool calculates more than twelve geometric ratios used by passport and visa agencies, including the U.S. Department of State.
+                  When you upload a photo, <strong className="text-slate-700">Google MediaPipe Face Mesh</strong> detects and maps 468 facial landmarks in real time — key points around your eyes, nose, mouth, jawline, and forehead. From those points, the tool calculates the geometric ratios visa and passport agencies use.
                 </p>
                 <p>
-                  It checks your <strong className="text-slate-700">head-to-frame height ratio</strong> to confirm your face fills the correct percentage of the image. It measures the <strong className="text-slate-700">inter-ocular distance</strong> — the pixel gap between your pupils — to verify the photo meets the biometric alignment standard. It samples the background to check for shadows, color cast, and pattern violations, which matters just as much for a USCIS photo composition tool check as it does for a Schengen visa photo.
+                  It checks your <strong className="text-slate-700">head-to-frame height ratio</strong> to confirm your face fills the correct percentage of the image. It measures the <strong className="text-slate-700">inter-ocular distance</strong> — the pixel gap between your pupils — to verify the photo meets the biometric alignment standard. It samples the background to check for shadows, color cast, and pattern violations, — the most common reasons visa photos are rejected.
                 </p>
                 <p>
-                  All results score against the specification loaded for your country and document type. The final report tells you exactly which checks passed, which failed, and what you need to do to fix each issue before you print, crop, or submit — whether that's a passport photo, a US visa photo, or a DV lottery entry.
+                  All results are scored against the photo standard of the country you select. The report tells you which checks passed, which failed, and what to fix before you print, crop, or submit.
                 </p>
               </div>
             </div>
             <div className="space-y-3">
               {[
-                { step: "01", title: "Select country and document type", desc: "The tool loads the exact embassy specification — pixel dimensions, head ratios, background rules, and expression requirements — for your destination, including United States passport, visa, and DS-160 profiles." },
-                { step: "02", title: "Upload your JPEG, PNG, or WebP photo", desc: "Drop your photo into the upload zone. No account required. Your photo stays in the browser and is never saved to any server." },
+                { step: "01", title: "Select your destination country", desc: "The tool loads that country's photo specification — head ratios, eye line, background and expression rules." },
+                { step: "02", title: "Upload your JPEG, PNG, or WebP photo", desc: "Drop your photo into the upload zone. No account required. It's sent over an encrypted connection to run the check." },
                 { step: "03", title: "Biometric scan runs in under 3 seconds", desc: "MediaPipe maps 468 facial landmarks and runs all geometric, lighting, and background checks against the loaded specification." },
                 { step: "04", title: "Read your scored compliance report", desc: "Every check shows as Pass, Warning, or Fail with a reason and a fix instruction. Your overall compliance score tells you at a glance whether the photo is ready to submit." },
               ].map(({ step, title, desc }) => (
@@ -623,10 +581,10 @@ export default function ValidatorClient() {
         <div className="text-center mb-12">
           <p className="text-[11px] font-bold text-lime-600 uppercase tracking-[0.2em] mb-3">Before you upload</p>
           <h2 id="tips-heading" className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
-            How to take a compliant passport photo at home
+            How to take a visa photo at home
           </h2>
           <p className="mt-4 text-base text-slate-500 font-medium max-w-xl mx-auto leading-relaxed">
-            You do not need a studio. These steps produce an embassy-grade photo with any modern smartphone — ready for a passport, US visa, or green card application.
+            You don&apos;t need a studio. These steps produce a compliant visa photo with any modern smartphone.
           </p>
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -653,7 +611,7 @@ export default function ValidatorClient() {
           <div className="text-center mb-12">
             <p className="text-[11px] font-bold text-lime-600 uppercase tracking-[0.2em] mb-3">FAQ</p>
             <h2 id="faq-heading" className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
-              Common questions
+              Visa photo checker FAQ
             </h2>
           </div>
           <div className="space-y-3">
@@ -672,10 +630,10 @@ export default function ValidatorClient() {
           <div className="relative z-10">
             <p className="text-[11px] font-bold text-lime-200 uppercase tracking-[0.2em] mb-3">Ready?</p>
             <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight mb-4">
-              Check your passport or US visa photo in seconds
+              Check your visa photo in seconds
             </h2>
             <p className="text-lime-100 font-medium text-base max-w-md mx-auto mb-8 leading-relaxed">
-              Avoid a costly rejection. Upload your photo now and get a full embassy-grade compliance report — no account needed, completely free.
+              Avoid a costly rejection. Upload your photo now and get a full compliance report — no account needed, completely free.
             </p>
             <button
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
@@ -690,7 +648,7 @@ export default function ValidatorClient() {
         </div>
       </section>
 
-    </main>
+    </div>
   );
 }
 
@@ -893,9 +851,7 @@ function FAQItem({ item }: { item: (typeof FAQ_ITEMS)[0] }) {
           </svg>
         </span>
       </button>
-      {open && (
-        <p className="px-6 pb-5 text-sm text-slate-500 leading-relaxed font-medium">{item.a}</p>
-      )}
+      <p hidden={!open} className="px-6 pb-5 text-sm text-slate-500 leading-relaxed font-medium">{item.a}</p>
     </div>
   );
 }

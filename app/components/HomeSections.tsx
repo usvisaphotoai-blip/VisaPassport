@@ -323,7 +323,7 @@ export default function HomeSections({
           Every year, thousands of passport and visa applications are delayed
           because of a photo that doesn't meet size or background rules.
           <strong> PixPassport</strong> is a free{" "}
-          <a href="/online-passport-photo-checker" style={{ color: "#3d8c6e", fontWeight: 600 }}>
+          <a href="/passport-photo-checker" style={{ color: "#3d8c6e", fontWeight: 600 }}>
             online passport photo checker
           </a>{" "}
           that crops, resizes, and validates your photo against official{" "}

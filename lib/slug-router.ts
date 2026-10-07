@@ -106,5 +106,12 @@ export function createMetadata({
       type: "website",
       ...openGraph,
     },
+    // Without this, slug pages inherit the homepage's Twitter title/description from the root layout.
+    twitter: {
+      card: "summary_large_image",
+      title: openGraph?.title ?? title,
+      description: openGraph?.description ?? description,
+      ...(openGraph?.images && { images: openGraph.images }),
+    },
   };
 }

@@ -116,7 +116,13 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/visa-photo-validator/online-passport-photo-checker",
-        destination: "/online-passport-photo-checker",
+        destination: "/passport-photo-checker",
+        permanent: true,
+      },
+      // Consolidated: same search intent as /passport-photo-checker
+      {
+        source: "/online-passport-photo-checker",
+        destination: "/passport-photo-checker",
         permanent: true,
       },
       // Normalize ICAO slashes

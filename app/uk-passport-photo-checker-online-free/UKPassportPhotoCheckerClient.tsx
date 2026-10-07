@@ -4,6 +4,7 @@ import React, { useState, useCallback, useEffect } from "react";
 import Link from "next/link";
 import { useFaceVerification } from "@/hooks/useFaceVerification";
 import ValidationReportView from "@/app/visa-photo-validator/components/ValidationReport";
+import { FAQ_ITEMS } from "./content";
 
 const UK_COUNTRY_CODE = "GB"; // API is always called with "GB"
 
@@ -18,37 +19,6 @@ const IMAGE_PLACEHOLDERS = {
 
 // ─── FAQ data ────────────────────────────────────────────────────────────────
 
-const FAQ_ITEMS = [
-  {
-    q: "Is this passport photo checker UK free to use?",
-    a: "Yes. This passport photo checker UK tool is completely free, with no account, sign-up, or watermark. Upload your photo, get your compliance report, and download your result at no cost.",
-  },
-  {
-    q: "Does this replace the official GOV.UK passport photo checker?",
-    a: "No. This is an independent online passport photo checker UK applicants can use to catch issues before applying. Always confirm your final photo against the official GOV.UK passport photo checker and current HM Passport Office guidance before you submit your application.",
-  },
-  {
-    q: "How accurate is this UK passport digital photo checker?",
-    a: "Our tool achieves 99.2% accuracy, tested against a benchmark dataset of 10,000+ UK passport images verified against HMPO and ICAO 9303 standards. It uses MediaPipe's 468-point facial landmark model to measure head position, face size, eye line, and background uniformity.",
-  },
-  {
-    q: "Can I use this as a passport photo verification UK tool for a child's photo?",
-    a: "Yes, the checker supports both adult and child passport photos and applies the same UK size, background, and expression rules HM Passport Office uses, with additional guidance for infants where expression rules are relaxed.",
-  },
-  {
-    q: "What size does a UK passport photo need to be?",
-    a: "UK passport photos must be 35mm wide by 45mm tall, with the head height between 29mm and 34mm from chin to crown, taken against a plain cream or light grey background.",
-  },
-  {
-    q: "Does this online passport photo checker UK tool store my photo?",
-    a: "No. Your photo is processed to generate your report and is never stored permanently or shared with any third party.",
-  },
-  {
-    q: "Can I check a UK visa photo with this tool too?",
-    a: "Yes. Switch the document type to UK Visa Photo and the checker will apply the correct UK visa photo specification alongside the standard passport photo checker UK rules.",
-  },
-];
-
 const UK_REQUIREMENTS = [
   { emoji: "📐", title: "Exact size", desc: "35mm × 45mm, head height 29–34mm — checked to the pixel." },
   { emoji: "🎨", title: "Cream / light grey background", desc: "Plain, uniform, no shadows or texture." },
@@ -59,7 +29,7 @@ const UK_REQUIREMENTS = [
 ];
 
 const HOW_IT_WORKS = [
-  { title: "Upload your photo", desc: "Drop in a JPEG, PNG, or WebP file up to 10MB. Nothing is stored." },
+  { title: "Upload your photo", desc: "Drop in a JPEG, PNG, or WebP file up to 10MB, sent over an encrypted connection." },
   { title: "We run the UK spec", desc: "Size, head ratio, background, and expression rules are checked against your photo." },
   { title: "Get a scored report", desc: "Every check shows Pass, Warning, or Fail with a plain-English reason." },
   { title: "Retake or submit", desc: "Fix flagged issues and re-check, or move on to your GOV.UK application." },
@@ -148,7 +118,7 @@ function FAQItem({ item }: { item: (typeof FAQ_ITEMS)[0] }) {
           </svg>
         </span>
       </button>
-      {open && <p className="px-6 pb-5 text-sm text-slate-500 leading-relaxed font-medium">{item.a}</p>}
+      <p hidden={!open} className="px-6 pb-5 text-sm text-slate-500 leading-relaxed font-medium">{item.a}</p>
     </div>
   );
 }
@@ -213,7 +183,7 @@ export default function UKPassportPhotoCheckerClient() {
               ✓ Reviewed by biometric photo specialists
             </span>
             <span className="text-slate-400">•</span>
-            <span>Last updated July 2026</span>
+            <span>Last updated October 2026</span>
           </div>
 
           <div className="text-center mb-4 sm:mb-5">
@@ -225,7 +195,7 @@ export default function UKPassportPhotoCheckerClient() {
               UK Passport Photo Checker <span className="text-lime-600">Online — Free</span>
             </h1>
             <p className="text-xs sm:text-sm text-slate-500 font-medium max-w-lg mx-auto leading-relaxed">
-              A free <strong className="text-slate-700">passport photo checker UK</strong> applicants trust — instant GOV.UK-standard compliance results.
+              Check your photo against the <strong className="text-slate-700">GOV.UK passport photo rules</strong> before you apply — instant results, free.
             </p>
           </div>
 
@@ -357,7 +327,7 @@ export default function UKPassportPhotoCheckerClient() {
               {[
                 { value: "35×45mm", label: "UK Size" },
                 { value: "GOV.UK", label: "Spec" },
-                { value: "99.2%", label: "Accuracy" },
+                { value: "29–34mm", label: "Head" },
                 { value: "<3s", label: "Speed" },
               ].map(({ value, label }) => (
                 <div key={label} className="flex items-center gap-1.5 text-xs">
@@ -366,9 +336,6 @@ export default function UKPassportPhotoCheckerClient() {
                 </div>
               ))}
             </div>
-            <p className="text-[10px] text-slate-400 font-medium text-center">
-              *99.2% accuracy verified across 10,000+ benchmark passport photos evaluated against HMPO &amp; ICAO 9303 specifications.
-            </p>
           </div>
 
         </div>
@@ -651,7 +618,7 @@ export default function UKPassportPhotoCheckerClient() {
                 Our verification logic is continuously reviewed and updated by biometric photo specialists to mirror current HM Passport Office standards.
               </p>
               <span className="text-[11px] text-lime-400 font-bold block">
-                Last updated: July 2026
+                Last updated: October 2026
               </span>
             </div>
 
@@ -659,9 +626,9 @@ export default function UKPassportPhotoCheckerClient() {
               <div className="w-10 h-10 rounded-lg bg-sky-500/20 text-sky-400 flex items-center justify-center font-bold mb-4 text-xl">
                 📊
               </div>
-              <h3 className="font-black text-base mb-2">99.2% Accuracy Proven</h3>
+              <h3 className="font-black text-base mb-2">468-Point Face Mapping</h3>
               <p className="text-xs text-slate-300 font-medium leading-relaxed">
-                Tested against a benchmark database of 10,000+ passport images to ensure high precision facial landmark detection and background verification.
+                Facial landmark detection measures head size, eye line and centering, while a separate scan checks background uniformity and lighting.
               </p>
             </div>
 
@@ -708,7 +675,7 @@ export default function UKPassportPhotoCheckerClient() {
                   UK passport photo rules follow the <strong className="text-slate-700">HM Passport Office specification</strong>, which sits alongside the international ICAO biometric standard. It defines exact pixel and millimetre dimensions, head-to-frame ratio, background tone, and lighting conditions your photo must meet.
                 </p>
                 <p>
-                  This <strong className="text-slate-700">passport photo checker UK</strong> tool applies that specification to your photo before you apply — so you catch the problem at home, not after a rejected application.
+                  This <strong className="text-slate-700">UK passport photo checker</strong> applies that specification to your photo before you apply — so you catch the problem at home, not after a rejected application.
                 </p>
               </div>
             </div>
@@ -717,7 +684,7 @@ export default function UKPassportPhotoCheckerClient() {
                 { stat: "35×45mm", label: "the official UK passport photo size" },
                 { stat: "29–34mm", label: "required head height, chin to crown" },
                 { stat: "GOV.UK", label: "the standard HM Passport Office applies" },
-                { stat: "10,000+", label: "passport images in 99.2% accuracy dataset" },
+                { stat: "6 months", label: "maximum age of your photo" },
               ].map(({ stat, label }) => (
                 <div key={stat} className="bg-slate-50 border border-slate-100 rounded-xl p-4">
                   <div className="text-xl font-black text-lime-600 mb-1">{stat}</div>
@@ -734,7 +701,7 @@ export default function UKPassportPhotoCheckerClient() {
                 Official UK passport photo rules
               </h2>
               <p className="mt-3 text-sm text-slate-500 font-medium max-w-2xl mx-auto leading-relaxed">
-                These are the exact rules our online passport photo checker UK tool validates your photo against:
+                These are the exact rules our UK passport photo checker tests your photo against:
               </p>
             </div>
             <div className="overflow-x-auto rounded-xl border border-slate-100 shadow-lg shadow-slate-200/40">
@@ -856,20 +823,20 @@ export default function UKPassportPhotoCheckerClient() {
             </Link>
 
             <Link
-              href="/online-passport-photo-checker"
+              href="/driving-licence-photograph"
               className="bg-white p-4 rounded-xl border border-slate-200 hover:border-lime-400 hover:shadow-md transition-all flex flex-col justify-between group"
             >
               <div>
-                <span className="text-base mb-1.5 block">⚡</span>
+                <span className="text-base mb-1.5 block">🚗</span>
                 <h4 className="font-bold text-sm text-slate-900 group-hover:text-lime-700 transition-colors">
-                  Online Photo Checker
+                  UK Driving Licence Photo
                 </h4>
                 <p className="text-xs text-slate-500 font-medium mt-1">
-                  Free instant in-browser test with zero downloads or accounts.
+                  Create a DVLA-compliant photo for your provisional or renewed licence.
                 </p>
               </div>
               <span className="text-xs font-bold text-lime-600 mt-3 flex items-center gap-1">
-                Open Online Checker →
+                Make Licence Photo →
               </span>
             </Link>
 
@@ -934,10 +901,10 @@ export default function UKPassportPhotoCheckerClient() {
               <div>
                 <span className="text-base mb-1.5 block">🛡️</span>
                 <h4 className="font-bold text-sm text-slate-900 group-hover:text-lime-700 transition-colors">
-                  Free Photo Validator
+                  Visa Photo Checker
                 </h4>
                 <p className="text-xs text-slate-500 font-medium mt-1">
-                  Biometric compliance scan for passports and visas for 50+ countries.
+                  Check a visa photo for Schengen, US, India, China and 55+ more countries.
                 </p>
               </div>
               <span className="text-xs font-bold text-lime-600 mt-3 flex items-center gap-1">

@@ -6,12 +6,9 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "DV Lottery Photo Checker – Free Diversity Visa & Green Card Photo Validator",
+  title: "DV Lottery Photo Checker – Free Diversity Visa Entry Photo Test",
   description:
-    "Free DV Lottery photo checker for the Diversity Visa program. Instantly verify the 600×600px square size, 50–69% head height, 240KB file limit, and every US Department of State requirement before you submit.",
-  keywords: [
-  
-  ],
+    "Free DV Lottery photo checker for your Diversity Visa entry. Check the 600×600 px square, 50–69% head height, eye line, white background and no-glasses rule before you submit on dvprogram.state.gov.",
   alternates: {
     canonical: "https://www.pixpassport.com/diversity-visa-lottery-photo-checker",
     languages: {
@@ -20,7 +17,7 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "DV Lottery Photo Checker – Free Green Card Photo Validator",
+    title: "DV Lottery Photo Checker – Free Diversity Visa Entry Photo Test",
     description:
       "Don't get disqualified over a photo. Check your DV Lottery entry photo against every official rule: 600×600px, 50–69% head height, 240KB, no glasses, plain white background.",
     url: "https://www.pixpassport.com/diversity-visa-lottery-photo-checker",
@@ -38,7 +35,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "DV Lottery Photo Checker – Free Green Card Photo Validator",
+    title: "DV Lottery Photo Checker – Free Diversity Visa Entry Photo Test",
     description:
       "Check your DV Lottery photo before you submit it. Free test against every US State Department rule: size, head height, file size, and background.",
     images: ["https://res.cloudinary.com/dipzpwbbk/image/upload/v1785679206/icao_visa_photo_example_whvfqt.jpg"],
@@ -115,7 +112,7 @@ export default function DVLotteryPhotoCheckerPage() {
     {
       question: "What happens if the photo checker flags an issue?",
       answer:
-        "You'll see which specific rule the photo failed — for example, head height outside the allowed range, a non-white background, or a file over the 240 KB limit — along with a plain-language explanation of what to change. Retake or re-edit the photo, upload it again, and repeat the check until every item comes back passing before you submit it on dvprogram.state.gov.",
+        "You'll see which specific rule the photo failed — for example, head height outside the allowed range, eyes outside the 56–69% band, or a non-white background — along with a plain-language explanation of what to change. Retake or re-edit the photo, upload it again, and repeat the check until every item comes back passing before you submit it on dvprogram.state.gov.",
     },
   ];
 
@@ -185,12 +182,13 @@ export default function DVLotteryPhotoCheckerPage() {
       />
       <PhotoCheckerTool
         initialCountry="US"
-        countryName="United States (DV / Green Card)"
+        lockCountry
+        countryName="United States (Diversity Visa)"
         countryFlag="🇺🇸"
         initialDocType="passport"
         badgeText="🇺🇸 Official U.S. State Department DV Photo Standards · Free & Instant"
         title="DV Lottery Photo Checker"
-        highlightTitle="Free Green Card Photo Validator"
+        highlightTitle="Free Diversity Visa Entry Photo Test"
         subtitle="One bad photo is enough to get a Diversity Visa entry thrown out with no warning. Upload yours here first and see exactly whether it meets the 600×600px square size, 50–69% head height, 240KB file cap, and every other rule the dvprogram.state.gov portal checks for."
         specs={[
           { label: "Dimensions", value: "600 × 600 px (2×2 in / 51×51 mm)" },
@@ -228,8 +226,8 @@ export default function DVLotteryPhotoCheckerPage() {
           },
           {
             icon: "💾",
-            title: "File Size Under 240 KB",
-            desc: "Verifies your JPEG sits under the strict 240 KB ceiling in 24-bit sRGB color without compression artifacts that would blur facial detail.",
+            title: "240 KB JPEG Limit",
+            desc: "The entry portal rejects JPEGs over 240 KB. Compress before you upload, but keep the full 600×600 px so facial detail stays sharp.",
           },
           {
             icon: "😐",
@@ -242,7 +240,17 @@ export default function DVLotteryPhotoCheckerPage() {
             desc: "Reminds you the photo needs to be less than six months old and free of filters, color grading, or heavy retouching that can distort skin tone.",
           },
         ]}
+        requirementsHeading="What the DV Lottery Photo Checker Verifies"
+        requirementsIntro="Every check follows the U.S. Department of State photo rules for the Electronic Diversity Visa (E-DV) entry form."
+        stepsHeading="How to Check Your DV Lottery Photo"
+        steps={[
+          { title: "Take a Fresh Photo", desc: "A photo from the last six months, against a plain white wall, with no glasses. One photo per family member." },
+          { title: "Upload and Check", desc: "The checker measures the 600×600 px square, 50–69% head height and 56–69% eye line." },
+          { title: "Submit on the Official Site", desc: "Once every check passes, upload it only on dvprogram.state.gov — entry is free." },
+        ]}
+        faqHeading="DV Lottery Photo FAQ"
         faqs={faqs}
+        relatedHeading="More US Photo Checkers & Tools"
         relatedTools={[
           {
             title: "Passport Photo Checker",
@@ -251,10 +259,10 @@ export default function DVLotteryPhotoCheckerPage() {
             icon: "🌍",
           },
           {
-            title: "Online Photo Checker",
-            desc: "Instant in-browser passport and visa photo test with no download needed.",
-            href: "/online-passport-photo-checker",
-            icon: "⚡",
+            title: "Green Card Photo Checker",
+            desc: "2×2 inch photos for USCIS forms like I-485, I-130 and I-765.",
+            href: "/us-check-photo-green-card",
+            icon: "🟢",
           },
           {
             title: "Australian Photo Checker",
@@ -275,8 +283,8 @@ export default function DVLotteryPhotoCheckerPage() {
             icon: "🇺🇸",
           },
           {
-            title: "Visa Photo Validator",
-            desc: "Run biometric checks against official ICAO-based requirements for 50+ countries.",
+            title: "Visa Photo Checker",
+            desc: "Check a visa photo for Schengen, India, China and more.",
             href: "/visa-photo-validator",
             icon: "🌐",
           },

@@ -60,11 +60,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
     case "special": {
       const specialPage = route.data;
+      const { image, ...og } = specialPage.openGraph;
       return createMetadata({
         title: specialPage.title,
         description: specialPage.metaDescription,
         canonical: `https://www.pixpassport.com/${slug}`,
-        openGraph: specialPage.openGraph,
+        openGraph: { ...og, ...(image && { images: [{ url: image, alt: specialPage.heroTitle }] }) },
       });
     }
 
@@ -232,13 +233,49 @@ export default async function Page({ params }: PageProps) {
 
     case "special": {
       const specialPage = route.data;
+      const pageUrl = `https://www.pixpassport.com/${slug}`;
+      const specialSchemas = [
+        {
+          "@context": "https://schema.org",
+          "@type": "SoftwareApplication",
+          url: pageUrl,
+          operatingSystem: "All",
+          offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+          ...specialPage.jsonLd,
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          name: specialPage.title,
+          url: pageUrl,
+          description: specialPage.metaDescription,
+          isPartOf: { "@type": "WebSite", name: "PixPassport", url: "https://www.pixpassport.com/" },
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: specialPage.faqs.map((f) => ({
+            "@type": "Question",
+            name: f.q,
+            acceptedAnswer: { "@type": "Answer", text: f.a },
+          })),
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Home", item: "https://www.pixpassport.com/" },
+            { "@type": "ListItem", position: 2, name: specialPage.breadcrumbLabel ?? specialPage.title, item: pageUrl },
+          ],
+        },
+      ];
       return (
         <>
           <script
             type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(specialPage.jsonLd) }}
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(specialSchemas) }}
           />
-          <SpecialPhotoPageClient {...specialPage} />
+          <SpecialPhotoPageClient {...specialPage} slug={slug} />
         </>
       );
     }

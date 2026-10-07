@@ -20,9 +20,8 @@ export default function Footer() {
     {
       title: "Compliance Checkers",
       items: [
-        { label: "Free Photo Validator", href: "/visa-photo-validator" },
+        { label: "Visa Photo Checker", href: "/visa-photo-validator" },
         { label: "Passport Photo Checker", href: "/passport-photo-checker" },
-        { label: "Online Passport Photo Checker", href: "/online-passport-photo-checker" },
         { label: "Green Card Photo Checker", href: "/us-check-photo-green-card" },
         { label: "Australian Passport Photo Checker", href: "/australian-passport-photo-checker" },
         { label: "DV Lottery Photo Checker", href: "/diversity-visa-lottery-photo-checker" },

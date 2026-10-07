@@ -1,35 +1,30 @@
 import type { Metadata, Viewport } from "next";
+import Link from "next/link";
 import PhotoCheckerTool from "@/app/components/PhotoCheckerTool";
 
 export const viewport: Viewport = {
   themeColor: "#ffffff",
 };
 
+const PAGE_URL = "https://www.pixpassport.com/passport-photo-checker";
+const PAGE_TITLE = "Passport Photo Checker – Free Online Check for 50+ Countries";
+
 export const metadata: Metadata = {
-  title: "Passport Photo Checker – Free Biometric Compliance Check Online",
+  title: PAGE_TITLE,
   description:
-    "Free passport photo checker online. Check your photo against official ICAO 9303 biometric standards for 50+ countries. Instant pass/fail analysis with zero sign-up.",
-  keywords: [
-    "passport photo checker",
-    "check passport photo online",
-    "passport photo validator",
-    "biometric passport photo check",
-    "icao passport photo checker",
-    "online passport photo test",
-    "passport picture checker free",
-  ],
+    "Check your passport photo online for free. Upload a photo and get an instant pass/fail report on size, head height, background, lighting and expression for 50+ countries — no app, no sign-up.",
   alternates: {
-    canonical: "https://www.pixpassport.com/passport-photo-checker",
+    canonical: PAGE_URL,
     languages: {
-      en: "https://www.pixpassport.com/passport-photo-checker",
-      "x-default": "https://www.pixpassport.com/passport-photo-checker",
+      en: PAGE_URL,
+      "x-default": PAGE_URL,
     },
   },
   openGraph: {
-    title: "Passport Photo Checker – Free Biometric Compliance Check Online",
+    title: PAGE_TITLE,
     description:
-      "Instant passport photo compliance check online. Verify dimensions, head ratios, background uniformity, and lighting for 50+ countries.",
-    url: "https://www.pixpassport.com/passport-photo-checker",
+      "Upload your passport photo and see instantly whether it passes. Free online check for size, head height, background and lighting across 50+ countries.",
+    url: PAGE_URL,
     siteName: "PixPassport",
     locale: "en_US",
     type: "website",
@@ -38,50 +33,80 @@ export const metadata: Metadata = {
         url: "https://res.cloudinary.com/dipzpwbbk/image/upload/v1785679206/icao_visa_photo_example_whvfqt.jpg",
         width: 1200,
         height: 630,
-        alt: "Passport Photo Checker Online Free",
+        alt: "Passport photo checker online free",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Passport Photo Checker – Free Biometric Compliance Check Online",
+    title: PAGE_TITLE,
     description:
-      "Free passport photo compliance check online. Verifies dimensions, head ratios, background, and lighting for 50+ countries.",
+      "Free online passport photo checker. See whether your size, head height, background and lighting pass before you submit.",
     images: ["https://res.cloudinary.com/dipzpwbbk/image/upload/v1785679206/icao_visa_photo_example_whvfqt.jpg"],
   },
 };
+
+// Official headline rules for the most-checked passports. Head height is chin to crown.
+const COUNTRY_RULES = [
+  { country: "United States", flag: "🇺🇸", size: "2 × 2 in (51 × 51 mm)", head: "25–35 mm (1–1⅜ in)", background: "White or off-white", href: "/us-passport-photo-editor" },
+  { country: "United Kingdom", flag: "🇬🇧", size: "35 × 45 mm", head: "29–34 mm", background: "Cream or light grey", href: "/uk-passport-photo-checker-online-free" },
+  { country: "Canada", flag: "🇨🇦", size: "50 × 70 mm", head: "31–36 mm", background: "White or light-coloured", href: "/ca/canada-passport-photo-requirements" },
+  { country: "Australia", flag: "🇦🇺", size: "35 × 45 mm", head: "32–36 mm", background: "Plain white or light grey", href: "/australian-passport-photo-checker" },
+  { country: "India", flag: "🇮🇳", size: "35 × 45 mm", head: "Face ~80% of frame", background: "Plain white", href: "/india-passport-photo-editor" },
+  { country: "Germany / EU", flag: "🇪🇺", size: "35 × 45 mm", head: "32–36 mm", background: "Plain light grey", href: "/germany-passport-photo-editor" },
+];
 
 export default function PassportPhotoCheckerPage() {
   const faqs = [
     {
       question: "How does this passport photo checker work?",
       answer:
-        "The tool analyzes your photo using advanced biometric facial landmark detection. It measures head-to-frame proportions, eye alignment, background color uniformity, and lighting gradients against the official government specifications of your selected country.",
+        "Pick the country that issues your passport and upload a photo. The checker maps the key points of your face, measures head height and eye position against that country's rules, and scans the background and lighting. You get a pass/fail result for each category in a few seconds, with a note on what to fix.",
     },
     {
-      question: "Which countries does this passport photo checker support?",
+      question: "Which countries does the checker support?",
       answer:
-        "Over 50 countries are supported, including the United States, United Kingdom, Canada, Australia, India, China, and all Schengen European Union nations. Each country uses its specific embassy guidelines rather than generic estimates.",
+        "More than 50, including the United States, United Kingdom, Canada, Australia, India, China and the Schengen countries. Each country uses its own published size, head-height and background rules rather than one generic template. The UK and Australia also have dedicated checker pages with their full rulebooks.",
     },
     {
-      question: "Will my photo be accepted by the passport office if it passes?",
+      question: "Do I need to download an app?",
       answer:
-        "This tool verifies all measurable biometric criteria (head height, dimensions, eye line, background uniformity, and pose) that automated passport systems test. If your photo passes all checks and is printed on quality photo paper or uploaded in digital format, it is fully compliant with official requirements.",
+        "No. The checker runs in your phone, tablet or computer browser. There is nothing to install and no account to create.",
     },
     {
-      question: "Can I check both passport and visa photos?",
+      question: "Can I check a photo I already took on my phone?",
       answer:
-        "Yes. You can switch between Passport Photo and Visa Photo for any supported country. The tool will adjust the tested dimensions, background color rules, and head ratios accordingly.",
+        "Yes, that's how most people use it. A recent smartphone photo has more than enough resolution. For the best result, face a window in daylight with a plain wall behind you and have someone else take the shot at eye level rather than taking a selfie.",
     },
     {
-      question: "Is this photo check private and secure?",
+      question: "Will this checker work for a photo booth or studio print?",
       answer:
-        "Yes. Your photo is processed in a secure, ephemeral session and is never stored permanently, sold, or shared with any third party.",
+        "Yes. Photograph or scan the printed photo in good light and upload that image. The checker measures proportions and background tone the same way whether the original was digital or printed.",
+    },
+    {
+      question: "What image formats are supported?",
+      answer:
+        "JPEG, PNG and WebP files up to 10 MB. iPhone HEIC photos are usually converted to JPEG automatically when you share or export them.",
+    },
+    {
+      question: "What happens if my photo fails part of the check?",
+      answer:
+        "You'll see which category failed — for example head size outside the allowed range, an uneven background, or a shadow across the face — with a plain-language note on what to change. Retake the photo or run it through our passport photo maker, then check it again. Re-checks are free and unlimited.",
+    },
+    {
+      question: "If my photo passes, is acceptance guaranteed?",
+      answer:
+        "No checker can guarantee acceptance — the final decision always rests with the passport office. The tool measures the things automated intake systems test most (head size, eye line, background, lighting and pose), so it catches the common mistakes before you submit.",
     },
     {
       question: "What are the most common reasons passport photos are rejected?",
       answer:
-        "The top reasons include incorrect head size (too large or small in the frame), shadows on the background or face, wearing eyeglasses, uneven lighting or flash glare, tilted head, and smiling.",
+        "Head too large or too small in the frame, shadows on the background or face, glasses or glare, uneven lighting, a tilted head, and a smile or open mouth.",
+    },
+    {
+      question: "What happens to my photo after I upload it?",
+      answer:
+        "Your photo is sent over an encrypted connection to run the check. We never sell it, and we don't share it with government agencies or advertisers. See our data security page for details on how uploads are handled.",
     },
   ];
 
@@ -89,10 +114,10 @@ export default function PassportPhotoCheckerPage() {
     {
       "@context": "https://schema.org",
       "@type": "SoftwareApplication",
-      name: "Passport Photo Checker Online Free",
-      url: "https://www.pixpassport.com/passport-photo-checker",
+      name: "Passport Photo Checker",
+      url: PAGE_URL,
       description:
-        "Free passport photo checker online. Checks biometric standards, head proportions, background, and dimensions for 50+ countries.",
+        "Free online passport photo checker. Checks size, head height, background, lighting and expression against official rules for 50+ countries.",
       applicationCategory: "UtilitiesApplication",
       operatingSystem: "All",
       offers: {
@@ -104,10 +129,14 @@ export default function PassportPhotoCheckerPage() {
     {
       "@context": "https://schema.org",
       "@type": "WebPage",
-      name: "Passport Photo Checker",
-      url: "https://www.pixpassport.com/passport-photo-checker",
+      name: PAGE_TITLE,
+      url: PAGE_URL,
+      dateModified: "2026-10-07",
+      isPartOf: { "@type": "WebSite", name: "PixPassport", url: "https://www.pixpassport.com/" },
       citation: [
         "https://www.icao.int/Security/FAL/PKI/Pages/ICAO-Doc-9303.aspx",
+        "https://travel.state.gov/content/travel/en/passports/how-apply/photos.html",
+        "https://www.gov.uk/photos-for-passports",
       ],
     },
     {
@@ -136,7 +165,7 @@ export default function PassportPhotoCheckerPage() {
           "@type": "ListItem",
           position: 2,
           name: "Passport Photo Checker",
-          item: "https://www.pixpassport.com/passport-photo-checker",
+          item: PAGE_URL,
         },
       ],
     },
@@ -152,90 +181,140 @@ export default function PassportPhotoCheckerPage() {
         initialCountry="US"
         lockCountry={false}
         initialDocType="passport"
-        badgeText="🌍 Global ICAO Doc 9303 Compliant · 50+ Countries · Free"
+        badgeText="🌍 50+ Countries · No App, No Sign-Up · Free"
         title="Passport Photo Checker"
-        highlightTitle="Official Biometric Validator"
-        subtitle="Validate any passport or visa photo online against official embassy & ICAO 9303 biometric specifications. Select your country to get an instant pass/fail compliance report."
+        highlightTitle="Free Online Check for 50+ Countries"
+        subtitle="Upload your passport photo, pick the issuing country, and get a pass/fail report on size, head height, background, lighting and expression in seconds — before you print, upload, or hand it over at the counter."
         specs={[
-          { label: "Global Standard", value: "ICAO Doc 9303 Compliant" },
-          { label: "Country Coverage", value: "50+ Supported Countries" },
-          { label: "Biometric Checks", value: "30+ Automated Parameters" },
-          { label: "Landmark Precision", value: "468-Point MediaPipe Grid" },
-          { label: "Validation Speed", value: "Under 3 Seconds" },
-          { label: "Privacy Policy", value: "100% Ephemeral Processing" },
+          { label: "Country Coverage", value: "50+ Countries" },
+          { label: "Checks Run", value: "Size, Head, Eyes, Background, Light" },
+          { label: "Result Time", value: "Under 3 Seconds" },
+          { label: "Install Required", value: "None — Browser Only" },
+          { label: "Re-checks", value: "Free & Unlimited" },
+          { label: "Account", value: "Not Required" },
         ]}
+        requirementsHeading="What the Passport Photo Checker Tests"
+        requirementsIntro="Each check uses the published rules of the country you select, not a one-size-fits-all template."
         requirements={[
           {
             icon: "🌍",
-            title: "50+ Country Specifications",
-            desc: "Applies exact official government guidelines for your selected country, including US, UK, Canada, Australia, Schengen, and India.",
+            title: "Country-Specific Rules",
+            desc: "Applies the size, head-height and background rules of your selected country — from the US 2×2 inch photo to the 35×45 mm EU and UK format.",
           },
           {
             icon: "📐",
-            title: "Biometric Head Proportion",
-            desc: "Calculates the exact chin-to-crown percentage to make sure your face satisfies embassy height standards.",
+            title: "Head Height & Framing",
+            desc: "Measures chin-to-crown height and centering, catching the too-close and too-far mistakes that cause most rejections.",
+          },
+          {
+            icon: "👁️",
+            title: "Eye Line & Pose",
+            desc: "Checks that your eyes sit in the required band, both are open, and your head isn't tilted or turned.",
           },
           {
             icon: "🎨",
             title: "Background Uniformity",
-            desc: "Scans background pixels for shadows, textures, patterns, or incorrect colors required by your destination authority.",
+            desc: "Flags shadows, patterns and off-tone backdrops that don't match the colour your passport office requires.",
           },
           {
             icon: "💡",
-            title: "Balanced Illumination Check",
-            desc: "Identifies harsh side shadows, flash hotspots, overexposure, and uneven lighting across the face.",
+            title: "Lighting & Glare",
+            desc: "Picks up flash hotspots, one-sided shadows and uneven exposure across the face.",
           },
           {
-            icon: "👁️",
-            title: "Eye Visibility & Expression",
-            desc: "Verifies horizontal eye line, open eyes, closed mouth, and absence of prohibited eyewear or hair obstruction.",
-          },
-          {
-            icon: "📊",
-            title: "Scored Diagnostic Report",
-            desc: "Provides clear pass/fail status for every metric alongside actionable guidance to fix any identified issue.",
+            icon: "🎯",
+            title: "Plain-Language Fixes",
+            desc: "Every failed check comes with a short note on what caused it and what to change before you re-check.",
           },
         ]}
+        stepsHeading="How to Check a Passport Photo Online"
+        steps={[
+          { title: "Choose Your Country", desc: "Select the country issuing your passport so the right size and head-height rules are applied." },
+          { title: "Upload Your Photo", desc: "Use a phone photo, a scan of a booth print, or any clear portrait in JPEG, PNG or WebP." },
+          { title: "Read Your Report", desc: "See a pass/fail result for each check, fix anything flagged, and re-check for free." },
+        ]}
+        faqHeading="Passport Photo Checker FAQ"
         faqs={faqs}
+        relatedHeading="More Photo Checkers & Tools"
         relatedTools={[
           {
-            title: "Online Photo Checker",
-            desc: "Instant web-based biometric checker for all documents.",
-            href: "/online-passport-photo-checker",
-            icon: "⚡",
-          },
-          {
-            title: "Australian Photo Checker",
-            desc: "DFAT and APO official passport compliance checker.",
-            href: "/australian-passport-photo-checker",
-            icon: "🇦🇺",
-          },
-          {
-            title: "DV Lottery Photo Checker",
-            desc: "Diversity Visa 600x600 px photo validation tool.",
-            href: "/diversity-visa-lottery-photo-checker",
-            icon: "🎟️",
-          },
-          {
             title: "UK Passport Photo Checker",
-            desc: "Official GOV.UK 35×45mm passport photo compliance checker.",
+            desc: "GOV.UK 35×45 mm rules, cream or light grey background.",
             href: "/uk-passport-photo-checker-online-free",
             icon: "🇬🇧",
           },
           {
-            title: "Free Photo Validator",
-            desc: "Validate any passport or visa photo across 50+ countries.",
+            title: "Australian Passport Photo Checker",
+            desc: "APO 35×45 mm photo with 32–36 mm face height.",
+            href: "/australian-passport-photo-checker",
+            icon: "🇦🇺",
+          },
+          {
+            title: "Green Card Photo Checker",
+            desc: "2×2 inch photos for USCIS forms like I-485 and I-765.",
+            href: "/us-check-photo-green-card",
+            icon: "🟢",
+          },
+          {
+            title: "DV Lottery Photo Checker",
+            desc: "600×600 px digital photo for the Diversity Visa entry.",
+            href: "/diversity-visa-lottery-photo-checker",
+            icon: "🎟️",
+          },
+          {
+            title: "Visa Photo Checker",
+            desc: "Check a visa photo for Schengen, India, China and more.",
             href: "/visa-photo-validator",
             icon: "🌐",
           },
           {
             title: "Passport Size Photo Maker",
-            desc: "Create and crop compliant passport photos online.",
+            desc: "Crop, fix the background and download a compliant photo.",
             href: "/passport-size-photo-maker",
             icon: "📸",
           },
         ]}
-      />
+      >
+        <section className="bg-white border-t border-slate-200 py-12 sm:py-16">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6">
+            <div className="text-center max-w-2xl mx-auto mb-8">
+              <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight mb-2">
+                Passport Photo Requirements by Country
+              </h2>
+              <p className="text-sm text-slate-500 font-normal">
+                The checker applies these rules automatically when you select a country. Always confirm the latest rules with the issuing passport office.
+              </p>
+            </div>
+            <div className="overflow-x-auto rounded-xl border border-slate-200">
+              <table className="w-full text-left text-sm">
+                <thead className="bg-slate-50 text-[11px] uppercase tracking-wider text-slate-500">
+                  <tr>
+                    <th scope="col" className="px-4 py-3 font-bold">Country</th>
+                    <th scope="col" className="px-4 py-3 font-bold">Photo size</th>
+                    <th scope="col" className="px-4 py-3 font-bold">Head height</th>
+                    <th scope="col" className="px-4 py-3 font-bold">Background</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {COUNTRY_RULES.map((r) => (
+                    <tr key={r.country}>
+                      <th scope="row" className="px-4 py-3 font-semibold text-slate-900">
+                        <Link href={r.href} className="hover:text-lime-700">
+                          <span className="mr-2">{r.flag}</span>
+                          {r.country}
+                        </Link>
+                      </th>
+                      <td className="px-4 py-3 text-slate-600">{r.size}</td>
+                      <td className="px-4 py-3 text-slate-600">{r.head}</td>
+                      <td className="px-4 py-3 text-slate-600">{r.background}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </PhotoCheckerTool>
     </>
   );
 }

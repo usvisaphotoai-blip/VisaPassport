@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { trackAdsPurchaseConversion } from "@/lib/ads-conversion";
 
 export default function ExpertEditPage() {
   const router = useRouter();
@@ -161,6 +162,11 @@ export default function ExpertEditPage() {
                 console.warn("[GA4] Failed to dispatch expert purchase event:", gaErr);
               }
             }
+            trackAdsPurchaseConversion({
+              transactionId: response.razorpay_payment_id || data.orderId,
+              value: (data.amount || 0) / 100,
+              currency: data.currency || "USD",
+            });
 
             setIsSuccess(true);
             setMessage("Payment successful! Our team will process your photos shortly.");
