@@ -7,36 +7,37 @@ import RequirementsFr from "../components/RequirementsFr";
 import StickyCTAFr from "../components/StickyCTAFr";
 import BreadcrumbsFr from "../components/BreadcrumbsFr";
 import FaqSectionFr from "../components/FaqSectionFr";
+import RelatedGuidesFr from "../components/RelatedGuidesFr";
 
 export const metadata: Metadata = {
-  title: "Photo Carte d'Identité en Ligne — CNI Conforme | PixPassport",
-  description: "Créez une photo carte d'identité conforme aux normes françaises. Format 35×45mm, fond blanc, cadrage biométrique automatique. Résultat instantané.",
-  keywords: ["photo carte identité", "photo CNI", "photo carte nationale identité", "photo CNI en ligne"],
+  title: "Photo carte d'identité (CNI) en ligne | PixPassport",
+  description: "Photo pour carte d'identité depuis votre smartphone : 35×45 mm, fond gris clair (pas blanc), visage 32-36 mm. Planche 10×15 cm à imprimer, remboursé si refusée.",
+  keywords: ["photo carte d'identité", "photo CNI", "photo carte nationale d'identité", "photo carte identité enfant", "photo CNI normes", "photo carte identité en ligne"],
   alternates: {
     canonical: "https://www.pixpassport.com/fr/photo-carte-identite",
     languages: {
-      en: "https://www.pixpassport.com/passport-photos",
       fr: "https://www.pixpassport.com/fr/photo-carte-identite",
-      de: "https://www.pixpassport.com/de/biometrisches-passbild",
-      "x-default": "https://www.pixpassport.com/passport-photos",
     },
   },
   openGraph: {
-    title: "Photo Carte d'Identité en Ligne | PixPassport", description: "Photo CNI conforme aux normes françaises.",
+    title: "Photo carte d'identité (CNI) en ligne | PixPassport", description: "Photo pour carte d'identité française aux normes ANTS : 35×45 mm, fond gris clair, depuis votre smartphone.",
     url: "https://www.pixpassport.com/fr/photo-carte-identite", siteName: "PixPassport", locale: "fr_FR", type: "website",
     images: [{ url: "https://www.pixpassport.com/og-image.jpg", width: 1200, height: 630, alt: "Photo Carte d'Identité en Ligne" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Photo Carte d'Identité en Ligne | PixPassport",
-    description: "Photo CNI conforme aux normes françaises. Vérification biométrique IA.",
+    description: "Photo pour carte d'identité française aux normes ANTS : 35×45 mm, fond gris clair, depuis votre smartphone.",
     images: ["https://www.pixpassport.com/og-image.jpg"],
   },
 };
 
 const cniFaqs = [
   { q: "Quelles sont les dimensions d'une photo pour la CNI ?", a: "La photo pour la carte nationale d'identité doit mesurer 35×45mm avec un visage de 32 à 36mm de hauteur, du menton au sommet du crâne." },
-  { q: "Quelle est la différence entre photo passeport et photo CNI ?", a: "En France, les exigences sont identiques : 35×45mm, fond blanc uni, expression neutre. La même photo peut être utilisée pour les deux documents." },
+  { q: "Quelle est la différence entre photo passeport et photo CNI ?", a: "Aucune : en France, les exigences sont identiques (35×45 mm, fond uni gris clair ou bleu clair, expression neutre, tête nue). La même photo peut servir pour les deux documents si vous les demandez ensemble." },
+  { q: "Le fond de la photo de carte d'identité peut-il être blanc ?", a: "Non. Le fond blanc est refusé pour la carte nationale d'identité. Il doit être uni et clair, de préférence gris clair ou bleu clair. PixPassport applique automatiquement un fond gris clair conforme." },
+  { q: "Peut-on porter des lunettes sur la photo de CNI ?", a: "Oui, si les yeux sont parfaitement visibles : monture fine, verres non teintés, aucun reflet. Il reste conseillé de les retirer pour éviter tout refus. La tête doit en revanche être nue." },
+  { q: "Combien coûte une carte d'identité ?", a: "La première demande et le renouvellement d'une carte d'identité sont gratuits. Un timbre fiscal de 25 € est demandé uniquement en cas de perte ou de vol. Seule la photo reste à votre charge." },
   { q: "La photo est-elle compatible avec le nouveau format de CNI ?", a: "Oui, notre outil génère des photos conformes aux normes du nouveau format de carte d'identité française au format carte bancaire, en vigueur depuis 2021." },
   { q: "Combien de photos sont incluses dans la planche d'impression ?", a: "La planche d'impression A4 contient plusieurs photos au format exact 35×45mm, prêtes à être découpées pour votre demande de CNI." },
 ];
@@ -44,7 +45,7 @@ const cniFaqs = [
 const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
-    { "@type": "SoftwareApplication", name: "PixPassport — Photo Carte d'Identité", applicationCategory: "PhotographyApplication", operatingSystem: "All", inLanguage: "fr", offers: { "@type": "Offer", price: "6.99", priceCurrency: "EUR" } },
+    { "@type": "SoftwareApplication", name: "PixPassport — Photo Carte d'Identité", applicationCategory: "PhotographyApplication", operatingSystem: "All", inLanguage: "fr-FR", offers: { "@type": "Offer", price: "6.99", priceCurrency: "EUR" } },
   ],
 };
 
@@ -56,15 +57,16 @@ export default function PhotoCarteIdentitePage() {
       <HeroSectionFr
         title="Photo Carte d'Identité en Ligne"
         subtitle="Aux normes de la carte nationale d'identité française"
-        description="Photo conforme aux exigences de la CNI française. Format 35×45mm, fond blanc uni, cadrage biométrique automatique. Prête en 30 secondes."
-        ctaHref="/fr/passport-photo-online?type=france-passport"
+        description="Photo conforme aux exigences de la CNI française : format 35×45 mm, fond gris clair uni, visage cadré entre 32 et 36 mm. Prête en 30 secondes depuis votre smartphone."
+        ctaHref="/fr/passport-photo-online?type=france-cni-passport"
         showImage={true}
+        imageAlt="Photo pour carte nationale d'identité française, 35×45 mm sur fond gris clair"
       />
 
       <RequirementsFr countryName="France (CNI)" specs={[
         { label: "Dimensions", value: "35 × 45 mm", detail: "Format officiel CNI" },
         { label: "Visage", value: "32-36 mm", detail: "Hauteur menton-crâne" },
-        { label: "Arrière-plan", value: "Blanc uni", detail: "Sans ombre" },
+        { label: "Arrière-plan", value: "Gris clair", detail: "Uni, sans ombre — blanc refusé" },
         { label: "Expression", value: "Neutre", detail: "Bouche fermée" },
         { label: "Regard", value: "Face objectif", detail: "Yeux ouverts" },
         { label: "Format CNI", value: "Nouveau format", detail: "Compatible 2021+" },
@@ -100,10 +102,11 @@ export default function PhotoCarteIdentitePage() {
         <ul className="list-disc pl-6 mb-4">
           <li>Dimensions obligatoires : 35 × 45 mm</li>
           <li>Hauteur du visage : entre 32 et 36 mm</li>
-          <li>Fond : blanc ou très clair, uniforme et sans ombre</li>
+          <li>Fond : uni et clair (gris clair ou bleu clair), sans ombre — le blanc est refusé</li>
           <li>Expression : neutre, bouche fermée</li>
           <li>Regard : droit face à l'objectif</li>
-          <li>Accessoires : lunettes et couvre-chefs interdits</li>
+          <li>Tête nue : couvre-chefs interdits ; lunettes tolérées si les yeux restent visibles, sans reflet</li>
+          <li>Photo récente : moins de six mois, non retouchée</li>
         </ul>
 
         <p className="mb-4">
@@ -161,14 +164,18 @@ export default function PhotoCarteIdentitePage() {
         </h2>
 
         <p className="mb-4">
-          Depuis 2021, la France a introduit un nouveau format de carte nationale d'identité, similaire à une carte bancaire.
-          Cette nouvelle CNI intègre des éléments biométriques renforcés pour améliorer la sécurité et lutter contre la fraude.
-          Les exigences pour la photo restent strictes, ce qui rend l'utilisation d'un outil conforme encore plus importante.
+          Depuis 2021, la France délivre une nouvelle carte nationale d'identité au format carte bancaire, valable 10 ans.
+          Elle intègre une puce contenant votre photo et vos empreintes digitales. La demande se fait en trois étapes :
+          pré-demande en ligne sur le site de l'ANTS, rendez-vous dans une mairie équipée d'un dispositif de recueil
+          (avec votre photo papier 35×45 mm de moins de six mois), puis retrait de la carte dans la même mairie.
         </p>
 
         <p className="mb-4">
-          PixPassport garantit une compatibilité totale avec ce nouveau format, vous assurant que votre photo sera acceptée
-          sans problème par les administrations françaises.
+          Pour un enfant, les règles sont les mêmes : il doit être seul sur la photo, tête nue, sur fond clair uni
+          (astuces pour les tout-petits dans notre guide <Link href="/fr/photo-bebe" className="text-lime-600 hover:underline">photo d&apos;identité bébé</Link>).
+          PixPassport recadre automatiquement la photo au bon format, que ce soit pour un adulte ou un mineur. Si vous
+          demandez aussi un <Link href="/fr/photo-passeport" className="text-lime-600 hover:underline">passeport</Link>,
+          la même photo convient.
         </p>
 
         <h2 className="text-2xl font-semibold mt-8 mb-4">
@@ -189,7 +196,8 @@ export default function PhotoCarteIdentitePage() {
         </p>
       </section>
       <FaqSectionFr faqs={cniFaqs} title="Questions fréquentes — Photo carte d'identité" />
-      <StickyCTAFr ctaHref="/fr/passport-photo-online?type=france-passport" ctaText="Créer votre photo CNI" />
+      <RelatedGuidesFr />
+      <StickyCTAFr ctaHref="/fr/passport-photo-online?type=france-cni-passport" ctaText="Créer votre photo CNI" />
     </>
   );
 }

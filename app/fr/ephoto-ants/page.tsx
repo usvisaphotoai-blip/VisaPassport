@@ -9,26 +9,27 @@ import BreadcrumbsFr from "../components/BreadcrumbsFr";
 
 // ─── METADATA ────────────────────────────────────────────────
 export const metadata: Metadata = {
-  title: "ePhoto ANTS en Ligne — Code Photo Numérique Passeport & CNI 2026",
+  title: "Code ePhoto ANTS : à quoi il sert et comment l'obtenir (2026)",
   description:
-    "Obtenez votre ePhoto ANTS avec code numérique officiel en 30 secondes. Photo biométrique conforme pour passeport, carte d'identité et permis de conduire. Accepté par l'ANTS — sans photomaton.",
+    "Code ePhoto ANTS : obligatoire pour le permis et le titre de séjour, facultatif pour passeport et CNI. Où l'obtenir, durée de validité et normes photo.",
   keywords: [
     "code ephoto ants",
-    "ephoto ants en ligne",
+    "ephoto ants",
+    "ephoto permis de conduire",
+    "ephoto titre de séjour",
     "photo numérique ants",
-  
+    "cabine ephoto agréée",
   ],
   alternates: {
     canonical: "https://www.pixpassport.com/fr/ephoto-ants",
     languages: {
       fr: "https://www.pixpassport.com/fr/ephoto-ants",
-      "x-default": "https://www.pixpassport.com/fr/ephoto-ants",
     },
   },
   openGraph: {
-    title: "ePhoto ANTS en Ligne — Photo & Code Numérique | PixPassport",
+    title: "Code ePhoto ANTS : à quoi il sert et comment l'obtenir",
     description:
-      "Créez votre ePhoto ANTS conforme en 30s. Photo biométrique + code numérique pour passeport, CNI et permis. Sans déplacement.",
+      "Permis de conduire, titre de séjour, passeport, CNI : quand le code ePhoto est obligatoire, où l'obtenir et comment réussir sa photo.",
     url: "https://www.pixpassport.com/fr/ephoto-ants",
     siteName: "PixPassport",
     locale: "fr_FR",
@@ -37,9 +38,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "ePhoto ANTS en Ligne | PixPassport",
+    title: "Code ePhoto ANTS : le guide 2026 | PixPassport",
     description:
-      "Créez votre ePhoto ANTS conforme en 30s. Photo biométrique pour passeport, CNI et permis.",
+      "Quand le code ePhoto est obligatoire, où l'obtenir et comment réussir sa photo.",
     images: ["https://www.pixpassport.com/og-image.jpg"],
   },
 };
@@ -48,31 +49,31 @@ export const metadata: Metadata = {
 const ephotoFaqs = [
   {
     q: "Qu'est-ce qu'une ePhoto ANTS et à quoi sert-elle ?",
-    a: "L'ePhoto ANTS est une photo d'identité numérique requise pour toute demande de passeport ou carte nationale d'identité (CNI) effectuée en ligne sur le portail officiel de l'ANTS. Elle remplace la photo papier et doit respecter les normes biométriques ISO/IEC 19794-5 : dimensions 35×45 mm, fond blanc uni, visage centré entre 32 et 36 mm.",
+    a: "L'ePhoto (ou e-photo) est une photo d'identité numérique associée à un code unique de 22 caractères. Ce code permet à l'ANTS ou à l'ANEF de récupérer votre photo, et souvent votre signature numérisée, directement depuis la cabine ou le photographe qui l'a réalisée. Il remplace l'envoi d'une photo papier dans les démarches en ligne.",
   },
   {
-    q: "Comment obtenir un code ePhoto ANTS en ligne ?",
-    a: "Le code ePhoto à 22 caractères est exclusivement délivré par un photographe agréé ou un photomaton homologué par l'ANTS. PixPassport ne fournit pas ce code. En revanche, nous vous permettons de créer une photo parfaitement conforme aux normes biométriques ANTS — que vous pouvez ensuite présenter à un photographe agréé ou utiliser dans une cabine pour obtenir votre code rapidement et sans risque de refus.",
+    q: "Pour quelles démarches le code ePhoto est-il obligatoire ?",
+    a: "Il est obligatoire pour les demandes de permis de conduire faites en ligne sur le site de l'ANTS (première demande, renouvellement, duplicata, échange) et pour les titres de séjour demandés sur le site de l'ANEF. Pour le passeport et la carte d'identité, il est facultatif : une photo papier conforme de moins de six mois reste acceptée lors du rendez-vous en mairie.",
+  },
+  {
+    q: "Où obtenir un code ePhoto ANTS ?",
+    a: "Uniquement dans une cabine photo agréée (repérez le logo « agréé ANTS » ou « e-photo ») ou chez un photographe professionnel habilité. Le code figure sur la planche imprimée ou sur le ticket remis avec les photos. PixPassport ne délivre pas de code ePhoto.",
+  },
+  {
+    q: "Combien de temps le code ePhoto est-il valable ?",
+    a: "Le code ePhoto est valable six mois à partir de la prise de vue. Il peut être utilisé pour plusieurs démarches pendant cette période. Passé ce délai, il faut refaire une photo.",
+  },
+  {
+    q: "Puis-je utiliser une photo prise avec mon smartphone pour obtenir un code ePhoto ?",
+    a: "Non. Le code ePhoto ne peut être généré que par une cabine ou un photographe agréé. En revanche, pour le passeport, la CNI, un visa ou la carte Vitale, une photo conforme réalisée en ligne avec PixPassport suffit, sans code.",
   },
   {
     q: "PixPassport est-il affilié à l'ANTS ou à une autorité gouvernementale ?",
-    a: "Non. PixPassport est un service privé et indépendant, non affilié à l'ANTS (Agence Nationale des Titres Sécurisés) ni à aucune autorité gouvernementale. Notre expertise est la création de photos d'identité conformes aux normes biométriques officielles, que vous pouvez ensuite utiliser pour vos démarches administratives en toute confiance.",
+    a: "Non. PixPassport est un service privé et indépendant, non affilié à l'ANTS (Agence nationale des titres sécurisés), à l'ANEF ni à aucune autorité gouvernementale. Nous fournissons des photos d'identité conformes aux normes biométriques officielles.",
   },
   {
-    q: "La photo PixPassport est-elle acceptée par l'ANTS ?",
-    a: "Oui. Notre outil génère des photos respectant toutes les spécifications techniques ANTS : format JPEG, dimensions 35×45 mm, fond blanc uni, cadrage biométrique précis et résolution 300 DPI minimum. Taux d'acceptation constaté : 99,8 %.",
-  },
-  {
-    q: "Puis-je utiliser cette photo pour une CNI, un permis de conduire et un passeport ?",
-    a: "Oui. L'ePhoto ANTS générée par PixPassport est valable pour l'ensemble des documents officiels traités via le portail ANTS : passeport biométrique, carte nationale d'identité (CNI) et permis de conduire.",
-  },
-  {
-    q: "Quelles sont les exigences techniques officielles de l'ePhoto ANTS ?",
-    a: "Format JPEG, dimensions 35×45 mm, fond blanc uni sans ombre, visage centré entre 32 et 36 mm du menton au sommet du crâne, expression neutre, yeux ouverts et regard direct, résolution 300 DPI minimum, norme ISO 19794-5.",
-  },
-  {
-    q: "Combien de temps faut-il pour obtenir mon ePhoto ?",
-    a: "Moins de 30 secondes. Téléchargez votre photo, notre IA vérifie automatiquement la conformité biométrique, ajuste le cadrage et le fond, puis génère votre fichier prêt à l'emploi.",
+    q: "Quelles sont les normes de la photo pour une ePhoto ANTS ?",
+    a: "Ce sont les mêmes que pour toute photo d'identité française : format 35×45 mm, visage de 32 à 36 mm du menton au sommet du crâne, fond uni clair (gris clair ou bleu clair, jamais blanc), expression neutre, bouche fermée, tête nue, yeux ouverts et visibles, photo de moins de six mois.",
   },
 ];
 
@@ -101,8 +102,8 @@ const rejectionErrors = [
   },
   {
     icon: "🖼️",
-    error: "Arrière-plan coloré ou texturé",
-    fix: "Suppression et remplacement fond blanc",
+    error: "Fond blanc, coloré ou texturé",
+    fix: "Remplacement par un fond gris clair uni",
   },
   {
     icon: "☀️",
@@ -116,8 +117,8 @@ const rejectionErrors = [
   },
   {
     icon: "👓",
-    error: "Lunettes portées sur la photo",
-    fix: "Détection et signalement obligatoire",
+    error: "Reflets ou verres teintés sur les lunettes",
+    fix: "Détection et signalement automatiques",
   },
   {
     icon: "🔍",
@@ -129,39 +130,39 @@ const rejectionErrors = [
 // ─── DOCUMENTS DATA ──────────────────────────────────────────
 const documents = [
   {
+    title: "Permis de conduire",
+    href: "/fr/photo-permis-de-conduire",
+    description:
+      "Code ePhoto obligatoire pour toute demande en ligne sur le site de l'ANTS : première demande, renouvellement, duplicata ou échange d'un permis étranger.",
+  },
+  {
+    title: "Titre de séjour",
+    href: "/fr/photo-titre-de-sejour",
+    description:
+      "Code ePhoto obligatoire pour les demandes déposées sur le site de l'ANEF (premier titre, renouvellement, changement de statut).",
+  },
+  {
     title: "Passeport biométrique",
     href: "/fr/photo-passeport",
     description:
-      "Renouvellement ou première demande. La photo numérique conforme remplace la photo papier dans votre dossier en ligne.",
+      "Code ePhoto facultatif : une photo papier 35×45 mm conforme, de moins de six mois, reste acceptée lors du rendez-vous en mairie.",
   },
   {
     title: "Carte nationale d'identité (CNI)",
     href: "/fr/photo-carte-identite",
     description:
-      "Valable 10 ans pour les adultes. Mêmes normes que le passeport : 35×45 mm, fond blanc, expression neutre.",
-  },
-  {
-    title: "Permis de conduire",
-    href: "/fr/photo-identite",
-    description:
-      "Première obtention ou échange de permis étranger. La même photo biométrique est acceptée via l'ANTS.",
-  },
-  {
-    title: "Titre de séjour",
-    href: "/fr/photo-visa",
-    description:
-      "Certaines démarches préfectorales dématérialisées requièrent également une photo numérique conforme ANTS.",
+      "Mêmes règles que le passeport : photo papier acceptée en mairie, fond gris clair ou bleu clair, expression neutre, tête nue.",
   },
 ];
 
 // ─── WHY PIXPASSPORT DATA ────────────────────────────────────
 const features = [
-  { icon: "✔", label: "Conformité ANTS garantie", detail: "Norme ISO 19794-5 respectée" },
+  { icon: "✔", label: "Photo aux normes ANTS", detail: "Format 35×45 mm, norme ISO 19794-5" },
   { icon: "✔", label: "Vérification biométrique IA", detail: "Cadrage, fond, expression, luminosité" },
   { icon: "✔", label: "Résultat en 30 secondes", detail: "Sans rendez-vous ni photomaton" },
   { icon: "✔", label: "Compatible tous appareils", detail: "Smartphone, tablette, ordinateur" },
   { icon: "✔", label: "Planche d'impression incluse", detail: "Pour impression physique si besoin" },
-  { icon: "✔", label: "100 % privé", detail: "Photos non stockées ni partagées" },
+  { icon: "✔", label: "Données protégées", detail: "Photos supprimées après 24 h, jamais revendues" },
 ];
 
 // ─── PAGE ────────────────────────────────────────────────────
@@ -181,12 +182,13 @@ export default function EphotoAntsPage() {
 
       {/* Hero */}
       <HeroSectionFr
-        title="Code ePhoto ANTS en Ligne — Passeport & CNI 2026"
-        subtitle="Photo numérique biométrique + code conforme ANTS en 30 secondes"
-        description="Créez votre ePhoto ANTS sans photomaton ni rendez-vous. Notre IA vérifie automatiquement le cadrage, le fond et la conformité ISO — pour votre passeport, carte d'identité ou permis de conduire."
+        title="Code ePhoto ANTS : à quoi il sert et comment l'obtenir"
+        subtitle="Permis de conduire, titre de séjour, passeport, CNI : le guide 2026"
+        description="Le code ePhoto est obligatoire pour le permis de conduire et le titre de séjour, facultatif pour le passeport et la carte d'identité. Découvrez où l'obtenir et, pour les démarches sans code, créez une photo conforme depuis votre smartphone."
         ctaHref="/fr/passport-photo-online?type=france-passport"
-        ctaText="Obtenir mon ePhoto ANTS →"
+        ctaText="Créer une photo conforme (sans code) →"
         showImage={true}
+        imageAlt="Photo d'identité aux normes ANTS : 35×45 mm, fond gris clair, visage centré"
       />
 
       {/* Trust strip */}
@@ -199,34 +201,34 @@ export default function EphotoAntsPage() {
             Qu&apos;est-ce que l&apos;ePhoto ANTS ?
           </h2>
           <p className="text-slate-600 leading-relaxed mb-4">
-            L&apos;ePhoto ANTS est la photo d&apos;identité numérique officielle
-            exigée par l&apos;Agence Nationale des Titres Sécurisés pour toute
-            demande en ligne de{" "}
+            L&apos;ePhoto ANTS est une photo d&apos;identité numérique associée
+            à un code unique de 22 caractères. Ce code permet à l&apos;ANTS (Agence
+            nationale des titres sécurisés) ou à l&apos;ANEF de récupérer votre
+            photo et votre signature directement auprès de la cabine ou du
+            photographe agréé. Il est obligatoire pour le permis de conduire et
+            le titre de séjour, mais facultatif pour le{" "}
             <Link href="/fr/photo-passeport" className="text-lime-600 hover:underline">
               passeport
             </Link>{" "}
-            ou de{" "}
+            et la{" "}
             <Link href="/fr/photo-carte-identite" className="text-lime-600 hover:underline">
               carte nationale d&apos;identité
             </Link>
-            . Contrairement à une photo papier classique, l&apos;ePhoto est un
-            fichier numérique conforme aux normes biométriques internationales
-            (ISO/IEC 19794-5).
+            , pour lesquels une photo papier conforme reste acceptée en mairie.
           </p>
           <p className="text-slate-600 leading-relaxed mb-8">
-            Depuis 2021, la dématérialisation des démarches ANTS rend cette
-            photo indispensable. Elle s&apos;accompagne d&apos;un code unique
-            transmis lors de votre dépôt de dossier. Avec PixPassport, vous
-            générez une photo aux normes exactes en moins de 30 secondes — sans
-            vous déplacer en photomaton, sans attente, depuis n&apos;importe
-            quel appareil.
+            Le code ePhoto est valable six mois et ne peut être délivré que par
+            une cabine ou un photographe agréé : PixPassport ne fournit pas ce
+            code. Pour toutes les démarches qui n&apos;en exigent pas (passeport,
+            CNI, visa, carte Vitale), vous pouvez en revanche créer une photo
+            aux normes exactes en moins de 30 secondes, depuis votre smartphone.
           </p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { icon: "🏛️", label: "Conforme ANTS" },
-              { icon: "📱", label: "Depuis votre téléphone" },
-              { icon: "⚡", label: "Prêt en 30 secondes" },
-              { icon: "✅", label: "Normes ISO respectées" },
+              { icon: "🔢", label: "Code à 22 caractères" },
+              { icon: "⏳", label: "Valable 6 mois" },
+              { icon: "🚗", label: "Obligatoire pour le permis" },
+              { icon: "🏛️", label: "Obligatoire pour l'ANEF" },
             ].map((item, i) => (
               <div
                 key={i}
@@ -248,7 +250,7 @@ export default function EphotoAntsPage() {
         specs={[
           { label: "Dimensions", value: "35 × 45 mm", detail: "Norme ANTS officielle" },
           { label: "Format", value: "JPEG", detail: "Qualité haute résolution" },
-          { label: "Arrière-plan", value: "Blanc uni", detail: "Sans ombre ni motif" },
+          { label: "Arrière-plan", value: "Gris ou bleu clair", detail: "Uni, sans ombre — blanc refusé" },
           { label: "Visage", value: "32–36 mm", detail: "Du menton au sommet" },
           { label: "Résolution", value: "300+ DPI", detail: "Qualité d'impression" },
           { label: "Norme", value: "ISO 19794-5", detail: "Standard biométrique" },
@@ -262,23 +264,25 @@ export default function EphotoAntsPage() {
             Comment obtenir votre code ePhoto ANTS en ligne ?
           </h2>
           <p className="text-slate-600 leading-relaxed mb-4">
-            Le code ePhoto est normalement délivré par un photomaton agréé ANTS
-            ou un photographe professionnel habilité. Ce processus implique un
-            déplacement, une attente, et un coût souvent supérieur à 6&nbsp;€.
+            Le code ePhoto est délivré exclusivement par une cabine photo agréée
+            (logo « agréé ANTS » ou « e-photo ») ou par un photographe
+            professionnel habilité. Le code est imprimé sur votre planche ou sur
+            le ticket remis avec les photos : il suffit ensuite de le saisir dans
+            votre démarche en ligne.
           </p>
           <p className="text-slate-600 leading-relaxed mb-6">
-            PixPassport simplifie cette démarche&nbsp;: notre outil utilise une
-            intelligence artificielle avancée pour analyser votre photo, ajuster
-            automatiquement le cadrage{" "}
+            Pour les démarches sans code (passeport, CNI, visa), PixPassport
+            analyse votre photo, ajuste automatiquement le cadrage{" "}
             <Link href="/fr/photo-passeport-biometrique" className="text-lime-600 hover:underline">
               biométrique
             </Link>
-            , supprimer l&apos;arrière-plan et générer un fichier JPEG conforme
-            aux exigences ANTS — le tout en moins d&apos;une minute.
+            , remplace l&apos;arrière-plan par un fond gris clair et génère un
+            fichier conforme aux normes ANTS, avec une planche à imprimer — le
+            tout en moins d&apos;une minute.
           </p>
 
           <h3 className="text-lg font-bold text-slate-900 mb-4">
-            Étapes pour créer votre ePhoto ANTS en ligne
+            Créer une photo conforme pour une démarche sans code ePhoto
           </h3>
           <ol className="space-y-3">
             {[
@@ -295,7 +299,7 @@ export default function EphotoAntsPage() {
               {
                 emoji: "🤖",
                 step: "Vérification et ajustement automatiques",
-                detail: "Notre IA corrige le cadrage, le fond blanc et la luminosité en temps réel.",
+                detail: "Notre outil corrige le cadrage, le fond et la luminosité en temps réel.",
               },
               {
                 emoji: "✅",
@@ -304,8 +308,8 @@ export default function EphotoAntsPage() {
               },
               {
                 emoji: "⬇️",
-                step: "Téléchargez votre ePhoto prête à l'emploi",
-                detail: "Fichier JPEG + planche d'impression pour vos démarches ANTS.",
+                step: "Téléchargez votre photo conforme",
+                detail: "Fichier JPEG + planche 10×15 cm à imprimer pour votre rendez-vous en mairie.",
               },
             ].map((item, i) => (
               <li
@@ -327,11 +331,10 @@ export default function EphotoAntsPage() {
       <section className="py-16 bg-white">
         <div className="max-w-4xl mx-auto px-4">
           <h2 className="text-2xl font-extrabold text-slate-900 mb-2 text-center">
-            Pour quels documents utiliser une ePhoto ANTS ?
+            Code ePhoto : obligatoire ou non selon la démarche
           </h2>
           <p className="text-center text-slate-500 text-sm mb-8">
-            Valable pour l&apos;ensemble des titres traités via{" "}
-            <span className="font-medium">predemande.service-public.fr</span>
+            Démarches en ligne sur le site de l&apos;ANTS et de l&apos;ANEF
           </p>
           <div className="grid md:grid-cols-2 gap-5">
             {documents.map((doc, i) => (
@@ -356,11 +359,11 @@ export default function EphotoAntsPage() {
       <section className="py-16 bg-slate-50">
         <div className="max-w-3xl mx-auto px-4">
           <h2 className="text-2xl font-extrabold text-slate-900 mb-2 text-center">
-            Erreurs courantes qui causent un refus ANTS
+            Erreurs courantes qui font refuser une photo d&apos;identité
           </h2>
           <p className="text-center text-slate-500 text-sm mb-8">
-            80&nbsp;% des rejets sont dus à des erreurs évitables. PixPassport
-            les détecte toutes automatiquement.
+            Ces erreurs valent aussi en cabine : vérifiez-les avant la prise de
+            vue. PixPassport les détecte automatiquement.
           </p>
           <div className="space-y-3">
             {rejectionErrors.map((item, i) => (
@@ -380,10 +383,6 @@ export default function EphotoAntsPage() {
               </div>
             ))}
           </div>
-          <p className="text-center text-slate-500 text-sm mt-6">
-            Taux d&apos;acceptation ANTS constaté avec PixPassport&nbsp;:{" "}
-            <span className="font-bold text-slate-800">99,8 %</span>
-          </p>
         </div>
       </section>
 
@@ -391,11 +390,11 @@ export default function EphotoAntsPage() {
       <section className="py-16 bg-white">
         <div className="max-w-4xl mx-auto px-4">
           <h2 className="text-2xl font-extrabold text-slate-900 mb-2 text-center">
-            Pourquoi choisir PixPassport pour votre ePhoto ANTS ?
+            Pas besoin de code ePhoto ? Utilisez PixPassport
           </h2>
           <p className="text-center text-slate-500 text-sm mb-8">
             Utilisé par plus de 17&nbsp;000 personnes pour leurs démarches
-            officielles en France et dans 120+ pays.
+            officielles en France et dans plus de 50 pays.
           </p>
           <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
             {features.map((f, i) => (
@@ -476,8 +475,8 @@ export default function EphotoAntsPage() {
               { icon: "🪪", label: "Photo CNI", href: "/fr/photo-carte-identite" },
               { icon: "🌐", label: "Photo Visa", href: "/fr/photo-visa" },
               { icon: "📸", label: "Photo Biométrique", href: "/fr/photo-passeport-biometrique" },
-              { icon: "📐", label: "Taille photo", href: "/fr/guides/passport-photo-size" },
-              { icon: "🖼️", label: "Fond photo", href: "/fr/guides/passport-photo-background" },
+              { icon: "📐", label: "Taille photo d'identité", href: "/fr/guides/passport-photo-size" },
+              { icon: "🇫🇷", label: "Guide photo France", href: "/fr/guides/photo-identite-france-passeport-cni-ephoto-permis-visa" },
             ].map((link, i) => (
               <Link
                 key={i}
@@ -497,7 +496,7 @@ export default function EphotoAntsPage() {
       {/* Sticky CTA */}
       <StickyCTAFr
         ctaHref="/fr/passport-photo-online?type=france-passport"
-        ctaText="Créer votre ePhoto ANTS"
+        ctaText="Créer une photo conforme"
       />
     </>
   );

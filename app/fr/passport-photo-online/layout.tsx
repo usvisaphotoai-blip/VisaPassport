@@ -1,16 +1,13 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Créer votre Photo Passeport & Visa — Outil en Ligne | PixPassport",
-  description: "Outil professionnel de création de photos passeport et visa. Téléchargez votre photo, sélectionnez votre pays, obtenez une photo conforme en 30 secondes.",
+  title: "Créer votre photo d'identité, passeport ou visa | PixPassport",
+  description: "Importez votre photo, choisissez le document (passeport, CNI, visa…) et obtenez une photo conforme en 30 secondes.",
+  // App step, not a landing page: keep it out of the index so /fr/photo-identite-en-ligne
+  // (its hreflang equivalent in the sitemap) is the page that ranks for "photo d'identité en ligne".
+  robots: { index: false, follow: true },
   alternates: {
     canonical: "https://www.pixpassport.com/fr/passport-photo-online",
-    languages: {
-      en: "https://www.pixpassport.com/passport-photo-online",
-      fr: "https://www.pixpassport.com/fr/passport-photo-online",
-      de: "https://www.pixpassport.com/de/passbild-online",
-      "x-default": "https://www.pixpassport.com/passport-photo-online",
-    },
   },
   openGraph: {
     title: "Créer votre Photo — PixPassport", description: "Outil de création de photos passeport et visa conformes.",

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import dbConnect from "@/lib/mongodb";
 import Photo from "@/models/Photo";
@@ -5,6 +6,12 @@ import PreviewClientFr from "./PreviewClientFr";
 import { getLocalPrice } from "@/lib/currency";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+
+// Per-user photo previews must never be indexed
+export const metadata: Metadata = {
+  title: "Aperçu de votre photo | PixPassport",
+  robots: { index: false, follow: false },
+};
 
 export default async function FrPreviewPage(props: { params: Promise<{ id: string }> }) {
   const params = await props.params;

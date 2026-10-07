@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
 import { fr } from "../translations";
@@ -11,6 +9,7 @@ interface HeroProps {
   ctaText?: string;
   ctaHref?: string;
   showImage?: boolean; // 👈 changed
+  imageAlt?: string;
   showTrustBadges?: boolean;
   showAnimatedText?: boolean;
 }
@@ -22,6 +21,7 @@ export default function HeroSectionFr({
   ctaText = fr.buttons.getApprovedPhoto,
   ctaHref = "/fr/passport-photo-online?type=france-passport",
   showImage = true,
+  imageAlt = "Exemple de photo d'identité biométrique conforme aux normes ANTS, fond gris clair",
   showTrustBadges = true,
   showAnimatedText = false,
 }: HeroProps) {
@@ -75,7 +75,7 @@ export default function HeroSectionFr({
               <div className="relative w-full max-w-[400px] aspect-square rounded-xl overflow-hidden ">
                 <Image
                   src="https://res.cloudinary.com/dipzpwbbk/image/upload/v1779008016/c24d89b1-ab0e-4f1d-9035-5814bc7b91ca_preview_ip9ogs.jpg"
-                  alt="Photo biométrique conforme"
+                  alt={imageAlt}
                   fill
                   className="object-cover"
                   priority

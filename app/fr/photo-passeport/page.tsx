@@ -8,9 +8,9 @@ import FaqSectionFr from "../components/FaqSectionFr";
 import { fr } from "../translations";
 
 export const metadata: Metadata = {
-  title: "Photo Passeport en Ligne 2026 — Conforme ANTS en 30s",
-  description: "Créez votre photo passeport aux normes ANTS 2026 : 35×45mm, fond gris clair, cadrage automatique par IA. Résultat conforme en 30 secondes, garanti ou remboursé.",
-  keywords: ["photo passeport", "photo passeport en ligne", "photo passeport conforme ANTS", "photo passeport france", "35x45mm", "fond gris photo passeport"],
+  title: "Photo passeport en ligne aux normes ANTS 2026 | PixPassport",
+  description: "Photo passeport français depuis votre smartphone : 35×45 mm, fond gris clair, visage 32-36 mm vérifié. Fichier + planche 10×15 cm en 30 s, remboursé si refusée.",
+  keywords: ["photo passeport", "photo passeport en ligne", "photo passeport normes", "photo passeport france", "photo passeport bébé", "photo passeport enfant", "taille photo passeport", "35x45"],
   alternates: {
     canonical: "https://www.pixpassport.com/fr/photo-passeport",
     languages: {
@@ -38,15 +38,15 @@ export const metadata: Metadata = {
 const passportFaqs = [
   {
     q: "Le fond de ma photo passeport doit-il être blanc ?",
-    a: "Non. Depuis la mise à jour des normes ANTS, le blanc pur est déconseillé car il réduit le contraste avec la peau et perturbe la détection automatique du visage. Utilisez un gris clair ou un bleu-gris neutre, sans ombre portée. PixPassport applique ce fond automatiquement.",
+    a: "Non. En France, le fond blanc est refusé : il doit être uni et clair, de préférence gris clair ou bleu clair, sans motif ni ombre portée. PixPassport remplace automatiquement votre arrière-plan par un fond gris clair conforme.",
   },
   {
     q: "Puis-je porter des lunettes sur ma photo passeport ?",
-    a: "Les lunettes ne sont plus recommandées, sauf prescription médicale justifiée par un certificat d'ophtalmologiste à joindre au dossier. Sans certificat, retirez vos lunettes avant la prise de vue pour éviter tout rejet.",
+    a: "Oui, c'est toléré pour le passeport français, à condition que les yeux restent parfaitement visibles : monture fine qui ne cache pas les yeux, verres non teintés et aucun reflet. Les lunettes de soleil sont interdites. En cas de doute, retirez-les : c'est le moyen le plus sûr d'éviter un refus en mairie.",
   },
   {
     q: "Qu'est-ce que l'e-photo et en ai-je besoin ?",
-    a: "L'e-photo est un code numérique associé à votre photo, exigé pour certaines démarches en ligne sur ants.gouv.fr. Il est généralement délivré par un photographe agréé ou une cabine partenaire. Vérifiez sur votre espace ANTS si votre démarche l'exige avant de déposer un dossier en mairie.",
+    a: "L'e-photo est un code numérique associé à votre photo, délivré par une cabine ou un photographe agréé par l'ANTS. Il est obligatoire pour le permis de conduire et le titre de séjour, mais pas pour le passeport : en mairie, une photo papier conforme reste acceptée. PixPassport fournit la photo conforme et la planche à imprimer, pas le code e-photo.",
   },
   {
     q: "Ma photo passeport a-t-elle une durée de validité ?",
@@ -55,6 +55,14 @@ const passportFaqs = [
   {
     q: "Le sourire est-il toléré sur une photo passeport ?",
     a: "Non, même un léger sourire entraîne un rejet. Gardez la bouche fermée, les sourcils détendus et le regard neutre face à l'objectif.",
+  },
+  {
+    q: "Comment faire une photo passeport pour un bébé ?",
+    a: "Allongez le bébé sur un drap uni gris clair ou bleu clair et photographiez-le d'au-dessus, en lumière naturelle. Il doit être seul sur la photo, tête nue, sans tétine ni jouet, les yeux ouverts si possible. L'administration se montre plus tolérante sur l'expression des tout-petits. PixPassport recadre ensuite la photo au format 35×45 mm.",
+  },
+  {
+    q: "Peut-on utiliser la même photo pour le passeport et la carte d'identité ?",
+    a: "Oui. Le passeport et la carte nationale d'identité suivent la même norme (35×45 mm, fond clair uni, expression neutre). Si vous déposez les deux demandes lors du même rendez-vous en mairie, une seule planche de photos suffit, tant qu'elles datent de moins de six mois.",
   },
 ];
 
@@ -79,28 +87,28 @@ const steps = [
   {
     step: "3",
     title: "Laissez l'IA corriger votre photo",
-    content: "L'algorithme retire l'arrière-plan d'origine et le remplace par le fond gris clair désormais recommandé par l'ANTS. Il recadre votre visage aux dimensions exactes de 35×45 mm (413×531 pixels), ajuste la luminosité et vérifie l'alignement horizontal des yeux.",
+    content: "L'algorithme retire l'arrière-plan d'origine et le remplace par un fond gris clair uni, conforme aux normes ANTS (le fond blanc est refusé). Il recadre votre visage aux dimensions exactes de 35×45 mm (413×531 pixels), ajuste la luminosité et vérifie l'alignement horizontal des yeux.",
   },
   {
     step: "4",
     title: "Téléchargez votre photo conforme",
-    content: "Récupérez en moins de 30 secondes un fichier numérique haute résolution, prêt à être déposé en mairie ou utilisé pour une e-photo si votre démarche l'exige. Une planche d'impression 4×6 est incluse, acceptée en pharmacie, en mairie et en bureau de poste.",
+    content: "Récupérez en moins de 30 secondes un fichier numérique haute résolution et une planche d'impression 10×15 cm. Imprimez-la sur papier photo (chez vous, sur une borne photo ou en pharmacie), découpez une photo 35×45 mm et apportez-la à votre rendez-vous en mairie.",
   },
 ];
 
 const rejectionReasons = [
-  { title: "Fond blanc pur ou non uniforme", detail: "Le blanc écrase le contraste et gêne la lecture automatique. Une ombre derrière la tête suffit à faire rejeter le dossier." },
+  { title: "Fond blanc ou non uniforme", detail: "Le fond blanc est refusé en France. Une ombre derrière la tête ou un mur texturé suffit aussi à faire rejeter le dossier." },
   { title: "Visage trop petit ou trop grand", detail: "Hors de la fourchette 32-36 mm de hauteur, la photo est refusée même si le format global est correct." },
   { title: "Expression non neutre", detail: "Sourire, bouche entrouverte ou sourcils froncés comptent parmi les motifs de refus les plus fréquents." },
   { title: "Reflet ou ombre sur le visage", detail: "Un éclairage direct mal réparti crée des zones d'ombre derrière les oreilles ou sous le menton." },
-  { title: "Lunettes ou couvre-chef non justifiés", detail: "Sans certificat médical ou motif religieux documenté, tout accessoire couvrant le visage entraîne un rejet." },
+  { title: "Couvre-chef ou lunettes avec reflets", detail: "La tête doit être nue. Les lunettes sont tolérées seulement si les yeux sont parfaitement visibles, sans reflet ni verres teintés." },
   { title: "Photo de plus de six mois", detail: "Même parfaitement conforme sur le plan technique, une photo trop ancienne est automatiquement refusée." },
 ];
 
 const passportSpecs = [
   { label: "Dimensions", value: "35 × 45 mm", detail: "Norme ANTS, conforme ISO/IEC 19794-5" },
   { label: "Résolution", value: "413 × 531 px", detail: "300 DPI minimum pour l'impression" },
-  { label: "Arrière-plan", value: "Gris clair ou bleu-gris", detail: "Uni, sans ombre ni motif — le blanc pur est déconseillé" },
+  { label: "Arrière-plan", value: "Gris clair ou bleu clair", detail: "Uni, sans ombre ni motif — le fond blanc est refusé" },
   { label: "Taille du visage", value: "32-36 mm", detail: "Du menton au sommet du crâne (70-80% du cadre)" },
   { label: "Position des yeux", value: "Centrés, ouverts", detail: "Regard direct vers l'objectif, sans mèche devant les yeux" },
   { label: "Expression", value: "Neutre", detail: "Bouche fermée, sourcils détendus, pas de sourire" },
@@ -109,15 +117,7 @@ const passportSpecs = [
 const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
-    { "@type": "SoftwareApplication", name: "PixPassport — Photo Passeport", applicationCategory: "PhotographyApplication", operatingSystem: "All", inLanguage: "fr", offers: { "@type": "Offer", price: "6.99", priceCurrency: "EUR" } },
-    {
-      "@type": "FAQPage",
-      mainEntity: passportFaqs.map((item) => ({
-        "@type": "Question",
-        name: item.q,
-        acceptedAnswer: { "@type": "Answer", text: item.a },
-      })),
-    },
+    { "@type": "SoftwareApplication", name: "PixPassport — Photo Passeport", applicationCategory: "PhotographyApplication", operatingSystem: "All", inLanguage: "fr-FR", offers: { "@type": "Offer", price: "6.99", priceCurrency: "EUR" } },
   ],
 };
 
@@ -132,6 +132,7 @@ export default function PhotoPasseportPage() {
         description={fr.hero.passport.description}
         ctaHref="/fr/passport-photo-online?type=france-passport"
         showImage={true}
+        imageAlt="Photo passeport française 35×45 mm sur fond gris clair, conforme aux normes ANTS"
       />
 
       {/* Intro + trust strip — no cards, single inline row */}
@@ -139,7 +140,7 @@ export default function PhotoPasseportPage() {
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-2xl font-extrabold text-slate-900 mb-4">Pourquoi passer par PixPassport pour votre photo passeport ?</h2>
           <p className="text-slate-600 leading-relaxed mb-8">
-            Un logiciel de vérification biométrique contrôle chaque photo passeport que vous téléversez sur PixPassport, selon les mêmes critères que ceux appliqués par l&apos;ANTS en 2026. Notre outil supprime l&apos;arrière-plan de votre photo, applique le fond gris clair désormais requis, recentre votre visage et vérifie l&apos;alignement des yeux, le tout en moins de 30 secondes.
+            Un logiciel de vérification biométrique contrôle chaque photo passeport que vous téléversez sur PixPassport, selon les mêmes critères que ceux appliqués par l&apos;ANTS en 2026. Notre outil supprime l&apos;arrière-plan de votre photo, applique un fond gris clair conforme, recentre votre visage et vérifie l&apos;alignement des yeux, le tout en moins de 30 secondes.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 border-y border-slate-100 py-5">
             {trustPoints.map((item, i) => (
@@ -197,7 +198,7 @@ export default function PhotoPasseportPage() {
             Normes ANTS 2026 pour la photo passeport française
           </h2>
           <p className="text-slate-600 mb-10 leading-relaxed text-center max-w-2xl mx-auto">
-            Ces critères suivent les exigences de l&apos;<Link href="/fr/ephoto-ants" className="text-lime-600 hover:underline">ANTS</Link> (Agence Nationale des Titres Sécurisés) et les standards <Link href="/fr/photo-passeport-biometrique" className="text-lime-600 hover:underline">ICAO internationaux</Link>.
+            Ces critères suivent les exigences de l&apos;<Link href="/fr/ephoto-ants" className="text-lime-600 hover:underline">ANTS</Link> (Agence Nationale des Titres Sécurisés) et les standards biométriques internationaux de l&apos;<Link href="/fr/photo-passeport-biometrique" className="text-lime-600 hover:underline">OACI</Link>. Pour les dimensions des autres pays, consultez notre guide sur la <Link href="/fr/guides/passport-photo-size" className="text-lime-600 hover:underline">taille des photos d&apos;identité</Link>.
           </p>
 
           <div className="grid md:grid-cols-2 gap-x-8 gap-y-5 mb-14">
@@ -280,6 +281,44 @@ export default function PhotoPasseportPage() {
               </tbody>
             </table>
           </div>
+        </div>
+      </section>
+
+      {/* France-specific procedure — answers "comment faire son passeport" intent */}
+      <section className="py-16 bg-white">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-extrabold text-slate-900 mb-6 text-center">
+            Demande de passeport en France : où intervient la photo ?
+          </h2>
+          <ol className="list-decimal pl-6 space-y-3 text-slate-600 leading-relaxed mb-8">
+            <li>
+              <strong className="text-slate-800">Pré-demande en ligne</strong> sur le site de l&apos;ANTS, puis achat du
+              timbre fiscal (86&nbsp;€ pour un adulte, 42&nbsp;€ de 15 à 17 ans, 17&nbsp;€ pour un enfant de moins de 15 ans).
+            </li>
+            <li>
+              <strong className="text-slate-800">Rendez-vous en mairie</strong> (dans n&apos;importe quelle mairie équipée
+              d&apos;un dispositif de recueil, pas forcément celle de votre domicile).
+            </li>
+            <li>
+              <strong className="text-slate-800">Photo d&apos;identité</strong> : apportez une photo papier 35×45&nbsp;mm de
+              moins de six mois, ou un code e-photo si votre mairie le propose. C&apos;est l&apos;étape où la plupart des
+              dossiers sont bloqués : fond blanc, visage trop petit ou sourire.
+            </li>
+            <li>
+              <strong className="text-slate-800">Retrait du passeport</strong> dans la même mairie, généralement quelques
+              semaines plus tard. Le passeport est valable 10 ans pour un adulte et 5 ans pour un mineur.
+            </li>
+          </ol>
+          <h3 className="text-xl font-bold text-slate-900 mb-3">Photo passeport enfant et bébé</h3>
+          <p className="text-slate-600 leading-relaxed">
+            Les règles sont les mêmes que pour un adulte : format 35×45&nbsp;mm, fond clair uni (pas blanc), tête nue,
+            enfant seul sur la photo. Pour un bébé, allongez-le sur un drap gris clair et photographiez-le d&apos;au-dessus
+            : PixPassport se charge du recadrage (voir notre guide{" "}
+            <Link href="/fr/photo-bebe" className="text-lime-600 hover:underline">photo d&apos;identité bébé</Link>). Même photo pour la{" "}
+            <Link href="/fr/photo-carte-identite" className="text-lime-600 hover:underline">carte d&apos;identité</Link>{" "}
+            si vous faites les deux demandes ensemble. Pour réussir la prise de vue, suivez notre guide{" "}
+            <Link href="/fr/guides/how-to-take-passport-photo-at-home" className="text-lime-600 hover:underline">photo d&apos;identité à la maison</Link>.
+          </p>
         </div>
       </section>
 

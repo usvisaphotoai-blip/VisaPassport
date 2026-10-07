@@ -6,9 +6,9 @@ import Image from "next/image";
    Metadata
 ───────────────────────────────────────────── */
 export const metadata: Metadata = {
-  title: "Photo Passeport, Visa & Carte d'Identité en Ligne | PixPassport",
+  title: "Photo d'identité et photo passeport en ligne | PixPassport",
   description:
-    "Créez votre photo passeport, photo visa ou photo d'identité conforme en 30 secondes. Photo biométrique vérifiée par IA, fond conforme, 50+ pays. Garanti ou remboursé.",
+    "Photo d'identité et passeport depuis votre smartphone, aux normes ANTS 2026 : fond gris clair, 35×45 mm, contrôle biométrique. Dès 6,99 €, remboursé si refusée.",
 
   alternates: {
     canonical: "https://www.pixpassport.com/fr",
@@ -21,9 +21,9 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "PixPassport — Photo Passeport Conforme en 30 Secondes",
+    title: "Photo d'identité et passeport en ligne aux normes ANTS | PixPassport",
     description:
-      "Photo passeport, visa et carte d'identité conformes, vérifiées par IA. Fond conforme, conforme pour 50+ pays. Garanti ou remboursé.",
+      "Photo d'identité, passeport, CNI et visa depuis votre smartphone : format 35×45 mm, fond gris clair, contrôle biométrique. Remboursé si refusée.",
     url: "https://www.pixpassport.com/fr",
     siteName: "PixPassport",
     locale: "fr_FR",
@@ -33,15 +33,15 @@ export const metadata: Metadata = {
         url: "https://www.pixpassport.com/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "PixPassport — Photo passeport biométrique en ligne",
+        alt: "PixPassport — photo d'identité et photo passeport en ligne",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Photo Passeport, Visa & Carte d'Identité en Ligne | PixPassport",
+    title: "Photo d'identité et photo passeport en ligne | PixPassport",
     description:
-      "Créez votre photo passeport, visa ou carte d'identité conforme en 30 secondes. Vérification biométrique IA.",
+      "Photo d'identité, passeport, CNI et visa aux normes ANTS 2026, depuis votre smartphone. Contrôle biométrique, remboursé si refusée.",
     images: ["https://www.pixpassport.com/og-image.jpg"],
   },
 };
@@ -112,7 +112,7 @@ const benefits = [
   { icon: "🔒", title: "Données protégées et conformes RGPD", desc: "Chiffrement de bout en bout. Vos photos sont supprimées après 24 heures, sans revente ni partage." },
   { icon: "💶", title: "À partir de 6,99 € seulement", desc: "Économisez sur les frais de studio et sur les resoumissions en cas de refus. Tarif unique, sans abonnement." },
   { icon: "🌍", title: "50+ pays et documents couverts", desc: "France, États-Unis, Canada, Royaume-Uni, espace Schengen, Chine — base mise à jour en continu." },
-  { icon: "🖨️", title: "Planche d'impression incluse", desc: "Format prêt à imprimer, accepté dans toutes les pharmacies, mairies et bureaux de poste français." },
+  { icon: "🖨️", title: "Planche d'impression 10×15 cm incluse", desc: "À imprimer chez vous sur papier photo, sur une borne photo ou en pharmacie, puis à découper aux dimensions 35×45 mm." },
 ];
 
 const docs = [
@@ -120,7 +120,7 @@ const docs = [
   { icon: "🪪", name: "Photo carte d'identité (CNI)", detail: "Même norme que le passeport" },
   { icon: "✈️", name: "Photo visa Schengen", detail: "Tous pays de l'espace Schengen" },
   { icon: "🇺🇸", name: "Photo visa américain", detail: "Passeport US · formulaire DS-160" },
-  { icon: "🟩", name: "Photo carte verte / loterie DV", detail: "lime Card · DV Lottery" },
+  { icon: "🟩", name: "Photo carte verte / loterie DV", detail: "Green Card · loterie DV" },
   { icon: "🇨🇳", name: "Photo visa chinois", detail: "Format et fond dédiés" },
 ];
 
@@ -131,14 +131,14 @@ const reviews = [
 ];
 
 const checklist = [
-  "Fond gris clair ou bleu-gris uni, sans ombre",
+  "Fond uni gris clair ou bleu clair (le blanc est refusé)",
   "Dimensions exactes 35×45 mm (norme France)",
   "Expression neutre, bouche fermée",
   "Yeux ouverts, regard vers l'objectif",
   "Visage centré, dégagé, sans couvre-chef",
   "Photo de moins de six mois",
   "Résolution minimale 413×531 px à 300 DPI",
-  "Format numérique compatible ANTS pour la soumission en ligne",
+  "Tête nue, visage dégagé, lunettes sans reflet ni verres teintés",
 ];
 
 const jsonLd = {
@@ -154,9 +154,9 @@ const jsonLd = {
       "@type": "WebPage",
       "@id": "https://www.pixpassport.com/fr/#webpage",
       url: "https://www.pixpassport.com/fr",
-      name: "Photo Passeport, Visa & Carte d'Identité en Ligne | PixPassport",
-      inLanguage: "fr",
-      description: "Créez votre photo passeport, visa ou carte d'identité conforme en 30 secondes.",
+      name: "Photo d'identité et photo passeport en ligne | PixPassport",
+      inLanguage: "fr-FR",
+      description: "Photo d'identité, passeport, CNI et visa aux normes ANTS 2026, réalisée en ligne depuis un smartphone.",
     },
     {
       "@type": "SoftwareApplication",
@@ -176,12 +176,6 @@ const jsonLd = {
         acceptedAnswer: { "@type": "Answer", text: f.a },
       })),
     },
-    {
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Accueil", item: "https://www.pixpassport.com/fr" },
-      ],
-    },
   ],
 };
 
@@ -195,7 +189,7 @@ export default function FrHomePage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-      <main className="pb-20 md:pb-0">
+      <div className="pb-20 md:pb-0">
           <section aria-labelledby="hero-h1" className="pt-8 md:pt-10">
           <div className="mx-auto max-w-7xl px-3 py-10 sm:px-4 md:py-10 lg:px-6">
             <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-12">
@@ -213,15 +207,15 @@ export default function FrHomePage() {
                   id="hero-h1"
                   className="max-w-2xl text-3xl font-extrabold leading-tight tracking-tight text-slate-900 sm:text-4xl"
                 >
-                 Photo passeport et photo visa en ligne,{" "}
-              <span className="text-lime-700">conformes en 30 secondes</span>
+                 Photo d&apos;identité et photo passeport en ligne,{" "}
+              <span className="text-lime-700">conformes ANTS en 30 secondes</span>
                 </h1>
 
                 <p className="mt-5 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
-                Créez une photo d&apos;identité 100&nbsp;% conforme aux normes biométriques officielles, sans vous
-              déplacer. Notre générateur de photo passeport supprime l&apos;arrière-plan, recadre votre visage et
-              vérifie chaque critère ANTS avant que vous ne téléchargiez le fichier — accepté par les autorités de
-              plus de 50 pays.
+                Faites votre photo d&apos;identité avec votre smartphone, sans photomaton ni rendez-vous. Notre
+              outil applique le fond gris clair exigé en France, recadre votre visage au format 35×45&nbsp;mm et
+              vérifie chaque critère ANTS avant le téléchargement — pour le passeport, la carte d&apos;identité,
+              le visa et plus de 50 pays.
                 </p>
 
                 <div className="mt-8 flex gap-2">
@@ -242,7 +236,7 @@ export default function FrHomePage() {
               <div className="flex justify-center">
                 <Image
                   src="https://res.cloudinary.com/dipzpwbbk/image/upload/v1779008016/c24d89b1-ab0e-4f1d-9035-5814bc7b91ca_preview_ip9ogs.jpg"
-                  alt="Biometrisches Passbild online per Smartphone erstellen"
+                  alt="Photo d'identité prise au smartphone puis recadrée aux normes ANTS sur fond gris clair"
                   width={700}
                   height={560}
                   className="w-full h-auto rounded-lg "
@@ -335,10 +329,10 @@ export default function FrHomePage() {
               <p>
                 Une <strong className="text-slate-800">photo passeport conforme</strong> répond à des critères
                 précis fixés par l&apos;<Link href="/fr/ephoto-ants" className="text-lime-700 underline hover:text-lime-800">ANTS (Agence Nationale des Titres Sécurisés)</Link> pour la France,
-                et par les standards biométriques ICAO pour les documents de voyage internationaux. Ces exigences
-                couvrent le fond (gris clair ou bleu-gris uni, le blanc pur étant aujourd&apos;hui déconseillé),
-                les dimensions (35×45 mm), l&apos;expression neutre, les yeux ouverts, l&apos;absence
-                d&apos;accessoires sur le visage, et la qualité de l&apos;image.
+                et par les standards biométriques de l&apos;OACI pour les documents de voyage internationaux. Ces exigences
+                couvrent le fond (uni, gris clair ou bleu clair : le fond blanc est refusé en France),
+                les dimensions (35×45 mm, visage de 32 à 36 mm), l&apos;expression neutre, les yeux ouverts,
+                la tête nue et la qualité de l&apos;image.
               </p>
               <p>
                 Une photo non conforme entraîne le rejet automatique de votre dossier : délais supplémentaires,
@@ -349,9 +343,14 @@ export default function FrHomePage() {
                 Notre générateur de photo passeport produit des fichiers conformes pour le{" "}
                 <Link href="/fr/photo-passeport" className="text-lime-700 underline hover:text-lime-800">passeport biométrique français</Link>,
                 la <Link href="/fr/photo-carte-identite" className="text-lime-700 underline hover:text-lime-800">carte nationale d&apos;identité</Link>,
-                les <Link href="/fr/photo-visa" className="text-lime-700 underline hover:text-lime-800">visas Schengen</Link>, le permis de
-                conduire international, ainsi que les visas américain et chinois, la carte verte américaine et la
-                loterie DV, dans plus de 50 pays au total.
+                les <Link href="/fr/photo-visa" className="text-lime-700 underline hover:text-lime-800">visas Schengen</Link>, ainsi que les
+                visas américain et chinois, la carte verte américaine et la loterie DV, dans plus de 50 pays au
+                total. Pour le permis de conduire et le titre de séjour, qui exigent un{" "}
+                <Link href="/fr/ephoto-ants" className="text-lime-700 underline hover:text-lime-800">code ePhoto ANTS</Link>, consultez
+                notre guide dédié. Vous hésitez sur le format ? Voir la{" "}
+                <Link href="/fr/guides/passport-photo-size" className="text-lime-700 underline hover:text-lime-800">taille de la photo d&apos;identité</Link>{" "}
+                et les{" "}
+                <Link href="/fr/guides/passport-photo-background" className="text-lime-700 underline hover:text-lime-800">couleurs de fond acceptées</Link>.
               </p>
             </div>
 
@@ -446,7 +445,8 @@ export default function FrHomePage() {
                     ["Délai", "Moins de 30 secondes", "Attente sur place"],
                     ["Prix moyen", "À partir de 6,99 €", "8 € à 15 €"],
                     ["Garantie", "Remboursé si refusé", "Résultat non garanti"],
-                    ["Format numérique ANTS", "Inclus", "Rarement proposé"],
+                    ["Fichier numérique HD", "Inclus", "Souvent en supplément"],
+                    ["Code ePhoto ANTS (permis, titre de séjour)", "Non fourni", "Oui, en cabine ou chez un photographe agréé"],
                   ].map((row) => (
                     <tr key={row[0]} className="border-b border-slate-100 last:border-0">
                       <td className="py-3 pl-4 pr-4 font-medium">{row[0]}</td>
@@ -546,7 +546,7 @@ export default function FrHomePage() {
         </div>
 
     
-      </main>
+      </div>
     </>
   );
 }

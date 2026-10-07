@@ -8,9 +8,9 @@ import BreadcrumbsFr from "../components/BreadcrumbsFr";
 import { fr } from "../translations";
 
 export const metadata: Metadata = {
-  title: "Photo d'Identité en Ligne — Passeport, Visa & CNI | PixPassport",
+  title: "Photo d'identité en ligne avec votre smartphone | PixPassport",
   description:
-    "Faites votre photo d'identité en ligne depuis chez vous : fond conforme, recadrage biométrique IA, formats adaptés à chaque pays pour passeport, visa et CNI.",
+    "Votre photo d'identité en ligne sans photomaton : une photo au smartphone, le fond gris clair et le format 35×45 mm ANTS appliqués. Aperçu gratuit, dès 6,99 €.",
  
   alternates: {
     canonical: "https://www.pixpassport.com/fr/photo-identite-en-ligne",
@@ -22,9 +22,9 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Photo d'Identité en Ligne — Passeport, Visa & CNI | PixPassport",
+    title: "Photo d'identité en ligne avec votre smartphone | PixPassport",
     description:
-      "Faites votre photo d'identité en ligne : fond conforme, recadrage biométrique IA, formats adaptés à chaque pays.",
+      "Photo d'identité en ligne sans photomaton : fond gris clair, format 35×45 mm ANTS, planche à imprimer.",
     url: "https://www.pixpassport.com/fr/photo-identite-en-ligne",
     siteName: "PixPassport",
     locale: "fr_FR",
@@ -40,9 +40,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Photo d'Identité en Ligne | PixPassport",
+    title: "Photo d'identité en ligne avec votre smartphone | PixPassport",
     description:
-      "Faites votre photo d'identité en ligne : fond conforme, recadrage biométrique IA, formats adaptés à chaque pays.",
+      "Photo d'identité en ligne sans photomaton : fond gris clair, format 35×45 mm ANTS, planche à imprimer.",
     images: ["https://www.pixpassport.com/og-image.jpg"],
   },
 };
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
 const onlineFaqs = [
   {
     q: "Une photo prise chez moi peut-elle remplacer le photomaton ?",
-    a: "Oui pour la plupart des usages numériques et impressions à domicile. Certaines démarches ANTS exigent toutefois une e-photo délivrée par un professionnel agréé : vérifiez cette exigence sur votre espace ants.gouv.fr avant de déposer votre dossier.",
+    a: "Oui pour le passeport, la carte d'identité, les visas et la carte Vitale : une photo conforme imprimée suffit. Le permis de conduire et le titre de séjour exigent en revanche un code e-photo délivré par une cabine ou un photographe agréé.",
   },
   {
     q: "Le format change-t-il selon le pays de destination ?",
@@ -63,6 +63,14 @@ const onlineFaqs = [
   {
     q: "Combien de temps prend le traitement en ligne ?",
     a: "Moins de 30 secondes entre le téléversement de votre photo et la réception du fichier conforme, contre 10 à 20 minutes en moyenne dans un photomaton en libre-service.",
+  },
+  {
+    q: "Peut-on faire une photo d'identité en ligne gratuitement ?",
+    a: "La vérification de conformité et l'aperçu de votre photo sont gratuits, sans inscription. Le téléchargement du fichier haute résolution et de la planche d'impression est payant (dès 6,99 €, paiement unique, sans abonnement), soit moins qu'un photomaton ou un photographe.",
+  },
+  {
+    q: "Où imprimer ma photo d'identité ?",
+    a: "Imprimez la planche 10×15 cm fournie sur papier photo brillant : chez vous avec une imprimante photo, sur une borne photo en grande surface, en pharmacie ou via un service de tirage en ligne. Découpez ensuite une photo au format exact 35×45 mm.",
   },
   {
     q: "Que se passe-t-il si ma photo est refusée malgré tout ?",
@@ -78,16 +86,8 @@ const jsonLd = {
       name: "PixPassport — Photo d'Identité en Ligne",
       applicationCategory: "PhotographyApplication",
       operatingSystem: "All",
-      inLanguage: "fr",
+      inLanguage: "fr-FR",
       offers: { "@type": "Offer", price: "6.99", priceCurrency: "EUR" },
-    },
-    {
-      "@type": "FAQPage",
-      mainEntity: onlineFaqs.map((item) => ({
-        "@type": "Question",
-        name: item.q,
-        acceptedAnswer: { "@type": "Answer", text: item.a },
-      })),
     },
   ],
 };
@@ -113,8 +113,9 @@ export default function PhotoIdentiteEnLignePage() {
         description="Téléversez une photo prise depuis votre smartphone : notre IA ajuste le fond, le cadrage et la luminosité selon les normes du document et du pays choisis."
         ctaHref="/fr/passport-photo-online"
         showImage={true}
+        imageAlt="Selfie pris au smartphone transformé en photo d'identité conforme sur fond gris clair"
       />
-      <main className="mx-auto max-w-6xl px-6 py-16 text-slate-800">
+      <div className="mx-auto max-w-6xl px-6 py-16 text-slate-800">
         <article>
           <header className="mb-10">
             <p className="mt-6 text-lg leading-relaxed text-slate-600">
@@ -165,23 +166,27 @@ export default function PhotoIdentiteEnLignePage() {
             </h2>
             <p className="mb-4 leading-relaxed">
               Les règles de l&apos;ANTS (Agence Nationale des Titres Sécurisés)
-              évoluent régulièrement. Le fond blanc pur, longtemps toléré, est
-              aujourd&apos;hui déconseillé : il réduit le contraste avec la
-              peau et perturbe la détection automatique du visage lors des
-              contrôles en préfecture. Utilisez un <strong>gris clair ou un
-              bleu-gris neutre</strong>, sans motif ni ombre portée. PixPassport
-              applique désormais ce fond par défaut sur chaque photo générée.
+              sont souvent mal connues. Le fond blanc, que beaucoup pensent
+              obligatoire, est en réalité refusé : il manque de contraste avec
+              le visage et perturbe la lecture biométrique. Utilisez un{" "}
+              <strong>fond uni gris clair ou bleu clair</strong>, sans motif ni
+              ombre portée. PixPassport applique ce fond par défaut sur chaque
+              photo générée (voir les{" "}
+              <Link href="/fr/photo-identite" className="text-lime-700 underline">normes de la photo d&apos;identité</Link>).
             </p>
             <p className="mb-4 leading-relaxed">
-              Autre point souvent négligé : certaines démarches en ligne sur
-              ants.gouv.fr exigent une <strong>e-photo</strong>, un code
-              numérique délivré par un photographe agréé ou une cabine
-              partenaire, distinct d&apos;une simple photo numérique. Vérifiez
-              cette exigence sur votre espace personnel avant le dépôt, car elle
-              varie selon la démarche et la mairie concernée.
+              Autre point souvent négligé : le permis de conduire et le titre
+              de séjour exigent un{" "}
+              <Link href="/fr/ephoto-ants" className="text-lime-700 underline">code e-photo</Link>,
+              délivré uniquement par une cabine ou un photographe agréé, distinct
+              d&apos;une simple photo numérique. Pour le passeport et la carte
+              d&apos;identité, une photo papier conforme reste acceptée lors du
+              rendez-vous en mairie.
             </p>
             <p className="leading-relaxed">
-              Pour une carte nationale d&apos;identité, les mêmes règles de
+              Pour une{" "}
+              <Link href="/fr/photo-carte-identite" className="text-lime-700 underline">carte nationale d&apos;identité</Link>,
+              les mêmes règles de
               cadrage s&apos;appliquent : distance interoculaire correcte,
               menton dégagé, absence de verres teintés et arrière-plan
               homogène. Contrairement à un photomaton classique, dont le
@@ -228,18 +233,20 @@ export default function PhotoIdentiteEnLignePage() {
                 strictement la luminosité et la netteté.
               </li>
               <li>
-                <strong>Visa Canada</strong> : format 50 × 70 mm, fond clair
-                uni, photo de moins de six mois. Notre outil génère
-                automatiquement les bonnes dimensions et peut ajouter le nom et
-                la date de naissance si le formulaire l&apos;exige.
+                <strong>Visa Canada</strong> : format 35 × 45 mm, fond blanc ou
+                très clair uni, photo de moins de six mois. Attention, le
+                passeport canadien utilise lui un format différent (50 × 70 mm).
               </li>
               <li>
                 <strong>Visa Schengen</strong> : format 35 × 45 mm, identique à
-                la photo passeport français, avec un fond gris clair ou bleu
-                pâle et une expression neutre obligatoire.
+                la{" "}
+                <Link href="/fr/photo-passeport" className="text-lime-700 underline">photo passeport français</Link>,
+                avec un fond clair uni et une expression neutre obligatoire.
               </li>
             </ul>
             <p className="leading-relaxed">
+              Retrouvez tous les formats sur notre page{" "}
+              <Link href="/fr/photo-visa" className="text-lime-700 underline">photo visa</Link>.
               Un sélecteur de pays intégré ajuste automatiquement le format, la
               résolution et la couleur de fond attendue, qu&apos;il
               s&apos;agisse d&apos;un visa touristique, étudiant ou
@@ -276,13 +283,14 @@ export default function PhotoIdentiteEnLignePage() {
               Un photomaton reste dépendant de l&apos;éclairage de la cabine et
               de la qualité de l&apos;appareil installé. Un traitement
               numérique applique un correctif homogène à chaque photo, ce qui
-              réduit le taux de rejet en préfecture ou en ambassade — sauf pour
+              réduit le taux de rejet en mairie ou en ambassade — sauf pour
               les démarches exigeant spécifiquement une e-photo d&apos;un
-              professionnel agréé.
+              professionnel agréé. Pour réussir votre cliché, suivez notre guide{" "}
+              <Link href="/fr/guides/how-to-take-passport-photo-at-home" className="text-lime-700 underline">faire sa photo d&apos;identité à la maison</Link>.
             </p>
           </section>
         </article>
-      </main>
+      </div>
       <FaqSectionFr
         faqs={onlineFaqs}
         title="Questions fréquentes — Photo d'identité en ligne"

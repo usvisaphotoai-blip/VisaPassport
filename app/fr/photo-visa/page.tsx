@@ -5,12 +5,14 @@ import StickyCTAFr from "../components/StickyCTAFr";
 import BreadcrumbsFr from "../components/BreadcrumbsFr";
 import Link from "next/link";
 import FaqSectionFr from "../components/FaqSectionFr";
+import RelatedGuidesFr from "../components/RelatedGuidesFr";
 import { fr } from "../translations";
 
 export const metadata: Metadata = {
-  title: "Photo Visa en Ligne — Tous Pays & Types de Visa | PixPassport",
+  title: "Photo visa en ligne : taille et fond par pays | PixPassport",
   description:
-    "Créez une photo visa conforme pour Schengen, États-Unis, Canada, Australie et plus de 50 pays. Vérification biométrique IA instantanée.",
+    "Photo visa au bon format pour chaque pays : USA (DS-160, 51×51 mm), Schengen, Chine (33×48 mm), Canada, Inde… Fond et dimensions ajustés automatiquement.",
+  keywords: ["photo visa", "photo visa usa", "photo visa ds-160", "photo visa chine", "photo visa schengen", "taille photo visa"],
 
   alternates: {
     canonical: "https://www.pixpassport.com/fr/photo-visa",
@@ -22,9 +24,9 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Photo Visa en Ligne | PixPassport",
+    title: "Photo visa en ligne : taille et fond par pays | PixPassport",
     description:
-      "Photo visa conforme pour tous les pays. Vérification biométrique IA.",
+      "Photo visa au bon format pour les États-Unis, l'espace Schengen, la Chine, le Canada, l'Inde et plus de 50 pays.",
     url: "https://www.pixpassport.com/fr/photo-visa",
     siteName: "PixPassport",
     locale: "fr_FR",
@@ -40,9 +42,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Photo Visa en Ligne | PixPassport",
+    title: "Photo visa en ligne : taille et fond par pays | PixPassport",
     description:
-      "Photo visa conforme pour tous les pays. Vérification biométrique IA.",
+      "Photo visa au bon format pour les États-Unis, l'espace Schengen, la Chine, le Canada, l'Inde et plus de 50 pays.",
     images: ["https://www.pixpassport.com/og-image.jpg"],
   },
 };
@@ -55,7 +57,7 @@ const jsonLd = {
       name: "PixPassport — Photo Visa",
       applicationCategory: "PhotographyApplication",
       operatingSystem: "All",
-      inLanguage: "fr",
+      inLanguage: "fr-FR",
       offers: { "@type": "Offer", price: "6.99", priceCurrency: "EUR" },
     },
   ],
@@ -81,7 +83,7 @@ const countries = [
     name: "Canada",
     size: "35×45mm",
     type: "canada-visa",
-    desc: "Visa visiteur, ETA, RP",
+    desc: "Visa visiteur, études, RP",
   },
   {
     flag: "🇬🇧",
@@ -95,7 +97,7 @@ const countries = [
     name: "Australie",
     size: "35×45mm",
     type: "australia-visa",
-    desc: "ETA, visa travail",
+    desc: "Visa visiteur, travail",
   },
   {
     flag: "🇮🇳",
@@ -107,7 +109,7 @@ const countries = [
   {
     flag: "🇯🇵",
     name: "Japon",
-    size: "35×45mm",
+    size: "45×45mm",
     type: "japan-visa",
     desc: "Visa touriste, travail",
   },
@@ -137,6 +139,7 @@ export default function PhotoVisaPage() {
         description={fr.hero.visa.description}
         ctaHref="/fr/passport-photo-online"
         showImage={true}
+        imageAlt="Photo visa recadrée aux dimensions du pays de destination, fond uni"
       />
 
       {/* Country selector */}
@@ -222,16 +225,18 @@ export default function PhotoVisaPage() {
           Les exigences varient selon la destination. Par exemple, une photo
           visa pour les États-Unis doit être au format 51×51 mm, tandis que la
           plupart des pays européens exigent un format 35×45 mm. Certains pays
-          comme la Chine ont des dimensions spécifiques comme 33×48 mm.
+          comme la Chine ont des dimensions spécifiques comme 33×48 mm. Consultez
+          notre tableau complet des{" "}
+          <Link href="/fr/guides/passport-photo-size" className="text-lime-600 hover:underline">dimensions de photo par pays</Link>.
         </p>
 
         <p className="mb-4">En plus des dimensions, les règles incluent :</p>
 
         <ul className="list-disc pl-6 mb-4">
-          <li>Fond clair et uniforme (blanc ou gris)</li>
+          <li>Fond clair et uniforme : blanc pour les États-Unis, l&apos;Inde ou la Chine, clair et uni pour l&apos;espace Schengen</li>
           <li>Visage centré et clairement visible</li>
           <li>Expression neutre sans sourire</li>
-          <li>Pas d'accessoires comme lunettes ou chapeaux</li>
+          <li>Tête nue (sauf motif religieux selon les pays) ; lunettes interdites pour les États-Unis</li>
           <li>Bonne luminosité sans ombres</li>
         </ul>
 
@@ -282,7 +287,18 @@ export default function PhotoVisaPage() {
           <li>Visa de travail</li>
           <li>Visa affaires</li>
           <li>Résidence permanente</li>
+          <li>Visa long séjour pour la France (photo aux normes françaises, voir{" "}
+            <Link href="/fr/photo-identite" className="text-lime-600 hover:underline">photo d&apos;identité</Link>)</li>
         </ul>
+
+        <p className="mb-4">
+          Bon à savoir : l&apos;ESTA (États-Unis), l&apos;AVE (Canada) et l&apos;ETIAS
+          (Europe) ne demandent pas de photo. Pour un titre de séjour en France
+          demandé sur le site de l&apos;ANEF, un{" "}
+          <Link href="/fr/ephoto-ants" className="text-lime-600 hover:underline">code e-photo</Link>{" "}
+          délivré par une cabine agréée est obligatoire (voir{" "}
+          <Link href="/fr/photo-titre-de-sejour" className="text-lime-600 hover:underline">photo titre de séjour</Link>).
+        </p>
 
         <h2 className="text-2xl font-semibold mt-8 mb-4">
           Avantages de PixPassport pour vos photos visa
@@ -303,6 +319,7 @@ export default function PhotoVisaPage() {
         </p>
       </section>
       <FaqSectionFr faqs={fr.faq.visa} title="Questions fréquentes — Photo visa" />
+      <RelatedGuidesFr />
       <StickyCTAFr ctaText="Créer votre photo visa" />
     </>
   );

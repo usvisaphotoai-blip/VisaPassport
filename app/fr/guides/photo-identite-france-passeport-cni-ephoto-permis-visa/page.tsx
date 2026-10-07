@@ -5,8 +5,8 @@ import FaqSectionFr from "../../components/FaqSectionFr";
 import StickyCTAFr from "../../components/StickyCTAFr";
 
 export const metadata: Metadata = {
-  title: "Photo d'Identité France 2026 : Passeport, CNI, ePhoto Permis, Visa | PixPassport",
-  description: "Photo identité France 2026 : créez une photo passeport en ligne, une photo CNI en ligne ou une ePhoto ANTS conforme pour le permis, le visa et plus.",
+  title: "Photo d'identité en France : quel format pour quel document ?",
+  description: "Passeport, CNI, permis, titre de séjour, visa, carte Vitale : quelle photo fournir, normes ANTS 2026, et quand un code ePhoto est obligatoire. Le guide complet.",
   keywords: [
     "photo identite france",
     "photo passeport en ligne",
@@ -19,11 +19,12 @@ export const metadata: Metadata = {
     canonical: "https://www.pixpassport.com/fr/guides/photo-identite-france-passeport-cni-ephoto-permis-visa",
     languages: {
       fr: "https://www.pixpassport.com/fr/guides/photo-identite-france-passeport-cni-ephoto-permis-visa",
-      "x-default": "https://www.pixpassport.com/fr/guides/photo-identite-france-passeport-cni-ephoto-permis-visa",
     },
   },
   openGraph: {
-    title: "Photo d'Identité France 2026 : Passeport, CNI, ePhoto Permis, Visa | PixPassport",
+    title: "Photo d'identité en France : quel format pour quel document ?",
+    description: "Passeport, CNI, permis, titre de séjour, visa : quelle photo fournir et quand un code ePhoto est obligatoire.",
+    siteName: "PixPassport",
     url: "https://www.pixpassport.com/fr/guides/photo-identite-france-passeport-cni-ephoto-permis-visa",
     locale: "fr_FR",
     type: "article",
@@ -61,14 +62,16 @@ const jsonLd = {
   "@graph": [
     {
       "@type": "Article",
-      headline: "Photo d'Identité France 2026 : Passeport, CNI, ePhoto Permis, Visa",
-      description: "Guide pour créer une photo passeport en ligne, une photo CNI en ligne ou une ePhoto ANTS conforme en France.",
-      inLanguage: "fr",
+      headline: "Photo d'identité en France : quel format pour quel document ?",
+      description: "Normes ANTS 2026, documents concernés et différence entre photo classique et ePhoto.",
+      inLanguage: "fr-FR",
+      url: "https://www.pixpassport.com/fr/guides/photo-identite-france-passeport-cni-ephoto-permis-visa",
+      mainEntityOfPage: "https://www.pixpassport.com/fr/guides/photo-identite-france-passeport-cni-ephoto-permis-visa",
+      image: "https://www.pixpassport.com/og-image.jpg",
+      datePublished: "2026-05-19",
+      dateModified: "2026-10-06",
       author: { "@type": "Organization", name: "PixPassport" },
-    },
-    {
-      "@type": "FAQPage",
-      mainEntity: guideFaqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+      publisher: { "@type": "Organization", name: "PixPassport", logo: { "@type": "ImageObject", url: "https://www.pixpassport.com/logo.png" } },
     },
   ],
 };
@@ -86,7 +89,7 @@ export default function FranceGuidePage() {
       <article className="py-16 lg:py-20 bg-white">
         <div className="max-w-3xl mx-auto px-4">
           <h1 className="text-3xl lg:text-4xl font-extrabold text-slate-900 mb-6 leading-tight">
-            Photo d&apos;Identité France 2026 : Passeport, CNI, ePhoto Permis, Visa
+            Photo d&apos;identité en France : quel format pour quel document ?
           </h1>
           <p className="text-lg text-slate-600 mb-4 leading-relaxed">
             En France, la photo identité conditionne l&apos;acceptation de la plupart des démarches administratives.
@@ -112,7 +115,7 @@ export default function FranceGuidePage() {
             {[
               { title: "Dimensions", desc: "Format unique de 35 × 45 mm, avec une résolution numérique d'au moins 413 × 531 pixels (300 DPI)." },
               { title: "Taille du visage", desc: "Entre 32 et 36 mm, mesurés du menton au sommet du crâne." },
-              { title: "Arrière-plan", desc: "Uni et clair — gris clair ou bleu très pâle. Le blanc pur est formellement déconseillé par l'administration." },
+              { title: "Arrière-plan", desc: "Uni et clair — gris clair ou bleu clair. Le fond blanc est refusé." },
               { title: "Position et expression", desc: "Regard droit vers l'objectif, tête parfaitement droite, expression neutre, bouche fermée, yeux bien ouverts." },
               { title: "Lunettes", desc: "Autorisées seulement si les verres sont transparents, sans reflet, et si la monture ne masque aucune partie des yeux." },
             ].map((norm, i) => (
@@ -139,7 +142,9 @@ export default function FranceGuidePage() {
             L&apos;ePhoto ANTS n&apos;est pas une simple photo d&apos;identité : elle associe un cliché biométrique à
             une signature numérique et à un code de transfert unique, transmis directement au système de l&apos;ANTS.
             Ce format est exigé pour la création, le renouvellement, le duplicata ou le changement d&apos;adresse
-            d&apos;un permis de conduire en ligne.
+            d&apos;un permis de conduire en ligne, ainsi que pour les titres de séjour demandés sur le site de
+            l&apos;ANEF. Il ne peut être obtenu que dans une cabine ou chez un photographe agréé (voir notre guide{" "}
+            <Link href="/fr/ephoto-ants" className="text-lime-600 hover:underline">code ePhoto ANTS</Link>).
           </p>
           <div className="overflow-x-auto rounded-2xl border border-slate-200 mb-12">
             <table className="w-full text-sm">
@@ -153,6 +158,8 @@ export default function FranceGuidePage() {
               <tbody className="divide-y divide-slate-100">
                 {[
                   { name: "Photo imprimée", classic: "Oui", ephoto: "Oui" },
+                  { name: "Acceptée pour passeport et CNI", classic: "Oui", ephoto: "Oui" },
+                  { name: "Acceptée pour permis et titre de séjour", classic: "Non", ephoto: "Oui" },
                   { name: "Signature numérique", classic: "Non", ephoto: "Oui" },
                   { name: "Code de transfert unique", classic: "Non", ephoto: "Oui" },
                   { name: "Transmission directe à l'ANTS", classic: "Non", ephoto: "Oui" },
@@ -172,7 +179,9 @@ export default function FranceGuidePage() {
             Les ressortissants étrangers vivant en France ou souhaitant s&apos;y installer doivent aussi fournir une
             photo d&apos;identité conforme aux normes biométriques françaises, que ce soit pour un visa touristique,
             d&apos;études ou de travail, ou pour une demande de naturalisation. La photo doit rester nette et fidèle
-            aux traits du visage, sans retouche ni filtre.
+            aux traits du visage, sans retouche ni filtre. Pour un visa étranger, les dimensions et la couleur de
+            fond dépendent du pays : consultez notre page{" "}
+            <Link href="/fr/photo-visa" className="text-lime-600 hover:underline">photo visa</Link>.
           </p>
 
           <h2 className="text-2xl font-bold text-slate-900 mt-12 mb-6">⚡ Comment créer votre photo d&apos;identité en ligne</h2>
@@ -184,8 +193,8 @@ export default function FranceGuidePage() {
             {[
               { step: "01", title: "Prenez une photo", desc: "Placez-vous face à une fenêtre pour une lumière naturelle, à environ 1,5 m de l'appareil, en regardant droit devant vous." },
               { step: "02", title: "Importez l'image", desc: "Téléversez votre photo sur PixPassport : notre IA détecte le visage et ajuste le centrage automatiquement." },
-              { step: "03", title: "Choisissez le document", desc: "Sélectionnez passeport, CNI, visa, ePhoto ou carte Vitale pour appliquer le recadrage biométrique correspondant." },
-              { step: "04", title: "Téléchargez votre photo conforme", desc: "Récupérez un fichier numérique haute résolution, prêt pour l'ANTS, ou une planche d'impression à faire tirer en pharmacie." },
+              { step: "03", title: "Choisissez le document", desc: "Sélectionnez passeport, CNI, visa ou carte Vitale pour appliquer le recadrage biométrique correspondant." },
+              { step: "04", title: "Téléchargez votre photo conforme", desc: "Récupérez un fichier numérique haute résolution et une planche 10×15 cm à imprimer chez vous, sur une borne photo ou en pharmacie." },
             ].map((step, idx) => (
               <div key={idx} className="flex gap-5 items-start bg-slate-50 rounded-2xl p-6 border border-slate-100">
                 <div className="shrink-0 w-12 h-12 bg-lime-100 rounded-xl flex items-center justify-center font-black text-lime-700 text-lg">{step.step}</div>
@@ -202,7 +211,7 @@ export default function FranceGuidePage() {
             {[
               { title: "😊 Sourire, même léger", desc: "Toute expression autre que neutre entraîne un rejet. Gardez la bouche fermée et les sourcils détendus." },
               { title: "🌓 Ombre sur le visage", desc: "Un éclairage asymétrique crée des ombres. Privilégiez une lumière de face, douce et naturelle." },
-              { title: "⬜ Fond blanc pur", desc: "Le blanc écrase le contraste avec la peau. Utilisez un fond gris clair ou bleu très pâle." },
+              { title: "⬜ Fond blanc", desc: "Le fond blanc est refusé en France. Utilisez un fond uni gris clair ou bleu clair." },
               { title: "🕶️ Accessoires non autorisés", desc: "Chapeaux, casquettes et lunettes teintées sont refusés ; les cheveux ne doivent pas couvrir le visage." },
             ].map((err, i) => (
               <div key={i} className="bg-red-50/50 border border-red-100 rounded-2xl p-5">
@@ -223,10 +232,10 @@ export default function FranceGuidePage() {
           <div className="bg-lime-50 border border-lime-200 rounded-3xl p-8 text-center mt-4 shadow-sm">
             <h3 className="text-xl font-bold text-slate-950 mb-2">Créez votre photo d&apos;identité conforme dès aujourd&apos;hui</h3>
             <p className="text-sm text-slate-600 mb-6 max-w-lg mx-auto">
-              Générez votre photo passeport, CNI, visa ou ePhoto conforme en quelques secondes, directement en ligne.
+              Générez votre photo passeport, CNI ou visa conforme en quelques secondes, directement en ligne.
             </p>
             <Link
-              href="/fr/passport-photo-online"
+              href="/fr/passport-photo-online?type=france-passport"
               className="inline-flex items-center px-8 py-4 bg-lime-600 text-white rounded-2xl font-bold text-base hover:bg-lime-700 transition-all shadow-lg hover:shadow-lime-600/20 active:scale-95 duration-200"
             >
               Commencer gratuitement →

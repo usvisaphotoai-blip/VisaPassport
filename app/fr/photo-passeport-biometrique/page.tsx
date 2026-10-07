@@ -5,45 +5,44 @@ import HeroSectionFr from "../components/HeroSectionFr";
 import StickyCTAFr from "../components/StickyCTAFr";
 import BreadcrumbsFr from "../components/BreadcrumbsFr";
 import FaqSectionFr from "../components/FaqSectionFr";
+import RelatedGuidesFr from "../components/RelatedGuidesFr";
 
 export const metadata: Metadata = {
-  title: "Photo Passeport Biométrique — Normes OACI 2026 | PixPassport",
-  description: "Photo passeport biométrique conforme aux normes OACI internationales. Vérification automatique de la position des yeux, taille de la tête et arrière-plan.",
-  keywords: ["photo biométrique", "photo passeport biométrique", "normes OACI", "ICAO photo", "photo biométrique en ligne"],
+  title: "Photo biométrique : normes OACI et règles en France",
+  description: "Photo d'identité biométrique : normes OACI, règles françaises (fond gris clair, visage 32-36 mm) et photo conforme créée en ligne depuis votre smartphone.",
+  keywords: ["photo biométrique", "photo d'identité biométrique", "photo passeport biométrique", "normes OACI photo", "photo biométrique en ligne"],
   alternates: {
     canonical: "https://www.pixpassport.com/fr/photo-passeport-biometrique",
     languages: {
-      en: "https://www.pixpassport.com/passport-photos",
       fr: "https://www.pixpassport.com/fr/photo-passeport-biometrique",
-      de: "https://www.pixpassport.com/de/biometrisches-passbild",
-      "x-default": "https://www.pixpassport.com/passport-photos",
     },
   },
   openGraph: {
-    title: "Photo Passeport Biométrique | PixPassport", description: "Photo biométrique conforme aux normes OACI internationales.",
+    title: "Photo biométrique : normes OACI et règles en France | PixPassport", description: "Normes de la photo d'identité biométrique et photo conforme créée en ligne.",
     url: "https://www.pixpassport.com/fr/photo-passeport-biometrique", siteName: "PixPassport", locale: "fr_FR", type: "website",
     images: [{ url: "https://www.pixpassport.com/og-image.jpg", width: 1200, height: 630, alt: "Photo Passeport Biométrique" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Photo Passeport Biométrique | PixPassport",
-    description: "Photo biométrique conforme aux normes OACI internationales. Vérification biométrique IA.",
+    title: "Photo biométrique : normes OACI et règles en France | PixPassport",
+    description: "Normes de la photo d'identité biométrique et photo conforme créée en ligne.",
     images: ["https://www.pixpassport.com/og-image.jpg"],
   },
 };
 
 const bioFaqs = [
   { q: "Qu'est-ce qu'une photo biométrique ?", a: "Une photo biométrique est une photo d'identité conforme aux normes OACI (Organisation de l'Aviation Civile Internationale). Elle respecte des critères stricts de dimension, de position du visage, d'éclairage et d'arrière-plan pour permettre la reconnaissance faciale automatisée." },
-  { q: "Quelles sont les normes OACI pour les photos ?", a: "Les normes OACI (Doc 9303) exigent : un visage centré occupant 70-80% de la hauteur, des yeux entre 56% et 69% de la hauteur, un fond blanc uni, une expression neutre, et une résolution minimale de 300 DPI." },
-  { q: "Tous les pays utilisent-ils les normes OACI ?", a: "Oui, presque tous les pays membres de l'ONU suivent les normes OACI pour les passeports biométriques. Certains pays ajoutent des exigences supplémentaires (couleur de fond, dimensions spécifiques)." },
-  { q: "Comment PixPassport vérifie-t-il la conformité biométrique ?", a: "Notre système analyse 64 points faciaux pour vérifier la position des yeux, la taille de la tête, la symétrie du visage, la qualité de l'éclairage et l'uniformité de l'arrière-plan." },
+  { q: "Quelles sont les normes OACI pour les photos ?", a: "Les normes OACI (Doc 9303) exigent : un visage centré occupant 70 à 80 % de la hauteur, des yeux entre 56 % et 69 % de la hauteur, un fond uni et clair, une expression neutre et une image nette. Chaque pays précise ensuite ses règles : en France, le fond doit être gris clair ou bleu clair (le blanc est refusé)." },
+  { q: "Tous les pays utilisent-ils les normes OACI ?", a: "Oui, presque tous les pays suivent les normes OACI pour les passeports biométriques. Certains ajoutent des exigences supplémentaires : fond blanc aux États-Unis, gris clair ou bleu clair en France, format 51×51 mm aux États-Unis et en Inde." },
+  { q: "Une photo biométrique est-elle la même chose qu'une photo d'identité ?", a: "En France, oui : toute photo d'identité destinée au passeport, à la carte d'identité ou au titre de séjour doit être biométrique, c'est-à-dire respecter les normes de cadrage, de fond et d'expression permettant la reconnaissance faciale." },
+  { q: "Comment PixPassport vérifie-t-il la conformité biométrique ?", a: "Notre système analyse plus de 60 points faciaux pour vérifier la position des yeux, la taille de la tête, la symétrie du visage, la qualité de l'éclairage et l'uniformité de l'arrière-plan." },
   { q: "La photo biométrique est-elle acceptée dans tous les pays ?", a: "Oui, une photo conforme aux normes OACI est acceptée dans la majorité des pays pour les passeports et visas. Notre outil adapte automatiquement les dimensions spécifiques de chaque pays." },
 ];
 
 const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
-    { "@type": "SoftwareApplication", name: "PixPassport — Photo Biométrique", applicationCategory: "PhotographyApplication", operatingSystem: "All", inLanguage: "fr", offers: { "@type": "Offer", price: "6.99", priceCurrency: "EUR" } },
+    { "@type": "SoftwareApplication", name: "PixPassport — Photo Biométrique", applicationCategory: "PhotographyApplication", operatingSystem: "All", inLanguage: "fr-FR", offers: { "@type": "Offer", price: "6.99", priceCurrency: "EUR" } },
   ],
 };
 
@@ -53,11 +52,12 @@ export default function PhotoBiometriquePage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <BreadcrumbsFr items={[{ label: "Photo Biométrique", href: "/fr/photo-passeport-biometrique" }]} />
       <HeroSectionFr
-        title="Photo Passeport Biométrique "
-        subtitle="Conforme aux normes OACI internationales"
-        description="Photo biométrique conforme aux standards OACI pour passeports et visas. Vérification automatique de la position des yeux, taille de la tête et arrière-plan."
-        ctaHref="/fr/passport-photo-online"
+        title="Photo biométrique : normes OACI et règles françaises"
+        subtitle="Pour le passeport, la carte d'identité et les visas"
+        description="Une photo d'identité biométrique respecte les normes OACI de cadrage, de fond et d'expression. Créez la vôtre depuis votre smartphone : position des yeux, taille du visage et fond sont vérifiés automatiquement."
+        ctaHref="/fr/passport-photo-online?type=france-passport"
         showImage={true}
+        imageAlt="Photo d'identité biométrique avec repères de cadrage OACI : yeux, menton, sommet du crâne"
       />
     
 
@@ -72,7 +72,7 @@ export default function PhotoBiometriquePage() {
             {[
               { icon: "👁️", label: "Position des yeux", desc: "56-69% de la hauteur" },
               { icon: "📏", label: "Taille de la tête", desc: "70-80% du cadre" },
-              { icon: "🖼️", label: "Arrière-plan", desc: "Blanc uni uniforme" },
+              { icon: "🖼️", label: "Arrière-plan", desc: "Uni et clair (gris clair en France)" },
               { icon: "😐", label: "Expression", desc: "Neutre, bouche fermée" },
               { icon: "💡", label: "Éclairage", desc: "Uniforme, sans ombre" },
               { icon: "🔍", label: "Résolution", desc: "300 DPI minimum" },
@@ -134,7 +134,7 @@ export default function PhotoBiometriquePage() {
   <ul className="list-disc pl-6 mb-4">
     <li>Visage centré occupant 70 à 80 % de la hauteur de l’image</li>
     <li>Position des yeux entre 56 % et 69 % de la hauteur</li>
-    <li>Fond blanc ou clair, uniforme et sans texture</li>
+    <li>Fond uni et clair, sans texture (en France : gris clair ou bleu clair, le blanc est refusé)</li>
     <li>Expression neutre, bouche fermée</li>
     <li>Yeux ouverts et clairement visibles</li>
     <li>Absence d’ombres ou de reflets</li>
@@ -219,11 +219,15 @@ export default function PhotoBiometriquePage() {
   </ul>
 
   <p>
+    Pour les règles propres à la France, consultez nos pages{" "}
+    <Link href="/fr/photo-passeport" className="text-lime-600 hover:underline">photo passeport</Link> et{" "}
+    <Link href="/fr/photo-identite" className="text-lime-600 hover:underline">normes de la photo d&apos;identité</Link>.
     Ne prenez aucun risque avec vos documents officiels. Créez dès maintenant votre photo passeport biométrique 
     conforme en ligne avec PixPassport et assurez-vous une acceptation rapide lors de vos démarches administratives.
   </p>
 </section>
       <FaqSectionFr faqs={bioFaqs} title="Questions fréquentes — Photo biométrique" />
+      <RelatedGuidesFr />
       <StickyCTAFr ctaText="Créer votre photo biométrique" />
     </>
   );

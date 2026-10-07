@@ -8,12 +8,12 @@ interface GuideLink {
 }
 
 const defaultLinks: GuideLink[] = [
-  { label: "Photo Passeport", href: "/fr/photo-passeport", emoji: "🛂", desc: "Normes passeport officielles" },
-  { label: "Photo Visa", href: "/fr/photo-visa", emoji: "🌐", desc: "Exigences visa par pays" },
-  { label: "Photo Biométrique", href: "/fr/photo-passeport-biometrique", emoji: "📸", desc: "Standards OACI" },
-  { label: "Taille photo", href: "/fr/guides/passport-photo-size", emoji: "📐", desc: "Dimensions par pays" },
-  { label: "Fond photo", href: "/fr/guides/passport-photo-background", emoji: "🖼️", desc: "Règles d'arrière-plan" },
-  { label: "Photo maison", href: "/fr/guides/how-to-take-passport-photo-at-home", emoji: "🏠", desc: "Guide étape par étape" },
+  { label: "Photo d'identité", href: "/fr/photo-identite", emoji: "🪪", desc: "Normes ANTS 2026" },
+  { label: "Photo passeport", href: "/fr/photo-passeport", emoji: "🛂", desc: "Passeport français 35×45 mm" },
+  { label: "Photo carte d'identité", href: "/fr/photo-carte-identite", emoji: "🇫🇷", desc: "Photo CNI conforme" },
+  { label: "Code ePhoto ANTS", href: "/fr/ephoto-ants", emoji: "🔢", desc: "Permis, titre de séjour" },
+  { label: "Taille photo d'identité", href: "/fr/guides/passport-photo-size", emoji: "📐", desc: "Dimensions par pays" },
+  { label: "Fond photo d'identité", href: "/fr/guides/passport-photo-background", emoji: "🖼️", desc: "Couleurs acceptées" },
 ];
 
 export default function RelatedGuidesFr({ links, title = "Guides et ressources associés" }: { links?: GuideLink[]; title?: string }) {

@@ -21,14 +21,14 @@ export const fr = {
 
   // ── Buttons ─────────────────────────────────────────────────────────────────
   buttons: {
-    upload: "Télécharger une photo",
+    upload: "Importer une photo",
     selectCountry: "Choisir un pays",
     continue: "Continuer",
     createNow: "Créer maintenant",
     download: "Télécharger",
     checkout: "Procéder au paiement",
     startNow: "Commencer maintenant",
-    uploadPhoto: "Télécharger votre photo →",
+    uploadPhoto: "Importer votre photo →",
     getApprovedPhoto: "Obtenir ma photo conforme →",
     tryFree: "Essai gratuit →",
     loadMore: "Voir plus",
@@ -39,7 +39,7 @@ export const fr = {
 
   // ── Status Messages ─────────────────────────────────────────────────────────
   status: {
-    uploading: "Téléchargement en cours...",
+    uploading: "Envoi en cours...",
     processing: "Traitement de votre photo...",
     biometricCheck: "Vérification biométrique...",
     ready: "Votre photo est prête",
@@ -170,9 +170,9 @@ export const fr = {
     },
     passport: {
       title: "Photo Passeport en Ligne",
-      subtitle: "Conforme aux normes officielles françaises et internationales",
+      subtitle: "Aux normes ANTS 2026 pour votre passeport français",
       description:
-        "Créez une photo passeport 35×45mm parfaitement conforme avec vérification biométrique IA. Fond blanc, cadrage automatique, résultat instantané.",
+        "Créez une photo passeport 35×45 mm aux normes ANTS depuis votre smartphone : fond gris clair, visage cadré entre 32 et 36 mm, vérification biométrique automatique. Fichier numérique et planche 10×15 cm prêts en 30 secondes.",
     },
     id: {
       title: "Photo d'Identité en Ligne",
@@ -182,9 +182,9 @@ export const fr = {
     },
     visa: {
       title: "Photo Visa en Ligne",
-      subtitle: "Conforme pour tous les pays et types de visa",
+      subtitle: "Le bon format pour chaque pays et chaque type de visa",
       description:
-        "Créez une photo visa conforme aux exigences de chaque pays. Schengen, États-Unis, Canada, et plus de 50 pays supportés.",
+        "Créez une photo visa au bon format pour votre destination : visa Schengen, visa américain (DS-160), visa chinois, canadien, indien et plus de 50 pays. Dimensions et fond ajustés automatiquement.",
     },
     ephoto: {
       title: "ePhoto ANTS en Ligne",
@@ -196,7 +196,7 @@ export const fr = {
       title: "Photo Carte d'Identité en Ligne",
       subtitle: "Aux normes de la carte nationale d'identité française",
       description:
-        "Photo conforme aux exigences de la CNI française. Format 35×45mm, fond blanc uni, cadrage biométrique automatique.",
+        "Photo conforme aux exigences de la CNI française. Format 35×45 mm, fond gris clair uni, cadrage biométrique automatique.",
     },
     biometric: {
       title: "Photo Passeport Biométrique",
@@ -221,7 +221,7 @@ export const fr = {
 
   // ── Stats Strip ─────────────────────────────────────────────────────────────
   stats: [
-    { stat: "12 000+", label: "Photos traitées" },
+    { stat: "17 000+", label: "Utilisateurs" },
     { stat: "99,8%", label: "Taux d'acceptation" },
     { stat: "50+", label: "Pays supportés" },
     { stat: "30s", label: "Prêt en secondes" },
@@ -236,7 +236,7 @@ export const fr = {
     steps: [
       {
         num: "01",
-        title: "Télécharger votre photo",
+        title: "Importer votre photo",
         desc: "Envoyez votre photo. Nous acceptons les formats JPEG, PNG et HEIC depuis n'importe quel appareil.",
         icon: "📤",
       },
@@ -254,7 +254,7 @@ export const fr = {
       },
       {
         num: "04",
-        title: "Petit frais",
+        title: "Paiement unique",
         desc: "Tarification locale selon votre pays. Paiement unique pour des résultats professionnels.",
         icon: "💳",
       },
@@ -265,7 +265,7 @@ export const fr = {
         icon: "⬇️",
       },
     ],
-    cta: "Commencer — Télécharger votre photo →",
+    cta: "Commencer — Importer votre photo →",
   },
 
   // ── Requirements ────────────────────────────────────────────────────────────
@@ -308,162 +308,52 @@ export const fr = {
     ],
     note: {
       title: "Les exigences biométriques sont essentielles",
-      text: "Les raisons de rejet les plus courantes sont une position incorrecte des yeux et une taille de tête inadaptée. Votre visage doit être centré, regardant directement l'objectif avec une expression neutre. Pas de lunettes, couvre-chefs (sauf religieux/médicaux), ni d'ombres sur le visage.",
+      text: "Les motifs de refus les plus fréquents en mairie sont un fond blanc ou non uniforme, un visage trop petit ou trop grand et une expression non neutre. En France, la tête doit être nue (couvre-chef interdit), le visage dégagé et sans ombre. Les lunettes sont tolérées si les yeux restent parfaitement visibles : monture fine, verres non teintés, aucun reflet.",
     },
   },
 
   // ── FAQ Data ────────────────────────────────────────────────────────────────
   faq: {
-    passport: [
-      {
-        q: "Quelle est la taille standard d'une photo passeport en 2026 ?",
-        a: "En France, la taille officielle reste 35×45 mm (format portrait), conforme aux normes OACI mises à jour en 2025. Aux États-Unis, c'est 51×51 mm (2×2 pouces). Au Royaume-Uni, 35×45 mm. Notre outil détecte automatiquement votre pays et applique les dimensions exactes requises — aucun réglage manuel nécessaire.",
-      },
-      {
-        q: "Puis-je prendre ma photo avec un smartphone en 2026 ?",
-        a: "Absolument. Les smartphones récents (iPhone 15/16, Samsung Galaxy S24/S25, Pixel 8/9) offrent une qualité largement suffisante. Utilisez le capteur principal, désactivez les modes 'portrait' et 'beautification', et placez-vous face à une fenêtre pour un éclairage naturel diffus. Notre algorithme IA analyse et corrige la mise en page automatiquement.",
-      },
-      {
-        q: "Les lunettes sont-elles autorisées sur une photo passeport ?",
-        a: "Non. Depuis la directive OACI 2021, maintenue en 2026, les lunettes (de vue, de soleil, progressives) sont interdites sur toutes les photos d'identité biométriques. Notre système de détection IA repère automatiquement les lunettes et vous en informe avant traitement, vous évitant un refus à guichet.",
-      },
-      {
-        q: "Quel fond dois-je utiliser pour ma photo passeport ?",
-        a: "Un fond blanc uni ou très légèrement gris clair est exigé par la majorité des pays en 2026. Positionnez-vous à 80 cm à 1 mètre du fond pour éviter les ombres portées. Si votre fond n'est pas parfait, notre technologie de suppression d'arrière-plan par IA le corrige automatiquement avec un résultat naturel et conforme.",
-      },
-      {
-        q: "Comment notre système garantit-il la conformité biométrique ?",
-        a: "Notre moteur d'analyse biométrique vérifie plus de 30 critères OACI : position du visage, ouverture des yeux, expression neutre, éclairage uniforme, absence de reflets, résolution minimale, profondeur de champ, et bien d'autres. Chaque photo reçoit un score de conformité avant livraison. Nous garantissons le remboursement si votre photo est refusée.",
-      },
-      {
-        q: "Combien coûte le service et que comprend le tarif ?",
-        a: "La validation et l'analyse biométrique sont entièrement gratuites. Le téléchargement de la photo haute résolution traitée, prête à l'impression, est disponible à partir de 2,99 € (tarif unique, sans abonnement). Vous obtenez : le fichier numérique optimisé, la planche d'impression 10×15 cm, et le certificat de conformité OACI téléchargeable.",
-      },
-      {
-        q: "Mes données biométriques et photos sont-elles protégées ?",
-        a: "Oui, entièrement. Nous appliquons le RGPD et le Digital Services Act (DSA) européen de 2024. Vos photos originales sont supprimées automatiquement après 24 heures. Les fichiers traités sont chiffrés (AES-256) et les liens d'accès expirent après 1 heure. Aucune image faciale n'est utilisée pour entraîner nos modèles IA.",
-      },
-      {
-        q: "Puis-je utiliser ma photo pour un renouvellement de passeport en ligne ?",
-        a: "Oui. En 2026, de nombreux pays (France, Royaume-Uni, États-Unis, Canada, Australie…) permettent le dépôt de photo en ligne lors du renouvellement de passeport. Notre format de sortie (JPEG, fond blanc, 600×800 px min.) est compatible avec les portails officiels France Connect, GOV.UK, TravelDocs et USCIS.",
-      },
-      {
-        q: "Combien de temps faut-il pour obtenir ma photo conforme ?",
-        a: "Moins de 60 secondes pour la majorité des photos. Notre pipeline IA traite l'image, corrige le fond, centre le visage, calibre les dimensions et génère la planche d'impression en temps réel. Si une correction manuelle est nécessaire (flou, contre-jour excessif), le délai est de 5 à 10 minutes maximum.",
-      },
-      {
-        q: "Puis-je porter un hijab, turban ou autre couvre-chef religieux ?",
-        a: "Oui, sous conditions. Les couvre-chefs d'ordre religieux ou médical sont acceptés dans la plupart des pays à condition que le visage (front, joues, menton) reste entièrement visible. Notre système vérifie automatiquement que ces critères sont respectés pour chaque pays sélectionné et vous guide si des ajustements sont nécessaires.",
-      },
-      {
-        q: "La photo est-elle acceptée pour les passeports de mes enfants ou nourrissons ?",
-        a: "Oui. Nous gérons les photos pour tous les âges, y compris les nourrissons dès la naissance. Pour les bébés, placez l'enfant allongé sur un drap blanc et photographiez de dessus. Notre outil adapte automatiquement les critères biométriques selon l'âge (0–5 ans : règles assouplies sur l'expression et l'ouverture des yeux).",
-      },
-      {
-        q: "Quels formats de sortie sont disponibles pour l'impression ou le dépôt numérique ?",
-        a: "Nous fournissons : JPEG haute résolution (300 DPI) pour impression professionnelle, PNG transparent sur demande, planche 10×15 cm prête à imprimer chez tout photographe ou pharmacie, et fichier numérique optimisé pour les portails gouvernementaux en ligne. Tous les fichiers sont livrés par lien sécurisé téléchargeable pendant 1 heure.",
-      },
-    ],
-
     visa: [
       {
-        q: "Quelles sont les dimensions requises pour une photo visa en 2026 ?",
-        a: "Les dimensions varient selon le pays et le type de visa. Visa Schengen : 35×45 mm, fond blanc. Visa américain (DS-160) : 51×51 mm (600×600 px, 150 DPI min.). Visa indien (e-Visa) : 51×51 mm, fond blanc, fichier JPEG < 1 Mo. Notre outil sélectionne et applique automatiquement le bon format selon votre destination.",
+        q: "Quelle taille pour une photo visa ?",
+        a: "Cela dépend du pays de destination. Visa Schengen : 35×45 mm. Visa américain (DS-160) : 51×51 mm, soit 600×600 pixels minimum pour le fichier numérique. Visa chinois : 33×48 mm. Visa indien : 51×51 mm. Visa canadien : 35×45 mm. Choisissez votre destination dans l'outil : PixPassport applique automatiquement le bon format.",
       },
       {
-        q: "Ma photo est-elle compatible avec le formulaire DS-160 pour le visa américain ?",
-        a: "Oui. Notre outil génère des photos 100 % conformes aux exigences du DS-160 (édition 2025) : 600×600 pixels, fond blanc ou blanc cassé, visage occupant 50 à 69 % de la surface, yeux entre 56 et 69 % de hauteur totale, JPEG < 240 Ko. Le fichier est directement importable dans le portail CEAC du Département d'État américain.",
+        q: "Quelle couleur de fond pour une photo visa ?",
+        a: "Le fond change selon le pays : blanc pour les États-Unis, l'Inde et la Chine, blanc ou très clair pour le Canada, clair et uni pour l'espace Schengen. Attention : une photo faite pour un visa américain sur fond blanc n'est pas valable pour un passeport ou une carte d'identité français, qui exigent un fond gris clair ou bleu clair.",
       },
       {
-        q: "Puis-je utiliser la même photo pour mon passeport et mon visa Schengen ?",
-        a: "Techniquement les dimensions sont identiques (35×45 mm pour la France), mais les exigences de date de validité diffèrent : certaines ambassades exigent une photo datant de moins de 6 mois. Nous vous recommandons de créer une photo spécifique pour chaque demande et d'indiquer la date dans le certificat de conformité que nous fournissons.",
+        q: "Ma photo est-elle compatible avec le formulaire DS-160 du visa américain ?",
+        a: "Oui. Pour le DS-160, PixPassport génère un fichier JPEG carré de 600×600 pixels minimum, sur fond blanc, avec une tête occupant 50 à 69 % de la hauteur de l'image et un poids inférieur à 240 Ko. Les lunettes sont interdites sur les photos de visa américain depuis 2016.",
       },
       {
-        q: "Quels visas e-Visa et visas en ligne acceptent vos photos en 2026 ?",
-        a: "Nous sommes compatibles avec plus de 60 portails e-Visa en 2026 : India e-Visa, Kenya ETA, Rwanda e-Visa, Saudi Arabia eVisa, UAE e-Visa, UK eVisa (remplaçant la vignette depuis 2024), ETIAS européen (ouverture 2026), Canada eTA, Australia ETA et bien d'autres. Chaque format est optimisé selon les spécifications techniques officielles.",
+        q: "Puis-je utiliser ma photo de passeport français pour un visa Schengen ?",
+        a: "Souvent oui, car le format est le même (35×45 mm). Vérifiez toutefois les consignes du consulat ou du centre de visas (VFS Global, TLScontact) : la photo doit dater de moins de six mois et certains consulats demandent un fond plus clair que celui du passeport français.",
       },
       {
-        q: "L'ETIAS européen est-il lancé en 2026 ? Vos photos sont-elles compatibles ?",
-        a: "L'ETIAS (Système Européen d'Information et d'Autorisation de Voyage) est entré en phase opérationnelle progressive début 2026. Notre outil génère des photos conformes aux spécifications ETIAS : 35×45 mm, fond blanc, résolution 600 DPI, profil biométrique OACI. Nous mettons à jour nos paramètres en temps réel selon les directives de l'Agence de l'UE pour la gestion opérationnelle des systèmes.",
+        q: "Les lunettes sont-elles autorisées sur une photo visa ?",
+        a: "Les États-Unis les interdisent totalement. La plupart des autres pays les tolèrent si les yeux restent parfaitement visibles, sans reflet ni verres teintés, mais beaucoup recommandent de les retirer. Pour éviter tout refus, le plus sûr est de poser sans lunettes.",
       },
       {
-        q: "Puis-je porter des lunettes sur une photo visa ?",
-        a: "Non. Conformément aux directives OACI adoptées par l'ensemble des pays délivrant des visas biométriques, les lunettes sont interdites depuis 2021. Cette règle s'applique également aux verres correcteurs transparents. Notre système détecte automatiquement la présence de lunettes et vous demande de retirer la photo avant traitement.",
+        q: "Faut-il une photo pour l'ESTA, l'AVE canadienne ou l'ETIAS ?",
+        a: "Non. Ces autorisations de voyage électroniques ne demandent pas de photo d'identité : seuls les renseignements du passeport sont requis. Une photo n'est nécessaire que si vous demandez un vrai visa (par exemple un visa B1/B2 pour les États-Unis ou un visa visiteur pour le Canada).",
       },
       {
-        q: "La photo est-elle valable pour un visa de travail ou un visa long séjour ?",
-        a: "Oui. Nos photos sont valables pour tous types de visas : tourisme, affaires, travail, études, regroupement familial, visa long séjour (VLS-TS), carte de séjour, et titre de voyage. Sélectionnez le type de document lors de votre commande pour recevoir le format et le certificat appropriés à la démarche administrative.",
+        q: "La photo convient-elle pour un visa long séjour ou un titre de séjour en France ?",
+        a: "Pour un visa long séjour, nous fournissons une photo au format 35×45 mm aux normes françaises, à joindre au dossier du consulat. Pour un titre de séjour demandé en ligne sur le site de l'ANEF, une e-photo avec code est obligatoire : elle doit être réalisée dans une cabine ou chez un photographe agréé. PixPassport ne délivre pas ce code.",
       },
       {
-        q: "Comment préparer ma photo pour un visa indien e-Visa 2026 ?",
-        a: "Le e-Visa indien exige : photo JPEG, fond blanc uni, visage centré et occupant 70–80 % du cadre, taille 51×51 mm, fichier entre 10 Ko et 1 Mo, et prise datant de moins de 6 mois. Notre outil optimise automatiquement ces paramètres. Le fichier généré est directement importable sur le portail indianvisaonline.gov.in.",
+        q: "Comment préparer ma photo pour un e-Visa indien ?",
+        a: "Le e-Visa indien exige un fichier JPEG carré sur fond blanc uni, visage centré et de face, d'un poids compris entre 10 Ko et 1 Mo. Sélectionnez « Inde – Visa » dans l'outil : le cadrage et le fond sont ajustés automatiquement.",
       },
       {
-        q: "Proposez-vous des photos pour les visas de pays africains ?",
-        a: "Oui. En 2026, nous couvrons les visas de 38 pays africains dont le Kenya (ETA), l'Éthiopie (e-Visa), le Rwanda (e-Visa), le Maroc (consulaire), la Tanzanie (ETA), le Nigeria (consulaire) et l'Égypte (e-Visa). Les spécifications sont régulièrement synchronisées avec les portails officiels de chaque pays.",
+        q: "Combien de temps une photo visa reste-t-elle valable ?",
+        a: "La plupart des consulats exigent une photo de moins de six mois au moment du dépôt du dossier. Si vous préparez plusieurs demandes, refaites une photo récente plutôt que de réutiliser un ancien cliché.",
       },
       {
-        q: "Quelle est la durée de validité d'une photo pour un dossier visa ?",
-        a: "La plupart des pays exigent une photo datant de moins de 6 mois au moment du dépôt du dossier. Certains pays (États-Unis, Inde) exigent une photo de moins de 6 mois à la date de l'entretien, pas du dépôt. Notre certificat de conformité inclut la date de création de la photo, ce qui est accepté par les consulats comme preuve de fraîcheur.",
-      },
-      {
-        q: "Puis-je commander plusieurs photos pour différents pays en une seule session ?",
-        a: "Oui. Notre fonction multi-pays vous permet de générer jusqu'à 5 formats différents à partir d'une seule photo téléchargée. Sélectionnez tous les pays et types de documents dans le panier, réglez une fois, et recevez tous les fichiers dans un zip sécurisé. Idéal pour un tour du monde ou des démarches consulaires multiples.",
-      },
-      {
-        q: "Que faire si ma photo visa est refusée par l'ambassade ou le portail en ligne ?",
-        a: "Notre garantie Conformité 100 % couvre tous les rejets liés aux critères biométriques ou techniques. En cas de refus, envoyez-nous le motif indiqué par le consulat ou le portail, et nous traitons une nouvelle photo sans frais supplémentaires dans les 2 heures. Si le problème vient de notre traitement, nous remboursons intégralement.",
-      },
-    ],
-
-    home: [
-      {
-        q: "Qu'est-ce que PixPassport et en quoi est-il différent des photographes traditionnels ?",
-        a: "PixPassport est une plateforme professionnelle d'identité photographique pilotée par l'IA, disponible 24h/24, 7j/7. Contrairement à un photographe traditionnel (délai de rendez-vous, tarif 10–25 €, déplacement), PixPassport livre votre photo conforme en moins de 60 secondes, depuis votre domicile, pour moins de 3 €. Nous couvrons plus de 50 pays et 10 types de documents.",
-      },
-      {
-        q: "Comment fonctionne le service de A à Z ?",
-        a: "1) Téléchargez votre selfie ou photo existante. 2) Sélectionnez votre pays et type de document (passeport, visa, carte d'identité…). 3) Notre IA analyse la conformité biométrique, corrige le fond, centre le visage et calibre les dimensions. 4) Vous recevez un aperçu avec score de conformité. 5) Téléchargez la photo haute résolution et la planche d'impression. Durée totale : moins de 2 minutes.",
-      },
-      {
-        q: "La validation biométrique est-elle vraiment gratuite ?",
-        a: "Oui, à 100 %. L'analyse biométrique, le score de conformité et l'aperçu de votre photo traitée sont entièrement gratuits, sans compte requis. Vous ne payez (tarif unique à partir de 2,99 €) que si vous souhaitez télécharger le fichier haute résolution et la planche d'impression prête à commander chez un imprimeur.",
-      },
-      {
-        q: "Quels pays et documents sont supportés en 2026 ?",
-        a: "Nous supportons 54 pays et 10 types de documents en 2026 : passeports (France, USA, UK, Inde, Canada, Allemagne, Australie, Espagne, Italie, Brésil, Japon, Corée du Sud…), visas Schengen, DS-160, e-Visas, cartes d'identité nationales, permis de conduire internationaux, titres de séjour, ETIAS, et photos pour cartes de transport sécurisées.",
-      },
-      {
-        q: "Mon téléphone est-il suffisant pour obtenir une photo de qualité professionnelle ?",
-        a: "Oui. Tout smartphone équipé d'un appareil photo de 12 Mpx ou plus (la majorité des modèles depuis 2020) est largement suffisant. Notre algorithme compense les imperfections courantes : légère surexposition, bruit numérique, distorsion grand-angle. Nous vous guidons pas à pas avec des conseils de prise de vue adaptés à l'éclairage détecté dans votre photo.",
-      },
-      {
-        q: "Quelle technologie IA utilisez-vous pour traiter les photos ?",
-        a: "Nous combinons plusieurs modèles spécialisés : détection faciale biométrique (landmarks 468 points), segmentation de fond par diffusion latente, super-résolution neuronale pour l'upscaling, et classification multiclasse pour la détection des lunettes, accessoires et expressions. Nos modèles sont entraînés sur des données anonymisées conformes RGPD et audités trimestriellement.",
-      },
-      {
-        q: "Puis-je obtenir une photo conforme pour toute ma famille en une seule session ?",
-        a: "Oui. Notre fonction Famille vous permet de traiter jusqu'à 6 photos individuelles (adultes, enfants, nourrissons) en une session unique. Chaque photo est analysée et traitée indépendamment. Un tarif famille dégressif s'applique à partir de 3 photos. Les planches d'impression peuvent être combinées sur une feuille 10×15 cm pour réduire les coûts d'impression.",
-      },
-      {
-        q: "Puis-je imprimer moi-même la photo ou dois-je passer par un professionnel ?",
-        a: "Les deux options fonctionnent. Vous pouvez imprimer chez vous sur papier photo glacé 300 DPI (résultat professionnel), ou envoyer notre fichier à une pharmacie, un laboratoire photo, ou un service d'impression en ligne. Nous fournissons également un bon de commande compatible avec les principales chaînes d'impression européennes (Fujifilm, Cewe, PhotoService).",
-      },
-      {
-        q: "Mes données personnelles et photos sont-elles protégées et jamais revendues ?",
-        a: "Vos données ne sont jamais vendues, partagées ou utilisées à des fins commerciales. Nous appliquons le RGPD, le DSA (Digital Services Act 2024) et la Loi 25 québécoise. Photos supprimées après 24h, liens expirés après 1h, chiffrement AES-256 en transit et au repos, zéro tracking publicitaire. Rapport de transparence publié semestriellement.",
-      },
-      {
-        q: "PixPassport est-il accessible sur mobile et tablette ?",
-        a: "Oui, PixPassport est une Progressive Web App (PWA) entièrement responsive, optimisée pour iOS et Android. Elle fonctionne directement dans votre navigateur (Safari, Chrome, Firefox) sans installation. Une application native iOS et Android est disponible sur l'App Store et le Google Play Store pour une expérience encore plus fluide avec accès à la caméra intégrée.",
-      },
-      {
-        q: "Proposez-vous un service B2B pour les entreprises et administrations ?",
-        a: "Oui. Notre offre PixPassport Business est disponible depuis 2025 : API RESTful pour intégration dans vos workflows RH ou consulaires, traitement en lot jusqu'à 500 photos/jour, tableau de bord administrateur avec historique et exports, facturation mensuelle, et support dédié SLA 4h. Contactez notre équipe commerciale pour un devis sur mesure.",
-      },
-      {
-        q: "Que faire si je ne suis pas satisfait du résultat ?",
-        a: "Si votre photo traitée ne vous convient pas ou est refusée par une autorité, notre garantie Conformité 100 % s'applique : nouveau traitement gratuit dans les 2 heures ou remboursement intégral sans condition. En 2025, notre taux de satisfaction client était de 98,7 % et notre taux de refus documentaire inférieur à 0,3 % sur plus de 2 millions de photos traitées.",
+        q: "Que faire si ma photo visa est refusée ?",
+        a: "Contactez notre support avec le motif de refus indiqué par le consulat ou le portail en ligne. Si le refus est lié à la conformité de la photo, nous vous remboursons ou vous fournissons une nouvelle photo conforme.",
       },
     ],
   },
@@ -538,28 +428,28 @@ export const fr = {
   // ── Guides ──────────────────────────────────────────────────────────────────
   guides: {
     index: {
-      title: "Guides Photo d'Identité",
-      subtitle: "Tout ce que vous devez savoir pour des photos conformes",
+      title: "Guides photo d'identité et passeport",
+      subtitle: "Taille, fond, ePhoto ANTS, photo faite à la maison : tout pour une photo acceptée du premier coup en France",
     },
     size: {
-      title: "Taille Photo Passeport : Guide Complet 2026",
+      title: "Taille photo d'identité et passeport : 35×45 mm et formats par pays",
       description:
-        "Découvrez les dimensions exactes requises pour les photos passeport dans chaque pays. Guide complet avec tableaux de tailles et conseils pratiques.",
+        "Format officiel 35×45 mm, taille du visage (32 à 36 mm), résolution en pixels et tableau des dimensions par pays pour passeport, CNI et visa.",
     },
     background: {
-      title: "Fond Photo Passeport : Règles et Astuces",
+      title: "Fond photo d'identité : quelle couleur choisir ?",
       description:
-        "Apprenez les règles d'arrière-plan pour les photos passeport. Couleur, éclairage, ombres — tout ce qu'il faut savoir pour un fond conforme.",
+        "Pourquoi le fond blanc est refusé en France, quelles couleurs sont acceptées (gris clair, bleu clair) et les règles de fond pour chaque pays.",
     },
     howTo: {
-      title: "Comment Prendre une Photo Passeport à la Maison",
+      title: "Faire sa photo d'identité soi-même à la maison",
       description:
-        "Guide étape par étape pour prendre une photo passeport professionnelle chez vous avec votre téléphone. Conseils d'éclairage, position et cadrage.",
+        "Prendre sa photo d'identité avec son téléphone, étape par étape : lumière, fond, distance, réglages du smartphone et erreurs à éviter.",
     },
     franceGuide: {
-      title: "Photo d'Identité Officielle en France (2026)",
+      title: "Photo d'identité en France : passeport, CNI, ePhoto, permis, visa",
       description:
-        "Comment créer une photo d'identité officielle en ligne en France : Passeport, CNI, ePhoto Permis, Visa, Titre de Séjour et Plus.",
+        "Quels documents exigent une photo, normes ANTS 2026, différence entre photo classique et ePhoto pour le permis de conduire et le titre de séjour.",
     },
   },
 
