@@ -1,5 +1,6 @@
 "use client";
 
+import { div } from "framer-motion/client";
 import { useState, useEffect } from "react";
 
 export default function LiveActivityChip() {
@@ -45,24 +46,6 @@ export default function LiveActivityChip() {
   }
 
   return (
-    <div className="bg-slate-900 text-white border-b border-slate-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row items-center justify-center py-2 md:py-1.5 gap-2 md:gap-6 text-[10px] sm:text-xs font-medium">
-          {/* Live Activity Section */}
-          <div className="flex items-center gap-2 shrink-0">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-lime-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-lime-500"></span>
-            </span>
-            <span className="font-bold uppercase tracking-wider text-[11px] sm:text-xs">
-              Live: <span className="text-lime-400 tabular-nums">{count.toLocaleString()}</span> photos processed
-            </span>
-          </div>
-
-          {/* Divider (Desktop only) */}
-        
-        </div>
-      </div>
-    </div>
+<div></div>
   );
 }

@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { compressImage } from "@/lib/compressImage";
 import Image from "next/image";
+import { compressImage } from "@/lib/compressImage";
 
 interface DocumentItem {
   id: string;
@@ -28,6 +28,9 @@ export interface SpecialPhotoPageProps {
   slug?: string;
   breadcrumbLabel?: string;
   relatedLinks?: { href: string; label: string }[];
+  heroImages?: { before: string; after: string };
+  heroSpecs?: string[];
+  heroBadge?: string;
 }
 
 const DEFAULT_RELATED_LINKS = [
@@ -40,11 +43,53 @@ const DEFAULT_RELATED_LINKS = [
 ];
 
 const TRUST_ITEMS = [
-  { tag: "01", title: "Privacy first", desc: "Encrypted uploads, never sold" },
-  { tag: "02", title: "ICAO compliant", desc: "Meets 9303 biometric standards" },
-  { tag: "03", title: "Instant result", desc: "AI processing in under 10 seconds" },
-  { tag: "04", title: "Free preview", desc: "Check before you pay anything" },
+  {
+    title: "Privacy first",
+    desc: "Encrypted uploads, never sold",
+    icon: "M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z",
+  },
+  {
+    title: "ICAO compliant",
+    desc: "Meets 9303 biometric standards",
+    icon: "M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z",
+  },
+  {
+    title: "Instant result",
+    desc: "AI processing in under 10 seconds",
+    icon: "M13 10V3L4 14h7v7l9-11h-7z",
+  },
+  {
+    title: "Free preview",
+    desc: "Check before you pay anything",
+    icon: "M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z",
+  },
 ];
+
+const HOW_IT_WORKS = [
+  { title: "Upload any photo", desc: "A clear selfie or phone photo taken against any wall." },
+  { title: "AI fixes it instantly", desc: "Background turned white, face centred and cropped to size." },
+  { title: "Download or print", desc: "Get a digital file and a print-ready sheet in seconds." },
+];
+
+const PROCESSING_STEPS = [
+  "Uploading photo",
+  "Detecting face",
+  "Whitening background",
+  "Cropping to size",
+];
+
+const ACCEPTED_TYPES = "image/jpeg,image/png,image/webp,image/heic,image/heif";
+
+// Downscale before upload — the output is only 630 × 810 px, so ~1 MB is plenty and uploads much faster
+const UPLOAD_MAX_BYTES = 1 * 1024 * 1024;
+
+function CheckIcon({ className = "w-4 h-4" }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+    </svg>
+  );
+}
 
 export default function SpecialPhotoPageClient({
   countryCode,
@@ -56,6 +101,9 @@ export default function SpecialPhotoPageClient({
   slug,
   breadcrumbLabel,
   relatedLinks = DEFAULT_RELATED_LINKS,
+  heroImages,
+  heroSpecs,
+  heroBadge = "Official size · 2026 rules",
 }: SpecialPhotoPageProps) {
   const router = useRouter();
   const [selectedDoc, setSelectedDoc] = useState(documents[0]?.id);
@@ -63,26 +111,14 @@ export default function SpecialPhotoPageClient({
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [dragOver, setDragOver] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [processingStep, setProcessingStep] = useState(0);
   const [errorMsg, setErrorMsg] = useState("");
+  const [showStickyCta, setShowStickyCta] = useState(false);
 
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-  const dropdownRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const uploadCardRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsDropdownOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  const filteredDocs = documents.filter((doc) =>
-    doc.label.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const activeDoc = documents.find((d) => d.id === selectedDoc);
 
   useEffect(() => {
     if (!selectedFile) {
@@ -94,380 +130,373 @@ export default function SpecialPhotoPageClient({
     return () => URL.revokeObjectURL(url);
   }, [selectedFile]);
 
-  const processFile = async () => {
-    if (!selectedFile) return;
-    setErrorMsg("");
-    setIsProcessing(true);
+  // Advance the visual step list while the request is in flight
+  useEffect(() => {
+    if (!isProcessing) return;
+    setProcessingStep(0);
+    const timers = [1000, 2500, 4500].map((ms, i) => setTimeout(() => setProcessingStep(i + 1), ms));
+    return () => timers.forEach(clearTimeout);
+  }, [isProcessing]);
 
-    try {
-      const compressed = await compressImage(selectedFile);
-      const doc = documents.find((d) => d.id === selectedDoc);
+  // Mobile sticky CTA only when the upload card is off-screen
+  useEffect(() => {
+    const el = uploadCardRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(([entry]) => setShowStickyCta(!entry.isIntersecting));
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
-      const formData = new FormData();
-      formData.append("image", compressed);
-      formData.append("country_code", countryCode);
-      formData.append("document_type", doc?.type || "passport");
-      formData.append("source", "special-photo-page");
+  const processFile = useCallback(
+    async (file: File) => {
+      setErrorMsg("");
+      setIsProcessing(true);
 
-      const res = await fetch("/api/external-process", {
-        method: "POST",
-        body: formData,
-      });
+      try {
+        const compressed = await compressImage(file, { maxBytes: UPLOAD_MAX_BYTES });
 
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.details || data.error || "Processing failed");
+        const formData = new FormData();
+        formData.append("image", compressed);
+        formData.append("country_code", countryCode);
+        formData.append("document_type", activeDoc?.type || "passport");
+        formData.append("source", "special-photo-page");
 
-      const photoRes = await fetch(`/api/photo/${data.photoId}`);
-      const photoResult = await photoRes.json();
-      if (!photoRes.ok || !photoResult.success) {
-        throw new Error("Failed to load generated photo details.");
+        const res = await fetch("/api/external-process", {
+          method: "POST",
+          body: formData,
+        });
+
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.details || data.error || "Processing failed");
+
+        // The preview page loads the photo server-side, so go straight there
+        setProcessingStep(PROCESSING_STEPS.length);
+        router.push(`/preview/${data.photoId}?from=special-photo-page`);
+      } catch (err) {
+        setErrorMsg((err instanceof Error && err.message) || "Something went wrong. Please try again.");
+        setIsProcessing(false);
       }
+    },
+    [countryCode, activeDoc?.type, router]
+  );
 
-      router.push(`/preview/${data.photoId}?from=special-photo-page`);
-    } catch (err: any) {
-      setErrorMsg(err.message || "Something went wrong. Please try again.");
-      setIsProcessing(false);
+  // Selecting a photo starts processing immediately — no extra click
+  const acceptFile = (file: File | undefined) => {
+    if (!file || isProcessing) return;
+    if (!file.type.startsWith("image/") && !/\.(heic|heif)$/i.test(file.name)) {
+      setErrorMsg("Please choose an image file (JPG, PNG, WEBP or HEIC).");
+      return;
     }
+    setSelectedFile(file);
+    processFile(file);
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setSelectedFile(file);
-      setErrorMsg("");
-    }
+    acceptFile(e.target.files?.[0]);
+    e.target.value = "";
   };
 
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     setDragOver(false);
-    const file = e.dataTransfer.files?.[0];
-    if (file?.type.startsWith("image/")) {
-      setSelectedFile(file);
-      setErrorMsg("");
-    }
+    acceptFile(e.dataTransfer.files?.[0]);
   };
 
-  const clearSelection = () => {
-    setSelectedFile(null);
-    if (fileInputRef.current) fileInputRef.current.value = "";
+  const openPicker = () => {
+    if (!isProcessing) fileInputRef.current?.click();
   };
 
-  const activeDoc = documents.find((d) => d.id === selectedDoc);
+  const scrollToUploadAndPick = () => {
+    uploadCardRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    openPicker();
+  };
+
+  const progressPct = Math.min(95, 15 + processingStep * 22);
 
   return (
-    <div className="min-h-screen bg-white pb-24 lg:pb-0">
-      {/* Breadcrumb strip */}
-      <div className="border-b border-slate-200 px-4 sm:px-6 lg:px-8 py-3">
-        <nav aria-label="Breadcrumb" className="max-w-6xl mx-auto">
-          <ol className="flex items-center gap-2 text-xs uppercase tracking-wide text-slate-500">
-            <li><a href="/" className="hover:text-lime-700">Home</a></li>
-            <li aria-hidden>/</li>
-            <li className="text-slate-900 font-semibold" aria-current="page">{breadcrumbLabel || countryCode}</li>
-          </ol>
-        </nav>
-      </div>
+    <div className="min-h-screen bg-white">
+      <input
+        type="file"
+        ref={fileInputRef}
+        onChange={handleFileChange}
+        accept={ACCEPTED_TYPES}
+        className="hidden"
+      />
 
-      {/* Hero + Form: single column on mobile, two columns from lg up */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-5 lg:px-8 py-5 sm:py-8 lg:py-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 lg:gap-0 rounded-2xl border border-slate-200 overflow-hidden">
-          {/* LEFT — heading + document select + submit */}
-          <div className="lg:col-span-5 p-5 sm:p-8 lg:p-10 flex flex-col">
-            <span className="inline-flex w-fit items-center text-xs uppercase tracking-widest text-lime-800 bg-lime-100 rounded-full px-3 py-1 mb-3 sm:mb-4">
-              Photo · {countryCode}
-            </span>
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 mb-3 sm:mb-4 tracking-tight leading-[1.1]">
-              {heroTitle}
-            </h1>
-            <p className="text-sm sm:text-base text-slate-600 mb-6 sm:mb-8 lg:mb-10">
-              {heroSubtitle}
-            </p>
+      {/* ─── HERO ─────────────────────────────────────────────────────────── */}
+      <section className="bg-slate-50 border-b border-slate-200">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-8 sm:pb-12 lg:pb-14">
+          <nav aria-label="Breadcrumb" className="mb-5 sm:mb-8">
+            <ol className="flex items-center gap-2 text-xs text-slate-500">
+              <li><Link href="/" className="hover:text-lime-700">Home</Link></li>
+              <li aria-hidden>/</li>
+              <li className="text-slate-900 font-medium truncate" aria-current="page">{breadcrumbLabel || countryCode}</li>
+            </ol>
+          </nav>
 
-            {/* Field 01 — document type */}
-            <div className="mb-2 sm:mb-4">
-              <div className="flex items-center gap-3 mb-3">
-                <span className="text-xs font-bold w-7 h-7 rounded-lg flex items-center justify-center bg-lime-600 text-white shrink-0">
-                  01
-                </span>
-                <p className="text-sm font-semibold uppercase tracking-wide text-slate-900">
-                  Photo type
-                </p>
-              </div>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 lg:items-center">
+            {/* LEFT — copy + upload */}
+            <div className="lg:col-span-7 min-w-0">
+              <p className="text-xs font-semibold uppercase tracking-wide text-lime-700 mb-3">
+                {heroBadge}
+              </p>
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight leading-tight mb-3 sm:mb-4">
+                {heroTitle}
+              </h1>
+              <p className="text-sm sm:text-base text-slate-600 leading-relaxed mb-4 sm:mb-5">
+                {heroSubtitle}
+              </p>
 
-              <div className="relative" ref={dropdownRef}>
-                <button
-                  type="button"
-                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                  aria-haspopup="listbox"
-                  aria-expanded={isDropdownOpen}
-                  className={`w-full bg-white border rounded-xl text-slate-900 py-3 px-4 transition-colors font-medium cursor-pointer flex items-center justify-between text-left
-                    ${isDropdownOpen ? "border-lime-600 ring-2 ring-lime-100" : "border-slate-200 hover:border-slate-300"}`}
-                >
-                  <span className="truncate pr-4 text-sm">
-                    {activeDoc?.label} {activeDoc?.size ? `(${activeDoc.size})` : ""}
-                  </span>
-                  <svg
-                    className={`w-4 h-4 shrink-0 text-lime-700 transition-transform ${isDropdownOpen ? "rotate-180" : ""}`}
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
+              {heroSpecs && heroSpecs.length > 0 && (
+                <ul className="flex flex-wrap gap-x-4 gap-y-1.5 mb-6">
+                  {heroSpecs.map((s) => (
+                    <li key={s} className="inline-flex items-center gap-1.5 text-sm text-slate-700">
+                      <CheckIcon className="w-3.5 h-3.5 text-lime-600 shrink-0" />
+                      {s}
+                    </li>
+                  ))}
+                </ul>
+              )}
 
-                {isDropdownOpen && (
-                  <div className="absolute z-10 mt-2 w-full bg-white border border-slate-200 rounded-xl max-h-[60vh] sm:max-h-80 overflow-hidden flex flex-col shadow-lg">
-                    <div className="p-3 border-b border-slate-100 bg-slate-50">
-                      <div className="relative">
-                        <svg className="absolute left-3 top-2.5 w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        </svg>
-                        <input
-                          type="text"
-                          placeholder="Search documents..."
-                          value={searchQuery}
-                          onChange={(e) => setSearchQuery(e.target.value)}
-                          className="w-full pl-9 pr-3 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-lime-600 focus:ring-2 focus:ring-lime-100"
-                          autoFocus
-                        />
+              {/* Upload card */}
+              <div ref={uploadCardRef} className="bg-white rounded-xl border border-slate-200 p-4 sm:p-5">
+                {documents.length > 1 && (
+                  <div className="mb-4">
+                    <p className="text-xs font-medium text-slate-500 mb-2">Photo for</p>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2" role="radiogroup" aria-label="Photo type">
+                      {documents.map((doc) => {
+                        const active = doc.id === selectedDoc;
+                        return (
+                          <button
+                            key={doc.id}
+                            type="button"
+                            role="radio"
+                            aria-checked={active}
+                            disabled={isProcessing}
+                            onClick={() => setSelectedDoc(doc.id)}
+                            className={`flex sm:block items-center justify-between gap-2 text-left rounded-lg border px-3 py-2 transition-colors disabled:opacity-60
+                              ${active ? "border-lime-600 bg-lime-50" : "border-slate-200 hover:border-slate-300"}`}
+                          >
+                            <span className={`block text-sm font-medium ${active ? "text-lime-900" : "text-slate-800"}`}>{doc.label}</span>
+                            <span className={`block text-xs ${active ? "text-lime-700" : "text-slate-500"}`}>{doc.size}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                {isProcessing ? (
+                  <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 flex items-start gap-4" aria-live="polite">
+                    {previewUrl && (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={previewUrl} alt="Your uploaded photo" className="w-16 h-20 sm:w-20 sm:h-24 rounded-md object-cover shrink-0" />
+                    )}
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm sm:text-base font-semibold text-slate-900">Creating your photo…</p>
+                      <p className="text-xs text-slate-500 mb-3">Usually under 10 seconds. Keep this page open.</p>
+                      <div className="h-1.5 rounded-full bg-slate-200 overflow-hidden mb-3">
+                        <div className="h-full rounded-full bg-lime-600 transition-[width] duration-700" style={{ width: `${progressPct}%` }} />
+                      </div>
+                      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1">
+                        {PROCESSING_STEPS.map((step, i) => {
+                          const done = i < processingStep;
+                          const current = i === processingStep;
+                          return (
+                            <li key={step} className={`flex items-center gap-2 text-xs sm:text-sm ${done || current ? "text-slate-800" : "text-slate-400"}`}>
+                              {done ? (
+                                <CheckIcon className="w-3.5 h-3.5 text-lime-600 shrink-0" />
+                              ) : current ? (
+                                <span className="w-3.5 h-3.5 rounded-full border-2 border-lime-600 border-t-transparent animate-spin shrink-0" />
+                              ) : (
+                                <span className="w-3.5 h-3.5 rounded-full border-2 border-slate-300 shrink-0" />
+                              )}
+                              {step}
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </div>
+                  </div>
+                ) : errorMsg && selectedFile ? (
+                  <div className="rounded-lg border border-rose-200 bg-rose-50 p-4 flex items-start gap-4" role="alert">
+                    {previewUrl && (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={previewUrl} alt="Your uploaded photo" className="w-16 h-20 rounded-md object-cover shrink-0" />
+                    )}
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-semibold text-rose-700">We couldn&apos;t process this photo</p>
+                      <p className="text-sm text-rose-600 mt-0.5 mb-3 break-words">{errorMsg}</p>
+                      <div className="flex flex-wrap gap-2">
+                        <button
+                          type="button"
+                          onClick={() => processFile(selectedFile)}
+                          className="px-4 py-2 rounded-lg bg-slate-900 text-white text-sm font-medium hover:bg-slate-800 transition-colors"
+                        >
+                          Try again
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => { setSelectedFile(null); setErrorMsg(""); openPicker(); }}
+                          className="px-4 py-2 rounded-lg border border-slate-300 bg-white text-slate-900 text-sm font-medium hover:border-slate-500 transition-colors"
+                        >
+                          Use another photo
+                        </button>
                       </div>
                     </div>
-                    <ul className="overflow-auto py-1.5 px-1.5" role="listbox">
-                      {filteredDocs.length > 0 ? (
-                        filteredDocs.map((doc) => (
-                          <li
-                            key={doc.id}
-                            role="option"
-                            aria-selected={selectedDoc === doc.id}
-                            onClick={() => {
-                              setSelectedDoc(doc.id);
-                              setIsDropdownOpen(false);
-                              setSearchQuery("");
-                            }}
-                            className={`px-3.5 py-3 rounded-lg cursor-pointer text-sm transition-colors border-l-[3px]
-                              ${selectedDoc === doc.id
-                                ? "bg-lime-50 border-l-lime-600 text-lime-900 font-semibold"
-                                : "border-l-transparent text-slate-700 hover:bg-slate-50 hover:border-l-slate-200"}`}
-                          >
-                            {doc.label} {doc.size && <span className={selectedDoc === doc.id ? "text-lime-600" : "text-slate-400 ml-1"}>({doc.size})</span>}
-                          </li>
-                        ))
-                      ) : (
-                        <li className="px-4 py-6 text-sm text-slate-500 text-center">No documents found</li>
-                      )}
-                    </ul>
+                  </div>
+                ) : (
+                  <div
+                    className={`rounded-lg border-2 border-dashed px-4 py-6 sm:py-8 text-center cursor-pointer transition-colors
+                      ${dragOver ? "border-lime-600 bg-lime-50" : "border-slate-300 hover:border-lime-500"}`}
+                    onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
+                    onDragLeave={() => setDragOver(false)}
+                    onDrop={handleDrop}
+                    onClick={openPicker}
+                    onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openPicker(); } }}
+                    role="button"
+                    tabIndex={0}
+                    aria-label="Upload your photo"
+                  >
+                    <span className="inline-flex w-full sm:w-auto items-center justify-center gap-2 px-6 py-3 rounded-lg bg-lime-700 hover:bg-lime-800 text-white text-base font-semibold transition-colors">
+                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                      </svg>
+                      Upload your photo
+                    </span>
+                    <p className="text-sm text-slate-500 mt-3">
+                      <span className="hidden sm:inline">or drag &amp; drop · </span>starts automatically
+                    </p>
+                    <p className="text-xs text-slate-400 mt-1">JPG · PNG · WEBP · HEIC</p>
+                    {errorMsg && <p className="text-sm text-rose-600 mt-3" role="alert">{errorMsg}</p>}
                   </div>
                 )}
-              </div>
-            </div>
 
-            {errorMsg && (
-              <div className="mt-4 p-4 rounded-xl bg-rose-50 border border-rose-200 flex items-start gap-3" role="alert">
-                <svg className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                </svg>
-                <div>
-                  <h4 className="text-sm font-semibold text-rose-700 uppercase tracking-wide">Processing failed</h4>
-                  <p className="text-sm text-rose-600 mt-1">{errorMsg}</p>
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* RIGHT — upload & submit */}
-          <div className="lg:col-span-7 p-5 sm:p-8 lg:p-10 bg-slate-50 border-t border-slate-200 lg:border-t-0 lg:border-l flex flex-col">
-            <div className="flex items-center gap-3 mb-4 sm:mb-5">
-              <span className={`text-xs font-bold w-7 h-7 rounded-lg flex items-center justify-center text-white shrink-0 ${selectedFile ? "bg-lime-600" : "bg-slate-900"}`}>
-                {selectedFile ? "✓" : "02"}
-              </span>
-              <p className="text-sm font-semibold uppercase tracking-wide text-slate-900">
-                Upload your photo
-              </p>
-            </div>
-
-            {!selectedFile ? (
-              <div
-                className={`relative flex-1 min-h-[200px] sm:min-h-[260px] rounded-xl border-2 border-dashed p-6 sm:p-8 lg:p-12 text-center cursor-pointer transition-colors flex flex-col items-center justify-center
-                  ${dragOver ? "border-lime-600 bg-lime-50" : "border-slate-300 hover:border-lime-400 bg-white"}`}
-                onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
-                onDragLeave={() => setDragOver(false)}
-                onDrop={handleDrop}
-                onClick={() => fileInputRef.current?.click()}
-                role="button"
-                tabIndex={0}
-                aria-label="Upload your photo"
-              >
-                <input
-                  type="file"
-                  ref={fileInputRef}
-                  onChange={handleFileChange}
-                  accept="image/jpeg,image/png,image/webp,image/heic"
-                  className="hidden"
-                />
-                <div className="mx-auto w-14 h-14 sm:w-16 sm:h-16 mb-3 sm:mb-4 rounded-full bg-lime-100 flex items-center justify-center">
-                  <svg className="w-6 h-6 sm:w-7 sm:h-7 text-lime-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-                  </svg>
-                </div>
-                <h3 className="text-base sm:text-lg font-medium text-slate-900 mb-1.5 sm:mb-2 px-2">Drag and drop your portrait photo</h3>
-                <p className="text-xs sm:text-sm text-slate-500 mb-4 sm:mb-6">JPG · PNG · WEBP · HEIC</p>
-                <button className="px-5 sm:px-6 py-2.5 rounded-lg bg-slate-900 text-white text-sm font-medium hover:bg-lime-600 transition-colors">
-                  Select image
-                </button>
-              </div>
-            ) : (
-              <div className="flex-1 flex flex-col xs:flex-row sm:flex-row items-center gap-5 sm:gap-8 bg-white rounded-xl border border-slate-200 p-5 sm:p-6">
-                {/* Preview with crop-guide corner marks */}
-                <div className="relative w-28 h-36 sm:w-36 sm:h-44 rounded-lg overflow-hidden bg-slate-100 shrink-0">
-                  {previewUrl && (
-                    <Image src={previewUrl} alt="Selected photo" fill className="object-cover" />
-                  )}
-                  {/* crop marks */}
-                  <span className="absolute top-1.5 left-1.5 w-4 h-4 border-t-2 border-l-2 border-lime-500" />
-                  <span className="absolute top-1.5 right-1.5 w-4 h-4 border-t-2 border-r-2 border-lime-500" />
-                  <span className="absolute bottom-1.5 left-1.5 w-4 h-4 border-b-2 border-l-2 border-lime-500" />
-                  <span className="absolute bottom-1.5 right-1.5 w-4 h-4 border-b-2 border-r-2 border-lime-500" />
-                </div>
-                <div className="flex-1 w-full text-center sm:text-left min-w-0">
-                  <h4 className="font-medium text-slate-900 mb-1 line-clamp-1 break-all">{selectedFile.name}</h4>
-                  <p className="text-sm text-slate-500 mb-4">
-                    {(selectedFile.size / (1024 * 1024)).toFixed(2)} MB
-                  </p>
-                  <div className="flex flex-col sm:flex-row gap-3 justify-center sm:justify-start">
-                    <button
-                      onClick={() => fileInputRef.current?.click()}
-                      className="text-sm font-medium text-slate-900 rounded-lg border border-slate-300 px-4 py-2 hover:border-slate-900 transition-colors"
-                    >
-                      Replace photo
-                    </button>
-                    <input
-                      type="file"
-                      ref={fileInputRef}
-                      onChange={handleFileChange}
-                      accept="image/jpeg,image/png,image/webp,image/heic"
-                      className="hidden"
-                    />
-                    <button
-                      onClick={clearSelection}
-                      className="text-sm font-medium text-rose-600 hover:text-rose-700 flex items-center justify-center sm:justify-start gap-1.5"
-                    >
-                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                      </svg>
-                      Remove
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Step 03 — submit (desktop only, mobile uses sticky bar below) */}
-            <div className="mt-6 pt-6 border-t border-slate-200 hidden lg:block">
-              <div className="flex items-center gap-3 mb-3">
-                <span className="text-xs font-bold w-7 h-7 rounded-lg flex items-center justify-center bg-slate-900 text-white shrink-0">
-                  03
-                </span>
-                <p className="text-sm font-semibold uppercase tracking-wide text-slate-900">
-                  Submit
+                <p className="text-xs text-slate-500 text-center mt-3">
+                  Free preview · Pay only to download · Photos kept private
                 </p>
               </div>
-              <button
-                onClick={processFile}
-                disabled={!selectedFile || isProcessing}
-                className={`w-full py-4 px-6 rounded-xl text-base font-bold flex items-center justify-center gap-2 transition-colors
-                  ${!selectedFile
-                    ? "bg-slate-100 text-slate-400 cursor-not-allowed"
-                    : isProcessing
-                    ? "bg-lime-600 text-white cursor-wait"
-                    : "bg-lime-600 hover:bg-lime-700 text-white"}`}
-              >
-                {isProcessing ? (
-                  <>
-                    <svg className="animate-spin -ml-1 mr-2 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                    </svg>
-                    Processing photo...
-                  </>
-                ) : (
-                  <>
-                    Proceed to verification
-                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                    </svg>
-                  </>
-                )}
-              </button>
-              <p className="text-xs text-slate-400 text-center mt-3">
-                Free to preview · pay only to download or print
-              </p>
             </div>
-          </div>
-        </div>
-      </div>
 
-      {/* Sticky mobile CTA */}
-      <div
-        className="lg:hidden fixed bottom-0 inset-x-0 z-20 bg-white border-t border-slate-200 p-3"
-        style={{ paddingBottom: "max(0.75rem, env(safe-area-inset-bottom))" }}
-      >
-        <button
-          onClick={processFile}
-          disabled={!selectedFile || isProcessing}
-          className={`w-full py-3.5 px-6 rounded-xl text-base font-bold flex items-center justify-center gap-2
-            ${!selectedFile ? "bg-slate-100 text-slate-400" : "bg-lime-600 text-white"}`}
-        >
-          {isProcessing ? "Processing..." : "Proceed to verification"}
-        </button>
-      </div>
-
-      {/* Trust strip — flat, colorful, no shadow */}
-      <div className="border-y border-slate-200 bg-slate-50">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 sm:grid-cols-4 divide-x divide-slate-200">
-            {TRUST_ITEMS.map(({ tag, title, desc }, i) => (
-              <div
-                key={title}
-                className={`py-5 sm:py-6 px-3 sm:px-6 ${i >= 2 ? "border-t border-slate-200 sm:border-t-0" : ""}`}
-              >
-                <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-lime-100 text-lime-800 text-[11px] font-bold mb-2 sm:mb-3">
-                  {tag}
-                </span>
-                <p className="text-xs sm:text-sm font-semibold text-slate-900 leading-tight">{title}</p>
-                <p className="text-xs text-slate-500 mt-1 leading-snug hidden sm:block">{desc}</p>
+            {/* RIGHT — before / after */}
+            {heroImages && (
+              <div className="lg:col-span-5">
+                <div className="grid grid-cols-2 gap-3 max-w-sm mx-auto lg:max-w-none">
+                  <figure>
+                    <div className="relative aspect-[35/45] rounded-lg overflow-hidden bg-slate-200 border border-slate-200">
+                      <Image
+                        src={heroImages.before}
+                        alt="Original home photo before conversion"
+                        fill
+                        sizes="(max-width: 640px) 45vw, (max-width: 1024px) 190px, 220px"
+                        className="object-cover"
+                      />
+                    </div>
+                    <figcaption className="mt-2 text-xs font-medium text-slate-500 text-center">Your photo</figcaption>
+                  </figure>
+                  <figure>
+                    <div className="relative aspect-[35/45] rounded-lg overflow-hidden bg-white border-2 border-lime-600">
+                      <Image
+                        src={heroImages.after}
+                        alt="Final compliant passport size photo"
+                        fill
+                        sizes="(max-width: 640px) 45vw, (max-width: 1024px) 190px, 220px"
+                        className="object-cover"
+                      />
+                    </div>
+                    <figcaption className="mt-2 text-xs font-medium text-lime-700 text-center">
+                      Ready photo{activeDoc?.size ? ` · ${activeDoc.size.split(" (")[0]}` : ""}
+                    </figcaption>
+                  </figure>
+                </div>
               </div>
-            ))}
+            )}
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Rich Content Section */}
+      {/* ─── HOW IT WORKS ─────────────────────────────────────────────────── */}
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+        <ol className="grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-8">
+          {HOW_IT_WORKS.map((s, i) => (
+            <li key={s.title} className="flex items-start gap-3">
+              <span className="w-8 h-8 rounded-full bg-lime-100 text-lime-800 text-sm font-bold flex items-center justify-center shrink-0">
+                {i + 1}
+              </span>
+              <div>
+                <p className="text-sm sm:text-base font-semibold text-slate-900">{s.title}</p>
+                <p className="text-sm text-slate-500 mt-0.5 leading-snug">{s.desc}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      {/* ─── TRUST ────────────────────────────────────────────────────────── */}
+      <section className="border-y border-slate-200">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-2 lg:grid-cols-4">
+          {TRUST_ITEMS.map(({ title, desc, icon }, i) => (
+            <div
+              key={title}
+              className={`flex items-start gap-3 py-5 px-2 sm:px-4
+                ${i % 2 === 1 ? "border-l border-slate-200" : ""}
+                ${i >= 2 ? "border-t lg:border-t-0 border-slate-200" : ""}
+                ${i === 2 ? "lg:border-l" : ""}`}
+            >
+              <svg className="w-5 h-5 text-lime-700 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={icon} />
+              </svg>
+              <div className="min-w-0">
+                <p className="text-sm font-semibold text-slate-900">{title}</p>
+                <p className="text-xs text-slate-500 mt-0.5 leading-snug">{desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ─── RICH CONTENT ─────────────────────────────────────────────────── */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-12 lg:py-16">
         <article className="rich-content">
           <div dangerouslySetInnerHTML={{ __html: contentHtml }} />
 
-          {/* Section: FAQ */}
+          {/* Mid-page CTA */}
+          <div className="my-10 rounded-xl border border-slate-200 bg-slate-50 p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <p className="text-base sm:text-lg font-semibold text-slate-900">Ready to make your photo?</p>
+              <p className="text-sm text-slate-500 mt-0.5">Upload a selfie — we start processing right away.</p>
+            </div>
+            <button
+              type="button"
+              onClick={scrollToUploadAndPick}
+              className="shrink-0 px-5 py-2.5 rounded-lg bg-lime-700 hover:bg-lime-800 text-white text-sm font-semibold transition-colors"
+            >
+              Upload photo
+            </button>
+          </div>
+
+          {/* FAQ */}
           {faqs && faqs.length > 0 && (
             <div className="mt-10 sm:mt-12">
-              <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-900 mb-5 sm:mb-6 pb-3 border-b-2 border-lime-500">
+              <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-900 mb-5 sm:mb-6">
                 Frequently asked questions
               </h2>
-              <div>
+              <div className="divide-y divide-slate-200 border-y border-slate-200">
                 {faqs.map((item) => (
-                  <details key={item.q} className="group border-b border-slate-200 last:border-b-0">
-                    <summary className="p-4 font-semibold text-slate-900 cursor-pointer list-none flex justify-between items-center gap-4 hover:bg-lime-50 transition-colors">
+                  <details key={item.q} className="group">
+                    <summary className="py-4 font-semibold text-slate-900 cursor-pointer list-none flex justify-between items-center gap-4">
                       <span className="text-sm sm:text-base">{item.q}</span>
                       <svg
-                        className="w-4 h-4 shrink-0 text-lime-700 transition-transform group-open:rotate-180"
+                        className="w-4 h-4 shrink-0 text-slate-500 transition-transform group-open:rotate-180"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
+                        aria-hidden
                       >
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                       </svg>
                     </summary>
-                    <div className="p-4 text-sm sm:text-base text-slate-600 bg-slate-50 border-t border-slate-200">
+                    <div className="pb-4 text-sm sm:text-base text-slate-600 leading-relaxed">
                       <p>{item.a}</p>
                     </div>
                   </details>
@@ -475,7 +504,8 @@ export default function SpecialPhotoPageClient({
               </div>
             </div>
           )}
-          {/* Section: Related Sizing Tools */}
+
+          {/* Related tools */}
           <div className="mt-12 sm:mt-16 pt-8 border-t border-slate-200">
             <h2 className="text-lg sm:text-xl font-bold text-slate-900 mb-5 sm:mb-6">
               Related Photo Tools
@@ -484,7 +514,7 @@ export default function SpecialPhotoPageClient({
               {relatedLinks
                 .filter((l) => l.href !== `/${slug}`)
                 .map((l) => (
-                  <Link key={l.href} href={l.href} className="text-xs font-semibold text-slate-700 hover:text-lime-700 bg-slate-50 p-3 rounded-xl border border-slate-200 transition-colors block text-center">
+                  <Link key={l.href} href={l.href} className="text-xs font-semibold text-slate-700 hover:text-lime-700 bg-slate-50 p-3 rounded-lg border border-slate-200 transition-colors block text-center">
                     {l.label}
                   </Link>
                 ))}
@@ -492,6 +522,22 @@ export default function SpecialPhotoPageClient({
           </div>
         </article>
       </div>
+
+      {/* Sticky mobile CTA — only when the upload card is scrolled away */}
+      {showStickyCta && !isProcessing && (
+        <div
+          className="lg:hidden fixed bottom-0 inset-x-0 z-20 bg-white border-t border-slate-200 p-3"
+          style={{ paddingBottom: "max(0.75rem, env(safe-area-inset-bottom))" }}
+        >
+          <button
+            type="button"
+            onClick={scrollToUploadAndPick}
+            className="w-full py-3 px-6 rounded-lg text-base font-semibold bg-lime-700 text-white"
+          >
+            Upload photo — free preview
+          </button>
+        </div>
+      )}
     </div>
   );
 }

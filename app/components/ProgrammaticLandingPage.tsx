@@ -3,7 +3,7 @@ import Image from "next/image";
 import HomeSections from "./HomeSections";
 import HomeFAQ from "./HomeFAQ";
 import LongformSection from "./LongformSection";      // ← NEW
-import { SpecEntry } from "../../lib/slug-utils";
+import { SpecEntry, getSpecH1, getSpecMetaDescription } from "../../lib/slug-utils";
 import "../home.css";
 import { generateLongformContent } from "@/lib/content-weaver";
 import Breadcrumbs from "./Breadcrumbs";
@@ -17,6 +17,12 @@ export default function ProgrammaticLandingPage({ spec, slug }: Props) {
   const isVisaIntent = slug.includes("visa");
   const docName = isVisaIntent ? "Visa" : "Passport";
   const countryName = spec.country;
+
+  const customH1 = getSpecH1(spec, isVisaIntent);
+  const customMetaDesc = getSpecMetaDescription(spec, isVisaIntent);
+
+  const heroH1 = customH1 || `${spec.country} ${docName} Photo Editor Online 2026`;
+  const heroSubtitle = customMetaDesc || `Create a 100% compliant ${docName} photo in seconds. Our biometric checks ensure the correct ${spec.width_mm}x${spec.height_mm}mm size, background color, and biometric alignment for ${countryName}.`;
 
   const countrySlug = slug.replace("-passport-photo-editor", "").replace("-visa-photo-editor", "");
   const siblingLabel = isVisaIntent ? "Passport" : "Visa";
@@ -81,13 +87,12 @@ export default function ProgrammaticLandingPage({ spec, slug }: Props) {
                 </Link>
               </div>
 
-                        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 leading-tight tracking-tight mb-3">
-
-                 {spec.country} {docName} Photo Editor Online 2026
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 leading-tight tracking-tight mb-3">
+                {heroH1}
               </h1>
 
               <p className="text-sm sm:text-base text-slate-600 leading-relaxed mb-7 max-w-lg">
-                Create a 100% compliant {docName} photo in seconds. Our biometric checks ensure the correct {spec.width_mm}x{spec.height_mm}mm size, background color, and biometric alignment for {countryName}.
+                {heroSubtitle}
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 mb-8">

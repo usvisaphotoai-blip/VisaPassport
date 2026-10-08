@@ -28,6 +28,7 @@ export interface CountrySpec {
   print_size: "A4" | "Letter";
   head_top_multiplier?: number;
   dpi?: number;
+  [key: string]: any;
 }
 
 export const allSpecs = specsData as CountrySpec[];

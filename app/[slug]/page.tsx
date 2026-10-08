@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getAllSlugs } from "../../lib/slug-utils";
+import { getAllSlugs, getSpecTitle, getSpecH1, getSpecMetaDescription, getSpecKeywords } from "../../lib/slug-utils";
 import { getRouteBySlug, createMetadata } from "../../lib/slug-router";
 import ProgrammaticLandingPage from "../components/ProgrammaticLandingPage";
 import PassportMakerApp from "../passport-size-photo-maker/PassportMakerApp";
@@ -74,11 +74,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       const intentLabel = isVisaUrl ? "Visa" : "Passport";
       const baseUrl = `https://www.pixpassport.com/${canonicalSlug}`;
 
-      let title = isVisaUrl
+      let defaultTitle = isVisaUrl
         ? `${spec.country} Visa Photo Online (2026) | ${spec.width_mm}x${spec.height_mm}mm`
         : `${spec.country} Passport Photo Maker (2026) | 100% Approved`;
 
-      let description = `Create your ${spec.country} ${intentLabel.toLowerCase()} photo online in 2 mins. ${spec.width_mm}x${spec.height_mm}mm with automatic cropping and background checks.`;
+      let defaultDescription = `Create your ${spec.country} ${intentLabel.toLowerCase()} photo online in 2 mins. ${spec.width_mm}x${spec.height_mm}mm with automatic cropping and background checks.`;
 
       let keywords = [
         `${spec.country} ${intentLabel.toLowerCase()} photo online`,
@@ -88,8 +88,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       ];
 
       if (canonicalSlug === "us-passport-photo-editor") {
-        title = "US Passport Photo Checker & 2x2 Maker Online Free | 51x51mm Tool";
-        description = "Consolidated US passport photo checker and 2×2 maker. Convert selfies to official 2×2 inch / 51×51 mm (600×600 px) US passport photos with biometric check, 240KB limit, and rejection checklist.";
+        defaultTitle = "US Passport Photo Checker & 2x2 Maker Online Free | 51x51mm Tool";
+        defaultDescription = "Consolidated US passport photo checker and 2×2 maker. Convert selfies to official 2×2 inch / 51×51 mm (600×600 px) US passport photos with biometric check, 240KB limit, and rejection checklist.";
         keywords = [
           "us passport photo tool",
           "2x2 picture size online free",
@@ -99,6 +99,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
           "america passport photo size",
           "american passport picture size",
         ];
+      }
+
+      const customTitle = getSpecTitle(spec, isVisaUrl);
+      const customDescription = getSpecMetaDescription(spec, isVisaUrl);
+      const customKeywords = getSpecKeywords(spec, isVisaUrl);
+
+      const title = customTitle || defaultTitle;
+      const description = customDescription || defaultDescription;
+      if (customKeywords && customKeywords.length > 0) {
+        keywords = customKeywords;
       }
 
       return createMetadata({
@@ -192,15 +202,21 @@ export default async function Page({ params }: PageProps) {
 
     case "spec": {
       const spec = route.data;
+      const isVisaUrl = route.isVisaUrl;
       const localPrice = await getLocalPrice(spec.price, undefined, false, true);
       const enrichedSpec = { ...spec, local_price: localPrice };
+
+      const customTitle = getSpecTitle(spec, isVisaUrl);
+      const customDescription = getSpecMetaDescription(spec, isVisaUrl);
+      const customH1 = getSpecH1(spec, isVisaUrl);
+
       const jsonLd = {
         "@context": "https://schema.org",
         "@type": "SoftwareApplication",
-        name: `Official ${spec.country} ${spec.name} Photo Maker`,
+        name: customH1 || customTitle || `Official ${spec.country} ${spec.name} Photo Maker`,
         applicationCategory: "UtilitiesApplication",
         operatingSystem: "All",
-        description: `Online biometric tool for ${spec.country} ${spec.name} requirements.`,
+        description: customDescription || `Online biometric tool for ${spec.country} ${spec.name} requirements.`,
       };
 
       return (

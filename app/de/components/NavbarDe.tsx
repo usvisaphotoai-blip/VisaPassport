@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
@@ -48,11 +49,14 @@ export default function NavbarDe() {
         <nav aria-label={de.nav.mainNav} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-[60px] lg:h-[66px]">
             <Link href="/de" aria-label="PixPassport – Startseite" className="flex items-center gap-2.5 shrink-0 group">
-              <div className="w-8 h-8 lg:w-9 lg:h-9 bg-lime-700 rounded-lg flex items-center justify-center group-hover:bg-lime-800 transition-colors duration-200">
-                <svg aria-hidden="true" className="w-4 h-4 lg:w-5 lg:h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.8}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                </svg>
-              </div>
+              <Image
+                src="/logo.png"
+                alt=""
+                width={36}
+                height={36}
+                priority
+                className="w-8 h-8 lg:w-9 lg:h-9 rounded-xl shadow-sm shadow-lime-700/30"
+              />
               <span className="text-lg lg:text-xl font-extrabold text-slate-900 tracking-tight group-hover:text-lime-700 transition-colors duration-200">
                 PixPassport
               </span>

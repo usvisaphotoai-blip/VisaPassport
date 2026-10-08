@@ -100,6 +100,15 @@
     "flag": "🇪🇺",
     "width_mm": 35,
     "height_mm": 45,
+    "title": "Schengen Visa Photo Editor – Create a Compliant Visa Photo Online",
+    "h1": "Schengen Visa Photo Editor",
+    "meta_description": "Create a Schengen visa photo online. Resize, crop and adjust your photo to Schengen requirements with the right background, framing and biometric guidelines.",
+    "keywords": [
+      "schengen visa photo",
+      "schengen visa photo online",
+      "schengen visa photo editor",
+      "schengen visa photo requirements"
+    ],
     "width_px": 413,
     "height_px": 531,
     "head_min_pct": 70,
@@ -110,7 +119,34 @@
     "price": 6.99,
     "print_size": "A4",
     "dpi": 300,
-    "hero_photo": "https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/45_35_passport_photo_ogdxnu.jpg"
+    "hero_photo": "https://res.cloudinary.com/dipzpwbbk/image/upload/v1791472341/schengen-visa-photo-example_gezwom.webp"
+  },
+  {
+    "id": "schengen-passport",
+    "name": "Schengen photo requirements & size",
+    "country": "Schengen",
+    "flag": "🇪🇺",
+    "width_mm": 35,
+    "height_mm": 45,
+    "title": "Schengen Photo Requirements & Size – Create Your Photo Online",
+    "h1": "Schengen Photo Requirements, Size & Online Photo Editor",
+    "meta_description": "Check Schengen photo requirements, size and specifications, then create your photo online with the right background, head size and biometric framing.",
+    "keywords": [
+      "schengen passport photo",
+      "schengen passport size photo",
+      "schengen passport photo size"
+    ],
+    "width_px": 413,
+    "height_px": 531,
+    "head_min_pct": 70,
+    "head_max_pct": 80,
+    "eye_min_pct": 56,
+    "eye_max_pct": 69,
+    "bg_color": "light-gray",
+    "price": 6.99,
+    "print_size": "A4",
+    "dpi": 300,
+    "hero_photo": "https://res.cloudinary.com/dipzpwbbk/image/upload/v1791472341/schengen-passport-photo_bdpdtl.webp"
   },
   {
     "id": "brazil-passport",

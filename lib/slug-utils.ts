@@ -27,6 +27,166 @@ export interface SpecEntry {
     amount: number;
   };
   hero_photo?: string;
+  dpi?: number;
+
+  // Custom SEO / Metadata overrides from data/countries-specs.json
+  title?: string;
+  meta_title?: string;
+  metaTitle?: string;
+  passport_title?: string;
+  passportTitle?: string;
+  passport_meta_title?: string;
+  passportMetaTitle?: string;
+  visa_title?: string;
+  visaTitle?: string;
+  visa_meta_title?: string;
+  visaMetaTitle?: string;
+
+  h1?: string;
+  h1_title?: string;
+  hero_title?: string;
+  heroTitle?: string;
+  passport_h1?: string;
+  passportH1?: string;
+  passport_h1_title?: string;
+  passportHeroTitle?: string;
+  passport_hero_title?: string;
+  visa_h1?: string;
+  visaH1?: string;
+  visa_h1_title?: string;
+  visaHeroTitle?: string;
+  visa_hero_title?: string;
+
+  meta_description?: string;
+  metaDescription?: string;
+  description?: string;
+  meta_desc?: string;
+  passport_meta_description?: string;
+  passportMetaDescription?: string;
+  passport_description?: string;
+  passportDescription?: string;
+  passport_meta_desc?: string;
+  visa_meta_description?: string;
+  visaMetaDescription?: string;
+  visa_description?: string;
+  visaDescription?: string;
+  visa_meta_desc?: string;
+
+  keywords?: string[];
+  passport_keywords?: string[];
+  passportKeywords?: string[];
+  visa_keywords?: string[];
+  visaKeywords?: string[];
+}
+
+/**
+ * Resolves custom meta title for a spec if defined in countries-specs.json.
+ */
+export function getSpecTitle(spec: SpecEntry, isVisa: boolean): string | undefined {
+  if (isVisa) {
+    return (
+      spec.visa_title ||
+      spec.visaTitle ||
+      spec.visa_meta_title ||
+      spec.visaMetaTitle ||
+      (spec.id.includes("visa")
+        ? spec.title || spec.meta_title || spec.metaTitle
+        : !spec.id.includes("passport")
+        ? spec.title || spec.meta_title || spec.metaTitle
+        : undefined)
+    );
+  } else {
+    return (
+      spec.passport_title ||
+      spec.passportTitle ||
+      spec.passport_meta_title ||
+      spec.passportMetaTitle ||
+      (!spec.id.includes("visa")
+        ? spec.title || spec.meta_title || spec.metaTitle
+        : undefined)
+    );
+  }
+}
+
+/**
+ * Resolves custom H1 for a spec if defined in countries-specs.json.
+ */
+export function getSpecH1(spec: SpecEntry, isVisa: boolean): string | undefined {
+  if (isVisa) {
+    return (
+      spec.visa_h1 ||
+      spec.visaH1 ||
+      spec.visa_h1_title ||
+      spec.visaHeroTitle ||
+      spec.visa_hero_title ||
+      (spec.id.includes("visa")
+        ? spec.h1 || spec.h1_title || spec.hero_title || spec.heroTitle
+        : !spec.id.includes("passport")
+        ? spec.h1 || spec.h1_title || spec.hero_title || spec.heroTitle
+        : undefined)
+    );
+  } else {
+    return (
+      spec.passport_h1 ||
+      spec.passportH1 ||
+      spec.passport_h1_title ||
+      spec.passportHeroTitle ||
+      spec.passport_hero_title ||
+      (!spec.id.includes("visa")
+        ? spec.h1 || spec.h1_title || spec.hero_title || spec.heroTitle
+        : undefined)
+    );
+  }
+}
+
+/**
+ * Resolves custom meta description for a spec if defined in countries-specs.json.
+ */
+export function getSpecMetaDescription(spec: SpecEntry, isVisa: boolean): string | undefined {
+  if (isVisa) {
+    return (
+      spec.visa_meta_description ||
+      spec.visaMetaDescription ||
+      spec.visa_description ||
+      spec.visaDescription ||
+      spec.visa_meta_desc ||
+      (spec.id.includes("visa")
+        ? spec.meta_description || spec.metaDescription || spec.description || spec.meta_desc
+        : !spec.id.includes("passport")
+        ? spec.meta_description || spec.metaDescription || spec.description || spec.meta_desc
+        : undefined)
+    );
+  } else {
+    return (
+      spec.passport_meta_description ||
+      spec.passportMetaDescription ||
+      spec.passport_description ||
+      spec.passportDescription ||
+      spec.passport_meta_desc ||
+      (!spec.id.includes("visa")
+        ? spec.meta_description || spec.metaDescription || spec.description || spec.meta_desc
+        : undefined)
+    );
+  }
+}
+
+/**
+ * Resolves custom keywords for a spec if defined in countries-specs.json.
+ */
+export function getSpecKeywords(spec: SpecEntry, isVisa: boolean): string[] | undefined {
+  if (isVisa) {
+    return (
+      spec.visa_keywords ||
+      spec.visaKeywords ||
+      (spec.id.includes("visa") || !spec.id.includes("passport") ? spec.keywords : undefined)
+    );
+  } else {
+    return (
+      spec.passport_keywords ||
+      spec.passportKeywords ||
+      (!spec.id.includes("visa") ? spec.keywords : undefined)
+    );
+  }
 }
 
 /**

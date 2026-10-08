@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useSession, signOut } from "next-auth/react";
@@ -43,11 +44,14 @@ export default function NavbarFr() {
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-[60px] lg:h-[66px]">
             <Link href="/fr" className="flex items-center gap-2.5 shrink-0 group">
-              <div className="w-8 h-8 lg:w-9 lg:h-9 bg-lime-600 rounded-xl flex items-center justify-center shadow-sm shadow-lime-700/30 group-hover:bg-lime-700 group-hover:shadow-lime-700/40 transition-all duration-200">
-                <svg className="w-4 h-4 lg:w-5 lg:h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.8}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                </svg>
-              </div>
+              <Image
+                src="/logo.png"
+                alt=""
+                width={36}
+                height={36}
+                priority
+                className="w-8 h-8 lg:w-9 lg:h-9 rounded-xl shadow-sm shadow-lime-700/30"
+              />
               <span className="text-lg lg:text-xl font-extrabold text-slate-900 tracking-tight group-hover:text-lime-700 transition-colors duration-200">
                 PixPassport
               </span>

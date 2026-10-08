@@ -14,6 +14,12 @@
       "image": "https://res.cloudinary.com/dipzpwbbk/image/upload/f_jpg/v1786350662/365049f2-b3cc-44ff-859c-e3597f008ae8_photo_xmwlmn.webp"
     },
     "countryCode": "IN",
+    "heroImages": {
+      "before": "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786350660/indian_man_passport_photo_before_q3xijr.webp",
+      "after": "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786350662/365049f2-b3cc-44ff-859c-e3597f008ae8_photo_xmwlmn.webp"
+    },
+    "heroBadge": "Passport Seva & ICAO ready · 2026 rules",
+    "heroSpecs": ["4.5 × 3.5 cm", "White background", "630 × 810 px", "ICAO compliant"],
     "heroTitle": "Indian Passport Size Photograph — 4.5 × 3.5 cm, Made Online",
     "heroSubtitle": "Make a 45 × 35 mm Indian passport size photo with a plain white background in minutes — for Passport Seva applications that need a printed photo, Indian embassies abroad that require ICAO photos, or OCI.",
     "documents": [

@@ -8,10 +8,13 @@
 const TARGET_SIZE = 3.0 * 1024 * 1024; // 🎯 3.0 MB
 const MAX_DIMENSION = 1600; // Good balance for face quality
 
-export async function compressImage(file: File): Promise<File> {
+export async function compressImage(
+  file: File,
+  { maxBytes = TARGET_SIZE }: { maxBytes?: number } = {}
+): Promise<File> {
   // ✅ Skip if already small
-  if (file.size <= TARGET_SIZE) {
-    console.log("[compressImage] ✅ Already under 3MB");
+  if (file.size <= maxBytes) {
+    console.log("[compressImage] ✅ Already under size limit");
     return file;
   }
 
@@ -59,7 +62,7 @@ export async function compressImage(file: File): Promise<File> {
           `[compressImage] q=${q}, size=${(blob.size / 1024 / 1024).toFixed(2)} MB`
         );
 
-        if (blob.size <= TARGET_SIZE) {
+        if (blob.size <= maxBytes) {
           return resolve(
             new File([blob], file.name.replace(/\.\w+$/, ".jpg"), {
               type: "image/jpeg",
