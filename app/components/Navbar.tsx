@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
 
 import LanguageSwitcher from "./LanguageSwitcher";
@@ -29,6 +30,8 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { data: session, status } = useSession();
+  const pathname = usePathname();
+  const isActive = (href: string) => pathname === href || pathname?.startsWith(`${href}/`);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 8);
@@ -74,98 +77,106 @@ export default function Navbar() {
             </Link>
 
             {/* ── Desktop nav links ── */}
-            <div className="hidden lg:flex items-center gap-0.5 flex-1 ml-10">
-              {navLinks.map((link) => (
-                link.href === "/visa-photo-validator" ? (
+            <div className="hidden lg:flex items-center justify-center gap-0.5 xl:gap-1 flex-1 mx-6">
+              {navLinks.map((link) => {
+                const active = isActive(link.href);
+                const linkClass = `relative px-2.5 xl:px-3.5 py-2 text-sm font-medium rounded-full transition-colors duration-150 whitespace-nowrap flex items-center gap-1 ${
+                  active
+                    ? "text-lime-800 bg-lime-50"
+                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/80"
+                }`;
+
+                if (link.href !== "/visa-photo-validator") {
+                  return (
+                    <Link key={link.href} href={link.href} prefetch={true} aria-current={active ? "page" : undefined} className={linkClass}>
+                      {link.label}
+                    </Link>
+                  );
+                }
+
+                const checkerActive = active || checkerLinks.some((c) => isActive(c.href));
+                return (
                   <div key={link.href} className="relative group">
                     <Link
                       href={link.href}
                       prefetch={true}
-                      className="relative px-3.5 py-2 text-sm font-medium text-slate-600 hover:text-lime-700 rounded-lg hover:bg-lime-50/80 transition-all duration-150 whitespace-nowrap flex items-center gap-1.5"
+                      aria-haspopup="true"
+                      aria-current={active ? "page" : undefined}
+                      className={`${linkClass} ${checkerActive && !active ? "!text-lime-800" : ""}`}
                     >
                       {link.label}
-                      <svg className="w-3.5 h-3.5 text-slate-400 group-hover:text-lime-600 transition-transform duration-150 group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                      <svg className="w-3.5 h-3.5 opacity-60 transition-transform duration-200 group-hover:rotate-180 group-focus-within:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                       </svg>
-                      <span className="absolute bottom-1 left-3.5 right-3.5 h-px bg-lime-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left rounded-full" />
                     </Link>
-                    {/* Dropdown Menu */}
-                    <div className="invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-200 absolute top-full left-0 pt-2 w-80 z-50">
-                      <div className="bg-white rounded-2xl shadow-xl shadow-slate-900/10 border border-slate-100 p-2 space-y-1">
-                        {checkerLinks.map((item) => (
-                          <Link
-                            key={item.href}
-                            href={item.href}
-                            prefetch={true}
-                            className="flex flex-col px-3.5 py-2.5 rounded-xl hover:bg-lime-50/70 transition-colors group/item"
-                          >
-                            <span className="text-xs font-bold text-slate-800 group-hover/item:text-lime-700 transition-colors">
-                              {item.label}
-                            </span>
-                            <span className="text-[11px] text-slate-500 line-clamp-1">
-                              {item.desc}
-                            </span>
+
+                    {/* Mega menu */}
+                    <div className="invisible opacity-0 translate-y-1 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-0 transition-all duration-200 absolute top-full left-1/2 -translate-x-1/2 pt-3 w-[600px] z-50">
+                      <div className="bg-white rounded-2xl shadow-2xl shadow-slate-900/10 ring-1 ring-slate-900/5 overflow-hidden">
+                        <div className="grid grid-cols-2 gap-1 p-3">
+                          {checkerLinks.map((item) => {
+                            const itemActive = isActive(item.href);
+                            return (
+                              <Link
+                                key={item.href}
+                                href={item.href}
+                                prefetch={true}
+                                className={`flex items-start gap-3 p-3 rounded-xl transition-colors group/item ${itemActive ? "bg-lime-50" : "hover:bg-slate-50"}`}
+                              >
+                                <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-lime-100 text-lime-700 group-hover/item:bg-lime-600 group-hover/item:text-white transition-colors">
+                                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                  </svg>
+                                </span>
+                                <span className="flex flex-col min-w-0">
+                                  <span className="text-sm font-semibold text-slate-800 group-hover/item:text-lime-700 transition-colors">
+                                    {item.label}
+                                  </span>
+                                  <span className="text-xs text-slate-500 leading-snug mt-0.5">
+                                    {item.desc}
+                                  </span>
+                                </span>
+                              </Link>
+                            );
+                          })}
+                        </div>
+                        <div className="flex items-center justify-between gap-4 bg-slate-50 border-t border-slate-100 px-5 py-3">
+                          <span className="text-xs text-slate-500">Free instant checks against official government specs</span>
+                          <Link href="/passport-photo-online" prefetch={true} className="text-xs font-bold text-lime-700 hover:text-lime-800 whitespace-nowrap">
+                            Create a compliant photo →
                           </Link>
-                        ))}
+                        </div>
                       </div>
                     </div>
                   </div>
-                ) : (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    prefetch={true}
-                    className="relative px-3.5 py-2 text-sm font-medium text-slate-600 hover:text-lime-700 rounded-lg hover:bg-lime-50/80 transition-all duration-150 whitespace-nowrap group"
-                  >
-                    {link.label}
-                    <span className="absolute bottom-1 left-3.5 right-3.5 h-px bg-lime-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left rounded-full" />
-                  </Link>
-                )
-              ))}
+                );
+              })}
             </div>
 
             {/* ── Desktop CTA ── */}
             <div className="hidden lg:flex items-center gap-3 shrink-0">
               <LanguageSwitcher />
               {status === "loading" ? (
-                <div className="flex items-center gap-3">
-                  <div className="w-14 h-5 bg-slate-100 animate-pulse rounded-md" />
-                  <div className="w-36 h-9 bg-slate-100 animate-pulse rounded-xl" />
-                </div>
-              ) : session ? (
-                <>
-                  <Link
-                    href="/dashboard"
-                    prefetch={true}
-                    className="text-sm font-semibold text-slate-600 hover:text-lime-700 transition-colors duration-150"
-                  >
-                    Dashboard
-                  </Link>
-                  <button
-                    onClick={() => signOut({ callbackUrl: "/login" })}
-                    className="text-sm font-medium text-slate-400 hover:text-slate-700 transition-colors duration-150"
-                  >
-                    Log out
-                  </button>
-                  <Link
-                    href="/passport-photo-online"
-                    prefetch={true}
-                    className="bg-slate-900 text-white hover:bg-slate-800 active:bg-slate-950 rounded-xl px-5 py-2.5 text-sm font-bold transition-all duration-150 shadow-sm hover:shadow-md hover:shadow-black/10 hover:-translate-y-px"
-                  >
-                    New Photo →
-                  </Link>
-                </>
+                <div className="w-36 h-10 bg-slate-100 animate-pulse rounded-full" />
               ) : (
-                <>
-                 
-                  <Link
-                    href="/passport-photo-online"
-                    prefetch={true}
-                    className="bg-lime-700 text-white hover:bg-lime-800 active:bg-lime-900 rounded-xl px-5 py-2.5 text-sm font-bold transition-all duration-150 shadow-sm shadow-lime-600/25 hover:shadow-md hover:shadow-lime-600/30 hover:-translate-y-px whitespace-nowrap"
-                  >
-                    Get Approved Photo →
-                  </Link>
-                </>
+                <Link
+                  href="/passport-photo-online"
+                  prefetch={true}
+                  className={`text-white rounded-full px-5 py-2.5 text-sm font-bold transition-all duration-150 shadow-sm hover:shadow-md whitespace-nowrap ${
+                    session
+                      ? "bg-slate-900 hover:bg-slate-800 active:bg-slate-950 hover:shadow-black/10"
+                      : "bg-lime-700 hover:bg-lime-800 active:bg-lime-900 shadow-lime-700/25 hover:shadow-lime-700/30"
+                  }`}
+                >
+                  {session ? (
+                    "New Photo →"
+                  ) : (
+                    <>
+                      <span className="xl:hidden">Get Photo →</span>
+                      <span className="hidden xl:inline">Get Approved Photo →</span>
+                    </>
+                  )}
+                </Link>
               )}
             </div>
 
@@ -267,7 +278,7 @@ export default function Navbar() {
               {status !== "loading" && (
                 <div className="mt-2 mx-1 flex flex-col gap-2">
                   <div className="flex justify-center mb-2">
-                    <LanguageSwitcher />
+                    <LanguageSwitcher placement="up" />
                   </div>
                   {session ? (
                     <>
