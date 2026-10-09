@@ -295,15 +295,36 @@ for (const code of getSiteCodes()) {
     if (claims[key] && claims[key].confirmed !== true) warn('_claims.md', `claim "${key}" is live but not confirmed yet`);
   }
 
-  // Cannibalization: another page's title targeting this page's exact primary keyword
+  // ── Cannibalization guardrails ────────────────────────────────────────
+  // Each primary keyword has one owner: an existing page, or a planned route in _site.md reservedKeywords.
+  const owners = [
+    ...pages.map((p) => ({ kw: norm(p.data.primaryKeyword), raw: p.data.primaryKeyword, owner: p.rel, page: p })),
+    ...Object.entries(site.reservedKeywords || {}).map(([raw, route]) => ({ kw: norm(raw), raw, owner: `${route} (reserved)` })),
+  ].filter((o) => o.kw);
+  const hasPhrase = (text, kw) => ` ${norm(text)} `.includes(` ${kw} `);
+  for (const o of owners.filter((o) => !o.page)) {
+    const user = pages.find((p) => norm(p.data.primaryKeyword) === o.kw);
+    if (user) quality(user.rel, `primaryKeyword "${o.raw}" is reserved for ${o.owner}`);
+  }
   for (const p of pages) {
-    const kw = norm(p.data.primaryKeyword);
-    if (!kw) continue;
-    for (const other of pages) {
-      if (other === p) continue;
-      if (norm(other.data.title).includes(kw) && !norm(other.data.primaryKeyword).includes(kw)) {
-        warn(other.rel, `title contains "${p.data.primaryKeyword}", the primary keyword of ${p.rel}`);
+    const ownKw = norm(p.data.primaryKeyword);
+    for (const o of owners) {
+      if (o.page === p) continue;
+      // A long-tail page may contain its parent's keyword ("foto para pasaporte mexicano" ⊃ "foto para pasaporte")
+      if (ownKw && hasPhrase(ownKw, o.kw)) continue;
+      for (const key of ['title', 'h1']) {
+        if (hasPhrase(p.data[key], o.kw)) quality(p.rel, `${key} contains "${o.raw}", the primary keyword of ${o.owner}`);
       }
+    }
+  }
+
+  // Size tables (mm / cm / px / in) belong only to the pages listed in _site.md sizeTablePages
+  const tablePages = new Set(site.sizeTablePages || []);
+  for (const p of pages) {
+    if (tablePages.has(p.slug)) continue;
+    const tables = p.body.match(/(^\|.*\|\s*$\n?){2,}/gm) || [];
+    if (tables.some((t) => /\b\d+([.,]\d+)?\s*(mm|cm|px|in|pulgadas|p[ií]xeles)\b|\bp[ií]xeles\b|\bmil[ií]metros\b/i.test(t))) {
+      quality(p.rel, `has a size table; only ${[...tablePages].join(', ') || '(none configured)'} may — link there instead`);
     }
   }
 

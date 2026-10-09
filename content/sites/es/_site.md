@@ -10,6 +10,13 @@ author: "Equipo PixPassport España"
 defaultImage: "https://res.cloudinary.com/dipzpwbbk/image/upload/45_35_passport_photo_ogdxnu.jpg"
 # Turns the stricter content checks in scripts/validate-sites.mjs from warnings into build errors
 qualityGate: true
+# Primary keywords owned by routes that don't exist yet: no current page may target them
+reservedKeywords:
+  "foto carnet online": /es/foto-carnet
+# The only pages allowed to carry a size table (mm / px / in)
+sizeTablePages:
+  - tamano-foto-pasaporte
+  - medidas-foto-carnet
 # Slugs that have been used in copy but are not real routes → the route that owns the intent
 linkAliases:
   /es/foto-tamano-carnet: /es/medidas-foto-carnet
