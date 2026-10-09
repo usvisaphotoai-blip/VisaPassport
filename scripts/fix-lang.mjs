@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { syncCountrySitemap } from './lib/site-sitemap.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -18,22 +19,8 @@ function getCountrySites() {
     .map(d => {
       const config = fs.readFileSync(path.join(SITES_DIR, d.name, '_site.md'), 'utf-8');
       const lang = (config.match(/^lang:\s*["']?([\w-]+)["']?\s*$/m) || [])[1] || 'en';
-      return { code: d.name, lang, paths: listSitePaths(d.name) };
+      return { code: d.name, lang };
     });
-}
-
-function listSitePaths(code, dir = path.join(SITES_DIR, code), prefix = '') {
-  const out = [];
-  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-    if (entry.name.startsWith('_')) continue;
-    const rel = prefix ? `${prefix}/${entry.name}` : entry.name;
-    if (entry.isDirectory()) out.push(...listSitePaths(code, path.join(dir, entry.name), rel));
-    else if (entry.name.endsWith('.md')) {
-      const slug = rel.replace(/\.md$/, '').replace(/(^|\/)index$/, '');
-      out.push(`/${code}${slug ? `/${slug}` : ''}`);
-    }
-  }
-  return out;
 }
 
 const COUNTRY_SITES = getCountrySites();
@@ -138,7 +125,8 @@ function getSitemapHreflangTags(pathname) {
     const fullUrl = `${BASE_URL}${cleanPath}`;
     const countrySite = COUNTRY_SITES.find(s => cleanPath === `/${s.code}` || cleanPath.startsWith(`/${s.code}/`));
     if (countrySite) {
-      tags.push(`    <xhtml:link rel="alternate" hreflang="${countrySite.lang}" href="${fullUrl}" />`);
+      // Country sections get their hreflang from frontmatter (scripts/lib/site-sitemap.mjs)
+      return '';
     } else if (cleanPath.startsWith('/fr')) {
       tags.push(`    <xhtml:link rel="alternate" hreflang="fr" href="${fullUrl}" />`);
       tags.push(`    <xhtml:link rel="alternate" hreflang="x-default" href="${fullUrl}" />`);
@@ -234,12 +222,9 @@ function updateSitemap() {
     }
   }
 
-  // 2. Country section pages
-  const countryUrls = COUNTRY_SITES.flatMap(s => s.paths);
-
-  // Inject any missing checklist / country URLs before closing </urlset>
+  // Inject any missing checklist URLs before closing </urlset>
   const today = new Date().toISOString().split('T')[0];
-  for (const urlPath of [...checklistUrls, ...countryUrls]) {
+  for (const urlPath of checklistUrls) {
     const fullUrl = `${BASE_URL}${urlPath}`;
     if (!sitemapContent.includes(`<loc>${fullUrl}</loc>`)) {
       const priority = urlPath === '/visa-checklist' ? '0.9' : '0.8';
@@ -270,7 +255,8 @@ function updateSitemap() {
     parts[i] = part;
   }
   
-  fs.writeFileSync(SITEMAP_PATH, parts.join('<url>'), 'utf-8');
+  // 2. Country section pages: ready pages only, real lastmod, frontmatter hreflang
+  fs.writeFileSync(SITEMAP_PATH, syncCountrySitemap(parts.join('<url>')), 'utf-8');
   console.log(`✅ Updated sitemap with hreflang tags and visa checklists for ${addedCount} routes!`);
 }
 

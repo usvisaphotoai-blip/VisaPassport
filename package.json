@@ -11,7 +11,8 @@
     "start": "NODE_OPTIONS='--max-old-space-size=3072' next start",
     "lint": "eslint",
     "sites:check": "node scripts/validate-sites.mjs",
-    "seo:duplicates": "node scripts/audit-duplicates.mjs"
+    "seo:duplicates": "node scripts/audit-duplicates.mjs",
+    "sitemap:sites": "node scripts/gen-sitemap-sites.mjs"
   },
   "dependencies": {
     "@mediapipe/tasks-vision": "^0.10.34",

@@ -13,6 +13,7 @@ secondaryKeywords:
     "fotografías para pasaporte mexicano",
   ]
 status: "draft"
+hreflang: "es-MX"
 officialSources: []
 lastVerified: ""
 date: "2026-10-09"

@@ -201,6 +201,14 @@ for (const code of getSiteCodes()) {
       if (m) quality(rel, `placeholder "${m[0]}" would be rendered (keep editorial notes inside <!-- -->)`);
     }
 
+    // ── hreflang ──────────────────────────────────────────────────────────
+    if (data.hreflang && !/^[a-z]{2}(-[A-Z]{2})?$/.test(data.hreflang)) error(rel, `hreflang "${data.hreflang}" is not a valid code (es, es-MX…)`);
+    for (const [lang, href] of Object.entries(data.alternates || {})) {
+      if (!/^([a-z]{2}(-[A-Z]{2})?|x-default)$/.test(lang)) error(rel, `alternates key "${lang}" is not a valid hreflang code`);
+      if (!/^(\/|https:\/\/www\.pixpassport\.com\/)/.test(href)) error(rel, `alternates.${lang} must be a site path or https://www URL: ${href}`);
+      else if (p.status === 'ready') warn(rel, `alternate ${lang} → ${href}: that page must link back with hreflang="${data.hreflang || site.lang}"`);
+    }
+
     // ── Product claims and guarantees ─────────────────────────────────────
     for (const s of [...renderedFrontmatter(data), body]) {
       const g = s.match(GUARANTEE_RE);

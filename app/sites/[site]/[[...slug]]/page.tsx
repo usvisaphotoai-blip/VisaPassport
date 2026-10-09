@@ -8,6 +8,7 @@ import {
   getAllCountryDocuments,
   getBreadcrumbs,
   getChildPages,
+  getHreflang,
   getSiteCodes,
   getSiteConfig,
   getSitePage,
@@ -53,7 +54,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     ...(isPublished(page) ? {} : { robots: { index: false, follow: true } }),
     alternates: {
       canonical: page.url,
-      languages: { [site.lang]: page.url },
+      ...(isPublished(page) && Object.keys(getHreflang(site, page)).length ? { languages: getHreflang(site, page) } : {}),
     },
     openGraph: {
       title: page.title,

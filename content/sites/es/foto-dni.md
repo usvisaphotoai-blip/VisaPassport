@@ -14,6 +14,7 @@ secondaryKeywords:
     "foto dni y pasaporte",
   ]
 status: "draft"
+hreflang: "es-ES"
 officialSources: []
 lastVerified: ""
 date: "2026-10-09"

@@ -122,6 +122,10 @@ export interface SitePageMeta {
   officialSources: SiteSource[];
   /** YYYY-MM-DD the sources were last checked */
   lastVerified?: string;
+  /** This page's hreflang code when it has alternates (es-MX, es-ES…); defaults to the section lang */
+  hreflang?: string;
+  /** Other-language versions of this page: { en: "/passport-photo-online" } */
+  alternates: Record<string, string>;
 }
 
 export interface SiteTocItem {
@@ -270,6 +274,8 @@ function toMeta(site: SiteConfig, slug: string, data: Record<string, any>): Site
     status: data.status === "draft" ? "draft" : "ready",
     officialSources: (data.officialSources || []).filter((s: SiteSource) => s?.name && s?.url),
     lastVerified: data.lastVerified ? String(data.lastVerified) : undefined,
+    hreflang: data.hreflang,
+    alternates: data.alternates || {},
   };
 }
 
@@ -285,6 +291,21 @@ export function getSitePages(code: string): SitePageMeta[] {
   return listMarkdownFiles(path.join(SITES_DIR, code))
     .map((rel) => readPageFile(site, rel).meta)
     .sort((a, b) => a.order - b.order || a.slug.localeCompare(b.slug));
+}
+
+/**
+ * hreflang → URL for the page head. Empty when the page has no alternate-language version:
+ * a lone self-reference adds nothing and risks naming the wrong region.
+ * Must stay in sync with pageHreflang() in scripts/lib/site-sitemap.mjs (checked after build).
+ */
+export function getHreflang(site: SiteConfig, page: SitePageMeta): Record<string, string> {
+  const entries = Object.entries(page.alternates);
+  if (entries.length === 0) return {};
+  const abs = (href: string) => (href.startsWith("http") ? href : `${SITE_BASE_URL}${href}`);
+  const out: Record<string, string> = { [page.hreflang || site.lang]: page.url };
+  for (const [lang, href] of entries) out[lang] = abs(href);
+  if (page.alternates.en && !page.alternates["x-default"]) out["x-default"] = abs(page.alternates.en);
+  return out;
 }
 
 export function isPublished(page: SitePageMeta): boolean {
