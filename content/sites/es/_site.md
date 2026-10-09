@@ -8,6 +8,8 @@ flag: "🇪🇸"
 siteName: "PixPassport España"
 author: "Equipo PixPassport España"
 defaultImage: "https://res.cloudinary.com/dipzpwbbk/image/upload/45_35_passport_photo_ogdxnu.jpg"
+# Turns the stricter content checks in scripts/validate-sites.mjs from warnings into build errors
+qualityGate: true
 
 nav:
   - label: "Foto tamaño carnet"
@@ -243,6 +245,8 @@ ui:
   notFoundTitle: "Página no encontrada"
   notFoundBody: "Esta página no existe o se ha movido. Elige tu documento desde la portada o crea tu foto directamente."
   notFoundCta: "Volver a la portada"
+  sourcesHeading: "Fuente oficial y fecha de consulta"
+  sourcesChecked: "Datos comprobados en la fuente oficial el"
 
 # Textos para /preview/[id]?from=es
 preview:

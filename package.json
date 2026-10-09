@@ -5,9 +5,9 @@
   "scripts": {
     "predev": "node scripts/gen-specs-lite.mjs",
     "dev": "next dev",
-    "prebuild": "node scripts/gen-specs-lite.mjs",
+    "prebuild": "node scripts/gen-specs-lite.mjs && node scripts/validate-sites.mjs es",
     "build": "NODE_OPTIONS='--max-old-space-size=4096' next build",
-    "postbuild": "node scripts/fix-lang.mjs",
+    "postbuild": "node scripts/fix-lang.mjs && node scripts/check-build-output.mjs",
     "start": "NODE_OPTIONS='--max-old-space-size=3072' next start",
     "lint": "eslint",
     "sites:check": "node scripts/validate-sites.mjs",

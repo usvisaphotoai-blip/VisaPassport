@@ -1,59 +1,68 @@
-// SEO checks for the Markdown country sections in content/sites/<code>.
+// SEO and content-quality checks for the Markdown country sections in content/sites/<code>.
 // Usage: npm run sites:check [-- <code>]   (exits 1 when any error is found)
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
+//
+// Sections with `qualityGate: true` in _site.md (es) treat the content-quality rules as errors;
+// other sections get them as warnings so they can be brought up to the same bar gradually.
+import {
+  bodyLinks,
+  getSiteCodes,
+  hrefToPath,
+  interpolateClaims,
+  loadSite,
+  norm,
+  visibleBlocks,
+} from './lib/site-content.mjs';
 
-const SITES_DIR = path.join(process.cwd(), 'content/sites');
 const only = process.argv[2];
-
-const norm = (s = '') => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
-
-function listMarkdown(dir, prefix = '') {
-  const out = [];
-  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-    if (entry.name.startsWith('_')) continue;
-    const rel = prefix ? `${prefix}/${entry.name}` : entry.name;
-    if (entry.isDirectory()) out.push(...listMarkdown(path.join(dir, entry.name), rel));
-    else if (entry.name.endsWith('.md')) out.push(rel);
-  }
-  return out;
-}
-
-const toSlug = (rel) => rel.replace(/\.md$/, '').replace(/(^|\/)index$/, '');
 
 let errorCount = 0;
 let warnCount = 0;
 
-for (const code of fs.readdirSync(SITES_DIR)) {
+// Text that must never be rendered (editorial placeholders)
+const PLACEHOLDER_RE = /\[VERIFICAR|ANTES DE PUBLICAR/i;
+// A measurement: "35 x 45 mm", "3x4", "600 x 600 píxeles", "240 KB", "2 pulgadas", "300 ppp"
+const SPEC_RE =
+  /\b\d+(?:[.,]\d+)?\s*[x×]\s*\d+(?:[.,]\d+)?\b|\b\d+(?:[.,]\d+)?\s*(?:mm|cm|px|kb|mb|ppp|dpi|pulgadas?|p[ií]xeles)\b/i;
+const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
+
+/** Every string a visitor can see that comes from page frontmatter */
+function renderedFrontmatter(data) {
+  const out = [data.title, data.description, data.h1, data.intro, data.breadcrumbLabel, data.badge];
+  out.push(data.image?.alt, data.cta?.label, data.tool?.title, data.tool?.subtitle);
+  for (const f of data.faq || []) out.push(f.question, f.answer);
+  return out.filter((s) => typeof s === 'string');
+}
+
+function* allStrings(value) {
+  if (typeof value === 'string') yield value;
+  else if (Array.isArray(value)) for (const v of value) yield* allStrings(v);
+  else if (value && typeof value === 'object') for (const v of Object.values(value)) yield* allStrings(v);
+}
+
+for (const code of getSiteCodes()) {
   if (only && code !== only) continue;
-  const siteDir = path.join(SITES_DIR, code);
-  if (!fs.statSync(siteDir).isDirectory()) continue;
+  const { config: site, claims, pages } = loadSite(code);
+  const gate = !!site.qualityGate;
 
   const issues = [];
   const error = (file, msg) => issues.push({ level: 'error', file, msg });
   const warn = (file, msg) => issues.push({ level: 'warn', file, msg });
+  /** Content-quality rule: error on gated sections, warning elsewhere */
+  const quality = (file, msg) => (gate ? error : warn)(file, msg);
 
-  const configPath = path.join(siteDir, '_site.md');
-  if (!fs.existsSync(configPath)) {
-    error('_site.md', 'missing site config');
-    continue;
-  }
-  const site = matter(fs.readFileSync(configPath, 'utf8')).data;
   for (const key of ['country', 'lang', 'ogLocale', 'siteName', 'defaultImage', 'ui']) {
     if (!site[key]) error('_site.md', `missing "${key}"`);
   }
+  for (const s of allStrings(site)) {
+    if (PLACEHOLDER_RE.test(s)) quality('_site.md', `placeholder text would be rendered: "${s.slice(0, 80)}"`);
+  }
   const toolDocs = new Set((site.tool?.documents || []).map((d) => d.id));
 
-  const pages = listMarkdown(siteDir).map((rel) => {
-    const { data, content } = matter(fs.readFileSync(path.join(siteDir, rel), 'utf8'));
-    return { rel, slug: toSlug(rel), path: `/${code}${toSlug(rel) ? `/${toSlug(rel)}` : ''}`, data, content };
-  });
   const paths = new Set(pages.map((p) => p.path));
-  const resolves = (href) => paths.has(href.split('#')[0].replace(/\/$/, '') || '/');
+  const resolves = (href) => paths.has(hrefToPath(href));
   const inbound = new Map(pages.map((p) => [p.path, 0]));
   const link = (href) => {
-    const target = href.split('#')[0].replace(/\/$/, '');
+    const target = hrefToPath(href);
     if (inbound.has(target)) inbound.set(target, inbound.get(target) + 1);
   };
 
@@ -72,7 +81,7 @@ for (const code of fs.readdirSync(SITES_DIR)) {
   };
 
   for (const p of pages) {
-    const { data, content, rel } = p;
+    const { data, body, rel } = p;
     for (const key of ['title', 'description', 'h1', 'primaryKeyword', 'date']) {
       if (!data[key]) error(rel, `missing frontmatter "${key}"`);
     }
@@ -93,9 +102,9 @@ for (const code of fs.readdirSync(SITES_DIR)) {
     }
 
     // Single H1 (from frontmatter) and no skipped heading levels in the body
-    const body = content.replace(/```[\s\S]*?```/g, '');
+    const cleanBody = body.replace(/```[\s\S]*?```/g, '');
     let prev = 1;
-    for (const m of body.matchAll(/^(#{1,6})\s+(.+)$/gm)) {
+    for (const m of cleanBody.matchAll(/^(#{1,6})\s+(.+)$/gm)) {
       const level = m[1].length;
       if (level === 1) error(rel, `body contains an H1 ("${m[2]}") — the H1 comes from frontmatter`);
       else if (level > prev + 1) error(rel, `heading jumps from H${prev} to H${level}: "${m[2]}"`);
@@ -103,13 +112,11 @@ for (const code of fs.readdirSync(SITES_DIR)) {
     }
 
     // Internal links
-    for (const m of body.matchAll(/\]\((\/[^)\s]+)\)/g)) {
-      if (m[1].startsWith(`/${code}`)) {
-        if (!resolves(m[1])) error(rel, `broken internal link: ${m[1]}`);
-        else if (m[1].split('#')[0] !== p.path) link(m[1]);
-      }
+    for (const l of bodyLinks(p, code)) {
+      if (!resolves(l.href)) error(rel, `broken internal link: ${l.href}`);
+      else if (hrefToPath(l.href) !== p.path) link(l.href);
     }
-    for (const m of body.matchAll(/!\[([^\]]*)\]\(([^)]+)\)/g)) {
+    for (const m of cleanBody.matchAll(/!\[([^\]]*)\]\(([^)]+)\)/g)) {
       if (!m[1].trim()) error(rel, `image without alt text: ${m[2]}`);
     }
     for (const slug of data.related || []) {
@@ -140,6 +147,32 @@ for (const code of fs.readdirSync(SITES_DIR)) {
       if (!brief.alt) error(rel, 'imageBriefs entry is missing alt text');
     }
     if (data.image && !data.image.src) warn(rel, `hero image pending — brief: "${data.image.alt}"`);
+
+    // ── Publication status, placeholders and sources ──────────────────────
+    if (data.status !== undefined && !['draft', 'ready'].includes(data.status)) {
+      error(rel, `status must be "draft" or "ready" (got "${data.status}")`);
+    } else if (data.status === undefined) quality(rel, 'missing frontmatter "status" (draft | ready)');
+
+    for (const s of [...renderedFrontmatter(data), body]) {
+      const m = interpolateClaims(s, claims).match(PLACEHOLDER_RE);
+      if (m) quality(rel, `placeholder "${m[0]}" would be rendered (keep editorial notes inside <!-- -->)`);
+    }
+
+    const sources = data.officialSources || [];
+    if (!Array.isArray(sources)) error(rel, 'officialSources must be a list of { name, url }');
+    for (const s of Array.isArray(sources) ? sources : []) {
+      if (!s?.name || !s?.url) error(rel, 'officialSources entry needs both "name" and "url"');
+      else if (!/^https:\/\//.test(s.url)) error(rel, `officialSources url must be https: ${s.url}`);
+    }
+    if (data.lastVerified && !DATE_RE.test(String(data.lastVerified))) {
+      error(rel, `lastVerified must be YYYY-MM-DD (got "${data.lastVerified}")`);
+    }
+    const specText = visibleBlocks(p, claims).find((b) => SPEC_RE.test(b.text));
+    if (specText && (!sources.length || !data.lastVerified)) {
+      const msg = `states measurements ("${specText.text.match(SPEC_RE)[0]}") without officialSources + lastVerified`;
+      if (p.status === 'ready') quality(rel, msg);
+      else warn(rel, `${msg} — keep as draft until sourced`);
+    }
   }
 
   for (const [target, count] of inbound) {

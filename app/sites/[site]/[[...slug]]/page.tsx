@@ -11,6 +11,7 @@ import {
   getSiteConfig,
   getSitePage,
   getSitePages,
+  isPublished,
   pagePath,
   type SitePageMeta,
 } from "@/lib/country-sites";
@@ -48,6 +49,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: page.title,
     description: page.description,
+    ...(isPublished(page) ? {} : { robots: { index: false, follow: true } }),
     alternates: {
       canonical: page.url,
       languages: { [site.lang]: page.url },
@@ -97,9 +99,11 @@ export default async function SitePageRoute({ params }: PageProps) {
 
   const all = getSitePages(site.code);
   const crumbs = getBreadcrumbs(site, page, all);
-  const children = page.type === "home" || page.type === "hub" ? getChildPages(page, all) : [];
+  // Draft pages are never linked: no cards, no related entries
+  const published = all.filter(isPublished);
+  const children = page.type === "home" || page.type === "hub" ? getChildPages(page, published) : [];
   const related = page.related
-    .map((slug) => all.find((p) => p.slug === slug))
+    .map((slug) => published.find((p) => p.slug === slug))
     .filter((p): p is SitePageMeta => !!p);
   // Every page gets the tool, preset to the page's document or the section's first one
   const toolDocuments = site.tool.documents.map((d) => ({ ...d, flag: d.flag || flagEmoji(d.countryCode) }));
@@ -331,6 +335,33 @@ export default async function SitePageRoute({ params }: PageProps) {
             <article className="bg-white p-6 sm:p-10 rounded-2xl border border-slate-200 shadow-xs prose prose-slate max-w-none prose-headings:font-black prose-headings:text-slate-900 prose-a:text-lime-700 prose-a:font-bold prose-img:rounded-xl">
               <div className="rich-content" dangerouslySetInnerHTML={{ __html: page.contentHtml }} />
             </article>
+
+            {(page.officialSources.length > 0 || page.lastVerified) && (
+              <section aria-labelledby="sources" className="mt-6 bg-white p-6 rounded-2xl border border-slate-200 shadow-xs text-sm">
+                <h2 id="sources" className="text-base font-black text-slate-900 mb-3">
+                  {ui.sourcesHeading}
+                </h2>
+                {page.officialSources.length > 0 && (
+                  <ul className="space-y-1 list-disc pl-5 text-slate-700">
+                    {page.officialSources.map((s) => (
+                      <li key={s.url}>
+                        <a href={s.url} target="_blank" rel="noopener noreferrer" className="font-bold text-lime-700 hover:underline">
+                          {s.name}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                {page.lastVerified && (
+                  <p className="mt-3 text-slate-600">
+                    {ui.sourcesChecked}{" "}
+                    <time dateTime={page.lastVerified}>
+                      {new Date(page.lastVerified).toLocaleDateString(site.lang, { timeZone: "UTC" })}
+                    </time>
+                  </p>
+                )}
+              </section>
+            )}
 
             {page.faq.length > 0 && (
               <section aria-labelledby="faq" className="mt-10 bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-xs">

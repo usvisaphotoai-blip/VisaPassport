@@ -13,6 +13,7 @@ secondaryKeywords:
     "foto para visa online",
     "foto para DNI",
   ]
+status: "ready"
 date: "2026-10-09"
 image:
   alt: "Persona tomándose una foto para documento con el móvil frente a una pared blanca"

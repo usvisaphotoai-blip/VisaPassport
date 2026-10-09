@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getSiteCodes, getSiteConfig } from "@/lib/country-sites";
+import { filterPublishedLinks, getPublishedPaths, getSiteCodes, getSiteConfig } from "@/lib/country-sites";
 import SiteNavbar from "../components/SiteNavbar";
 import SiteFooter from "../components/SiteFooter";
 
@@ -21,6 +21,15 @@ export default async function SiteLayout({
   const { site: code } = await params;
   const site = getSiteConfig(code);
   if (!site) notFound();
+  // Nav and footer never point at draft pages
+  const published = getPublishedPaths(code);
+  const nav = filterPublishedLinks(site, site.nav, published);
+  const footer = {
+    ...site.footer,
+    columns: site.footer.columns
+      .map((col) => ({ ...col, links: filterPublishedLinks(site, col.links, published) }))
+      .filter((col) => col.links.length > 0),
+  };
 
   return (
     <div lang={site.lang} className="flex flex-col min-h-screen">
@@ -35,13 +44,13 @@ export default async function SiteLayout({
         homeLabel={site.ui.breadcrumbHome}
         navLabel={site.ui.mainNav}
         menuLabel={site.ui.menu}
-        links={site.nav}
+        links={nav}
         cta={site.navCta}
       />
       <main id="main-content" className="grow">
         {children}
       </main>
-      <SiteFooter site={site} />
+      <SiteFooter site={{ ...site, footer }} />
     </div>
   );
 }

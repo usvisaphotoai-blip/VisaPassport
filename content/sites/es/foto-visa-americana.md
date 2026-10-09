@@ -13,6 +13,9 @@ secondaryKeywords:
     "tamaño foto visa americana",
     "foto visa Estados Unidos",
   ]
+status: "draft"
+officialSources: []
+lastVerified: ""
 date: "2026-10-09"
 image:
   alt: "Persona preparando su foto para la visa americana frente a una pared clara"

@@ -13,6 +13,9 @@ secondaryKeywords:
     "foto carnet en píxeles",
     "foto carnet cm",
   ]
+status: "draft"
+officialSources: []
+lastVerified: ""
 date: "2026-10-09"
 image:
   alt: "Fotos carnet de distintos tamaños comparadas junto a una regla"

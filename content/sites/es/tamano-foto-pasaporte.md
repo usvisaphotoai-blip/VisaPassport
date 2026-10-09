@@ -12,6 +12,9 @@ secondaryKeywords:
     "foto de pasaporte en píxeles",
     "foto de pasaporte para renovar",
   ]
+status: "draft"
+officialSources: []
+lastVerified: ""
 date: "2026-10-09"
 image:
   alt: "Foto de pasaporte con reglas y guías que muestran sus proporciones"
@@ -102,10 +105,13 @@ Depende del país y de la oficina. En algunos trámites la foto se toma en el mo
 
 La tabla reúne las medidas de cada país con su fuente oficial. Para ver los requisitos completos, entra en la página de tu país.
 
-| País | Medida (mm / cm) | Píxeles (foto digital) | Pulgadas | Fuente oficial y fecha de consulta |
-|---|---|---|---|---|
-| [México](/es/foto-pasaporte-mexico) | [VERIFICAR] | [VERIFICAR] | [VERIFICAR] | [VERIFICAR] |
-| [España](/es/foto-pasaporte-espana) | [VERIFICAR] | [VERIFICAR] | [VERIFICAR] | [VERIFICAR] |
+<!--
+Tabla pendiente. Rellenar con la fuente oficial de cada país y volver a mostrarla:
+| País | Medida (mm / cm) | Píxeles (foto digital) | Pulgadas |
+|---|---|---|---|
+| [México](/es/foto-pasaporte-mexico) | [VERIFICAR] | [VERIFICAR] | [VERIFICAR] |
+| [España](/es/foto-pasaporte-espana) | [VERIFICAR] | [VERIFICAR] | [VERIFICAR] |
+-->
 
 ### Cómo preparar la foto en Word o Photoshop
 

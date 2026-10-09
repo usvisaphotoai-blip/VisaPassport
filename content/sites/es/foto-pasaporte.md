@@ -13,6 +13,7 @@ secondaryKeywords:
     "fotos para pasaporte",
     "hacer foto para pasaporte",
   ]
+status: "ready"
 date: "2026-10-09"
 image:
   alt: "Persona tomándose una foto para el pasaporte con el móvil frente a una pared blanca"

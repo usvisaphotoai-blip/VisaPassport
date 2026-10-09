@@ -13,6 +13,9 @@ secondaryKeywords:
     "foto para renovar el dni",
     "foto dni y pasaporte",
   ]
+status: "draft"
+officialSources: []
+lastVerified: ""
 date: "2026-10-09"
 image:
   alt: "Persona preparando una foto para el DNI con el móvil frente a una pared clara"
@@ -55,7 +58,7 @@ ANTES DE PUBLICAR (equipo de contenido):
 
 Esta página trata de la **foto que se aporta para el documento**, no de una imagen del propio DNI. Se centra en España. En otros países, como Argentina o Perú, el DNI se rige por normas distintas, así que no apliques estas indicaciones sin comprobarlas.
 
-**Medida vigente según la fuente oficial:** [VERIFICAR: medida en mm, píxeles si aplica, fuente y fecha de consulta].
+<!-- [VERIFICAR: medida en mm y píxeles si aplica. Añadir la fuente en officialSources y la fecha en lastVerified] -->
 
 Para entender cómo se pasa de milímetros a píxeles, consulta las [medidas de la foto carnet](/es/medidas-foto-carnet).
 

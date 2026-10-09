@@ -73,6 +73,14 @@ export interface SiteImage {
 
 export type SitePageType = "home" | "landing" | "guide" | "hub";
 
+/** draft pages render with noindex and stay out of the sitemap and every internal link */
+export type SitePageStatus = "draft" | "ready";
+
+export interface SiteSource {
+  name: string;
+  url: string;
+}
+
 export interface SitePageMeta {
   site: string;
   /** Path below the section root: "" for home, "guias/foo" for nested pages */
@@ -99,6 +107,11 @@ export interface SitePageMeta {
   related: string[];
   faq: SiteFaqItem[];
   order: number;
+  status: SitePageStatus;
+  /** Official sources for the measurements and rules the page states */
+  officialSources: SiteSource[];
+  /** YYYY-MM-DD the sources were last checked */
+  lastVerified?: string;
 }
 
 export interface SiteTocItem {
@@ -208,7 +221,7 @@ function toMeta(site: SiteConfig, slug: string, data: Record<string, any>): Site
     primaryKeyword: data.primaryKeyword || "",
     secondaryKeywords: data.secondaryKeywords || [],
     date: String(data.date || ""),
-    updatedAt: data.updatedAt ? String(data.updatedAt) : undefined,
+    updatedAt: data.updated || data.updatedAt ? String(data.updated || data.updatedAt) : undefined,
     author: data.author || site.author,
     readingTime: data.readingTime,
     image: data.image,
@@ -219,6 +232,9 @@ function toMeta(site: SiteConfig, slug: string, data: Record<string, any>): Site
     related: data.related || [],
     faq: data.faq || [],
     order: typeof data.order === "number" ? data.order : 100,
+    status: data.status === "draft" ? "draft" : "ready",
+    officialSources: (data.officialSources || []).filter((s: SiteSource) => s?.name && s?.url),
+    lastVerified: data.lastVerified ? String(data.lastVerified) : undefined,
   };
 }
 
@@ -236,7 +252,29 @@ export function getSitePages(code: string): SitePageMeta[] {
     .sort((a, b) => a.order - b.order || a.slug.localeCompare(b.slug));
 }
 
-function renderMarkdown(content: string): { html: string; toc: SiteTocItem[] } {
+export function isPublished(page: SitePageMeta): boolean {
+  return page.status === "ready";
+}
+
+/** Paths ("/es/foto-pasaporte") of every ready page in the section */
+export function getPublishedPaths(code: string): Set<string> {
+  return new Set(getSitePages(code).filter(isPublished).map((p) => pagePath(code, p.slug)));
+}
+
+/** Drops nav/footer links that point into the section but not at a ready page */
+export function filterPublishedLinks<T extends SiteLink>(site: SiteConfig, links: T[], published: Set<string>): T[] {
+  return links.filter((l) => {
+    const target = l.href.split("#")[0].split("?")[0].replace(/\/$/, "");
+    if (!(target === site.basePath || target.startsWith(`${site.basePath}/`))) return true;
+    return published.has(target);
+  });
+}
+
+function renderMarkdown(
+  content: string,
+  site: SiteConfig,
+  published: Set<string>
+): { html: string; toc: SiteTocItem[] } {
   const toc: SiteTocItem[] = [];
   const renderer = new marked.Renderer();
 
@@ -253,6 +291,9 @@ function renderMarkdown(content: string): { html: string; toc: SiteTocItem[] } {
 
   renderer.link = function ({ href, title, tokens }) {
     const text = this.parser.parseInline(tokens);
+    // Links to draft or missing section pages render as plain text until the target is ready
+    const local = href.replace(SITE_BASE_URL, "").split("#")[0].split("?")[0].replace(/\/$/, "");
+    if ((local === site.basePath || local.startsWith(`${site.basePath}/`)) && !published.has(local)) return text;
     const external = /^https?:\/\//.test(href) && !href.startsWith(SITE_BASE_URL);
     const titleAttr = title ? ` title="${title}"` : "";
     return external
@@ -265,7 +306,9 @@ function renderMarkdown(content: string): { html: string; toc: SiteTocItem[] } {
     return `<figure><img src="${href}" alt="${text}" loading="lazy" decoding="async" />${caption}</figure>`;
   };
 
-  const html = (marked(content, { renderer }) as string)
+  // Editorial notes live in HTML comments and must never reach the rendered page
+  const source = content.replace(/<!--[\s\S]*?-->/g, "");
+  const html = (marked(source, { renderer }) as string)
     .replace(/<table>/g, '<div class="overflow-x-auto"><table>')
     .replace(/<\/table>/g, "</table></div>");
 
@@ -278,7 +321,7 @@ export function getSitePage(code: string, slug: string): SitePage | null {
   const rel = listMarkdownFiles(path.join(SITES_DIR, code)).find((f) => fileToSlug(f) === slug);
   if (!rel) return null;
   const { meta, content } = readPageFile(site, rel);
-  const { html, toc } = renderMarkdown(content);
+  const { html, toc } = renderMarkdown(content, site, getPublishedPaths(code));
   return { ...meta, contentHtml: html, toc };
 }
 

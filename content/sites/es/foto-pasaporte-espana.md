@@ -12,6 +12,9 @@ secondaryKeywords:
     "requisitos foto pasaporte español",
     "tamaño foto pasaporte español",
   ]
+status: "draft"
+officialSources: []
+lastVerified: ""
 date: "2026-10-09"
 image:
   alt: "Persona preparando su foto para el pasaporte español con el móvil"
@@ -50,7 +53,7 @@ ANTES DE PUBLICAR (equipo de contenido):
 
 ## Medidas de la foto para el pasaporte español
 
-**Medida vigente según la fuente oficial:** [VERIFICAR: medida en mm, píxeles si aplica, fuente y fecha de consulta].
+<!-- [VERIFICAR: medida en mm y píxeles si aplica. Añadir la fuente en officialSources y la fecha en lastVerified] -->
 
 Si quieres entender cómo se convierten milímetros, pulgadas y píxeles, consulta nuestra guía de [tamaño y requisitos de la foto de pasaporte](/es/tamano-foto-pasaporte).
 

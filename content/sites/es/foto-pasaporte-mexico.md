@@ -12,6 +12,9 @@ secondaryKeywords:
     "tamaño foto pasaporte mexicano",
     "fotografías para pasaporte mexicano",
   ]
+status: "draft"
+officialSources: []
+lastVerified: ""
 date: "2026-10-09"
 image:
   alt: "Persona preparando su foto para el pasaporte mexicano con el celular"
@@ -67,7 +70,7 @@ Según el trámite, la foto puede presentarse impresa o en digital. Revisa qué 
 
 ## Tamaño y medidas de la foto del pasaporte mexicano
 
-**Medida vigente según la SRE:** [VERIFICAR: medida, píxeles si aplica, fuente y fecha de consulta].
+<!-- [VERIFICAR: medida según la SRE, píxeles si aplica. Añadir la fuente en officialSources y la fecha en lastVerified] -->
 
 Para entender cómo se convierten centímetros, pulgadas y píxeles, consulta nuestra guía de [tamaño y requisitos de la foto de pasaporte](/es/tamano-foto-pasaporte).
 
