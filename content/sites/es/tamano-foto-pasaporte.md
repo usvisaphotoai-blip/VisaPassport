@@ -50,7 +50,7 @@ order: 2
 
 <!--
 ANTES DE PUBLICAR (equipo de contenido):
-1. Rellenar cada celda [VERIFICAR] de la tabla con la medida oficial, la fuente y la fecha de consulta.
+1. Rellenar cada celda [VERIFICAR] de la tabla con la medida oficial; añadir cada fuente en officialSources y la fecha en lastVerified.
 2. No copiar medidas de memoria ni de otras webs: usar solo la fuente oficial de cada país.
 3. Esta es la ÚNICA página con la tabla de medidas. Las páginas de país y la home solo enlazan aquí (cannibalization audit CA-01).
 -->
@@ -113,10 +113,10 @@ Tabla pendiente. Rellenar con la fuente oficial de cada país y volver a mostrar
 | [España](/es/foto-pasaporte-espana) | [VERIFICAR] | [VERIFICAR] | [VERIFICAR] |
 -->
 
-### Cómo preparar la foto en Word o Photoshop
+### Si prefieres montarla tú en un editor
 
-Si prefieres hacerlo tú mismo, crea un documento con el tamaño exacto de tu país, establece la resolución en ppp que corresponda, coloca la foto sin estirarla y exporta en el formato que pida tu trámite. En Word, comprueba que la imagen conserve la proporción antes de imprimir. Si no quieres calcularlo, [crea tu foto para pasaporte online](/es/foto-pasaporte) y la herramienta aplica el recorte de tu país.
+Para ajustar la foto a mano, sigue los pasos de [Word y Photoshop de la guía de foto carnet](/es/medidas-foto-carnet#como-hacer-una-foto-carnet-en-word-o-photoshop) usando la medida de tu país en lugar de la del carnet. Si no quieres calcular nada, [crea tu foto para pasaporte online](/es/foto-pasaporte) y la herramienta aplica el recorte de tu país.
 
-## Preguntas frecuentes sobre el tamaño y los requisitos de la foto de pasaporte
+## Si la foto es para otro documento
 
-¿Necesitas la foto para otro documento? Consulta las [medidas de la foto carnet](/es/medidas-foto-carnet) o la guía de [foto para DNI](/es/foto-dni).
+El DNI y los carnets tienen sus propias medidas. Consulta la [foto para DNI](/es/foto-dni) si es para el documento de identidad español, o los formatos habituales de carnet en la misma guía de equivalencias.

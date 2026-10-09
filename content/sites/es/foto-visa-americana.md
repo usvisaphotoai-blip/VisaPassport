@@ -34,7 +34,7 @@ cta:
 faq:
   - question: "¿Qué requisitos tiene la foto para la visa americana?"
     answer: "Debe ser una foto reciente, en color, de frente, con expresión neutra y fondo liso blanco o casi blanco. El Departamento de Estado publica las condiciones y las actualiza, así que revisa su guía oficial antes de subirla."
-  - question: "¿De qué tamaño es la foto para el DS-160?"
+  - question: "¿Qué tamaño debe tener la foto del DS-160?"
     answer: "La foto digital debe ser cuadrada y estar en formato JPEG, con unas dimensiones entre 600 x 600 y 1200 x 1200 píxeles y un peso máximo de unos 240 KB. Si necesitas una foto impresa, el tamaño es de 2 x 2 pulgadas, unos 5 x 5 cm. Confirma estos datos en el sitio oficial."
   - question: "¿Puedo usar barba o lentes en la foto para la visa americana?"
     answer: "La barba no suele ser un problema mientras el rostro sea claramente visible y se parezca a tu aspecto actual. Con los lentes, la regla general es no llevarlos. Hay excepciones médicas puntuales, por lo que debes consultar la guía oficial."
@@ -50,30 +50,28 @@ order: 8
 <!--
 ANTES DE PUBLICAR (equipo de contenido):
 1. VERIFICAR TODAS LAS CIFRAS con la guía oficial del Departamento de Estado (travel.state.gov): formato, píxeles (600-1200), peso (240 KB), antigüedad (6 meses), gafas, fondo, y tamaño impreso (2x2 in). Se han incluido de memoria y pueden haber cambiado.
-2. Anotar la fecha de consulta en la página y repetirla periódicamente.
+2. Añadir la fuente en officialSources y la fecha en lastVerified; después cambiar status a "ready".
 3. Esta página es dueña de lo que lleva «visa / DS-160 / embajada» (CA-11). La foto de pasaporte de EE. UU. va en /es/foto-pasaporte-estados-unidos. No copiar tablas entre ambas.
 4. No incluir años ni «lotería de visas» (palabras de estas búsquedas están en revisión).
-5. Confirmar con producto que la herramienta valida formato y peso.
+5. Confirmar con producto que la herramienta valida formato y peso antes de afirmarlo en esta página.
 -->
 
 ## Requisitos de la foto para la visa americana
 
 El Departamento de Estado de EE. UU. establece las condiciones de la foto, y las aplican tanto el formulario online como el consulado. Los puntos que más se repiten son:
 
-- Foto **reciente**, tomada en los últimos meses y que refleje tu aspecto actual.
+- Tomada en los últimos meses y fiel a tu aspecto actual.
 - **En color**, nítida y sin filtros ni retoques.
-- Rostro **de frente, completo y centrado**, con la mirada a la cámara.
-- **Expresión neutra**, con la boca cerrada y los ojos abiertos.
-- **Fondo liso y blanco o casi blanco**, sin sombras.
+- Cara **de frente y centrada**, mirando a la cámara.
+- Gesto neutro y los dos ojos abiertos.
+- **Fondo blanco o casi blanco**, sin sombras.
 - **Sin lentes** en general, y sin accesorios que tapen la cara.
 
-### Fondo, expresión y encuadre
+### La luz, el motivo de rechazo más común
 
-La causa más frecuente de rechazo es la iluminación. Colócate frente a una ventana, con una pared clara detrás, a una distancia que evite que tu sombra se proyecte en ella. La cámara debe estar a la altura de tus ojos y la cabeza recta.
+Cuando el sistema del DS-160 rechaza una foto, lo más frecuente es que sea por la iluminación: sombras detrás de la cabeza, media cara más oscura o un fondo que se ve gris. Hazla de día, con la luz de frente, y separa un poco a la persona de la pared para que su sombra no caiga sobre ella. La cámara, a la altura de los ojos.
 
-### Cómo comprobar si tu foto será aceptada
-
-Antes de subir la foto, revisa esta lista:
+### Lista de comprobación antes de subirla
 
 1. El archivo es cuadrado y está en JPEG.
 2. Las dimensiones y el peso están dentro de los límites del formulario.
@@ -85,15 +83,13 @@ Antes de subir la foto, revisa esta lista:
 
 Según la guía oficial, la foto digital debe cumplir estas especificaciones (compruébalas en el sitio del Departamento de Estado, porque pueden actualizarse):
 
-| Característica     | Lo que se pide                        |
-| ------------------ | ------------------------------------- |
-| Forma              | Cuadrada                              |
-| Formato de archivo | JPEG                                  |
-| Dimensiones        | Entre 600 x 600 y 1200 x 1200 píxeles |
-| Peso               | Hasta unos 240 KB                     |
-| Color              | A color                               |
+- **Forma:** cuadrada.
+- **Formato de archivo:** JPEG.
+- **Dimensiones:** entre 600 x 600 y 1200 x 1200 píxeles.
+- **Peso:** hasta unos 240 KB.
+- **Color:** a color.
 
-Si necesitas una foto impresa, el tamaño habitual es de 2 x 2 pulgadas, equivalente a unos 5 x 5 cm. Por eso muchas búsquedas hablan de la «foto 5x5» para la visa americana. Para entender cómo se convierten pulgadas, milímetros y píxeles, consulta las [medidas de la foto carnet](/es/medidas-foto-carnet) o la guía de [tamaño y requisitos de la foto de pasaporte](/es/tamano-foto-pasaporte).
+Si necesitas una foto impresa, el tamaño habitual es de 2 x 2 pulgadas, equivalente a unos 5 x 5 cm. Por eso muchas búsquedas hablan de la «foto 5x5» para la visa americana. Para convertir pulgadas a milímetros o píxeles, usa la [tabla de equivalencias de formatos de foto](/es/medidas-foto-carnet).
 
 ## Foto para el formulario DS-160
 
@@ -101,14 +97,7 @@ El DS-160 es el formulario online de solicitud de visa no inmigrante. Al llegar 
 
 ## Crea tu foto para visa americana
 
-La herramienta de PixPassport incluye un preset para la foto digital del DS-160:
-
-1. Sube una foto hecha con tu celular.
-2. Ajusta el encuadre y el fondo.
-3. Revisa las comprobaciones de formato, tamaño y peso.
-4. Descarga el archivo digital, o una hoja si necesitas imprimirla.
-
-Es una ayuda para preparar la foto, no una garantía: la decisión final la toman el sistema y el consulado. Si también necesitas la foto del pasaporte, mira [foto para pasaporte online](/es/foto-pasaporte).
+Selecciona el preset «Visa Americana (DS-160)» y carga una foto tomada con tu celular. El recorte es cuadrado y la herramienta prepara el fondo blanco; antes de descargar, repasa la lista de comprobación de arriba. Si además vas a renovar tu pasaporte, prepara esa foto aparte con la [herramienta de foto para pasaporte](/es/foto-pasaporte), porque puede tener otro formato.
 
 ## Problemas al subir la foto y cómo evitarlos
 
@@ -120,7 +109,7 @@ Si el DS-160 rechaza tu foto, revisa en este orden:
 - **Peso:** reduce la calidad o el tamaño hasta quedar por debajo del límite.
 - **Calidad:** repite la foto con más luz si sale oscura, borrosa o con sombras.
 
-## Preguntas frecuentes sobre la foto de la visa americana (barba, lentes, bebés y renovación)
+## Renovación, cita consular y casos especiales
 
 ### Foto para renovar la visa
 
@@ -130,14 +119,10 @@ Si renuevas tu visa, normalmente debes presentar una foto reciente. Consulta las
 
 En la cita consular suelen tomarse las huellas, y puede que te pidan una foto impresa. Revisa las instrucciones de tu cita para saber qué debes llevar.
 
-### Foto de menores y bebés
+### Bebés y niños en el DS-160
 
-Las fotos de bebés y menores tienen particularidades de posición y fondo.
+Cada solicitante, también los bebés, necesita su propia foto en su propio formulario. Con un bebé, túmbalo boca arriba sobre una sábana blanca y haz la foto desde arriba.
 
 ### ¿Y si la foto es para un pasaporte de EE. UU.?
 
-La visa y el pasaporte estadounidense tienen trámites distintos.
-
-## Antes de enviar tu foto
-
-Los requisitos pueden cambiar. Verifica siempre la guía actual del Departamento de Estado y las instrucciones de tu consulado. La aceptación final corresponde al sistema del formulario y a las autoridades consulares.
+El pasaporte estadounidense se tramita aparte y lo solicitan los ciudadanos de EE. UU.; esta página solo cubre la foto de la visa.

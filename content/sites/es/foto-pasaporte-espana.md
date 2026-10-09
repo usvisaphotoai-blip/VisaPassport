@@ -2,7 +2,7 @@
 title: "Foto pasaporte español: medidas | PixPassport"
 description: "Consulta las medidas y requisitos de la foto para el pasaporte español y prepárala online. Confirma los datos en la fuente oficial."
 h1: "Foto para pasaporte español: medidas y requisitos"
-intro: "Aquí puedes revisar qué se pide para la foto del pasaporte español, cómo se diferencia de la foto del DNI y preparar la tuya desde el móvil. Confirma siempre las medidas y condiciones en la fuente oficial de la autoridad que emite el pasaporte."
+intro: "El pasaporte español lo expide la Policía Nacional, en las mismas oficinas donde se tramita el DNI. Aquí tienes qué revisar de la foto antes de la cita, en qué puede diferir de la del DNI y cómo prepararla desde el móvil si te la piden."
 breadcrumbLabel: "Pasaporte español"
 primaryKeyword: "foto para pasaporte español"
 secondaryKeywords:
@@ -30,13 +30,13 @@ cta:
   href: "#tool"
 faq:
   - question: "¿Qué medidas tiene la foto del pasaporte español?"
-    answer: "La medida la fija la autoridad que emite el pasaporte. Consulta la cifra vigente en su sitio oficial. En nuestra guía de tamaño y requisitos explicamos cómo se leen las medidas en milímetros, píxeles y pulgadas."
+    answer: "Las fija la Policía Nacional, que es quien expide el pasaporte. Consulta la cifra vigente en su web antes de imprimir; para trámites online en píxeles, tienes la conversión en nuestra página de medidas de pasaporte."
   - question: "¿Qué requisitos debe cumplir la foto del pasaporte español?"
-    answer: "Por lo general se piden una foto reciente, fondo liso y claro, rostro descubierto y de frente, y expresión neutra. Verifica el detalle en la fuente oficial antes de imprimirla."
-  - question: "¿La foto del pasaporte y la del DNI son iguales?"
-    answer: "No tienen por qué serlo. Cada documento puede exigir condiciones distintas, por lo que conviene comprobarlo. Hemos reunido la comparación en nuestra página de foto para DNI y NIE."
+    answer: "Fíjate sobre todo en el fondo, en que el gesto sea neutro y en que no haya sombras ni reflejos. El detalle exacto lo publica la Policía Nacional y es el que manda."
+  - question: "¿Dónde se tramita el pasaporte español?"
+    answer: "En las oficinas de expedición de la Policía Nacional, con cita previa, o en el consulado si vives fuera de España. Comprueba en su web qué documentación debes llevar."
   - question: "¿Puedo usar una foto carnet para el pasaporte español?"
-    answer: "Solo si cumple exactamente las medidas y condiciones del pasaporte. El término «foto carnet» se usa de forma distinta según la región, así que comprueba el tamaño oficial antes de usarla."
+    answer: "Depende de a qué llames «foto carnet»: el término se usa para formatos distintos según la región. Si su tamaño y sus proporciones coinciden con lo que pide la Policía Nacional para el pasaporte, sirve; si no, conviene hacer una nueva."
 order: 4
 ---
 
@@ -44,55 +44,36 @@ order: 4
 
 <!--
 ANTES DE PUBLICAR (equipo de contenido):
-1. Verificar con la fuente oficial española: medidas, fondo, formato digital/impreso, requisitos para menores.
-2. Rellenar el bloque [VERIFICAR] con fuente y fecha de consulta.
-3. IMPORTANTE: la home actual afirma 30 x 40 mm para el DNI y el pasaporte español. Comprobar ese dato antes de reutilizarlo: puede no coincidir con la norma oficial.
+1. Verificar con la fuente oficial española (Policía Nacional): medidas, fondo, formato digital/impreso, requisitos para menores.
+2. Añadir la fuente en officialSources y la fecha en lastVerified; después cambiar status a "ready".
+3. IMPORTANTE: _site.md configura 30 x 40 mm para el DNI y el pasaporte español. Comprobar ese dato antes de reutilizarlo: puede no coincidir con la norma oficial.
 4. No incluir años en H1, título ni encabezados.
 5. Validar con una búsqueda real que hay resultados específicos de España; si no, convertir esta página en una sección de /es/foto-pasaporte (MERGE).
 -->
 
 ## Medidas de la foto para el pasaporte español
 
-<!-- [VERIFICAR: medida en mm y píxeles si aplica. Añadir la fuente en officialSources y la fecha en lastVerified] -->
+La Policía Nacional publica en su web la medida vigente de la foto del pasaporte. Revísala antes de imprimir, porque es la que comprobarán en la oficina. Para pasarla a píxeles, la [guía de medidas de pasaporte](/es/tamano-foto-pasaporte) explica la conversión.
 
-Si quieres entender cómo se convierten milímetros, pulgadas y píxeles, consulta nuestra guía de [tamaño y requisitos de la foto de pasaporte](/es/tamano-foto-pasaporte).
+## Qué revisar en la foto antes de la cita
 
-## Requisitos de la foto para el pasaporte español
+- Que sea reciente: si has cambiado de aspecto (barba, gafas nuevas, otro corte de pelo), hazte una nueva.
+- Que no haya sombras detrás de la cabeza ni reflejos en las gafas.
+- Que el gesto sea neutro y la cabeza esté recta.
+- Que la copia impresa mida lo que indica la Policía Nacional.
 
-Estas condiciones suelen repetirse, aunque debes confirmarlas en la fuente oficial:
+### Llevarla impresa o que te la hagan allí
 
-- Foto **reciente**, en color y nítida.
-- **Fondo liso y claro**, sin sombras.
-- **Rostro descubierto**, de frente y centrado.
-- **Expresión neutra** y ojos abiertos.
-
-### Fondo, expresión y encuadre
-
-Colócate frente a una pared lisa con luz de frente, sin sombras detrás de la cabeza ni reflejos en las gafas. Mantén la cabeza recta y mira a la cámara.
-
-### Foto digital frente a foto impresa
-
-Según el trámite, la foto puede entregarse impresa o subirse en digital. Comprueba qué se pide en tu caso: el formato de archivo, el peso y las dimensiones pueden variar. Si imprimes en casa, revisa el tamaño impreso con una regla.
+Pregunta al pedir la cita si debes llevar la foto impresa. Si la llevas, mide la copia con una regla antes de salir de casa: si no coincide con la medida oficial, pueden pedirte otra.
 
 ## Crea tu foto para el pasaporte español
 
-PixPassport incluye una plantilla pensada para el pasaporte de España:
-
-1. Sube una foto hecha con el móvil.
-2. Ajusta el encuadre y el fondo.
-3. Revisa las comprobaciones de requisitos.
-4. Descarga en digital o en hoja para imprimir.
-
-La herramienta te ayuda a preparar la foto, pero la aceptación final corresponde a la autoridad. Para ver cómo funciona en general, visita [foto para pasaporte online](/es/foto-pasaporte).
+Con la opción «Pasaporte Español» activa, sube tu foto: el encuadre se adapta a la plantilla de España. Revisa el recorte y, si vas a imprimir, elige «{{claim:printSheet.short}}» al descargar.
 
 ## Foto de pasaporte y foto del DNI: diferencias
 
-Ambos documentos pueden tener condiciones distintas, así que no des por hecho que una misma foto sirve para los dos. Para comparar y consultar los requisitos del DNI, visita [foto para DNI y NIE](/es/foto-dni).
+Los dos documentos se piden a la Policía Nacional, pero no des por hecho que una misma copia sirve para ambos. La comparación detallada está en la página de la [foto para el DNI](/es/foto-dni).
 
-### Foto de menores y bebés
+### Pasaporte para menores
 
-Las fotos de menores y bebés tienen particularidades.
-
-## Preguntas frecuentes sobre la foto del pasaporte español
-
-Respondemos las dudas más comunes sobre medidas, requisitos y diferencias con el DNI. Ante cualquier discrepancia, prevalece siempre la información de la fuente oficial.
+Si el pasaporte es para un menor, revisa en la web de la Policía Nacional qué documentación y qué autorizaciones necesitas además de la foto.

@@ -2,7 +2,7 @@
 title: "Medidas de la foto carnet: cm y píxeles | PixPassport"
 description: "Consulta las medidas de la foto carnet en cm, mm y píxeles y la diferencia con la foto de pasaporte. Confirma el tamaño exigido por tu trámite."
 h1: "Medidas de la foto carnet: tamaño en cm, mm y píxeles"
-intro: "¿De qué tamaño es una foto carnet? La respuesta corta es que depende del documento y del país. Aquí tienes los formatos más habituales con su equivalencia en centímetros, milímetros, píxeles y pulgadas, cómo calcularlas y cómo preparar la foto en Word o Photoshop."
+intro: "¿De qué tamaño es una foto carnet? La respuesta corta es que depende del documento y del país. Aquí tienes los formatos más habituales con su equivalencia en centímetros, milímetros, píxeles y pulgadas, cómo calcularlas y cómo montar la foto en Word o Photoshop."
 breadcrumbLabel: "Medidas de la foto carnet"
 primaryKeyword: "foto carnet medida"
 secondaryKeywords:
@@ -35,11 +35,11 @@ faq:
   - question: "¿Cuántos píxeles tiene una foto carnet?"
     answer: "Depende del tamaño físico y de la resolución. A 300 ppp, una foto de 3x4 cm tiene unos 354 x 472 píxeles. En la tabla de esta página encontrarás los demás formatos. Si tu trámite es online, usa los píxeles que indique el portal."
   - question: "¿Qué es más grande, la foto carnet o la de pasaporte?"
-    answer: "Depende de los países y los documentos que compares, porque ambos formatos varían. La forma segura es mirar la medida de cada uno en su guía oficial. Puedes ver las de pasaporte en nuestra guía de tamaño y requisitos de la foto de pasaporte."
+    answer: "Depende de los países y los documentos que compares, porque ambos formatos varían. La forma segura es mirar la medida de cada uno en su guía oficial. Las de pasaporte están reunidas, país por país, en nuestra página de medidas de pasaporte."
   - question: "¿Cómo hago una foto carnet en Word?"
     answer: "Inserta la imagen, desactiva la opción de bloquear la relación de aspecto solo si es necesario, fija el alto y el ancho exactos en centímetros y comprueba que no queda estirada. Después imprime a tamaño real, sin ajustar a la página."
   - question: "¿Cuántas fotos carnet caben en una hoja de 10x15?"
-    answer: "Depende del formato. Con tamaños pequeños suelen caber varias copias en una hoja de 10x15 cm. La hoja de impresión de PixPassport coloca las copias por ti."
+    answer: "Depende del formato. Con tamaños pequeños suelen caber varias copias en una hoja de 10x15 cm. Al descargar, la opción «{{claim:printSheet.short}}» las coloca por ti."
 order: 6
 ---
 
@@ -73,7 +73,7 @@ La fórmula es sencilla: **píxeles = milímetros ÷ 25,4 × ppp**. Por ejemplo,
 
 ### Tamaños habituales según el documento
 
-El tamaño que debes usar lo decide el documento y el país, no el nombre «carnet». Por ejemplo, la foto del DNI se rige por sus propias normas: consulta [foto para DNI y NIE](/es/foto-dni). Y las de pasaporte por las del país emisor: mira [tamaño y requisitos de la foto de pasaporte](/es/tamano-foto-pasaporte).
+El tamaño que debes usar lo decide el documento y el país, no el nombre «carnet». Por ejemplo, la foto del DNI se rige por sus propias normas, que encontrarás en la página de la [foto del DNI español](/es/foto-dni). Y las de pasaporte dependen del país emisor: están en las [medidas de pasaporte por país](/es/tamano-foto-pasaporte).
 
 ## Diferencia entre foto carnet y foto de pasaporte
 
@@ -99,12 +99,10 @@ Y si prefieres no calcular nada, [crea tu foto carnet online](#tool): eliges el 
 
 ## Resolución, formato y peso del archivo
 
-Para imprimir, 300 ppp suele ser suficiente. Para trámites online, importa más cumplir con las dimensiones en píxeles y el peso máximo que pide el portal, normalmente en formato JPG. No amplíes una foto pequeña para «ganar píxeles»: se verá borrosa. Parte siempre de una foto original nítida.
+Para imprimir, 300 ppp suele ser suficiente. En un trámite online lo que cuenta es lo que diga el portal: ancho y alto en píxeles, formato (normalmente JPG) y tamaño máximo del archivo. No amplíes una foto pequeña para «ganar píxeles»: se verá borrosa. Parte siempre de una foto original nítida.
 
 ## Ejemplos y formatos de foto carnet
 
-Un buen ejemplo de foto carnet muestra el rostro completo, de frente, con luz uniforme, expresión neutra y fondo liso. Evita sombras, filtros y recortes que dejen la cabeza muy pegada al borde. Para imprimir varias copias, la hoja de impresión te ahorra el trabajo de colocarlas.
+En una foto carnet bien hecha la cara queda centrada, con un pequeño margen por encima de la cabeza, y el fondo no tiene sombras. Los fallos más típicos al recortarla tú mismo son dejar la cabeza pegada al borde superior o estirar la imagen para que encaje en el formato.
 
-## Antes de usar estas medidas
-
-Esta guía sirve para orientarte y calcular equivalencias. Para presentar la foto, confirma el tamaño y las condiciones en la fuente oficial de tu trámite, porque pueden cambiar.
+Ten en cuenta que las cifras de esta página son conversiones matemáticas: la medida que debes usar es la que fije tu trámite.

@@ -16,4 +16,4 @@ Necesita texto legal revisado por un profesional (RGPD/LOPDGDD para España y no
 Cuando esté listo, cambiar status a "ready": el enlace del pie de página aparece automáticamente.
 -->
 
-Estamos preparando la versión en español de esta política. Mientras tanto, la versión vigente es la [política de privacidad en inglés](/privacy-policy).
+La traducción de esta política está en preparación. Hasta que se publique, la versión vigente es la [política de privacidad en inglés](/privacy-policy).

@@ -2,7 +2,7 @@
 title: "Foto para DNI: medidas y requisitos | PixPassport"
 description: "Consulta medidas y requisitos de la foto para el DNI, si hace falta llevarla al renovar y crea tu foto online. Verifica en la fuente oficial."
 h1: "Foto para DNI: medidas, requisitos y creador online"
-intro: "Resolvemos las dudas más comunes sobre la foto del DNI en España: qué medidas y condiciones se piden, si hace falta llevarla al renovar y en qué se diferencia de la foto del pasaporte. También puedes preparar la tuya desde casa."
+intro: "La foto del DNI genera siempre las mismas preguntas: qué medida tiene, si hay que llevarla al renovar y si vale la misma que para el pasaporte. Esta página se centra en el DNI de España, que expide la Policía Nacional, y te permite preparar la foto desde casa."
 breadcrumbLabel: "Foto para DNI"
 primaryKeyword: "foto para dni"
 secondaryKeywords:
@@ -31,15 +31,15 @@ cta:
   href: "#tool"
 faq:
   - question: "¿Hace falta llevar foto para renovar el DNI?"
-    answer: "Depende del trámite y de la oficina. En algunas oficinas la foto se toma en el momento y en otras hay que llevarla. Confirma el procedimiento en la web oficial de la Policía Nacional o al pedir tu cita."
+    answer: "Depende de la oficina de expedición en la que tengas cita. Revísalo en la web de la Policía Nacional o pregúntalo al reservar la cita."
   - question: "¿De qué tamaño es la foto para el DNI?"
-    answer: "La medida la fija el organismo que expide el documento. Consulta la cifra vigente en su sitio oficial. En nuestra guía de medidas de foto carnet explicamos cómo convertir milímetros en píxeles."
+    answer: "La medida la publica la Policía Nacional junto al resto de requisitos del DNI. Para pasar de milímetros a píxeles, mira la página de medidas de la foto carnet."
   - question: "¿La foto del DNI y la del pasaporte son iguales?"
-    answer: "No tienen por qué serlo. Cada documento puede pedir medidas y condiciones distintas, así que no des por hecho que la misma foto sirve para los dos. Comprueba cada requisito antes de imprimir."
+    answer: "Aunque los dos los expide la Policía Nacional, no tienen por qué coincidir en medida ni en forma de entrega. Comprueba los requisitos de cada uno antes de imprimir una sola tanda de fotos para ambos."
   - question: "¿Qué es el NIE y qué foto necesita?"
     answer: "El NIE es el número de identidad para personas extranjeras en España. Si tu trámite exige foto, el tamaño y las condiciones los indica el organismo que lo gestiona. Verifícalos en su web o en tu cita."
   - question: "¿Se puede sonreír en la foto del DNI?"
-    answer: "Lo habitual es pedir una expresión neutra y el rostro bien visible. La norma exacta depende del organismo, así que consúltala en la fuente oficial."
+    answer: "Para el DNI se pide un gesto neutro con la cara bien visible. La norma exacta está en la web de la Policía Nacional; consúltala si tienes dudas."
 order: 7
 ---
 
@@ -48,7 +48,7 @@ order: 7
 <!--
 ANTES DE PUBLICAR (equipo de contenido):
 1. Verificar con la Policía Nacional: medida oficial, fondo, formato, y si la foto se aporta o se toma en la oficina al renovar/expedir.
-2. Rellenar el bloque [VERIFICAR] con fuente y fecha de consulta.
+2. Añadir la fuente en officialSources y la fecha en lastVerified; después cambiar status a "ready".
 3. Comprobar con Search Console el reparto de países (España vs Argentina vs Perú) antes de reforzar el contenido solo para España. «foto dni» también puede significar «foto de un DNI» (imagen del documento): validar en la SERP.
 4. Esta página es dueña de TODAS las consultas con «dni» y de la comparación DNI vs pasaporte (CA-09, CA-10). No usar «foto carnet DNI» en títulos de /es/foto-carnet.
 5. No incluir años en H1, título ni encabezados.
@@ -58,44 +58,32 @@ ANTES DE PUBLICAR (equipo de contenido):
 
 Esta página trata de la **foto que se aporta para el documento**, no de una imagen del propio DNI. Se centra en España. En otros países, como Argentina o Perú, el DNI se rige por normas distintas, así que no apliques estas indicaciones sin comprobarlas.
 
-<!-- [VERIFICAR: medida en mm y píxeles si aplica. Añadir la fuente en officialSources y la fecha en lastVerified] -->
+La medida vigente aparece en la web de la Policía Nacional, junto al resto de requisitos para expedir o renovar el DNI. Para convertir esa medida a píxeles, consulta la [tabla de equivalencias de la foto carnet](/es/medidas-foto-carnet).
 
-Para entender cómo se pasa de milímetros a píxeles, consulta las [medidas de la foto carnet](/es/medidas-foto-carnet).
+### Cómo debe verse tu cara en la foto del DNI
 
-### Fondo, expresión y encuadre
+- Tal como estás ahora: si te has dejado barba o has cambiado de gafas, mejor una foto nueva.
+- Cabeza recta y mirada a la cámara, sin girar los hombros.
+- Pelo apartado de los ojos y del contorno de la cara.
+- Sin reflejos en las gafas que oculten los ojos.
 
-Las condiciones que suelen pedirse en fotos de identidad, y que debes confirmar en la fuente oficial, son:
-
-- Foto **reciente** y fiel a tu aspecto actual.
-- **Fondo liso y claro**, sin sombras.
-- **Rostro de frente, descubierto y centrado.**
-- **Expresión neutra**, con los ojos abiertos.
-- Sin filtros ni retoques.
-
-Si usas gafas, evita reflejos que oculten los ojos. Para otros accesorios o prendas en la cabeza, consulta la norma oficial.
+Para prendas en la cabeza u otros accesorios, consulta la norma oficial.
 
 ## Crea tu foto para DNI online
 
-La herramienta de PixPassport incluye una plantilla para el DNI:
-
-1. Sube una foto hecha con el móvil.
-2. Ajusta el encuadre y el fondo.
-3. Revisa las comprobaciones de requisitos.
-4. Descarga en digital o en hoja para imprimir.
-
-Es una ayuda para preparar la foto, no una confirmación de que vaya a aceptarse.
+Busca «DNI y NIE Español» en el selector de documentos. Al subir la foto, el recorte se ajusta a la plantilla del DNI y puedes revisarlo antes de descargar.
 
 ## ¿Hace falta llevar foto para renovar el DNI?
 
-Es la duda más repetida y la respuesta honesta es que depende. En algunas oficinas de expedición la foto se toma en el momento del trámite; en otras puede que debas llevarla. Antes de tu cita, consulta la información oficial de la Policía Nacional o pregunta al pedirla. Si finalmente te piden una foto, ya sabrás cómo prepararla.
+Es la duda más repetida y la respuesta honesta es que depende de la oficina de expedición. Antes de tu cita, consulta la información oficial de la Policía Nacional o pregunta al reservarla. Si finalmente te piden una foto, ya sabrás cómo prepararla.
 
 ### Cuántas fotos llevar
 
-Si te piden fotos impresas, confirma cuántas. Con la hoja de impresión de PixPassport obtienes varias copias.
+Si te piden fotos impresas, confirma cuántas. Con la descarga «{{claim:printSheet.short}}» tendrás varias copias iguales.
 
 ## Foto del DNI y foto del pasaporte: ¿son iguales?
 
-No siempre. Los dos documentos pueden pedir medidas y condiciones distintas, y la forma de entrega también puede variar. Por eso, antes de usar una misma foto para ambos, comprueba cada requisito oficial. Para el pasaporte, consulta [foto para pasaporte español](/es/foto-pasaporte-espana) y la guía general de [tamaño y requisitos de la foto de pasaporte](/es/tamano-foto-pasaporte).
+No siempre. Aunque los dos documentos dependen de la Policía Nacional, pueden pedir medidas distintas y la forma de entrega también puede variar. Antes de usar una misma foto para ambos, compara los requisitos: para el pasaporte tienes la página del [pasaporte español](/es/foto-pasaporte-espana) y una [comparativa de medidas de pasaporte por país](/es/tamano-foto-pasaporte).
 
 ## Foto para NIE y otros documentos
 
@@ -105,18 +93,15 @@ El NIE y otros documentos de identidad para extranjeros pueden tener su propia n
 
 Si tu duda es cómo se ve la foto en el DNI electrónico, recuerda que la norma que importa es la del momento de la solicitud. Consulta los requisitos vigentes antes de preparar la imagen.
 
-### Foto de bebés y menores
+### DNI para menores
 
-Los menores y los bebés tienen particularidades.
+Cuando el titular es menor de edad, consulta en la web de la Policía Nacional quién debe acompañarlo a la cita y qué tiene que llevar.
 
 ## Consejos para una foto de DNI sin rechazos
 
-- Hazla con luz natural de frente y evita el flash.
-- Mantén una distancia de unos 50 cm a 1 m de la pared para no proyectar sombra.
-- Mira a la cámara con la cabeza recta, sin inclinarla.
-- Recoge el pelo si te tapa los ojos o el contorno de la cara.
-- Si imprimes en casa, comprueba las medidas con una regla.
+- Ropa de un color que contraste con el fondo, para que el recorte no se confunda.
+- Quítate gafas de sol y gorras; para otras prendas en la cabeza, consulta qué admite la norma.
+- No uses filtros ni modos «retrato» que desenfoquen el fondo de forma artificial.
+- Si imprimes en casa, comprueba la medida con una regla.
 
-## Antes de presentar tu foto
-
-Los requisitos pueden cambiar. Verifica siempre la norma vigente en la fuente oficial.
+Para la luz y la posición del móvil, mira [cómo hacer la foto con el móvil](/es).

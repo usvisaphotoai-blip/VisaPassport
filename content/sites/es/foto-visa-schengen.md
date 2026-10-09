@@ -34,7 +34,7 @@ faq:
   - question: "¿Qué medidas tiene la foto para el visado Schengen?"
     answer: "Muchos consulados piden una foto biométrica de 35 x 45 mm, con el rostro ocupando buena parte del encuadre. Los detalles pueden variar según el país y el centro de solicitud, así que confirma las medidas en la web de tu consulado."
   - question: "¿Sirve la foto de pasaporte para el Schengen?"
-    answer: "Solo si cumple exactamente las medidas y condiciones que pide el consulado para el visado. Una foto de pasaporte de otro país o formato puede no coincidir. Comprueba el requisito antes de imprimirla."
+    answer: "Solo si coincide con lo que pide el consulado para el visado. Una foto hecha para el pasaporte de otro país puede tener otro tamaño u otra proporción del rostro, así que compárala antes de imprimirla."
   - question: "¿La foto debe ser impresa o digital?"
     answer: "Depende del consulado y del centro de solicitud. Algunos piden la foto impresa en papel fotográfico y otros la suben en digital. Revisa las instrucciones de tu cita."
   - question: "¿Hay requisitos distintos para la visa de Alemania?"
@@ -48,8 +48,9 @@ order: 9
 ANTES DE PUBLICAR (equipo de contenido):
 1. DECISIÓN PENDIENTE: el workbook marca este cluster como borderline (9 palabras clave, todas en el bucket de 50). Publicar solo si el producto tiene una plantilla Schengen real. Si no, hacer MERGE en /es/foto-visa como sección y no crear esta URL.
 2. Verificar con la fuente oficial (consulado / centro de solicitud / guía del país de destino): medida, proporción del rostro, fondo, y papel impreso vs digital. La medida 35 x 45 mm y los píxeles equivalentes se han incluido de memoria como orientación.
-3. La visa de EE. UU. va en /es/foto-visa-americana (CA-12). Visas de otros destinos (Reino Unido, Canadá...) van en /es/foto-visa.
-4. No incluir años en H1, título ni encabezados.
+3. Añadir la fuente en officialSources y la fecha en lastVerified; después cambiar status a "ready".
+4. La visa de EE. UU. va en /es/foto-visa-americana (CA-12). Visas de otros destinos (Reino Unido, Canadá...) van en /es/foto-visa.
+5. No incluir años en H1, título ni encabezados.
 -->
 
 ## Medidas de la foto para visa Schengen
@@ -58,42 +59,30 @@ Muchos consulados del espacio Schengen piden una foto biométrica de **35 x 45 m
 
 <!-- [VERIFICAR: medida y proporción del rostro según el consulado. Añadir la fuente en officialSources y la fecha en lastVerified] -->
 
-Si quieres entender cómo se convierten milímetros en píxeles, consulta las [medidas de la foto carnet](/es/medidas-foto-carnet).
+Si el centro de visados te la pide en otra unidad, la [conversión de milímetros a píxeles](/es/medidas-foto-carnet) se explica paso a paso en la guía de formatos.
 
 ## Requisitos biométricos de la foto
 
-Las fotos biométricas siguen un patrón parecido en muchos países, aunque debes comprobarlo en la fuente oficial:
+Una foto biométrica está pensada para que un sistema pueda comparar tu cara con la del pasaporte. Por eso los consulados se fijan en detalles que en otras fotos pasan desapercibidos:
 
-- Foto **reciente**, nítida y en color.
-- Rostro **de frente, completo y centrado**, sin inclinar la cabeza.
-- **Expresión neutra**, con la boca cerrada y los ojos abiertos.
-- **Fondo liso y claro**, sin sombras ni dibujos.
-- Sin filtros ni retoques.
-- Rostro despejado: el pelo no debe tapar los ojos ni el contorno de la cara.
+- Cabeza recta, sin inclinar, y mirada al frente.
+- Boca cerrada y gesto neutro.
+- Fondo claro y uniforme, sin dibujos.
+- Ojos y contorno de la cara despejados, sin pelo por delante.
+- Tomada hace poco, en color y sin retoques.
 
-### Fondo y expresión
+### Gafas, reflejos y sombras
 
-Colócate frente a una pared clara, con luz de frente y a unos 50 cm de distancia para evitar sombras. Los reflejos en las gafas son una causa común de rechazo, así que revisa que se vean bien los ojos.
+Los reflejos en las gafas son un motivo de rechazo habitual en los centros de visado: si no puedes evitarlos, pregunta si puedes quitártelas para la foto. Las sombras en el fondo se reducen separándote un poco de la pared.
 
 ### Formato impreso frente a digital
 
-Algunos consulados y centros de visado piden la foto impresa en papel fotográfico y otros la suben en digital. Si te piden papel, usa tamaño real, sin ajustar a la página, y comprueba la medida con una regla. Tienes los pasos en imprimir fotos carnet y de pasaporte en casa. <!-- Enlazar a /es/imprimir-fotos-carnet cuando exista -->
+Algunos consulados y centros de visado piden la foto impresa en papel fotográfico y otros la suben en digital. Si te piden papel, desactiva el ajuste automático de la impresora y mide la copia con una regla. <!-- Enlazar a /es/imprimir-fotos-carnet cuando exista -->
 
 ## Crea tu foto para visa Schengen
 
-La herramienta de PixPassport incluye una plantilla para el visado Schengen:
-
-1. Sube una foto hecha con el móvil.
-2. Ajusta el encuadre y el fondo.
-3. Revisa las comprobaciones de requisitos.
-4. Descarga en digital o en hoja para imprimir.
-
-Es una ayuda para preparar tu foto, no una garantía de aceptación: la decisión final es del consulado. Para una visión general, visita foto para visa online. <!-- Enlazar a /es/foto-visa cuando exista -->
+Marca «Visa Schengen» en la lista de documentos antes de subir la foto: el recorte seguirá el formato configurado para este visado. Antes de descargar, compara el resultado con las instrucciones de tu consulado. <!-- Enlazar a /es/foto-visa («foto para visa online») cuando exista -->
 
 ## Foto para visa de Alemania y otros países Schengen
 
-Se suele hablar de «foto para visa alemana» o «visa europea», pero el requisito depende del país de destino y del consulado que tramita tu solicitud. Consulta su guía de foto biométrica y usa la medida que indique. Si tu destino es Estados Unidos, el formato es distinto: visita [foto para visa americana](/es/foto-visa-americana). Y si necesitas la foto para tu pasaporte, ve a [foto para pasaporte online](/es/foto-pasaporte).
-
-## Preguntas frecuentes sobre la foto para visa Schengen
-
-Resolvemos las dudas más habituales sobre medidas y sobre si sirve la foto de pasaporte. Recuerda que los requisitos pueden cambiar y que la información oficial de tu consulado prevalece siempre.
+Se suele hablar de «foto para visa alemana» o «visa europea», pero el requisito depende del país de destino y del consulado que tramita tu solicitud. Consulta su guía de foto biométrica y usa la medida que indique. Si tu destino es Estados Unidos, el formato es distinto: visita la página de la [foto para el DS-160](/es/foto-visa-americana). Y si lo que necesitas es renovar el pasaporte, ve a [crear tu foto de pasaporte](/es/foto-pasaporte).

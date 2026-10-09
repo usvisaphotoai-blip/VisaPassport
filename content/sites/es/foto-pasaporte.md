@@ -2,7 +2,7 @@
 title: "Foto para pasaporte online: crea la tuya | PixPassport"
 description: "Crea tu foto para pasaporte online: sube una foto, ajústala al formato de tu país y descárgala lista para imprimir o subir. Revisa los requisitos oficiales."
 h1: "Crea tu foto para pasaporte online"
-intro: "Sube una foto hecha con el móvil, elige el país de tu pasaporte y PixPassport ajusta el encuadre y el fondo al formato que necesitas. Revisa la vista previa antes de pagar y descarga tu foto de pasaporte en digital o en una hoja lista para imprimir."
+intro: "Elige el país que expide tu pasaporte, sube una foto reciente y la herramienta recorta la imagen con las proporciones de ese pasaporte. Así no tienes que calcular márgenes ni medir a mano la altura de la cabeza."
 breadcrumbLabel: "Foto para pasaporte"
 primaryKeyword: "foto para pasaporte"
 secondaryKeywords:
@@ -31,74 +31,46 @@ cta:
   href: "#tool"
 faq:
   - question: "¿Cómo hago una foto para pasaporte en casa?"
-    answer: "Colócate frente a una ventana, con una pared lisa y clara detrás, y pide a alguien que sostenga el móvil a la altura de tus ojos. Mira a la cámara con expresión neutra y sube la imagen a la herramienta: ajustará el encuadre y el fondo según el país que elijas. Antes de presentarla, confirma el requisito de la autoridad que emite tu pasaporte."
+    answer: "Con dos personas es más fácil: una se coloca de cara a la luz con una pared lisa detrás y la otra hace la foto con la cámara trasera del móvil, sin zoom digital. Después sube la imagen y elige el país de tu pasaporte para que el recorte se ajuste."
   - question: "¿Qué fondo y encuadre se piden en una foto de pasaporte?"
-    answer: "En general se pide un fondo liso y claro, el rostro centrado, completo y sin sombras, y la mirada de frente. Los detalles exactos cambian según el país y la autoridad emisora, así que revisa la página de tu país o la fuente oficial."
-  - question: "¿Puedo subir una foto hecha con el móvil o el celular?"
-    answer: "Sí. Funciona con una foto tomada con el móvil siempre que tenga buena luz, esté nítida y se vea bien la cara. Evita filtros, sombras fuertes y fotos escaneadas de impresiones antiguas."
+    answer: "Depende del país: unos piden blanco y otros admiten gris claro u otros tonos suaves. Lo que casi todos comparten es un fondo uniforme, sin objetos detrás, y la cabeza centrada. Revisa el formato de tu país en el selector antes de descargar."
+  - question: "¿Puedo usar una foto antigua para el pasaporte?"
+    answer: "Lo habitual es que se pida una foto reciente que refleje tu aspecto actual. Además, una foto escaneada de una copia en papel pierde nitidez, así que suele salir mejor hacerte una nueva."
   - question: "¿La foto de pasaporte es igual en todos los países?"
-    answer: "No. El tamaño, el fondo y las reglas sobre expresión, gafas o accesorios dependen del país y del tipo de entrega, digital o impresa. Elige tu país en la herramienta o consulta nuestras páginas para México, España, Estados Unidos y otros países."
+    answer: "No. El tamaño, el color del fondo y las reglas sobre gafas o expresión cambian de un país a otro, y también según la foto se entregue en papel o se suba a un portal. Por eso el selector tiene un formato para cada país."
   - question: "¿Cómo imprimo mi foto de pasaporte?"
-    answer: "Puedes descargar la foto en digital o en una hoja con varias copias para imprimir en casa o en una tienda. Comprueba que el tamaño impreso es el correcto y que tu trámite acepta fotos impresas por ti, porque algunas autoridades piden impresión profesional."
+    answer: "Al descargar, elige «{{claim:printSheet.short}}» e imprímela a tamaño real, sin la opción de ajustar a la página. Mide una copia con una regla antes de recortar: algunas autoridades exigen además impresión en papel fotográfico profesional."
 order: 1
 ---
 
 <!-- Componente de la herramienta con id="tool" -->
 
-## Cómo hacer tu foto para pasaporte en pocos pasos
+## Cómo funciona la herramienta de foto para pasaporte
 
-Convierte una foto común en una imagen preparada para tu trámite, sin ir a un fotomatón ni a un estudio.
+Lo que distingue una foto de pasaporte de un retrato cualquiera es el recorte: cada país fija cuánto debe ocupar la cabeza y cuánto margen queda por encima. Al elegir el país en el selector, la herramienta coloca el rostro dentro de esas proporciones y prepara el fondo. Si el recorte automático no te convence, puedes mover el encuadre antes de continuar.
 
-### Sube o toma una foto
+{{claim:requirementChecks}} Si el aviso es por sombras o por poca luz, suele ser más rápido repetir la foto que intentar arreglarla.
 
-Usa una foto reciente en la que se vea tu rostro completo y de frente, o hazte una nueva con buena luz natural.
+### Si tu país no aparece entre los más pedidos
 
-### Ajusta el encuadre y el fondo
+El selector muestra primero los documentos más solicitados. Para el resto, usa el buscador de «Todos los países»: cada pasaporte aparece con su tamaño y su color de fondo.
 
-Elige el país de tu pasaporte. La herramienta detecta la posición del rostro, propone el recorte y prepara el fondo. Puedes mover y ajustar el encuadre antes de continuar.
+## Por qué se rechaza una foto de pasaporte
 
-### Revisa las comprobaciones de requisitos
-
-Antes de descargar, la herramienta señala problemas habituales de encuadre y fondo para que puedas corregirlos. Es una ayuda para evitar errores, no una confirmación de que la autoridad vaya a aceptar la foto.
-
-### Descarga en digital o en hoja para imprimir
-
-Descarga el archivo para trámites online o una hoja con varias copias para imprimir. Puedes probar la herramienta y ver la vista previa sin coste ni registro, y pagas solo cuando el resultado te convence.
-
-## Qué debe cumplir una foto para pasaporte
-
-Aunque cada país tiene su norma, las fotos de pasaporte suelen pedir:
-
-- Una foto **reciente**, en color y con buena nitidez.
-- Un **fondo liso y claro**, sin sombras ni objetos detrás.
-- El **rostro descubierto**, de frente, con los ojos abiertos y expresión neutra.
-- **Sin filtros ni retoques** que cambien tus rasgos.
-
-Para consultar medidas, píxeles y ejemplos válidos e inválidos, visita la guía de [tamaño y requisitos de la foto de pasaporte](/es/tamano-foto-pasaporte). Allí explicamos cada requisito en detalle.
+Las normas cambian de un país a otro, pero los rechazos suelen repetirse: sombras en la cara o en la pared, un gesto que no es neutro, pelo o gafas que tapan los ojos y fotos retocadas con filtros. Las medidas de cada país y los ejemplos de fotos válidas e inválidas están en la guía de [medidas y requisitos del pasaporte por país](/es/tamano-foto-pasaporte).
 
 ## Foto para pasaporte según tu país
 
-El formato de la foto cambia de un país a otro. Elige tu página:
+Tenemos páginas específicas para el [pasaporte mexicano](/es/foto-pasaporte-mexico), que se tramita ante la SRE, y para el [pasaporte español](/es/foto-pasaporte-espana), que expide la Policía Nacional. Para cualquier otro país, elige su formato directamente en el selector.
 
-- [Foto para pasaporte mexicano](/es/foto-pasaporte-mexico)
-- [Foto para pasaporte español](/es/foto-pasaporte-espana)
+## Digital o en papel: cómo entregar tu foto de pasaporte
 
-## Descarga e impresión de tu foto
+Cada vez más trámites piden subir la foto a un portal; otros siguen pidiendo copias impresas. Si el portal indica dimensiones en píxeles o un peso máximo, sube el archivo tal como lo descargas: recortarlo o comprimirlo otra vez puede dejarlo fuera de esos límites. Para imprimir en casa, usa papel fotográfico y recorta con regla o guillotina.
 
-Con la versión digital puedes subir tu foto a un trámite online si el organismo lo permite. Con la hoja de impresión obtienes varias copias en un solo papel fotográfico. Si vas a imprimir en casa, usa papel de buena calidad, comprueba que el tamaño impreso es el que pide tu trámite y recorta con regla o guillotina.
+### Pasaporte para bebés y niños pequeños
 
-Si la foto es para un bebé o un menor, las reglas pueden cambiar.
+Con un bebé, lo más práctico es tumbarlo boca arriba sobre una sábana blanca y hacer la foto desde arriba, sin que se vean las manos de quien lo sujeta. Algunos países son más flexibles con la expresión o la mirada de los más pequeños; compruébalo en la norma de tu país.
 
-## Antes de presentar tu foto
+## ¿Puedo usar la misma foto para otros documentos?
 
-Los requisitos dependen de la autoridad que emite tu pasaporte y pueden actualizarse. Verifica siempre la norma vigente en su sitio oficial. Además, algunas oficinas toman o repiten la foto en el momento del trámite. PixPassport te ayuda a preparar la foto, pero la aceptación final corresponde a la autoridad.
-
-## Preguntas frecuentes sobre la foto para pasaporte
-
-### ¿Sirve una foto hecha con el móvil?
-
-Sí, si tiene buena luz y nitidez y cumple los requisitos de tu país. Encontrarás la respuesta completa en las preguntas frecuentes de esta página.
-
-### ¿Puedo usar la misma foto para otros documentos?
-
-Depende del documento y del país. El formato de una foto para pasaporte puede no coincidir con el de un carnet, un DNI o una visa, así que conviene comprobarlo en la página de cada documento.
+No siempre. El DNI, un carnet o una visa pueden pedir otro tamaño u otra proporción del rostro aunque el fondo sea el mismo. Las [medidas habituales de la foto carnet](/es/medidas-foto-carnet) te ayudan a compararlos.

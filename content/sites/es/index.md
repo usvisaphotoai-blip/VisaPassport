@@ -2,14 +2,13 @@
 title: "Foto carnet, pasaporte y visa online | PixPassport"
 description: "Crea tu foto para carnet, pasaporte, DNI o visa online: sube una foto, ajústala al formato de tu documento y descárgala lista para imprimir."
 h1: "Foto para carnet, pasaporte y visa: hazla online con PixPassport"
-intro: "Sube una foto hecha con el móvil, elige el documento y PixPassport ajusta el encuadre y el fondo al formato que necesitas. Revisa la vista previa gratis y descarga tu foto en digital o en una hoja lista para imprimir, para tu pasaporte, DNI, carnet o visa."
+intro: "Sube una foto hecha con el móvil, elige el documento y PixPassport ajusta el encuadre y el fondo al formato que necesitas: pasaporte, DNI, carnet o visa. Revisa la vista previa y descarga la foto para subirla a tu trámite o para imprimirla."
 breadcrumbLabel: "Inicio"
 primaryKeyword: "foto carnet y pasaporte online"
 secondaryKeywords:
   [
     "foto para documentos online",
     "foto para pasaporte online",
-    "foto carnet online",
     "foto para visa online",
     "foto para DNI",
   ]
@@ -31,15 +30,15 @@ cta:
   href: "#tool"
 faq:
   - question: "¿Qué documentos puedo preparar con PixPassport?"
-    answer: "Puedes crear fotos para pasaporte, DNI, carnet de identidad o de conducir y visas. Elige el documento en el selector de la herramienta y el recorte se ajusta al formato correspondiente. Antes de presentarla, comprueba siempre el requisito vigente en la fuente oficial de tu trámite."
+    answer: "Pasaporte, DNI, carnet y visados de varios países. Elige el documento en el selector y el recorte se adapta a su formato; los países que no están entre los destacados se encuentran en «Todos los países»."
   - question: "¿Sirve una foto hecha con el móvil?"
-    answer: "Sí, siempre que tenga buena luz natural de frente, un fondo liso y claro, y que mires a la cámara con expresión neutra. La herramienta recorta el encuadre y ajusta el fondo; la calidad de la foto original sigue siendo importante."
+    answer: "Sí. Lo que más influye en el resultado es la luz: ponte de cara a una ventana, con una pared lisa detrás, y pide a otra persona que haga la foto en lugar de usar la cámara frontal."
   - question: "¿La foto es igual para el pasaporte, el DNI, el carnet y la visa?"
-    answer: "No. Cada documento y cada país tienen su propio formato, y a veces también reglas distintas para la foto digital y la impresa. Consulta la guía de tu documento: pasaporte, carnet, DNI o visa."
-  - question: "¿Es gratis probar la herramienta?"
-    answer: "Puedes subir tu foto, ajustar el recorte y ver la vista previa sin coste ni registro. Solo pagas la descarga cuando el resultado te convence."
+    answer: "No. Cada documento y cada país fijan su propio formato, y a veces piden algo distinto para la foto digital y la impresa. Por eso el selector tiene una opción por documento."
+  - question: "¿Cuándo tengo que pagar?"
+    answer: "{{claim:freePreview}} {{claim:paidDownload}}"
   - question: "¿Qué ocurre con mi fotografía después de subirla?"
-    answer: "Las imágenes se procesan de forma cifrada y se eliminan automáticamente de nuestros servidores en menos de 24 horas."
+    answer: "{{claim:deletion24h}}"
 order: 0
 ---
 
@@ -59,40 +58,16 @@ Selecciona en la herramienta el documento que vas a tramitar. El sistema detecta
 
 ### 3. Revisa la vista previa y descarga
 
-Comprueba el resultado antes de pagar. Descarga el archivo digital para trámites online o una hoja con varias copias para imprimir en casa o en una tienda.
-
-## Elige tu documento
-
-Cada documento tiene su propia página con requisitos, preguntas frecuentes y la herramienta ya configurada.
-
-### Foto para pasaporte
-
-- [Foto para pasaporte online](/es/foto-pasaporte): la herramienta general para cualquier pasaporte.
-- [Foto para pasaporte mexicano](/es/foto-pasaporte-mexico): requisitos y creador online para trámites ante la SRE.
-- [Foto para pasaporte español](/es/foto-pasaporte-espana): requisitos y herramienta para el pasaporte de España.
-- [Tamaño y requisitos de la foto de pasaporte](/es/tamano-foto-pasaporte): guía con medidas y errores frecuentes.
-
-### Foto carnet y DNI
-
-- [Foto para DNI y NIE](/es/foto-dni): requisitos y herramienta para el DNI.
-- [Medidas de la foto carnet](/es/medidas-foto-carnet): tamaños habituales en cm, mm y píxeles.
-
-### Foto para visa
-
-- [Foto para visa americana (DS-160)](/es/foto-visa-americana): requisitos y subida al formulario.
+Comprueba el resultado antes de pagar y descarga el archivo digital para trámites online. {{claim:printSheet}}
 
 ## Por qué preparar tu foto online
 
 Hacer la foto desde casa te ahorra desplazamientos y esperas:
 
 - **Repite la foto las veces que quieras** hasta conseguir una expresión y un encuadre correctos.
-- **Comprobaciones de requisitos** antes de descargar, para detectar problemas habituales de encuadre y fondo.
-- **Fondo ajustado automáticamente**, sin necesidad de un estudio.
-- **Descarga digital o en hoja para imprimir**, según lo que pida tu trámite.
-
-## Antes de presentar tu foto
-
-Los requisitos cambian según el país, el documento y si la foto se entrega impresa o en digital. Por eso cada página de PixPassport remite a la fuente oficial correspondiente: consulta siempre la norma vigente de la autoridad que emite tu documento.
+- **{{claim:requirementChecks.short}}** antes de descargar.
+- **{{claim:backgroundAdjust.short}}**, sin necesidad de un estudio.
+- **{{claim:printSheet.short}}**, además del archivo para subir a un portal.
 
 ## Errores habituales que debes evitar
 

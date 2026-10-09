@@ -16,4 +16,4 @@ Confirmar canales de contacto, horario y tiempos de respuesta reales. No promete
 Cuando esté listo, cambiar status a "ready": el enlace del pie de página aparece automáticamente.
 -->
 
-Estamos preparando la versión en español de esta página. Mientras tanto, encontrarás los canales de soporte en la [página de contacto en inglés](/contact).
+Esta página todavía no está traducida. Hasta entonces, encontrarás los canales de soporte en la [página de contacto en inglés](/contact).

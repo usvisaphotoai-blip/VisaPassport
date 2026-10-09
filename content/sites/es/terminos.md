@@ -16,4 +16,4 @@ Necesita texto legal revisado por un profesional. Debe ser coherente con los cla
 Cuando esté listo, cambiar status a "ready": el enlace del pie de página aparece automáticamente.
 -->
 
-Estamos preparando la versión en español de estas condiciones. Mientras tanto, las condiciones vigentes son los [términos de uso en inglés](/terms).
+Estas condiciones aún no están disponibles en español. Las que se aplican hoy son los [términos de uso en inglés](/terms).
