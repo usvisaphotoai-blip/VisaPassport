@@ -25,6 +25,8 @@ linkAliases:
 nav:
   - label: "Foto tamaño carnet"
     href: "/es/medidas-foto-carnet"
+  - label: "Foto pasaporte"
+    href: "/es/foto-pasaporte"
   - label: "Foto DNI y Pasaporte"
     href: "/es/foto-dni"
   - label: "Visado EE. UU."
