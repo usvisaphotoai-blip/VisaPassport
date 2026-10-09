@@ -10,7 +10,8 @@
     "postbuild": "node scripts/fix-lang.mjs",
     "start": "NODE_OPTIONS='--max-old-space-size=3072' next start",
     "lint": "eslint",
-    "sites:check": "node scripts/validate-sites.mjs"
+    "sites:check": "node scripts/validate-sites.mjs",
+    "seo:duplicates": "node scripts/audit-duplicates.mjs"
   },
   "dependencies": {
     "@mediapipe/tasks-vision": "^0.10.34",
