@@ -214,6 +214,7 @@ ui:
   mainNav: "Navegación principal"
   menu: "Abrir menú"
   breadcrumbHome: "PixPassport España"
+  breadcrumbRoot: "Inicio"
   breadcrumbLabel: "Estás aquí"
   onThisPage: "En esta página"
   faqHeading: "Preguntas frecuentes"

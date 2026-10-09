@@ -383,7 +383,7 @@ export function getSitePage(code: string, slug: string): SitePage | null {
 
 /** Section home → each existing ancestor page → current page */
 export function getBreadcrumbs(site: SiteConfig, page: SitePageMeta, all: SitePageMeta[]): SiteLink[] {
-  const crumbs: SiteLink[] = [{ label: site.ui.breadcrumbHome, href: site.basePath }];
+  const crumbs: SiteLink[] = [{ label: site.ui.breadcrumbRoot || site.ui.breadcrumbHome, href: site.basePath }];
   if (!page.slug) return crumbs;
   const parts = page.slug.split("/");
   for (let i = 1; i <= parts.length; i++) {

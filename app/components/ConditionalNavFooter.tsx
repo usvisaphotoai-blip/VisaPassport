@@ -17,7 +17,11 @@ export default function ConditionalNavFooter({
   const pathname = usePathname();
   const isFrench = pathname === "/fr" || pathname?.startsWith("/fr/");
   const isGerman = pathname === "/de" || pathname?.startsWith("/de/");
-  const countrySite = countrySites.find((s) => pathname === s.prefix || pathname?.startsWith(`${s.prefix}/`));
+  // Country sections are prerendered at their internal route (/sites/es/…, reached through rewrites),
+  // so match that too — otherwise the static HTML ships the global English navbar and footer.
+  const countrySite = countrySites.find((s) =>
+    [s.prefix, `/sites${s.prefix}`].some((p) => pathname === p || pathname?.startsWith(`${p}/`))
+  );
   const countryLang = countrySite?.lang;
   const isLocalized = isFrench || isGerman || !!countrySite;
 

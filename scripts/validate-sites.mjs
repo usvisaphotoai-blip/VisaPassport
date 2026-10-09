@@ -24,6 +24,15 @@ const PLACEHOLDER_RE = /\[VERIFICAR|ANTES DE PUBLICAR/i;
 const SPEC_RE =
   /\b\d+(?:[.,]\d+)?\s*[x×]\s*\d+(?:[.,]\d+)?\b|\b\d+(?:[.,]\d+)?\s*(?:mm|cm|px|kb|mb|ppp|dpi|pulgadas?|p[ií]xeles)\b/i;
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
+const YEAR_RE = /\b20(2[0-6])\b/;
+const STOPWORDS = new Set('a al con de del el en la las lo los o para por que se su sus tu tus un una y'.split(' '));
+const countPhrase = (words, phrase) => {
+  let n = 0;
+  for (let i = 0; i + phrase.length <= words.length; i++) {
+    if (phrase.every((w, j) => words[i + j] === w)) n++;
+  }
+  return n;
+};
 // Acceptance guarantees are never allowed, in pages or in _site.md
 const GUARANTEE_RE = /garant[ií]a|garantiza|100\s*%|aprobada seguro|aceptaci[oó]n asegurada/i;
 // Product claims that must come from _claims.md ({{claim:key}}), never typed into a page
@@ -125,11 +134,23 @@ for (const code of getSiteCodes()) {
     remember('h1', data.h1, rel);
     remember('primaryKeyword', data.primaryKeyword, rel);
 
+    // ── Title, description, H1 ────────────────────────────────────────────
     const titleLen = (data.title || '').length;
-    if (titleLen > 65) error(rel, `title is ${titleLen} chars (max 65)`);
-    else if (titleLen > 60) warn(rel, `title is ${titleLen} chars (aim for ≤ 60)`);
+    if (titleLen < 30 || titleLen > 60) quality(rel, `title is ${titleLen} chars (must be 30–60)`);
     const descLen = (data.description || '').length;
-    if (descLen < 110 || descLen > 165) warn(rel, `description is ${descLen} chars (aim for 120–160)`);
+    if (descLen < 70 || descLen > 155) quality(rel, `meta description is ${descLen} chars (must be 70–155)`);
+    for (const key of ['title', 'h1']) {
+      const y = String(data[key] || '').match(YEAR_RE);
+      if (y) quality(rel, `${key} contains a year (${y[0]}) — it dates the page`);
+    }
+    // The same keyword phrase twice in one field reads as stuffing
+    const phrases = [data.primaryKeyword, ...(data.secondaryKeywords || [])].filter(Boolean).map((k) => norm(k).split(' '));
+    for (const key of ['title', 'description', 'h1']) {
+      const words = norm(data[key]).split(' ');
+      for (const ph of phrases) {
+        if (ph.length > 1 && countPhrase(words, ph) > 1) quality(rel, `${key} repeats "${ph.join(' ')}"`);
+      }
+    }
 
     const kw = norm(data.primaryKeyword);
     if (kw && !norm(data.title).includes(kw) && !norm(data.h1).includes(kw)) {
@@ -160,6 +181,25 @@ for (const code of getSiteCodes()) {
     for (const m of cleanBody.matchAll(/!\[([^\]]*)\]\(([^)]+)\)/g)) {
       if (!m[1].trim()) error(rel, `image without alt text: ${m[2]}`);
     }
+    // A body "Preguntas frecuentes" section would sit next to the template FAQ (from frontmatter)
+    for (const m of cleanBody.matchAll(/^#{2,3}\s+(.*preguntas frecuentes.*|.*perguntas frequentes.*)$/gim)) {
+      quality(rel, `body heading "${m[1]}" duplicates the FAQ section — put questions in the faq frontmatter`);
+    }
+    for (const l of bodyLinks(p, code)) {
+      if (/\/(#|$)/.test(l.href.replace(/^\/[a-z]{2}\/?$/, ''))) quality(rel, `link ${l.href} has a trailing slash (canonical URLs have none)`);
+    }
+
+    // ── Keyword density in the visible copy ───────────────────────────────
+    const bodyWords = visibleBlocks(p, claims)
+      .filter((b) => !b.kind.startsWith('faq'))
+      .flatMap((b) => norm(b.text).split(' ').filter(Boolean));
+    for (const ph of phrases) {
+      const n = countPhrase(bodyWords, ph);
+      const density = bodyWords.length ? (n * ph.length) / bodyWords.length : 0;
+      if (n > 5 || (n > 1 && density > 0.02)) {
+        quality(rel, `"${ph.join(' ')}" appears ${n}× in body text (${(density * 100).toFixed(1)}% of ${bodyWords.length} words; max 5× / 2%)`);
+      }
+    }
     for (const slug of data.related || []) {
       const target = `/${code}/${slug}`;
       if (checkTarget(rel, target, 'related', p.status === 'ready') && p.status === 'ready') link(target);
@@ -185,7 +225,14 @@ for (const code of getSiteCodes()) {
       remember('faq', f.question, rel);
     }
 
-    if (data.image && !data.image.alt) error(rel, 'image is missing alt text');
+    if (data.type !== 'legal' && !data.image?.alt) quality(rel, 'image.alt is missing');
+    if (data.image?.alt) {
+      const alt = data.image.alt;
+      const kwCount = Math.max(0, ...phrases.map((ph) => countPhrase(norm(alt).split(' '), ph)));
+      if (alt.length > 125) quality(rel, `image.alt is ${alt.length} chars (keep it ≤ 125 and descriptive)`);
+      if (kwCount > 1 || (alt.match(/,/g) || []).length > 2) quality(rel, `image.alt looks keyword-stuffed: "${alt}"`);
+      if (norm(alt) === norm(data.primaryKeyword)) quality(rel, 'image.alt is just the primary keyword — describe the image');
+    }
     for (const brief of data.imageBriefs || []) {
       if (!brief.alt) error(rel, 'imageBriefs entry is missing alt text');
     }

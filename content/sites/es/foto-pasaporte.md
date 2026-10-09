@@ -1,6 +1,6 @@
 ---
 title: "Foto para pasaporte online: crea la tuya | PixPassport"
-description: "Crea tu foto para pasaporte online: sube una foto, ajústala al formato de tu país y descárgala lista para imprimir o subir. Revisa los requisitos oficiales."
+description: "Crea tu foto para pasaporte online: sube una foto, ajústala al formato de tu país y descárgala lista para imprimir o para subirla a tu trámite."
 h1: "Crea tu foto para pasaporte online"
 intro: "Elige el país que expide tu pasaporte, sube una foto reciente y la herramienta recorta la imagen con las proporciones de ese pasaporte. Así no tienes que calcular márgenes ni medir a mano la altura de la cabeza."
 breadcrumbLabel: "Foto para pasaporte"

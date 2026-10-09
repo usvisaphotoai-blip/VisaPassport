@@ -1,6 +1,6 @@
 ---
 title: "Foto visa americana DS-160: requisitos | PixPassport"
-description: "Prepara tu foto para la visa americana y el formulario DS-160: requisitos, tamaño y creador online. Confirma en el sitio oficial del Departamento de Estado."
+description: "Prepara tu foto para la visa americana y el formulario DS-160: requisitos, tamaño y creador online. Confírmalo en la guía del Departamento de Estado."
 h1: "Foto para visa americana: requisitos y creador online"
 intro: "Si vas a pedir la visa de Estados Unidos, la foto es uno de los puntos donde más se atascan los solicitantes al subirla al DS-160. Aquí tienes los requisitos habituales, qué hacer cuando el formulario la rechaza y cómo preparar una foto digital desde tu celular."
 breadcrumbLabel: "Foto visa americana"

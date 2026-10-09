@@ -1,6 +1,10 @@
 // Post-build guard for the prerendered country sections (.next/server/app/sites/<code>).
 // Fails the build when editorial placeholders reach the output, or when a page links to a section
-// page that is missing or draft (noindex), or when a page's hreflang tags differ from public/sitemap.xml. Markdown HTML comments are stripped
+// page that is missing or draft (noindex), or when a page's hreflang tags differ from public/sitemap.xml.
+// Link and page-structure checks apply to sections with `qualityGate: true` (es); placeholder and
+// sitemap checks apply to every section. Also validates each rendered page of a gated section: one <h1>, no skipped heading levels, self-referencing https://www
+// canonical without trailing slash, robots noindex exactly on drafts, BreadcrumbList JSON-LD
+// (root → page), and FAQPage JSON-LD only for Q&A that is visible on the page. Markdown HTML comments are stripped
 // before rendering (lib/country-sites.ts); React's own <!-- --> text separators are expected.
 // Usage: node scripts/check-build-output.mjs   (runs from `postbuild`)
 import fs from 'fs';
@@ -15,6 +19,15 @@ const sitemapHreflang = new Map(
     Object.fromEntries([...block.matchAll(/hreflang="([^"]+)" href="([^"]+)"/g)].map((m) => [m[1], m[2]])),
   ])
 );
+const decode = (s) =>
+  s
+    .replace(/&quot;/g, '"')
+    .replace(/&#x27;|&#39;/g, "'")
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&');
+const squash = (s) => decode(s).replace(/\s+/g, ' ').trim();
 const sameMap = (a, b) => JSON.stringify(Object.entries(a).sort()) === JSON.stringify(Object.entries(b).sort());
 
 const OUT_DIR = path.join(process.cwd(), '.next/server/app/sites');
@@ -37,11 +50,12 @@ if (files.length === 0) {
 
 const sites = Object.fromEntries(
   getSiteCodes().map((code) => {
-    const { pages } = loadSite(code);
+    const { pages, config } = loadSite(code);
     return [
       code,
       {
         pages,
+        gate: !!config.qualityGate,
         all: new Set(pages.map((p) => p.path)),
         ready: new Set(pages.filter((p) => p.status === 'ready').map((p) => p.path)),
       },
@@ -78,14 +92,59 @@ for (const file of files) {
       errors.push(`${rel}: head hreflang ${JSON.stringify(head)} ≠ sitemap ${JSON.stringify(inSitemap)}`);
     }
   }
+
+  if (page && sites[code].gate) {
+    // Headings: exactly one <h1>, never skip a level
+    const levels = [...content.matchAll(/<h([1-6])\b/gi)].map((m) => Number(m[1]));
+    const h1s = levels.filter((l) => l === 1).length;
+    if (h1s !== 1) errors.push(`${rel}: ${h1s} <h1> elements (need exactly 1)`);
+    levels.reduce((prev, level) => {
+      if (level > prev + 1) errors.push(`${rel}: heading jumps from h${prev} to h${level}`);
+      return level;
+    }, 1);
+
+    // Canonical: self-referencing, https://www, no trailing slash
+    const canonical = content.match(/<link\b[^>]*rel="canonical"[^>]*href="([^"]+)"/i)?.[1];
+    if (canonical !== page.url) errors.push(`${rel}: canonical ${canonical} ≠ ${page.url}`);
+
+    // Robots: noindex exactly on drafts
+    const robots = content.match(/<meta\b[^>]*name="robots"[^>]*content="([^"]+)"/i)?.[1] || '';
+    const noindex = /noindex/i.test(robots);
+    if (page.status === 'draft' && !noindex) errors.push(`${rel}: draft page is indexable (robots="${robots}")`);
+    if (page.status === 'ready' && noindex) errors.push(`${rel}: ready page has robots="${robots}"`);
+
+    // Structured data
+    const ld = [...content.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].flatMap((m) => {
+      try {
+        return [JSON.parse(m[1])];
+      } catch {
+        errors.push(`${rel}: invalid JSON-LD`);
+        return [];
+      }
+    });
+    const visible = squash(content.replace(/<script[\s\S]*?<\/script>/gi, ' ').replace(/<[^>]+>/g, ' '));
+    for (const faq of ld.filter((d) => d['@type'] === 'FAQPage')) {
+      for (const q of faq.mainEntity || []) {
+        if (!visible.includes(squash(q.name))) errors.push(`${rel}: FAQPage question not visible: "${q.name}"`);
+        if (!visible.includes(squash(q.acceptedAnswer?.text || ''))) errors.push(`${rel}: FAQPage answer not visible for "${q.name}"`);
+      }
+    }
+    const crumbs = ld.find((d) => d['@type'] === 'BreadcrumbList')?.itemListElement || [];
+    const root = `${BASE_URL}/${code}`;
+    if (!crumbs.length) errors.push(`${rel}: missing BreadcrumbList JSON-LD`);
+    else {
+      if (crumbs[0].item !== root) errors.push(`${rel}: breadcrumb must start at ${root}`);
+      if (crumbs.at(-1).item !== page.url) errors.push(`${rel}: breadcrumb must end at ${page.url}`);
+    }
+  }
   // <a href> into any country section must target a ready page
   for (const m of content.matchAll(/<a\b[^>]*\bhref="([^"]+)"/g)) {
     const href = m[1].replace(BASE_URL, '');
-    const code = href.match(/^\/([a-z]{2})(?:[/#?]|$)/)?.[1];
-    if (!code || !sites[code]) continue;
     const target = hrefToPath(href);
-    if (!sites[code].all.has(target)) errors.push(`${rel}: links to missing page ${target}`);
-    else if (!sites[code].ready.has(target)) errors.push(`${rel}: links to draft (noindex) page ${target}`);
+    const linked = target.match(/^\/([a-z]{2})(?:\/|$)/)?.[1];
+    if (!sites[code]?.gate || !linked || !sites[linked]) continue;
+    if (!sites[linked].all.has(target)) errors.push(`${rel}: links to missing page ${target}`);
+    else if (!sites[linked].ready.has(target)) errors.push(`${rel}: links to draft (noindex) page ${target}`);
   }
 }
 
