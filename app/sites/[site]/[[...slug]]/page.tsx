@@ -102,7 +102,8 @@ export default async function SitePageRoute({ params }: PageProps) {
   const crumbs = getBreadcrumbs(site, page, all);
   // Draft pages are never linked: no cards, no related entries
   const published = all.filter(isPublished);
-  const children = page.type === "home" || page.type === "hub" ? getChildPages(page, published) : [];
+  const children =
+    page.type === "home" || page.type === "hub" ? getChildPages(page, published).filter((p) => p.type !== "legal") : [];
   const related = page.related
     .map((slug) => published.find((p) => p.slug === slug))
     .filter((p): p is SitePageMeta => !!p);
@@ -111,7 +112,9 @@ export default async function SitePageRoute({ params }: PageProps) {
   const countryDocuments = await getAllCountryDocuments(site);
   const defaultDoc =
     (page.tool && toolDocuments.find((d) => d.id === page.tool!.doc)?.id) || toolDocuments[0]?.id || countryDocuments[0]?.id;
-  const hasTool = !!defaultDoc;
+  // Legal/trust pages (about, contact, privacy, terms) are plain documents: no tool, badge or hero visual
+  const isLegal = page.type === "legal";
+  const hasTool = !isLegal && !!defaultDoc;
 
   const schemas: Record<string, unknown>[] = [
     {
@@ -164,7 +167,7 @@ export default async function SitePageRoute({ params }: PageProps) {
   const pageCta = page.cta && filterPublishedLinks(site, [page.cta], new Set(published.map((p) => pagePath(site.code, p.slug))))[0];
   const primaryCta = hasTool ? { label: ui.heroToolCta, href: "#tool" } : pageCta;
   const secondaryCta = hasTool ? pageCta : undefined;
-  const badge = page.badge || ui.heroBadge;
+  const badge = isLegal ? undefined : page.badge || ui.heroBadge;
   const showToc = page.toc.length > 0;
 
   return (
@@ -248,6 +251,7 @@ export default async function SitePageRoute({ params }: PageProps) {
               </p>
             </div>
 
+            {!isLegal && (
             <div className="w-full lg:w-auto flex justify-center">
               {page.image?.src ? (
                 <img
@@ -274,6 +278,7 @@ export default async function SitePageRoute({ params }: PageProps) {
                 />
               )}
             </div>
+            )}
           </div>
         </div>
       </header>

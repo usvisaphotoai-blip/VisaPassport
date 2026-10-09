@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { filterPublishedLinks, getPublishedPaths, getSiteCodes, getSiteConfig } from "@/lib/country-sites";
 import SiteNavbar from "../components/SiteNavbar";
 import SiteFooter from "../components/SiteFooter";
+import SiteDisclaimer from "../components/SiteDisclaimer";
 
 // Served at /<code>/* through the rewrites in next.config.ts. dynamicParams stays on (the default)
 // so unknown slugs reach the page's notFound() and render [site]/not-found.tsx inside this layout;
@@ -30,6 +31,7 @@ export default async function SiteLayout({
       .map((col) => ({ ...col, links: filterPublishedLinks(site, col.links, published) }))
       .filter((col) => col.links.length > 0),
   };
+  const legalLinks = filterPublishedLinks(site, site.legalLinks, published);
 
   return (
     <div lang={site.lang} className="flex flex-col min-h-screen">
@@ -50,7 +52,8 @@ export default async function SiteLayout({
       <main id="main-content" className="grow">
         {children}
       </main>
-      <SiteFooter site={{ ...site, footer }} />
+      <SiteDisclaimer site={site} />
+      <SiteFooter site={{ ...site, footer, legalLinks }} />
     </div>
   );
 }

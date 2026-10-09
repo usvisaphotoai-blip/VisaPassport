@@ -27,9 +27,22 @@ export default function SiteFooter({ site }: { site: SiteConfig }) {
             </div>
           ))}
         </div>
-        <p className="mt-10 pt-6 border-t border-slate-800 text-xs text-slate-500">
-          © {new Date().getFullYear()} PixPassport. {site.ui.footerRights}
-        </p>
+        <div className="mt-10 pt-6 border-t border-slate-800 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-xs text-slate-500">
+            © {new Date().getFullYear()} PixPassport. {site.ui.footerRights}
+          </p>
+          {site.legalLinks.length > 0 && (
+            <ul className="flex flex-wrap gap-x-4 gap-y-1 text-xs">
+              {site.legalLinks.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className="text-slate-400 hover:text-white transition-colors">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
       </div>
     </footer>
   );

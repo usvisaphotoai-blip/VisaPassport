@@ -24,6 +24,17 @@ const PLACEHOLDER_RE = /\[VERIFICAR|ANTES DE PUBLICAR/i;
 const SPEC_RE =
   /\b\d+(?:[.,]\d+)?\s*[x×]\s*\d+(?:[.,]\d+)?\b|\b\d+(?:[.,]\d+)?\s*(?:mm|cm|px|kb|mb|ppp|dpi|pulgadas?|p[ií]xeles)\b/i;
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
+// Acceptance guarantees are never allowed, in pages or in _site.md
+const GUARANTEE_RE = /garant[ií]a|garantiza|100\s*%|aprobada seguro|aceptaci[oó]n asegurada/i;
+// Product claims that must come from _claims.md ({{claim:key}}), never typed into a page
+const CLAIM_PATTERNS = [
+  ['deletion24h', /\b24\s*(h|horas)\b/i],
+  ['freePreview', /sin coste|\bgratis\b|gratuit[ao]/i],
+  ['paidDownload', /\bpagas?\b[^.]{0,40}\b(descarga|cuando)/i],
+  ['printSheet', /hoja (lista )?para imprimir|hoja con varias copias|hoja de impresi[oó]n/i],
+  ['requirementChecks', /comprobaciones de requisitos/i],
+  ['refundIfRejected', /reembolso si\b|te devolvemos/i],
+];
 
 /** Every string a visitor can see that comes from page frontmatter */
 function renderedFrontmatter(data) {
@@ -55,7 +66,12 @@ for (const code of getSiteCodes()) {
   }
   for (const s of allStrings(site)) {
     if (PLACEHOLDER_RE.test(s)) quality('_site.md', `placeholder text would be rendered: "${s.slice(0, 80)}"`);
+    if (GUARANTEE_RE.test(s)) quality('_site.md', `acceptance-guarantee wording: "${s.slice(0, 80)}"`);
+    for (const m of s.matchAll(/\{\{\s*claim:([\w-]+)/g)) {
+      if (!claims[m[1]]) error('_site.md', `unknown claim {{claim:${m[1]}}} (define it in _claims.md)`);
+    }
   }
+  const usedClaims = new Set([...allStrings(site)].flatMap((s) => [...s.matchAll(/\{\{\s*claim:([\w-]+)/g)].map((m) => m[1])));
   const toolDocs = new Set((site.tool?.documents || []).map((d) => d.id));
 
   const paths = new Set(pages.map((p) => p.path));
@@ -163,7 +179,7 @@ for (const code of getSiteCodes()) {
     }
 
     const faq = data.faq || [];
-    if (faq.length < 3) warn(rel, `only ${faq.length} FAQ items (aim for 3+)`);
+    if (faq.length < 3 && data.type !== 'legal') warn(rel, `only ${faq.length} FAQ items (aim for 3+)`);
     for (const f of faq) {
       if (!f.question || !f.answer) error(rel, 'FAQ item missing question or answer');
       remember('faq', f.question, rel);
@@ -185,6 +201,20 @@ for (const code of getSiteCodes()) {
       if (m) quality(rel, `placeholder "${m[0]}" would be rendered (keep editorial notes inside <!-- -->)`);
     }
 
+    // ── Product claims and guarantees ─────────────────────────────────────
+    for (const s of [...renderedFrontmatter(data), body]) {
+      const g = s.match(GUARANTEE_RE);
+      if (g) quality(rel, `acceptance-guarantee wording "${g[0]}" — PixPassport cannot promise acceptance`);
+      for (const [key, re] of CLAIM_PATTERNS) {
+        const m = s.match(re);
+        if (m) quality(rel, `hardcoded product claim "${m[0]}" — use {{claim:${key}}} from _claims.md`);
+      }
+      for (const m of s.matchAll(/\{\{\s*claim:([\w-]+)/g)) {
+        if (!claims[m[1]]) error(rel, `unknown claim {{claim:${m[1]}}} (define it in _claims.md)`);
+        else if (p.status === 'ready') usedClaims.add(m[1]);
+      }
+    }
+
     const sources = data.officialSources || [];
     if (!Array.isArray(sources)) error(rel, 'officialSources must be a list of { name, url }');
     for (const s of Array.isArray(sources) ? sources : []) {
@@ -204,6 +234,10 @@ for (const code of getSiteCodes()) {
 
   for (const [target, count] of inbound) {
     if (count === 0 && target !== `/${code}`) error(target, 'orphan page: nothing links to it');
+  }
+
+  for (const key of usedClaims) {
+    if (claims[key] && claims[key].confirmed !== true) warn('_claims.md', `claim "${key}" is live but not confirmed yet`);
   }
 
   // Cannibalization: another page's title targeting this page's exact primary keyword

@@ -57,6 +57,16 @@ export interface SiteConfig {
   heroSlider?: { before: string; after: string; aspect?: string };
   /** Overrides for the /preview/[id] copy, keyed like DEFAULT_PREVIEW_STRINGS (lib/preview-strings.ts) */
   preview?: Record<string, unknown>;
+  /** Site-wide trust/legal links in the footer (about, contact, privacy, terms) */
+  legalLinks: SiteLink[];
+  /** Product claims from _claims.md, already referenced through {{claim:key}} */
+  claims: Record<string, SiteClaim>;
+}
+
+export interface SiteClaim {
+  text: string;
+  short?: string;
+  confirmed?: boolean;
 }
 
 export interface SiteFaqItem {
@@ -71,7 +81,7 @@ export interface SiteImage {
   brief?: string;
 }
 
-export type SitePageType = "home" | "landing" | "guide" | "hub";
+export type SitePageType = "home" | "landing" | "guide" | "hub" | "legal";
 
 /** draft pages render with noindex and stay out of the sitemap and every internal link */
 export type SitePageStatus = "draft" | "ready";
@@ -149,10 +159,33 @@ export function getSiteCodes(): string[] {
     .map((d) => d.name);
 }
 
+/** content/sites/<code>/_claims.md → the section's product claims */
+function getSiteClaims(code: string): Record<string, SiteClaim> {
+  const file = path.join(SITES_DIR, code, "_claims.md");
+  if (!fs.existsSync(file)) return {};
+  return matter(fs.readFileSync(file, "utf8")).data.siteClaims || {};
+}
+
+/** Replaces {{claim:key}} / {{claim:key.short}} in every string of a value */
+function withClaims<T>(value: T, claims: Record<string, SiteClaim>): T {
+  if (typeof value === "string") {
+    return value.replace(/\{\{\s*claim:([\w-]+)(?:\.(\w+))?\s*\}\}/g, (match, key: string, variant?: string) => {
+      const claim = claims[key] as unknown as Record<string, string> | undefined;
+      return claim?.[variant || "text"] ?? match;
+    }) as T;
+  }
+  if (Array.isArray(value)) return value.map((v) => withClaims(v, claims)) as T;
+  if (value && typeof value === "object") {
+    return Object.fromEntries(Object.entries(value).map(([k, v]) => [k, withClaims(v, claims)])) as T;
+  }
+  return value;
+}
+
 export function getSiteConfig(code: string): SiteConfig | null {
   const file = path.join(SITES_DIR, code, "_site.md");
   if (!fs.existsSync(file)) return null;
-  const { data } = matter(fs.readFileSync(file, "utf8"));
+  const claims = getSiteClaims(code);
+  const data = withClaims(matter(fs.readFileSync(file, "utf8")).data, claims);
   return {
     code,
     basePath: `/${code}`,
@@ -170,6 +203,8 @@ export function getSiteConfig(code: string): SiteConfig | null {
     ui: data.ui || {},
     heroSlider: data.heroSlider,
     preview: data.preview,
+    legalLinks: data.legalLinks || [],
+    claims,
   };
 }
 
@@ -241,7 +276,7 @@ function toMeta(site: SiteConfig, slug: string, data: Record<string, any>): Site
 function readPageFile(site: SiteConfig, rel: string) {
   const raw = fs.readFileSync(path.join(SITES_DIR, site.code, rel), "utf8");
   const { data, content } = matter(raw);
-  return { meta: toMeta(site, fileToSlug(rel), data), content };
+  return { meta: toMeta(site, fileToSlug(rel), withClaims(data, site.claims)), content: withClaims(content, site.claims) };
 }
 
 export function getSitePages(code: string): SitePageMeta[] {
