@@ -27,7 +27,7 @@ tool:
   doc: "mexico-passport"
 cta:
   label: "Crear mi foto para pasaporte mexicano"
-  href: "#herramienta"
+  href: "#tool"
 faq:
   - question: "¿Qué requisitos tiene la foto del pasaporte mexicano?"
     answer: "La SRE fija las condiciones de la foto, que suelen incluir rostro descubierto y de frente, expresión neutra y fondo liso. Consulta la información vigente en el sitio oficial de la SRE antes de tu cita, porque puede actualizarse."
@@ -42,7 +42,7 @@ faq:
 order: 3
 ---
 
-<!-- Componente de la herramienta con id="herramienta" (plantilla de México) -->
+<!-- Componente de la herramienta con id="tool" (plantilla de México) -->
 
 <!--
 ANTES DE PUBLICAR (equipo de contenido):

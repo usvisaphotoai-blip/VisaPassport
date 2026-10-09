@@ -28,7 +28,7 @@ tool:
   doc: "spain-passport"
 cta:
   label: "Crear mi foto ahora"
-  href: "#herramienta"
+  href: "#tool"
 faq:
   - question: "¿Qué documentos puedo preparar con PixPassport?"
     answer: "Puedes crear fotos para pasaporte, DNI, carnet de identidad o de conducir y visas. Elige el documento en el selector de la herramienta y el recorte se ajusta al formato correspondiente. Antes de presentarla, comprueba siempre el requisito vigente en la fuente oficial de tu trámite."
@@ -43,7 +43,7 @@ faq:
 order: 0
 ---
 
-<!-- Componente de la herramienta con id="herramienta" -->
+<!-- Componente de la herramienta con id="tool" -->
 
 ## Cómo hacer tu foto para documentos en tres pasos
 

@@ -10,6 +10,10 @@ author: "Equipo PixPassport España"
 defaultImage: "https://res.cloudinary.com/dipzpwbbk/image/upload/45_35_passport_photo_ogdxnu.jpg"
 # Turns the stricter content checks in scripts/validate-sites.mjs from warnings into build errors
 qualityGate: true
+# Slugs that have been used in copy but are not real routes → the route that owns the intent
+linkAliases:
+  /es/foto-tamano-carnet: /es/medidas-foto-carnet
+  /es/foto-visado-estados-unidos: /es/foto-visa-americana
 
 nav:
   - label: "Foto tamaño carnet"

@@ -29,7 +29,7 @@ tool:
   doc: "spain-passport"
 cta:
   label: "Ajustar mi foto al tamaño de mi país"
-  href: "#herramienta"
+  href: "#tool"
 faq:
   - question: "¿De qué tamaño es la foto de pasaporte?"
     answer: "Depende del país y de la autoridad que emite el pasaporte. No existe una medida única: consulta la tabla de esta página, la página de tu país o la fuente oficial de tu trámite."
@@ -46,7 +46,7 @@ faq:
 order: 2
 ---
 
-<!-- Componente de mini-herramienta (comprobar/ajustar al país elegido) con id="herramienta" -->
+<!-- Componente de mini-herramienta (comprobar/ajustar al país elegido) con id="tool" -->
 
 <!--
 ANTES DE PUBLICAR (equipo de contenido):

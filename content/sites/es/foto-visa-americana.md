@@ -30,7 +30,7 @@ tool:
   doc: "us-visa-ds160"
 cta:
   label: "Crear mi foto para visa americana"
-  href: "#herramienta"
+  href: "#tool"
 faq:
   - question: "¿Qué requisitos tiene la foto para la visa americana?"
     answer: "Debe ser una foto reciente, en color, de frente, con expresión neutra y fondo liso blanco o casi blanco. El Departamento de Estado publica las condiciones y las actualiza, así que revisa su guía oficial antes de subirla."
@@ -45,7 +45,7 @@ faq:
 order: 8
 ---
 
-<!-- Componente de la herramienta con id="herramienta" (preset DS-160 digital) -->
+<!-- Componente de la herramienta con id="tool" (preset DS-160 digital) -->
 
 <!--
 ANTES DE PUBLICAR (equipo de contenido):

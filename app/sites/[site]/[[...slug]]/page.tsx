@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
   SITE_BASE_URL,
+  filterPublishedLinks,
   flagEmoji,
   getAllCountryDocuments,
   getBreadcrumbs,
@@ -160,8 +161,9 @@ export default async function SitePageRoute({ params }: PageProps) {
     });
   }
 
-  const primaryCta = hasTool ? { label: ui.heroToolCta, href: "#tool" } : page.cta;
-  const secondaryCta = hasTool ? page.cta : undefined;
+  const pageCta = page.cta && filterPublishedLinks(site, [page.cta], new Set(published.map((p) => pagePath(site.code, p.slug))))[0];
+  const primaryCta = hasTool ? { label: ui.heroToolCta, href: "#tool" } : pageCta;
+  const secondaryCta = hasTool ? pageCta : undefined;
   const badge = page.badge || ui.heroBadge;
   const showToc = page.toc.length > 0;
 

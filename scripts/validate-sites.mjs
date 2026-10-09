@@ -59,17 +59,36 @@ for (const code of getSiteCodes()) {
   const toolDocs = new Set((site.tool?.documents || []).map((d) => d.id));
 
   const paths = new Set(pages.map((p) => p.path));
-  const resolves = (href) => paths.has(hrefToPath(href));
-  const inbound = new Map(pages.map((p) => [p.path, 0]));
+  // Only ready pages are published: drafts are noindex and never linked (lib/country-sites.ts)
+  const published = new Set(pages.filter((p) => p.status === 'ready').map((p) => p.path));
+  const aliases = site.linkAliases || {};
+  const inbound = new Map(pages.filter((p) => p.status === 'ready').map((p) => [p.path, 0]));
   const link = (href) => {
     const target = hrefToPath(href);
     if (inbound.has(target)) inbound.set(target, inbound.get(target) + 1);
   };
+  /** Internal link check shared by nav, body, related and CTA links. Returns true when it will render. */
+  const checkTarget = (file, href, where, fromReady = true) => {
+    const target = hrefToPath(href);
+    if (aliases[target]) {
+      error(file, `${where} uses ${target}; the real route is ${aliases[target]}`);
+      return false;
+    }
+    if (!paths.has(target)) {
+      error(file, `${where} points to a missing page: ${href} (remove the link and keep the text)`);
+      return false;
+    }
+    if (!published.has(target)) {
+      if (fromReady) warn(file, `${where} → ${target} is draft; it renders as plain text / is hidden until that page is ready`);
+      return false;
+    }
+    return true;
+  };
 
   // Site-wide navigation counts as inbound links
-  for (const l of [...(site.nav || []), ...(site.footer?.columns || []).flatMap((c) => c.links)]) {
-    if (l.href.startsWith(`/${code}`) && !resolves(l.href)) error('_site.md', `nav/footer link does not resolve: ${l.href}`);
-    link(l.href);
+  const siteLinks = [...(site.nav || []), ...(site.footer?.columns || []).flatMap((c) => c.links)];
+  for (const l of siteLinks.filter((l, i) => siteLinks.findIndex((o) => o.href === l.href) === i)) {
+    if (l.href.startsWith(`/${code}`) && checkTarget('_site.md', l.href, 'nav/footer link')) link(l.href);
   }
 
   const seen = { title: new Map(), description: new Map(), h1: new Map(), primaryKeyword: new Map(), faq: new Map() };
@@ -111,26 +130,34 @@ for (const code of getSiteCodes()) {
       prev = level;
     }
 
-    // Internal links
+    // Internal links (only links on ready pages count towards inbound links)
+    const anchors = new Map();
     for (const l of bodyLinks(p, code)) {
-      if (!resolves(l.href)) error(rel, `broken internal link: ${l.href}`);
-      else if (hrefToPath(l.href) !== p.path) link(l.href);
+      if (checkTarget(rel, l.href, `link "${l.text}"`, p.status === 'ready') && p.status === 'ready' && hrefToPath(l.href) !== p.path) link(l.href);
+      const key = `${hrefToPath(l.href)}|${norm(l.text)}`;
+      if (anchors.has(key)) quality(rel, `two links to ${hrefToPath(l.href)} use the same anchor "${l.text}" — vary the anchor or drop one`);
+      anchors.set(key, true);
+    }
+    for (const m of cleanBody.matchAll(/(?<!!)\[[^\]]+\]\((#[^)\s]+)\)/g)) {
+      if (m[1] !== '#tool') warn(rel, `in-page link ${m[1]}: the tool anchor is #tool`);
     }
     for (const m of cleanBody.matchAll(/!\[([^\]]*)\]\(([^)]+)\)/g)) {
       if (!m[1].trim()) error(rel, `image without alt text: ${m[2]}`);
     }
     for (const slug of data.related || []) {
       const target = `/${code}/${slug}`;
-      if (!paths.has(target)) error(rel, `related page not found: ${slug}`);
-      else link(target);
+      if (checkTarget(rel, target, 'related', p.status === 'ready') && p.status === 'ready') link(target);
     }
-    if (data.cta?.href?.startsWith(`/${code}`) && !resolves(data.cta.href)) error(rel, `cta link does not resolve: ${data.cta.href}`);
+    if (data.cta?.href?.startsWith(`/${code}`)) checkTarget(rel, data.cta.href, 'cta', p.status === 'ready');
+    if (data.cta?.href?.startsWith('#') && data.cta.href !== '#tool') {
+      error(rel, `cta href ${data.cta.href} does not match an anchor (the tool is #tool)`);
+    }
     if (data.tool && !toolDocs.has(data.tool.doc)) error(rel, `tool.doc "${data.tool.doc}" is not in _site.md tool.documents`);
 
-    // Home and hubs link to their direct children automatically
-    if (!p.slug || data.type === 'hub') {
+    // Home and hubs link to their ready direct children automatically
+    if (p.status === 'ready' && (!p.slug || data.type === 'hub')) {
       const prefix = p.slug ? `${p.path}/` : `/${code}/`;
-      for (const child of pages) {
+      for (const child of pages.filter((c) => c.status === 'ready')) {
         if (child.path.startsWith(prefix) && !child.path.slice(prefix.length).includes('/')) link(child.path);
       }
     }

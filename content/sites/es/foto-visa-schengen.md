@@ -28,9 +28,8 @@ tool:
   doc: "schengen-visa"
 cta:
   label: "Crear mi foto para visa Schengen"
-  href: "#herramienta"
-related:
-  - "guias/como-hacer-foto-carnet-en-casa"
+  href: "#tool"
+# related: "guias/como-hacer-foto-carnet-en-casa" cuando exista la guía
 faq:
   - question: "¿Qué medidas tiene la foto para el visado Schengen?"
     answer: "Muchos consulados piden una foto biométrica de 35 x 45 mm, con el rostro ocupando buena parte del encuadre. Los detalles pueden variar según el país y el centro de solicitud, así que confirma las medidas en la web de tu consulado."
@@ -43,7 +42,7 @@ faq:
 order: 9
 ---
 
-<!-- Componente de la herramienta con id="herramienta" (preset Schengen) -->
+<!-- Componente de la herramienta con id="tool" (preset Schengen) -->
 
 <!--
 ANTES DE PUBLICAR (equipo de contenido):
@@ -78,7 +77,7 @@ Colócate frente a una pared clara, con luz de frente y a unos 50 cm de distanci
 
 ### Formato impreso frente a digital
 
-Algunos consulados y centros de visado piden la foto impresa en papel fotográfico y otros la suben en digital. Si te piden papel, usa tamaño real, sin ajustar a la página, y comprueba la medida con una regla. Tienes los pasos en [imprimir fotos carnet y de pasaporte en casa](/es/imprimir-fotos-carnet).
+Algunos consulados y centros de visado piden la foto impresa en papel fotográfico y otros la suben en digital. Si te piden papel, usa tamaño real, sin ajustar a la página, y comprueba la medida con una regla. Tienes los pasos en imprimir fotos carnet y de pasaporte en casa. <!-- Enlazar a /es/imprimir-fotos-carnet cuando exista -->
 
 ## Crea tu foto para visa Schengen
 
@@ -89,7 +88,7 @@ La herramienta de PixPassport incluye una plantilla para el visado Schengen:
 3. Revisa las comprobaciones de requisitos.
 4. Descarga en digital o en hoja para imprimir.
 
-Es una ayuda para preparar tu foto, no una garantía de aceptación: la decisión final es del consulado. Para una visión general, visita [foto para visa online](/es/foto-visa).
+Es una ayuda para preparar tu foto, no una garantía de aceptación: la decisión final es del consulado. Para una visión general, visita foto para visa online. <!-- Enlazar a /es/foto-visa cuando exista -->
 
 ## Foto para visa de Alemania y otros países Schengen
 

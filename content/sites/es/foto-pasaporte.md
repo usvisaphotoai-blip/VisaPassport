@@ -28,7 +28,7 @@ tool:
   doc: "spain-passport"
 cta:
   label: "Crear mi foto de pasaporte"
-  href: "#herramienta"
+  href: "#tool"
 faq:
   - question: "¿Cómo hago una foto para pasaporte en casa?"
     answer: "Colócate frente a una ventana, con una pared lisa y clara detrás, y pide a alguien que sostenga el móvil a la altura de tus ojos. Mira a la cámara con expresión neutra y sube la imagen a la herramienta: ajustará el encuadre y el fondo según el país que elijas. Antes de presentarla, confirma el requisito de la autoridad que emite tu pasaporte."
@@ -43,7 +43,7 @@ faq:
 order: 1
 ---
 
-<!-- Componente de la herramienta con id="herramienta" -->
+<!-- Componente de la herramienta con id="tool" -->
 
 ## Cómo hacer tu foto para pasaporte en pocos pasos
 

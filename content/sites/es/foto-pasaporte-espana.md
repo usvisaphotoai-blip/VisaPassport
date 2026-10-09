@@ -27,7 +27,7 @@ tool:
   doc: "spain-passport"
 cta:
   label: "Crear mi foto para pasaporte español"
-  href: "#herramienta"
+  href: "#tool"
 faq:
   - question: "¿Qué medidas tiene la foto del pasaporte español?"
     answer: "La medida la fija la autoridad que emite el pasaporte. Consulta la cifra vigente en su sitio oficial. En nuestra guía de tamaño y requisitos explicamos cómo se leen las medidas en milímetros, píxeles y pulgadas."
@@ -40,7 +40,7 @@ faq:
 order: 4
 ---
 
-<!-- Componente de la herramienta con id="herramienta" (plantilla de España) -->
+<!-- Componente de la herramienta con id="tool" (plantilla de España) -->
 
 <!--
 ANTES DE PUBLICAR (equipo de contenido):

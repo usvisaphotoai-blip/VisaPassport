@@ -28,7 +28,7 @@ tool:
   doc: "spain-dni"
 cta:
   label: "Crear mi foto para el DNI"
-  href: "#herramienta"
+  href: "#tool"
 faq:
   - question: "¿Hace falta llevar foto para renovar el DNI?"
     answer: "Depende del trámite y de la oficina. En algunas oficinas la foto se toma en el momento y en otras hay que llevarla. Confirma el procedimiento en la web oficial de la Policía Nacional o al pedir tu cita."
@@ -43,7 +43,7 @@ faq:
 order: 7
 ---
 
-<!-- Componente de la herramienta con id="herramienta" (plantilla DNI) -->
+<!-- Componente de la herramienta con id="tool" (plantilla DNI) -->
 
 <!--
 ANTES DE PUBLICAR (equipo de contenido):
