@@ -3,8 +3,9 @@ import { getSiteCodes, getSiteConfig } from "@/lib/country-sites";
 import SiteNavbar from "../components/SiteNavbar";
 import SiteFooter from "../components/SiteFooter";
 
-// Served at /<code>/* through the rewrites in next.config.ts
-export const dynamicParams = false;
+// Served at /<code>/* through the rewrites in next.config.ts. dynamicParams stays on (the default)
+// so unknown slugs reach the page's notFound() and render [site]/not-found.tsx inside this layout;
+// unknown site codes never get here because the rewrites only cover existing folders.
 
 export function generateStaticParams() {
   return getSiteCodes().map((site) => ({ site }));

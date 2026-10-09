@@ -2396,4 +2396,74 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://www.pixpassport.com/es</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.pixpassport.com/es" />
+    <lastmod>2026-10-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/es/foto-pasaporte</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.pixpassport.com/es/foto-pasaporte" />
+    <lastmod>2026-10-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/es/foto-pasaporte-mexico</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.pixpassport.com/es/foto-pasaporte-mexico" />
+    <lastmod>2026-10-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/es/foto-pasaporte-espana</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.pixpassport.com/es/foto-pasaporte-espana" />
+    <lastmod>2026-10-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/es/tamano-foto-pasaporte</loc>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://www.pixpassport.com/es/tamano-foto-pasaporte" />
+    <lastmod>2026-10-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/es/foto-dni</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.pixpassport.com/es/foto-dni" />
+    <lastmod>2026-10-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/es/medidas-foto-carnet</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.pixpassport.com/es/medidas-foto-carnet" />
+    <lastmod>2026-10-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/es/foto-visa-americana</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.pixpassport.com/es/foto-visa-americana" />
+    <lastmod>2026-10-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/es/guias</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.pixpassport.com/es/guias" />
+    <lastmod>2026-10-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/es/foto-visa-schengen</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.pixpassport.com/es/foto-visa-schengen" />
+    <lastmod>2026-10-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>

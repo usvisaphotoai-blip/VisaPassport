@@ -142,6 +142,9 @@ ui:
   toolStageFinish: "Gerando a prévia"
   toolError: "Não conseguimos processar a foto. Tente outra imagem, com o rosto bem iluminado."
   toolDisclaimer: "A ferramenta ajusta recorte, tamanho e fundo. A aprovação final é sempre do consulado ou órgão que recebe o pedido."
+  notFoundTitle: "Página não encontrada"
+  notFoundBody: "Esta página não existe ou foi movida. Escolha seu documento na página inicial ou crie sua foto agora."
+  notFoundCta: "Voltar para a página inicial"
 
 # Copy for /preview/[id]?from=br (the page after upload). Keys match
 # DEFAULT_PREVIEW_STRINGS in lib/preview-strings.ts; any key left out stays in English.

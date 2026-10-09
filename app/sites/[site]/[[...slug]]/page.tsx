@@ -21,7 +21,9 @@ interface PageProps {
   params: Promise<{ site: string; slug?: string[] }>;
 }
 
-export const dynamicParams = false;
+// Unknown slugs must reach load() → notFound() so [site]/not-found.tsx renders inside the
+// section layout; with dynamicParams = false they 404 before it and lose the navbar/footer.
+export const dynamicParams = true;
 
 export function generateStaticParams() {
   return getSiteCodes().flatMap((site) =>
