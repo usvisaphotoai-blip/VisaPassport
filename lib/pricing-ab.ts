@@ -16,7 +16,7 @@ export function isPriceVariant(value: unknown): value is PriceVariant {
 }
 
 export function assignPriceVariant(): PriceVariant {
-  return Math.random() < 0.5 ? "A" : "B";
+  return Math.random() < 0.65 ? "A" : "B";
 }
 
 export async function getPriceVariant(): Promise<PriceVariant> {
