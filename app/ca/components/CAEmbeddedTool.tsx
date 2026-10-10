@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { compressImage } from "@/lib/compressImage";
 import Image from "next/image";
+import { getOtherCountryDocs, getCountryCode, type ToolDoc } from "@/lib/embedded-tool-docs";
 
 export const caDocumentsList = [
   { id: "canada-passport", label: "Canada Passport (50 × 70 mm)", size: "50 × 70 mm", bg: "Plain White", head: "31–36 mm" },
@@ -19,9 +20,13 @@ export const caDocumentsList = [
   { id: "canada-driving", label: "Canada Driving Licence / Provincial ID", size: "50 × 70 mm", bg: "Plain White", head: "Centered" },
 ];
 
+const caToolDocs: ToolDoc[] = caDocumentsList.map((d) => ({ ...d, flag: "🇨🇦", isLocal: true }));
+
+const allToolDocs: ToolDoc[] = [...caToolDocs, ...getOtherCountryDocs("Canada", ["canada"])];
+
 const STAGES = [
   { label: "Compressing image", icon: "🗜️" },
-  { label: "Biometric analysis for Canada (CA)", icon: "👤" },
+  { label: "Biometric analysis", icon: "👤" },
   { label: "Generating compliant results", icon: "✨" },
 ];
 
@@ -76,11 +81,11 @@ export default function CAEmbeddedTool({
     return () => URL.revokeObjectURL(url);
   }, [selectedFile]);
 
-  const filteredDocs = caDocumentsList.filter((doc) =>
+  const filteredDocs = allToolDocs.filter((doc) =>
     doc.label.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const activeDocObj = caDocumentsList.find((d) => d.id === selectedDoc) || caDocumentsList[0];
+  const activeDocObj = allToolDocs.find((d) => d.id === selectedDoc) || allToolDocs[0];
 
   const processFile = async (fileToProcess?: File) => {
     const file = fileToProcess || selectedFile;
@@ -97,13 +102,13 @@ export default function CAEmbeddedTool({
       setProcessingStage(1); // External API for CA
       const formData = new FormData();
       formData.append("image", compressed);
-      formData.append("country_code", "CA"); // Canada / CA
-      const isVisaType =
-        selectedDoc.includes("visa") ||
-        selectedDoc.includes("study") ||
-        selectedDoc.includes("work") ||
-        selectedDoc.includes("super-visa") ||
-        selectedDoc.includes("express-entry");
+      formData.append("country_code", activeDocObj.isLocal ? "CA" : getCountryCode(selectedDoc));
+      const isVisaType = activeDocObj.isLocal
+        ? selectedDoc.includes("visa") ||
+          selectedDoc.includes("study") ||
+          selectedDoc.includes("work") ||
+          selectedDoc.includes("express-entry")
+        : selectedDoc.includes("visa");
       formData.append("document_type", isVisaType ? "visa" : "passport");
       formData.append("full_doc_id", selectedDoc);
       formData.append("source", "ca_embedded_tool");
@@ -163,15 +168,15 @@ export default function CAEmbeddedTool({
         <div className="bg-white rounded-md border border-slate-200 p-4 sm:p-6 flex flex-col justify-between">
           <div>
             <div className="flex items-center gap-3 mb-4 pb-3 border-b border-slate-100">
-              <div className="w-8 h-8 rounded-xl bg-red-600 text-white font-black text-sm flex items-center justify-center shrink-0">
+              <div className="w-8 h-8 rounded-xl bg-lime-700 text-white font-black text-sm flex items-center justify-center shrink-0">
                 1
               </div>
               <div>
                 <h3 className="text-base font-bold text-slate-900 leading-tight">
-                  Select Canada Document Type
+                  Select Document Type
                 </h3>
                 <p className="text-xs text-slate-500">
-                  Official IRCC or Canadian Passport Program specification
+                  Canada (IRCC) specs first, plus passport & visa photos for other countries
                 </p>
               </div>
             </div>
@@ -183,12 +188,12 @@ export default function CAEmbeddedTool({
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                 className={`w-full flex items-center justify-between gap-3 px-4 py-3.5 rounded-xl border text-left bg-white transition-all ${
                   isDropdownOpen
-                    ? "border-red-600 ring-2 ring-red-200"
+                    ? "border-lime-600 ring-2 ring-lime-200"
                     : "border-slate-200 hover:border-slate-300"
                 }`}
               >
                 <div className="flex items-center gap-3 min-w-0">
-                  <span className="text-2xl leading-none shrink-0">🇨🇦</span>
+                  <span className="text-2xl leading-none shrink-0">{activeDocObj.flag}</span>
                   <div className="min-w-0">
                     <p className="text-sm font-bold text-slate-900 truncate">
                       {activeDocObj.label}
@@ -200,7 +205,7 @@ export default function CAEmbeddedTool({
                 </div>
                 <svg
                   className={`w-5 h-5 text-slate-400 shrink-0 transition-transform ${
-                    isDropdownOpen ? "rotate-180 text-red-600" : ""
+                    isDropdownOpen ? "rotate-180 text-lime-600" : ""
                   }`}
                   fill="none"
                   viewBox="0 0 24 24"
@@ -215,10 +220,10 @@ export default function CAEmbeddedTool({
                   <div className="p-3 border-b border-slate-100 bg-slate-50">
                     <input
                       type="text"
-                      placeholder="Search Canadian documents..."
+                      placeholder="Search Canada or any country..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-red-300"
+                      className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-lime-300"
                       autoFocus
                     />
                   </div>
@@ -232,12 +237,12 @@ export default function CAEmbeddedTool({
                         }}
                         className={`px-4 py-3 cursor-pointer text-xs sm:text-sm font-medium transition-colors flex items-center justify-between ${
                           selectedDoc === doc.id
-                            ? "bg-red-50 text-red-900 font-bold"
+                            ? "bg-lime-50 text-lime-900 font-bold"
                             : "text-slate-700 hover:bg-slate-50"
                         }`}
                       >
                         <div className="flex items-center gap-2">
-                          <span>🇨🇦</span>
+                          <span>{doc.flag}</span>
                           <span>{doc.label}</span>
                         </div>
                         <span className="text-xs text-slate-400">{doc.size}</span>
@@ -250,10 +255,10 @@ export default function CAEmbeddedTool({
 
             {/* Spec Pills */}
             <div className="flex flex-wrap gap-2">
-              <div className="inline-flex items-center gap-1.5 rounded-lg border border-red-200 bg-red-50 px-2.5 py-1 text-xs font-semibold text-red-800">
+              <div className="inline-flex items-center gap-1.5 rounded-lg border border-lime-200 bg-lime-50 px-2.5 py-1 text-xs font-semibold text-lime-800">
                 <span>📐</span> Size: <strong className="text-slate-900">{activeDocObj.size}</strong>
               </div>
-              <div className="inline-flex items-center gap-1.5 rounded-lg border border-red-200 bg-red-50 px-2.5 py-1 text-xs font-semibold text-red-800">
+              <div className="inline-flex items-center gap-1.5 rounded-lg border border-lime-200 bg-lime-50 px-2.5 py-1 text-xs font-semibold text-lime-800">
                 <span>🎨</span> BG: <strong className="text-slate-900">{activeDocObj.bg}</strong>
               </div>
               <div className="inline-flex items-center gap-1.5 rounded-lg border border-purple-200 bg-purple-50 px-2.5 py-1 text-xs font-semibold text-purple-900">
@@ -276,7 +281,7 @@ export default function CAEmbeddedTool({
         <div className="bg-white rounded-md border border-slate-200 p-4 sm:p-6 flex flex-col justify-between">
           <div>
             <div className="flex items-center gap-3 mb-4 pb-3 border-b border-slate-100">
-              <div className="w-8 h-8 rounded-xl bg-red-600 text-white font-black text-sm flex items-center justify-center shrink-0">
+              <div className="w-8 h-8 rounded-xl bg-lime-700 text-white font-black text-sm flex items-center justify-center shrink-0">
                 2
               </div>
               <div>
@@ -298,10 +303,10 @@ export default function CAEmbeddedTool({
             />
 
             {isProcessing ? (
-              <div className="rounded-md border-2 border-red-400 bg-slate-50 p-6 text-center">
+              <div className="rounded-md border-2 border-lime-400 bg-slate-50 p-6 text-center">
                 <div className="relative w-24 h-24 mx-auto mb-4">
                   <div className="absolute inset-0 rounded-full border-4 border-slate-200" />
-                  <div className="absolute inset-0 rounded-full border-4 border-red-600 border-t-transparent animate-spin" />
+                  <div className="absolute inset-0 rounded-full border-4 border-lime-600 border-t-transparent animate-spin" />
                   {previewUrl && (
                     <img
                       src={previewUrl}
@@ -314,7 +319,7 @@ export default function CAEmbeddedTool({
                   {STAGES[processingStage]?.label}…
                 </p>
                 <p className="text-xs text-slate-400 mb-4">
-                  Running 30+ Canadian biometric checks against IRCC standards...
+                  Running 30+ biometric checks against official standards...
                 </p>
 
                 <div className="bg-white rounded-xl p-3 border border-slate-200 space-y-2 text-left text-xs">
@@ -323,11 +328,11 @@ export default function CAEmbeddedTool({
                     const isActive = i === processingStage;
                     return (
                       <div key={i} className="flex items-center justify-between">
-                        <span className={`font-semibold ${isDone ? "text-emerald-600 line-through" : isActive ? "text-red-700" : "text-slate-400"}`}>
+                        <span className={`font-semibold ${isDone ? "text-emerald-600 line-through" : isActive ? "text-lime-700" : "text-slate-400"}`}>
                           {st.icon} {st.label}
                         </span>
                         {isDone && <span className="text-emerald-600 font-bold">Done ✓</span>}
-                        {isActive && <span className="text-red-600 font-bold animate-pulse">Running…</span>}
+                        {isActive && <span className="text-lime-600 font-bold animate-pulse">Running…</span>}
                       </div>
                     );
                   })}
@@ -374,11 +379,11 @@ export default function CAEmbeddedTool({
                 onDrop={handleDrop}
                 className={`rounded-md border-2 border-dashed p-5 sm:p-8 text-center cursor-pointer transition-all ${
                   dragOver
-                    ? "border-red-600 bg-red-50"
-                    : "border-slate-300 bg-slate-50/60 hover:border-red-500 hover:bg-red-50/30"
+                    ? "border-lime-600 bg-lime-50"
+                    : "border-slate-300 bg-slate-50/60 hover:border-lime-500 hover:bg-lime-50/30"
                 }`}
               >
-                <div className="w-14 h-14 mx-auto mb-3 rounded-md bg-red-100 text-red-700 flex items-center justify-center text-2xl">
+                <div className="w-14 h-14 mx-auto mb-3 rounded-md bg-lime-100 text-lime-700 flex items-center justify-center text-2xl">
                   📷
                 </div>
                 <p className="text-sm font-bold text-slate-900 mb-1">
@@ -389,9 +394,9 @@ export default function CAEmbeddedTool({
                 </p>
                 <button
                   type="button"
-                  className="px-5 py-2.5 bg-red-700 hover:bg-red-800 text-white font-bold text-xs sm:text-sm rounded-xl transition-all shadow-sm"
+                  className="px-5 py-2.5 bg-lime-700 hover:bg-lime-800 text-white font-bold text-xs sm:text-sm rounded-xl transition-all shadow-sm"
                 >
-                  Select Photo for Canada Verification
+                  Select Photo for Verification
                 </button>
               </div>
             )}
@@ -408,9 +413,9 @@ export default function CAEmbeddedTool({
               <button
                 type="button"
                 onClick={() => processFile()}
-                className="w-full py-3.5 bg-red-700 hover:bg-red-800 text-white font-bold text-sm rounded-xl transition-all flex items-center justify-center gap-2 shadow-sm"
+                className="w-full py-3.5 bg-lime-700 hover:bg-lime-800 text-white font-bold text-sm rounded-xl transition-all flex items-center justify-center gap-2 shadow-sm"
               >
-                Proceed to Canada Verification →
+                Proceed to Verification →
               </button>
             </div>
           )}

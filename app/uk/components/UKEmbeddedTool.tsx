@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { compressImage } from "@/lib/compressImage";
 import Image from "next/image";
+import { getOtherCountryDocs, getCountryCode, type ToolDoc } from "@/lib/embedded-tool-docs";
 
 export const ukDocumentsList = [
   { id: "uk-passport-online", label: "UK Passport (Digital Upload)", size: "35 × 45 mm", bg: "Light Grey / White", head: "29–34 mm" },
@@ -20,9 +21,13 @@ export const ukDocumentsList = [
 
 ];
 
+const ukToolDocs: ToolDoc[] = ukDocumentsList.map((d) => ({ ...d, flag: "🇬🇧", isLocal: true }));
+
+const allToolDocs: ToolDoc[] = [...ukToolDocs, ...getOtherCountryDocs("United Kingdom", ["uk-", "united-kingdom", "gb-"])];
+
 const STAGES = [
   { label: "Compressing image", icon: "🗜️" },
-  { label: "Biometric analysis for UK (GB)", icon: "👤" },
+  { label: "Biometric analysis", icon: "👤" },
   { label: "Generating compliant results", icon: "✨" },
 ];
 
@@ -77,11 +82,11 @@ export default function UKEmbeddedTool({
     return () => URL.revokeObjectURL(url);
   }, [selectedFile]);
 
-  const filteredDocs = ukDocumentsList.filter((doc) =>
+  const filteredDocs = allToolDocs.filter((doc) =>
     doc.label.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const activeDocObj = ukDocumentsList.find((d) => d.id === selectedDoc) || ukDocumentsList[0];
+  const activeDocObj = allToolDocs.find((d) => d.id === selectedDoc) || allToolDocs[0];
 
   const processFile = async (fileToProcess?: File) => {
     const file = fileToProcess || selectedFile;
@@ -98,7 +103,7 @@ export default function UKEmbeddedTool({
       setProcessingStage(1); // External API for GB
       const formData = new FormData();
       formData.append("image", compressed);
-      formData.append("country_code", "GB"); // Always United Kingdom / GB
+      formData.append("country_code", activeDocObj.isLocal ? "GB" : getCountryCode(selectedDoc));
       formData.append(
         "document_type",
         selectedDoc.includes("visa") ? "visa" : "passport"
@@ -170,10 +175,10 @@ export default function UKEmbeddedTool({
                 </div>
                 <div>
                   <h3 className="text-base font-bold text-slate-900 leading-tight">
-                    Select UK Document Type
+                    Select Document Type
                   </h3>
                   <p className="text-xs text-slate-500">
-                    Official UK HMPO, DVLA, or UKVI specification
+                    UK (HMPO, DVLA, UKVI) specs first, plus passport & visa photos for other countries
                   </p>
                 </div>
               </div>
@@ -190,7 +195,7 @@ export default function UKEmbeddedTool({
                   }`}
                 >
                   <div className="flex items-center gap-3 min-w-0">
-                    <span className="text-2xl leading-none shrink-0">🇬🇧</span>
+                    <span className="text-2xl leading-none shrink-0">{activeDocObj.flag}</span>
                     <div className="min-w-0">
                       <p className="text-sm font-bold text-slate-900 truncate">
                         {activeDocObj.label}
@@ -217,7 +222,7 @@ export default function UKEmbeddedTool({
                     <div className="p-3 border-b border-slate-100 bg-slate-50">
                       <input
                         type="text"
-                        placeholder="Search UK documents..."
+                        placeholder="Search UK or any country..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-lime-300"
@@ -239,7 +244,7 @@ export default function UKEmbeddedTool({
                           }`}
                         >
                           <div className="flex items-center gap-2">
-                            <span>🇬🇧</span>
+                            <span>{doc.flag}</span>
                             <span>{doc.label}</span>
                           </div>
                           <span className="text-xs text-slate-400">{doc.size}</span>
@@ -316,7 +321,7 @@ export default function UKEmbeddedTool({
                     {STAGES[processingStage]?.label}…
                   </p>
                   <p className="text-xs text-slate-400 mb-4">
-                    Running 30+ UK biometric checks against GB server...
+                    Running 30+ biometric checks against official standards...
                   </p>
 
                   <div className="bg-white rounded-xl p-3 border border-slate-200 space-y-2 text-left text-xs">
@@ -393,7 +398,7 @@ export default function UKEmbeddedTool({
                     type="button"
                     className="px-5 py-2.5 bg-lime-700 hover:bg-lime-800 text-white font-bold text-xs sm:text-sm rounded-xl  transition-all"
                   >
-                    Select Photo for UK Verification
+                    Select Photo for Verification
                   </button>
                 </div>
               )}
@@ -412,7 +417,7 @@ export default function UKEmbeddedTool({
                   onClick={() => processFile()}
                   className="w-full py-3.5 bg-lime-700 hover:bg-lime-800 text-white font-bold text-sm rounded-xl  transition-all flex items-center justify-center gap-2"
                 >
-                  Proceed to UK Verification →
+                  Proceed to Verification →
                 </button>
               </div>
             )}

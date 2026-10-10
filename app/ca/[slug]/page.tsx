@@ -35,6 +35,11 @@ export async function generateMetadata({
     keywords: page.keywords,
     alternates: {
       canonical: canonicalUrl,
+      languages: {
+        "en-CA": canonicalUrl,
+        en: canonicalUrl,
+        "x-default": canonicalUrl,
+      },
     },
     openGraph: {
       title: page.title,
@@ -43,6 +48,9 @@ export async function generateMetadata({
       siteName: "PixPassport Canada",
       locale: "en_CA",
       type: "article",
+      publishedTime: page.date,
+      modifiedTime: page.updatedAt || page.date,
+      authors: [page.author],
       images: [
         {
           url: page.image,
@@ -75,6 +83,7 @@ export default async function CASlugPage({ params }: PageProps) {
     name: page.title,
     url: `https://www.pixpassport.com/ca/${page.slug}`,
     description: page.description,
+    image: page.image,
     applicationCategory: "UtilitiesApplication",
     operatingSystem: "All",
     offers: {
@@ -82,6 +91,24 @@ export default async function CASlugPage({ params }: PageProps) {
       price: "6.99",
       priceCurrency: "CAD",
     },
+  };
+
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: (page.h1 || page.title).slice(0, 110),
+    description: page.description,
+    image: page.image,
+    datePublished: page.date,
+    dateModified: page.updatedAt || page.date,
+    author: { "@type": "Organization", name: page.author },
+    publisher: {
+      "@type": "Organization",
+      name: "PixPassport",
+      url: "https://www.pixpassport.com/",
+    },
+    mainEntityOfPage: `https://www.pixpassport.com/ca/${page.slug}`,
+    inLanguage: "en-CA",
   };
 
   const breadcrumbSchema = {
@@ -128,7 +155,7 @@ export default async function CASlugPage({ params }: PageProps) {
   return (
     <div className="bg-slate-50 min-h-screen pb-16">
       {/* Canada red top accent bar */}
-      <div className="h-1 bg-red-700 w-full" />
+      <div className="h-1 bg-lime-700 w-full" />
 
       {/* Structured Data */}
       <script
@@ -138,6 +165,10 @@ export default async function CASlugPage({ params }: PageProps) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
       />
       {faqSchema && (
         <script
@@ -149,7 +180,12 @@ export default async function CASlugPage({ params }: PageProps) {
       {/* Navigation */}
       <div className="bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-4 py-1">
-          <Breadcrumbs />
+          <Breadcrumbs
+            items={[
+              { label: "Canada Photo Tools", href: "/ca" },
+              { label: page.h1 || page.title, href: `/ca/${page.slug}` },
+            ]}
+          />
         </div>
       </div>
 
@@ -158,9 +194,9 @@ export default async function CASlugPage({ params }: PageProps) {
           <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
             {/* Left Column: Headline & CTAs */}
             <div className="flex-1 w-full text-left">
-              <div className="inline-flex items-center gap-2 bg-red-50 border border-red-200 rounded-full px-3 py-1 mb-4">
-                <span className="w-2 h-2 rounded-full bg-red-600 animate-pulse" />
-                <span className="text-xs font-extrabold text-red-800 tracking-wide uppercase">
+              <div className="inline-flex items-center gap-2 bg-lime-50 border border-lime-200 rounded-full px-3 py-1 mb-4">
+                <span className="w-2 h-2 rounded-full bg-lime-700 animate-pulse" />
+                <span className="text-xs font-extrabold text-lime-800 tracking-wide uppercase">
                   Canada Biometric Photo Tool · IRCC &amp; Service Canada Compliant
                 </span>
               </div>
@@ -177,13 +213,13 @@ export default async function CASlugPage({ params }: PageProps) {
               <div className="flex flex-col sm:flex-row gap-3.5 mb-7">
                 <a
                   href="#ca-tool"
-                  className="inline-flex items-center justify-center bg-red-700 hover:bg-red-800 text-white text-sm sm:text-base font-bold px-4 py-3 rounded-xl transition-all active:scale-95 gap-2 shadow-sm"
+                  className="inline-flex items-center justify-center bg-lime-700 hover:bg-lime-800 text-white text-sm sm:text-base font-bold px-4 py-3 rounded-xl transition-all active:scale-95 gap-2 shadow-sm"
                 >
                   <span>Upload &amp; Create Photo</span>
                 </a>
                 <a
-                  href="/ca"
-                  className="inline-flex items-center justify-center bg-white border-2 border-slate-300 hover:border-red-600 hover:text-red-700 text-slate-800 text-sm sm:text-base font-bold px-4 py-3 rounded-xl transition-all active:scale-95 gap-2"
+                  href="/ca/canada-passport-photo-requirements"
+                  className="inline-flex items-center justify-center bg-white border-2 border-slate-300 hover:border-lime-600 hover:text-lime-700 text-slate-800 text-sm sm:text-base font-bold px-4 py-3 rounded-xl transition-all active:scale-95 gap-2"
                 >
                   <span>Canada Visa Photo Guide</span>
                 </a>
@@ -236,7 +272,7 @@ export default async function CASlugPage({ params }: PageProps) {
                     <a
                       key={item.id}
                       href={`#${item.id}`}
-                      className={`block text-slate-600 hover:text-red-700 transition-colors ${
+                      className={`block text-slate-600 hover:text-lime-700 transition-colors ${
                         item.level === 3 ? "pl-3 border-l border-slate-200" : ""
                       }`}
                     >
@@ -246,13 +282,13 @@ export default async function CASlugPage({ params }: PageProps) {
                 </nav>
 
                 <div className="mt-6 pt-4 border-t border-slate-100 text-[11px] space-y-2 font-medium text-slate-500">
-                  <div className="flex items-center gap-1.5 text-red-700 font-bold">
+                  <div className="flex items-center gap-1.5 text-lime-700 font-bold">
                     <span>✅</span> IRCC &amp; Passport Program Compliant
                   </div>
-                  <div className="flex items-center gap-1.5 text-red-700 font-bold">
+                  <div className="flex items-center gap-1.5 text-lime-700 font-bold">
                     <span>⚡</span> 30-Second Result
                   </div>
-                  <div className="flex items-center gap-1.5 text-red-700 font-bold">
+                  <div className="flex items-center gap-1.5 text-lime-700 font-bold">
                     <span>🔒</span> Deleted in 24 Hours
                   </div>
                 </div>
@@ -264,7 +300,7 @@ export default async function CASlugPage({ params }: PageProps) {
           <main
             className={page.toc.length > 0 ? "lg:col-span-3" : "lg:col-span-4"}
           >
-            <article className="bg-white p-6 sm:p-10 rounded-2xl border border-slate-200 shadow-xs prose prose-slate max-w-none prose-headings:font-black prose-headings:text-slate-900 prose-a:text-red-700 prose-a:font-bold">
+            <article className="bg-white p-6 sm:p-10 rounded-2xl border border-slate-200 shadow-xs prose prose-slate max-w-none prose-headings:font-black prose-headings:text-slate-900 prose-a:text-lime-700 prose-a:font-bold">
               <div
                 className="rich-content"
                 dangerouslySetInnerHTML={{ __html: page.contentHtml }}
@@ -285,7 +321,7 @@ export default async function CASlugPage({ params }: PageProps) {
                     <details key={index} className="group py-4">
                       <summary className="flex cursor-pointer items-center justify-between font-bold text-slate-900 list-none text-base sm:text-lg">
                         {item.question}
-                        <span className="ml-4 text-red-700 group-open:rotate-45 transition-transform text-xl">
+                        <span className="ml-4 text-lime-700 group-open:rotate-45 transition-transform text-xl">
                           +
                         </span>
                       </summary>
@@ -302,7 +338,7 @@ export default async function CASlugPage({ params }: PageProps) {
             <div className="mt-10 text-center">
               <Link
                 href="/ca"
-                className="inline-flex items-center gap-2 px-5 py-3 bg-white border border-slate-200 rounded-xl text-sm font-extrabold text-slate-800 hover:border-red-500 hover:text-red-700 transition-all shadow-xs"
+                className="inline-flex items-center gap-2 px-5 py-3 bg-white border border-slate-200 rounded-xl text-sm font-extrabold text-slate-800 hover:border-lime-500 hover:text-lime-700 transition-all shadow-xs"
               >
                 ← Explore All Canada Passport &amp; Visa Guides
               </Link>

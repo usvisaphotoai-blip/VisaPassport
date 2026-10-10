@@ -183,7 +183,7 @@ export default function CABeforeAfterSlider() {
             height="9"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="#b91c1c"
+            stroke="#4d7c0f"
             strokeWidth="3.5"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -195,7 +195,7 @@ export default function CABeforeAfterSlider() {
             height="9"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="#b91c1c"
+            stroke="#4d7c0f"
             strokeWidth="3.5"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -232,7 +232,7 @@ export default function CABeforeAfterSlider() {
             position: "absolute",
             bottom: "12px",
             right: "12px",
-            background: "#b91c1c",
+            background: "#4d7c0f",
             color: "white",
             padding: "4px 10px",
             borderRadius: "6px",

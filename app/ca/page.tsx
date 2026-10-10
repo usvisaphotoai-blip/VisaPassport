@@ -5,15 +5,27 @@ import CAEmbeddedTool from "./components/CAEmbeddedTool";
 import CABeforeAfterSlider from "./components/CABeforeAfterSlider";
 
 export const metadata: Metadata = {
-  title: "Canada Passport Size Photo Maker Photo Tool IRCC Compliant",
+  title: "Canada Passport Photo Maker Online – 50x70mm IRCC Compliant | PixPassport",
   description:
     "Create Canadian passport, visa, PR card and ID photos online with automatic 50x70mm & 35x45mm cropping, background checks, and official IRCC & Service Canada photo requirements.",
   alternates: {
     canonical: "https://www.pixpassport.com/ca",
     languages: {
+      "en-CA": "https://www.pixpassport.com/ca",
       en: "https://www.pixpassport.com/ca",
       "x-default": "https://www.pixpassport.com/ca",
     },
+  },
+  keywords:
+    "canada passport photo, canada passport photo maker, canadian passport photo size 50x70mm, ircc photo requirements, canada visa photo, pr card photo, canada citizenship photo",
+  twitter: {
+    card: "summary_large_image",
+    title: "Canada Passport & Visa Photo Maker | PixPassport",
+    description:
+      "Create IRCC & Service Canada compliant 50x70mm passport photos online.",
+    images: [
+      "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786116374/uk_passport_photo_after_atvxmj.webp",
+    ],
   },
   openGraph: {
     title: "Canada Passport & Visa Photo Maker | PixPassport",
@@ -68,10 +80,34 @@ const officialCASources = [
 export default function CAIndexPage() {
   const pages = getAllCAPages();
 
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      name: "PixPassport Canada Passport Photo Maker",
+      url: "https://www.pixpassport.com/ca",
+      applicationCategory: "UtilitiesApplication",
+      operatingSystem: "All",
+      offers: { "@type": "Offer", price: "6.99", priceCurrency: "CAD" },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://www.pixpassport.com/" },
+        { "@type": "ListItem", position: 2, name: "Canada Photo Tools", item: "https://www.pixpassport.com/ca" },
+      ],
+    },
+  ];
+
   return (
     <div className="bg-slate-50 min-h-screen pb-10">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Canada red top accent bar */}
-      <div className="h-1 bg-red-700 w-full" />
+      <div className="h-1 bg-lime-700 w-full" />
 
       {/* ── HERO SECTION ── */}
       <section className="bg-white border-b border-slate-200 py-8 lg:py-8">
@@ -79,9 +115,9 @@ export default function CAIndexPage() {
           <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
             {/* Left Column: Headline & 2 CTAs */}
             <div className="flex-1 w-full text-left">
-              <div className="inline-flex items-center gap-2 bg-red-50 border border-red-200 rounded-full px-3 py-1 mb-4">
-                <span className="w-2 h-2 rounded-full bg-red-600 animate-pulse" />
-                <span className="text-xs font-extrabold text-red-800 tracking-wide uppercase">
+              <div className="inline-flex items-center gap-2 bg-lime-50 border border-lime-200 rounded-full px-3 py-1 mb-4">
+                <span className="w-2 h-2 rounded-full bg-lime-700 animate-pulse" />
+                <span className="text-xs font-extrabold text-lime-800 tracking-wide uppercase">
                Canada Passport & Visa Photo Tool · Based on IRCC & Passport Program Requirements
                 </span>
               </div>
@@ -101,13 +137,13 @@ export default function CAIndexPage() {
               <div className="flex flex-col sm:flex-row gap-3.5 mb-7">
                 <a
                   href="#ca-tool"
-                  className="inline-flex items-center justify-center bg-red-700 hover:bg-red-800 text-white text-sm sm:text-base font-bold px-4 py-3 rounded-xl transition-all active:scale-95 gap-2 shadow-sm"
+                  className="inline-flex items-center justify-center bg-lime-700 hover:bg-lime-800 text-white text-sm sm:text-base font-bold px-4 py-3 rounded-xl transition-all active:scale-95 gap-2 shadow-sm"
                 >
                   <span>Upload &amp; Create Photo</span>
                 </a>
                 <a
-                  href="/ca"
-                  className="inline-flex items-center justify-center bg-white border-2 border-slate-300 hover:border-red-600 hover:text-red-700 text-slate-800 text-sm sm:text-base font-bold px-4 py-3 rounded-xl transition-all active:scale-95 gap-2"
+                  href="/ca/canada-passport-photo-requirements"
+                  className="inline-flex items-center justify-center bg-white border-2 border-slate-300 hover:border-lime-600 hover:text-lime-700 text-slate-800 text-sm sm:text-base font-bold px-4 py-3 rounded-xl transition-all active:scale-95 gap-2"
                 >
                   <span>Canada Visa Photo Guide</span>
                 </a>
@@ -122,7 +158,7 @@ export default function CAIndexPage() {
                       width="18"
                       height="18"
                       viewBox="0 0 24 24"
-                      fill="#b91c1c"
+                      fill="#15803d"
                     >
                       <path d="M12 2l2.9 8.9H23l-7.4 5.4 2.8 8.7L12 19.6l-6.4 5.4 2.8-8.7L2 10.9h8.1z" />
                     </svg>
@@ -151,7 +187,7 @@ export default function CAIndexPage() {
       <section className="bg-white border-y border-slate-200 py-10 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-7">
-            <span className="text-xs font-black text-red-700 uppercase tracking-widest block mb-1">
+            <span className="text-xs font-black text-lime-700 uppercase tracking-widest block mb-1">
               Automatic Photo Transformation Flow
             </span>
             <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
@@ -165,12 +201,16 @@ export default function CAIndexPage() {
           {/* 4 Cards Grid Flow */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
             {/* Step 1: Normal Camera Upload */}
-            <div className="group relative border border-slate-200 rounded-xl overflow-hidden bg-slate-50/50 hover:border-red-500 hover:shadow-xs transition-all flex flex-col justify-between">
+            <div className="group relative border border-slate-200 rounded-xl overflow-hidden bg-slate-50/50 hover:border-lime-500 hover:shadow-xs transition-all flex flex-col justify-between">
               <div>
                 <div className="aspect-[50/70] relative bg-slate-100 overflow-hidden">
                   <img
                     src="https://res.cloudinary.com/dipzpwbbk/image/upload/v1786116243/uk_before_image_passport_photo_d4sqnr.webp"
                     alt="1. Camera Upload - Raw Selfie"
+                    width={500}
+                    height={700}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover transition-transform duration-300"
                   />
                   <span className="absolute top-2 left-2 bg-slate-900/80 text-white text-[10px] font-black px-2 py-0.5 rounded">
@@ -186,18 +226,22 @@ export default function CAIndexPage() {
                   </p>
                 </div>
               </div>
-              <div className="px-3 pb-3 hidden md:flex items-center text-[10px] font-bold text-red-700">
+              <div className="px-3 pb-3 hidden md:flex items-center text-[10px] font-bold text-lime-700">
                 Next: Biometric scan →
               </div>
             </div>
 
             {/* Step 2: Biometric Check */}
-            <div className="group relative border border-slate-200 rounded-xl overflow-hidden bg-slate-50/50 hover:border-red-500 hover:shadow-xs transition-all flex flex-col justify-between">
+            <div className="group relative border border-slate-200 rounded-xl overflow-hidden bg-slate-50/50 hover:border-lime-500 hover:shadow-xs transition-all flex flex-col justify-between">
               <div>
                 <div className="aspect-[50/70] relative bg-slate-100 overflow-hidden">
                   <img
                     src="https://res.cloudinary.com/dipzpwbbk/image/upload/v1786118128/passport_photo_biometric_check_truryq.webp"
                     alt="2. Biometric Scan & Analysis"
+                    width={500}
+                    height={700}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover transition-transform duration-300"
                   />
                   <span className="absolute top-2 left-2 bg-blue-700/80 text-white text-[10px] font-black px-2 py-0.5 rounded">
@@ -213,21 +257,25 @@ export default function CAIndexPage() {
                   </p>
                 </div>
               </div>
-              <div className="px-3 pb-3 hidden md:flex items-center text-[10px] font-bold text-red-700">
+              <div className="px-3 pb-3 hidden md:flex items-center text-[10px] font-bold text-lime-700">
                 Next: IRCC Crop →
               </div>
             </div>
 
             {/* Step 3: Compliant 50x70mm Photo */}
-            <div className="group relative border border-slate-200 rounded-xl overflow-hidden bg-slate-50/50 hover:border-red-500 hover:shadow-xs transition-all flex flex-col justify-between">
+            <div className="group relative border border-slate-200 rounded-xl overflow-hidden bg-slate-50/50 hover:border-lime-500 hover:shadow-xs transition-all flex flex-col justify-between">
               <div>
                 <div className="aspect-[50/70] relative bg-slate-100 overflow-hidden">
                   <img
                     src="https://res.cloudinary.com/dipzpwbbk/image/upload/v1786116374/uk_passport_photo_after_atvxmj.webp"
                     alt="3. Compliant 50x70mm Canada Passport Photo"
+                    width={500}
+                    height={700}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover transition-transform duration-300"
                   />
-                  <span className="absolute top-2 left-2 bg-red-700 text-white text-[10px] font-black px-2 py-0.5 rounded">
+                  <span className="absolute top-2 left-2 bg-lime-700 text-white text-[10px] font-black px-2 py-0.5 rounded">
                     STEP 3
                   </span>
                 </div>
@@ -240,18 +288,22 @@ export default function CAIndexPage() {
                   </p>
                 </div>
               </div>
-              <div className="px-3 pb-3 hidden md:flex items-center text-[10px] font-bold text-red-700">
+              <div className="px-3 pb-3 hidden md:flex items-center text-[10px] font-bold text-lime-700">
                 Next: Print template →
               </div>
             </div>
 
             {/* Step 4: Print-Ready Sheet */}
-            <div className="group relative border border-slate-200 rounded-xl overflow-hidden bg-slate-50/50 hover:border-red-500 hover:shadow-xs transition-all flex flex-col justify-between">
+            <div className="group relative border border-slate-200 rounded-xl overflow-hidden bg-slate-50/50 hover:border-lime-500 hover:shadow-xs transition-all flex flex-col justify-between">
               <div>
                 <div className="aspect-[50/70] relative bg-slate-100 overflow-hidden">
                   <img
                     src="https://res.cloudinary.com/dipzpwbbk/image/upload/v1786118129/final_result_vzs9an.jpg"
                     alt="4. Print-Ready Template"
+                    width={500}
+                    height={700}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover transition-transform duration-300"
                   />
                   <span className="absolute top-2 left-2 bg-emerald-700 text-white text-[10px] font-black px-2 py-0.5 rounded">
@@ -279,7 +331,7 @@ export default function CAIndexPage() {
       <section className="bg-white border-y border-slate-200 py-6 sm:py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-5">
-            <span className="text-[11px] font-black text-red-700 uppercase tracking-widest block mb-0.5">
+            <span className="text-[11px] font-black text-lime-700 uppercase tracking-widest block mb-0.5">
               Official Canadian Specifications
             </span>
             <h2 className="text-lg sm:text-xl font-bold text-slate-900">
@@ -297,19 +349,19 @@ export default function CAIndexPage() {
                 href={src.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block p-3 sm:p-3.5 bg-red-50/40 border border-red-200/80 rounded-xl hover:border-red-400 transition-all flex flex-col justify-between"
+                className="block p-3 sm:p-3.5 bg-lime-50/40 border border-lime-200/80 rounded-xl hover:border-lime-400 transition-all flex flex-col justify-between"
               >
                 <div>
                   <div className="flex justify-between items-center mb-1.5">
-                    <span className="text-[9px] font-black text-red-800 bg-red-100 px-2 py-0.5 rounded-md uppercase tracking-wider">
+                    <span className="text-[9px] font-black text-lime-800 bg-lime-100 px-2 py-0.5 rounded-md uppercase tracking-wider">
                       {src.badge}
                     </span>
-                    <span className="text-[10px] text-red-700 font-bold">↗</span>
+                    <span className="text-[10px] text-lime-700 font-bold">↗</span>
                   </div>
                   <div className="text-[11px] font-bold text-slate-900 leading-tight">
                     {src.agency}
                   </div>
-                  <div className="text-xs font-extrabold text-red-900 mt-0.5 mb-1 leading-tight">
+                  <div className="text-xs font-extrabold text-lime-900 mt-0.5 mb-1 leading-tight">
                     {src.doc}
                   </div>
                 </div>
@@ -340,7 +392,7 @@ export default function CAIndexPage() {
             </p>
 
             {/* Helpful Crop Tool Box */}
-            <div className="mt-4 p-4 rounded-xl bg-red-50 border border-red-200 text-red-900 text-xs sm:text-sm font-semibold flex items-start gap-3">
+            <div className="mt-4 p-4 rounded-xl bg-lime-50 border border-lime-200 text-lime-900 text-xs sm:text-sm font-semibold flex items-start gap-3">
               <span className="text-lg">💡</span>
               <div>
                 <p className="font-bold">Automated Biometric Sizing:</p>
@@ -348,10 +400,10 @@ export default function CAIndexPage() {
                   You don&apos;t need to manually measure millimeters. Our online tool crops and aligns your photo to exact Canadian specifications automatically.
                 </p>
                 <div className="mt-2.5 flex flex-wrap items-center gap-3 text-xs">
-                  <a href="#ca-tool" className="text-red-800 font-extrabold hover:underline">
+                  <a href="#ca-tool" className="text-lime-800 font-extrabold hover:underline">
                     Create Canada Passport Photo →
                   </a>
-                  <a href="/ca" className="text-red-800 font-extrabold hover:underline">
+                  <a href="/ca/canada-passport-photo-requirements" className="text-lime-800 font-extrabold hover:underline">
                     Check Canada Visa Photo Specs →
                   </a>
                   <a href="/passport-photos" className="text-slate-600 hover:text-slate-900 underline font-medium">
@@ -375,43 +427,43 @@ export default function CAIndexPage() {
 
             <ul className="grid sm:grid-cols-2 gap-3 text-xs sm:text-sm text-slate-700 font-medium">
               <li className="flex items-start gap-2 bg-slate-50 p-3 rounded-xl border border-slate-200">
-                <span className="text-red-600 font-bold shrink-0">✓</span>
+                <span className="text-lime-600 font-bold shrink-0">✓</span>
                 <span>Passport photo must be in full color (24-bit sRGB).</span>
               </li>
               <li className="flex items-start gap-2 bg-slate-50 p-3 rounded-xl border border-slate-200">
-                <span className="text-red-600 font-bold shrink-0">✓</span>
+                <span className="text-lime-600 font-bold shrink-0">✓</span>
                 <span>Plain, solid white or light-coloured background with no decorations or patterns.</span>
               </li>
               <li className="flex items-start gap-2 bg-slate-50 p-3 rounded-xl border border-slate-200">
-                <span className="text-red-600 font-bold shrink-0">✓</span>
+                <span className="text-lime-600 font-bold shrink-0">✓</span>
                 <span>Look straight at the camera. Both sides of the face and ears should be visible.</span>
               </li>
               <li className="flex items-start gap-2 bg-slate-50 p-3 rounded-xl border border-slate-200">
-                <span className="text-red-600 font-bold shrink-0">✓</span>
+                <span className="text-lime-600 font-bold shrink-0">✓</span>
                 <span>Neutral facial expression with mouth closed and no smiling.</span>
               </li>
               <li className="flex items-start gap-2 bg-slate-50 p-3 rounded-xl border border-slate-200">
-                <span className="text-red-600 font-bold shrink-0">✓</span>
+                <span className="text-lime-600 font-bold shrink-0">✓</span>
                 <span>Both eyes fully open and looking directly into the camera lens.</span>
               </li>
               <li className="flex items-start gap-2 bg-slate-50 p-3 rounded-xl border border-slate-200">
-                <span className="text-red-600 font-bold shrink-0">✓</span>
+                <span className="text-lime-600 font-bold shrink-0">✓</span>
                 <span>No hats or headgear except for verified religious or medical reasons.</span>
               </li>
               <li className="flex items-start gap-2 bg-slate-50 p-3 rounded-xl border border-slate-200">
-                <span className="text-red-600 font-bold shrink-0">✓</span>
+                <span className="text-lime-600 font-bold shrink-0">✓</span>
                 <span>Remove eyeglasses if possible. No glare, tint, or thick frames allowed.</span>
               </li>
               <li className="flex items-start gap-2 bg-slate-50 p-3 rounded-xl border border-slate-200">
-                <span className="text-red-600 font-bold shrink-0">✓</span>
+                <span className="text-lime-600 font-bold shrink-0">✓</span>
                 <span>Forehead and eyebrows clearly visible — do not cover with bangs or hair.</span>
               </li>
               <li className="flex items-start gap-2 bg-slate-50 p-3 rounded-xl border border-slate-200">
-                <span className="text-red-600 font-bold shrink-0">✓</span>
+                <span className="text-lime-600 font-bold shrink-0">✓</span>
                 <span>No shadows on face, under chin, or behind head on the background.</span>
               </li>
               <li className="flex items-start gap-2 bg-slate-50 p-3 rounded-xl border border-slate-200">
-                <span className="text-red-600 font-bold shrink-0">✓</span>
+                <span className="text-lime-600 font-bold shrink-0">✓</span>
                 <span>Taken within the last six (6) months of application.</span>
               </li>
             </ul>
@@ -449,18 +501,14 @@ export default function CAIndexPage() {
       {/* ── CANADA MARKDOWN GUIDES DIRECTORY ── */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         <div className="text-center mb-5">
-          <span className="text-[11px] font-black text-red-700 uppercase tracking-widest block mb-0.5">
+          <span className="text-[11px] font-black text-lime-700 uppercase tracking-widest block mb-0.5">
             Comprehensive Knowledge Base
           </span>
           <h2 className="text-lg sm:text-xl font-bold text-slate-900">
             Canada Passport &amp; Document Guides
           </h2>
           <p className="text-slate-500 text-xs mt-0.5">
-            Guides generated dynamically from Markdown files in{" "}
-            <code className="bg-slate-200 px-1 py-0.5 rounded text-slate-800 text-[10px]">
-              content/ca/
-            </code>
-            .
+            Step-by-step guides on Canadian passport, visa, PR card and citizenship photo rules.
           </p>
         </div>
 
@@ -469,18 +517,18 @@ export default function CAIndexPage() {
             <Link
               key={page.slug}
               href={`/ca/${page.slug}`}
-              className="group bg-white rounded-xl p-3.5 border border-slate-200 hover:border-red-500 transition-all flex flex-col justify-between shadow-xs"
+              className="group bg-white rounded-xl p-3.5 border border-slate-200 hover:border-lime-500 transition-all flex flex-col justify-between shadow-xs"
             >
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <span className="px-2 py-0.5 rounded bg-red-100 text-red-800 text-[10px] font-bold uppercase">
+                  <span className="px-2 py-0.5 rounded bg-lime-100 text-lime-800 text-[10px] font-bold uppercase">
                     {page.category}
                   </span>
                   <span className="text-[10px] text-slate-400 font-semibold">
                     🇨🇦 Canada Spec
                   </span>
                 </div>
-                <h3 className="text-xs font-bold text-slate-900 group-hover:text-red-700 transition-colors line-clamp-1 leading-snug">
+                <h3 className="text-xs font-bold text-slate-900 group-hover:text-lime-700 transition-colors line-clamp-1 leading-snug">
                   {page.h1 || page.title}
                 </h3>
                 <p className="text-[11px] text-slate-500 mt-1 line-clamp-2 leading-snug">
@@ -489,7 +537,7 @@ export default function CAIndexPage() {
               </div>
               <div className="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-[10px] font-bold text-slate-400">
                 <span>{page.readingTime} read</span>
-                <span className="text-red-700 group-hover:translate-x-0.5 transition-transform">
+                <span className="text-lime-700 group-hover:translate-x-0.5 transition-transform">
                   Read guide →
                 </span>
               </div>
