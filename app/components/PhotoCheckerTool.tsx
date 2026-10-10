@@ -132,7 +132,7 @@ function CountrySelector({
 
   return (
     <div ref={ref} className="relative">
-      <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">
+      <label className="block truncate text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">
         Issuing Authority / Country
       </label>
       <button
@@ -155,7 +155,7 @@ function CountrySelector({
 
       {open && (
         <div
-          className="absolute z-50 left-0 right-0 mt-1.5 bg-white border border-slate-200 rounded-xl shadow-xl overflow-hidden max-h-72 flex flex-col"
+          className="absolute z-50 left-0 w-[calc(200%+0.75rem)] sm:w-auto sm:right-0 mt-1.5 bg-white border border-slate-200 rounded-xl shadow-xl overflow-hidden max-h-72 flex flex-col"
           role="listbox"
         >
           <div className="p-2.5 border-b border-slate-100 bg-slate-50/50">
@@ -414,21 +414,21 @@ export default function PhotoCheckerTool({
       <div className="h-1 bg-lime-700 w-full" />
 
       {/* ── HERO SECTION ── */}
-      <section className="bg-white border-b border-slate-200 py-10 sm:py-14">
+      <section className="bg-white border-b border-slate-200 py-4 sm:py-6">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
 
           {/* Official Badge */}
-          <div className="flex items-center gap-2 mb-4">
-            <div className="inline-flex items-center gap-2 bg-lime-50 border border-lime-200 rounded px-3 py-1.5">
+          <div className="flex items-center gap-2 mb-2.5 sm:mb-3">
+            <div className="inline-flex items-center gap-2 bg-lime-50 border border-lime-200 rounded px-2.5 sm:px-3 py-1 sm:py-1.5">
               <span className="w-2 h-2 rounded-full bg-lime-600 inline-block animate-pulse" />
-              <span className="text-xs font-semibold text-lime-800 tracking-wide uppercase">
+              <span className="text-[10px] sm:text-xs font-semibold text-lime-800 tracking-wide uppercase">
                 {badgeText}
               </span>
             </div>
           </div>
 
           {/* H1 Heading */}
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 leading-tight tracking-tight mb-3">
+          <h1 className="text-xl sm:text-2xl lg:text-[2rem] font-bold text-slate-900 leading-tight tracking-tight mb-1.5 sm:mb-2">
             {title}{" "}
             {highlightTitle && (
               <span className="text-lime-700 font-extrabold">{highlightTitle}</span>
@@ -436,12 +436,12 @@ export default function PhotoCheckerTool({
           </h1>
 
           {/* Subtitle */}
-          <p className="text-base sm:text-lg text-slate-500 font-normal leading-relaxed max-w-3xl mb-6">
+          <p className="text-sm sm:text-base text-slate-500 font-normal leading-relaxed max-w-3xl mb-3 sm:mb-4">
             {subtitle}
           </p>
 
           {/* Trust Rating Strip (Matching Homepage) */}
-          <div className="flex flex-wrap items-center gap-6 sm:gap-8 pt-2 border-t border-slate-100">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 sm:gap-x-8 pt-3 border-t border-slate-100">
             <div className="flex items-center gap-2.5">
               <div className="flex gap-0.5">
                 {[1, 2, 3, 4, 5].map((i) => (
@@ -455,7 +455,7 @@ export default function PhotoCheckerTool({
               </span>
             </div>
 
-            <div className="flex flex-wrap gap-4 text-xs font-medium text-slate-500">
+            <div className="flex flex-wrap gap-x-4 gap-y-1.5 text-xs font-medium text-slate-500">
               {TRUST_BADGES.map((b) => (
                 <span key={b.text} className="inline-flex items-center gap-1.5">
                   <span>{b.icon}</span>
@@ -468,21 +468,21 @@ export default function PhotoCheckerTool({
       </section>
 
       {/* ── TOOL & CHECKER SECTION ── */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
-        <div className="grid lg:grid-cols-12 gap-8 items-start">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
+        <div className="grid lg:grid-cols-12 gap-4 lg:gap-6 lg:items-stretch">
 
           {/* LEFT: Upload & Config Card */}
-          <div className="lg:col-span-6 bg-white rounded-2xl border border-slate-200 p-5 sm:p-7 shadow-sm">
-            <h2 className="text-lg font-bold text-slate-900 mb-5 flex items-center gap-2.5 pb-4 border-b border-slate-100">
+          <div className="lg:col-span-6 bg-white rounded-2xl border border-slate-200 p-4 sm:p-6 shadow-sm">
+            <h2 className="text-base sm:text-lg font-bold text-slate-900 mb-3 sm:mb-4 flex items-center gap-2.5 pb-3 border-b border-slate-100">
               <span className="w-6 h-6 rounded-full bg-lime-700 text-white flex items-center justify-center text-xs font-bold">1</span>
               Step 1: Check Photo Requirements
             </h2>
 
             {/* Document / Country Configuration */}
-            <div className="grid sm:grid-cols-2 gap-4 mb-6">
+            <div className="grid grid-cols-2 gap-3 sm:gap-4 mb-4 sm:mb-5">
               {lockCountry ? (
                 <div>
-                  <span className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">
+                  <span className="block truncate text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">
                     Issuing Authority / Country
                   </span>
                   <div className="w-full h-12 bg-slate-50 border border-slate-200 rounded-lg px-3.5 flex items-center gap-2.5 text-sm font-bold text-slate-800">
@@ -502,7 +502,7 @@ export default function PhotoCheckerTool({
               )}
 
               <div>
-                <label htmlFor="tool-doc-type" className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">
+                <label htmlFor="tool-doc-type" className="block truncate text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">
                   Document Standard
                 </label>
                 {lockDocType ? (
@@ -531,7 +531,7 @@ export default function PhotoCheckerTool({
             </div>
 
             {/* Step 2: Upload */}
-            <h3 className="text-lg font-bold text-slate-900 mb-3 flex items-center gap-2.5">
+            <h3 className="text-base sm:text-lg font-bold text-slate-900 mb-2.5 flex items-center gap-2.5">
               <span className="w-6 h-6 rounded-full bg-lime-700 text-white flex items-center justify-center text-xs font-bold">2</span>
               Step 2: Upload Your Photo
             </h3>
@@ -546,7 +546,7 @@ export default function PhotoCheckerTool({
             />
 
             {/* Checklist Chips */}
-            <div className="flex flex-wrap gap-2 mt-4">
+            <div className="flex flex-wrap gap-1.5 sm:gap-2 mt-3">
               {["Plain background", "Eyes open & clear", "Centered face", "No glasses / glare"].map((req) => (
                 <span
                   key={req}
@@ -563,7 +563,7 @@ export default function PhotoCheckerTool({
               type="button"
               onClick={handleVerify}
               disabled={!file || isProcessing}
-              className={`w-full mt-6 h-12 rounded-lg font-bold text-sm tracking-wide transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-lime-600/30 flex items-center justify-center gap-2 shadow-sm ${
+              className={`w-full mt-4 h-12 rounded-lg font-bold text-sm tracking-wide transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-lime-600/30 flex items-center justify-center gap-2 shadow-sm ${
                 !file || isProcessing
                   ? "bg-slate-100 text-slate-400 cursor-not-allowed border border-slate-200"
                   : "bg-lime-700 hover:bg-lime-800 text-white shadow-lime-700/20 active:scale-[0.99]"
@@ -596,11 +596,14 @@ export default function PhotoCheckerTool({
             )}
           </div>
 
-          {/* RIGHT: Validation Report OR Specs Overview */}
-          <div className="lg:col-span-6 lg:sticky lg:top-8">
+          {/* RIGHT: Validation Report OR Specs Overview — on desktop it matches the left card height and scrolls inside */}
+          <div className="lg:col-span-6 relative">
+          <div className="lg:absolute lg:inset-0 lg:overflow-y-auto lg:overscroll-contain lg:rounded-2xl">
             {report ? (
-              <div className="bg-white rounded-2xl border border-slate-200 p-5 sm:p-7 shadow-sm">
+              <div className="bg-white rounded-2xl border border-slate-200 p-4 sm:p-6 shadow-sm">
                 <ValidationReportView
+                  photo={file}
+                  photoPreviewUrl={previewUrl}
                   report={report}
                   onReset={handleReset}
                   selectedDocId={selectedDocId}
@@ -608,8 +611,8 @@ export default function PhotoCheckerTool({
                 />
               </div>
             ) : (
-              <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-7 shadow-sm">
-                <div className="flex items-center gap-3 pb-4 mb-5 border-b border-slate-100">
+              <div className="bg-white rounded-2xl border border-slate-200 p-4 sm:p-6 shadow-sm lg:min-h-full">
+                <div className="flex items-center gap-3 pb-3 mb-4 border-b border-slate-100">
                   <div className="w-10 h-10 rounded-xl bg-lime-50 text-lime-700 border border-lime-100 flex items-center justify-center text-lg font-bold shrink-0">
                     📐
                   </div>
@@ -625,7 +628,7 @@ export default function PhotoCheckerTool({
 
                 {/* Specs Highlights Grid */}
                 {specs.length > 0 && (
-                  <div className="grid grid-cols-2 gap-3 mb-6">
+                  <div className="grid grid-cols-2 gap-2.5 sm:gap-3 mb-4 sm:mb-5">
                     {specs.map((s) => (
                       <div key={s.label} className="bg-slate-50 border border-slate-100 rounded-xl p-3">
                         <span className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-0.5">
@@ -640,8 +643,8 @@ export default function PhotoCheckerTool({
                 )}
 
                 {/* Biometric Checklist */}
-                <div className="space-y-2.5">
-                  <p className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+                <div className="space-y-1">
+                  <p className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">
                     Automated Verification Checks:
                   </p>
                   {[
@@ -651,7 +654,7 @@ export default function PhotoCheckerTool({
                     { title: "Facial Expression & Eyes", desc: "Confirms neutral expression, eyes fully visible and open" },
                     { title: "Eyewear & Obstruction Check", desc: "Detects prohibited glasses, hair covering eyes or face" },
                   ].map((check) => (
-                    <div key={check.title} className="flex items-start gap-2.5 p-2.5 rounded-lg hover:bg-slate-50 transition-colors">
+                    <div key={check.title} className="flex items-start gap-2.5 p-2 rounded-lg hover:bg-slate-50 transition-colors">
                       <svg className="w-4 h-4 text-lime-600 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
@@ -663,12 +666,13 @@ export default function PhotoCheckerTool({
                   ))}
                 </div>
 
-                <div className="mt-6 pt-5 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400 font-medium">
+                <div className="mt-4 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-400 font-medium">
                   <span>⚡ Analysis completes in &lt; 3 seconds</span>
                   <span>🔒 Encrypted upload</span>
                 </div>
               </div>
             )}
+          </div>
           </div>
         </div>
       </section>

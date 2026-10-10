@@ -1,8 +1,11 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence, useInView, Variants } from "framer-motion";
 import { ValidationReport, ValidationMetric } from "@/lib/validation-engine";
+import { processPhotoForDocument } from "@/lib/processPhoto";
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 
@@ -11,6 +14,10 @@ interface Props {
   onReset: () => void;
   selectedDocId?: string;
   selectedDocPrice?: number;
+  /** The photo the user checked; processed directly when they click "Create your passport photo". */
+  photo?: File | null;
+  /** Object URL of `photo` owned by the checker (already shown in its upload box). */
+  photoPreviewUrl?: string | null;
 }
 
 import PriceDisplay from "@/app/components/PriceDisplay";
@@ -46,8 +53,8 @@ function ScoreRing({ score, pass }: { score: number; pass: boolean }) {
   const bgColor = score >= 90 ? "bg-emerald-50" : score >= 75 ? "bg-amber-50" : "bg-red-50";
 
   return (
-    <div className="flex flex-col items-center gap-3">
-      <div className={`relative w-28 h-28 rounded-full flex items-center justify-center ${bgColor}`}>
+    <div className="flex flex-col items-center gap-2 sm:gap-3 shrink-0">
+      <div className={`relative w-24 h-24 sm:w-28 sm:h-28 rounded-full flex items-center justify-center ${bgColor}`}>
         {/* SVG ring */}
         <svg className="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 100 100">
           {/* Track */}
@@ -206,7 +213,7 @@ function SummaryList({ items, title, dark = false }: { items: string[]; title: s
   return (
     <motion.div
       variants={itemVariants}
-      className={`rounded-xl p-6 ${dark ? "bg-slate-900 shadow-xl" : "bg-white border border-slate-100 shadow-lg shadow-slate-200/40"}`}
+      className={`rounded-xl p-4 sm:p-5 ${dark ? "bg-slate-900 shadow-xl" : "bg-white border border-slate-100 shadow-lg shadow-slate-200/40"}`}
     >
       <h3 className={`text-sm font-black mb-4 flex items-center gap-2 ${dark ? "text-white" : "text-slate-900"}`}>
         <span
@@ -247,12 +254,164 @@ function SummaryList({ items, title, dark = false }: { items: string[]; title: s
   );
 }
 
+// ─── Create Photo Processing Overlay ──────────────────────────────────────────
+
+const CREATE_STEPS = [
+  "Uploading your photo",
+  "Detecting face & landmarks",
+  "Removing background",
+  "Adjusting head size & eye level",
+  "Fixing lighting & exposure",
+  "Checking country requirements",
+  "Preparing your passport photo",
+];
+
+const STEP_INTERVAL_MS = 2200;
+
+function CreatePhotoOverlay({ previewUrl, done }: { previewUrl?: string | null; done: boolean }) {
+  const [step, setStep] = useState(0);
+
+  // Advance through the steps, holding on the last one until the request finishes
+  useEffect(() => {
+    if (done) return;
+    const timer = setInterval(() => {
+      setStep((s) => Math.min(s + 1, CREATE_STEPS.length - 1));
+    }, STEP_INTERVAL_MS);
+    return () => clearInterval(timer);
+  }, [done]);
+
+  // Lock page scroll while the overlay is open
+  useEffect(() => {
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = prev; };
+  }, []);
+
+  const activeStep = done ? CREATE_STEPS.length : step;
+  const progress = done ? 100 : Math.min(92, ((step + 0.6) / CREATE_STEPS.length) * 100);
+
+  return createPortal(
+    <motion.div
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/40 backdrop-blur-sm px-4"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      role="dialog"
+      aria-modal="true"
+      aria-live="polite"
+      aria-label="Creating your passport photo"
+    >
+      <motion.div
+        className="w-full max-w-md bg-white rounded-xl border border-slate-100 shadow-xl shadow-slate-200/40 overflow-hidden"
+        initial={{ opacity: 0, y: 24, scale: 0.96 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <div className="flex items-center gap-5 p-5 sm:p-6 border-b border-slate-100">
+          {/* Photo with scanning line */}
+          <div className="relative shrink-0 w-24 h-32 sm:w-28 sm:h-36 bg-slate-50 rounded-xl overflow-hidden border border-slate-200">
+            {previewUrl && (
+              <img src={previewUrl} alt="Your photo being processed" className="w-full h-full object-cover" />
+            )}
+            {!done && (
+              <motion.div
+                className="absolute left-0 w-full h-0.5 bg-blue-500 shadow-[0_0_12px_rgba(59,130,246,0.8)]"
+                animate={{ top: ["0%", "100%", "0%"] }}
+                transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+              />
+            )}
+            {done && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="absolute inset-0 flex items-center justify-center bg-emerald-500/20"
+              >
+                <span className="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-lg shadow-emerald-200">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                </span>
+              </motion.div>
+            )}
+          </div>
+
+          <div className="flex-1 min-w-0">
+            <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.18em] mb-1.5">
+              {done ? "Complete" : "Processing"}
+            </p>
+            <h3 className="text-base sm:text-lg font-black text-slate-900 leading-tight">
+              {done ? "Your photo is ready!" : "Creating your passport photo"}
+            </h3>
+            <p className="text-xs text-slate-500 font-medium mt-1.5 leading-relaxed">
+              {done ? "Opening your photo..." : "This usually takes 10–20 seconds. Please keep this page open."}
+            </p>
+          </div>
+        </div>
+
+        {/* Step checklist */}
+        <ul className="p-5 sm:p-6 space-y-2.5">
+          {CREATE_STEPS.map((label, i) => {
+            const isDone = i < activeStep;
+            const isActive = i === activeStep;
+            return (
+              <li key={label} className="flex items-center gap-3 text-xs">
+                <span className="w-5 h-5 shrink-0 flex items-center justify-center">
+                  {isDone ? (
+                    <motion.span
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center"
+                    >
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                    </motion.span>
+                  ) : isActive ? (
+                    <span className="block w-4 h-4 border-[2.5px] border-lime-600/30 border-t-lime-600 rounded-full animate-spin" />
+                  ) : (
+                    <span className="w-1.5 h-1.5 rounded-full bg-slate-300" />
+                  )}
+                </span>
+                <span className={isDone ? "text-slate-500 font-medium" : isActive ? "text-slate-900 font-bold" : "text-slate-400 font-medium"}>
+                  {label}
+                </span>
+              </li>
+            );
+          })}
+        </ul>
+
+        {/* Progress bar */}
+        <div className="h-1.5 bg-slate-100">
+          <motion.div
+            className={`h-full ${done ? "bg-emerald-500" : "bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-600"}`}
+            initial={{ width: "0%" }}
+            animate={{ width: `${progress}%` }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          />
+        </div>
+      </motion.div>
+    </motion.div>,
+    document.body
+  );
+}
+
 // ─── Main Report Component ─────────────────────────────────────────────────────
 
-export default function ValidationReportView({ report, onReset, selectedDocId, selectedDocPrice }: Props) {
+export default function ValidationReportView({ report, onReset, selectedDocId, selectedDocPrice, photo, photoPreviewUrl }: Props) {
+  const router = useRouter();
+  const [isCreating, setIsCreating] = useState(false);
+  const [createError, setCreateError] = useState("");
+  const [isCreateDone, setIsCreateDone] = useState(false);
+
   const { overall_result, compliance_score, summary, suggestions, metrics } = report;
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true });
+
+  // On mobile the report renders below the upload form — bring it into view
+  useEffect(() => {
+    if (!window.matchMedia("(max-width: 1023px)").matches) return;
+    ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, []);
 
   const isPass = overall_result === "PASS";
   const metricEntries = Object.entries(metrics).filter(([, m]) => m != null) as [string, ValidationMetric][];
@@ -272,17 +431,21 @@ export default function ValidationReportView({ report, onReset, selectedDocId, s
       variants={containerVariants}
       initial="hidden"
       animate={inView ? "visible" : "hidden"}
-      className="space-y-5"
+      className="space-y-4 scroll-mt-20"
       aria-label="Validation report"
     >
+      <AnimatePresence>
+        {isCreating && <CreatePhotoOverlay previewUrl={photoPreviewUrl} done={isCreateDone} />}
+      </AnimatePresence>
+
       {/* ── Header Card ──────────────────────────────────────────── */}
       <motion.div
         variants={itemVariants}
-        className="bg-white rounded-xl p-6 sm:p-8 border border-slate-100 shadow-xl shadow-slate-200/40"
+        className="bg-white rounded-xl p-4 sm:p-6 border border-slate-100 shadow-xl shadow-slate-200/40"
       >
-        <div className="flex flex-col sm:flex-row items-center gap-6 sm:gap-8 justify-between">
+        <div className="flex flex-row items-center gap-4 sm:gap-8 justify-between">
           {/* Pass / Fail badge */}
-          <div className="flex flex-col items-center sm:items-start gap-3">
+          <div className="flex flex-col items-start gap-2.5 sm:gap-3 min-w-0">
             <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.18em]">Compliance Result</p>
             <motion.div
               initial={{ scale: 0.8, opacity: 0 }}
@@ -334,7 +497,7 @@ export default function ValidationReportView({ report, onReset, selectedDocId, s
         </div>
 
         {overall_result === "FAIL" && (
-          <div className="mt-6 border-t border-slate-100 pt-6">
+          <div className="mt-4 sm:mt-5 border-t border-slate-100 pt-4 sm:pt-5">
            
 
             {/* Animated Button Container */}
@@ -355,10 +518,26 @@ export default function ValidationReportView({ report, onReset, selectedDocId, s
 
               {/* Main Animated Button */}
               <motion.button
-                onClick={() => {
-                  const url = selectedDocId ? `/passport-photo-online?type=${selectedDocId}` : '/passport-photo-online';
-                  window.location.href = url;
+                onClick={async () => {
+                  if (isCreating) return;
+                  const docId = selectedDocId || "general";
+                  if (!photo) {
+                    router.push(`/passport-photo-online?type=${docId}`);
+                    return;
+                  }
+                  setIsCreating(true);
+                  setCreateError("");
+                  try {
+                    const photoId = await processPhotoForDocument(photo, docId, "pixpassport_checker");
+                    setIsCreateDone(true);
+                    await new Promise((r) => setTimeout(r, 900));
+                    router.push(`/preview/${photoId}`);
+                  } catch (err) {
+                    setCreateError(err instanceof Error ? err.message : "Processing failed. Please try again.");
+                    setIsCreating(false);
+                  }
                 }}
+                disabled={isCreating}
                 animate={{
                   scale: [1, 1.018, 1],
                 }}
@@ -404,7 +583,7 @@ export default function ValidationReportView({ report, onReset, selectedDocId, s
 
                 {/* Button text */}
                 <span className="relative z-10 font-black tracking-widest text-sm drop-shadow-sm">
-                  Create your passport photo
+                  {isCreating ? "Processing your photo..." : "Create your passport photo"}
                 </span>
 
                 {/* Right: Bouncing arrow */}
@@ -428,8 +607,17 @@ export default function ValidationReportView({ report, onReset, selectedDocId, s
             
             </div>
 
+            {createError && (
+              <p className="mt-4 text-center text-xs text-red-600 font-medium" role="alert">
+                {createError}{" "}
+                <a href={`/passport-photo-online?type=${selectedDocId || "general"}`} className="underline font-bold">
+                  Upload in the photo maker instead
+                </a>
+              </p>
+            )}
+
             {/* Explanatory subtitle */}
-            <p className="mt-4 text-center text-xs text-slate-500 font-medium flex items-center justify-center gap-1.5">
+            <p className="mt-3 text-center text-xs text-slate-500 font-medium flex items-center justify-center gap-1.5">
               <span>✨ Automatically crop, correct background & fix lighting for 100% compliance</span>
             </p>
           </div>
@@ -442,7 +630,7 @@ export default function ValidationReportView({ report, onReset, selectedDocId, s
           <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.18em] mb-3 px-1">
             Metric Breakdown
           </p>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-2 sm:gap-3">
             {orderedMetrics.map(([key, metric]) => (
               <MetricCard key={key} metric={metric} />
             ))}
@@ -451,7 +639,7 @@ export default function ValidationReportView({ report, onReset, selectedDocId, s
       )}
 
       {/* ── Summary & Suggestions ─────────────────────────────────── */}
-      <div className="grid sm:grid-cols-2 gap-4">
+      <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
         <SummaryList items={summary} title="Compliance Summary" />
         <SummaryList items={suggestions} title="Improvement Actions" dark />
       </div>
@@ -459,11 +647,11 @@ export default function ValidationReportView({ report, onReset, selectedDocId, s
       {/* ── Action Footer ─────────────────────────────────────────── */}
       <motion.div
         variants={itemVariants}
-        className="flex flex-col sm:flex-row gap-4 pt-2"
+        className="flex flex-col sm:flex-row gap-4 pt-1"
       >
         <button
           onClick={onReset}
-          className="w-full sm:flex-1 h-14 rounded-xl bg-blue-600 text-white font-bold text-sm uppercase tracking-widest hover:bg-blue-700 active:scale-[0.98] transition-all flex items-center justify-center gap-2.5 shadow-lg shadow-blue-500/30"
+          className="w-full sm:flex-1 h-12 sm:h-14 rounded-xl bg-blue-600 text-white font-bold text-sm uppercase tracking-widest hover:bg-blue-700 active:scale-[0.98] transition-all flex items-center justify-center gap-2.5 shadow-lg shadow-blue-500/30"
           aria-label="Validate another photo"
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">

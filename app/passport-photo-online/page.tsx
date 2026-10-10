@@ -13,7 +13,7 @@ import { WarnIcon } from "./components/Icons";
 // Constants and Types
 import { documentTypes, bgColors } from "./constants";
 import { Feedback } from "./types";
-import { countryMapping } from "@/lib/external-api";
+import { processPhotoForDocument } from "@/lib/processPhoto";
 
 function ProcessingText() {
   const [index, setIndex] = useState(0);
@@ -141,32 +141,12 @@ function ToolForm() {
     setErrorMsg("");
     setCropMsg("Processing Your Photo...");
 
-    // Better country/doc type extraction
-    const countrySlug = activeDoc.id.replace(/-passport$/, "").replace(/-visa$/, "").toLowerCase();
-    let countryCode = countryMapping[countrySlug] || "US";
-
-    // Handle special cases for country mapping
-    if (activeDoc.id.includes("ds-160")) countryCode = "US";
-    if (activeDoc.id.includes("schengen")) countryCode = "EU";
-    if (activeDoc.id.startsWith("france-")) countryCode = "FR";
-
-    const documentType = activeDoc.id.includes("visa") ? "visa" : "passport";
-
-    const formData = new FormData();
-    formData.append("image", file);
-    formData.append("country_code", countryCode);
-    formData.append("document_type", documentType);
-    formData.append("full_doc_id", activeDoc.id);
-    formData.append("source", "pixpassport_tool"); // Add extra key
-
     try {
-      const res = await fetch("/api/external-process", { method: "POST", body: formData });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.details || data.error || "Processing failed");
+      const photoId = await processPhotoForDocument(file, activeDoc.id);
 
       setCropMsg("Redirecting to your photo...");
       await new Promise(r => setTimeout(r, 800));
-      router.push(`/preview/${data.photoId}`);
+      router.push(`/preview/${photoId}`);
     } catch (err: any) {
       setErrorMsg(err.message || "Processing failed. Please try again.");
     } finally {

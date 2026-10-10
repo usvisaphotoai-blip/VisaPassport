@@ -175,7 +175,7 @@ export default function UKPassportPhotoCheckerClient() {
         <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "radial-gradient(#1e40af 1px, transparent 1px)", backgroundSize: "28px 28px" }} />
         <div className="absolute -top-32 -right-32 w-[380px] h-[380px] rounded-full bg-lime-100/50 blur-3xl pointer-events-none" />
 
-        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 py-5 sm:py-7 min-h-[calc(100svh-0px)] sm:min-h-0 flex flex-col justify-center">
+        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 py-5 sm:py-7 min-h-[calc(100svh-60px)] sm:min-h-0 flex flex-col justify-center">
 
           {/* EEAT & Trust Banner above hero */}
           <div className="flex flex-wrap items-center justify-center gap-3 mb-3 text-[11px] text-slate-500 font-medium">
@@ -286,9 +286,13 @@ export default function UKPassportPhotoCheckerClient() {
               )}
             </div>
 
-            <div className="lg:max-h-[520px] lg:overflow-y-auto">
+            {/* On desktop the result matches the left card height and scrolls inside */}
+            <div className="relative">
+            <div className="lg:absolute lg:inset-0 lg:overflow-y-auto lg:overscroll-contain lg:p-1.5 lg:-m-1.5">
               {report ? (
                 <ValidationReportView
+                  photo={file}
+                  photoPreviewUrl={previewUrl}
                   report={report}
                   onReset={handleReset}
                   selectedDocId={selectedDocId}
@@ -318,6 +322,7 @@ export default function UKPassportPhotoCheckerClient() {
                   </div>
                 </div>
               )}
+            </div>
             </div>
           </div>
 

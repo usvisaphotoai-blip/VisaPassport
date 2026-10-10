@@ -147,18 +147,20 @@ export default function ValidatorClient() {
 
     
 
-        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-8">
+        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 py-4 sm:py-5">
 
+          <div className="lg:flex lg:items-end lg:justify-between lg:gap-8 mb-4 lg:mb-5">
+          <div className="min-w-0">
           {/* Badge */}
-          <div className="flex justify-start mb-6">
-            <span className="inline-flex items-center gap-2 bg-lime-50 border border-lime-100 rounded-full px-4 py-1.5 text-[11px] font-bold text-lime-700 uppercase tracking-widest">
+          <div className="flex justify-start mb-2.5">
+            <span className="inline-flex items-center gap-2 bg-lime-50 border border-lime-100 rounded-full px-3 sm:px-4 py-1 sm:py-1.5 text-[10px] sm:text-[11px] font-bold text-lime-700 uppercase tracking-widest">
               <span className="w-1.5 h-1.5 rounded-full bg-lime-500 animate-pulse" />
               ICAO Compliant · Embassy-Grade · Free &amp; Instant
             </span>
           </div>
 
           {/* H1 — primary SEO keyword */}
-          <h1 id="validator-heading" className="text-left text-xl sm:text-2xl lg:text-[2rem] font-black text-slate-900 tracking-tight leading-[1.07] mb-5">
+          <h1 id="validator-heading" className="text-left text-xl sm:text-2xl lg:text-[2rem] font-black text-slate-900 tracking-tight leading-[1.15] mb-2">
             Visa Photo Checker{" "}
             <span className="relative inline-block">
               <span className="relative z-10 text-lime-600">— Free Validator for 60+ Countries</span>
@@ -166,12 +168,14 @@ export default function ValidatorClient() {
           </h1>
 
           {/* Meta description-quality subhead */}
-          <p className="text-left text-sm sm:text-base text-slate-500 font-medium max-w-2xl mb-10 leading-relaxed">
+          <p className="text-left text-sm sm:text-base text-slate-500 font-medium max-w-2xl leading-relaxed">
             Check your <strong className="text-slate-700">visa photo</strong> against the destination country&apos;s rules before you apply — US DS-160, Schengen, India, China, Canada, Australia and 55+ more. Results in under 3 seconds.
           </p>
 
+          </div>
+
           {/* Trust stats */}
-          <div className="flex justify-start gap-8 sm:gap-14 mb-10">
+          <div className="flex justify-start gap-6 sm:gap-10 lg:gap-8 mt-3 lg:mt-0 lg:shrink-0 lg:pb-1">
             {TRUST_STATS.map(({ value, label }) => (
               <div key={label} className="text-left">
                 <div className="text-xl sm:text-xl font-black text-lime-600 leading-none">{value}</div>
@@ -179,20 +183,21 @@ export default function ValidatorClient() {
               </div>
             ))}
           </div>
+          </div>
 
           {/* Tool grid */}
-          <div className="grid lg:grid-cols-2 gap-8 xl:gap-12 items-start">
+          <div className="grid lg:grid-cols-2 gap-4 lg:gap-6 xl:gap-8 lg:items-stretch">
 
             {/* Left: config + upload */}
-            <div className="space-y-6">
+            <div className="space-y-3">
 
               {/* Step 1 */}
-              <div className=" bg-gray-100 rounded-md p-3 sm:p-4 ">
-                <h2 className="text-base font-black text-slate-900 mb-5 flex items-center gap-3">
+              <div className="bg-gray-100 rounded-md p-3 sm:p-4">
+                <h2 className="text-sm sm:text-base font-black text-slate-900 mb-3 flex items-center gap-2.5 sm:gap-3">
                   <span className="w-7 h-7 rounded-lg bg-lime-600 text-white flex items-center justify-center text-xs font-black">1</span>
                   Choose Destination Country
                 </h2>
-                <div className="grid sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-2 gap-3 sm:gap-4">
                   <CountrySelector documentTypes={documentTypes} selectedCountry={selectedCountry} onSelect={setSelectedCountry} />
                   <div>
                     <label htmlFor="doc-type" className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">
@@ -203,7 +208,7 @@ export default function ValidatorClient() {
                         id="doc-type"
                         value={selectedDocType}
                         onChange={(e) => setSelectedDocType(e.target.value)}
-                        className="w-full h-[52px] bg-slate-50 border border-slate-200 rounded-xl px-4 pr-10 text-sm font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-lime-500/20 focus:border-lime-300 appearance-none hover:border-lime-300 hover:bg-white transition-all"
+                        className="w-full h-11 sm:h-12 bg-slate-50 border border-slate-200 rounded-xl px-3 sm:px-4 pr-9 sm:pr-10 text-sm font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-lime-500/20 focus:border-lime-300 appearance-none hover:border-lime-300 hover:bg-white transition-all"
                       >
                         <option value="passport">Passport Photo</option>
                         <option value="visa">Visa Photo</option>
@@ -220,7 +225,7 @@ export default function ValidatorClient() {
 
               {/* Step 2 */}
               <div className="bg-gray-100 rounded-md p-3 sm:p-4 ">
-                <h2 className="text-base font-black text-slate-900 mb-5 flex items-center gap-3">
+                <h2 className="text-sm sm:text-base font-black text-slate-900 mb-3 flex items-center gap-2.5 sm:gap-3">
                   <span className="w-7 h-7 rounded-lg bg-lime-600 text-white flex items-center justify-center text-xs font-black">2</span>
                   Upload Your Photo
                 </h2>
@@ -234,7 +239,7 @@ export default function ValidatorClient() {
                   onDrop={handleDrop}
                 />
 
-                <div className="flex flex-wrap gap-2 mt-4">
+                <div className="flex flex-wrap gap-1.5 sm:gap-2 mt-3">
                   {["Neutral background", "Eyes open", "Centered face", "No glasses"].map((req) => (
                     <span key={req} className="inline-flex items-center gap-1.5 bg-slate-50 border border-slate-100 rounded-full px-3 py-1 text-[10px] font-bold text-slate-500 uppercase tracking-wider">
                       <span className="w-1 h-1 rounded-full bg-emerald-400" />
@@ -246,7 +251,7 @@ export default function ValidatorClient() {
                 <button
                   onClick={handleVerify}
                   disabled={!file || isProcessing}
-                  className={`w-full mt-5 h-14 rounded-xl font-black text-sm uppercase tracking-widest transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-lime-500/30 ${
+                  className={`w-full mt-3 sm:mt-4 h-12 sm:h-14 rounded-xl font-black text-sm uppercase tracking-widest transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-lime-500/30 ${
                     !file || isProcessing
                       ? "bg-slate-100 text-slate-400 cursor-not-allowed"
                       : "bg-lime-600 text-white shadow-lg shadow-lime-200 hover:bg-lime-700 hover:-translate-y-0.5 active:scale-[0.99]"
@@ -279,10 +284,13 @@ export default function ValidatorClient() {
               </div>
             </div>
 
-            {/* Right: result */}
-            <div className="lg:sticky lg:top-8">
+            {/* Right: result — on desktop it matches the left column height and scrolls inside */}
+            <div className="relative">
+            <div className="lg:absolute lg:inset-0 lg:overflow-y-auto lg:overscroll-contain lg:p-1.5 lg:-m-1.5">
               {report ? (
                 <ValidationReportView 
+                  photo={file}
+                  photoPreviewUrl={previewUrl}
                   report={report} 
                   onReset={handleReset} 
                   selectedDocId={
@@ -310,10 +318,10 @@ export default function ValidatorClient() {
                 />
               ) : (
                 <div
-                  className="rounded-xl border-2 border-dashed border-slate-200 bg-slate-50/60 p-12 flex flex-col items-center justify-center min-h-[520px] text-center"
+                  className="rounded-xl border-2 border-dashed border-slate-200 bg-slate-50/60 p-6 sm:p-8 flex flex-col items-center justify-center h-full min-h-[240px] text-center"
                   aria-label="Awaiting analysis"
                 >
-                  <div className="w-20 h-20 bg-white rounded-xl shadow-sm border border-slate-100 flex items-center justify-center text-slate-200 mb-6">
+                  <div className="w-14 h-14 sm:w-16 sm:h-16 bg-white rounded-xl shadow-sm border border-slate-100 flex items-center justify-center text-slate-200 mb-4">
                     <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                       <circle cx="12" cy="8" r="4" /><path d="M6 20v-2a6 6 0 0112 0v2" />
                     </svg>
@@ -322,7 +330,7 @@ export default function ValidatorClient() {
                   <p className="text-sm text-slate-400 font-medium max-w-xs leading-relaxed">
                     Upload a photo and select your country to get an official biometric compliance report.
                   </p>
-                  <div className="mt-8 grid grid-cols-2 gap-2 w-full max-w-xs">
+                  <div className="mt-5 grid grid-cols-2 gap-2 w-full max-w-xs">
                     {["Face Detection", "Background Check", "Lighting Analysis", "Size Validation", "Eye Line Test", "Expression Check"].map((item) => (
                       <div key={item} className="flex items-center gap-2 bg-white border border-slate-100 rounded-xl px-3 py-2">
                         <span className="w-1.5 h-1.5 rounded-full bg-slate-200" />
@@ -332,6 +340,7 @@ export default function ValidatorClient() {
                   </div>
                 </div>
               )}
+            </div>
             </div>
           </div>
         </div>
@@ -705,9 +714,9 @@ function CountrySelector({
         onClick={() => setOpen(!open)}
         aria-haspopup="listbox"
         aria-expanded={open}
-        className="w-full h-[52px] bg-slate-50 border border-slate-200 rounded-xl px-4 flex items-center justify-between text-sm font-bold text-slate-800 hover:border-lime-400 hover:bg-white transition-all focus:outline-none focus:ring-2 focus:ring-lime-500/20"
+        className="w-full h-11 sm:h-12 bg-slate-50 border border-slate-200 rounded-xl px-3 sm:px-4 flex items-center justify-between text-sm font-bold text-slate-800 hover:border-lime-400 hover:bg-white transition-all focus:outline-none focus:ring-2 focus:ring-lime-500/20"
       >
-        <span className="flex items-center gap-2.5">
+        <span className="flex items-center gap-2 sm:gap-2.5 min-w-0">
           <span className="text-xl leading-none">{selected?.flag ?? "🏳️"}</span>
           <span className="truncate">{selected?.country ?? "Select Country"}</span>
         </span>
@@ -720,7 +729,7 @@ function CountrySelector({
 
       {open && (
         <div
-          className="absolute z-50 left-0 right-0 mt-2 bg-white border border-slate-100 rounded-xl shadow-2xl shadow-slate-300/30 overflow-hidden"
+          className="absolute z-50 left-0 w-[calc(200%+0.75rem)] sm:w-auto sm:right-0 mt-2 bg-white border border-slate-100 rounded-xl shadow-2xl shadow-slate-300/30 overflow-hidden"
           role="listbox"
         >
           <div className="p-2.5 border-b border-slate-100">
@@ -799,7 +808,7 @@ function UploadZone({
         aria-label="Upload photo"
       />
       <div
-        className={`aspect-[4/3] rounded-xl border-2 border-dashed flex flex-col items-center justify-center overflow-hidden transition-all duration-200 ${
+        className={`h-48 sm:h-56 lg:h-[200px] xl:h-[220px] rounded-xl border-2 border-dashed flex flex-col items-center justify-center overflow-hidden transition-all duration-200 ${
           isDragging
             ? "border-lime-500 bg-lime-50 scale-[1.01]"
             : previewUrl
@@ -809,7 +818,7 @@ function UploadZone({
       >
         {previewUrl ? (
           <div className="w-full h-full relative">
-            <img src={previewUrl} className="w-full h-full object-contain p-4" alt="Photo preview" />
+            <img src={previewUrl} className="w-full h-full object-contain p-3" alt="Photo preview" />
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-200 rounded-xl flex items-center justify-center">
               <span className="bg-white/90 backdrop-blur-sm rounded-xl px-4 py-2 text-xs font-bold text-slate-700 shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
                 Click to change photo
@@ -818,14 +827,14 @@ function UploadZone({
           </div>
         ) : (
           <div className="text-center px-6">
-            <div className="w-14 h-14 bg-white rounded-xl shadow-sm border border-slate-100 flex items-center justify-center mx-auto mb-4 text-slate-300 group-hover:text-lime-500 group-hover:border-lime-100 transition-all duration-200">
+            <div className="w-12 h-12 bg-white rounded-xl shadow-sm border border-slate-100 flex items-center justify-center mx-auto mb-3 text-slate-300 group-hover:text-lime-500 group-hover:border-lime-100 transition-all duration-200">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" />
               </svg>
             </div>
             <p className="text-sm font-bold text-slate-800">{isDragging ? "Release to upload" : "Drop your photo here"}</p>
             <p className="text-[11px] text-slate-400 mt-1 font-semibold uppercase tracking-widest">or click to browse</p>
-            <p className="text-[10px] text-slate-300 mt-3 font-medium">JPEG · PNG · WebP · Max 10 MB</p>
+            <p className="text-[10px] text-slate-300 mt-2 font-medium">JPEG · PNG · WebP · Max 10 MB</p>
           </div>
         )}
       </div>

@@ -23,12 +23,16 @@ linkAliases:
   /es/foto-visado-estados-unidos: /es/foto-visa-americana
 
 nav:
-  - label: "Foto tamaño carnet"
-    href: "/es/medidas-foto-carnet"
   - label: "Foto pasaporte"
     href: "/es/foto-pasaporte"
-  - label: "Foto DNI y Pasaporte"
+  - label: "Foto DNI"
     href: "/es/foto-dni"
+  - label: "Tamaño pasaporte"
+    href: "/es/tamano-foto-pasaporte"
+  - label: "Visa Schengen"
+    href: "/es/foto-visa-schengen"
+  - label: "Foto tamaño carnet"
+    href: "/es/medidas-foto-carnet"
   - label: "Visado EE. UU."
     href: "/es/foto-visa-americana"
   - label: "Guías"
@@ -57,8 +61,12 @@ footer:
           href: "/es/medidas-foto-carnet"
         - label: "Foto para DNI y Pasaporte"
           href: "/es/foto-dni"
+        - label: "Tamaño de foto de pasaporte"
+          href: "/es/tamano-foto-pasaporte"
     - heading: "Visados internacionales"
       links:
+        - label: "Foto para visa Schengen (35x45 mm)"
+          href: "/es/foto-visa-schengen"
         - label: "Foto visado Estados Unidos (DS-160)"
           href: "/es/foto-visa-americana"
     - heading: "Guías y consejos"

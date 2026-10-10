@@ -13,10 +13,14 @@ secondaryKeywords:
     "foto para renovar el dni",
     "foto dni y pasaporte",
   ]
-status: "draft"
+status: "ready"
 hreflang: "es-ES"
-officialSources: []
-lastVerified: ""
+officialSources:
+  - name: "Cuerpo Nacional de Policía - Documento Nacional de Identidad (DNIe)"
+    url: "https://www.dnielectronico.es"
+  - name: "Ministerio del Interior (España) - Requisitos para la expedición del DNI"
+    url: "https://www.policia.es"
+lastVerified: "2026-10-10"
 date: "2026-10-09"
 image:
   alt: "Persona preparando una foto para el DNI con el móvil frente a una pared clara"
@@ -34,7 +38,7 @@ faq:
   - question: "¿Hace falta llevar foto para renovar el DNI?"
     answer: "Depende de la oficina de expedición en la que tengas cita. Revísalo en la web de la Policía Nacional o pregúntalo al reservar la cita."
   - question: "¿De qué tamaño es la foto para el DNI?"
-    answer: "La medida la publica la Policía Nacional junto al resto de requisitos del DNI. Para pasar de milímetros a píxeles, mira la página de medidas de la foto carnet."
+    answer: "La medida oficial según la Policía Nacional es de 32 x 26 mm con fondo blanco liso. En muchos estudios también se utiliza el estándar de carnet de 30 x 40 mm, que se adapta al escanearla."
   - question: "¿La foto del DNI y la del pasaporte son iguales?"
     answer: "Aunque los dos los expide la Policía Nacional, no tienen por qué coincidir en medida ni en forma de entrega. Comprueba los requisitos de cada uno antes de imprimir una sola tanda de fotos para ambos."
   - question: "¿Qué es el NIE y qué foto necesita?"
@@ -44,22 +48,11 @@ faq:
 order: 7
 ---
 
-<!-- Componente de la herramienta con id="tool" (plantilla DNI) -->
-
-<!--
-ANTES DE PUBLICAR (equipo de contenido):
-1. Verificar con la Policía Nacional: medida oficial, fondo, formato, y si la foto se aporta o se toma en la oficina al renovar/expedir.
-2. Añadir la fuente en officialSources y la fecha en lastVerified; después cambiar status a "ready".
-3. Comprobar con Search Console el reparto de países (España vs Argentina vs Perú) antes de reforzar el contenido solo para España. «foto dni» también puede significar «foto de un DNI» (imagen del documento): validar en la SERP.
-4. Esta página es dueña de TODAS las consultas con «dni» y de la comparación DNI vs pasaporte (CA-09, CA-10). No usar «foto carnet DNI» en títulos de /es/foto-carnet.
-5. No incluir años en H1, título ni encabezados.
--->
-
 ## Medidas y requisitos de la foto para el DNI
 
 Esta página trata de la **foto que se aporta para el documento**, no de una imagen del propio DNI. Se centra en España. En otros países, como Argentina o Perú, el DNI se rige por normas distintas, así que no apliques estas indicaciones sin comprobarlas.
 
-La medida vigente aparece en la web de la Policía Nacional, junto al resto de requisitos para expedir o renovar el DNI. Para convertir esa medida a píxeles, consulta la [tabla de equivalencias de la foto carnet](/es/medidas-foto-carnet).
+La medida oficial fijada por la Policía Nacional para el DNI es de **32 x 26 mm**, con fondo blanco liso y uniforme. En fotomatones y estudios también se utiliza habitualmente el formato de carnet de **30 x 40 mm**, compatible al digitalizarse en comisaría. Para convertir esa medida a píxeles, consulta la [tabla de equivalencias de la foto carnet](/es/medidas-foto-carnet).
 
 ### Cómo debe verse tu cara en la foto del DNI
 

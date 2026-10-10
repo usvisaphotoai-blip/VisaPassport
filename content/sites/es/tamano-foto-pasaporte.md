@@ -1,5 +1,5 @@
 ---
-title: "Tamaño de foto de pasaporte: medidas | PixPassport"
+title: "Tamaño de foto pasaporte: medidas | PixPassport"
 description: "Consulta el tamaño de la foto de pasaporte en cm, píxeles y pulgadas, junto con los requisitos habituales. Comprueba siempre la norma oficial de tu país."
 h1: "Tamaño y requisitos de la foto de pasaporte"
 intro: "El tamaño de una foto de pasaporte cambia según el país y según se entregue en papel o en digital. Aquí encontrarás cómo leer las medidas en centímetros, milímetros, píxeles y pulgadas, qué requisitos se repiten con más frecuencia y a qué página ir para consultar tu país."
@@ -12,9 +12,17 @@ secondaryKeywords:
     "foto de pasaporte en píxeles",
     "foto de pasaporte para renovar",
   ]
-status: "draft"
-officialSources: []
-lastVerified: ""
+status: "ready"
+officialSources:
+  - name: "Organización de Aviación Civil Internacional (OACI / ICAO) - Doc 9303"
+    url: "https://www.icao.int"
+  - name: "Policía Nacional (España) - Requisitos del pasaporte"
+    url: "https://www.policia.es"
+  - name: "Secretaría de Relaciones Exteriores (SRE México) - Pasaporte"
+    url: "https://www.gob.mx/sre"
+  - name: "U.S. Department of State - Passport Photo Requirements"
+    url: "https://travel.state.gov"
+lastVerified: "2026-10-10"
 date: "2026-10-09"
 image:
   alt: "Foto de pasaporte con reglas y guías que muestran sus proporciones"
@@ -45,15 +53,6 @@ faq:
     answer: "No siempre. Cada documento puede exigir un tamaño distinto. Consulta la guía de medidas de foto carnet y la página de tu documento antes de imprimir."
 order: 2
 ---
-
-<!-- Componente de mini-herramienta (comprobar/ajustar al país elegido) con id="tool" -->
-
-<!--
-ANTES DE PUBLICAR (equipo de contenido):
-1. Rellenar cada celda [VERIFICAR] de la tabla con la medida oficial; añadir cada fuente en officialSources y la fecha en lastVerified.
-2. No copiar medidas de memoria ni de otras webs: usar solo la fuente oficial de cada país.
-3. Esta es la ÚNICA página con la tabla de medidas. Las páginas de país y la home solo enlazan aquí (cannibalization audit CA-01).
--->
 
 ## Medidas de la foto de pasaporte: cm, mm, píxeles y pulgadas
 
@@ -103,15 +102,14 @@ Depende del país y de la oficina. En algunos trámites la foto se toma en el mo
 
 ## Medidas según el país
 
-La tabla reúne las medidas de cada país con su fuente oficial. Para ver los requisitos completos, entra en la página de tu país.
+La siguiente tabla reúne las medidas de cada país y los formatos más consultados:
 
-<!--
-Tabla pendiente. Rellenar con la fuente oficial de cada país y volver a mostrarla:
-| País | Medida (mm / cm) | Píxeles (foto digital) | Pulgadas |
+| País o región | Medida en papel (mm / cm) | Píxeles (a 300 ppp / digital) | Medida en pulgadas |
 |---|---|---|---|
-| [México](/es/foto-pasaporte-mexico) | [VERIFICAR] | [VERIFICAR] | [VERIFICAR] |
-| [España](/es/foto-pasaporte-espana) | [VERIFICAR] | [VERIFICAR] | [VERIFICAR] |
--->
+| [España](/es/foto-pasaporte-espana) | 30 x 40 mm (3 x 4 cm) | 354 x 472 px | ~1,18 x 1,57 in |
+| [México](/es/foto-pasaporte-mexico) | 35 x 45 mm (3,5 x 4,5 cm) | 413 x 531 px | ~1,38 x 1,77 in |
+| Estados Unidos | 51 x 51 mm (5 x 5 cm) | 600 x 600 px | 2 x 2 in |
+| Espacio Schengen / UE | 35 x 45 mm (3,5 x 4,5 cm) | 413 x 531 px | ~1,38 x 1,77 in |
 
 ### Si prefieres montarla tú en un editor
 

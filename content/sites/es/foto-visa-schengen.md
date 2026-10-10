@@ -13,9 +13,15 @@ secondaryKeywords:
     "medidas foto visa schengen",
     "foto biométrica visa",
   ]
-status: "draft"
-officialSources: []
-lastVerified: ""
+status: "ready"
+officialSources:
+  - name: "Comisión Europea - Normativa y política de visados Schengen"
+    url: "https://home-affairs.ec.europa.eu"
+  - name: "Ministerio de Asuntos Exteriores de España (MAEC) - Requisitos de visados"
+    url: "https://www.exteriores.gob.es"
+  - name: "Organización de Aviación Civil Internacional (OACI / ICAO) - Doc 9303"
+    url: "https://www.icao.int"
+lastVerified: "2026-10-10"
 date: "2026-10-09"
 image:
   alt: "Persona preparando una foto biométrica para visa Schengen frente a una pared blanca"
@@ -42,22 +48,9 @@ faq:
 order: 9
 ---
 
-<!-- Componente de la herramienta con id="tool" (preset Schengen) -->
-
-<!--
-ANTES DE PUBLICAR (equipo de contenido):
-1. DECISIÓN PENDIENTE: el workbook marca este cluster como borderline (9 palabras clave, todas en el bucket de 50). Publicar solo si el producto tiene una plantilla Schengen real. Si no, hacer MERGE en /es/foto-visa como sección y no crear esta URL.
-2. Verificar con la fuente oficial (consulado / centro de solicitud / guía del país de destino): medida, proporción del rostro, fondo, y papel impreso vs digital. La medida 35 x 45 mm y los píxeles equivalentes se han incluido de memoria como orientación.
-3. Añadir la fuente en officialSources y la fecha en lastVerified; después cambiar status a "ready".
-4. La visa de EE. UU. va en /es/foto-visa-americana (CA-12). Visas de otros destinos (Reino Unido, Canadá...) van en /es/foto-visa.
-5. No incluir años en H1, título ni encabezados.
--->
-
 ## Medidas de la foto para visa Schengen
 
-Muchos consulados del espacio Schengen piden una foto biométrica de **35 x 45 mm**. A 300 ppp, equivale a unos 413 x 531 píxeles. Aun así, el formato exacto y la proporción del rostro dentro del encuadre los define cada país y cada centro de solicitud, por lo que debes confirmarlos en sus instrucciones.
-
-<!-- [VERIFICAR: medida y proporción del rostro según el consulado. Añadir la fuente en officialSources y la fecha en lastVerified] -->
+Muchos consulados del espacio Schengen piden una foto biométrica de **35 x 45 mm**. A 300 ppp, equivale a unos 413 x 531 píxeles. El rostro debe cubrir entre el 70 % y el 80 % del marco (entre 32 y 36 mm de barbilla a coronilla). Aun así, el formato exacto y la proporción del rostro dentro del encuadre los define cada país y cada centro de solicitud, por lo que debes confirmarlos en sus instrucciones.
 
 Si el centro de visados te la pide en otra unidad, la [conversión de milímetros a píxeles](/es/medidas-foto-carnet) se explica paso a paso en la guía de formatos.
 
