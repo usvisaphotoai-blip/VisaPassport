@@ -4,7 +4,6 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { Suspense, useState, useEffect, useRef } from "react";
 import { compressImage } from "@/lib/compressImage";
 import UploadArea from "@/app/passport-photo-online/components/UploadArea";
-import GuidePrompt from "@/app/passport-photo-online/components/GuidePrompt";
 import { WarnIcon } from "@/app/passport-photo-online/components/Icons";
 import { documentTypes } from "@/app/passport-photo-online/constants";
 import { countryMapping } from "@/lib/external-api";
@@ -53,7 +52,6 @@ function ToolFormDe() {
   const [errorMsg, setErrorMsg] = useState("");
   const [cropMsg, setCropMsg] = useState("");
   const [guidelinesOpen, setGuidelinesOpen] = useState(false);
-  const [showGuide, setShowGuide] = useState(false);
   const [previewUrl, setPreviewUrl] = useState<string>("");
   const [headerSelectorOpen, setHeaderSelectorOpen] = useState(false);
   const [headerSearchTerm, setHeaderSearchTerm] = useState("");
@@ -83,14 +81,7 @@ function ToolFormDe() {
   useEffect(() => { if (headerSelectorOpen && headerSearchRef.current) headerSearchRef.current.focus(); }, [headerSelectorOpen]);
   useEffect(() => { const saved = localStorage.getItem("selectedDocDe"); if (saved && localizedDocumentTypes.some((d) => d.id === saved)) setSelectedDoc(saved); }, []);
   useEffect(() => { if (initialType && localizedDocumentTypes.some((d) => d.id === initialType)) setSelectedDoc(initialType); }, [initialType]);
-  useEffect(() => { if (selectedDoc) localStorage.setItem("selectedDocDe", selectedDoc); }, [selectedDoc]);
-
-  useEffect(() => {
-    const hasSeenGuide = localStorage.getItem("hasSeenGuideDe");
-    if (hasSeenGuide) return;
-    const timer = setTimeout(() => { if (!selectedFile) { setShowGuide(true); localStorage.setItem("hasSeenGuideDe", "true"); } }, 6000);
-    return () => clearTimeout(timer);
-  }, [selectedFile]);
+  useEffect(() => { if (selectedDoc) { try { localStorage.setItem("selectedDocDe", selectedDoc); } catch { /* storage full or blocked */ } } }, [selectedDoc]);
 
   useEffect(() => {
     if (!selectedFile) { setPreviewUrl(""); return; }
@@ -244,7 +235,7 @@ function ToolFormDe() {
 
           {/* Upload area */}
           {!selectedFile && (
-            <UploadArea onFileChange={handleFileChange} guidelinesOpen={guidelinesOpen} setGuidelinesOpen={setGuidelinesOpen} onShowGuide={() => setShowGuide(true)} locale="de" variant="flat" />
+            <UploadArea onFileChange={handleFileChange} guidelinesOpen={guidelinesOpen} setGuidelinesOpen={setGuidelinesOpen} locale="de" variant="flat" />
           )}
 
           {/* Processing state */}
@@ -291,7 +282,6 @@ function ToolFormDe() {
             </div>
           )}
 
-          <GuidePrompt isOpen={showGuide} onClose={() => setShowGuide(false)} onUploadClick={() => { const input = document.getElementById("tool-photo-input"); if (input) (input as HTMLInputElement).click(); setShowGuide(false); }} locale="de" />
         </div>
       </div>
     </div>

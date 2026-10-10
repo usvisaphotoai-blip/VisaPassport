@@ -680,7 +680,7 @@ const BEFORE_AFTER_PAIRS = [
   },
 ];
 
-const ExpertsFixModal = memo(function ExpertsFixModal({
+export const ExpertsFixModal = memo(function ExpertsFixModal({
   isOpen,
   onClose,
   onContinue,

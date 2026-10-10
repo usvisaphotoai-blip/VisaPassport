@@ -6,7 +6,7 @@ interface UploadAreaProps {
   onFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   guidelinesOpen: boolean;
   setGuidelinesOpen: (open: boolean) => void;
-  onShowGuide: () => void;
+  onShowGuide?: () => void;
   locale?: "en" | "fr" | "de";
   /** "flat" matches the borderless, shadow-free /de design */
   variant?: "default" | "flat";
@@ -65,7 +65,7 @@ const UploadArea: React.FC<UploadAreaProps> = ({
       /> */}
 
       {/* Manual Guide Trigger */}
-      <div className="flex justify-center -mt-2">
+      {onShowGuide && <div className="flex justify-center -mt-2">
         <button
           type="button"
           onClick={onShowGuide}
@@ -78,7 +78,7 @@ const UploadArea: React.FC<UploadAreaProps> = ({
           <CheckIcon className="w-3 h-3" />
           {t.showGuide}
         </button>
-      </div>
+      </div>}
 
       {/* Upload area */}
       <div
