@@ -370,7 +370,7 @@ export default function ValidationReportView({ report, onReset, selectedDocId, s
                 whileHover={{ scale: 1.025 }}
                 whileTap={{ scale: 0.97 }}
                 className="relative w-full h-14 rounded-xl bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-600 text-white font-bold text-sm uppercase tracking-widest transition-all flex items-center justify-center gap-2.5 shadow-xl shadow-blue-500/30 overflow-hidden cursor-pointer"
-                aria-label="Create your ID photo"
+                aria-label="Create your Passport photo"
               >
                 {/* Continuous Shimmer sweep beam */}
                 <motion.div
@@ -404,7 +404,7 @@ export default function ValidationReportView({ report, onReset, selectedDocId, s
 
                 {/* Button text */}
                 <span className="relative z-10 font-black tracking-widest text-sm drop-shadow-sm">
-                  Create your ID photo
+                  Create your passport photo
                 </span>
 
                 {/* Right: Bouncing arrow */}
