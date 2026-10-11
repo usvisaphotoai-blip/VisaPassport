@@ -25,6 +25,8 @@ linkAliases:
 nav:
   - label: "Foto pasaporte"
     href: "/es/foto-pasaporte"
+  - label: "Pasaporte español"
+    href: "/es/foto-pasaporte-espana"
   - label: "Foto DNI"
     href: "/es/foto-dni"
   - label: "Tamaño pasaporte"
@@ -57,6 +59,8 @@ footer:
   columns:
     - heading: "Documentos de España"
       links:
+        - label: "Foto para pasaporte español"
+          href: "/es/foto-pasaporte-espana"
         - label: "Foto tamaño carnet (30x40 mm)"
           href: "/es/medidas-foto-carnet"
         - label: "Foto para DNI y Pasaporte"

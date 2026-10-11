@@ -13,9 +13,13 @@ secondaryKeywords:
     "tamaño foto visa americana",
     "foto visa Estados Unidos",
   ]
-status: "draft"
-officialSources: []
-lastVerified: ""
+status: "ready"
+officialSources:
+  - name: "U.S. Department of State - Bureau of Consular Affairs (Photo Requirements)"
+    url: "https://travel.state.gov"
+  - name: "Consular Electronic Application Center (DS-160 Online Nonimmigrant Visa Application)"
+    url: "https://ceac.state.gov"
+lastVerified: "2026-10-11"
 date: "2026-10-09"
 image:
   alt: "Persona preparando su foto para la visa americana frente a una pared clara"

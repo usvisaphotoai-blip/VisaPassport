@@ -6,6 +6,7 @@ export const de = {
   nav: {
     home: "Startseite",
     passportPhoto: "Passbild",
+    diyPhoto: "Selber machen",
     drivingLicence: "Führerscheinfoto",
     visaPhoto: "Visumfoto",
     cvPhoto: "Bewerbungsfoto",

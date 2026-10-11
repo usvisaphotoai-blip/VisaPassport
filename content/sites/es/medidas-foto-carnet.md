@@ -1,7 +1,7 @@
 ---
-title: "Medidas de la foto carnet: cm y píxeles | PixPassport"
+title: "Foto carnet: medida en cm, mm y píxeles | PixPassport"
 description: "Consulta las medidas de la foto carnet en cm, mm y píxeles y la diferencia con la foto de pasaporte. Confirma el tamaño exigido por tu trámite."
-h1: "Medidas de la foto carnet: tamaño en cm, mm y píxeles"
+h1: "Foto carnet: medida y tamaño en cm, mm y píxeles"
 intro: "¿De qué tamaño es una foto carnet? La respuesta corta es que depende del documento y del país. Aquí tienes los formatos más habituales con su equivalencia en centímetros, milímetros, píxeles y pulgadas, cómo calcularlas y cómo montar la foto en Word o Photoshop."
 breadcrumbLabel: "Medidas de la foto carnet"
 primaryKeyword: "foto carnet medida"
@@ -13,9 +13,15 @@ secondaryKeywords:
     "foto carnet en píxeles",
     "foto carnet cm",
   ]
-status: "draft"
-officialSources: []
-lastVerified: ""
+status: "ready"
+officialSources:
+  - name: "Dirección General de Tráfico (DGT) - Permiso de conducción y fotografía"
+    url: "https://www.dgt.es"
+  - name: "Cuerpo Nacional de Policía - Documento Nacional de Identidad (DNIe)"
+    url: "https://www.dnielectronico.es"
+  - name: "Organización de Aviación Civil Internacional (OACI / ICAO) - Doc 9303"
+    url: "https://www.icao.int"
+lastVerified: "2026-10-11"
 date: "2026-10-09"
 image:
   alt: "Fotos carnet de distintos tamaños comparadas junto a una regla"

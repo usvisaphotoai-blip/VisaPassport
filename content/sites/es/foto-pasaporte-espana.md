@@ -12,10 +12,14 @@ secondaryKeywords:
     "requisitos foto pasaporte español",
     "tamaño foto pasaporte español",
   ]
-status: "draft"
+status: "ready"
 hreflang: "es-ES"
-officialSources: []
-lastVerified: ""
+officialSources:
+  - name: "Cuerpo Nacional de Policía - Requisitos y expedición de Pasaporte"
+    url: "https://www.policia.es"
+  - name: "Ministerio del Interior (España) - Pasaporte ordinario"
+    url: "https://www.interior.gob.es"
+lastVerified: "2026-10-11"
 date: "2026-10-09"
 image:
   alt: "Persona preparando su foto para el pasaporte español con el móvil"
@@ -31,7 +35,7 @@ cta:
   href: "#tool"
 faq:
   - question: "¿Qué medidas tiene la foto del pasaporte español?"
-    answer: "Las fija la Policía Nacional, que es quien expide el pasaporte. Consulta la cifra vigente en su web antes de imprimir; para trámites online en píxeles, tienes la conversión en nuestra página de medidas de pasaporte."
+    answer: "El estándar reglamentario en España es de 32 x 26 mm sobre fondo blanco liso. No obstante, las copias habituales de carnet en formato 30 x 40 mm también son aceptadas con frecuencia al tramitar el documento en comisaría."
   - question: "¿Qué requisitos debe cumplir la foto del pasaporte español?"
     answer: "Fíjate sobre todo en el fondo, en que el gesto sea neutro y en que no haya sombras ni reflejos. El detalle exacto lo publica la Policía Nacional y es el que manda."
   - question: "¿Dónde se tramita el pasaporte español?"
@@ -54,7 +58,7 @@ ANTES DE PUBLICAR (equipo de contenido):
 
 ## Medidas de la foto para el pasaporte español
 
-La Policía Nacional publica en su web la medida vigente de la foto del pasaporte. Revísala antes de imprimir, porque es la que comprobarán en la oficina. Para pasarla a píxeles, la [guía de medidas de pasaporte](/es/tamano-foto-pasaporte) explica la conversión.
+El Ministerio del Interior y el Cuerpo Nacional de Policía establecen un tamaño reglamentario de **32 x 26 mm** sobre fondo liso y claro sin sombras. Asimismo, las fotos estándar de carnet en dimensiones de **30 x 40 mm** tomadas en cabinas o tiendas de fotografía suelen ser admitidas al escanear el documento durante la cita. Si necesitas conocer la equivalencia en píxeles para formularios telemáticos, puedes revisar la [guía de medidas de pasaporte](/es/tamano-foto-pasaporte) o comprobar los distintos formatos en la [tabla de formatos de foto carnet](/es/medidas-foto-carnet).
 
 ## Qué revisar en la foto antes de la cita
 

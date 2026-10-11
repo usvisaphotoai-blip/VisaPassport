@@ -2133,6 +2133,22 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.pixpassport.com/de/passfoto-selber-machen</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.pixpassport.com/de/passfoto-selber-machen" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/de/passfoto-selber-machen" />
+    <lastmod>2026-10-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/de/passfoto-app-kostenlos</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.pixpassport.com/de/passfoto-app-kostenlos" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/de/passfoto-app-kostenlos" />
+    <lastmod>2026-10-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://www.pixpassport.com/de/fuehrerschein-foto</loc>
     <xhtml:link rel="alternate" hreflang="de" href="https://www.pixpassport.com/de/fuehrerschein-foto" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/de/fuehrerschein-foto" />
@@ -2386,7 +2402,15 @@
     <lastmod>2026-10-10</lastmod>
   </url>
   <url>
+    <loc>https://www.pixpassport.com/es/foto-pasaporte-espana</loc>
+    <lastmod>2026-10-09</lastmod>
+  </url>
+  <url>
     <loc>https://www.pixpassport.com/es/foto-pasaporte</loc>
+    <lastmod>2026-10-09</lastmod>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/es/foto-visa-americana</loc>
     <lastmod>2026-10-09</lastmod>
   </url>
   <url>
@@ -2399,6 +2423,10 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/es</loc>
+    <lastmod>2026-10-09</lastmod>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/es/medidas-foto-carnet</loc>
     <lastmod>2026-10-09</lastmod>
   </url>
   <url>

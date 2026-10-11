@@ -10,6 +10,7 @@ import LanguageSwitcher from "../../components/LanguageSwitcher";
 
 const navLinks = [
   { href: "/de/biometrisches-passbild", label: de.nav.passportPhoto },
+  { href: "/de/passfoto-selber-machen", label: de.nav.diyPhoto },
   { href: "/de/fuehrerschein-foto", label: de.nav.drivingLicence },
   { href: "/de/visum-foto", label: de.nav.visaPhoto },
   { href: "/de/bewerbungsfoto", label: de.nav.cvPhoto },

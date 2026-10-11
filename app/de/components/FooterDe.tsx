@@ -7,6 +7,7 @@ export default function FooterDe() {
       title: de.footer.sections.popularServices,
       items: [
         { label: "Biometrisches Passbild", href: "/de/biometrisches-passbild" },
+        { label: "Passfoto selber machen", href: "/de/passfoto-selber-machen" },
         { label: "Führerscheinfoto", href: "/de/fuehrerschein-foto" },
         { label: "Visumfoto", href: "/de/visum-foto" },
         { label: "Bewerbungsfoto", href: "/de/bewerbungsfoto" },
@@ -20,6 +21,7 @@ export default function FooterDe() {
       items: [
         { label: de.nav.home, href: "/de" },
         { label: "Passbild online erstellen", href: "/de/passbild-online" },
+        { label: "Passfoto-App kostenlos", href: "/de/passfoto-app-kostenlos" },
         { label: de.nav.guides, href: "/de/guides" },
       ],
     },
