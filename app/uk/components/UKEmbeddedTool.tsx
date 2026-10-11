@@ -82,8 +82,10 @@ export default function UKEmbeddedTool({
     return () => URL.revokeObjectURL(url);
   }, [selectedFile]);
 
+  const term = searchQuery.trim().toLowerCase();
   const filteredDocs = allToolDocs.filter((doc) =>
-    doc.label.toLowerCase().includes(searchQuery.toLowerCase())
+    doc.label.toLowerCase().includes(term) ||
+    ((doc as any).countryCode && (doc as any).countryCode.toLowerCase().includes(term))
   );
 
   const activeDocObj = allToolDocs.find((d) => d.id === selectedDoc) || allToolDocs[0];

@@ -7,6 +7,7 @@ import UploadArea from "@/app/passport-photo-online/components/UploadArea";
 import { WarnIcon } from "@/app/passport-photo-online/components/Icons";
 import { documentTypes } from "@/app/passport-photo-online/constants";
 import { countryMapping } from "@/lib/external-api";
+import { getCentralCountry } from "@/lib/countries-registry";
 import { de } from "../translations";
 import { germanSubDocLabels, germanDocLabel, germanBackgroundLabel, germanSizeLabel } from "../docLabels";
 
@@ -59,9 +60,17 @@ function ToolFormDe() {
   const headerSearchRef = useRef<HTMLInputElement>(null);
 
   const term = headerSearchTerm.trim().toLowerCase();
-  const headerFilteredDocs = localizedDocumentTypes.filter(
-    (doc) => doc.label.toLowerCase().includes(term) || doc.country?.toLowerCase().includes(term)
-  );
+  const headerFilteredDocs = localizedDocumentTypes.filter((doc) => {
+    if (!term) return true;
+    const central = getCentralCountry(doc.id) || (doc.country ? getCentralCountry(doc.country) : undefined);
+    return (
+      doc.label.toLowerCase().includes(term) ||
+      (doc.country && doc.country.toLowerCase().includes(term)) ||
+      (central && central.country_name.toLowerCase().includes(term)) ||
+      (central && central.translations.de.toLowerCase().includes(term)) ||
+      (central && central.country_code.toLowerCase().includes(term))
+    );
+  });
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {

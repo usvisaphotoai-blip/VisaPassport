@@ -1,14 +1,19 @@
 import specsData from "@/data/countries-specs-lite.json";
 import { DocumentType } from "@/app/passport-photo-online/types";
 import { countryMapping } from "./external-api";
+import { CANONICAL_COUNTRIES } from "./countries-registry";
 
-export const SUPPORTED_COUNTRIES = [
-  "DZ", "AU", "AT", "BE", "BG", "BT", "CA", "CN", "HR", "CZ", "DK", "EE",
-  "FI", "FR", "DE", "GR", "HU", "IN", "ID", "IR", "IQ", "IT",
-  "JP", "KZ", "LV", "LT", "LU", "MW", "MT", "MX", "NP", "NL", "NZ", "NO", "PL",
-  "PT", "RO", "RU", "SA", "EU", "SG", "SK", "SI", "KR", "ES", "LK", "SE", "CHE", "CH",
-  "TJ", "TH", "TR", "AE", "GB", "US", "NI", "NG"
-];
+export const SUPPORTED_COUNTRIES = Array.from(
+  new Set([
+    ...CANONICAL_COUNTRIES.map((c) => c.country_code),
+    "DZ", "AU", "AT", "BE", "BG", "BT", "CA", "CN", "HR", "CZ", "DK", "EE",
+    "FI", "FR", "DE", "GR", "HU", "IN", "ID", "IR", "IQ", "IT",
+    "JP", "KZ", "LV", "LT", "LU", "MW", "MT", "MX", "NP", "NL", "NZ", "NO", "PL",
+    "PT", "RO", "RU", "SA", "EU", "SG", "SK", "SI", "KR", "ES", "LK", "SE", "CHE", "CH",
+    "TJ", "TH", "TR", "AE", "GB", "US", "NI", "NG", "PE", "PER", "UK", "ZA", "AR", "HK",
+    "CO", "PH", "MY", "IS", "BH", "BR", "BR-3*4", "IE"
+  ])
+);
 
 export interface CountrySpec {
   id: string;
@@ -31,7 +36,41 @@ export interface CountrySpec {
   [key: string]: any;
 }
 
-export const allSpecs = specsData as CountrySpec[];
+const canonicalSpecs: CountrySpec[] = CANONICAL_COUNTRIES.map((c) => ({
+  id: c.id,
+  name: c.id === "foto-3x4" ? "Photo 3x4 (Brazil)" : `${c.country_name} Passport`,
+  country: c.id === "foto-3x4" ? "Brazil" : c.country_name,
+  flag: c.flag,
+  width_mm: c.width_mm,
+  height_mm: c.height_mm,
+  width_px: c.width_px,
+  height_px: c.height_px,
+  head_min_pct: c.head_min_pct,
+  head_max_pct: c.head_max_pct,
+  eye_min_pct: 50,
+  eye_max_pct: 65,
+  bg_color: c.bg_color,
+  price: c.price,
+  print_size: c.print_size,
+  dpi: c.dpi,
+}));
+
+export const allSpecs: CountrySpec[] = (() => {
+  const merged: CountrySpec[] = [...(specsData as CountrySpec[])];
+  for (const c of canonicalSpecs) {
+    const idx = merged.findIndex((s) => s.id === c.id);
+    if (idx >= 0) {
+      merged[idx] = {
+        ...merged[idx],
+        width_px: c.width_px,
+        height_px: c.height_px,
+      };
+    } else {
+      merged.push(c);
+    }
+  }
+  return merged;
+})();
 
 // ---------------------------------------------------------------
 // getSpecById — resolves a document-type slug to a CountrySpec.
@@ -157,6 +196,7 @@ export function getSpecById(id: string): CountrySpec | undefined {
   if (base === "in" || base === "india") return allSpecs.find((s) => s.id === "india-passport");
   if (base === "switzerland" || base === "che" || base === "ch" || base === "swiss") return allSpecs.find((s) => s.id === "switzerland-passport");
   if (base === "nigeria" || base === "ni" || base === "ng" || base === "nigerian") return allSpecs.find((s) => s.id === "nigeria-passport");
+  if (base === "foto-3x4" || base === "br-3x4" || base === "br-3*4" || base === "3x4") return allSpecs.find((s) => s.id === "foto-3x4");
 
   // Country code mappings fallback (e.g., if id is "EU-passport", "IN-passport", "GB-passport", etc.)
   const codeToSpec: Record<string, string> = {
@@ -172,7 +212,18 @@ export function getSpecById(id: string): CountrySpec | undefined {
     CHE: "switzerland-passport",
     CH: "switzerland-passport",
     NI: "nigeria-passport",
-
+    BR: "brazil-passport",
+    ZA: "south-africa-passport",
+    PER: "peru-passport",
+    PE: "peru-passport",
+    AR: "argentina-passport",
+    HK: "hong-kong-passport",
+    CO: "colombia-passport",
+    PH: "philippines-passport",
+    MY: "malaysia-passport",
+    IS: "iceland-passport",
+    BH: "bahrain-passport",
+    IE: "ireland-passport",
   };
   const parts = cleanId.split("-");
   const countryCodeUpper = parts[0].toUpperCase();

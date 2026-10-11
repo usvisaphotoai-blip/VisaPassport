@@ -56,7 +56,11 @@ export default function SiteEmbeddedTool({
 
   const groups = useMemo(() => {
     const q = normalize(searchQuery.trim());
-    const match = (d: SiteToolDocument) => !q || normalize(`${d.label} ${d.size}`).includes(q);
+    const match = (d: SiteToolDocument) =>
+      !q ||
+      normalize(
+        `${d.label} ${d.size} ${d.countryCode} ${d.englishName || ""} ${d.nativeName || ""}`
+      ).includes(q);
     return [
       { key: "popular", heading: ui.toolPopular, items: documents.filter(match) },
       { key: "all", heading: ui.toolAllCountries, items: countries.filter(match) },

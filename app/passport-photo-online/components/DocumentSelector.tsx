@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import { DocumentType } from "../types";
 import { CheckIcon } from "./Icons";
+import { getCentralCountry } from "@/lib/countries-registry";
 
 interface DocumentSelectorProps {
   selectedDoc: string;
@@ -20,11 +21,20 @@ const DocumentSelector: React.FC<DocumentSelectorProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const filteredDocs = documentTypes.filter(
-    (doc) =>
-      doc.label.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      doc.country?.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const term = searchTerm.trim().toLowerCase();
+  const filteredDocs = documentTypes.filter((doc) => {
+    if (!term) return true;
+    const central = getCentralCountry(doc.id) || (doc.country ? getCentralCountry(doc.country) : undefined);
+    return (
+      doc.label.toLowerCase().includes(term) ||
+      (doc.country && doc.country.toLowerCase().includes(term)) ||
+      (central && central.country_name.toLowerCase().includes(term)) ||
+      (central && central.country_code.toLowerCase().includes(term)) ||
+      (central && central.translations.de.toLowerCase().includes(term)) ||
+      (central && central.translations.fr.toLowerCase().includes(term)) ||
+      (central && central.translations.es.toLowerCase().includes(term))
+    );
+  });
 
   const activeDoc = documentTypes.find((d) => d.id === selectedDoc);
 

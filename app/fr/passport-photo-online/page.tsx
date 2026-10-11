@@ -7,6 +7,7 @@ import UploadArea from "@/app/passport-photo-online/components/UploadArea";
 import { WarnIcon } from "@/app/passport-photo-online/components/Icons";
 import { documentTypes } from "@/app/passport-photo-online/constants";
 import { countryMapping } from "@/lib/external-api";
+import { getCentralCountry, formatLocalizedDocLabel } from "@/lib/countries-registry";
 import { fr } from "../translations";
 
 function ProcessingTextFr() {
@@ -20,23 +21,23 @@ function ProcessingTextFr() {
 }
 
 const franceSubDocs = [
-  { id: "france-passport", label: "France – Photo Passeport" },
-  { id: "france-cni-passport", label: "France – Photo Carte Nationale d'Identité (CNI)" },
-  { id: "france-permis-ephoto-passport", label: "France – Photo Permis de Conduire ePhoto" },
-  { id: "france-permis-conduire-passport", label: "France – Photo Permis de Conduire" },
-  { id: "france-titre-sejour-passport", label: "France – Photo Titre de Séjour" },
-  { id: "france-carte-sejour-passport", label: "France – Photo Carte de Séjour" },
-  { id: "france-visa", label: "France – Photo Visa" },
-  { id: "france-naturalisation-passport", label: "France – Photo Naturalisation" },
-  { id: "france-carte-vitale-passport", label: "France – Photo Carte Vitale" },
-  { id: "france-carte-etudiant-passport", label: "France – Photo Carte Étudiant" },
-  { id: "france-carte-professionnelle-passport", label: "France – Photo Carte Professionnelle" },
-  { id: "france-permis-travail-passport", label: "France – Photo Permis de Travail" },
-  { id: "france-carte-residente-passport", label: "France – Photo Carte de Résident" },
-  { id: "france-demande-immigration-passport", label: "France – Photo Demande d'Immigration" },
-  { id: "france-badge-professionnel-passport", label: "France – Photo Badge Professionnel" },
-  { id: "france-carte-transport-passport", label: "France – Photo Carte de Transport" },
-  { id: "france-permis-chasse-passport", label: "France – Photo Permis de Chasse" },
+  { id: "france-passport", label: "France (France) – Photo Passeport" },
+  { id: "france-cni-passport", label: "France (France) – Photo Carte Nationale d'Identité (CNI)" },
+  { id: "france-permis-ephoto-passport", label: "France (France) – Photo Permis de Conduire ePhoto" },
+  { id: "france-permis-conduire-passport", label: "France (France) – Photo Permis de Conduire" },
+  { id: "france-titre-sejour-passport", label: "France (France) – Photo Titre de Séjour" },
+  { id: "france-carte-sejour-passport", label: "France (France) – Photo Carte de Séjour" },
+  { id: "france-visa", label: "France (France) – Photo Visa" },
+  { id: "france-naturalisation-passport", label: "France (France) – Photo Naturalisation" },
+  { id: "france-carte-vitale-passport", label: "France (France) – Photo Carte Vitale" },
+  { id: "france-carte-etudiant-passport", label: "France (France) – Photo Carte Étudiant" },
+  { id: "france-carte-professionnelle-passport", label: "France (France) – Photo Carte Professionnelle" },
+  { id: "france-permis-travail-passport", label: "France (France) – Photo Permis de Travail" },
+  { id: "france-carte-residente-passport", label: "France (France) – Photo Carte de Résident" },
+  { id: "france-demande-immigration-passport", label: "France (France) – Photo Demande d'Immigration" },
+  { id: "france-badge-professionnel-passport", label: "France (France) – Photo Badge Professionnel" },
+  { id: "france-carte-transport-passport", label: "France (France) – Photo Carte de Transport" },
+  { id: "france-permis-chasse-passport", label: "France (France) – Photo Permis de Chasse" },
 ];
 
 const baseFrance = documentTypes.find((d) => d.id === "france-passport") || {
@@ -48,6 +49,13 @@ const baseFrance = documentTypes.find((d) => d.id === "france-passport") || {
   printSize: "A4" as const,
 };
 
+const specialLabelsFr: Record<string, string> = {
+  "icao-passport": "Norme OACI (ICAO Standard) – Photo biométrique",
+  "schengen-visa": "Espace Schengen (Schengen Area) – Photo Visa",
+  "schengen-passport": "Espace Schengen (Schengen Area) – Photo Passeport",
+  "us-visa": "États-Unis (United States) – Photo Visa (DS-160)",
+};
+
 const localizedDocumentTypes = documentTypes.flatMap((doc) => {
   if (doc.id === "france-passport") {
     return franceSubDocs.map((sub) => ({
@@ -55,6 +63,16 @@ const localizedDocumentTypes = documentTypes.flatMap((doc) => {
       id: sub.id,
       label: sub.label,
     }));
+  }
+  if (specialLabelsFr[doc.id]) {
+    return { ...doc, label: specialLabelsFr[doc.id] };
+  }
+  const central = getCentralCountry(doc.id) || (doc.country ? getCentralCountry(doc.country) : undefined);
+  if (central) {
+    return {
+      ...doc,
+      label: formatLocalizedDocLabel(central, "fr", doc.id.endsWith("-visa") ? "visa" : "passport"),
+    };
   }
   return doc;
 });
@@ -75,9 +93,18 @@ function ToolFormFr() {
   const headerSelectorRef = useRef<HTMLDivElement>(null);
   const headerSearchRef = useRef<HTMLInputElement>(null);
 
-  const headerFilteredDocs = localizedDocumentTypes.filter(
-    (doc) => doc.label.toLowerCase().includes(headerSearchTerm.toLowerCase()) || doc.country?.toLowerCase().includes(headerSearchTerm.toLowerCase())
-  );
+  const term = headerSearchTerm.trim().toLowerCase();
+  const headerFilteredDocs = localizedDocumentTypes.filter((doc) => {
+    if (!term) return true;
+    const central = getCentralCountry(doc.id) || (doc.country ? getCentralCountry(doc.country) : undefined);
+    return (
+      doc.label.toLowerCase().includes(term) ||
+      (doc.country && doc.country.toLowerCase().includes(term)) ||
+      (central && central.country_name.toLowerCase().includes(term)) ||
+      (central && central.translations.fr.toLowerCase().includes(term)) ||
+      (central && central.country_code.toLowerCase().includes(term))
+    );
+  });
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {

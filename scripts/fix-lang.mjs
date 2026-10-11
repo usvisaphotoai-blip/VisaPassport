@@ -169,7 +169,7 @@ function processFile(filePath, targetLang) {
 
   if (modified) {
     fs.writeFileSync(filePath, content, 'utf-8');
-    console.log(`✅ Fixed lang attribute to ${targetLang || 'en'} in: ${filePath}`);
+   
   }
 }
 
@@ -257,12 +257,12 @@ function updateSitemap() {
   
   // 2. Country section pages: ready pages only, real lastmod, frontmatter hreflang
   fs.writeFileSync(SITEMAP_PATH, syncCountrySitemap(parts.join('<url>')), 'utf-8');
-  console.log(`✅ Updated sitemap with hreflang tags and visa checklists for ${addedCount} routes!`);
+
 }
 
 const languages = ['fr', 'de'];
 
-console.log('🔧 Running postbuild script: Fixing HTML lang attributes & updating sitemap hreflangs...');
+
 
 // 1. Process HTML files for lang attribute
 const langHomeEnPath = path.join(NEXT_SERVER_DIR, `index.html`);

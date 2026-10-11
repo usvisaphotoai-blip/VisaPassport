@@ -4,6 +4,7 @@ import matter from "gray-matter";
 import { marked } from "marked";
 import specsData from "@/data/countries-specs.json";
 import { fetchExternalCountries } from "@/lib/external-api";
+import { CANONICAL_COUNTRIES, getCentralCountry } from "@/lib/countries-registry";
 
 /**
  * Markdown-driven country SEO sections.
@@ -36,6 +37,8 @@ export interface SiteToolDocument {
   background: string;
   head?: string;
   flag?: string;
+  englishName?: string;
+  nativeName?: string;
 }
 
 export interface SiteConfig {
@@ -415,46 +418,26 @@ export function flagEmoji(code: string): string {
 }
 
 // Used when the photo API is unreachable at build time
-const FALLBACK_API_COUNTRIES: [string, string, string][] = [
-  ["DZ", "Algeria", "413x531"], ["AU", "Australia", "413x531"], ["AT", "Austria", "413x531"],
-  ["BE", "Belgium", "413x531"], ["BT", "Bhutan", "413x531"], ["BG", "Bulgaria", "413x531"],
-  ["CA", "Canada", "1200x1800"], ["CN", "China", "420x560"], ["HR", "Croatia", "413x531"],
-  ["CZ", "Czechia", "413x531"], ["DK", "Denmark", "413x531"], ["EE", "Estonia", "1300x1600"],
-  ["FI", "Finland", "500x653"], ["FR", "France", "630x810"], ["DE", "Germany", "413x531"],
-  ["GR", "Greece", "413x531"], ["HU", "Hungary", "413x531"], ["IN", "India", "630x810"],
-  ["ID", "Indonesia", "400x600"], ["IR", "Iran", "600x400"], ["IQ", "Iraq", "413x531"],
-  ["IT", "Italy", "413x531"], ["JP", "Japan", "827x1063"], ["KZ", "Kazakhstan", "413x531"],
-  ["LV", "Latvia", "413x531"], ["LT", "Lithuania", "413x531"], ["LU", "Luxembourg", "413x531"],
-  ["MW", "Malawi", "413x531"], ["MT", "Malta", "413x531"], ["MX", "Mexico", "413x531"],
-  ["NP", "Nepal", "413x531"], ["NL", "Netherlands", "413x531"], ["NZ", "New Zealand", "900x1200"],
-  ["NI", "Nigeria", "600x800"], ["NO", "Norway", "413x531"], ["PL", "Poland", "413x531"],
-  ["PT", "Portugal", "413x531"], ["RO", "Romania", "413x531"], ["EU", "Schengen Area", "630x810"],
-  ["SG", "Singapore", "400x514"], ["SK", "Slovakia", "413x531"], ["SI", "Slovenia", "413x531"],
-  ["KR", "South Korea", "413x531"], ["ES", "Spain", "413x531"], ["LK", "Sri Lanka", "413x531"],
-  ["SE", "Sweden", "413x531"], ["CHE", "Switzerland", "413x531"], ["TJ", "Tajikistan", "413x531"],
-  ["TH", "Thailand", "413x531"], ["TR", "Turkey", "591x709"], ["AE", "United Arab Emirates", "413x531"],
-  ["GB", "United Kingdom", "600x750"], ["US", "United States", "600x600"],
-];
-
-// Always offered in the tool's country list, even when the photo API omits them
-const EXTRA_API_COUNTRIES: [string, string, string][] = [
-  ["IE", "Ireland", "715x951"], ["ZA", "South Africa", "413x531"],
-  ["PER", "Peru", "413x509"], ["AR", "Argentina", "472x472"],
-  ["HK", "Hong Kong", "472x591"], ["CO", "Colombia", "413x531"], ["PH", "Philippines", "413x531"],
-  ["MY", "Malaysia", "413x590"], ["IS", "Iceland", "413x531"], ["BH", "Bahrain", "413x531"],
-];
+const FALLBACK_API_COUNTRIES: [string, string, string][] = CANONICAL_COUNTRIES.map((c) => [
+  c.country_code,
+  c.country_name,
+  c.dimensions,
+]);
 
 /**
  * Every country the photo API can process, as passport-photo presets with names,
  * background and head size localized for the section. Sorted by localized name.
+ * On localized pages (es, br, fr, de), displays both the native language name and English name.
  */
 export async function getAllCountryDocuments(site: SiteConfig): Promise<SiteToolDocument[]> {
   const fetched = await fetchExternalCountries();
   const countries = fetched.length
     ? fetched.map((c) => ({ code: c.country_code, name: c.country_name, px: c.dimensions }))
     : FALLBACK_API_COUNTRIES.map(([code, name, px]) => ({ code, name, px }));
-  for (const [code, name, px] of EXTRA_API_COUNTRIES) {
-    if (!countries.some((c) => toRegion(c.code) === toRegion(code))) countries.push({ code, name, px });
+  for (const c of CANONICAL_COUNTRIES) {
+    if (!countries.some((existing) => toRegion(existing.code) === toRegion(c.country_code))) {
+      countries.push({ code: c.country_code, name: c.country_name, px: c.dimensions });
+    }
   }
 
   const regionNames = new Intl.DisplayNames([site.lang], { type: "region" });
@@ -465,30 +448,51 @@ export async function getAllCountryDocuments(site: SiteConfig): Promise<SiteTool
     blue: ui.toolBgBlue || "Blue",
   };
   const fmt = (n: number) => n.toLocaleString(site.lang);
+  const langKey = (site.lang.startsWith("pt") ? "pt" : site.lang) as "de" | "fr" | "es" | "pt" | "en";
 
   const docs = countries.map(({ code, name, px }) => {
+    const central = getCentralCountry(code) || getCentralCountry(name);
     const region = toRegion(code);
     const spec =
       specsData.find((s) => s.id === `${name.toLowerCase().replace(/\s+/g, "-")}-passport`) ||
       specsData.find((s) => s.country === name) ||
-      (code === "EU" ? specsData.find((s) => s.id === "schengen-visa") : undefined);
-    const label =
-      code === "EU" ? ui.toolSchengen || name : (() => {
-        try {
-          return regionNames.of(region) || name;
-        } catch {
-          return name;
-        }
-      })();
+      (code === "EU" ? specsData.find((s) => s.id === "schengen-visa") : undefined) ||
+      central;
+
+    let nativeName = "";
+    if (code === "EU") {
+      nativeName = ui.toolSchengen || (central?.translations[langKey] || "Schengen Area");
+    } else if (central?.translations[langKey]) {
+      nativeName = central.translations[langKey];
+    } else {
+      try {
+        nativeName = regionNames.of(region) || name;
+      } catch {
+        nativeName = name;
+      }
+    }
+    const englishName = central?.country_name || name;
+
+    let label: string;
+    if (site.lang === "en") {
+      label = englishName;
+    } else if (nativeName.toLowerCase() === englishName.toLowerCase()) {
+      label = nativeName;
+    } else {
+      label = `${nativeName} (${englishName})`;
+    }
+
     const pxLabel = px.replace("x", " x ") + " px";
     return {
-      id: spec?.id || `${code.toLowerCase()}-passport`,
+      id: spec?.id || central?.id || `${code.toLowerCase()}-passport`,
       label,
+      englishName,
+      nativeName,
       countryCode: code,
       documentType: code === "EU" ? "visa" : "passport",
-      size: spec ? `${fmt(spec.width_mm)} x ${fmt(spec.height_mm)} mm · ${pxLabel}` : pxLabel,
+      size: spec && (spec as any).width_mm && (spec as any).height_mm ? `${fmt(Number((spec as any).width_mm))} x ${fmt(Number((spec as any).height_mm))} mm · ${pxLabel}` : pxLabel,
       background: bgLabel[spec?.bg_color || "white"] || bgLabel.white,
-      head: spec ? `${spec.head_min_pct}–${spec.head_max_pct}%` : undefined,
+      head: spec && (spec as any).head_min_pct ? `${(spec as any).head_min_pct}–${(spec as any).head_max_pct}%` : undefined,
       flag: code === "EU" ? "🇪🇺" : flagEmoji(code),
     } satisfies SiteToolDocument;
   });

@@ -14,6 +14,10 @@ export async function processPhotoForDocument(file: File, docId: string, source 
   if (docId.includes("ds-160")) countryCode = "US";
   if (docId.includes("schengen")) countryCode = "EU";
   if (docId.startsWith("france-")) countryCode = "FR";
+  if (docId.startsWith("germany-")) countryCode = "DE";
+  if (docId.startsWith("uk-")) countryCode = "GB";
+  if (docId.startsWith("canada-")) countryCode = "CA";
+  if (docId === "foto-3x4") countryCode = "BR-3*4";
 
   const documentType = docId.includes("visa") ? "visa" : "passport";
   const compressed = await compressImage(file);

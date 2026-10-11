@@ -14,6 +14,7 @@ import { WarnIcon } from "./components/Icons";
 import { documentTypes, bgColors } from "./constants";
 import { Feedback } from "./types";
 import { processPhotoForDocument } from "@/lib/processPhoto";
+import { getCentralCountry } from "@/lib/countries-registry";
 
 function ProcessingText() {
   const [index, setIndex] = useState(0);
@@ -58,11 +59,20 @@ function ToolForm() {
   const headerSelectorRef = useRef<HTMLDivElement>(null);
   const headerSearchRef = useRef<HTMLInputElement>(null);
 
-  const headerFilteredDocs = documentTypes.filter(
-    (doc) =>
-      doc.label.toLowerCase().includes(headerSearchTerm.toLowerCase()) ||
-      doc.country?.toLowerCase().includes(headerSearchTerm.toLowerCase())
-  );
+  const term = headerSearchTerm.trim().toLowerCase();
+  const headerFilteredDocs = documentTypes.filter((doc) => {
+    if (!term) return true;
+    const central = getCentralCountry(doc.id) || (doc.country ? getCentralCountry(doc.country) : undefined);
+    return (
+      doc.label.toLowerCase().includes(term) ||
+      (doc.country && doc.country.toLowerCase().includes(term)) ||
+      (central && central.country_name.toLowerCase().includes(term)) ||
+      (central && central.country_code.toLowerCase().includes(term)) ||
+      (central && central.translations.de.toLowerCase().includes(term)) ||
+      (central && central.translations.fr.toLowerCase().includes(term)) ||
+      (central && central.translations.es.toLowerCase().includes(term))
+    );
+  });
 
   // Close header selector on outside click
   useEffect(() => {
