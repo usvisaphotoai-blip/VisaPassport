@@ -218,11 +218,11 @@ export default async function SitePageRoute({ params }: PageProps) {
               )}
 
               {(primaryCta || secondaryCta) && (
-                <div className="flex flex-col sm:flex-row gap-3.5 mb-7">
+                <div className="flex flex-col sm:flex-row gap-3 mb-7">
                   {primaryCta && (
                     <Link
                       href={primaryCta.href}
-                      className="inline-flex items-center justify-center bg-lime-700 hover:bg-lime-800 text-white text-sm sm:text-base font-bold px-4 py-3 transition-all active:scale-95 gap-2"
+                      className="inline-flex items-center justify-center bg-lime-700 hover:bg-lime-800 text-white text-sm font-semibold px-6 py-3 rounded transition-colors"
                     >
                       {primaryCta.label}
                     </Link>
@@ -230,7 +230,7 @@ export default async function SitePageRoute({ params }: PageProps) {
                   {secondaryCta && (
                     <Link
                       href={secondaryCta.href}
-                      className="inline-flex items-center justify-center bg-white border-2 border-slate-300 hover:border-lime-600 hover:text-lime-700 text-slate-800 text-sm sm:text-base font-bold px-4 py-3 transition-all active:scale-95 gap-2"
+                      className="inline-flex items-center justify-center border border-slate-300 hover:border-slate-400 text-slate-700 text-sm font-semibold px-6 py-3 rounded transition-colors"
                     >
                       {secondaryCta.label}
                     </Link>

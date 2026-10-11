@@ -402,7 +402,7 @@ export function getChildPages(page: SitePageMeta, all: SitePageMeta[]): SitePage
 }
 
 /** "US" → 🇺🇸. Photo-API codes that aren't ISO regions are mapped first. */
-const API_TO_REGION: Record<string, string> = { CHE: "CH", NI: "NG" };
+const API_TO_REGION: Record<string, string> = { CHE: "CH", NI: "NG", PER: "PE" };
 function toRegion(code: string): string {
   // Document variants like "BR-3*4" use their country's flag
   const base = code.toUpperCase().split("-")[0];
@@ -436,6 +436,14 @@ const FALLBACK_API_COUNTRIES: [string, string, string][] = [
   ["GB", "United Kingdom", "600x750"], ["US", "United States", "600x600"],
 ];
 
+// Always offered in the tool's country list, even when the photo API omits them
+const EXTRA_API_COUNTRIES: [string, string, string][] = [
+  ["IE", "Ireland", "715x951"], ["ZA", "South Africa", "413x531"],
+  ["PER", "Peru", "413x509"], ["AR", "Argentina", "472x472"],
+  ["HK", "Hong Kong", "472x591"], ["CO", "Colombia", "413x531"], ["PH", "Philippines", "413x531"],
+  ["MY", "Malaysia", "413x590"], ["IS", "Iceland", "413x531"], ["BH", "Bahrain", "413x531"],
+];
+
 /**
  * Every country the photo API can process, as passport-photo presets with names,
  * background and head size localized for the section. Sorted by localized name.
@@ -445,6 +453,9 @@ export async function getAllCountryDocuments(site: SiteConfig): Promise<SiteTool
   const countries = fetched.length
     ? fetched.map((c) => ({ code: c.country_code, name: c.country_name, px: c.dimensions }))
     : FALLBACK_API_COUNTRIES.map(([code, name, px]) => ({ code, name, px }));
+  for (const [code, name, px] of EXTRA_API_COUNTRIES) {
+    if (!countries.some((c) => toRegion(c.code) === toRegion(code))) countries.push({ code, name, px });
+  }
 
   const regionNames = new Intl.DisplayNames([site.lang], { type: "region" });
   const { ui } = site;

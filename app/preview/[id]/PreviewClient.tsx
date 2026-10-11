@@ -191,6 +191,7 @@ function PhotoPanel({
   passCount,
   metrics,
   spec,
+  flag,
   title,
   onZoom,
   t,
@@ -201,6 +202,7 @@ function PhotoPanel({
   passCount: number;
   metrics: any;
   spec: any;
+  flag?: string;
   title: string;
   onZoom: () => void;
   t: PreviewStrings;
@@ -215,7 +217,7 @@ function PhotoPanel({
         <div className="px-5 pt-5 pb-3 flex items-center justify-between">
           <div>
             <p className="text-sm font-bold text-slate-900 flex items-center gap-1.5">
-              <span>{spec?.flag || "📄"}</span>{" "}
+              <span>{flag || spec?.flag || "📄"}</span>{" "}
               {title}
             </p>
           </div>
@@ -1051,6 +1053,7 @@ export default function PreviewClient({
   strings: t = DEFAULT_PREVIEW_STRINGS,
   lang,
   documentLabel,
+  documentFlag,
 }: {
   photoId: string;
   previewUrl: string;
@@ -1066,6 +1069,8 @@ export default function PreviewClient({
   lang?: string;
   /** Localized document name from that section's tool presets */
   documentLabel?: string;
+  /** Flag emoji for that document, used when there is no entry in the specs data */
+  documentFlag?: string;
 }) {
   const { data: session, status } = useSession();
   const [hasPaid, setHasPaid] = useState(initialIsPaid || false);
@@ -1267,7 +1272,7 @@ export default function PreviewClient({
           <div className="mb-5 text-center lg:text-left">
             <h1 className="text-2xl sm:text-3xl font-black text-slate-900">
               {t.headingBefore} <span className="text-lime-600">{t.headingHighlight}</span> {t.headingAfter}{" "}
-              {spec?.flag || (isUK ? "🇬🇧" : "")} {documentLabel || spec?.name || spec?.country || (isUK ? "United Kingdom" : "")}
+              {documentFlag || spec?.flag || (isUK ? "🇬🇧" : "")} {documentLabel || spec?.name || spec?.country || (isUK ? "United Kingdom" : "")}
             </h1>
             <div className="flex items-center justify-center lg:justify-start gap-3 mt-2.5 flex-wrap">
               {/* 24/7 Email Support Pill */}
@@ -1316,6 +1321,7 @@ export default function PreviewClient({
                 passCount={passCount}
                 metrics={metrics}
                 spec={spec}
+                flag={documentFlag}
                 title={panelTitle}
                 onZoom={() => setIsZoomOpen(true)}
                 t={t}

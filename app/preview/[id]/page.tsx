@@ -5,7 +5,7 @@ import PreviewClient from "./PreviewClient";
 import { getLocalPrice } from "@/lib/currency";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { getSiteCodes, getSiteConfig } from "@/lib/country-sites";
+import { getAllCountryDocuments, getSiteCodes, getSiteConfig } from "@/lib/country-sites";
 import { resolvePreviewStrings } from "@/lib/preview-strings";
 
 export default async function PreviewPage(props: { params: Promise<{ id: string }>, searchParams: Promise<{ [key: string]: string | string[] | undefined }> }) {
@@ -35,7 +35,9 @@ export default async function PreviewPage(props: { params: Promise<{ id: string 
   const from = searchParams.from as string | undefined;
   const site = from && getSiteCodes().includes(from) ? getSiteConfig(from) : null;
   const strings = resolvePreviewStrings(site?.preview);
-  const siteDoc = site?.tool.documents.find((d) => d.id === photoRecord.documentType);
+  const siteDoc =
+    site?.tool.documents.find((d) => d.id === photoRecord.documentType) ||
+    (site ? (await getAllCountryDocuments(site)).find((d) => d.id === photoRecord.documentType) : undefined);
 
   return (
     <PreviewClient
@@ -51,6 +53,7 @@ export default async function PreviewPage(props: { params: Promise<{ id: string 
       strings={strings}
       lang={site?.lang}
       documentLabel={siteDoc?.label}
+      documentFlag={siteDoc?.flag}
     />
   );
 }
