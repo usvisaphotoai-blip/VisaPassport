@@ -5,9 +5,9 @@ import CAEmbeddedTool from "./components/CAEmbeddedTool";
 import CABeforeAfterSlider from "./components/CABeforeAfterSlider";
 
 export const metadata: Metadata = {
-  title: "Canada Passport Photo Maker Online – 50x70mm IRCC Compliant | PixPassport",
+  title: "Canada Passport Photo Online: 50x70mm Size Checker | PixPassport",
   description:
-    "Create Canadian passport, visa, PR card and ID photos online with automatic 50x70mm & 35x45mm cropping, background checks, and official IRCC & Service Canada photo requirements.",
+    "Make Canada passport, visa, PR card and citizenship photos online. Auto-crop to 50x70mm or 35x45mm and check face size and background against IRCC rules.",
   alternates: {
     canonical: "https://www.pixpassport.com/ca",
     languages: {
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     description:
       "Create IRCC & Service Canada compliant 50x70mm passport photos online.",
     images: [
-      "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786116374/uk_passport_photo_after_atvxmj.webp",
+      "https://www.pixpassport.com/og-image.jpg",
     ],
   },
   openGraph: {
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786116374/uk_passport_photo_after_atvxmj.webp",
+        url: "https://www.pixpassport.com/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "Canada Passport Size Photo Maker",
@@ -165,7 +165,7 @@ export default function CAIndexPage() {
                   ))}
                 </div>
                 <span className="text-sm text-slate-700 font-bold">
-                  4.9 · Trusted by 15,000+ Canadian applicants
+                  4.9 
                 </span>
               </div>
             </div>

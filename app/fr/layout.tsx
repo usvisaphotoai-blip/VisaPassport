@@ -36,7 +36,8 @@ export const metadata: Metadata = {
 export default function FrLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
-    
+      {/* Root layout renders <html lang="en">; set the real language before paint for /fr pages */}
+      <script dangerouslySetInnerHTML={{ __html: "document.documentElement.lang='fr'" }} />
       <NavbarFr />
       <main id="main-content" className="grow">
         {children}

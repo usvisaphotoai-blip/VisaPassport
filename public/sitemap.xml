@@ -588,7 +588,7 @@
     <loc>https://www.pixpassport.com/france-passport-photo-editor</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.pixpassport.com/france-passport-photo-editor" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/france-passport-photo-editor" />
-    <lastmod>2026-10-05</lastmod>
+    <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
  
@@ -597,7 +597,7 @@
     <loc>https://www.pixpassport.com/france-visa-photo-editor</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.pixpassport.com/france-visa-photo-editor" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/france-visa-photo-editor" />
-     <lastmod>2026-10-05</lastmod>
+    <lastmod>2026-10-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   
@@ -1561,7 +1561,7 @@
     <loc>https://www.pixpassport.com/thailand-passport-photo-editor</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/thailand-passport-photo-editor" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/thailand-passport-photo-editor" />
-    <lastmod>2026-04-12</lastmod>
+    <lastmod>2026-10-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -1569,7 +1569,7 @@
     <loc>https://www.pixpassport.com/thailand-visa-photo-editor</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/thailand-visa-photo-editor" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/thailand-visa-photo-editor" />
-    <lastmod>2026-04-12</lastmod>
+    <lastmod>2026-10-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -1858,15 +1858,7 @@
       <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1778666011/france-visa-photo-size-35x45mm-example_h8ralx.webp</image:loc>
     </image:image>
-      <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1778666011/france-visa-photo-correct-vs-incorrect-example_ylpttb.webp</image:loc>
-    </image:image>
-      <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1778666011/france-visa-photo-lighting-setup-home-tips_dn1hli.webp</image:loc>
-    </image:image>
-      <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1778666012/france-visa-photo-requirements-2026_ywpb2c.webp</image:loc>
-    </image:image>
+   
   </url>
   <url>
     <loc>https://www.pixpassport.com/fr</loc>
@@ -2006,22 +1998,28 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.pixpassport.com/fr/passport-photo-online</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/passport-photo-online" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.pixpassport.com/fr/photo-identite-en-ligne" />
-    <xhtml:link rel="alternate" hreflang="de" href="https://www.pixpassport.com/de/passbild-online" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/passport-photo-online" />
-    
-    <lastmod>2026-05-17</lastmod>
+    <loc>https://www.pixpassport.com/fr/photo-permis-de-conduire</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.pixpassport.com/fr/photo-permis-de-conduire" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/fr/photo-permis-de-conduire" />
+    <lastmod>2026-10-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/fr/photo-titre-de-sejour</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.pixpassport.com/fr/photo-titre-de-sejour" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/fr/photo-titre-de-sejour" />
+    <lastmod>2026-10-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/fr/photo-bebe</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.pixpassport.com/fr/photo-bebe" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/fr/photo-bebe" />
+    <lastmod>2026-10-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-     <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1779008016/c24d89b1-ab0e-4f1d-9035-5814bc7b91ca_preview_ip9ogs.jpg</image:loc>
-    </image:image>
-     <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1779008017/c24d89b1-ab0e-4f1d-9035-5814bc7b91ca_photo_eyp4a3.jpg</image:loc>
-    </image:image>
- 
   </url>
   <url>
     <loc>https://www.pixpassport.com/fr/guides</loc>
@@ -2252,6 +2250,22 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/ca/canada-passport-photo-requirements" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/ca/canada-passport-photo-requirements" />
     <lastmod>2026-08-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/ca/canada-visa-photo-requirements</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/ca/canada-visa-photo-requirements" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/ca/canada-visa-photo-requirements" />
+    <lastmod>2026-10-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/ca/canada-pr-card-photo-requirements</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/ca/canada-pr-card-photo-requirements" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/ca/canada-pr-card-photo-requirements" />
+    <lastmod>2026-10-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
