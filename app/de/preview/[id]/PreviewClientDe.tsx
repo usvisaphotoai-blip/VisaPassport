@@ -10,6 +10,7 @@ import { de } from "../../translations";
 import { ExpertsFixModal } from "@/app/preview/[id]/PreviewClient";
 import { PREVIEW_STRINGS_DE } from "@/lib/preview-strings-localized";
 import { germanCountryName, germanDocLabel } from "../../docLabels";
+import PayPalBadge from "@/components/PayPalBadge";
 
 const Icon = ({ d, size = 16, stroke = 2, className = "" }: { d: string; size?: number; stroke?: number; className?: string }) => (
   <svg aria-hidden="true" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={stroke} strokeLinecap="round" strokeLinejoin="round" className={className}><path d={d} /></svg>
@@ -273,11 +274,12 @@ export default function PreviewClientDe({
                             <div key={i} className="flex items-center gap-1.5 text-slate-500"><Icon d={b.icon} size={13} className="text-emerald-600" /><span className="text-[11px] font-semibold">{b.text}</span></div>
                           ))}
                         </div>
-                        <div className="hidden lg:flex justify-center pt-1">
+                        <div className="hidden lg:flex justify-center items-center gap-3 pt-1">
                           <a href="https://razorpay.com/" target="_blank" rel="noopener noreferrer">
                             {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img referrerPolicy="origin" src="https://badges.razorpay.com/badge-dark.png" style={{ height: 40, width: 100 }} alt="Razorpay | Payment Gateway | Neobank" />
                           </a>
+                          <PayPalBadge />
                         </div>
                       </div>
                     </div>

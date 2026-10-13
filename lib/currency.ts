@@ -59,10 +59,10 @@ const FIXED_PRICES: Record<string, { amount: number; symbol: string; decimals: n
   GBP: { amount: 6.99, symbol: "£", decimals: 2 },
   CHF: { amount: 14.99, symbol: "CHF", decimals: 2 },
   CAD: { amount: 8.99, symbol: "C$", decimals: 2 },
-  AUD: { amount: 8.99, symbol: "A$", decimals: 2 },
+  AUD: { amount: 9.99, symbol: "A$", decimals: 2 },
   NZD: { amount: 12.99, symbol: "NZ$", decimals: 2 },
   JPY: { amount: 1100, symbol: "¥", decimals: 0 },
-  SGD: { amount: 7.99, symbol: "S$", decimals: 2 },
+  SGD: { amount: 6.99, symbol: "S$", decimals: 2 },
   HKD: { amount: 49, symbol: "HK$", decimals: 0 },
   
   // Tier 2: ~20-30% Discount

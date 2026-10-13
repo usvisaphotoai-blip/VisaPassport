@@ -7,6 +7,7 @@ import { getSpecById } from "@/lib/specs";
 import { usePayment, LocalPrice } from "./hooks/usePayment";
 import { ComplianceCheck } from "./types";
 import { DEFAULT_PREVIEW_STRINGS, formatPreview, type PreviewStrings } from "@/lib/preview-strings";
+import PayPalBadge from "@/components/PayPalBadge";
 
 // ─── Icons ────────────────────────────────────────────────────────────────────
 const Icon = ({
@@ -521,7 +522,7 @@ function OrderPanel({
 
              
 
-                <div className="flex justify-center pt-2">
+                <div className="flex justify-center items-center gap-3 pt-2">
                   <a
                     href="https://razorpay.com/"
                     target="_blank"
@@ -534,6 +535,7 @@ function OrderPanel({
                       alt="Razorpay | Payment Gateway | Neobank"
                     />
                   </a>
+                  <PayPalBadge />
                 </div>
               </div>
             </div>
