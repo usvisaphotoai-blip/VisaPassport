@@ -239,7 +239,10 @@ function updateSitemap() {
     let part = parts[i];
     const locMatch = part.match(/<loc>(.*?)<\/loc>/);
     if (locMatch) {
-      const fullUrl = locMatch[1];
+      const fullUrl = locMatch[1].trim();
+      if (!URL.canParse(fullUrl)) {
+        throw new Error(`Invalid <loc> in sitemap.xml: "${fullUrl}" (entry: ${part.slice(0, 300).trim()})`);
+      }
       const urlObj = new URL(fullUrl);
       const pathname = urlObj.pathname;
       

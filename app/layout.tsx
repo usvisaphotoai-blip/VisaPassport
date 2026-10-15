@@ -73,6 +73,14 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <meta name="yandex-verification" content="0483efdc76375d14" />
+        {/* Windows has no flag emoji glyphs (🇮🇳 renders as "IN"). If the browser can
+            draw color emoji but not flags, load a flag-only Twemoji font. Adapted from
+            country-flag-emoji-polyfill; font is self-hosted in public/fonts. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var c=document.createElement("canvas");c.width=c.height=1;var x=c.getContext("2d",{willReadFrequently:true});if(!x)return;x.textBaseline="top";x.font='100px "Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji",sans-serif';x.scale(.01,.01);function px(t,f){x.clearRect(0,0,100,100);x.fillStyle=f;x.fillText(t,0,0);return x.getImageData(0,0,1,1).data.join(",")}function color(t){var w=px(t,"#fff"),b=px(t,"#000");return b===w&&b.indexOf("0,0,0,")!==0}if(color("\\u{1F60A}")&&!color("\\u{1F1E8}\\u{1F1ED}")){var s=document.createElement("style");s.textContent='@font-face{font-family:"Twemoji Country Flags";unicode-range:U+1F1E6-1F1FF,U+1F3F4,U+E0062-E0063,U+E0065,U+E0067,U+E006C,U+E006E,U+E0073-E0074,U+E0077,U+E007F;src:url("/fonts/TwemojiCountryFlags.woff2") format("woff2");font-display:swap}';document.head.appendChild(s)}}catch(e){}})();`,
+          }}
+        />
       </head>
 
       <body

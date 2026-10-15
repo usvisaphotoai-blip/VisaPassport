@@ -26,6 +26,10 @@
   --color-primary-light: var(--primary-light);
   --color-primary-dark: var(--primary-dark);
   --color-accent-gold: var(--accent);
+  /* "Twemoji Country Flags" is only defined on browsers that can't render
+     flag emoji (Windows) — see the polyfill script in app/layout.tsx. */
+  --font-sans: "Twemoji Country Flags", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-mono: "Twemoji Country Flags", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
 /* Smooth scroll */
@@ -37,6 +41,7 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family:
+    "Twemoji Country Flags",
     var(--font-dm-sans),
     system-ui,
     -apple-system,
@@ -227,7 +232,7 @@ body {
 
 /* Premium Money Page Utilities */
 .premium-serif {
-  font-family: var(--font-playfair), serif;
+  font-family: "Twemoji Country Flags", var(--font-playfair), serif;
 }
 
 .text-balance {
@@ -608,13 +613,13 @@ body {
    Rich Content Styles — formatted for dynamic HTML content
    ========================================================================== */
 .rich-content {
-  font-family: Georgia, 'Times New Roman', serif;
+  font-family: "Twemoji Country Flags", Georgia, 'Times New Roman', serif;
   font-size: 1.0625rem;
   line-height: 1.85;
   color: #475569;
 }
 .rich-content h2 {
-  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-family: "Twemoji Country Flags", system-ui, -apple-system, 'Segoe UI', sans-serif;
   font-size: clamp(1.2rem, 3vw, 1.5rem);
   font-weight: 800;
   color: #0f172a;
@@ -626,7 +631,7 @@ body {
 }
 .rich-content h2:first-child { margin-top: 0; }
 .rich-content h3 {
-  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-family: "Twemoji Country Flags", system-ui, -apple-system, 'Segoe UI', sans-serif;
   font-size: clamp(1rem, 2.5vw, 1.15rem);
   font-weight: 700;
   color: #1e293b;
@@ -635,7 +640,7 @@ body {
   line-height: 1.4;
 }
 .rich-content h4 {
-  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-family: "Twemoji Country Flags", system-ui, -apple-system, 'Segoe UI', sans-serif;
   font-size: 0.8125rem;
   font-weight: 600;
   color: #334155;
@@ -662,7 +667,7 @@ body {
 }
 .rich-content ol { padding-left: 1.5rem; margin: 0 0 1.2rem; }
 .rich-content ol li { padding-left: 0.25rem; margin-bottom: 0.5rem; color: #475569; }
-.rich-content ol li::marker { color: #2563eb; font-weight: 700; font-family: system-ui, sans-serif; }
+.rich-content ol li::marker { color: #2563eb; font-weight: 700; font-family: "Twemoji Country Flags", system-ui, sans-serif; }
 .rich-content li ul, .rich-content li ol { margin: 0.4rem 0; }
 .rich-content blockquote {
   margin: 1.5rem 0;
@@ -681,14 +686,14 @@ body {
   border-radius: 4px;
   font-size: 0.875em;
   color: #dc2626;
-  font-family: 'Fira Code', 'Courier New', monospace;
+  font-family: "Twemoji Country Flags", 'Fira Code', 'Courier New', monospace;
 }
 .rich-content table {
   width: 100%;
   border-collapse: collapse;
   margin: 1.5rem 0;
   font-size: 0.9rem;
-  font-family: system-ui, sans-serif;
+  font-family: "Twemoji Country Flags", system-ui, sans-serif;
   border: 1px solid #e2e8f0;
   border-radius: 8px;
   overflow: hidden;
@@ -718,7 +723,7 @@ body {
   padding: 0.875rem 1rem;
   cursor: pointer;
   font-weight: 600;
-  font-family: system-ui, sans-serif;
+  font-family: "Twemoji Country Flags", system-ui, sans-serif;
   color: #1e293b;
   background: #f8fafc;
   list-style: none;
