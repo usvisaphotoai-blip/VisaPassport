@@ -135,7 +135,7 @@ export function usePayment({
         currency: orderData.currency,
         name: "PixPassport",
         description: "Get your passport or visa photo verified & corrected instantly.",
-        image: "https://res.cloudinary.com/ddxu2wqfm/image/upload/v1774782293/logo_evktxq.jpg",
+        image: "https://pixpassport.com/logo.png",
         order_id: orderData.orderId,
         handler: async (response: any) => {
           try {

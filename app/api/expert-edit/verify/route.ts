@@ -162,7 +162,7 @@ export async function POST(req: Request) {
         html: `
           <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #1e293b; background: #f8fafc; padding: 32px 24px; border-radius: 16px;">
             <div style="text-align: center; margin-bottom: 24px;">
-              <img src="https://res.cloudinary.com/ddxu2wqfm/image/upload/v1774782293/logo_evktxq.jpg" alt="PixPassport" style="width: 54px; height: 54px; border-radius: 12px; margin-bottom: 12px; display: inline-block; object-fit: contain;" />
+              <img src="https://pixpassport.com/logo.png" alt="PixPassport" style="width: 54px; height: 54px; border-radius: 12px; margin-bottom: 12px; display: inline-block; object-fit: contain;" />
               <h2 style="font-size: 22px; font-weight: 800; color: #0f172a; margin: 0 0 6px;">Your Expert Edit Order is Confirmed! 🌟</h2>
               <p style="color: #64748b; font-size: 14px; margin: 0;">Order #${order._id}</p>
             </div>
@@ -174,7 +174,7 @@ export async function POST(req: Request) {
 
             ${invoiceData ? `
             <div style="background: #ffffff; border-radius: 12px; padding: 20px; border: 1px solid #e2e8f0; margin-bottom: 20px;">
-              <h3 style="margin: 0 0 10px; font-size: 15px; font-weight: 700; color: #0f172a;">🧾 Tax Invoice & Payment Receipt</h3>
+              <h3 style="margin: 0 0 10px; font-size: 15px; font-weight: 700; color: #0f172a;">🧾Payment Receipt</h3>
               <table style="width: 100%; font-size: 13px; color: #475569; margin-bottom: 12px; border-collapse: collapse;">
                 <tr><td style="padding: 5px 0; color: #64748b;">Invoice Number:</td><td style="padding: 5px 0; text-align: right; font-weight: 700; color: #0f172a;">${invoiceData.invoiceNumber}</td></tr>
                 <tr><td style="padding: 5px 0; color: #64748b;">Amount Paid:</td><td style="padding: 5px 0; text-align: right; font-weight: 700; color: #059669;">${formatCurrency(invoiceData.total, invoiceData.currency)} (PAID ✓)</td></tr>

@@ -123,7 +123,7 @@ export default function ExpertEditPage() {
         currency: data.currency,
         name: "PixPassport",
         description: "Expert manual editing for guaranteed compliance. 100% Guaranteed Approval.",
-        image: "https://res.cloudinary.com/ddxu2wqfm/image/upload/v1774782293/logo_evktxq.jpg",
+        image: "https://pixpassport.com/logo.png",
         order_id: data.orderId,
         handler: async function (response: any) {
           setMessage("Verifying payment...");

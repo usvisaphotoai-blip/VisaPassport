@@ -149,8 +149,8 @@ export async function sendOfficialInvoiceEmail({
     const emailHtml = `
       <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #1e293b; background: #f8fafc; padding: 32px 24px; border-radius: 16px;">
         <div style="text-align: center; margin-bottom: 24px;">
-          <img src="https://res.cloudinary.com/ddxu2wqfm/image/upload/v1774782293/logo_evktxq.jpg" alt="PixPassport Logo" style="width: 54px; height: 54px; border-radius: 12px; margin-bottom: 12px; display: inline-block; object-fit: contain;" />
-          <h1 style="font-size: 22px; font-weight: 800; color: #0f172a; margin: 0 0 6px;">Tax Invoice & Payment Receipt 🧾</h1>
+          <img src="https://pixpassport.com/logo.png" alt="PixPassport Logo" style="width: 54px; height: 54px; border-radius: 12px; margin-bottom: 12px; display: inline-block; object-fit: contain;" />
+          <h1 style="font-size: 22px; font-weight: 800; color: #0f172a; margin: 0 0 6px;">Payment Receipt 🧾</h1>
           <p style="color: #64748b; font-size: 14px; margin: 0;">Official Receipt for Invoice ${invoiceNumber}</p>
         </div>
 
@@ -184,7 +184,7 @@ export async function sendOfficialInvoiceEmail({
     const mailRes = await sendEmail({
       to,
       bcc: "usvisaphotoai@gmail.com",
-      subject: `Tax Invoice & Payment Receipt (${invoiceNumber}) - PixPassport`,
+      subject: `Payment Receipt (${invoiceNumber}) - PixPassport`,
       html: emailHtml,
       attachments: [
         {
@@ -204,7 +204,7 @@ export async function sendOfficialInvoiceEmail({
         actor: "system",
         metadata: {
           recipient: to,
-          subject: `Tax Invoice & Payment Receipt (${invoiceNumber}) - PixPassport`,
+          subject: `Payment Receipt (${invoiceNumber}) - PixPassport`,
           template: "tax_invoice",
           invoiceNumber,
           status: "sent",

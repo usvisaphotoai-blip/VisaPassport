@@ -656,7 +656,7 @@ export default function PrintTemplateApp() {
         currency: data.currency,
         name: "PixPassport",
         description: `Expert Photo Review (${reviewCountry})`,
-        image: "https://res.cloudinary.com/ddxu2wqfm/image/upload/v1774782293/logo_evktxq.jpg",
+        image: "https://pixpassport.com/logo.png",
         order_id: data.orderId,
         handler: async function (response: any) {
           setReviewMessage("Verifying payment...");

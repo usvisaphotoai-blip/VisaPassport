@@ -232,7 +232,7 @@ export function renderPaymentFailedEmail(opts: PaymentFailedEmailOptions): strin
 <div style="background:#f1f5f9;padding:24px 12px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#1e293b;">
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;margin:0 auto;background:#ffffff;border-radius:12px;border:1px solid #e2e8f0;">
     <tr><td style="padding:28px 28px 8px;text-align:center;">
-      <img src="https://res.cloudinary.com/ddxu2wqfm/image/upload/v1774782293/logo_evktxq.jpg" alt="PixPassport" width="48" height="48" style="border-radius:10px;display:inline-block;" />
+      <img src="https://pixpassport.com/logo.png" alt="PixPassport" width="48" height="48" style="border-radius:10px;display:inline-block;" />
       <h1 style="font-size:20px;line-height:1.3;color:#0f172a;margin:14px 0 6px;">Your payment didn't go through</h1>
       <p style="font-size:14px;color:#64748b;margin:0;">${escapeHtml(productLabel)} — no charge was made, your order is saved.</p>
     </td></tr>
