@@ -208,8 +208,8 @@ export async function getLocalPrice(
     console.error("Failed to get local price, falling back to USD", error);
     return {
       currency: "USD",
-      amount: 6.99,
-      formatted: "$6.99",
+      amount: 7.99,
+      formatted: "$7.99",
       symbol: "$",
     };
   }
