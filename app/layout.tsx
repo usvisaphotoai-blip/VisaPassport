@@ -102,7 +102,7 @@ export default function RootLayout({
         
         </AuthProvider>
 
-        {/* Microsoft Clarity */}
+        {/* Microsoft Clarityy */}
         <Script id="clarity-script" strategy="lazyOnload">
           {`
             (function(c,l,a,r,i,t,y){
