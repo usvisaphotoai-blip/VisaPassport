@@ -25,4 +25,20 @@ Disallow: /dashboard/
 Disallow: /cloudinary-gallery/
 Disallow: /api/cloudinary-gallery/
 
+# OpenAI: allow ChatGPT search, opt out of model training
+User-agent: OAI-SearchBot
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /cloudinary-gallery/
+Disallow: /api/cloudinary-gallery/
+
+User-agent: OAI-AdsBot
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /cloudinary-gallery/
+Disallow: /api/cloudinary-gallery/
+
+User-agent: GPTBot
+Disallow: /
+
 Sitemap: https://www.pixpassport.com/sitemap.xml
