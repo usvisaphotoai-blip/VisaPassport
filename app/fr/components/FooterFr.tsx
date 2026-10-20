@@ -9,6 +9,7 @@ export default function FooterFr() {
         { label: "Photo Passeport France", href: "/fr/photo-passeport" },
         { label: "Photo d'Identité", href: "/fr/photo-identite" },
         { label: "Photo d'Identité en ligne", href: "/fr/photo-identite-en-ligne" },
+        { label: "Imprimer une photo d'identité", href: "/fr/imprimer-photo-identite" },
         { label: "Photo Visa", href: "/fr/photo-visa" },
         { label: "Code ePhoto ANTS", href: "/fr/ephoto-ants" },
         { label: "Photo carte d'identité", href: "/fr/photo-carte-identite" },

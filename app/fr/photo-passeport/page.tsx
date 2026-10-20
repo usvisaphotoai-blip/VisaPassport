@@ -317,7 +317,10 @@ export default function PhotoPasseportPage() {
             <Link href="/fr/photo-bebe" className="text-lime-600 hover:underline">photo d&apos;identité bébé</Link>). Même photo pour la{" "}
             <Link href="/fr/photo-carte-identite" className="text-lime-600 hover:underline">carte d&apos;identité</Link>{" "}
             si vous faites les deux demandes ensemble. Pour réussir la prise de vue, suivez notre guide{" "}
-            <Link href="/fr/guides/how-to-take-passport-photo-at-home" className="text-lime-600 hover:underline">photo d&apos;identité à la maison</Link>.
+            <Link href="/fr/guides/how-to-take-passport-photo-at-home" className="text-lime-600 hover:underline">photo d&apos;identité à la maison</Link>,
+            puis notre guide pour{" "}
+            <Link href="/fr/imprimer-photo-identite" className="text-lime-600 hover:underline">imprimer une photo d&apos;identité</Link>{" "}
+            sans la déformer.
           </p>
         </div>
       </section>

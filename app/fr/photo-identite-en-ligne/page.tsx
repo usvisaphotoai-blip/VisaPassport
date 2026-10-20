@@ -150,7 +150,9 @@ export default function PhotoIdentiteEnLignePage() {
               <li>
                 Téléchargez votre photo d&apos;identité numérique, prête à
                 imprimer chez vous, en pharmacie, ou à intégrer directement dans
-                un formulaire en ligne.
+                un formulaire en ligne (voir comment{" "}
+                <Link href="/fr/imprimer-photo-identite" className="text-lime-700 underline">imprimer une photo d&apos;identité</Link>{" "}
+                au bon format).
               </li>
             </ol>
             <p className="leading-relaxed">

@@ -1926,6 +1926,14 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://www.pixpassport.com/fr/imprimer-photo-identite</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.pixpassport.com/fr/imprimer-photo-identite" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/fr/imprimer-photo-identite" />
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.pixpassport.com/fr/photo-identite</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/passport-photos" />
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.pixpassport.com/fr/photo-identite" />

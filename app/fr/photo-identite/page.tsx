@@ -169,7 +169,9 @@ export default function PhotoIdentitePage() {
         <h3 className="text-xl font-semibold mt-4 mb-2">3. Téléchargez votre photo conforme</h3>
         <p className="mb-4">
           Récupérez votre photo d&apos;identité prête à être imprimée ou utilisée en ligne pour vos démarches
-          administratives.
+          administratives. Pour le tirage, suivez notre guide pour{" "}
+          <Link href="/fr/imprimer-photo-identite" className="text-lime-600 hover:underline">imprimer une photo d&apos;identité</Link>{" "}
+          en taille réelle.
         </p>
 
         <h2 className="text-2xl font-semibold mt-8 mb-4">

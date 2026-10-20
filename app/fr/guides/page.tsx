@@ -51,6 +51,7 @@ const guides = [
   { href: "/fr/guides/passport-photo-background", emoji: "🖼️", title: fr.guides.background.title, desc: fr.guides.background.description },
   { href: "/fr/guides/how-to-take-passport-photo-at-home", emoji: "🏠", title: fr.guides.howTo.title, desc: fr.guides.howTo.description },
   { href: "/fr/guides/photo-identite-france-passeport-cni-ephoto-permis-visa", emoji: "🇫🇷", title: fr.guides.franceGuide.title, desc: fr.guides.franceGuide.description },
+  { href: "/fr/imprimer-photo-identite", emoji: "🖨️", title: "Imprimer une photo d'identité au format 35×45 mm", desc: "Planche 10×15 ou A4, réglages d'impression en taille réelle et où imprimer : chez soi, en borne ou en ligne." },
   { href: "/fr/photo-bebe", emoji: "👶", title: "Photo d'identité bébé : passeport et CNI", desc: "Faire la photo d'identité d'un nourrisson à la maison : allongé sur un drap clair, sans tétine, et recadrée au format 35×45 mm." },
   { href: "/fr/photo-permis-de-conduire", emoji: "🚗", title: "Photo permis de conduire : ePhoto et normes ANTS", desc: "Code ePhoto obligatoire, où faire la photo, normes et erreurs qui font refuser la demande de permis." },
   { href: "/fr/photo-titre-de-sejour", emoji: "🏛️", title: "Photo titre de séjour : ePhoto ANEF et normes", desc: "Code ePhoto obligatoire sur l'ANEF, où l'obtenir, tête nue et motifs de refus fréquents." },
