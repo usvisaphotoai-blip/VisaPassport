@@ -425,6 +425,7 @@ export default function PassportPhotoTemplate4x6Page() {
           {[
             { href: "/passport-photo-print-template-generator", label: "Passport Photo Print Template (A4 / Letter)" },
             { href: "/passport-size-photo-maker", label: "Passport Size Photo Maker" },
+            { href: "/in/photo-passport-size-converter", label: "Photo Passport Size Converter" },
             { href: "/passport-photo-online", label: "Passport Photo Online" },
             { href: "/passport-photo-checker", label: "Passport Photo Checker" },
             { href: "/uk-passport-size-photo-maker", label: "UK Passport Size Photo Maker" },

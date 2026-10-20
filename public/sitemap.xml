@@ -2120,6 +2120,17 @@
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1785679205/MakePassportPhoto_ph2uog_ryefxt.webp</image:loc>
     </image:image>
   </url>
+  <url>
+    <loc>https://www.pixpassport.com/in/photo-passport-size-converter</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/in/photo-passport-size-converter" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/in/photo-passport-size-converter" />
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1785679205/MakePassportPhoto_ph2uog_ryefxt.webp</image:loc>
+    </image:image>
+  </url>
   
   <url>
     <loc>https://www.pixpassport.com/de</loc>

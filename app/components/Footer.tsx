@@ -47,6 +47,7 @@ export default function Footer() {
         { label: "Canada Visa Size Photo", href: "/ca" },
         { label: "Print Template Generator", href: "/passport-photo-print-template-generator" },
         { label: "4x6 Passport Photo Template", href: "/passport-photo-template-4x6" },
+        { label: "Passport Size Photo Converter", href: "/in/photo-passport-size-converter" },
         { label: "Passport Photo Directory", href: "/passport-photos" },
         { label: "Visa Photo Directory", href: "/visa-photo" },
         { label: "Blog & Guides", href: "/blog" },
