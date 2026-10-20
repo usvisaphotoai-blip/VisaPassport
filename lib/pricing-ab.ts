@@ -9,6 +9,7 @@ export const PRICE_VARIANT_B_OVERRIDES: Record<string, number> = {
   USD: 8.99,
   EUR: 7.99,
   GBP: 7.99,
+  INR:200
 };
 
 export function isPriceVariant(value: unknown): value is PriceVariant {

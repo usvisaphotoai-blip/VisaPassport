@@ -162,6 +162,7 @@ export default function PrintTemplateGeneratorPage() {
 
   <div className="grid sm:grid-cols-2 py-5 lg:grid-cols-3 gap-3 max-w-4xl mx-auto px-4">
             {[
+              { href: "/passport-photo-template-4x6", label: "Free 4x6 Passport Photo Template" },
               { href: "/icao-standard-photo", label: "ICAO Standard Photo Tool" },
               { href: "/uk-passport-size-photo-maker", label: "UK Passport Size Photo Maker" },
               { href: "/passport-size-photo-maker", label: "Passport Size Photo Maker" },

@@ -1,163 +1,230 @@
 ---
-title: "Passport Photos London – Make a Compliant Photo Online"
-description: "Need passport photos in London? Make a compliant UK passport photo online in minutes, print it in the right size and skip the shop queue."
+title: "Passport Photos London: Online vs Shops, Size & Rules (2026)"
+description: "Passport photos in London: compare booths, shops and online, get the exact UK size (35x45 mm), avoid rejections and make a compliant photo in minutes."
 slug: "passport-photos-london"
-h1: "Passport Photos London: Make Yours Online in Minutes"
+h1: "Passport Photos in London: Online, Booths and Shops Compared"
 date: "2026-09-29"
-updatedAt: "2026-10-07"
+updatedAt: "2026-10-20"
 author: "PixPassport UK Team"
 category: "UK Passport Photos"
-readingTime: "6 Min."
-keywords: "passport photos london, passport pictures london, passport photographs london, passport photo shop london, passport photo studio london, digital passport photo london, london passport photo size, london visa photo, london visa photo size, london visa picture"
+readingTime: "8 Min."
+keywords: "passport photos london, online passport photo london, digital passport photo london, passport pictures london, london passport photo size, uk passport photo requirements, passport photo for london passport office"
 defaultDoc: "uk-passport-online"
 toolTitle: "London Passport Photo Maker Online"
-toolSubtitle: "Upload your portrait photo and get an HM Passport Office-compliant photo in seconds."
+toolSubtitle: "Upload a portrait photo and get an HM Passport Office-compliant photo in seconds."
 image: "https://res.cloudinary.com/dipzpwbbk/image/upload/v1784690540/uk-hero_m4cc8l.webp"
 faq:
   - question: "Where can I get passport photos in London?"
-    answer: "You can get passport photos at chemists, post offices, photo booths and print shops across London, from Central London and Holborn to Ealing, Brixton, Canary Wharf, Wimbledon and Stratford. You can also make a compliant digital passport photo online with our tool, then print it yourself or at a local shop."
-  - question: "Can I get a passport photo in London same day?"
-    answer: "Yes. Most London photo shops and booths print passport pictures while you wait, and our online maker gives you a digital file in under a minute. You can upload the digital file straight to your gov.uk application or print it the same day."
+    answer: "You can use photo booths (often in stations, supermarkets and Post Office branches), high street chains such as Boots, Timpson and Snappy Snaps, independent photo studios, or an online passport photo maker. Opening hours, prices and booth availability vary by branch, so check before you travel."
+  - question: "What is the best way to get a passport photo in London?"
+    answer: "It depends on your priority. An online maker is fastest and works 24/7. A booth or shop suits you if you want a printed photo straight away and do not mind travelling. If you apply online, a digital photo is all you need."
   - question: "What size is a UK passport photo?"
-    answer: "A printed UK passport photo is 35 mm wide and 45 mm tall, with the head measuring 29 to 34 mm from chin to crown. A digital photo for the online service must be at least 600 pixels wide and 750 pixels tall."
-  - question: "Can I print my passport photo at home in London?"
-    answer: "You can print at home only if you use proper photo paper and the print is sharp, unmarked and exactly 35 x 45 mm. Prints on plain paper are rejected. Many Londoners download the printable sheet and print it at a local photo shop or chemist instead."
+    answer: "A printed UK passport photo is 35 mm wide and 45 mm tall, with the head measuring 29 to 34 mm from chin to crown. A digital photo for the gov.uk service must be a JPEG of at least 600 x 750 pixels, between 50 KB and 10 MB."
+  - question: "Can I use a passport photo made online for my gov.uk application?"
+    answer: "Yes. You can upload a digital photo that meets the HM Passport Office rules. The gov.uk service runs its own check, so use a sharp, unedited, correctly sized photo with a plain light background."
+  - question: "Can I print my passport photo at home?"
+    answer: "Only if you print on proper photo paper at exactly 35 x 45 mm, with a sharp, unmarked result. Plain paper prints are rejected. Many people download the printable sheet and print it at a local shop or chemist instead."
+  - question: "Can I take my own passport photo with a phone?"
+    answer: "Yes, but it is easier if someone else takes it. Arm's-length selfies often distort the face and cast shadows. Use a plain light wall, soft daylight, a straight-on pose and a neutral expression."
+  - question: "Why do passport photos get rejected?"
+    answer: "Common reasons are a patterned or dark background, shadows on the face or background, glasses with glare, hair covering the eyes, a smiling or open mouth, a blurry image, filters or editing, and a head that is too large or too small in the frame."
+  - question: "Can I get a passport photo for a baby or child in London?"
+    answer: "Yes, and the rules are slightly relaxed for babies and young children, for example on eye contact and expression. See our UK child passport photo guide for the details."
+  - question: "I live outside the UK. Can I use this for a UK passport or visa application?"
+    answer: "Yes. The UK photo rules are the same wherever you apply, so you can make a compliant 35 x 45 mm photo from anywhere. For visas to other countries, the size and background can differ, so confirm the requirements of the embassy or visa centre first."
   - question: "Do London visa centres accept online photos?"
-    answer: "Many visa centres accept photos made online, as long as the print or file meets the destination country's size, background and quality rules. Some accept a digital file while others want a printed photo, so check your visa centre's guidance before you go. Most UK and Schengen visa photos use the 35 x 45 mm size."
+    answer: "Many accept them if the file or print meets the destination country's size, background and quality rules. Some want a printed photo, so check your visa centre's instructions before you go."
 ---
 
-Need passport photos in London today? You do not have to queue at a booth or book a studio. Our online passport photo maker turns a phone photo into a compliant UK passport photo in minutes.
+Need passport photos in London today? You can use a booth, a high street shop or an online maker. This guide compares them, explains the UK photo rules and helps you avoid a rejected application, whether you live in London, elsewhere in the UK or abroad.
 
-A photo that breaks [HM Passport Office photo rules](https://www.gov.uk/photos-for-passports) delays your application. Common problems include a patterned background, poor lighting and an incorrect head size. Our tool removes that risk. It crops, resizes and checks your photo automatically, so you can apply with confidence, whether you live in Camden, Croydon or anywhere in between.
+A photo that breaks the [HM Passport Office photo rules](https://www.gov.uk/photos-for-passports) can delay your application. Our tool crops, resizes and checks your photo automatically, so you can make a compliant photo from your phone in minutes.
 
-## How to Make a Passport Photo in London Online
+## Make Your Passport Photo Online in 3 Steps
 
-You need three quick steps and about one minute. Stand in front of a plain wall in good daylight, and let the tool handle the rest.
+You need about a minute and a plain wall. Anyone can use this tool, in London or anywhere else in the world.
 
 ### Step 1: Upload or Take Your Photo
 
-Take a new photo with your phone camera, or upload a recent portrait from your gallery. Follow these tips for the best result:
+Take a new photo with your phone, or upload a recent portrait. For the best result:
 
 - Face the camera straight on, with your head level.
-- Keep a neutral expression and your mouth closed.
-- Stand in soft, even light with no shadows on your face.
-- Keep your eyes open and your hair off your face.
-- Ask someone else to take the photo at eye level, about an arm's length away. HM Passport Office does not accept selfies taken at arm's length.
+- Keep a neutral expression with your mouth closed and eyes open.
+- Stand in soft, even daylight with no shadows on your face or the wall.
+- Keep hair off your face and your full face visible.
+- Ask someone else to take the photo at eye level, about an arm's length away.
 
 #### Accepted formats: JPG, PNG and HEIC
 
-Upload your photo as a JPG, PNG or HEIC file. HEIC is the default format on many iPhones, so you can upload straight from your camera roll without converting it first. Choose a sharp, high-resolution image for the cleanest crop.
+Upload a JPG, PNG or HEIC file. HEIC is the default on many iPhones, so you can upload straight from your camera roll. Choose a sharp, high-resolution image for the cleanest crop.
 
 ### Step 2: Auto-Crop to the 35 x 45 mm UK Size
 
-Our tool then does the technical work for you. It will:
+The tool does the technical work for you. It will:
 
-- **Crop** your image to the official **35 x 45 mm** UK passport size.
-- **Replace** your background with a plain light grey shade.
-- **Position** your head so the chin-to-crown height sits within **29–34 mm**.
-- **Centre** your face and keep your shoulders in frame.
+- **Crop** your image to the official **35 x 45 mm** size.
+- **Replace** the background with a plain light shade.
+- **Position** your head so chin-to-crown height sits within **29 to 34 mm**.
+- **Centre** your face with your shoulders in frame.
 
-You get a precise, biometric-ready result without a ruler or photo editing software. Applying for a baby or young child? Read our [UK child passport photo guide](/uk/uk-child-passport-photo) first, because the rules on expression and eyes are different.
+Applying for a baby or young child? Read our [UK child passport photo guide](/uk/uk-child-passport-photo) first, because the rules on expression and eyes are different.
 
 ### Step 3: Download Your Photo
 
-Preview the result, then download it. Use the digital file for an online gov.uk application, or print it for a paper form. Before you submit, check that your photo:
+Preview the result and download it. Before you submit, check that your photo:
 
 - shows a neutral expression and both eyes clearly;
-- has no glasses, hats or heavy shadows;
+- has no hats, heavy shadows or glare on glasses;
 - is in colour, with no filters or edits;
-- is recent and looks like you today.
+- looks like you today.
 
-Not sure about a photo you already have? Run it through our [free UK passport photo checker](/uk-passport-photo-checker-online-free) before you apply.
+Not sure about a photo you already have? Run it through our [free UK passport photo checker](/uk-passport-photo-checker-online-free).
 
-#### Digital file and printable sheet options
+#### Digital file and printable sheet
 
-Choose the format that fits your application:
+- **Digital file:** a JPEG for the gov.uk online service (at least 600 x 750 pixels).
+- **Printable sheet:** several photos on one sheet. Paper applications need two identical photos.
 
-- **Digital file:** a JPEG made for online upload. The gov.uk service asks for at least 600 x 750 pixels.
-- **Printable sheet:** a print-ready layout with several photos on one sheet. Paper applications need two identical photos, so this saves time.
+Print on proper photo paper at a local shop. Plain paper is not accepted.
 
-Print your sheet at a local shop on proper photo paper. Plain paper from a home inkjet printer is not accepted.
+## UK Passport Photo Requirements at a Glance
 
-## London Passport Photo Options Compared
+Use this quick reference before you take or print your photo.
 
-You have several ways to get passport pictures in London. Each option has its own strengths, so pick the one that suits your schedule and budget.
+### Size and Quality Rules
 
-### Photo Booths, Shops and Studios vs Online
+| Requirement | Printed photo               | Digital photo                    |
+| ----------- | --------------------------- | -------------------------------- |
+| Size        | 35 x 45 mm                  | At least 600 x 750 px            |
+| Head size   | 29 to 34 mm, chin to crown  | Whole head and shoulders visible |
+| File        | Photo paper, no marks       | JPEG, 50 KB to 10 MB             |
+| Background  | Plain cream or light grey   | Plain cream or light grey        |
+| Quality     | Sharp, in focus, no creases | Sharp, no filters or editing     |
 
-A passport photo shop in London gives you a photographer who takes the photo for you. A passport photo studio in London may offer extra help, such as retakes and printing. Photo booths in post offices and chemists offer quick, standard prints. Online tools let you handle everything at home.
+### Pose, Expression and Appearance
 
-Here is how the main options compare:
+- Look straight at the camera with a neutral expression and mouth closed.
+- Keep your eyes open and visible, with no hair across them.
+- Do not wear a hat or head covering unless for religious or medical reasons, and your face must stay fully visible.
+- Avoid glasses where possible. If you cannot remove them, there must be no glare and no tinted lenses.
+- Take a new photo if your appearance has changed significantly.
 
-| Feature                | Photo Booth          | Shop or Studio             | Online Maker   |
-| ---------------------- | -------------------- | -------------------------- | -------------- |
-| Waiting time           | Minutes, plus travel | 10–30 minutes, plus travel | Under 1 minute |
-| Travel needed          | Yes                  | Yes                        | No             |
-| Digital photo included | Sometimes            | Sometimes                  | Yes            |
-| Retakes                | Limited              | Usually available          | Unlimited      |
-| Open hours             | Store hours          | Store hours                | 24/7           |
-| Compliance check       | Basic                | Varies                     | Built in       |
+#### Religious and medical exceptions
 
-#### Compare cost and waiting time
+You may wear a head covering for religious or medical reasons, as long as your full face from chin to forehead is visible and there are no shadows. Check the current gov.uk guidance if you are unsure about your situation.
 
-Prices vary across London. A booth in Central London often costs more than one in an outer borough, and studios may charge extra for retakes or digital copies. Ask what the price includes before you pay, and check whether the shop confirms compliance with HM Passport Office rules.
+## Where to Get Passport Photos in London
 
-Waiting time matters too. Travelling to a shop, queuing and printing can take an hour or more. An online maker removes the journey, so you keep control of your day. If you need a physical copy, you can print your photo sheet at any local print shop.
+London has plenty of options. Each suits a different need.
 
-### Urgent Passport Appointments in London
+### Photo Booths
 
-If you need a passport quickly, HM Passport Office runs a London passport office for its [urgent passport services](https://www.gov.uk/get-a-passport-urgently). Fast Track appointments use a paper application, so bring two identical printed photos that meet the 35 x 45 mm rules. A rejected photo at the counter can cost you the appointment, so check your prints before you travel.
+Booths are common in stations, shopping centres, supermarkets and many Post Office branches. They are quick and give you prints straight away. Quality and compliance checks vary, so check your prints against the rules above before you travel to a passport office or visa centre.
 
-## London Visa Photo Size and Requirements
+### High Street Shops and Photo Studios
 
-Visa application centres in London, run by providers such as VFS Global and TLScontact, check photos as strictly as the passport office does.
+Chains such as Boots, Timpson and Snappy Snaps, plus independent studios, offer staffed passport photo services. A photographer can retake the photo if needed. Prices, opening hours and whether you get a digital copy differ by branch, so ask what is included before you pay.
 
-### Visa photo size in London
+### Online Passport Photo Makers
 
-The London visa photo size depends on the country you apply to. Use this quick guide, then confirm with the official source:
+An online maker lets you create the photo at home, with no travel. You get a digital file for gov.uk and a printable sheet for paper forms or visa centres.
 
-- **UK visa photos:** usually 35 x 45 mm, the same as a passport photo.
-- **Schengen visa photos:** usually 35 x 45 mm, with a plain light background.
-- **US visa photos:** 2 x 2 inches (51 x 51 mm), which is a different format.
+### Comparison: Booth vs Shop vs Online
 
-Because rules change, always read the embassy or visa centre instructions before you print.
+| Feature          | Photo Booth          | Shop or Studio                | Online Maker   |
+| ---------------- | -------------------- | ----------------------------- | -------------- |
+| Time             | Minutes, plus travel | 10 to 30 minutes, plus travel | Under 1 minute |
+| Travel needed    | Yes                  | Yes                           | No             |
+| Digital photo    | Sometimes            | Sometimes                     | Yes            |
+| Retakes          | Limited              | Usually available             | Unlimited      |
+| Open hours       | Location hours       | Store hours                   | 24/7           |
+| Compliance check | Basic                | Varies                        | Built in       |
 
-### What a London visa centre expects
+#### How to choose
 
-A London visa picture must meet strict standards, just like a passport photo. Most visa centres expect the following:
+- **Applying online on gov.uk:** a digital photo is enough, so an online maker saves the trip.
+- **Paper application:** make the photo online, then print two copies on photo paper at a local shop.
+- **No time to prepare:** a booth or staffed shop gives you a printed result quickly.
 
-- A recent photo, taken within the last six months.
-- A plain, light background with no patterns or shadows.
-- A neutral expression, with your eyes open and your face fully visible.
-- No glasses, hats or tinted lenses, apart from religious or medical exceptions.
-- A sharp, high-quality image with correct size and head position.
+## Applying for a Passport from London
 
-Your visa photo may not match your passport photo requirements exactly. For example, some countries want a white background, while the UK passport office asks for light grey or cream. Check the requirements for your destination, then choose the matching size and background in the tool.
+Your photo requirements depend on how you apply.
 
-## Why Make Your Passport Photo Online Instead?
+### Online Application
 
-Our tool takes the stress out of passport pictures. You save time, avoid rejections and keep full control of the result. It works for adults and children alike, and you can use it on any phone, tablet or computer.
+Upload your digital JPEG through the [gov.uk passport service](https://www.gov.uk/apply-renew-passport). It checks your photo automatically and tells you if there is a problem.
 
-### Faster Than a London Queue
+### Paper Application
 
-London life is busy. You might spend half your lunch break travelling to a booth and waiting in line. With our tool, you skip all of that.
+Attach two identical printed photos. Write nothing on the front. If your application needs a countersignature, the countersignatory signs the back of one photo.
 
-- **Instant results:** get your photo in under a minute.
-- **Open 24/7:** make your photo at midnight or on a Sunday morning.
-- **Unlimited retakes:** try again until you like the result.
-- **No travel:** save money on transport and time on the road.
+### Post Office Check and Send
 
-The tool also helps you avoid the most common rejection reasons: a patterned or dark background, glasses, a wrongly sized head and poor lighting.
+Some Post Office branches offer a paper-application checking service. Staff review your forms and photos before sending. Confirm the current price and rules on the Post Office website.
+
+### Urgent Passport Appointments
+
+If you need a passport quickly, read the official guidance on [urgent passport services](https://www.gov.uk/get-a-passport-urgently), since the options, timings and fees change. Whichever service you use, bring photos that meet the rules, because a rejected photo can cost you your appointment.
+
+## Passport Photos for UK Residents Outside London and for People Abroad
+
+### Living elsewhere in the UK
+
+The rules are the same in Manchester, Glasgow, Cardiff or a village. You do not need a London studio. Make the photo online, then print it locally if you need a paper copy.
+
+### Applying from outside the UK
+
+British citizens abroad can apply for a UK passport online. The photo rules are identical, so a 35 x 45 mm compliant photo works anywhere. If you cannot print on photo paper where you live, use a digital application where available.
+
+### Applying for a UK visa from another country
+
+Photos for UK visa applications usually follow the same 35 x 45 mm format, but always confirm on the official UK visa guidance for your visa type.
+
+## Visa Photos: Quick Size Guide
+
+Visa photo rules depend on the destination country. Use this as a starting point and confirm with the embassy or visa centre.
+
+- **UK visa photos:** usually 35 x 45 mm.
+- **Schengen visa photos:** usually 35 x 45 mm with a plain light background.
+- **US visa photos:** 2 x 2 inches (51 x 51 mm), a different format.
+
+Some countries want a white background, while the UK passport office asks for cream or light grey. Select the matching size and background in the tool.
+
+## Common Passport Photo Mistakes (and How to Fix Them)
+
+### Background Problems
+
+Patterned walls, doors, shadows and dark backgrounds cause rejections. Stand a short distance in front of a plain light wall, or let the tool replace the background.
+
+### Lighting and Shadows
+
+Harsh light creates shadows on the face and wall. Use soft daylight facing a window, not behind you.
+
+### Wrong Head Size or Framing
+
+A head that is too large, too small or tilted can fail the check. Our auto-crop sets the head within 29 to 34 mm.
+
+### Glasses, Hair and Expression
+
+Remove glasses if you can, keep hair off your eyes and relax your face. Smiling widely or opening your mouth is a common reason for rejection.
+
+### Filters and Editing
+
+Beauty filters, retouching and heavy edits are not allowed. Upload an unedited original.
+
+## Why Make Your Passport Photo Online?
+
+### Faster Than a Queue
+
+- **Instant results:** your photo in under a minute.
+- **Open 24/7:** make it at midnight or on a Sunday.
+- **Unlimited retakes:** try again until it passes.
+- **No travel:** save transport costs and time.
 
 ### Digital and Print in One
 
-One upload gives you everything you need: a digital passport photo for gov.uk, and a printable sheet for paper forms or visa centres. There is no need to book separate services or pay for extras. The same photo also works for a [UK driving licence](/uk/photo-for-driving-license-uk), and our [UK passport size photo maker](/uk-passport-size-photo-maker) covers 15 other UK documents, from Railcards to Oyster photocards.
-
-Follow the official rules when you apply:
-
-- **Online application:** upload the digital JPEG through the gov.uk service. It runs an automatic check on your photo.
-- **Paper application:** attach two identical printed photos. Ask a countersignatory to sign the back of one, if your application requires it.
+One upload gives you a digital photo for gov.uk and a printable sheet. The same photo also works for a [UK driving licence](/uk/photo-for-driving-license-uk), and our [UK passport size photo maker](/uk-passport-size-photo-maker) covers 15 other UK documents, from Railcards to Oyster photocards.
 
 Always confirm the latest requirements on the official gov.uk website before you apply, because HM Passport Office guidance can change.
 
-Ready to start? Use the tool above to create your compliant photo now, and finish your application without leaving home.
+Ready to start? Use the tool above to create your compliant photo now.
