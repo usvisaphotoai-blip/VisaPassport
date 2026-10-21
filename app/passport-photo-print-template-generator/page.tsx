@@ -61,11 +61,11 @@ const faqs = [
   },
   {
     q: "How do I print passport photos at home?",
-    a: "Upload your cropped passport photo to our tool, select your paper size (such as 4x6 or A4), and choose how many copies you need. Click 'Generate' to download a 300 DPI high-resolution JPG or PDF, then print it on your home color printer using photo paper.",
+    a: "Upload your cropped passport photo to our tool, select your paper size (such as 4x6 or A4), and choose how many copies you need. Download the free standard-quality JPG, or the 300 DPI HD sheet as PDF, JPG or PNG, then print it on your home color printer using photo paper.",
   },
   {
     q: "Is it free to create a print template?",
-    a: "Yes, our passport photo print template generator is completely free. You can generate and download your print-ready layout at no cost.",
+    a: "Yes. You can build your print-ready layout and download it as a standard-quality JPG for free. If you want the sharpest print, a one-time HD upgrade gives you the 300 DPI sheet as PDF, JPG and PNG.",
   },
   {
     q: "Do I need special photo paper?",
@@ -255,7 +255,7 @@ export default function PrintTemplateGeneratorPage() {
                 3. Print and cut
               </h3>
               <p>
-                Download the generated high-resolution 300 DPI JPG or PDF.
+                Download the free JPG, or the HD 300 DPI PDF, JPG or PNG for the sharpest print.
                 Print it at 100% scale and avoid the "fit to page" setting, since
                 it can distort the official photo dimensions. Use the thin
                 black crop lines as a guide to cut out your photos precisely.

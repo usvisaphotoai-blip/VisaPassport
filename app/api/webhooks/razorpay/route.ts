@@ -3,6 +3,7 @@ import crypto from "crypto";
 import dbConnect from "@/lib/mongodb";
 import Photo from "@/models/Photo";
 import ExpertOrder from "@/models/ExpertOrder";
+import PrintSheetOrder from "@/models/PrintSheetOrder";
 import Order from "@/models/Order";
 import Payment from "@/models/Payment";
 import Dispute from "@/models/Dispute";
@@ -585,6 +586,14 @@ export async function POST(req: Request) {
               },
             });
           }
+        }
+      } else if (notes.printSheetOrderId) {
+        // Backup for HD print sheet payments whose in-browser verify never ran
+        const sheetOrder = await PrintSheetOrder.findById(notes.printSheetOrderId);
+        if (sheetOrder && sheetOrder.status !== "paid") {
+          sheetOrder.status = "paid";
+          sheetOrder.razorpayPaymentId = paymentEntity.id;
+          await sheetOrder.save();
         }
       }
     } else if (event.event === "payment.failed") {
