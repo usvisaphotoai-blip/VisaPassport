@@ -368,7 +368,7 @@ export default function ValidatorClient() {
               { href: "/us-passport-photo-editor", label: "US Passport Photo Editor" },
               { href: "/us-visa-photo-editor", label: "US Visa Photo Editor" },
               { href: "/schengen-visa-photo-editor", label: "Schengen Visa Photo Editor" },
-              { href: "/icao-standard-photo", label: "ICAO Standard Photo Tool" },
+              { href: "/icao-standard-photograph", label: "ICAO Standard Photo Tool" },
             ].map(({ href, label }) => (
               <Link
                 key={href}

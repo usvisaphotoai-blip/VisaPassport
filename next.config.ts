@@ -98,6 +98,17 @@ const nextConfig: NextConfig = {
         destination: "/de/guides/:slug",
         permanent: true,
       },
+      // Duplicate ICAO pages consolidated into one canonical page
+      {
+        source: "/icao-standard-photo",
+        destination: "/icao-standard-photograph",
+        permanent: true,
+      },
+      {
+        source: "/icao-compliant-photo",
+        destination: "/icao-standard-photograph",
+        permanent: true,
+      },
       // Checker subpath redirects to canonical routes
       {
         source: "/visa-photo-validator/australian-passport-photo-checker",

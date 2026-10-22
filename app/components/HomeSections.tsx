@@ -327,7 +327,7 @@ export default function HomeSections({
             online passport photo checker
           </a>{" "}
           that crops, resizes, and validates your photo against official{" "}
-          <a href="/icao-compliant-photo" style={{ color: "#2f6f57", fontWeight: 600 }}>
+          <a href="/icao-standard-photograph" style={{ color: "#2f6f57", fontWeight: 600 }}>
             ICAO standard photo
           </a>{" "}
           requirements in seconds — no photo studio needed. Not sure if your

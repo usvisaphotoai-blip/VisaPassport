@@ -479,13 +479,17 @@ body {
 
 .prose-premium th {
   text-align: left;
-  color: #ffffff !important;
   font-weight: 700;
   padding: 1rem 1.25rem;
   font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   border-bottom: 2px solid #334155;
+}
+
+/* Headers that set their own inline color (e.g. light-background tables) keep it */
+.prose-premium th:not([style*="color"]) {
+  color: #ffffff !important;
 }
 
 .prose-premium td {
