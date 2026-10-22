@@ -6,12 +6,9 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "USA Driver's License Photo Editor – Online Real ID & DMV Photo Maker",
+  title: "Driver's License Photo Editor (USA) – 2×2 REAL ID & DMV Photo",
   description:
-    "Online photo editor for US Driver's Licenses and Real IDs. Automatically crop to official 2×2 inch (600×600 px) size, remove background, and generate compliant print sheets for any US State DMV.",
-  keywords: [
-   
-  ],
+    "Make a US driver's license or REAL ID photo online. Auto-crop to 2×2 in (600×600 px), white background, and a 4×6 print sheet for any state DMV. Free preview.",
   alternates: {
     canonical: "https://www.pixpassport.com/usa-driver-license-photo-editor",
     languages: {
@@ -29,7 +26,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "https://res.cloudinary.com/dipzpwbbk/image/upload/v1784690540/us-hero.webp",
+        url: "https://www.pixpassport.com/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "USA Driver's License Photo Editor Online",
@@ -41,7 +38,7 @@ export const metadata: Metadata = {
     title: "USA Driver's License Photo Editor – Real ID & DMV Maker",
     description:
       "Instant online editor for 2×2 inch US driver's license and Real ID photos with automatic background removal and 300 DPI export.",
-    images: ["https://res.cloudinary.com/dipzpwbbk/image/upload/v1784690540/us-hero.webp"],
+    images: ["https://www.pixpassport.com/og-image.jpg"],
   },
 };
 
@@ -60,7 +57,7 @@ export default function USADriverLicensePhotoEditorPage() {
     {
       question: "Are eyeglasses permitted for US Driver's License and Real ID photos?",
       answer:
-        "Under federal Real ID and Department of State guidelines, eyeglasses and sunglasses are strictly prohibited. Even prescription glasses must be removed to avoid lens glare and reflections that interfere with automated biometric facial recognition software.",
+        "Rules vary by state. Many DMVs ask you to remove eyeglasses for your photo, and sunglasses or tinted lenses are never allowed. Removing glasses is the safest choice because lens glare and reflections can block your eyes and interfere with facial recognition software.",
     },
     {
       question: "What background color is required for a US Driver's License photo?",
@@ -85,7 +82,7 @@ export default function USADriverLicensePhotoEditorPage() {
     {
       question: "Do all 50 states follow the same Real ID photo rules?",
       answer:
-        "Core rules stay consistent nationwide because Real ID is a federal standard: 2×2 inch dimensions, 50%–69% head height, no glasses, a plain white/light background, and a neutral or natural expression. All state licensing agencies (such as CA DMV, NYS DMV, TX DPS, FL DHSMV, and PA PennDOT) adhere to these baseline biometric requirements.",
+        "The core requirements are very similar nationwide: a 2×2 inch photo, 50%–69% head height, a plain white or light background, a neutral expression, and no sunglasses or hats. Agencies such as CA DMV, NYS DMV, TX DPS, FL DHSMV, and PA PennDOT may add small state-specific rules, so check your state's website before your appointment.",
     },
     {
       question: "Can I upload this photo for an online driver's license renewal?",
@@ -126,15 +123,17 @@ export default function USADriverLicensePhotoEditorPage() {
       operatingSystem: "All",
       offers: {
         "@type": "Offer",
-        price: "0",
+        price: "7.99",
         priceCurrency: "USD",
       },
     },
     {
       "@context": "https://schema.org",
       "@type": "WebPage",
-      name: "USA Driver's License Photo Editor – Real ID & DMV Standards",
+      name: "USA Driver's License Photo Editor – REAL ID & DMV Standards",
       url: "https://www.pixpassport.com/usa-driver-license-photo-editor",
+      inLanguage: "en-US",
+      isPartOf: { "@type": "WebSite", name: "PixPassport", url: "https://www.pixpassport.com/" },
     },
     {
       "@context": "https://schema.org",
