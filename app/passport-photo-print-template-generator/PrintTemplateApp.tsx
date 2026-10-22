@@ -5,6 +5,7 @@ import jsPDF from "jspdf";
 import { useSearchParams } from "next/navigation";
 import { getClientTimezoneCurrency } from "@/lib/currency";
 import { trackAdsPurchaseConversion } from "@/lib/ads-conversion";
+import { HD_UNLOCK_KEY } from "@/lib/print-sheet-checkout";
 import {
   PRINT_SHEET_PRODUCT,
   PRINT_SHEET_PRODUCT_NAME,
@@ -85,7 +86,6 @@ const MAX_CANVAS_PIXELS = 16_000_000;
 const FOOTER_MM = 3.5;
 // Free downloads and the on-screen preview; HD (paid) files use the full sheet DPI (up to 300)
 const FREE_DPI = 200;
-const HD_UNLOCK_KEY = "pixpassport_print_sheet_hd";
 // Same-origin link to a customer's paid photo, as sent by the preview page
 const PAID_PHOTO_LINK = /^\/api\/download\/[a-f0-9]{24}(\?|$)/i;
 

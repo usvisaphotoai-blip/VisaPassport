@@ -79,11 +79,11 @@ const faqs = [
   },
   {
     q: "How many passport photos fit on a 4x6 template?",
-    a: "It depends on the photo size. With a standard print-safe margin, a 4x6 sheet fits 8 photos at 35×45 mm (UK, EU, India, Australia) in a 6x4 landscape layout, 6 at 33×48 mm (China) and 2 at 2×2 inch (US). With the edge-to-edge option turned on, it fits 6 US 2×2 inch photos in a 2 × 3 grid.",
+    a: "It depends on the photo size. With a standard print-safe margin, a 4x6 sheet fits 8 photos at 35×45 mm (UK, EU, India, Australia) in a 6x4 landscape layout, 6 at 33×48 mm (China) and 2 at 2×2 inch (US). With 'No margin' turned on, it fits 6 US 2×2 inch photos in a 2 × 3 grid.",
   },
   {
     q: "Can I fit 6 US 2x2 passport photos on a 4x6 sheet?",
-    a: "Yes, but only edge-to-edge: two 2-inch photos are exactly 4 inches wide, which leaves no margin. Turn on 'Edge-to-edge' in the tool and order a borderless 4x6 print. If your printer or print shop adds a white border or trims the edges, use the standard layout with 2 photos instead.",
+    a: "Yes, but only edge-to-edge: two 2-inch photos are exactly 4 inches wide, which leaves no margin. Tick 'No margin' in the tool and order a borderless 4x6 print. If your printer or print shop adds a white border or trims the edges, keep the default print-safe layout with 2 photos instead.",
   },
   {
     q: "Is a 4x6 template the same as 6x4 or 4R?",
@@ -190,46 +190,45 @@ export default function PassportPhotoTemplate4x6Page() {
       />
       <div className="bg-slate-50 min-h-screen">
         {/* Hero */}
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-4 sm:pt-6">
-          <nav aria-label="Breadcrumb" className="mb-2">
-            <ol className="flex items-center gap-2 text-xs font-medium text-slate-500">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 pt-4 sm:pt-6 text-center">
+          <nav aria-label="Breadcrumb" className="mb-3 sm:mb-4">
+            <ol className="flex items-center justify-center gap-2 text-xs font-medium text-slate-500">
               <li><Link href="/" className="hover:text-lime-700">Home</Link></li>
               <li aria-hidden>/</li>
               <li aria-current="page" className="text-slate-700 truncate">4x6 Passport Photo Template</li>
             </ol>
           </nav>
-          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-2 lg:gap-6">
-            <div className="min-w-0">
-              <h1 className="text-[22px] sm:text-3xl font-black text-slate-900 tracking-tight leading-tight">
-                Free 4x6 Passport Photo Template
-              </h1>
-              <p className="text-slate-500 text-sm sm:text-base mt-1">
-                Upload one photo and get a printable 4×6 sheet with crop lines
-                for home, CVS or Walgreens printing.
-              </p>
-            </div>
-            <ul className="flex flex-wrap gap-1.5 shrink-0" aria-label="Highlights">
-              {["Free", "No sign-up", "300 DPI", "JPG & PDF"].map((t) => (
-                <li key={t} className="text-[11px] sm:text-xs font-bold text-lime-800 bg-lime-50 border border-lime-200 rounded-full px-2.5 py-1">
-                  {t}
-                </li>
-              ))}
-            </ul>
-          </div>
+          <h1 className="text-[26px] sm:text-4xl font-black text-slate-900 tracking-tight leading-tight">
+            Free 4x6 Passport Photo Template
+          </h1>
+          <p className="text-slate-500 text-sm sm:text-base mt-2 max-w-xl mx-auto">
+            Upload one photo and get a printable 4×6 sheet with crop lines
+            for home, CVS or Walgreens printing.
+          </p>
+          <ul className="flex flex-wrap justify-center gap-x-4 gap-y-1.5 mt-3 sm:mt-4" aria-label="Highlights">
+            {["Free", "No sign-up", "300 DPI", "JPG & PDF"].map((t) => (
+              <li key={t} className="flex items-center gap-1 text-xs sm:text-sm font-semibold text-slate-600">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="text-lime-700" aria-hidden>
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                {t}
+              </li>
+            ))}
+          </ul>
         </div>
 
         {/* Tool */}
         <Template4x6App />
 
         {/* Stats */}
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 pb-8">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-6">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 pb-10">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
             {STATS.map(({ value, label }) => (
               <div
                 key={label}
                 className="bg-white rounded-xl px-3 py-3 sm:py-4 border border-slate-100 text-center"
               >
-                <p className="text-xl sm:text-2xl font-black text-lime-600 leading-none">
+                <p className="text-xl sm:text-2xl font-black text-lime-700 leading-none">
                   {value}
                 </p>
                 <p className="text-xs text-slate-500 font-medium mt-1">
@@ -282,7 +281,7 @@ export default function PassportPhotoTemplate4x6Page() {
             </div>
             <p className="text-xs text-slate-500 mt-3">
               Need more copies on one sheet? Use{" "}
-              <Link href="/passport-photo-print-template-generator" className="text-lime-600 underline">
+              <Link href="/passport-photo-print-template-generator" className="text-lime-700 underline">
                 A4 or Letter paper
               </Link>{" "}
               instead.
@@ -309,8 +308,8 @@ export default function PassportPhotoTemplate4x6Page() {
                 of the other sizes. The sheet fills automatically.
               </li>
               <li>
-                <strong>Choose the layout.</strong> Keep the standard margin
-                for home printers, or switch on edge-to-edge to fit 6 US
+                <strong>Choose the layout.</strong> Keep the print-safe margin
+                for home printers, or tick &quot;No margin&quot; to fit 6 US
                 photos on a borderless print.
               </li>
               <li>
