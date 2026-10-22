@@ -6,7 +6,7 @@ export const PRICE_AB_MAX_AGE = 60 * 60 * 24 * 90; // 90 days
 export type PriceVariant = "A" | "B";
 
 export const PRICE_VARIANT_B_OVERRIDES: Record<string, number> = {
-  USD: 8.99,
+  USD: 7.99,
   EUR: 7.99,
   GBP: 7.99,
   INR:200

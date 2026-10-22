@@ -57,10 +57,10 @@ const FIXED_PRICES: Record<string, { amount: number; symbol: string; decimals: n
   USD: { amount: 7.99, symbol: "$", decimals: 2 },
   EUR: { amount: 6.99, symbol: "€", decimals: 2 },
   GBP: { amount: 6.99, symbol: "£", decimals: 2 },
-  CHF: { amount: 14.99, symbol: "CHF", decimals: 2 },
-  CAD: { amount: 8.99, symbol: "C$", decimals: 2 },
+  CHF: { amount: 12.99, symbol: "CHF", decimals: 2 },
+  CAD: { amount: 9.99, symbol: "C$", decimals: 2 },
   AUD: { amount: 9.99, symbol: "A$", decimals: 2 },
-  NZD: { amount: 12.99, symbol: "NZ$", decimals: 2 },
+  NZD: { amount: 10.99, symbol: "NZ$", decimals: 2 },
   JPY: { amount: 1100, symbol: "¥", decimals: 0 },
   SGD: { amount: 6.99, symbol: "S$", decimals: 2 },
   HKD: { amount: 49, symbol: "HK$", decimals: 0 },
@@ -106,9 +106,9 @@ export interface LocalPrice {
 
 const EXPERT_PRICES: Record<string, { amount: number; symbol: string; decimals: number }> = {
   // Scaling roughly 1.6x - 2x from standard
-  USD: { amount: 14.99, symbol: "$", decimals: 2 },
-  EUR: { amount: 11.99, symbol: "€", decimals: 2 },
-  GBP: { amount: 11.99, symbol: "£", decimals: 2 },
+  USD: { amount: 13.99, symbol: "$", decimals: 2 },
+  EUR: { amount: 12.99, symbol: "€", decimals: 2 },
+  GBP: { amount: 12.99, symbol: "£", decimals: 2 },
   CHF: { amount: 20.99, symbol: "CHF", decimals: 2 },
   CAD: { amount: 13.99, symbol: "C$", decimals: 2 },
   AUD: { amount: 14.99, symbol: "A$", decimals: 2 },
