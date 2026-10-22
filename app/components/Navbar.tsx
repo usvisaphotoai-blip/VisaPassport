@@ -172,8 +172,8 @@ export default function Navbar() {
                     "New Photo →"
                   ) : (
                     <>
-                      <span className="xl:hidden">Get Photo →</span>
-                      <span className="hidden xl:inline">Get Approved Photo →</span>
+                      <span className="xl:hidden">Create Passport Photo</span>
+                      <span className="hidden xl:inline">Create Passport Photo</span>
                     </>
                   )}
                 </Link>
@@ -191,7 +191,7 @@ export default function Navbar() {
                   href="/passport-photo-online"
                   className="bg-lime-700 text-white hover:bg-lime-800 rounded-lg px-3.5 py-2 text-xs font-bold transition-colors shadow-sm shadow-lime-600/20"
                 >
-                  Get Photo
+                  Create Photo
                 </Link>
               )}
               {status !== "loading" && session && (
