@@ -26,7 +26,12 @@ export default function ConditionalNavFooter({
   const isLocalized = isFrench || isGerman || !!countrySite;
 
   useEffect(() => {
-    if (isFrench) document.documentElement.lang = "fr";
+    // Pages localized by query string (e.g. /preview/[id]?from=es) declare their language on a
+    // [data-page-lang] element. A wrong lang="en" makes Chrome offer to translate the page, and
+    // browser translation is what crashes React mid-checkout.
+    const pageLang = document.querySelector<HTMLElement>("[data-page-lang]")?.dataset.pageLang;
+    if (pageLang) document.documentElement.lang = pageLang;
+    else if (isFrench) document.documentElement.lang = "fr";
     else if (isGerman) document.documentElement.lang = "de";
     else if (countryLang) document.documentElement.lang = countryLang;
     else document.documentElement.lang = "en";

@@ -265,7 +265,7 @@ export default function PreviewClientFr({
                         <button type="button" onClick={onPaymentClick} disabled={loading}
                           className={cx("w-full font-bold py-3.5 rounded-xl transition-colors text-sm tracking-wide flex items-center justify-center gap-2.5 disabled:opacity-50", isExpertPlan ? "bg-lime-600 hover:bg-lime-700 text-white shadow-md shadow-lime-600/20" : "bg-slate-900 hover:bg-black text-white")}>
                           {loading ? (<div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />) : (
-                            <><Icon d={ICONS.lock} size={15} className="shrink-0" />{isExpertPlan ? fr.payment.getExpertReview : fr.payment.downloadNow} — {isExpertPlan ? expertPrice?.formatted : localPrice?.formatted}</>
+                            <><Icon d={ICONS.lock} size={15} className="shrink-0" /><span>{isExpertPlan ? fr.payment.getExpertReview : fr.payment.downloadNow} — {isExpertPlan ? expertPrice?.formatted : localPrice?.formatted}</span></>
                           )}
                         </button>
                         <div className="flex items-center justify-center gap-x-5 gap-y-1.5 py-2 flex-wrap border-t border-slate-100 mt-2">
@@ -368,7 +368,7 @@ export default function PreviewClientFr({
                 <div className="w-px h-8 bg-slate-200 shrink-0" />
                 <button type="button" onClick={onPaymentClick} disabled={loading}
                   className="flex-1 font-bold py-3 px-4 rounded-xl text-sm flex items-center justify-center gap-2 disabled:opacity-50 transition-colors bg-blue-600 hover:bg-blue-700 text-white">
-                  {loading ? (<div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />) : (<><Icon d={ICONS.lock} size={15} />{isExpertPlan ? fr.payment.expertReview : fr.payment.downloadNow}</>)}
+                  {loading ? (<div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />) : (<><Icon d={ICONS.lock} size={15} /><span>{isExpertPlan ? fr.payment.expertReview : fr.payment.downloadNow}</span></>)}
                 </button>
               </div>
               <div className="flex items-center justify-center gap-1.5 mt-2.5"><Icon d={ICONS.shield} size={12} className="text-emerald-600 shrink-0" /><p className="text-center text-[11px] text-slate-500 font-semibold">{fr.payment.secureCheckout} · {fr.payment.refundIfRejected} · {fr.payment.noSubscription}</p></div>

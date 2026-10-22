@@ -40,6 +40,11 @@ export default async function PreviewPage(props: { params: Promise<{ id: string 
     (site ? (await getAllCountryDocuments(site)).find((d) => d.id === photoRecord.documentType) : undefined);
 
   return (
+    <>
+    {/* Root layout renders <html lang="en">; set the real language before paint so Chrome doesn't offer translation */}
+    {site?.lang && (
+      <script dangerouslySetInnerHTML={{ __html: `document.documentElement.lang=${JSON.stringify(site.lang)}` }} />
+    )}
     <PreviewClient
       photoId={photoRecord._id.toString()}
       previewUrl={photoRecord.previewUrl}
@@ -55,5 +60,6 @@ export default async function PreviewPage(props: { params: Promise<{ id: string 
       documentLabel={siteDoc?.label}
       documentFlag={siteDoc?.flag}
     />
+    </>
   );
 }

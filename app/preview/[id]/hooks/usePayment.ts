@@ -92,7 +92,11 @@ export function usePayment({
       if (!orderRes.ok) throw new Error(orderData.error || "Failed to create order");
 
       // Log Razorpay open event
-      const sid = typeof window !== "undefined" ? sessionStorage.getItem("usvisa_analytics_session") : null;
+      // Analytics only — blocked storage must not abort the checkout
+      let sid: string | null = null;
+      try {
+        sid = sessionStorage.getItem("usvisa_analytics_session");
+      } catch {}
       if (sid) {
         fetch("/api/analytics", {
           method: "POST",

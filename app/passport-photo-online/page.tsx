@@ -94,10 +94,12 @@ function ToolForm() {
   }, [headerSelectorOpen]);
 
   useEffect(() => {
-    const saved = localStorage.getItem("selectedDoc");
-    if (saved && documentTypes.some((d) => d.id === saved)) {
-      setSelectedDoc(saved);
-    }
+    try {
+      const saved = localStorage.getItem("selectedDoc");
+      if (saved && documentTypes.some((d) => d.id === saved)) {
+        setSelectedDoc(saved);
+      }
+    } catch { /* storage blocked (cookies disabled, in-app browsers) — throwing here crashes the page */ }
   }, []);
 
   useEffect(() => {
@@ -109,7 +111,7 @@ function ToolForm() {
 
   useEffect(() => {
     if (selectedDoc) {
-      localStorage.setItem("selectedDoc", selectedDoc);
+      try { localStorage.setItem("selectedDoc", selectedDoc); } catch { /* storage full or blocked */ }
     }
   }, [selectedDoc]);
 

@@ -73,6 +73,15 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <meta name="yandex-verification" content="0483efdc76375d14" />
+        {/* Browser translation (Chrome/Google Translate, Edge, Safari) moves React's text nodes
+            into <font> wrappers; the next re-render then throws "removeChild: The node to be
+            removed is not a child of this node" and the whole page becomes "Application error".
+            Tolerate those mismatches instead of crashing. facebook/react#11538 */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){if(typeof Node!=="function"||!Node.prototype)return;var rc=Node.prototype.removeChild;Node.prototype.removeChild=function(c){if(c&&c.parentNode!==this)return c;return rc.apply(this,arguments)};var ib=Node.prototype.insertBefore;Node.prototype.insertBefore=function(n,r){if(r&&r.parentNode!==this)return ib.call(this,n,null);return ib.apply(this,arguments)}})();`,
+          }}
+        />
         {/* Windows has no flag emoji glyphs (🇮🇳 renders as "IN"). If the browser can
             draw color emoji but not flags, load a flag-only Twemoji font. Adapted from
             country-flag-emoji-polyfill; font is self-hosted in public/fonts. */}

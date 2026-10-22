@@ -100,17 +100,21 @@ export default function ValidatorClient() {
   const { verifyPhoto, isProcessing, loadingMessage, report, setReport, error, setError } = useFaceVerification();
 
   useEffect(() => {
-    const savedCountry = localStorage.getItem("validator_country");
-    const savedDocType = localStorage.getItem("validator_doctype");
-    if (savedCountry) setSelectedCountry(savedCountry);
-    if (savedDocType) setSelectedDocType(savedDocType);
+    try {
+      const savedCountry = localStorage.getItem("validator_country");
+      const savedDocType = localStorage.getItem("validator_doctype");
+      if (savedCountry) setSelectedCountry(savedCountry);
+      if (savedDocType) setSelectedDocType(savedDocType);
+    } catch { /* storage blocked (cookies disabled, in-app browsers) — throwing here crashes the page */ }
     setIsMounted(true);
   }, []);
 
   useEffect(() => {
     if (isMounted) {
-      localStorage.setItem("validator_country", selectedCountry);
-      localStorage.setItem("validator_doctype", selectedDocType);
+      try {
+        localStorage.setItem("validator_country", selectedCountry);
+        localStorage.setItem("validator_doctype", selectedDocType);
+      } catch { /* storage full or blocked */ }
     }
   }, [selectedCountry, selectedDocType, isMounted]);
 

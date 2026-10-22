@@ -115,7 +115,7 @@ function ToolFormFr() {
   }, []);
 
   useEffect(() => { if (headerSelectorOpen && headerSearchRef.current) headerSearchRef.current.focus(); }, [headerSelectorOpen]);
-  useEffect(() => { const saved = localStorage.getItem("selectedDoc"); if (saved && localizedDocumentTypes.some((d) => d.id === saved)) setSelectedDoc(saved); }, []);
+  useEffect(() => { try { const saved = localStorage.getItem("selectedDoc"); if (saved && localizedDocumentTypes.some((d) => d.id === saved)) setSelectedDoc(saved); } catch { /* storage blocked */ } }, []);
   useEffect(() => { if (initialType && localizedDocumentTypes.some((d) => d.id === initialType)) setSelectedDoc(initialType); }, [initialType]);
   useEffect(() => { if (selectedDoc) { try { localStorage.setItem("selectedDoc", selectedDoc); } catch { /* storage full or blocked */ } } }, [selectedDoc]);
 

@@ -510,10 +510,13 @@ function OrderPanel({
                   ) : (
                     <>
                       <Icon d={ICONS.lock} size={15} className="shrink-0" />
-                      {isExpertPlan ? t.ctaExpert : t.ctaStandard} —{" "}
-                      {isExpertPlan
-                        ? expertPrice?.formatted
-                        : localPrice?.formatted}
+                      {/* Text stays inside <span>: bare text nodes here crash React when Google Translate rewrites them and the spinner swaps in */}
+                      <span>
+                        {isExpertPlan ? t.ctaExpert : t.ctaStandard} —{" "}
+                        {isExpertPlan
+                          ? expertPrice?.formatted
+                          : localPrice?.formatted}
+                      </span>
                     </>
                   )}
                 </button>
@@ -1018,7 +1021,7 @@ function MobileCTA({
               ) : (
                 <>
                   <Icon d={ICONS.lock} size={15} />
-                  {isExpertPlan ? t.mobileCtaExpert : t.mobileCtaStandard}
+                  <span>{isExpertPlan ? t.mobileCtaExpert : t.mobileCtaStandard}</span>
                 </>
               )}
             </button>
@@ -1267,7 +1270,7 @@ export default function PreviewClient({
   };
 
   return (
-    <div lang={lang} className="min-h-screen bg-slate-200/40 flex flex-col">
+    <div lang={lang} data-page-lang={lang} className="min-h-screen bg-slate-200/40 flex flex-col">
       <div className="flex-1 flex items-start justify-center px-4 py-6 sm:py-8">
         <div className="w-full max-w-6xl">
           {/* Header */}
