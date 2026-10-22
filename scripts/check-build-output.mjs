@@ -28,7 +28,9 @@ const decode = (s) =>
     .replace(/&nbsp;/g, ' ')
     .replace(/&amp;/g, '&');
 const squash = (s) => decode(s).replace(/\s+/g, ' ').trim();
-const sameMap = (a, b) => JSON.stringify(Object.entries(a).sort()) === JSON.stringify(Object.entries(b).sort());
+// Next.js renders the site root without its trailing slash; "https://x.com" and "https://x.com/" are the same URL
+const normalizeRoot = (m) => Object.entries(m).map(([k, v]) => [k, v === `${BASE_URL}/` ? BASE_URL : v]).sort();
+const sameMap = (a, b) => JSON.stringify(normalizeRoot(a)) === JSON.stringify(normalizeRoot(b));
 
 const OUT_DIR = path.join(process.cwd(), '.next/server/app/sites');
 const FORBIDDEN = ['[VERIFICAR', 'ANTES DE PUBLICAR'];

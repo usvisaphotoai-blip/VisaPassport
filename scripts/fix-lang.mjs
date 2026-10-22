@@ -32,6 +32,8 @@ const ROUTE_EQUIVALENTS = [
       en: `${BASE_URL}/`,
       fr: `${BASE_URL}/fr`,
       de: `${BASE_URL}/de`,
+      es: `${BASE_URL}/es`,
+      'pt-BR': `${BASE_URL}/br`,
       'x-default': `${BASE_URL}/`,
     },
     paths: ['/', '/fr', '/de', '']
@@ -119,6 +121,8 @@ function getSitemapHreflangTags(pathname) {
     if (group.urls.en) tags.push(`    <xhtml:link rel="alternate" hreflang="en" href="${group.urls.en}" />`);
     if (group.urls.fr) tags.push(`    <xhtml:link rel="alternate" hreflang="fr" href="${group.urls.fr}" />`);
     if (group.urls.de) tags.push(`    <xhtml:link rel="alternate" hreflang="de" href="${group.urls.de}" />`);
+    if (group.urls.es) tags.push(`    <xhtml:link rel="alternate" hreflang="es" href="${group.urls.es}" />`);
+    if (group.urls['pt-BR']) tags.push(`    <xhtml:link rel="alternate" hreflang="pt-BR" href="${group.urls['pt-BR']}" />`);
     if (group.urls['x-default']) tags.push(`    <xhtml:link rel="alternate" hreflang="x-default" href="${group.urls['x-default']}" />`);
   } else {
     // Standalone page

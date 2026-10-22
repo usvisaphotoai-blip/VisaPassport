@@ -7,6 +7,7 @@ breadcrumbLabel: "Foto do visto reprovada"
 primaryKeyword: "foto do visto americano reprovada"
 secondaryKeywords: ["erro na foto do DS-160", "photo failed DS-160", "foto não aceita visto americano"]
 type: "guide"
+status: "ready"
 date: "2026-10-06"
 readingTime: "6 min de leitura"
 image:

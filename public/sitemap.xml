@@ -7,6 +7,8 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/" />
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.pixpassport.com/fr" />
     <xhtml:link rel="alternate" hreflang="de" href="https://www.pixpassport.com/de" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.pixpassport.com/es" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.pixpassport.com/br" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/" />
     <lastmod>2026-07-27</lastmod>
     <changefreq>weekly</changefreq>
@@ -1871,6 +1873,8 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/" />
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.pixpassport.com/fr" />
     <xhtml:link rel="alternate" hreflang="de" href="https://www.pixpassport.com/de" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.pixpassport.com/es" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.pixpassport.com/br" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/" />
     <lastmod>2026-05-17</lastmod>
     <changefreq>weekly</changefreq>
@@ -2157,6 +2161,8 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/" />
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.pixpassport.com/fr" />
     <xhtml:link rel="alternate" hreflang="de" href="https://www.pixpassport.com/de" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.pixpassport.com/es" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.pixpassport.com/br" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/" />
     <lastmod>2026-10-06</lastmod>
     <changefreq>weekly</changefreq>
@@ -2459,6 +2465,12 @@
   </url>
   <url>
     <loc>https://www.pixpassport.com/br</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.pixpassport.com/br" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.pixpassport.com/fr" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.pixpassport.com/de" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.pixpassport.com/es" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/" />
     <lastmod>2026-10-06</lastmod>
   </url>
   <url>
@@ -2482,11 +2494,13 @@
     <lastmod>2026-10-10</lastmod>
   </url>
   <url>
-    <loc>https://www.pixpassport.com/es/guias</loc>
-    <lastmod>2026-10-09</lastmod>
-  </url>
-  <url>
     <loc>https://www.pixpassport.com/es</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.pixpassport.com/es" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.pixpassport.com/fr" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.pixpassport.com/de" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.pixpassport.com/br" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/" />
     <lastmod>2026-10-09</lastmod>
   </url>
   <url>

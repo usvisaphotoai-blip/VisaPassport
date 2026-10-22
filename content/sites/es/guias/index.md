@@ -8,7 +8,7 @@ primaryKeyword: "guías de fotos para carnet"
 type: "hub"
 image:
   alt: "Móvil apoyado en una mesa junto a varias fotos de carnet recién recortadas"
-status: "ready"
+status: "draft"
 date: "2026-10-09"
 related:
   - "medidas-foto-carnet"

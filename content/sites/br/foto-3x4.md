@@ -1,6 +1,6 @@
 ---
 title: "Foto 3x4: Tamanho, Como Tirar e Fazer Online Grátis"
-description: "Foto 3x4 tem 3 x 4 cm (354 x 472 px em 300 dpi). Veja como tirar foto 3x4 em casa, converter e redimensionar online grátis, deixar o fundo branco e onde imprimir."
+description: "Foto 3x4 tem 3 x 4 cm (354 x 472 px em 300 dpi). Veja como tirar em casa, redimensionar online grátis, deixar o fundo branco e onde imprimir."
 h1: "Foto 3x4: medidas, como tirar e como fazer online grátis"
 intro: "A foto 3x4 ainda é pedida em matrículas, crachás, cadastros e concursos. Veja as medidas exatas, como tirar foto 3x4 com o celular, como converter e redimensionar online grátis com fundo branco e onde imprimir pagando pouco."
 breadcrumbLabel: "Foto 3x4"

@@ -1,12 +1,13 @@
 ---
 title: "Como Tirar Foto para Documento em Casa com o Celular"
-description: "Passo a passo para tirar foto para documento em casa com o celular: luz de janela, parede clara, distância certa, roupa e os erros que fazem a foto ser recusada."
+description: "Passo a passo para tirar foto para documento em casa com o celular: luz de janela, parede clara, distância certa, roupa e os erros que reprovam a foto."
 h1: "Como tirar foto para documento em casa com o celular"
 intro: "Uma janela, uma parede clara e alguém para segurar o celular resolvem a maior parte do trabalho. Este passo a passo mostra como montar o cenário e evitar os erros que fazem a foto voltar."
 breadcrumbLabel: "Foto para documento em casa"
 primaryKeyword: "como tirar foto para documento em casa"
 secondaryKeywords: ["foto para documento pelo celular", "fundo branco foto documento", "iluminação foto documento"]
 type: "guide"
+status: "ready"
 date: "2026-10-06"
 readingTime: "7 min de leitura"
 image:

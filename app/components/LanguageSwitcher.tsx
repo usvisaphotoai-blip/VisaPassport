@@ -20,7 +20,7 @@ const languages = [
   { code: "fr", short: "FR", name: "Français" },
   { code: "es", short: "ES", name: "Español" },
   { code: "it", short: "IT", name: "Italiano" },
-  { code: "pt", short: "PT", name: "Português" },
+  { code: "pt", short: "PT", name: "Português (Brasil)" },
   { code: "nl", short: "NL", name: "Nederlands" },
   { code: "pl", short: "PL", name: "Polski" },
   { code: "zh-CN", short: "ZH", name: "中文 (简体)" },
@@ -29,6 +29,11 @@ const languages = [
   { code: "ar", short: "AR", name: "العربية" },
   { code: "hi", short: "HI", name: "हिन्दी" },
 ];
+
+// Languages with a native section get a real, crawlable link instead of Google Translate
+const NATIVE_ROUTES: Record<string, string> = { en: "/", de: "/de", fr: "/fr", es: "/es", pt: "/br" };
+
+const isUnder = (pathname: string, prefix: string) => pathname === prefix || pathname.startsWith(`${prefix}/`);
 
 const getGoogtransCookie = () => {
   const parts = `; ${document.cookie}`.split("; googtrans=");
@@ -66,10 +71,10 @@ export default function LanguageSwitcher({ placement = "down" }: Props) {
 
   const googtrans = useSyncExternalStore(subscribeNoop, getGoogtransCookie, () => null);
 
-  const isDeRoute = pathname === "/de" || pathname.startsWith("/de/");
-  const isFrRoute = pathname === "/fr" || pathname.startsWith("/fr/");
+  const isDeRoute = isUnder(pathname, "/de");
+  const isFrRoute = isUnder(pathname, "/fr");
   const cookieLang = googtrans?.split("/").pop();
-  const currentLang = isDeRoute ? "de" : isFrRoute ? "fr" : cookieLang || "en";
+  const currentLang = isDeRoute ? "de" : isFrRoute ? "fr" : isUnder(pathname, "/es") ? "es" : isUnder(pathname, "/br") ? "pt" : cookieLang || "en";
   const current = languages.find((l) => l.code === currentLang) ?? languages[0];
 
   // Only load Google Translate script if non-native translation cookie is active
@@ -111,17 +116,12 @@ export default function LanguageSwitcher({ placement = "down" }: Props) {
     setOpen(false);
     if (lang === currentLang) return;
 
-    if (lang === "de") {
-      clearGoogleTranslateCookies();
-      router.push("/de");
-    } else if (lang === "fr") {
-      clearGoogleTranslateCookies();
-      router.push("/fr");
-    } else if (lang === "en") {
+    const route = NATIVE_ROUTES[lang];
+    if (route) {
       clearGoogleTranslateCookies();
       // Google Translate rewrites the DOM, so a hard load is needed to fully undo it
-      if (googtrans) hardNavigate("/");
-      else router.push("/");
+      if (googtrans) hardNavigate(route);
+      else router.push(route);
     } else {
       setGoogleTranslateCookie(lang);
       // Navigate to home page to avoid translating the native localized pages
@@ -166,23 +166,40 @@ export default function LanguageSwitcher({ placement = "down" }: Props) {
         >
           {languages.map((l) => {
             const selected = l.code === currentLang;
+            const route = NATIVE_ROUTES[l.code];
+            const itemClass = `w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-left transition-colors ${
+              selected ? "bg-lime-50 text-lime-800 font-semibold" : "text-slate-700 hover:bg-slate-50"
+            }`;
+            const content = (
+              <>
+                <span className={`w-7 text-[11px] font-bold tracking-wide ${selected ? "text-lime-700" : "text-slate-400"}`}>{l.short}</span>
+                <span className="flex-1">{l.name}</span>
+                {selected && (
+                  <svg className="w-4 h-4 text-lime-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
+                )}
+              </>
+            );
             return (
               <li key={l.code} role="option" aria-selected={selected}>
-                <button
-                  type="button"
-                  onClick={() => handleLanguageChange(l.code)}
-                  className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-left transition-colors ${
-                    selected ? "bg-lime-50 text-lime-800 font-semibold" : "text-slate-700 hover:bg-slate-50"
-                  }`}
-                >
-                  <span className={`w-7 text-[11px] font-bold tracking-wide ${selected ? "text-lime-700" : "text-slate-400"}`}>{l.short}</span>
-                  <span className="flex-1">{l.name}</span>
-                  {selected && (
-                    <svg className="w-4 h-4 text-lime-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} aria-hidden="true">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                    </svg>
-                  )}
-                </button>
+                {route ? (
+                  <a
+                    href={route}
+                    hrefLang={l.code === "pt" ? "pt-BR" : l.code}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleLanguageChange(l.code);
+                    }}
+                    className={itemClass}
+                  >
+                    {content}
+                  </a>
+                ) : (
+                  <button type="button" onClick={() => handleLanguageChange(l.code)} className={itemClass}>
+                    {content}
+                  </button>
+                )}
               </li>
             );
           })}

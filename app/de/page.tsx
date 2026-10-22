@@ -19,6 +19,8 @@ export const metadata: Metadata = {
       de: "https://www.pixpassport.com/de",
       en: "https://www.pixpassport.com/",
       fr: "https://www.pixpassport.com/fr",
+      es: "https://www.pixpassport.com/es",
+      "pt-BR": "https://www.pixpassport.com/br",
       "x-default": "https://www.pixpassport.com/",
     },
   },

@@ -40,6 +40,12 @@ faq:
   - question: "¿Qué ocurre con mi fotografía después de subirla?"
     answer: "{{claim:deletion24h}}"
 order: 0
+# Same tool in other languages (hreflang). /, /fr, /de and /br link back to this page.
+alternates:
+  en: "/"
+  fr: "/fr"
+  de: "/de"
+  pt-BR: "/br"
 ---
 
 <!-- Componente de la herramienta con id="tool" -->

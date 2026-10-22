@@ -3,7 +3,7 @@
 country: "España"
 countryCode: "ES"
 lang: "es"
-ogLocale: "es"
+ogLocale: "es_ES"
 flag: "🇪🇸"
 siteName: "PixPassport España"
 author: "Equipo PixPassport España"
@@ -43,16 +43,20 @@ navCta:
   label: "Crear foto"
   href: "/es#tool"
 
-# Site-wide trust links (footer bottom bar). Hidden automatically while a page is draft.
+# Site-wide trust links (footer bottom bar). While a page is draft the link points at `fallback` (the English page).
 legalLinks:
   - label: "Sobre nosotros"
     href: "/es/sobre-nosotros"
+    fallback: "/about"
   - label: "Contacto"
     href: "/es/contacto"
+    fallback: "/contact"
   - label: "Privacidad"
     href: "/es/privacidad"
+    fallback: "/privacy-policy"
   - label: "Términos"
     href: "/es/terminos"
+    fallback: "/terms"
 
 footer:
   note: "Prepara desde el móvil fotos para DNI, pasaporte, carnet y visados. {{claim:deletion24h}}"
@@ -77,6 +81,16 @@ footer:
       links:
         - label: "Todas las guías"
           href: "/es/guias"
+    - heading: "Otros idiomas"
+      links:
+        - label: "English"
+          href: "/"
+        - label: "Português (Brasil)"
+          href: "/br"
+        - label: "Français"
+          href: "/fr"
+        - label: "Deutsch"
+          href: "/de"
 
 tool:
   trust:

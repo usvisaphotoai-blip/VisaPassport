@@ -25,6 +25,8 @@ const SITES_DIR = path.join(process.cwd(), "content/sites");
 export interface SiteLink {
   label: string;
   href: string;
+  /** Used instead of href while href is a draft or missing section page (e.g. the English /privacy-policy) */
+  fallback?: string;
 }
 
 export interface SiteToolDocument {
@@ -320,12 +322,13 @@ export function getPublishedPaths(code: string): Set<string> {
   return new Set(getSitePages(code).filter(isPublished).map((p) => pagePath(code, p.slug)));
 }
 
-/** Drops nav/footer links that point into the section but not at a ready page */
+/** Drops nav/footer links that point into the section but not at a ready page (or swaps in their fallback) */
 export function filterPublishedLinks<T extends SiteLink>(site: SiteConfig, links: T[], published: Set<string>): T[] {
-  return links.filter((l) => {
+  return links.flatMap((l) => {
     const target = l.href.split("#")[0].split("?")[0].replace(/\/$/, "");
-    if (!(target === site.basePath || target.startsWith(`${site.basePath}/`))) return true;
-    return published.has(target);
+    if (!(target === site.basePath || target.startsWith(`${site.basePath}/`))) return [l];
+    if (published.has(target)) return [l];
+    return l.fallback ? [{ ...l, href: l.fallback }] : [];
   });
 }
 

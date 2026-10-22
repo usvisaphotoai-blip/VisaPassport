@@ -48,6 +48,27 @@ footer:
           href: "/br/guias/foto-visto-americano-reprovada"
         - label: "Todos os guias"
           href: "/br/guias"
+    - heading: "Outros idiomas"
+      links:
+        - label: "English"
+          href: "/"
+        - label: "Español"
+          href: "/es"
+        - label: "Français"
+          href: "/fr"
+        - label: "Deutsch"
+          href: "/de"
+
+# Site-wide trust links (footer bottom bar). Point at the English pages until Portuguese versions exist.
+legalLinks:
+  - label: "Sobre nós"
+    href: "/about"
+  - label: "Contato"
+    href: "/contact"
+  - label: "Privacidade"
+    href: "/privacy-policy"
+  - label: "Termos"
+    href: "/terms"
 
 # Documents the embedded tool can actually produce. countryCode must exist in the
 # photo API (GET https://api.pixpassport.com/countries) — unknown codes fall back to EU 35x45.

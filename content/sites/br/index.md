@@ -14,6 +14,7 @@ secondaryKeywords:
     "foto para visto online",
     "tamanho de foto para documento",
   ]
+status: "ready"
 date: "2026-10-06"
 image:
   alt: "Pessoa tirando foto para documento com o celular em frente a uma parede branca"
@@ -27,8 +28,8 @@ imageBriefs:
 tool:
   doc: "brazil-passport"
 cta:
-  label: "Criar minha foto agora"
-  href: "#ferramenta"
+  label: "Ver medidas da foto 3x4"
+  href: "/br/foto-3x4"
 related:
   - "guias/como-tirar-foto-para-documento-em-casa"
   - "guias/foto-visto-americano-reprovada"
@@ -46,9 +47,15 @@ faq:
   - question: "O que acontece com a foto que eu envio?"
     answer: "A imagem é usada apenas para gerar a sua foto de documento e é apagada dos nossos servidores em até 24 horas. Você vê a prévia antes de decidir pagar pelo arquivo final."
 order: 0
+# Same tool in other languages (hreflang). /, /fr, /de and /es link back to this page.
+alternates:
+  en: "/"
+  fr: "/fr"
+  de: "/de"
+  es: "/es"
 ---
 
-<!-- Componente da ferramenta (upload + seleção do documento) deve ficar aqui, com id="ferramenta" -->
+<!-- Componente da ferramenta (upload + seleção do documento) deve ficar aqui, com id="tool" -->
 
 ## Crie sua foto para documento em três passos
 

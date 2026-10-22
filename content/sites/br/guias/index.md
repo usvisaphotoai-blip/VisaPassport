@@ -6,6 +6,7 @@ intro: "Respostas diretas para os problemas que mais aparecem na hora de tirar, 
 breadcrumbLabel: "Guias"
 primaryKeyword: "guias de foto para documento"
 type: "hub"
+status: "ready"
 date: "2026-10-06"
 related:
   - "foto-visto-americano"

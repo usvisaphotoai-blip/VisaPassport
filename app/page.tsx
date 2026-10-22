@@ -15,6 +15,8 @@ description:
       en: "https://www.pixpassport.com/",
       fr: "https://www.pixpassport.com/fr",
       de: "https://www.pixpassport.com/de",
+      es: "https://www.pixpassport.com/es",
+      "pt-BR": "https://www.pixpassport.com/br",
       "x-default": "https://www.pixpassport.com/",
     },
   },
