@@ -103,17 +103,15 @@ export default function HomeHero() {
               </div>
 
               <h1 className="text-3xl sm:text-4xl lg:text-4xl font-bold text-slate-900 leading-tight tracking-tight mb-3">
-             Create Passport &amp; Visa Photo Online
+             Passport size photo maker online
               </h1>
               <p className="text-lg sm:text-xl text-slate-500 font-normal mb-5 leading-snug">
-                Create ICAO compliant passport size biometric photo in 30 seconds
+                Create ICAO compliant passport size photo online in 30 seconds
               </p>
 
-              <p className="text-sm sm:text-base text-slate-600 leading-relaxed mb-7 max-w-lg">
-                Automated checks against official government specifications for 50+
-                countries — dimensions, background, face position, eye level — all
-                in under 5 seconds.
-              </p>
+            <p className="text-sm sm:text-base text-slate-600 leading-relaxed mb-7 max-w-lg">
+  Create a passport photo online with our passport size photo maker. Convert photos to passport size, edit and crop passport pictures, and create digital passport and US, UK, IN, AU, CA, FR, DE, ES, IT, IE visa photos online. Check photo dimensions, background, face position, and eye level against requirements for 50+ countries in seconds.
+</p>
 
               {/* CTA */} 
               <div className="flex flex-col sm:flex-row gap-3 mb-7">
