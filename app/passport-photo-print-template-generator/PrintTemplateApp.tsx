@@ -86,6 +86,13 @@ const MAX_CANVAS_PIXELS = 16_000_000;
 const FOOTER_MM = 3.5;
 // Free downloads and the on-screen preview; HD (paid) files use the full sheet DPI (up to 300)
 const FREE_DPI = 200;
+// Free downloads wait this long; paid HD downloads are instant
+const FREE_DELAY_MS = 270_000;
+
+const formatClock = (ms: number) => {
+  const total = Math.ceil(ms / 1000);
+  return `${Math.floor(total / 60)}:${String(total % 60).padStart(2, "0")}`;
+};
 // Same-origin link to a customer's paid photo, as sent by the preview page
 const PAID_PHOTO_LINK = /^\/api\/download\/[a-f0-9]{24}(\?|$)/i;
 
@@ -627,11 +634,10 @@ export default function PrintTemplateApp() {
     });
   }, [imageObj, layout, photo, photoCount, cropLines, margin, spacing, sheetDpi]);
 
-  // Download timer & processing state
-  const [isDownloading, setIsDownloading] = useState(false);
-  const [downloadFormat, setDownloadFormat] = useState<DownloadFormat | null>(null);
-  const [downloadSecondsLeft, setDownloadSecondsLeft] = useState(6);
-  const [downloadProgress, setDownloadProgress] = useState(0);
+  // Free-download countdown: elapsed ms, kept running while the dialog is closed
+  const [freeDialogOpen, setFreeDialogOpen] = useState(false);
+  const [countdownMs, setCountdownMs] = useState(0);
+  const timerRef = useRef<number | null>(null);
   const [downloadError, setDownloadError] = useState<string | null>(null);
 
   // HD unlock: one payment unlocks HD downloads for any layout for the rest of the session
@@ -726,66 +732,41 @@ export default function PrintTemplateApp() {
     }
   };
 
-  // Free download: standard-quality JPG after a 6-second wait (HD downloads skip this)
-  const startFreeDownload = () => {
-    if (isDownloading || !imageObj || layout.max === 0) return;
+  const clearTimer = () => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    timerRef.current = null;
+  };
+
+  useEffect(() => clearTimer, []);
+
+  // The free-download countdown starts on the first open and keeps running while the
+  // dialog is closed, so reopening picks up where it left off; paying skips it
+  const openFreeDownload = () => {
+    if (!imageObj || layout.max === 0) return;
     setDownloadError(null);
-    setDownloadFormat("jpg");
-    setDownloadSecondsLeft(6);
-    setDownloadProgress(0);
-    setIsDownloading(true);
-
-    // Trigger Cloudinary upload in parallel during the 6s countdown
+    setFreeDialogOpen(true);
+    if (timerRef.current || countdownMs >= FREE_DELAY_MS) return;
     uploadFinalImageToCloudinary("jpg");
+    const startedAt = Date.now();
+    timerRef.current = window.setInterval(() => {
+      const elapsed = Math.min(Date.now() - startedAt, FREE_DELAY_MS);
+      setCountdownMs(elapsed);
+      if (elapsed >= FREE_DELAY_MS) clearTimer();
+    }, 250);
   };
 
-  const cancelFreeDownload = () => {
-    setIsDownloading(false);
-    setDownloadFormat(null);
-    setDownloadProgress(0);
-    setDownloadSecondsLeft(6);
+  const downloadFree = (format: DownloadFormat) => {
+    setDownloadError(null);
+    executeDownload(format, false).catch((err) => {
+      console.warn("[Download] Failed:", err);
+      setDownloadError(
+        "Your download couldn't be created. Please try again, or re-upload your photo from your device.",
+      );
+    });
   };
 
-  // 6-second timer effect
-  useEffect(() => {
-    if (!isDownloading || !downloadFormat) return;
-
-    const DURATION_MS = 6000;
-    const startTime = Date.now();
-
-    const interval = setInterval(() => {
-      const elapsed = Date.now() - startTime;
-      const progressPercent = Math.min(100, (elapsed / DURATION_MS) * 100);
-      const remainingSeconds = Math.max(0, Math.ceil((DURATION_MS - elapsed) / 1000));
-
-      setDownloadProgress(progressPercent);
-      setDownloadSecondsLeft(remainingSeconds);
-
-      if (elapsed >= DURATION_MS) {
-        clearInterval(interval);
-        executeDownload(downloadFormat, false)
-          .catch((err) => {
-            console.warn("[Download] Failed:", err);
-            setDownloadError(
-              "Your download couldn't be created. Please try again, or re-upload your photo from your device.",
-            );
-          })
-          .finally(() => {
-            // Brief delay before closing modal so user sees 100% completion
-            setTimeout(cancelFreeDownload, 500);
-          });
-      }
-    }, 50);
-
-    return () => clearInterval(interval);
-  }, [isDownloading, downloadFormat]);
-
-  const getProcessingMessage = () => {
-    if (downloadSecondsLeft >= 5) return "Preparing your print sheet...";
-    if (downloadSecondsLeft >= 3) return "Arranging photos & crop lines...";
-    if (downloadSecondsLeft >= 1) return "Checking print size & layout...";
-    return "Starting your download...";
-  };
+  const freeReady = countdownMs >= FREE_DELAY_MS;
+  const countdownRunning = countdownMs > 0 && !freeReady;
 
   const unlockHd = (orderId: string) => {
     try {
@@ -793,6 +774,7 @@ export default function PrintTemplateApp() {
     } catch {
       // Private mode: stays unlocked until the page is reloaded
     }
+    clearTimer();
     setHdUnlocked(true);
   };
 
@@ -820,7 +802,7 @@ export default function PrintTemplateApp() {
 
   const handleBuyHd = async () => {
     if (payLoading || layout.max === 0) return;
-    if (isDownloading) cancelFreeDownload();
+    setFreeDialogOpen(false);
     setPayLoading(true);
     setPayError(null);
 
@@ -919,43 +901,77 @@ export default function PrintTemplateApp() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
-      {/* Download Processing Modal (6-second timer) */}
-      {isDownloading && (
+      {/* Free download dialog (4.5-minute countdown) */}
+      {freeDialogOpen && !hdAccess && (
         <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 animate-fade-in">
-          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 sm:p-8 text-center border border-slate-100 relative overflow-hidden">
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="free-download-title"
+            className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 sm:p-8 text-center border border-slate-100 relative overflow-hidden"
+          >
             {/* Top gradient accent line */}
             <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-lime-500 via-emerald-500 to-teal-500" />
 
-            {/* Circular Timer & Spinner */}
-            <div className="relative w-20 h-20 mx-auto mb-5 flex items-center justify-center">
-              <div className="absolute inset-0 border-4 border-lime-200 border-t-lime-600 rounded-full animate-spin" />
-              <div className="w-14 h-14 bg-lime-50 rounded-full flex flex-col items-center justify-center shadow-inner">
-                <span className="text-xl font-black text-lime-700 leading-none">
-                  {downloadSecondsLeft}s
-                </span>
-              </div>
-            </div>
+            <button
+              type="button"
+              autoFocus
+              onClick={() => setFreeDialogOpen(false)}
+              aria-label="Close"
+              className="absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden>
+                <path d="M18 6 6 18M6 6l12 12" />
+              </svg>
+            </button>
 
-            <h3 className="text-xl font-bold text-slate-800 mb-2">
-              Preparing {downloadFormat?.toUpperCase()} Template
+            <h3 id="free-download-title" className="text-xl font-bold text-slate-800 mb-1">
+              {freeReady ? "Free download ready" : "Free download in"}
             </h3>
 
-            <p className="text-sm text-slate-600 mb-5 font-medium min-h-[1.5rem] transition-all duration-300">
-              {getProcessingMessage()}
+            {freeReady ? (
+              <div className="grid grid-cols-2 gap-2 mt-4 mb-2.5">
+                {(["jpg", "pdf"] as const).map((format) => (
+                  <button
+                    key={format}
+                    type="button"
+                    onClick={() => downloadFree(format)}
+                    className="py-2.5 rounded-xl border border-lime-600 bg-white text-lime-800 hover:bg-lime-50 text-sm font-black transition-colors cursor-pointer"
+                  >
+                    ⬇ {format.toUpperCase()}
+                  </button>
+                ))}
+              </div>
+            ) : (
+              <>
+                <p className="text-4xl font-black text-lime-700 tabular-nums my-3" aria-hidden>
+                  {formatClock(FREE_DELAY_MS - countdownMs)}
+                </p>
+                <div
+                  className="w-full bg-slate-100 rounded-full h-3 mb-2.5 overflow-hidden p-0.5 border border-slate-200"
+                  role="progressbar"
+                  aria-label="Free download countdown"
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                  aria-valuenow={Math.round((countdownMs / FREE_DELAY_MS) * 100)}
+                >
+                  <div
+                    className="bg-gradient-to-r from-lime-500 to-emerald-600 h-full rounded-full transition-[width] duration-200 ease-linear"
+                    style={{ width: `${(countdownMs / FREE_DELAY_MS) * 100}%` }}
+                  />
+                </div>
+              </>
+            )}
+
+            <p className="text-xs text-slate-500 mb-5">
+              Standard quality ({Math.min(FREE_DPI, sheetDpi)} DPI). You can close this window, the timer keeps running.
             </p>
 
-            {/* Progress Bar */}
-            <div className="w-full bg-slate-100 rounded-full h-3 mb-2.5 overflow-hidden p-0.5 border border-slate-200">
-              <div
-                className="bg-gradient-to-r from-lime-500 to-emerald-600 h-full rounded-full transition-all duration-75 ease-out"
-                style={{ width: `${downloadProgress}%` }}
-              />
-            </div>
-
-            <div className="flex justify-between text-xs text-slate-400 font-semibold mb-5">
-              <span>Standard quality JPG</span>
-              <span>{Math.round(downloadProgress)}%</span>
-            </div>
+            {downloadError && (
+              <p role="alert" className="mb-4 text-xs font-semibold text-red-700 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
+                {downloadError}
+              </p>
+            )}
 
             {/* Details Badge */}
             <div className="bg-slate-50 rounded-xl p-3 text-xs text-slate-600 flex items-center justify-center gap-2 border border-slate-100">
@@ -978,6 +994,9 @@ export default function PrintTemplateApp() {
                 Sharper 300 DPI print in PDF, JPG and PNG, instantly.
               </span>
             </button>
+            <p className="sr-only" aria-live="polite">
+              {freeReady ? "Free download ready" : ""}
+            </p>
           </div>
         </div>
       )}
@@ -1463,13 +1482,13 @@ export default function PrintTemplateApp() {
                 <>
                   <button
                     type="button"
-                    onClick={startFreeDownload}
-                    disabled={isDownloading || layout.max === 0}
-                    className="w-full py-2.5 px-4 rounded-xl bg-red-600 hover:bg-red-700 active:bg-red-800 text-white text-sm font-black shadow-md shadow-red-600/20 transition-all cursor-pointer disabled:bg-slate-300 disabled:shadow-none disabled:cursor-not-allowed"
+                    onClick={openFreeDownload}
+                    disabled={layout.max === 0}
+                    className="w-full py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-900 active:bg-slate-950 text-white text-sm font-black shadow-md shadow-slate-800/20 transition-all cursor-pointer disabled:bg-slate-300 disabled:shadow-none disabled:cursor-not-allowed"
                   >
-                    Free Download
-                    <span className="block text-[11px] font-medium text-red-100">
-                      JPG · {Math.min(FREE_DPI, sheetDpi)} DPI standard quality
+                    {countdownRunning ? `Free Download · ready in ${formatClock(FREE_DELAY_MS - countdownMs)}` : "Free Download"}
+                    <span className="block text-[11px] font-medium text-slate-300">
+                      JPG or PDF · {Math.min(FREE_DPI, sheetDpi)} DPI standard quality
                     </span>
                   </button>
                   <button

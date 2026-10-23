@@ -297,6 +297,7 @@ export default function UKPassportPhotoCheckerClient() {
                   onReset={handleReset}
                   selectedDocId={selectedDocId}
                   selectedDocPrice={selectedDocPrice}
+                  scoreDisplay="gauge"
                 />
               ) : (
                 <div

@@ -18,6 +18,8 @@ interface Props {
   photo?: File | null;
   /** Object URL of `photo` owned by the checker (already shown in its upload box). */
   photoPreviewUrl?: string | null;
+  /** "gauge" shows a GOV.UK-style Poor / Okay / Good dial instead of the score ring. */
+  scoreDisplay?: "ring" | "gauge";
 }
 
 import PriceDisplay from "@/app/components/PriceDisplay";
@@ -92,6 +94,60 @@ function ScoreRing({ score, pass }: { score: number; pass: boolean }) {
       <span className={`text-xs font-bold ${textColor}`}>
         {score >= 90 ? "Excellent Quality" : score >= 75 ? "Acceptable Quality" : "Requirements Failed"}
       </span>
+    </div>
+  );
+}
+
+// ─── Rating Gauge (GOV.UK style) ───────────────────────────────────────────────
+
+// Bands keep the ring's thresholds but are drawn at GOV.UK's proportions
+const GAUGE_BANDS = [
+  { label: "Poor", color: "#d4351c", text: "text-[#d4351c]", from: 0, to: 0.22, min: 0, max: 75 },
+  { label: "Okay", color: "#ffdd00", text: "text-slate-900", from: 0.22, to: 0.76, min: 75, max: 90 },
+  { label: "Good", color: "#00703c", text: "text-[#00703c]", from: 0.76, to: 1, min: 90, max: 100 },
+] as const;
+
+const gaugePoint = (t: number) => {
+  const a = Math.PI * t;
+  return `${(100 - 80 * Math.cos(a)).toFixed(2)} ${(100 - 80 * Math.sin(a)).toFixed(2)}`;
+};
+
+function ScoreGauge({ score }: { score: number }) {
+  const band = GAUGE_BANDS.find((b) => score < b.max) ?? GAUGE_BANDS[GAUGE_BANDS.length - 1];
+  const within = Math.min(1, Math.max(0, (score - band.min) / (band.max - band.min)));
+  const t = band.from + within * (band.to - band.from);
+
+  // Start the needle at the far left, then swing it to the score
+  const [angle, setAngle] = useState(-90);
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setAngle((t - 0.5) * 180));
+    return () => cancelAnimationFrame(id);
+  }, [t]);
+
+  return (
+    <div className="flex flex-col items-center shrink-0" role="img" aria-label={`Photo rating: ${band.label} (score ${score} of 100)`}>
+      <svg viewBox="0 0 200 112" className="w-32 sm:w-40 h-auto" aria-hidden>
+        {GAUGE_BANDS.map((b) => (
+          <path
+            key={b.label}
+            d={`M ${gaugePoint(b.from)} A 80 80 0 0 1 ${gaugePoint(b.to)}`}
+            fill="none"
+            stroke={b.color}
+            strokeWidth="10"
+          />
+        ))}
+        <g
+          style={{
+            transform: `rotate(${angle}deg)`,
+            transformOrigin: "100px 100px",
+            transition: "transform 1.2s cubic-bezier(0.34, 1.3, 0.64, 1) 0.3s",
+          }}
+        >
+          <polygon points="95,100 100,36 105,100" fill="#b1b4b6" />
+          <circle cx="100" cy="100" r="5" fill="#b1b4b6" />
+        </g>
+      </svg>
+      <span className={`mt-1 text-xl sm:text-2xl font-bold ${band.text}`}>{band.label}</span>
     </div>
   );
 }
@@ -397,7 +453,7 @@ function CreatePhotoOverlay({ previewUrl, done }: { previewUrl?: string | null; 
 
 // ─── Main Report Component ─────────────────────────────────────────────────────
 
-export default function ValidationReportView({ report, onReset, selectedDocId, selectedDocPrice, photo, photoPreviewUrl }: Props) {
+export default function ValidationReportView({ report, onReset, selectedDocId, selectedDocPrice, photo, photoPreviewUrl, scoreDisplay = "ring" }: Props) {
   const router = useRouter();
   const [isCreating, setIsCreating] = useState(false);
   const [createError, setCreateError] = useState("");
@@ -493,30 +549,19 @@ export default function ValidationReportView({ report, onReset, selectedDocId, s
           </div>
 
           {/* Score ring */}
-          <ScoreRing score={compliance_score} pass={isPass} />
+          {scoreDisplay === "gauge" ? (
+            <ScoreGauge score={compliance_score} />
+          ) : (
+            <ScoreRing score={compliance_score} pass={isPass} />
+          )}
         </div>
 
         {overall_result === "FAIL" && (
           <div className="mt-4 sm:mt-5 border-t border-slate-100 pt-4 sm:pt-5">
            
 
-            {/* Animated Button Container */}
-            <div className="relative group">
-              {/* Outer pulsing glow aura */}
-              <motion.div
-                className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-500 to-blue-600 opacity-60 blur-md pointer-events-none"
-                animate={{
-                  opacity: [0.35, 0.8, 0.35],
-                  scale: [0.99, 1.025, 0.99],
-                }}
-                transition={{
-                  repeat: Infinity,
-                  duration: 2,
-                  ease: "easeInOut",
-                }}
-              />
-
-              {/* Main Animated Button */}
+            <div>
+              {/* Main CTA */}
               <motion.button
                 onClick={async () => {
                   if (isCreating) return;
@@ -538,73 +583,35 @@ export default function ValidationReportView({ report, onReset, selectedDocId, s
                   }
                 }}
                 disabled={isCreating}
-                animate={{
-                  scale: [1, 1.018, 1],
-                }}
-                transition={{
-                  repeat: Infinity,
-                  duration: 1.8,
-                  ease: "easeInOut",
-                }}
-                whileHover={{ scale: 1.025 }}
-                whileTap={{ scale: 0.97 }}
-                className="relative w-full h-14 rounded-xl bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-600 text-white font-bold text-sm uppercase tracking-widest transition-all flex items-center justify-center gap-2.5 shadow-xl shadow-blue-500/30 overflow-hidden cursor-pointer"
-                aria-label="Create your Passport photo"
+                whileTap={{ scale: 0.98 }}
+                className="group w-full h-13 sm:h-14 rounded-xl bg-lime-600 hover:bg-lime-700 disabled:opacity-70 disabled:cursor-wait text-white font-bold text-base transition-colors flex items-center justify-center gap-2 shadow-lg shadow-lime-600/25 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lime-600 focus-visible:ring-offset-2"
               >
-                {/* Continuous Shimmer sweep beam */}
-                <motion.div
-                  className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12 pointer-events-none"
-                  animate={{ x: ["-100%", "250%"] }}
-                  transition={{
-                    repeat: Infinity,
-                    duration: 2.2,
-                    ease: "easeInOut",
-                    repeatDelay: 0.6,
-                  }}
-                />
-
-                {/* Left: Sparkle / Magic icon */}
-                <motion.span
-                  animate={{
-                    rotate: [0, -15, 15, -10, 10, 0],
-                    scale: [1, 1.15, 1],
-                  }}
-                  transition={{
-                    repeat: Infinity,
-                    duration: 2.4,
-                    ease: "easeInOut",
-                  }}
-                  className="relative z-10 text-amber-300 drop-shadow-sm flex items-center"
-                >
-                  <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor">
+                {isCreating ? (
+                  <span className="w-4 h-4 rounded-full border-2 border-white/40 border-t-white animate-spin" aria-hidden />
+                ) : (
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
                     <path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4L12 2z" />
                   </svg>
-                </motion.span>
-
-                {/* Button text */}
-                <span className="relative z-10 font-black tracking-widest text-sm drop-shadow-sm">
-                  {isCreating ? "Processing your photo..." : "Create your passport photo"}
-                </span>
-
-                {/* Right: Bouncing arrow */}
-                <motion.span
-                  className="relative z-10 flex items-center"
-                  animate={{ x: [0, 5, 0] }}
-                  transition={{
-                    repeat: Infinity,
-                    duration: 1.2,
-                    ease: "easeInOut",
-                  }}
-                >
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                )}
+                <span>{isCreating ? "Processing your photo..." : "Create your passport photo"}</span>
+                {!isCreating && (
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="transition-transform group-hover:translate-x-1"
+                    aria-hidden
+                  >
                     <line x1="5" y1="12" x2="19" y2="12" />
                     <polyline points="12 5 19 12 12 19" />
                   </svg>
-                </motion.span>
+                )}
               </motion.button>
-
-              {/* Animated click / tap pointer guide */}
-            
             </div>
 
             {createError && (
@@ -618,7 +625,7 @@ export default function ValidationReportView({ report, onReset, selectedDocId, s
 
             {/* Explanatory subtitle */}
             <p className="mt-3 text-center text-xs text-slate-500 font-medium flex items-center justify-center gap-1.5">
-              <span>✨ Automatically crop, correct background & fix lighting for 100% compliance</span>
+              <span>Automatically crop, correct background &amp; fix lighting for 100% compliance</span>
             </p>
           </div>
         )}

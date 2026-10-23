@@ -17,7 +17,7 @@ type Format = "jpg" | "pdf";
 // Below this the print starts to look soft
 const MIN_PRINT_DPI = 200;
 // Free downloads wait this long and render at FREE_DPI; paid HD downloads are instant at full DPI
-const FREE_DELAY_MS = 180_000;
+const FREE_DELAY_MS = 270_000;
 const FREE_DPI = 200;
 
 const formatClock = (ms: number) => {
