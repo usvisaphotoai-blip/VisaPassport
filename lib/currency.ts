@@ -108,7 +108,7 @@ const EXPERT_PRICES: Record<string, { amount: number; symbol: string; decimals: 
   // Scaling roughly 1.6x - 2x from standard
   USD: { amount: 13.99, symbol: "$", decimals: 2 },
   EUR: { amount: 12.99, symbol: "€", decimals: 2 },
-  GBP: { amount: 12.99, symbol: "£", decimals: 2 },
+  GBP: { amount: 13.99, symbol: "£", decimals: 2 },
   CHF: { amount: 20.99, symbol: "CHF", decimals: 2 },
   CAD: { amount: 13.99, symbol: "C$", decimals: 2 },
   AUD: { amount: 14.99, symbol: "A$", decimals: 2 },
