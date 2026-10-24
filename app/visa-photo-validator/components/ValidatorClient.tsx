@@ -151,9 +151,9 @@ export default function ValidatorClient() {
 
     
 
-        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 py-4 sm:py-5">
+        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
 
-          <div className="lg:flex lg:items-end lg:justify-between lg:gap-8 mb-4 lg:mb-5">
+          <div className="mb-5 lg:mb-7">
           <div className="min-w-0">
           {/* Badge */}
           <div className="flex justify-start mb-2.5">
@@ -164,47 +164,44 @@ export default function ValidatorClient() {
           </div>
 
           {/* H1 — primary SEO keyword */}
-          <h1 id="validator-heading" className="text-left text-xl sm:text-2xl lg:text-[2rem] font-black text-slate-900 tracking-tight leading-[1.15] mb-2">
-            Visa Photo Checker{" "}
-            <span className="relative inline-block">
-              <span className="relative z-10 text-lime-600">— Free Validator for 60+ Countries</span>
-            </span>
+          <h1 id="validator-heading" className="text-left text-2xl sm:text-3xl lg:text-[2.25rem] font-black text-slate-900 tracking-tight leading-[1.15] mb-2">
+            Visa Photo Checker <span className="text-lime-700">— Free Validator for 60+ Countries</span>
           </h1>
 
           {/* Meta description-quality subhead */}
-          <p className="text-left text-sm sm:text-base text-slate-500 font-medium max-w-2xl leading-relaxed">
+          <p className="text-left text-sm sm:text-base text-slate-500 font-medium max-w-3xl leading-relaxed">
             Check your <strong className="text-slate-700">visa photo</strong> against the destination country&apos;s rules before you apply — US DS-160, Schengen, India, China, Canada, Australia and 55+ more. Results in under 3 seconds.
           </p>
 
           </div>
 
           {/* Trust stats */}
-          <div className="flex justify-start gap-6 sm:gap-10 lg:gap-8 mt-3 lg:mt-0 lg:shrink-0 lg:pb-1">
+          <div className="grid grid-cols-4 gap-2 sm:gap-3 mt-4 sm:mt-5 max-w-2xl">
             {TRUST_STATS.map(({ value, label }) => (
-              <div key={label} className="text-left">
-                <div className="text-xl sm:text-xl font-black text-lime-600 leading-none">{value}</div>
-                <div className="text-[8px] font-bold text-slate-400 uppercase tracking-widest mt-1">{label}</div>
+              <div key={label} className="text-center bg-slate-50 border border-slate-100 rounded-lg px-2 sm:px-4 py-2.5">
+                <div className="text-lg sm:text-xl font-black text-lime-700 leading-none">{value}</div>
+                <div className="text-[9px] sm:text-[10px] font-bold text-slate-500 uppercase tracking-wide mt-1.5 leading-tight">{label}</div>
               </div>
             ))}
           </div>
           </div>
 
           {/* Tool grid */}
-          <div className="grid lg:grid-cols-2 gap-4 lg:gap-6 xl:gap-8 lg:items-stretch">
+          <div className="grid lg:grid-cols-2 gap-4 lg:gap-6 xl:gap-8 items-start">
 
             {/* Left: config + upload */}
-            <div className="space-y-3">
+            <div className="space-y-3 lg:sticky lg:top-20">
 
               {/* Step 1 */}
-              <div className="bg-gray-100 rounded-md p-3 sm:p-4">
+              <div className="bg-white border border-slate-200 rounded-xl p-4 sm:p-5 shadow-sm">
                 <h2 className="text-sm sm:text-base font-black text-slate-900 mb-3 flex items-center gap-2.5 sm:gap-3">
-                  <span className="w-7 h-7 rounded-lg bg-lime-600 text-white flex items-center justify-center text-xs font-black">1</span>
+                  <span className="w-7 h-7 rounded-lg bg-lime-700 text-white flex items-center justify-center text-xs font-black">1</span>
                   Choose Destination Country
                 </h2>
                 <div className="grid grid-cols-2 gap-3 sm:gap-4">
                   <CountrySelector documentTypes={documentTypes} selectedCountry={selectedCountry} onSelect={setSelectedCountry} />
                   <div>
-                    <label htmlFor="doc-type" className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">
+                    <label htmlFor="doc-type" className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">
                       Document Type
                     </label>
                     <div className="relative">
@@ -212,7 +209,7 @@ export default function ValidatorClient() {
                         id="doc-type"
                         value={selectedDocType}
                         onChange={(e) => setSelectedDocType(e.target.value)}
-                        className="w-full h-11 sm:h-12 bg-slate-50 border border-slate-200 rounded-xl px-3 sm:px-4 pr-9 sm:pr-10 text-sm font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-lime-500/20 focus:border-lime-300 appearance-none hover:border-lime-300 hover:bg-white transition-all"
+                        className="w-full h-11 sm:h-12 bg-slate-50 border border-slate-200 rounded-xl px-3 sm:px-4 pr-9 sm:pr-10 text-sm font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-lime-500/20 focus:border-lime-300 appearance-none hover:border-lime-300 hover:bg-white transition-all cursor-pointer"
                       >
                         <option value="passport">Passport Photo</option>
                         <option value="visa">Visa Photo</option>
@@ -228,9 +225,9 @@ export default function ValidatorClient() {
               </div>
 
               {/* Step 2 */}
-              <div className="bg-gray-100 rounded-md p-3 sm:p-4 ">
+              <div className="bg-white border border-slate-200 rounded-xl p-4 sm:p-5 shadow-sm">
                 <h2 className="text-sm sm:text-base font-black text-slate-900 mb-3 flex items-center gap-2.5 sm:gap-3">
-                  <span className="w-7 h-7 rounded-lg bg-lime-600 text-white flex items-center justify-center text-xs font-black">2</span>
+                  <span className="w-7 h-7 rounded-lg bg-lime-700 text-white flex items-center justify-center text-xs font-black">2</span>
                   Upload Your Photo
                 </h2>
 
@@ -245,8 +242,8 @@ export default function ValidatorClient() {
 
                 <div className="flex flex-wrap gap-1.5 sm:gap-2 mt-3">
                   {["Neutral background", "Eyes open", "Centered face", "No glasses"].map((req) => (
-                    <span key={req} className="inline-flex items-center gap-1.5 bg-slate-50 border border-slate-100 rounded-full px-3 py-1 text-[10px] font-bold text-slate-500 uppercase tracking-wider">
-                      <span className="w-1 h-1 rounded-full bg-emerald-400" />
+                    <span key={req} className="inline-flex items-center gap-1.5 bg-slate-50 border border-slate-100 rounded-full px-3 py-1 text-[11px] font-bold text-slate-600">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
                       {req}
                     </span>
                   ))}
@@ -258,18 +255,18 @@ export default function ValidatorClient() {
                   className={`w-full mt-3 sm:mt-4 h-12 sm:h-14 rounded-xl font-black text-sm uppercase tracking-widest transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-lime-500/30 ${
                     !file || isProcessing
                       ? "bg-slate-100 text-slate-400 cursor-not-allowed"
-                      : "bg-lime-600 text-white shadow-lg shadow-lime-200 hover:bg-lime-700 hover:-translate-y-0.5 active:scale-[0.99]"
+                      : "bg-lime-700 text-white shadow-lg shadow-lime-200 hover:bg-lime-800 hover:-translate-y-0.5 active:scale-[0.99]"
                   }`}
                   aria-busy={isProcessing}
                 >
                   {isProcessing ? (
                     <span className="flex items-center justify-center gap-3">
-                      <span className="block w-4 h-4 border-[2.5px] border-lime-600/30 border-t-lime-600 rounded-full animate-spin" />
+                      <span className="block w-4 h-4 border-[2.5px] border-lime-600/30 border-t-lime-700 rounded-full animate-spin" />
                       {loadingMessage}
                     </span>
                   ) : (
                     <span className="flex items-center justify-center gap-2">
-                      Check My Photo
+                      {file ? "Check My Photo" : "Upload a photo to check"}
                       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                         <polyline points="9 18 15 12 9 6" />
                       </svg>
@@ -288,9 +285,8 @@ export default function ValidatorClient() {
               </div>
             </div>
 
-            {/* Right: result — on desktop it matches the left column height and scrolls inside */}
-            <div className="relative">
-            <div className="lg:absolute lg:inset-0 lg:overflow-y-auto lg:overscroll-contain lg:p-1.5 lg:-m-1.5">
+            {/* Right: result */}
+            <div>
               {report ? (
                 <ValidationReportView 
                   photo={file}
@@ -322,29 +318,28 @@ export default function ValidatorClient() {
                 />
               ) : (
                 <div
-                  className="rounded-xl border-2 border-dashed border-slate-200 bg-slate-50/60 p-6 sm:p-8 flex flex-col items-center justify-center h-full min-h-[240px] text-center"
+                  className="rounded-xl border border-slate-200 bg-slate-50 p-6 sm:p-8 flex flex-col items-center justify-center min-h-[260px] lg:min-h-[480px] text-center"
                   aria-label="Awaiting analysis"
                 >
-                  <div className="w-14 h-14 sm:w-16 sm:h-16 bg-white rounded-xl shadow-sm border border-slate-100 flex items-center justify-center text-slate-200 mb-4">
+                  <div className="w-14 h-14 sm:w-16 sm:h-16 bg-white rounded-xl shadow-sm border border-slate-100 flex items-center justify-center text-lime-500 mb-4">
                     <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                       <circle cx="12" cy="8" r="4" /><path d="M6 20v-2a6 6 0 0112 0v2" />
                     </svg>
                   </div>
-                  <p className="text-base font-bold text-slate-800 mb-2">Ready to validate</p>
-                  <p className="text-sm text-slate-400 font-medium max-w-xs leading-relaxed">
+                  <p className="text-base sm:text-lg font-black text-slate-900 mb-2">Your report appears here</p>
+                  <p className="text-sm text-slate-500 font-medium max-w-xs leading-relaxed">
                     Upload a photo and select your country to get an official biometric compliance report.
                   </p>
                   <div className="mt-5 grid grid-cols-2 gap-2 w-full max-w-xs">
                     {["Face Detection", "Background Check", "Lighting Analysis", "Size Validation", "Eye Line Test", "Expression Check"].map((item) => (
-                      <div key={item} className="flex items-center gap-2 bg-white border border-slate-100 rounded-xl px-3 py-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-slate-200" />
-                        <span className="text-[10px] font-bold text-slate-400">{item}</span>
+                      <div key={item} className="flex items-center gap-2 bg-white border border-slate-200 rounded-lg px-3 py-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-lime-400" />
+                        <span className="text-[11px] font-bold text-slate-600">{item}</span>
                       </div>
                     ))}
                   </div>
                 </div>
               )}
-            </div>
             </div>
           </div>
         </div>
@@ -353,7 +348,7 @@ export default function ValidatorClient() {
       <section className="bg-white border-y border-slate-100" aria-labelledby="related-heading">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-16">
           <div className="text-center mb-10">
-            <p className="text-[11px] font-bold text-lime-600 uppercase tracking-[0.2em] mb-3">Related tools</p>
+            <p className="text-[11px] font-bold text-lime-700 uppercase tracking-[0.2em] mb-3">Related tools</p>
             <h2 id="related-heading" className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
               More photo checkers &amp; editors
             </h2>
@@ -361,7 +356,7 @@ export default function ValidatorClient() {
               Once your photo passes validation, use these dedicated editors from PixPassport to crop, resize, and export it to the exact spec.
             </p>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 max-w-4xl mx-auto ">
+          <div className="grid sm:grid-cols-2 gap-3 max-w-4xl mx-auto">
             {[
               { href: "/passport-photo-checker", label: "Passport Photo Checker" },
               { href: "/us-check-photo-green-card", label: "Green Card Photo Checker" },
@@ -377,10 +372,10 @@ export default function ValidatorClient() {
               <Link
                 key={href}
                 href={href}
-                className="flex items-center justify-between gap-3 bg-white hover:bg-lime-50/80 border border-slate-200 hover:border-lime-300 rounded-xl px-5 py-4 text-sm font-bold text-slate-700 hover:text-lime-700 transition-all shadow-xs"
+                className="group flex items-center justify-between gap-3 bg-white hover:bg-lime-50/80 border border-slate-200 hover:border-lime-300 rounded-xl px-5 py-4 text-sm font-bold text-slate-700 hover:text-lime-800 transition-all shadow-xs"
               >
                 {label}
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 text-slate-400">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 text-slate-400 group-hover:text-lime-800">
                   <line x1="7" y1="17" x2="17" y2="7" /><polyline points="7 7 17 7 17 17" />
                 </svg>
               </Link>
@@ -391,7 +386,7 @@ export default function ValidatorClient() {
       {/* ── WHAT THIS TOOL CHECKS ─────────────────────────────────── */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 py-20 sm:py-24" aria-labelledby="checks-heading">
         <div className="text-center mb-12">
-          <p className="text-[11px] font-bold text-lime-600 uppercase tracking-[0.2em] mb-3">Six-point analysis</p>
+          <p className="text-[11px] font-bold text-lime-700 uppercase tracking-[0.2em] mb-3">Six-point analysis</p>
           <h2 id="checks-heading" className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
             What the visa photo checker tests
           </h2>
@@ -414,7 +409,7 @@ export default function ValidatorClient() {
       <section className="bg-white border-y border-slate-100" aria-labelledby="us-uses-heading">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-20 sm:py-24">
           <div className="text-center mb-12">
-            <p className="text-[11px] font-bold text-lime-600 uppercase tracking-[0.2em] mb-3">Popular destinations</p>
+            <p className="text-[11px] font-bold text-lime-700 uppercase tracking-[0.2em] mb-3">Popular destinations</p>
             <h2 id="us-uses-heading" className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
               Visa photo rules for popular destinations
             </h2>
@@ -441,7 +436,7 @@ export default function ValidatorClient() {
           {/* Block 1: Why photo rejections happen */}
           <div className="grid lg:grid-cols-2 gap-12 xl:gap-20 items-center mb-20">
             <div>
-              <p className="text-[11px] font-bold text-lime-600 uppercase tracking-[0.2em] mb-3">The hidden cost of a bad photo</p>
+              <p className="text-[11px] font-bold text-lime-700 uppercase tracking-[0.2em] mb-3">The hidden cost of a bad photo</p>
               <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight leading-tight mb-6">
                 Why embassies reject visa photos
               </h2>
@@ -465,7 +460,7 @@ export default function ValidatorClient() {
                 { stat: "ICAO 9303", label: "the biometric standard most visa photo rules build on" },
               ].map(({ stat, label }) => (
                 <div key={stat} className="bg-white border border-slate-100 rounded-xl p-5">
-                  <div className="text-2xl font-black text-lime-600 mb-1">{stat}</div>
+                  <div className="text-2xl font-black text-lime-700 mb-1">{stat}</div>
                   <p className="text-xs text-slate-500 font-medium leading-snug">{label}</p>
                 </div>
               ))}
@@ -487,7 +482,7 @@ export default function ValidatorClient() {
               ))}
             </div>
             <div className="order-1 lg:order-2">
-              <p className="text-[11px] font-bold text-lime-600 uppercase tracking-[0.2em] mb-3">Visa vs passport</p>
+              <p className="text-[11px] font-bold text-lime-700 uppercase tracking-[0.2em] mb-3">Visa vs passport</p>
               <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight leading-tight mb-6">
                 Visa photo vs passport photo: what&apos;s different
               </h2>
@@ -505,7 +500,7 @@ export default function ValidatorClient() {
           {/* Block 2: Country guide */}
           <div className="mb-20">
             <div className="text-center mb-10">
-              <p className="text-[11px] font-bold text-lime-600 uppercase tracking-[0.2em] mb-3">Country requirements</p>
+              <p className="text-[11px] font-bold text-lime-700 uppercase tracking-[0.2em] mb-3">Country requirements</p>
               <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
                 Visa photo requirements by country
               </h2>
@@ -514,7 +509,7 @@ export default function ValidatorClient() {
               </p>
             </div>
             <div className="overflow-x-auto rounded-xl border border-slate-100 shadow-lg shadow-slate-200/40 bg-white">
-              <table className="w-full text-sm">
+              <table className="w-full min-w-[600px] text-sm">
                 <thead>
                   <tr className="bg-slate-50 border-b border-slate-100">
                     <th className="text-left px-5 py-3.5 text-[10px] font-black text-slate-500 uppercase tracking-widest">Country</th>
@@ -533,8 +528,8 @@ export default function ValidatorClient() {
                     { flag: "🇦🇺", country: "Australia", size: "35×45 mm", bg: "Plain white or light grey", head: "32–36 mm" },
                   ].map(({ flag, country, size, bg, head }) => (
                     <tr key={country} className="border-b border-slate-50 last:border-0 hover:bg-slate-50/50 transition-colors">
-                      <td className="px-5 py-4 font-bold text-slate-800 flex items-center gap-2">
-                        <span>{flag}</span>{country}
+                      <td className="px-5 py-4 font-bold text-slate-800 whitespace-nowrap">
+                        <span className="mr-2">{flag}</span>{country}
                       </td>
                       <td className="px-5 py-4 text-slate-500 font-medium">{size}</td>
                       <td className="px-5 py-4 text-slate-500 font-medium">{bg}</td>
@@ -552,7 +547,7 @@ export default function ValidatorClient() {
           {/* Block 3: How our system works */}
           <div className="grid lg:grid-cols-2 gap-12 xl:gap-20 items-start">
             <div>
-              <p className="text-[11px] font-bold text-lime-600 uppercase tracking-[0.2em] mb-3">Under the hood</p>
+              <p className="text-[11px] font-bold text-lime-700 uppercase tracking-[0.2em] mb-3">Under the hood</p>
               <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight leading-tight mb-6">
                 How the visa photo checker works
               </h2>
@@ -592,7 +587,7 @@ export default function ValidatorClient() {
       {/* ── TIPS SECTION ──────────────────────────────────────────── */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 py-20 sm:py-24" aria-labelledby="tips-heading">
         <div className="text-center mb-12">
-          <p className="text-[11px] font-bold text-lime-600 uppercase tracking-[0.2em] mb-3">Before you upload</p>
+          <p className="text-[11px] font-bold text-lime-700 uppercase tracking-[0.2em] mb-3">Before you upload</p>
           <h2 id="tips-heading" className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
             How to take a visa photo at home
           </h2>
@@ -622,7 +617,7 @@ export default function ValidatorClient() {
       <section className="bg-white border-t border-slate-100">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 py-20 sm:py-24" aria-labelledby="faq-heading">
           <div className="text-center mb-12">
-            <p className="text-[11px] font-bold text-lime-600 uppercase tracking-[0.2em] mb-3">FAQ</p>
+            <p className="text-[11px] font-bold text-lime-700 uppercase tracking-[0.2em] mb-3">FAQ</p>
             <h2 id="faq-heading" className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
               Visa photo checker FAQ
             </h2>
@@ -637,7 +632,7 @@ export default function ValidatorClient() {
 
       {/* ── CTA ───────────────────────────────────────────────────── */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 pb-20">
-        <div className="relative overflow-hidden bg-lime-600 rounded-xl p-10 sm:p-14 text-center">
+        <div className="relative overflow-hidden bg-lime-700 rounded-xl p-10 sm:p-14 text-center">
           <div className="absolute -top-12 -right-12 w-48 h-48 rounded-full bg-lime-500/50 blur-2xl pointer-events-none" />
           <div className="absolute -bottom-8 -left-8 w-32 h-32 rounded-full bg-lime-500/40 blur-2xl pointer-events-none" />
           <div className="relative z-10">
@@ -649,7 +644,10 @@ export default function ValidatorClient() {
               Avoid a costly rejection. Upload your photo now and get a full compliance report — no account needed, completely free.
             </p>
             <button
-              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              onClick={() => {
+                document.getElementById("validator-heading")?.scrollIntoView({ behavior: "smooth", block: "start" });
+                setTimeout(() => document.querySelector<HTMLInputElement>('input[aria-label="Upload photo"]')?.click(), 500);
+              }}
               className="inline-flex items-center gap-2 bg-white text-lime-700 font-black text-sm px-8 py-4 rounded-xl hover:bg-lime-50 transition-all hover:-translate-y-0.5 shadow-lg shadow-lime-900/20 uppercase tracking-widest"
             >
               Validate My Photo
@@ -837,8 +835,8 @@ function UploadZone({
               </svg>
             </div>
             <p className="text-sm font-bold text-slate-800">{isDragging ? "Release to upload" : "Drop your photo here"}</p>
-            <p className="text-[11px] text-slate-400 mt-1 font-semibold uppercase tracking-widest">or click to browse</p>
-            <p className="text-[10px] text-slate-300 mt-2 font-medium">JPEG · PNG · WebP · Max 10 MB</p>
+            <p className="text-xs text-lime-700 mt-1 font-bold underline underline-offset-2">or click to browse</p>
+            <p className="text-[11px] text-slate-400 mt-2 font-medium">JPEG · PNG · WebP · Max 10 MB</p>
           </div>
         )}
       </div>

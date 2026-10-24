@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { motion, AnimatePresence, useInView, Variants } from "framer-motion";
 import { ValidationReport, ValidationMetric } from "@/lib/validation-engine";
 import { processPhotoForDocument } from "@/lib/processPhoto";
+import { getSpecById } from "@/lib/specs";
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 
@@ -14,7 +15,7 @@ interface Props {
   onReset: () => void;
   selectedDocId?: string;
   selectedDocPrice?: number;
-  /** The photo the user checked; processed directly when they click "Create your passport photo". */
+  /** The photo the user checked; processed directly when they click "Make It Compliant Now". */
   photo?: File | null;
   /** Object URL of `photo` owned by the checker (already shown in its upload box). */
   photoPreviewUrl?: string | null;
@@ -423,7 +424,7 @@ function CreatePhotoOverlay({ previewUrl, done }: { previewUrl?: string | null; 
                       </svg>
                     </motion.span>
                   ) : isActive ? (
-                    <span className="block w-4 h-4 border-[2.5px] border-lime-600/30 border-t-lime-600 rounded-full animate-spin" />
+                    <span className="block w-4 h-4 border-[2.5px] border-lime-600/30 border-t-lime-700 rounded-full animate-spin" />
                   ) : (
                     <span className="w-1.5 h-1.5 rounded-full bg-slate-300" />
                   )}
@@ -460,6 +461,15 @@ export default function ValidationReportView({ report, onReset, selectedDocId, s
   const [isCreateDone, setIsCreateDone] = useState(false);
 
   const { overall_result, compliance_score, summary, suggestions, metrics } = report;
+
+  // e.g. "United Kingdom visa" and "35 × 45 mm" for the fix-it CTA
+  const spec = selectedDocId ? getSpecById(selectedDocId) : undefined;
+  const docKind = selectedDocId?.includes("visa") ? "visa" : "passport";
+  const docLabel = spec ? `${spec.country} ${docKind}` : `your ${docKind}`;
+  const sizeLabel =
+    spec && spec.width_mm !== "unspecified" && spec.height_mm !== "unspecified"
+      ? `${spec.width_mm} × ${spec.height_mm} mm`
+      : "";
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true });
 
@@ -557,62 +567,67 @@ export default function ValidationReportView({ report, onReset, selectedDocId, s
         </div>
 
         {overall_result === "FAIL" && (
-          <div className="mt-4 sm:mt-5 border-t border-slate-100 pt-4 sm:pt-5">
-           
+          <div className="mt-4 sm:mt-5 rounded-xl border border-lime-200 bg-gradient-to-br from-lime-50 to-white p-4 sm:p-5">
+            <p className="inline-flex items-center gap-1.5 text-[10px] font-black text-lime-700 uppercase tracking-[0.18em] mb-2">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                <path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z" />
+              </svg>
+              1-Click Compliance Solution
+            </p>
+            <h3 className="text-base sm:text-lg font-black text-slate-900 leading-tight">
+              Fix All Issues for {docLabel}
+            </h3>
+            <p className="mt-1.5 text-xs sm:text-[13px] text-slate-600 font-medium leading-relaxed">
+              Automatically fixes background, applies exact {sizeLabel ? `${sizeLabel} ` : ""}crop, and provides printable sheets.
+            </p>
 
-            <div>
-              {/* Main CTA */}
-              <motion.button
-                onClick={async () => {
-                  if (isCreating) return;
-                  const docId = selectedDocId || "general";
-                  if (!photo) {
-                    router.push(`/passport-photo-online?type=${docId}`);
-                    return;
-                  }
-                  setIsCreating(true);
-                  setCreateError("");
-                  try {
-                    const photoId = await processPhotoForDocument(photo, docId, "pixpassport_checker");
-                    setIsCreateDone(true);
-                    await new Promise((r) => setTimeout(r, 900));
-                    router.push(`/preview/${photoId}`);
-                  } catch (err) {
-                    setCreateError(err instanceof Error ? err.message : "Processing failed. Please try again.");
-                    setIsCreating(false);
-                  }
-                }}
-                disabled={isCreating}
-                whileTap={{ scale: 0.98 }}
-                className="group w-full h-13 sm:h-14 rounded-xl bg-lime-600 hover:bg-lime-700 disabled:opacity-70 disabled:cursor-wait text-white font-bold text-base transition-colors flex items-center justify-center gap-2 shadow-lg shadow-lime-600/25 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lime-600 focus-visible:ring-offset-2"
-              >
-                {isCreating ? (
-                  <span className="w-4 h-4 rounded-full border-2 border-white/40 border-t-white animate-spin" aria-hidden />
-                ) : (
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-                    <path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4L12 2z" />
-                  </svg>
-                )}
-                <span>{isCreating ? "Processing your photo..." : "Create your passport photo"}</span>
-                {!isCreating && (
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="transition-transform group-hover:translate-x-1"
-                    aria-hidden
-                  >
-                    <line x1="5" y1="12" x2="19" y2="12" />
-                    <polyline points="12 5 19 12 12 19" />
-                  </svg>
-                )}
-              </motion.button>
-            </div>
+            {/* Main CTA */}
+            <motion.button
+              onClick={async () => {
+                if (isCreating) return;
+                const docId = selectedDocId || "general";
+                if (!photo) {
+                  router.push(`/passport-photo-online?type=${docId}`);
+                  return;
+                }
+                setIsCreating(true);
+                setCreateError("");
+                try {
+                  const photoId = await processPhotoForDocument(photo, docId, "pixpassport_checker");
+                  setIsCreateDone(true);
+                  await new Promise((r) => setTimeout(r, 900));
+                  router.push(`/preview/${photoId}`);
+                } catch (err) {
+                  setCreateError(err instanceof Error ? err.message : "Processing failed. Please try again.");
+                  setIsCreating(false);
+                }
+              }}
+              disabled={isCreating}
+              whileTap={{ scale: 0.98 }}
+              className="group mt-4 w-full h-13 sm:h-14 rounded-xl bg-lime-700 hover:bg-lime-800 disabled:opacity-70 disabled:cursor-wait text-white font-bold text-base transition-colors flex items-center justify-center gap-2 shadow-lg shadow-lime-700/25 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lime-700 focus-visible:ring-offset-2"
+            >
+              {isCreating && (
+                <span className="w-4 h-4 rounded-full border-2 border-white/40 border-t-white animate-spin" aria-hidden />
+              )}
+              <span>{isCreating ? "Processing your photo..." : "Make It Compliant Now"}</span>
+              {!isCreating && (
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="transition-transform group-hover:translate-x-1"
+                  aria-hidden
+                >
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
+                </svg>
+              )}
+            </motion.button>
 
             {createError && (
               <p className="mt-4 text-center text-xs text-red-600 font-medium" role="alert">
@@ -623,9 +638,11 @@ export default function ValidationReportView({ report, onReset, selectedDocId, s
               </p>
             )}
 
-            {/* Explanatory subtitle */}
-            <p className="mt-3 text-center text-xs text-slate-500 font-medium flex items-center justify-center gap-1.5">
-              <span>Automatically crop, correct background &amp; fix lighting for 100% compliance</span>
+            <p className="mt-3 text-center text-xs text-emerald-700 font-bold flex items-center justify-center gap-1.5">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /><polyline points="9 12 11 14 15 10" />
+              </svg>
+              Guaranteed embassy acceptance
             </p>
           </div>
         )}

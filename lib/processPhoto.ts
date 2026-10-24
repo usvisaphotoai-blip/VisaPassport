@@ -4,7 +4,7 @@ import { countryMapping } from "@/lib/external-api";
 /**
  * Sends a photo to /api/external-process for the given document id
  * (e.g. "uk-passport", "india-visa") and returns the created photo id.
- * Shared by the photo maker and the checkers' "Create your passport photo" CTA.
+ * Shared by the photo maker and the checkers' "Make It Compliant Now" CTA.
  */
 export async function processPhotoForDocument(file: File, docId: string, source = "pixpassport_tool"): Promise<string> {
   const countrySlug = docId.replace(/-passport$/, "").replace(/-visa$/, "").toLowerCase();

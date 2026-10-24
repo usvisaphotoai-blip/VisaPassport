@@ -65,7 +65,7 @@ function UploadZone({
         aria-label="Upload UK passport photo"
       />
       <div
-        className={`h-[132px] sm:h-[150px] rounded-lg border-2 border-dashed flex items-center justify-center overflow-hidden transition-all duration-200 ${
+        className={`h-[170px] sm:h-[190px] rounded-lg border-2 border-dashed flex items-center justify-center overflow-hidden transition-all duration-200 ${
           isDragging
             ? "border-lime-500 bg-lime-50 scale-[1.005]"
             : previewUrl
@@ -83,15 +83,15 @@ function UploadZone({
             </div>
           </div>
         ) : (
-          <div className="text-center px-4 flex items-center gap-3">
-            <div className="w-9 h-9 shrink-0 bg-white rounded-lg shadow-sm border border-slate-100 flex items-center justify-center text-slate-300 group-hover:text-lime-500 group-hover:border-lime-100 transition-all duration-200">
+          <div className="text-center px-4 flex flex-col items-center gap-2.5">
+            <div className="w-11 h-11 shrink-0 bg-white rounded-lg shadow-sm border border-slate-100 flex items-center justify-center text-slate-300 group-hover:text-lime-500 group-hover:border-lime-100 transition-all duration-200">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" />
               </svg>
             </div>
-            <div className="text-left">
-              <p className="text-xs font-bold text-slate-800 leading-tight">{isDragging ? "Release to upload" : "Drop photo or click to browse"}</p>
-              <p className="text-[10px] text-slate-400 mt-0.5 font-medium">JPEG · PNG · WebP · Max 10MB</p>
+            <div>
+              <p className="text-sm font-bold text-slate-800 leading-tight">{isDragging ? "Release to upload" : <>Drop photo or <span className="text-lime-700 underline underline-offset-2">browse</span></>}</p>
+              <p className="text-[11px] text-slate-400 mt-1 font-medium">JPEG · PNG · WebP · Max 10MB</p>
             </div>
           </div>
         )}
@@ -175,51 +175,47 @@ export default function UKPassportPhotoCheckerClient() {
         <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "radial-gradient(#1e40af 1px, transparent 1px)", backgroundSize: "28px 28px" }} />
         <div className="absolute -top-32 -right-32 w-[380px] h-[380px] rounded-full bg-lime-100/50 blur-3xl pointer-events-none" />
 
-        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 py-5 sm:py-7 min-h-[calc(100svh-60px)] sm:min-h-0 flex flex-col justify-center">
+        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-9">
 
-          {/* EEAT & Trust Banner above hero */}
-          <div className="flex flex-wrap items-center justify-center gap-3 mb-3 text-[11px] text-slate-500 font-medium">
-            <span className="inline-flex items-center gap-1 bg-emerald-50 text-emerald-800 border border-emerald-200/60 rounded-full px-2.5 py-0.5 font-bold">
-              ✓ Reviewed by biometric photo specialists
-            </span>
-            <span className="text-slate-400">•</span>
-            <span>Last updated October 2026</span>
-          </div>
-
-          <div className="text-center mb-4 sm:mb-5">
-            <span className="inline-flex items-center gap-1.5 bg-lime-50 border border-lime-100 rounded-full px-3 py-1 text-[10px] font-bold text-lime-700 uppercase tracking-widest mb-2.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-lime-500 animate-pulse" />
-              🇬🇧 GOV.UK Spec · Free &amp; Instant
-            </span>
-            <h1 id="uk-validator-heading" className="text-xl sm:text-2xl lg:text-3xl font-black text-slate-900 tracking-tight leading-tight mb-1.5">
-              UK Passport Photo Checker <span className="text-lime-600">Online — Free</span>
+          <div className="text-center mb-5 sm:mb-7">
+            <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 mb-3 text-[11px] font-medium text-slate-500">
+              <span className="inline-flex items-center gap-1.5 bg-lime-50 border border-lime-100 rounded-full px-3 py-1 font-bold text-lime-700">
+                <span className="w-1.5 h-1.5 rounded-full bg-lime-500 animate-pulse" />
+                🇬🇧 GOV.UK spec · Free &amp; instant
+              </span>
+              <span className="inline-flex items-center gap-1 text-emerald-700 font-bold">✓ Reviewed by biometric photo specialists</span>
+              <span className="hidden sm:inline text-slate-300">•</span>
+              <span>Updated Oct 2026</span>
+            </div>
+            <h1 id="uk-validator-heading" className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight leading-tight mb-2">
+              UK Passport Photo Checker <span className="text-lime-700 whitespace-nowrap">Online — Free</span>
             </h1>
-            <p className="text-xs sm:text-sm text-slate-500 font-medium max-w-lg mx-auto leading-relaxed">
+            <p className="text-sm sm:text-base text-slate-500 font-medium max-w-xl mx-auto leading-relaxed">
               Check your photo against the <strong className="text-slate-700">GOV.UK passport photo rules</strong> before you apply — instant results, free.
             </p>
           </div>
 
           {/* Tool grid */}
-          <div className="grid lg:grid-cols-2 gap-4 items-stretch">
+          <div className="grid lg:grid-cols-2 gap-4 lg:gap-6 items-start">
 
-            <div className="bg-white rounded-xl p-4 sm:p-5 border border-slate-100 shadow-lg shadow-slate-200/40 flex flex-col gap-3.5">
+            <div className="bg-white rounded-xl p-4 sm:p-5 border border-slate-200 shadow-lg shadow-slate-200/40 flex flex-col gap-4 lg:sticky lg:top-20">
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Country</label>
-                  <div className="w-full h-[42px] bg-slate-50 border border-slate-200 rounded-lg px-3 flex items-center gap-2 text-xs font-bold text-slate-800">
+                  <span className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1.5">Country</span>
+                  <div className="w-full h-11 bg-slate-50 border border-slate-200 rounded-lg px-3 flex items-center gap-2 text-sm font-bold text-slate-800">
                     <span className="text-base leading-none">🇬🇧</span>
                     <span>United Kingdom</span>
                   </div>
                 </div>
                 <div>
-                  <label htmlFor="doc-type" className="block text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Document</label>
+                  <label htmlFor="doc-type" className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1.5">Document</label>
                   <div className="relative">
                     <select
                       id="doc-type"
                       value={selectedDocType}
                       onChange={(e) => setSelectedDocType(e.target.value as "passport" | "visa")}
-                      className="w-full h-[42px] bg-slate-50 border border-slate-200 rounded-lg px-3 pr-8 text-xs font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-lime-500/20 focus:border-lime-300 appearance-none hover:border-lime-300 hover:bg-white transition-all"
+                      className="w-full h-11 bg-slate-50 border border-slate-200 rounded-lg px-3 pr-8 text-sm font-bold cursor-pointer text-slate-800 focus:outline-none focus:ring-2 focus:ring-lime-500/20 focus:border-lime-300 appearance-none hover:border-lime-300 hover:bg-white transition-all"
                     >
                       <option value="passport">UK Passport</option>
                       <option value="visa">UK Visa</option>
@@ -244,7 +240,7 @@ export default function UKPassportPhotoCheckerClient() {
 
               <div className="flex flex-wrap gap-1.5">
                 {["Cream/grey bg", "Eyes open", "Centered", "No glasses"].map((req) => (
-                  <span key={req} className="inline-flex items-center gap-1 bg-slate-50 border border-slate-100 rounded-full px-2 py-0.5 text-[9px] font-bold text-slate-500 uppercase tracking-wider">
+                  <span key={req} className="inline-flex items-center gap-1 bg-slate-50 border border-slate-100 rounded-full px-2.5 py-1 text-[10px] font-bold text-slate-600">
                     <span className="w-1 h-1 rounded-full bg-emerald-400" />
                     {req}
                   </span>
@@ -254,21 +250,21 @@ export default function UKPassportPhotoCheckerClient() {
               <button
                 onClick={handleVerify}
                 disabled={!file || isProcessing}
-                className={`w-full h-11 rounded-lg font-black text-xs uppercase tracking-widest transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-lime-500/30 ${
+                className={`w-full h-12 rounded-lg font-black text-sm uppercase tracking-widest transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-lime-500/30 ${
                   !file || isProcessing
                     ? "bg-slate-100 text-slate-400 cursor-not-allowed"
-                    : "bg-lime-600 text-white shadow-md shadow-lime-200 hover:bg-lime-700 active:scale-[0.99]"
+                    : "bg-lime-700 text-white shadow-md shadow-lime-200 hover:bg-lime-800 active:scale-[0.99]"
                 }`}
                 aria-busy={isProcessing}
               >
                 {isProcessing ? (
                   <span className="flex items-center justify-center gap-2.5">
-                    <span className="block w-3.5 h-3.5 border-[2px] border-lime-600/30 border-t-lime-600 rounded-full animate-spin" />
+                    <span className="block w-3.5 h-3.5 border-[2px] border-lime-600/30 border-t-lime-700 rounded-full animate-spin" />
                     {loadingMessage}
                   </span>
                 ) : (
                   <span className="flex items-center justify-center gap-2">
-                    Check My UK Photo
+                    {file ? "Check My UK Photo" : "Upload a photo to check"}
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                       <polyline points="9 18 15 12 9 6" />
                     </svg>
@@ -286,9 +282,7 @@ export default function UKPassportPhotoCheckerClient() {
               )}
             </div>
 
-            {/* On desktop the result matches the left card height and scrolls inside */}
-            <div className="relative">
-            <div className="lg:absolute lg:inset-0 lg:overflow-y-auto lg:overscroll-contain lg:p-1.5 lg:-m-1.5">
+            <div>
               {report ? (
                 <ValidationReportView
                   photo={file}
@@ -301,35 +295,34 @@ export default function UKPassportPhotoCheckerClient() {
                 />
               ) : (
                 <div
-                  className="rounded-xl border-2 border-dashed border-slate-200 bg-slate-50/60 p-6 flex flex-col items-center justify-center h-full min-h-[220px] lg:min-h-0 text-center"
+                  className="rounded-xl border border-slate-200 bg-slate-50 p-6 sm:p-8 flex flex-col items-center justify-center min-h-[240px] lg:min-h-[380px] text-center"
                   aria-label="Awaiting analysis"
                 >
-                  <div className="w-12 h-12 bg-white rounded-lg shadow-sm border border-slate-100 flex items-center justify-center text-slate-200 mb-3">
+                  <div className="w-12 h-12 bg-white rounded-lg shadow-sm border border-slate-100 flex items-center justify-center text-lime-500 mb-3">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                       <circle cx="12" cy="8" r="4" /><path d="M6 20v-2a6 6 0 0112 0v2" />
                     </svg>
                   </div>
-                  <p className="text-sm font-bold text-slate-800 mb-1">Ready to check your UK photo</p>
-                  <p className="text-xs text-slate-400 font-medium max-w-xs leading-relaxed mb-3">
+                  <p className="text-base font-black text-slate-900 mb-1">Your report appears here</p>
+                  <p className="text-xs sm:text-sm text-slate-500 font-medium max-w-xs leading-relaxed mb-4">
                     Upload a photo to get an instant GOV.UK-standard compliance report.
                   </p>
-                  <div className="grid grid-cols-3 gap-1.5 w-full max-w-xs">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 w-full max-w-sm">
                     {["Face", "Background", "Lighting", "Size", "Eye line", "Expression"].map((item) => (
-                      <div key={item} className="flex items-center gap-1 bg-white border border-slate-100 rounded-md px-2 py-1 justify-center">
-                        <span className="w-1 h-1 rounded-full bg-slate-200" />
-                        <span className="text-[9px] font-bold text-slate-400">{item}</span>
+                      <div key={item} className="flex items-center gap-1.5 bg-white border border-slate-200 rounded-md px-2 py-1.5 justify-center">
+                        <span className="w-1.5 h-1.5 rounded-full bg-lime-400" />
+                        <span className="text-[11px] font-bold text-slate-600">{item}</span>
                       </div>
                     ))}
                   </div>
                 </div>
               )}
             </div>
-            </div>
           </div>
 
           {/* Stats strip with trust explanation */}
-          <div className="flex flex-col items-center justify-center mt-5 gap-1.5">
-            <div className="flex justify-center gap-6 sm:gap-8 flex-wrap">
+          <div className="flex flex-col items-center justify-center mt-6 gap-1.5">
+            <div className="flex justify-center gap-x-6 gap-y-2 sm:gap-8 flex-wrap">
               {[
                 { value: "35×45mm", label: "UK Size" },
                 { value: "GOV.UK", label: "Spec" },
@@ -337,7 +330,7 @@ export default function UKPassportPhotoCheckerClient() {
                 { value: "<3s", label: "Speed" },
               ].map(({ value, label }) => (
                 <div key={label} className="flex items-center gap-1.5 text-xs">
-                  <span className="font-black text-lime-600">{value}</span>
+                  <span className="font-black text-lime-700">{value}</span>
                   <span className="font-semibold text-slate-400 uppercase tracking-wider">{label}</span>
                 </div>
               ))}
@@ -350,7 +343,7 @@ export default function UKPassportPhotoCheckerClient() {
       {/* ── 4. COMPARISON SECTION (UK Passport Photo Checker vs GOV.UK Checker) ── */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-20" aria-labelledby="comparison-heading">
         <div className="text-center mb-10">
-          <p className="text-[11px] font-bold text-lime-600 uppercase tracking-[0.2em] mb-3">Feature Comparison</p>
+          <p className="text-[11px] font-bold text-lime-700 uppercase tracking-[0.2em] mb-3">Feature Comparison</p>
           <h2 id="comparison-heading" className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
             UK Passport Photo Checker vs GOV.UK Checker
           </h2>
@@ -360,14 +353,14 @@ export default function UKPassportPhotoCheckerClient() {
         </div>
 
         <div className="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-lg shadow-slate-200/50">
-          <table className="w-full text-left text-sm border-collapse">
+          <table className="w-full min-w-[560px] text-left text-sm border-collapse">
             <thead>
               <tr className="bg-slate-50 border-b border-slate-200">
                 <th className="p-4 sm:p-5 font-black text-slate-900 text-xs sm:text-sm uppercase tracking-wider">Feature</th>
                 <th className="p-4 sm:p-5 font-black text-lime-700 bg-lime-50/70 text-xs sm:text-sm uppercase tracking-wider border-x border-lime-100">
                   <div className="flex items-center gap-1.5">
                     <span>Our Checker</span>
-                    <span className="text-[9px] bg-lime-600 text-white font-bold px-1.5 py-0.5 rounded">Pre-Check</span>
+                    <span className="text-[9px] bg-lime-700 text-white font-bold px-1.5 py-0.5 rounded">Pre-Check</span>
                   </div>
                 </th>
                 <th className="p-4 sm:p-5 font-black text-slate-700 text-xs sm:text-sm uppercase tracking-wider">
@@ -429,7 +422,7 @@ export default function UKPassportPhotoCheckerClient() {
       <section className="bg-white border-y border-slate-100 py-16 sm:py-20" aria-labelledby="examples-heading">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-12">
-            <p className="text-[11px] font-bold text-lime-600 uppercase tracking-[0.2em] mb-3">Visual Compliance Guide</p>
+            <p className="text-[11px] font-bold text-lime-700 uppercase tracking-[0.2em] mb-3">Visual Compliance Guide</p>
             <h2 id="examples-heading" className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
               UK Passport Photo Examples: Pass vs Fail
             </h2>
@@ -591,7 +584,7 @@ export default function UKPassportPhotoCheckerClient() {
       {/* ── WHAT THIS TOOL CHECKS ─────────────────────────────────── */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-20" aria-labelledby="checks-heading">
         <div className="text-center mb-10">
-          <p className="text-[11px] font-bold text-lime-600 uppercase tracking-[0.2em] mb-3">Six-point UK spec check</p>
+          <p className="text-[11px] font-bold text-lime-700 uppercase tracking-[0.2em] mb-3">Six-point UK spec check</p>
           <h2 id="checks-heading" className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
             What this UK passport photo checker verifies
           </h2>
@@ -669,7 +662,7 @@ export default function UKPassportPhotoCheckerClient() {
 
           <div className="grid lg:grid-cols-2 gap-10 xl:gap-16 items-center mb-16">
             <div>
-              <p className="text-[11px] font-bold text-lime-600 uppercase tracking-[0.2em] mb-3">The hidden cost of a bad photo</p>
+              <p className="text-[11px] font-bold text-lime-700 uppercase tracking-[0.2em] mb-3">The hidden cost of a bad photo</p>
               <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight leading-tight mb-4">
                 Why UK passport photos get rejected
               </h2>
@@ -690,10 +683,10 @@ export default function UKPassportPhotoCheckerClient() {
                 { stat: "35×45mm", label: "the official UK passport photo size" },
                 { stat: "29–34mm", label: "required head height, chin to crown" },
                 { stat: "GOV.UK", label: "the standard HM Passport Office applies" },
-                { stat: "6 months", label: "maximum age of your photo" },
+                { stat: "1 month", label: "maximum age of your photo" },
               ].map(({ stat, label }) => (
                 <div key={stat} className="bg-slate-50 border border-slate-100 rounded-xl p-4">
-                  <div className="text-xl font-black text-lime-600 mb-1">{stat}</div>
+                  <div className="text-xl font-black text-lime-700 mb-1">{stat}</div>
                   <p className="text-xs text-slate-500 font-medium leading-snug">{label}</p>
                 </div>
               ))}
@@ -702,7 +695,7 @@ export default function UKPassportPhotoCheckerClient() {
 
           <div className="mb-16">
             <div className="text-center mb-8">
-              <p className="text-[11px] font-bold text-lime-600 uppercase tracking-[0.2em] mb-3">UK photo requirements</p>
+              <p className="text-[11px] font-bold text-lime-700 uppercase tracking-[0.2em] mb-3">UK photo requirements</p>
               <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
                 Official UK passport photo rules
               </h2>
@@ -743,7 +736,7 @@ export default function UKPassportPhotoCheckerClient() {
 
           <div className="grid lg:grid-cols-2 gap-10 xl:gap-16 items-start">
             <div>
-              <p className="text-[11px] font-bold text-lime-600 uppercase tracking-[0.2em] mb-3">Under the hood</p>
+              <p className="text-[11px] font-bold text-lime-700 uppercase tracking-[0.2em] mb-3">Under the hood</p>
               <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight leading-tight mb-4">
                 How this UK passport digital photo checker works
               </h2>
@@ -788,7 +781,7 @@ export default function UKPassportPhotoCheckerClient() {
       {/* ── TIPS SECTION ──────────────────────────────────────────── */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-20" aria-labelledby="tips-heading">
         <div className="text-center mb-10">
-          <p className="text-[11px] font-bold text-lime-600 uppercase tracking-[0.2em] mb-3">Before you upload</p>
+          <p className="text-[11px] font-bold text-lime-700 uppercase tracking-[0.2em] mb-3">Before you upload</p>
           <h2 id="tips-heading" className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
             How to take a compliant UK passport photo at home
           </h2>
@@ -818,7 +811,7 @@ export default function UKPassportPhotoCheckerClient() {
           <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-6 text-center">
             Explore Related Passport &amp; Photo Tools
           </h3>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             
             <Link
               href="/passport-photo-checker"
@@ -826,14 +819,14 @@ export default function UKPassportPhotoCheckerClient() {
             >
               <div>
                 <span className="text-base mb-1.5 block">🌍</span>
-                <h4 className="font-bold text-sm text-slate-900 group-hover:text-lime-700 transition-colors">
+                <h4 className="font-bold text-sm text-slate-900 group-hover:text-lime-800 transition-colors">
                   Passport Photo Checker
                 </h4>
                 <p className="text-xs text-slate-500 font-medium mt-1">
                   Universal biometric compliance validator for 50+ countries.
                 </p>
               </div>
-              <span className="text-xs font-bold text-lime-600 mt-3 flex items-center gap-1">
+              <span className="text-xs font-bold text-lime-700 mt-3 flex items-center gap-1">
                 Check Passport Photo →
               </span>
             </Link>
@@ -844,14 +837,14 @@ export default function UKPassportPhotoCheckerClient() {
             >
               <div>
                 <span className="text-base mb-1.5 block">🚗</span>
-                <h4 className="font-bold text-sm text-slate-900 group-hover:text-lime-700 transition-colors">
+                <h4 className="font-bold text-sm text-slate-900 group-hover:text-lime-800 transition-colors">
                   UK Driving Licence Photo
                 </h4>
                 <p className="text-xs text-slate-500 font-medium mt-1">
                   Create a DVLA-compliant photo for your provisional or renewed licence.
                 </p>
               </div>
-              <span className="text-xs font-bold text-lime-600 mt-3 flex items-center gap-1">
+              <span className="text-xs font-bold text-lime-700 mt-3 flex items-center gap-1">
                 Make Licence Photo →
               </span>
             </Link>
@@ -862,14 +855,14 @@ export default function UKPassportPhotoCheckerClient() {
             >
               <div>
                 <span className="text-base mb-1.5 block">🇦🇺</span>
-                <h4 className="font-bold text-sm text-slate-900 group-hover:text-lime-700 transition-colors">
+                <h4 className="font-bold text-sm text-slate-900 group-hover:text-lime-800 transition-colors">
                   Australian Photo Checker
                 </h4>
                 <p className="text-xs text-slate-500 font-medium mt-1">
                   Verify 35×45mm, 32–36mm face height, and DFAT &amp; APO standards.
                 </p>
               </div>
-              <span className="text-xs font-bold text-lime-600 mt-3 flex items-center gap-1">
+              <span className="text-xs font-bold text-lime-700 mt-3 flex items-center gap-1">
                 Check Australian Photo →
               </span>
             </Link>
@@ -880,14 +873,14 @@ export default function UKPassportPhotoCheckerClient() {
             >
               <div>
                 <span className="text-base mb-1.5 block">🎟️</span>
-                <h4 className="font-bold text-sm text-slate-900 group-hover:text-lime-700 transition-colors">
+                <h4 className="font-bold text-sm text-slate-900 group-hover:text-lime-800 transition-colors">
                   DV Lottery Photo Checker
                 </h4>
                 <p className="text-xs text-slate-500 font-medium mt-1">
                   Validate 600×600 px digital requirements for US Green Card.
                 </p>
               </div>
-              <span className="text-xs font-bold text-lime-600 mt-3 flex items-center gap-1">
+              <span className="text-xs font-bold text-lime-700 mt-3 flex items-center gap-1">
                 Check DV Lottery Photo →
               </span>
             </Link>
@@ -898,14 +891,14 @@ export default function UKPassportPhotoCheckerClient() {
             >
               <div>
                 <span className="text-base mb-1.5 block">🇬🇧</span>
-                <h4 className="font-bold text-sm text-slate-900 group-hover:text-lime-700 transition-colors">
+                <h4 className="font-bold text-sm text-slate-900 group-hover:text-lime-800 transition-colors">
                   UK Passport Size Photo Maker
                 </h4>
                 <p className="text-xs text-slate-500 font-medium mt-1">
                   Create printable 35×45mm UK photos or digital code photos online.
                 </p>
               </div>
-              <span className="text-xs font-bold text-lime-600 mt-3 flex items-center gap-1">
+              <span className="text-xs font-bold text-lime-700 mt-3 flex items-center gap-1">
                 Make UK Photo →
               </span>
             </Link>
@@ -916,14 +909,14 @@ export default function UKPassportPhotoCheckerClient() {
             >
               <div>
                 <span className="text-base mb-1.5 block">📲</span>
-                <h4 className="font-bold text-sm text-slate-900 group-hover:text-lime-700 transition-colors">
+                <h4 className="font-bold text-sm text-slate-900 group-hover:text-lime-800 transition-colors">
                  How to Take a Passport Photo With an iPhone
                 </h4>
                 <p className="text-xs text-slate-500 font-medium mt-1">
                   Get a GOV.UK-ready digital passport photo and photo code for online applications.
                 </p>
               </div>
-              <span className="text-xs font-bold text-lime-600 mt-3 flex items-center gap-1">
+              <span className="text-xs font-bold text-lime-700 mt-3 flex items-center gap-1">
                 Get Digital Photo →
               </span>
             </a>
@@ -934,14 +927,14 @@ export default function UKPassportPhotoCheckerClient() {
             >
               <div>
                 <span className="text-base mb-1.5 block">🛡️</span>
-                <h4 className="font-bold text-sm text-slate-900 group-hover:text-lime-700 transition-colors">
+                <h4 className="font-bold text-sm text-slate-900 group-hover:text-lime-800 transition-colors">
                   Visa Photo Checker
                 </h4>
                 <p className="text-xs text-slate-500 font-medium mt-1">
                   Check a visa photo for Schengen, US, India, China and 55+ more countries.
                 </p>
               </div>
-              <span className="text-xs font-bold text-lime-600 mt-3 flex items-center gap-1">
+              <span className="text-xs font-bold text-lime-700 mt-3 flex items-center gap-1">
                 Open Validator →
               </span>
             </Link>
@@ -952,14 +945,14 @@ export default function UKPassportPhotoCheckerClient() {
             >
               <div>
                 <span className="text-base mb-1.5 block">📸</span>
-                <h4 className="font-bold text-sm text-slate-900 group-hover:text-lime-700 transition-colors">
+                <h4 className="font-bold text-sm text-slate-900 group-hover:text-lime-800 transition-colors">
                   Global Passport Size Photo Maker
                 </h4>
                 <p className="text-xs text-slate-500 font-medium mt-1">
                   Format compliant passport photos for over 130 countries worldwide.
                 </p>
               </div>
-              <span className="text-xs font-bold text-lime-600 mt-3 flex items-center gap-1">
+              <span className="text-xs font-bold text-lime-700 mt-3 flex items-center gap-1">
                 Create Global Photo →
               </span>
             </Link>
@@ -970,14 +963,14 @@ export default function UKPassportPhotoCheckerClient() {
             >
               <div>
                 <span className="text-base mb-1.5 block">🇫🇷</span>
-                <h4 className="font-bold text-sm text-slate-900 group-hover:text-lime-700 transition-colors">
+                <h4 className="font-bold text-sm text-slate-900 group-hover:text-lime-800 transition-colors">
                   PixPassport France (Photo Identité)
                 </h4>
                 <p className="text-xs text-slate-500 font-medium mt-1">
                   Générez votre photo d'identité conforme pour passeport et carte d'identité.
                 </p>
               </div>
-              <span className="text-xs font-bold text-lime-600 mt-3 flex items-center gap-1">
+              <span className="text-xs font-bold text-lime-700 mt-3 flex items-center gap-1">
                 Voir en français →
               </span>
             </Link>
@@ -990,7 +983,7 @@ export default function UKPassportPhotoCheckerClient() {
       <section className="bg-white border-t border-slate-100">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 py-16 sm:py-20" aria-labelledby="faq-heading">
           <div className="text-center mb-10">
-            <p className="text-[11px] font-bold text-lime-600 uppercase tracking-[0.2em] mb-3">FAQ</p>
+            <p className="text-[11px] font-bold text-lime-700 uppercase tracking-[0.2em] mb-3">FAQ</p>
             <h2 id="faq-heading" className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
               Common questions about checking a UK passport photo online
             </h2>
@@ -1005,7 +998,7 @@ export default function UKPassportPhotoCheckerClient() {
 
       {/* ── CTA ───────────────────────────────────────────────────── */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 pb-16">
-        <div className="relative overflow-hidden bg-lime-600 rounded-xl p-8 sm:p-12 text-center">
+        <div className="relative overflow-hidden bg-lime-700 rounded-xl p-8 sm:p-12 text-center">
           <div className="absolute -top-12 -right-12 w-48 h-48 rounded-full bg-lime-500/50 blur-2xl pointer-events-none" />
           <div className="absolute -bottom-8 -left-8 w-32 h-32 rounded-full bg-lime-500/40 blur-2xl pointer-events-none" />
           <div className="relative z-10">
@@ -1017,7 +1010,10 @@ export default function UKPassportPhotoCheckerClient() {
               Avoid a costly rejection. Upload your photo now and get a full GOV.UK-standard compliance report — free, private, and instant.
             </p>
             <button
-              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              onClick={() => {
+                document.getElementById("uk-validator-heading")?.scrollIntoView({ behavior: "smooth", block: "start" });
+                setTimeout(() => document.querySelector<HTMLInputElement>('input[aria-label="Upload UK passport photo"]')?.click(), 500);
+              }}
               className="inline-flex items-center gap-2 bg-white text-lime-700 font-black text-xs px-6 py-3 rounded-xl hover:bg-lime-50 transition-all hover:-translate-y-0.5 shadow-lg shadow-lime-900/20 uppercase tracking-widest"
             >
               Check My UK Photo
