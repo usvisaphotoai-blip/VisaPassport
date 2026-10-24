@@ -8,6 +8,7 @@ import SpecialPhotoPageClient from "../components/SpecialPhotoPageClient";
 import { getLocalPrice } from "@/lib/currency";
 import Breadcrumbs from "../components/Breadcrumbs";
 import ToolPageRenderer from "../components/ToolPageRenderer";
+import { extractFaqsFromContent } from "@/lib/tool-faqs";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -142,8 +143,46 @@ export default async function Page({ params }: PageProps) {
         else defaultDoc = "uk-passport";
       }
 
+      const pageUrl = `https://www.pixpassport.com/${slug}`;
+      const { faqs } = extractFaqsFromContent(toolPage.content);
+      const toolSchemas = [
+        {
+          "@context": "https://schema.org",
+          "@type": "SoftwareApplication",
+          name: toolPage.h1,
+          description: toolPage.metaDescription,
+          url: pageUrl,
+          applicationCategory: "PhotographyApplication",
+          operatingSystem: "All",
+          offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Home", item: "https://www.pixpassport.com/" },
+            { "@type": "ListItem", position: 2, name: toolPage.h1, item: pageUrl },
+          ],
+        },
+        ...(faqs.length > 0
+          ? [{
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              mainEntity: faqs.map((f) => ({
+                "@type": "Question",
+                name: f.question,
+                acceptedAnswer: { "@type": "Answer", text: f.answer },
+              })),
+            }]
+          : []),
+      ];
+
       return (
         <div className="bg-slate-50 min-h-screen">
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(toolSchemas) }}
+          />
           <Breadcrumbs />
 
           {/* Tool */}
