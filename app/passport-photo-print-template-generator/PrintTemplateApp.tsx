@@ -985,13 +985,19 @@ export default function PrintTemplateApp() {
             <button
               type="button"
               onClick={handleBuyHd}
-              className="mt-4 w-full rounded-xl border border-lime-300 bg-lime-50 hover:bg-lime-100 px-4 py-3 text-left transition-colors cursor-pointer"
+              disabled={payLoading || layout.max === 0}
+              className="mt-4 w-full flex items-center justify-between gap-3 rounded-xl bg-lime-700 hover:bg-lime-800 active:bg-lime-900 text-white px-4 py-3 text-left shadow-md shadow-lime-700/20 transition-all cursor-pointer disabled:bg-slate-300 disabled:shadow-none disabled:cursor-not-allowed"
             >
-              <span className="block text-sm font-black text-lime-900">
-                Skip the wait · get HD for {hdPrice.formatted}
+              <span className="min-w-0">
+                <span className="block text-sm font-black">
+                  {payLoading ? "Opening secure checkout…" : "Skip the wait · Download HD sheet"}
+                </span>
+                <span className="block text-xs font-medium text-lime-100 mt-0.5">
+                  Sharper 300 DPI print in PDF, JPG and PNG, instantly.
+                </span>
               </span>
-              <span className="block text-xs text-lime-800 mt-0.5">
-                Sharper 300 DPI print in PDF, JPG and PNG, instantly.
+              <span className="shrink-0 bg-white text-lime-800 font-black text-sm px-2.5 py-1 rounded-lg">
+                {hdPrice.formatted}
               </span>
             </button>
             <p className="sr-only" aria-live="polite">
@@ -1489,24 +1495,6 @@ export default function PrintTemplateApp() {
                     {countdownRunning ? `Free Download · ready in ${formatClock(FREE_DELAY_MS - countdownMs)}` : "Free Download"}
                     <span className="block text-[11px] font-medium text-slate-300">
                       JPG or PDF · {Math.min(FREE_DPI, sheetDpi)} DPI standard quality
-                    </span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={handleBuyHd}
-                    disabled={payLoading || layout.max === 0}
-                    className="w-full flex items-center justify-between gap-3 py-2.5 px-4 rounded-xl bg-lime-600 hover:bg-lime-700 text-white shadow-md shadow-lime-600/20 transition-all cursor-pointer disabled:bg-slate-300 disabled:shadow-none disabled:cursor-not-allowed"
-                  >
-                    <span className="text-left min-w-0">
-                      <span className="block text-sm font-black">
-                        {payLoading ? "Opening secure checkout…" : "Download HD sheet"}
-                      </span>
-                      <span className="block text-[11px] font-medium text-lime-100 truncate">
-                        300 DPI · PDF + JPG + PNG · no wait
-                      </span>
-                    </span>
-                    <span className="shrink-0 bg-white text-lime-800 font-black text-sm px-2.5 py-1 rounded-lg">
-                      {hdPrice.formatted}
                     </span>
                   </button>
                 </>
