@@ -15,9 +15,11 @@ interface Props {
   /** Document id to preselect (e.g. "uk-passport"); otherwise the visitor's last choice is used */
   defaultDoc?: string;
   title?: string;
+  /** Analytics source passed to the processing pipeline */
+  source?: string;
 }
 
-export default function GuidePhotoTool({ defaultDoc, title = "Make your passport photo now" }: Props) {
+export default function GuidePhotoTool({ defaultDoc, title = "Make your passport photo now", source = "guide_embedded_tool" }: Props) {
   const router = useRouter();
   const [selectedDoc, setSelectedDoc] = useState(
     defaultDoc && documentTypes.some((d) => d.id === defaultDoc) ? defaultDoc : FALLBACK_DOC,
@@ -110,7 +112,7 @@ export default function GuidePhotoTool({ defaultDoc, title = "Make your passport
     setPreviewUrl(URL.createObjectURL(file));
     setStage(0);
     try {
-      const photoId = await processPhotoForDocument(file, activeDoc.id, "guide_embedded_tool");
+      const photoId = await processPhotoForDocument(file, activeDoc.id, source);
       router.push(`/preview/${photoId}`);
     } catch (err) {
       setErrorMsg(err instanceof Error && err.message ? err.message : "Processing failed. Please try again.");

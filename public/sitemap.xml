@@ -1748,7 +1748,7 @@
     <loc>https://www.pixpassport.com/blog/us-visa-photo-size-background-rules-guide-uk-europe</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/blog/us-visa-photo-size-background-rules-guide-uk-europe" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/blog/us-visa-photo-size-background-rules-guide-uk-europe" />
-    <lastmod>2026-07-15</lastmod>
+    <lastmod>2026-10-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -1845,13 +1845,35 @@
     <loc>https://www.pixpassport.com/blog/france-visa-requirements-latest-guide</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/blog/france-visa-requirements-latest-guide" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/blog/france-visa-requirements-latest-guide" />
-    <lastmod>2026-10-05</lastmod>
+    <lastmod>2026-10-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
       <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1778666011/france-visa-photo-size-35x45mm-example_h8ralx.webp</image:loc>
     </image:image>
    
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/blog/country-wise-visa-photo-requirements-comparison-2026</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/blog/country-wise-visa-photo-requirements-comparison-2026" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/blog/country-wise-visa-photo-requirements-comparison-2026" />
+    <lastmod>2026-04-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1777027958/Complete_Australia_visa_photo_guide_2026._Official_size_vdcr5s.webp</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/blog/india-visa-requirements-for-foreigners</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/blog/india-visa-requirements-for-foreigners" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/blog/india-visa-requirements-for-foreigners" />
+    <lastmod>2026-05-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1778863761/india-Visa-Requirements-for-Foreigners_gyycfq.webp</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://www.pixpassport.com/fr</loc>

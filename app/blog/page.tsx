@@ -1,62 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import connectToDatabase from '@/lib/mongodb';
-import BlogModel from '@/models/Blog';
-import fs from 'fs';
-import path from 'path';
-
-// Define the Blog Post type
-export interface BlogPost {
-  slug: string;
-  title: string;
-  description: string;
-  date: string;
-  author: string;
-  content: string;
-  featuredImage?: string;
-}
-
-// Helper function to read the blog posts directly from DB with fallback to JSON
-export async function getBlogPosts(): Promise<BlogPost[]> {
-  try {
-    await connectToDatabase();
-    const posts = await BlogModel.find({ isPublished: true }).sort({ date: -1 }).lean() as BlogPost[];
-    if (posts && posts.length > 0) return JSON.parse(JSON.stringify(posts)) as BlogPost[];
-  } catch (error) {
-    console.error("Error reading blog posts from DB:", error);
-  }
-
-  const filePath = path.join(process.cwd(), 'data', 'blog-posts.json');
-  try {
-    const fileContents = fs.readFileSync(filePath, 'utf8');
-    const posts = JSON.parse(fileContents) as BlogPost[];
-    return posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-  } catch (error) {
-    console.error("Error reading blog posts:", error);
-    return [];
-  }
-}
-
-// Helper to compute reading time dynamically from word count
-function getReadingTime(content: string): string {
-  const words = content.replace(/<[^>]*>/g, '').trim().split(/\s+/).length;
-  const minutes = Math.max(3, Math.ceil(words / 225));
-  return `${minutes} min read`;
-}
-
-// Helper to determine category tag
-function getPostCategory(slug: string, title: string): string {
-  const lower = (slug + ' ' + title).toLowerCase();
-  if (lower.includes('us-visa') || lower.includes('us visa') || lower.includes('ds-160') || lower.includes('green card') || lower.includes('dv-lottery') || lower.includes('h1b')) return 'US Visas & Passports';
-  if (lower.includes('schengen') || lower.includes('france') || lower.includes('germany') || lower.includes('europe')) return 'Schengen & Europe';
-  if (lower.includes('uk-') || lower.includes('uk visa') || lower.includes('uk digital')) return 'UK Visas & Passports';
-  if (lower.includes('australia') || lower.includes('new zealand') || lower.includes('zealand')) return 'Australia & Pacific';
-  if (lower.includes('india')) return 'India e-Visa';
-  if (lower.includes('baby') || lower.includes('infant') || lower.includes('child')) return 'Baby & Child Photos';
-  return 'Compliance Guides';
-}
-
-const APP_URL = 'https://www.pixpassport.com';
+import { APP_URL, formatPostDate, getAllPosts, getPostCategory, getReadingTime } from '@/lib/blog';
 
 export const revalidate = 3600;
 
@@ -78,11 +22,14 @@ export const metadata = {
     description: 'Expert advice on passport, visa, and ID photo requirements for 50+ countries. 2026 compliance guidelines and step-by-step guides.',
     url: `${APP_URL}/blog`,
     type: 'website',
+    siteName: 'PixPassport',
+    // openGraph replaces the layout's object wholesale, so the default image must be restated
+    images: [{ url: `${APP_URL}/og-image.jpg`, width: 1200, height: 630, alt: 'PixPassport Blog' }],
   },
 };
 
 export default async function BlogIndex() {
-  const posts = await getBlogPosts();
+  const posts = await getAllPosts();
   const featuredPost = posts[0];
   const remainingPosts = posts.slice(1);
 
@@ -218,7 +165,7 @@ export default async function BlogIndex() {
                         </span>
                         <span className="w-1 h-1 bg-slate-300 rounded-full" />
                         <time dateTime={featuredPost.date} className="text-slate-400">
-                          {new Date(featuredPost.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                          {formatPostDate(featuredPost.date)}
                         </time>
                         <span className="w-1 h-1 bg-slate-300 rounded-full" />
                         <span className="text-lime-700 font-bold">{getReadingTime(featuredPost.content)}</span>
@@ -298,7 +245,7 @@ export default async function BlogIndex() {
                     <div className="p-4 sm:p-5 flex flex-col flex-grow">
                       <div className="flex items-center gap-2 text-slate-400 text-[11px] font-semibold uppercase tracking-wider mb-2">
                         <time dateTime={post.date}>
-                          {new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                          {formatPostDate(post.date)}
                         </time>
                         <span className="w-1 h-1 bg-slate-300 rounded-full" />
                         <span className="text-lime-700">{readTime}</span>

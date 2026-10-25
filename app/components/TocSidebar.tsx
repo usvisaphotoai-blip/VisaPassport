@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 interface TOCPageHeading {
   id: string;
@@ -35,8 +36,9 @@ export default function TocSidebar({ headings }: { headings: TOCPageHeading[] })
     e.preventDefault();
     const element = document.getElementById(id);
     if (element) {
+      // offsetTop is relative to the nearest positioned ancestor, not the page, so use the bounding rect
       window.scrollTo({
-        top: element.offsetTop - 100, // Offset for sticky headers
+        top: element.getBoundingClientRect().top + window.scrollY - 100, // Offset for sticky headers
         behavior: "smooth",
       });
     }
@@ -83,12 +85,12 @@ export default function TocSidebar({ headings }: { headings: TOCPageHeading[] })
         <p className="text-slate-400 text-xs sm:text-sm mb-4 sm:mb-6 leading-relaxed relative z-10 font-medium">
           Fix hair edges, remove background shadows, and get the exact size for your country instantly.
         </p>
-        <a
+        <Link
           href="/passport-photo-online"
           className="relative z-10 flex items-center justify-center w-full bg-lime-500 text-slate-950 font-bold py-2.5 sm:py-3 lg:py-3.5 rounded-xl sm:rounded-2xl hover:bg-lime-400 transition-colors shadow-lg shadow-lime-500/20 text-xs sm:text-sm"
         >
           Make Photo Now 
-        </a>
+        </Link>
       </div>
     </div>
   );
