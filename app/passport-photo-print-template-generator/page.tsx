@@ -169,6 +169,7 @@ export default function PrintTemplateGeneratorPage() {
               { href: "/passport-size-photo-maker", label: "Passport Size Photo Maker" },
               { href: "/us-passport-photo-editor", label: "US Passport Photo Editor" },
               { href: "/us-visa-photo-editor", label: "US Visa Photo Editor" },
+              { href: "https://idphoto.us/tool/passport-photo-converter", label: "Convert Any Photo to Passport Size" },
             ].map(({ href, label }) => (
               <a
                 key={href}

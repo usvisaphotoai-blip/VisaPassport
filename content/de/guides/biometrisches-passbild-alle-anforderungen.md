@@ -72,7 +72,7 @@ Für die Erstellung stehen grundsätzlich drei Wege offen, die sich in Aufwand, 
 | Fotoautomat | Schnell verfügbar, kein Termin | Wenig Kontrolle über Ergebnis, oft schlechte Beleuchtung |
 | Online-Tool | Selbstständig mit dem Smartphone, sofortige Prüfung, günstig | Erfordert ein einigermaßen scharfes Ausgangsfoto |
 
-Bei einem Online-Tool laden Sie ein selbst aufgenommenes Foto hoch, das System prüft Kopfgröße, Hintergrund und Position automatisch und passt das Bild auf die exakten Maße an. Das spart Zeit gegenüber einem Termin im Fotostudio und liefert eine sofort druckfertige oder digital einreichbare Datei.
+Bei einem Online-Tool laden Sie ein selbst aufgenommenes Foto hoch, das System prüft Kopfgröße, Hintergrund und Position automatisch und passt das Bild auf die exakten Maße an. Das spart Zeit gegenüber einem Termin im Fotostudio und liefert eine sofort druckfertige oder digital einreichbare Datei. Eine weitere Möglichkeit ist [Biometrisches Passbild online erstellen – in wenigen Minuten](https://fotoklar.de/).
 
 ## Biometrisches Passbild für Kinder und Babys
 

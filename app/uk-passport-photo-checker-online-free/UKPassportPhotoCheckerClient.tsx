@@ -904,6 +904,24 @@ export default function UKPassportPhotoCheckerClient() {
             </Link>
 
             <a
+              href="https://pixpassport.uk/"
+              className="bg-white p-4 rounded-xl border border-slate-200 hover:border-lime-400 hover:shadow-md transition-all flex flex-col justify-between group"
+            >
+              <div>
+                <span className="text-base mb-1.5 block">🇬🇧</span>
+                <h4 className="font-bold text-sm text-slate-900 group-hover:text-lime-800 transition-colors">
+                  PixPassport UK
+                </h4>
+                <p className="text-xs text-slate-500 font-medium mt-1">
+                  Visit our dedicated UK hub for passport, visa and driving licence photo tools.
+                </p>
+              </div>
+              <span className="text-xs font-bold text-lime-700 mt-3 flex items-center gap-1">
+                Visit PixPassport UK →
+              </span>
+            </a>
+
+            <a
               href="https://pixpassport.uk/tool/take-a-passport-photo-on-iphone"
               className="bg-white p-4 rounded-xl border border-slate-200 hover:border-lime-400 hover:shadow-md transition-all flex flex-col justify-between group"
             >

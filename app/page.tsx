@@ -341,7 +341,7 @@ export default async function Home() {
                   </p>
                 </div>
               </Link>
-              <Link 
+              <Link
                 href="/indian-passport-size-photograph"
                 className="group bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 hover:border-lime-400 hover:shadow-md transition-all flex flex-col justify-between"
               >
@@ -359,6 +359,24 @@ export default async function Home() {
                   </p>
                 </div>
               </Link>
+              <a
+                href="https://idphoto.us/"
+                className="group bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 hover:border-lime-400 hover:shadow-md transition-all flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-center gap-2.5 mb-2">
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 bg-lime-100/80 rounded-lg flex items-center justify-center text-sm sm:text-base shrink-0 group-hover:scale-105 transition-transform">
+                      🪪
+                    </div>
+                    <h3 className="font-bold text-xs sm:text-sm text-slate-900 group-hover:text-lime-700 transition-colors line-clamp-1 leading-snug">
+                      Passport Photo Online: Free Passport Photo Maker
+                    </h3>
+                  </div>
+                  <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">
+                    Create a free, compliant passport photo online with IDPhoto.us.
+                  </p>
+                </div>
+              </a>
             </div>
           </div>
         </section>
