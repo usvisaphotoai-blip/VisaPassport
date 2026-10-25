@@ -84,6 +84,7 @@ const jsonLd = {
 import HomeHero from "./components/HomeHero";
 import HomeSections from "./components/HomeSections";
 import HomeFAQ from "./components/HomeFAQ";
+import HomeGuides from "./components/guides/HomeGuides";
 import toolPages from "../data/tool-seo-pages.json";
 import "./home.css";
 
@@ -361,6 +362,8 @@ export default async function Home() {
             </div>
           </div>
         </section>
+
+        <HomeGuides />
 
         <HomeSections basePrice={basePrice} />
         <HomeFAQ />

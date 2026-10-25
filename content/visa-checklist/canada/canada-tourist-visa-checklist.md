@@ -1,5 +1,6 @@
 ---
 title: "Canada Tourist Visa Document Checklist 2026 (Visitor Visa V-1)"
+seoTitle: "Canada Visitor Visa Checklist 2026: Documents & Fees"
 shortTitle: "Canada Tourist Visa Checklist"
 slug: "canada-tourist-visa-checklist"
 country: "Canada"

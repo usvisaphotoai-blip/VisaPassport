@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
   getAllVisaChecklistPaths,
+  getAllVisaCountries,
   getVisaChecklist,
   getVisaCountry,
 } from "@/lib/visa-checklist";
@@ -33,7 +34,7 @@ export async function generateMetadata({
     };
   }
 
-  const title = `${checklist.title} | Official Requirements & Guide`;
+  const title = checklist.seoTitle || checklist.title;
   const description = checklist.description;
   const canonicalUrl = `${APP_URL}/visa-checklist/${checklist.countrySlug}/${checklist.slug}`;
 
@@ -89,6 +90,27 @@ export default async function VisaChecklistDetailPage({
   const auditUrl = `/visa-checklist/${checklist.countrySlug}/${checklist.slug}/audit`;
   const { checklists: otherChecklists } = getVisaCountry(countrySlug);
   const relatedChecklists = otherChecklists.filter((c) => c.slug !== checklistSlug);
+  const crossCountryChecklists = getAllVisaCountries()
+    .filter((c) => c.slug !== checklist.countrySlug)
+    .flatMap((c) => (c.availableVisas || []).map((v) => ({ ...v, countrySlug: c.slug, countryName: c.name })));
+  const lastVerified = new Date(checklist.lastUpdated).toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+  const photoTool = checklist.photoRequirements.toolLink || "/passport-photo-online";
+  const photoSize =
+    checklist.photoRequirements.size ||
+    checklist.photoRequirements.printedSize?.split(" (")[0] ||
+    "";
+  const photoSpec = { ...checklist.photoRequirements, size: photoSize, toolLink: photoTool };
+  const keyFacts = [
+    { label: "Processing time", value: checklist.processingTime },
+    { label: "Visa fee", value: checklist.fee },
+    { label: "Validity", value: checklist.validity },
+    { label: "Photo", value: photoSize },
+  ].filter((f) => f.value);
 
   // JSON-LD: Article / Guide Schema
   const articleSchema = {
@@ -186,323 +208,229 @@ export default async function VisaChecklistDetailPage({
         />
       )}
 
-      <div className="min-h-screen bg-slate-50/50 pb-20 lg:pb-12">
-        {/* ── Top Hero Header (Modern Dark Theme with Lime Accent) ── */}
-        <header className="relative bg-slate-950 pt-16 pb-12 sm:pt-20 sm:pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden border-b border-slate-800 text-white">
-          <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
-            <div className="absolute top-0 left-1/4 w-72 h-72 sm:w-[500px] sm:h-[500px] bg-lime-500 rounded-full blur-[130px] animate-pulse" />
-            <div className="absolute bottom-0 right-1/4 w-72 h-72 sm:w-[500px] sm:h-[500px] bg-emerald-600 rounded-full blur-[150px] animate-pulse delay-700" />
-          </div>
-
-          <div className="max-w-4xl mx-auto relative z-10 text-center">
-            {/* Breadcrumb Navigation */}
-            <nav aria-label="Breadcrumb" className="mb-4 flex justify-center">
-              <ol className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 text-xs font-medium text-slate-400">
+      <div className="min-h-screen bg-white text-slate-900 pb-24 lg:pb-0">
+        {/* ── Hero ── */}
+        <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-10 sm:pt-12 sm:pb-14 border-b border-slate-100">
+          <div className="max-w-6xl mx-auto">
+            <nav aria-label="Breadcrumb" className="mb-8">
+              <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-slate-500">
                 <li>
-                  <Link href="/" className="hover:text-lime-400 transition-colors">
-                    Home
+                  <Link href="/" className="hover:text-slate-900 transition-colors">Home</Link>
+                </li>
+                <li aria-hidden="true" className="text-slate-300">/</li>
+                <li>
+                  <Link href="/visa-checklist" className="hover:text-slate-900 transition-colors">Visa Checklists</Link>
+                </li>
+                <li aria-hidden="true" className="text-slate-300">/</li>
+                <li>
+                  <Link href={`/visa-checklist/${checklist.countrySlug}`} className="hover:text-slate-900 transition-colors">
+                    {checklist.country}
                   </Link>
                 </li>
-                <li aria-hidden="true" className="opacity-40">/</li>
-                <li>
-                  <Link href="/visa-checklist" className="hover:text-lime-400 transition-colors">
-                    Visa Checklists
-                  </Link>
-                </li>
-                <li aria-hidden="true" className="opacity-40">/</li>
-                <li>
-                  <Link
-                    href={`/visa-checklist/${checklist.countrySlug}`}
-                    className="hover:text-lime-400 transition-colors inline-flex items-center gap-1"
-                  >
-                    <span>{checklist.countryFlag}</span>
-                    <span>{checklist.country}</span>
-                  </Link>
-                </li>
-                <li aria-hidden="true" className="opacity-40">/</li>
-                <li className="text-slate-200 font-semibold truncate max-w-[150px] sm:max-w-[240px]" title={checklist.title}>
+                <li aria-hidden="true" className="text-slate-300">/</li>
+                <li className="text-slate-900 truncate max-w-[200px] sm:max-w-none" title={checklist.title}>
                   {checklist.shortTitle || checklist.visaType}
                 </li>
               </ol>
             </nav>
 
-            {/* Authority Badge */}
-            <div className="inline-flex items-center gap-2 mb-4 bg-lime-500/10 border border-lime-500/30 px-3.5 py-1.5 rounded-full">
-              <span className="w-2 h-2 bg-lime-400 rounded-full animate-pulse" />
-              <span className="text-lime-400 text-[11px] sm:text-xs font-black uppercase tracking-wider">
-                {checklist.countryFlag} {checklist.officialAuthority} • 2026 Guidelines
-              </span>
-            </div>
+            <div className="max-w-3xl">
+              <p className="flex items-center gap-2 text-sm text-slate-500 mb-4">
+                <span className="text-lg leading-none">{checklist.countryFlag}</span>
+                {checklist.officialAuthority}
+              </p>
 
-            {/* H1 Title */}
-            <h1 className="text-2xl sm:text-4xl md:text-5xl font-black text-white tracking-tight leading-[1.18] mb-4 text-pretty px-2">
-              {checklist.title}
-            </h1>
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.1] mb-5 text-balance">
+                {checklist.title}
+              </h1>
 
-            <p className="text-slate-300 text-xs sm:text-base max-w-2xl mx-auto font-normal leading-relaxed mb-6 sm:mb-8">
-              {checklist.description}
-            </p>
+              <p className="text-lg text-slate-600 leading-relaxed mb-4 text-pretty">{checklist.description}</p>
 
-            {/* Hero Quick CTA Buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-8">
-              <Link
-                href={auditUrl}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-lime-500 hover:bg-lime-400 active:bg-lime-600 text-slate-950 font-black text-xs sm:text-sm py-3.5 px-7 rounded-xl transition-all shadow-lg shadow-lime-500/25 hover:scale-[1.02]"
-              >
-                <span>⚡ Free AI Document Checklist</span>
-                <span className="text-base font-bold">→</span>
-              </Link>
-              <Link
-                href={checklist.photoRequirements.toolLink || "/passport-photo-online"}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-slate-200 hover:text-white font-bold text-xs sm:text-sm py-3.5 px-6 rounded-xl transition-all border border-slate-700"
-              >
-                <span>📷 Create {checklist.photoRequirements.size} Photo</span>
-              </Link>
-            </div>
+              <p className="text-sm text-slate-500 mb-8">
+                Last verified: <time dateTime={checklist.lastUpdated}>{lastVerified}</time>
+                {checklist.officialPortalUrl && (
+                  <>
+                    {" · Source: "}
+                    <a href={checklist.officialPortalUrl} target="_blank" rel="noopener" className="underline underline-offset-2 hover:text-slate-900">
+                      {checklist.officialAuthority}
+                    </a>
+                  </>
+                )}
+              </p>
 
-            {/* Quick Spec Pills Bar */}
-            <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-4 text-slate-300 text-xs sm:text-sm font-medium">
-              <div className="flex items-center gap-1.5 bg-slate-900/80 border border-slate-800/80 px-3 py-1.5 rounded-xl">
-                <span className="text-lime-400">⏱</span>
-                <span>Processing: <strong className="text-white">{checklist.processingTime.split('(')[0]}</strong></span>
-              </div>
-              <div className="flex items-center gap-1.5 bg-slate-900/80 border border-slate-800/80 px-3 py-1.5 rounded-xl">
-                <span className="text-lime-400">💳</span>
-                <span>Fee: <strong className="text-white">{checklist.fee.split('(')[0]}</strong></span>
-              </div>
-              <div className="flex items-center gap-1.5 bg-slate-900/80 border border-slate-800/80 px-3 py-1.5 rounded-xl">
-                <span className="text-lime-400">📷</span>
-                <span>Photo: <strong className="text-white">{checklist.photoRequirements.size}</strong></span>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <a
+                  href="#checklist-tracker"
+                  className="inline-flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm px-6 py-3.5 rounded-xl transition-colors"
+                >
+                  Start the checklist
+                  <span aria-hidden="true">↓</span>
+                </a>
+                <Link
+                  href={auditUrl}
+                  className="inline-flex items-center justify-center gap-2 text-slate-700 hover:text-slate-900 hover:bg-slate-50 font-semibold text-sm px-6 py-3.5 rounded-xl border border-slate-200 transition-colors"
+                >
+                  Check my documents — free
+                </Link>
               </div>
             </div>
+
+            {/* Key facts */}
+            <dl className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-slate-200 rounded-2xl overflow-hidden border border-slate-200">
+              {keyFacts.map((fact) => (
+                <div key={fact.label} className="bg-white p-5">
+                  <dt className="text-xs font-medium text-slate-500 mb-1.5">{fact.label}</dt>
+                  <dd className="text-sm text-slate-900 leading-relaxed">{fact.value}</dd>
+                </div>
+              ))}
+            </dl>
           </div>
         </header>
 
-        {/* ── Main Layout (PC Two-Column, Mobile Streamlined) ── */}
-        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-          <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 justify-center">
-            {/* Desktop Sticky TOC Sidebar */}
+        <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+          <div className="flex flex-col lg:flex-row gap-10 lg:gap-14">
+            {/* Desktop TOC */}
             {checklist.toc && checklist.toc.length > 0 && (
-              <aside className="hidden lg:block w-72 shrink-0">
-                <div className="sticky top-24 space-y-5">
+              <aside className="hidden lg:block w-64 shrink-0 order-first">
+                <div className="sticky top-24">
                   <TocSidebar headings={checklist.toc} />
-                  
-                  {/* Quick Sidebar Action Box */}
-                  <div className="p-5 bg-gradient-to-br from-slate-900 to-slate-950 text-white rounded-2xl border border-slate-800 shadow-md">
-                    <span className="text-[10px] font-mono font-bold text-lime-400 uppercase tracking-wider block mb-1">
-                      FREE DOCUMENT AUDIT
-                    </span>
-                    <h4 className="text-xs sm:text-sm font-black mb-2">Check Files Before Applying</h4>
-                    <p className="text-xs text-slate-300 mb-4 leading-relaxed">
-                      Verify your PAL, GIC certificates, bank statements &amp; biometric photos before IRCC submission.
-                    </p>
-                    <Link
-                      href={auditUrl}
-                      className="w-full inline-flex items-center justify-center gap-1.5 bg-lime-500 hover:bg-lime-400 text-slate-950 font-black text-xs py-2.5 px-3 rounded-xl transition-all shadow-sm"
-                    >
-                      <span>⚡ Free AI Document Checklist</span>
-                      <span>→</span>
-                    </Link>
-                  </div>
                 </div>
               </aside>
             )}
 
-            {/* Mobile TOC Accordion */}
-            {checklist.toc && checklist.toc.length > 0 && (
-              <div className="lg:hidden mb-2">
-                <details className="bg-white rounded-2xl border border-slate-200/90 shadow-2xs overflow-hidden">
-                  <summary className="flex items-center justify-between p-4 cursor-pointer list-none text-xs sm:text-sm font-bold text-slate-800">
-                    <span className="flex items-center gap-2">
-                      <svg className="w-4 h-4 text-lime-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-                      </svg>
-                      Table of Contents ({checklist.toc.length} Sections)
-                    </span>
-                    <svg className="w-4 h-4 text-slate-400 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <div className="w-full min-w-0 max-w-3xl">
+              {/* Mobile TOC */}
+              {checklist.toc && checklist.toc.length > 0 && (
+                <details className="lg:hidden group mb-8 rounded-xl border border-slate-200">
+                  <summary className="flex items-center justify-between px-4 py-3 cursor-pointer list-none text-sm font-medium text-slate-700">
+                    On this page
+                    <svg className="w-4 h-4 text-slate-400 transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                     </svg>
                   </summary>
-                  <nav className="px-4 pb-4 space-y-1.5 border-t border-slate-100 pt-3">
+                  <nav className="px-4 pb-3 border-t border-slate-100 pt-2">
                     {checklist.toc.map((heading) => (
                       <a
                         key={heading.id}
                         href={`#${heading.id}`}
-                        className={`block text-xs py-1.5 text-slate-600 hover:text-lime-600 ${
-                          heading.level === 3 ? "pl-3 font-medium" : "font-semibold text-slate-800"
-                        }`}
+                        className={`block text-sm py-1.5 text-slate-600 hover:text-slate-900 ${heading.level === 3 ? "pl-3" : ""}`}
                       >
                         {heading.text}
                       </a>
                     ))}
                   </nav>
                 </details>
-              </div>
-            )}
+              )}
 
-            {/* ── Main Column Content ── */}
-            <div className="w-full max-w-3xl">
-              {/* Quick Specification Cards Grid */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
-                <div className="p-3.5 sm:p-4 bg-white rounded-2xl border border-slate-200/90 shadow-2xs">
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
-                    Processing
-                  </span>
-                  <span className="text-xs sm:text-sm font-extrabold text-slate-900 block leading-tight">
-                    {checklist.processingTime}
-                  </span>
-                </div>
-                <div className="p-3.5 sm:p-4 bg-white rounded-2xl border border-slate-200/90 shadow-2xs">
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
-                    Visa Fee
-                  </span>
-                  <span className="text-xs sm:text-sm font-extrabold text-slate-900 block leading-tight">
-                    {checklist.fee}
-                  </span>
-                </div>
-                <div className="p-3.5 sm:p-4 bg-white rounded-2xl border border-slate-200/90 shadow-2xs">
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
-                    Validity
-                  </span>
-                  <span className="text-xs sm:text-sm font-extrabold text-slate-900 block leading-tight">
-                    {checklist.validity}
-                  </span>
-                </div>
-                <div className="p-3.5 sm:p-4 bg-white rounded-2xl border border-slate-200/90 shadow-2xs">
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
-                    Photo Specs
-                  </span>
-                  <span className="text-xs sm:text-sm font-extrabold text-lime-700 block leading-tight">
-                    {checklist.photoRequirements.size}
-                  </span>
-                </div>
-              </div>
-
-              {/* Interactive Document Checklist Tracker Component */}
               <InteractiveChecklistTracker
                 checklistSections={checklist.checklistSections}
                 visaTitle={checklist.title}
                 countryName={checklist.country}
-                photoSpec={checklist.photoRequirements}
+                photoSpec={photoSpec}
                 auditHref={auditUrl}
               />
 
-              {/* In-depth Markdown Content */}
               <div
-                className="prose-premium max-w-none mt-8"
+                className="prose-premium max-w-none mt-14"
                 dangerouslySetInnerHTML={{ __html: checklist.contentHtml }}
               />
 
-              {/* ── Mid-Page Pre-Submission AI Audit Banner ── */}
-              <section className="my-10 p-6 sm:p-8 bg-gradient-to-br from-slate-900 to-slate-950 rounded-3xl border border-slate-800 text-white shadow-xl relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-48 h-48 bg-lime-500/10 rounded-full blur-3xl pointer-events-none" />
-                <div className="relative z-10 flex flex-col sm:flex-row items-center justify-between gap-6">
-                  <div>
-                    <span className="inline-block text-lime-400 text-xs font-black uppercase tracking-wider mb-2">
-                      Free Pre-Submission Check
-                    </span>
-                    <h3 className="text-lg sm:text-2xl font-black mb-2 text-white">
-                      Check Your {checklist.country} Documents with AI
-                    </h3>
-                    <p className="text-xs sm:text-sm text-slate-300 max-w-md leading-relaxed">
-                      Find missing clauses, unexplained bank deposits, and non-compliant photos before attending your embassy or VFS appointment.
-                    </p>
-                  </div>
-                  <Link
-                    href={auditUrl}
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-lime-500 hover:bg-lime-400 text-slate-950 font-black text-xs sm:text-sm py-3.5 px-6 rounded-xl transition-all shadow-md shadow-lime-500/20 shrink-0"
-                  >
-                    <span>⚡ Free AI Document Checklist</span>
-                    <span>→</span>
-                  </Link>
-                </div>
-              </section>
-
-              {/* ── PixPassport Photo Maker Spotlight ── */}
-              <section className="my-10 p-6 sm:p-8 bg-white rounded-3xl border border-slate-200 shadow-sm text-center relative overflow-hidden">
-                <div className="max-w-lg mx-auto">
-                  <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-lime-100 text-lime-800 text-[11px] font-extrabold uppercase tracking-wide mb-3">
-                    <span>📷</span>
-                    <span>Official {checklist.country} Biometrics</span>
-                  </span>
-                  <h3 className="text-xl sm:text-2xl font-black text-slate-900 mb-2">
-                    Create {checklist.country} Visa Photo ({checklist.photoRequirements.size})
-                  </h3>
-                  <p className="text-xs sm:text-sm text-slate-600 mb-6 leading-relaxed">
-                    Automatic background cleaning, biometric alignment, and exact {checklist.photoRequirements.size} cropping compliant with {checklist.officialAuthority} rules.
+              {/* Next steps */}
+              <section className="mt-14 grid grid-cols-1 sm:grid-cols-2 gap-4 print:hidden">
+                <Link
+                  href={auditUrl}
+                  className="group p-6 rounded-2xl bg-slate-50 border border-slate-200 hover:border-slate-300 transition-colors"
+                >
+                  <p className="text-sm font-medium text-slate-500 mb-2">Free document check</p>
+                  <p className="font-semibold mb-2">Check your {checklist.country} documents</p>
+                  <p className="text-sm text-slate-600 leading-relaxed mb-4">
+                    Catch missing details, unexplained deposits and date mismatches before your appointment.
                   </p>
-                  <Link
-                    href={checklist.photoRequirements.toolLink || "/passport-photo-online"}
-                    className="inline-flex items-center justify-center bg-slate-900 hover:bg-lime-600 text-white font-extrabold text-xs sm:text-sm py-3.5 px-8 rounded-xl transition-all shadow-sm"
-                  >
-                    Create &amp; Verify My Photo Now →
-                  </Link>
-                </div>
+                  <span className="text-sm font-semibold text-slate-900 group-hover:underline underline-offset-4">Start check →</span>
+                </Link>
+                <Link
+                  href={photoTool}
+                  className="group p-6 rounded-2xl bg-lime-50 border border-lime-100 hover:border-lime-200 transition-colors"
+                >
+                  <p className="text-sm font-medium text-lime-700 mb-2">Visa photo</p>
+                  <p className="font-semibold mb-2">
+                    Make your {checklist.country} visa photo{photoSize ? ` (${photoSize})` : ""}
+                  </p>
+                  <p className="text-sm text-slate-600 leading-relaxed mb-4">
+                    Cropped to {checklist.officialAuthority} rules with a clean background, ready to upload or print.
+                  </p>
+                  <span className="text-sm font-semibold text-slate-900 group-hover:underline underline-offset-4">Make my photo →</span>
+                </Link>
               </section>
 
-              {/* ── FAQ Accordion Section ── */}
               {checklist.faq && checklist.faq.length > 0 && (
-                <section className="mt-12 pt-8 border-t border-slate-200">
-                  <div className="flex items-center gap-2.5 mb-6">
-                    <div className="w-1.5 h-6 bg-lime-500 rounded-full" />
-                    <h2 className="text-lg sm:text-xl font-black text-slate-900 !m-0 !p-0 !border-0">
-                      Frequently Asked Questions ({checklist.country})
-                    </h2>
-                  </div>
-                  <FaqAccordion
-                    faqs={checklist.faq.map((f) => ({ q: f.question, a: f.answer }))}
-                  />
+                <section className="mt-16">
+                  <h2 className="text-2xl font-bold tracking-tight mb-6">Frequently asked questions</h2>
+                  <FaqAccordion faqs={checklist.faq.map((f) => ({ q: f.question, a: f.answer }))} />
                 </section>
               )}
 
-              {/* ── Related Visa Checklists ── */}
               {relatedChecklists.length > 0 && (
-                <section className="mt-12 pt-8 border-t border-slate-200">
-                  <h3 className="text-base sm:text-lg font-black text-slate-900 mb-4">
-                    Other {checklist.country} Visa Checklists
-                  </h3>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <section className="mt-16 print:hidden">
+                  <h2 className="text-lg font-semibold mb-4">Other {checklist.country} checklists</h2>
+                  <ul className="divide-y divide-slate-100 border-y border-slate-100">
                     {relatedChecklists.map((rel) => (
-                      <Link
-                        key={rel.slug}
-                        href={`/visa-checklist/${checklist.countrySlug}/${rel.slug}`}
-                        className="p-4 bg-white rounded-2xl border border-slate-200/90 hover:border-lime-400 hover:shadow-sm transition-all flex items-center justify-between group"
-                      >
-                        <div>
-                          <span className="text-xs font-bold text-slate-900 group-hover:text-lime-600 block">
-                            {rel.title}
-                          </span>
-                          <span className="text-[11px] text-slate-500">
-                            {rel.visaType} • {rel.processingTime}
-                          </span>
-                        </div>
-                        <span className="text-slate-300 group-hover:text-lime-600 group-hover:translate-x-1 transition-transform text-base">
-                          →
-                        </span>
-                      </Link>
+                      <li key={rel.slug}>
+                        <Link
+                          href={`/visa-checklist/${checklist.countrySlug}/${rel.slug}`}
+                          className="group flex items-center justify-between gap-4 py-4"
+                        >
+                          <div className="min-w-0">
+                            <p className="text-sm font-medium text-slate-900 group-hover:text-lime-700 transition-colors">{rel.title}</p>
+                            <p className="text-xs text-slate-500 mt-0.5 truncate">{rel.visaType} · {rel.processingTime}</p>
+                          </div>
+                          <span className="text-slate-300 group-hover:text-slate-600 transition-colors" aria-hidden="true">→</span>
+                        </Link>
+                      </li>
                     ))}
-                  </div>
+                  </ul>
+                </section>
+              )}
+
+              {crossCountryChecklists.length > 0 && (
+                <section className="mt-16 print:hidden">
+                  <h2 className="text-lg font-semibold mb-4">Visa checklists for other countries</h2>
+                  <ul className="divide-y divide-slate-100 border-y border-slate-100">
+                    {crossCountryChecklists.map((rel) => (
+                      <li key={`${rel.countrySlug}/${rel.slug}`}>
+                        <Link
+                          href={`/visa-checklist/${rel.countrySlug}/${rel.slug}`}
+                          className="group flex items-center justify-between gap-4 py-4"
+                        >
+                          <div className="min-w-0">
+                            <p className="text-sm font-medium text-slate-900 group-hover:text-lime-700 transition-colors">{rel.title}</p>
+                            <p className="text-xs text-slate-500 mt-0.5 truncate">{rel.countryName} · {rel.visaType}</p>
+                          </div>
+                          <span className="text-slate-300 group-hover:text-slate-600 transition-colors" aria-hidden="true">→</span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
                 </section>
               )}
             </div>
           </div>
         </main>
 
-        {/* ── Floating Mobile Quick Action Bar (Fixed at bottom on mobile) ── */}
-        <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-slate-950/95 backdrop-blur-md border-t border-slate-800 px-4 py-3 shadow-2xl print:hidden">
-          <div className="max-w-md mx-auto flex items-center gap-2.5">
+        {/* Mobile action bar */}
+        <div className="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-white/95 backdrop-blur border-t border-slate-200 px-4 py-3 print:hidden">
+          <div className="max-w-md mx-auto flex gap-2">
             <Link
               href={auditUrl}
-              className="flex-1 inline-flex items-center justify-center gap-1.5 bg-lime-500 hover:bg-lime-400 text-slate-950 font-black text-xs py-3 px-4 rounded-xl shadow-md"
+              className="flex-1 inline-flex items-center justify-center bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm py-3 rounded-xl"
             >
-              <span>⚡ Free AI Document Checklist</span>
+              Check my documents
             </Link>
             <Link
-              href={checklist.photoRequirements.toolLink || "/passport-photo-online"}
-              className="inline-flex items-center justify-center gap-1 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs py-3 px-3.5 rounded-xl border border-slate-700 shrink-0"
-              title="Create Photo"
+              href={photoTool}
+              className="inline-flex items-center justify-center px-4 text-slate-700 font-semibold text-sm py-3 rounded-xl border border-slate-200"
             >
-              <span>📷 Photo</span>
+              Photo
             </Link>
           </div>
         </div>

@@ -2417,6 +2417,22 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.pixpassport.com/visa-checklist/france</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/visa-checklist/france" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/visa-checklist/france" />
+    <lastmod>2026-10-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/visa-checklist/france/france-tourist-visa-checklist</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/visa-checklist/france/france-tourist-visa-checklist" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/visa-checklist/france/france-tourist-visa-checklist" />
+    <lastmod>2026-10-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.pixpassport.com/visa-checklist/united-states</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/visa-checklist/united-states" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/visa-checklist/united-states" />
@@ -2431,6 +2447,30 @@
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/guides</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/guides" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/guides" />
+    <lastmod>2026-10-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/guides/is-passport-photo-online-legit</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/guides/is-passport-photo-online-legit" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/guides/is-passport-photo-online-legit" />
+    <lastmod>2026-10-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/guides/how-to-make-french-passport-photo</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/guides/how-to-make-french-passport-photo" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/guides/how-to-make-french-passport-photo" />
+    <lastmod>2026-10-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.pixpassport.com/br/foto-3x4</loc>

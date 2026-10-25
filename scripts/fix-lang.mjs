@@ -237,6 +237,42 @@ function updateSitemap() {
     }
   }
 
+  // 1b. Sync English guides (data/guides/<slug>.json → /guides/<slug>, see lib/guides.ts): published guides
+  // are added with their dateModified as lastmod; drafts and deleted guides are removed.
+  const GUIDES_DIR = path.join(__dirname, '../data/guides');
+  const guides = fs.existsSync(GUIDES_DIR)
+    ? fs.readdirSync(GUIDES_DIR).filter(f => f.endsWith('.json')).map(f => {
+        const meta = JSON.parse(fs.readFileSync(path.join(GUIDES_DIR, f), 'utf-8'));
+        return { urlPath: `/guides/${f.replace(/\.json$/, '')}`, draft: meta.draft === true, lastmod: meta.dateModified || meta.datePublished };
+      })
+    : [];
+  const published = guides.filter(g => !g.draft);
+  const guideEntries = published.length
+    ? [{ urlPath: '/guides', lastmod: published.map(g => g.lastmod).sort().at(-1), isHub: true }, ...published]
+    : [];
+  const wanted = new Set(guideEntries.map(e => `${BASE_URL}${e.urlPath}`));
+  const guideLocPrefix = `${BASE_URL}/guides`;
+
+  // Drop guide URLs that are no longer published
+  sitemapContent = sitemapContent.replace(/\s*<url>\s*<loc>([^<]*)<\/loc>[\s\S]*?<\/url>/g, (block, loc) =>
+    (loc === guideLocPrefix || loc.startsWith(`${guideLocPrefix}/`)) && !wanted.has(loc) ? '' : block
+  );
+
+  for (const { urlPath, lastmod = today, isHub } of guideEntries) {
+    const fullUrl = `${BASE_URL}${urlPath}`;
+    const loc = `<loc>${fullUrl}</loc>`;
+    if (sitemapContent.includes(loc)) {
+      // Keep lastmod in step with the guide's dateModified
+      sitemapContent = sitemapContent.replace(
+        new RegExp(`(${loc.replace(/[.*+?^${}()|[\]\\/]/g, '\\$&')}(?:(?!</url>)[\\s\\S])*?<lastmod>)[^<]*(</lastmod>)`),
+        `$1${lastmod}$2`
+      );
+      continue;
+    }
+    const newEntry = `  <url>\n    ${loc}\n    <xhtml:link rel="alternate" hreflang="en" href="${fullUrl}" />\n    <xhtml:link rel="alternate" hreflang="x-default" href="${fullUrl}" />\n    <lastmod>${lastmod}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>${isHub ? '0.8' : '0.7'}</priority>\n  </url>\n`;
+    sitemapContent = sitemapContent.replace('</urlset>', `${newEntry}</urlset>`);
+  }
+
   const parts = sitemapContent.split('<url>');
   let addedCount = 0;
   for (let i = 1; i < parts.length; i++) {

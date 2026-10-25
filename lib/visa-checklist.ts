@@ -21,6 +21,8 @@ export interface ChecklistSection {
 
 export interface VisaPhotoSpec {
   size: string;
+  printedSize?: string;
+  digitalMinSize?: string;
   width_mm?: number;
   height_mm?: number;
   faceHeight?: string;
@@ -43,6 +45,7 @@ export interface TocHeading {
 
 export interface VisaChecklistMeta {
   title: string;
+  seoTitle?: string; // shorter <title> for search results; falls back to title
   shortTitle?: string;
   slug: string;
   country: string;
@@ -86,6 +89,7 @@ export interface CountryMeta {
   description: string;
   processingOverview: string;
   heroImage?: string;
+  photoGuidance?: string;
   checklistsCount?: number;
   availableVisas?: {
     title: string;
@@ -232,6 +236,7 @@ export function getAllVisaCountries(): CountryMeta[] {
       description: countryData.description || `Official visa document checklists, biometric photo specifications, and application guides for ${defaultName}.`,
       processingOverview: countryData.processingOverview || "15 - 30 working days standard processing.",
       heroImage: countryData.heroImage,
+      photoGuidance: countryData.photoGuidance,
       checklistsCount: checklists.length,
       availableVisas: checklists,
     };
@@ -280,6 +285,7 @@ export function getVisaCountry(countrySlug: string): {
 
     checklists.push({
       title: data.title || "Visa Document Checklist",
+      seoTitle: data.seoTitle,
       shortTitle: data.shortTitle || data.title,
       slug,
       country: data.country || country.name,
@@ -353,6 +359,7 @@ export function getVisaChecklist(
 
   return {
     title: fileData.title || "Visa Document Checklist",
+    seoTitle: fileData.seoTitle,
     shortTitle: fileData.shortTitle || fileData.title,
     slug: checklistSlug,
     country: fileData.country || country?.name || countrySlug,

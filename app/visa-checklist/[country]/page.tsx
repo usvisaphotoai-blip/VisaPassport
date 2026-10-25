@@ -18,7 +18,7 @@ export async function generateMetadata({
   params: Promise<{ country: string }>;
 }): Promise<Metadata> {
   const { country: countrySlug } = await params;
-  const { country } = getVisaCountry(countrySlug);
+  const { country, checklists } = getVisaCountry(countrySlug);
 
   if (!country) {
     return {
@@ -26,8 +26,10 @@ export async function generateMetadata({
     };
   }
 
-  const title = `${country.name} Visa Document Checklists 2026 | Requirements & Guidelines`;
-  const description = `Complete official document checklists for ${country.name} visas (Tourist, Student, Business, Work). Check required paperwork, ${country.photoSize} biometric photo specs, fees, and processing times.`;
+  const title = `${country.name} Visa Document Checklists 2026`;
+  const visaTypes = checklists.map((c) => c.visaType).join(", ");
+  const description = `Official 2026 document checklists for ${country.name} visas${visaTypes ? ` (${visaTypes})` : ""}. Required paperwork, ${country.photoSize} photo specs, fees and processing times.`;
+  const ogImage = `${APP_URL}/og-image.jpg`;
 
   return {
     title: `${title} | PixPassport`,
@@ -40,13 +42,13 @@ export async function generateMetadata({
       },
     },
     openGraph: {
-      title: `${country.name} Visa Document Checklists 2026`,
+      title,
       description,
       url: `${APP_URL}/visa-checklist/${country.slug}`,
       siteName: "PixPassport",
       images: [
         {
-          url: country.heroImage || `${APP_URL}/og-image.jpg`,
+          url: ogImage,
           width: 1200,
           height: 630,
           alt: `${country.name} Visa Requirements`,
@@ -57,9 +59,9 @@ export async function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: `${country.name} Visa Document Checklists 2026`,
+      title,
       description,
-      images: [country.heroImage || `${APP_URL}/og-image.jpg`],
+      images: [ogImage],
     },
   };
 }
@@ -83,7 +85,7 @@ export default async function VisaCountryHubPage({
     },
     {
       q: `What are the exact photo specifications for ${country.name} visas?`,
-      a: `${country.name} requires a ${country.photoSize} photograph with a plain white or neutral background, taken within the last 6 months. Eyeglasses and head coverings (except religious) must be removed.`,
+      a: country.photoGuidance || `${country.name} visa photos are ${country.photoSize} with a plain, light-coloured background. Background colour, how recent the photo must be and rules on glasses vary by visa, so check the photo section of your specific checklist.`,
     },
     {
       q: `Can I apply for a ${country.name} visa online?`,
@@ -339,10 +341,10 @@ export default async function VisaCountryHubPage({
                     <span className="text-lime-400">✓</span> Exact {country.photoSize} dimensions
                   </span>
                   <span className="flex items-center gap-1 text-slate-300">
-                    <span className="text-lime-400">✓</span> Automatic plain white background
+                    <span className="text-lime-400">✓</span> Compliant plain background
                   </span>
                   <span className="flex items-center gap-1 text-slate-300">
-                    <span className="text-lime-400">✓</span> Guaranteed ICAO / Consular acceptance
+                    <span className="text-lime-400">✓</span> Checked against official specs
                   </span>
                 </div>
               </div>

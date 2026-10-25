@@ -12,7 +12,7 @@ export const revalidate = 3600;
 export const metadata: Metadata = {
   title: "Check Your Visa Documents Before You Apply | Visa Checklists 2026",
   description:
-    "Upload and check your visa documents before you apply. Find missing, incorrect, unreadable, or incorrectly formatted files before submitting to the embassy. Official 2026 checklists for 50+ countries.",
+    "Free 2026 visa document checklists with fees, processing times and photo specs. Check your documents for missing or incorrect files before you apply.",
   alternates: {
     canonical: `${APP_URL}/visa-checklist`,
     languages: {
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Check Your Visa Documents Before You Apply | PixPassport",
     description:
-      "A generic website says 'Here are the documents you may need.' PixPassport says 'Here is what YOU have, what you're missing, and what needs attention.' Avoid delays with pre-submission document checks.",
+      "Free 2026 visa document checklists for the UK, US, Canada and more. Check what you have, what's missing and what needs fixing before you apply.",
     url: `${APP_URL}/visa-checklist`,
     siteName: "PixPassport",
     images: [
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
 const GLOBAL_FAQS = [
   {
     q: "How does the PixPassport Document & Photo Audit prevent visa refusals?",
-    a: "Over 65% of visa application delays or refusals happen due to preventable technicalities: missing leave authorization clauses in employer letters, unexplained bank statement deposits, non-compliant biometric photograph dimensions, or mismatched dates between flights and hotel reservations. PixPassport audits your prepared files against the destination consulate's exact criteria so you can fix issues before you apply.",
+    a: "Many visa delays and refusals come down to preventable technicalities: missing leave authorization clauses in employer letters, unexplained bank statement deposits, non-compliant biometric photograph dimensions, or mismatched dates between flights and hotel reservations. PixPassport audits your prepared files against the destination consulate's exact criteria so you can fix issues before you apply.",
   },
   {
     q: "What is the difference between a free generic checklist and PixPassport's audit?",
@@ -148,207 +148,133 @@ export default async function VisaChecklistHubPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
-      <div className="min-h-screen bg-white">
-        {/* Top Accent Bar */}
-        <div className="h-1 bg-lime-600 w-full" />
-
-        {/* ── Direct Value Hero Section ── */}
-        <header className="bg-slate-50/60 border-b border-slate-200/80 pt-6 pb-12 sm:pt-10 sm:pb-16 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-7xl mx-auto">
-            {/* Breadcrumb Navigation */}
-            <nav aria-label="Breadcrumb" className="mb-5">
-              <ol className="flex items-center space-x-2 text-xs font-bold text-slate-400 uppercase tracking-widest">
+      <div className="min-h-screen bg-white text-slate-900">
+        {/* ── Hero ── */}
+        <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-16 sm:pt-12 sm:pb-24">
+          <div className="max-w-6xl mx-auto">
+            <nav aria-label="Breadcrumb" className="mb-10">
+              <ol className="flex items-center gap-2 text-sm text-slate-500">
                 <li>
-                  <Link href="/" className="hover:text-lime-600 transition-colors">
+                  <Link href="/" className="hover:text-slate-900 transition-colors">
                     Home
                   </Link>
                 </li>
-                <li aria-hidden="true" className="opacity-30">/</li>
-                <li className="text-slate-900 font-bold">Visa Checklists</li>
+                <li aria-hidden="true" className="text-slate-300">/</li>
+                <li className="text-slate-900">Visa Checklists</li>
               </ol>
             </nav>
 
-            {/* Direct Value Showcase Component */}
             <VisaDocumentAuditHero />
           </div>
         </header>
 
-        {/* ── Product Philosophy / Value Contrast Bar ── */}
-        <section className="bg-slate-900 text-white py-12 px-4 sm:px-6 lg:px-8 border-b border-slate-800">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center max-w-2xl mx-auto mb-8">
-              <span className="text-[11px] font-mono font-bold text-lime-400 uppercase tracking-widest block mb-2">
-                THE PIXPASSPORT DIFFERENCE
-              </span>
-              <h2 className="text-xl sm:text-3xl font-black text-white">
-                Why Generic Checklists Aren&apos;t Enough
-              </h2>
-              <p className="text-xs sm:text-sm text-slate-400 mt-2">
-                Official requirements are always free. PixPassport helps you organize and check your own personal files against them.
-              </p>
-            </div>
+        {/* ── Why not a generic list ── */}
+        <section className="px-4 sm:px-6 lg:px-8 py-16 sm:py-20 bg-slate-50 border-y border-slate-100">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-center mb-3">
+              A list tells you what to bring. We check what you have.
+            </h2>
+            <p className="text-slate-600 text-center max-w-xl mx-auto mb-10">
+              Official requirements are free. The hard part is knowing whether your own files meet them.
+            </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
-              {/* Other websites */}
-              <div className="p-6 sm:p-7 rounded-3xl bg-slate-950/80 border border-slate-800 flex flex-col justify-between">
-                <div>
-                  <div className="flex items-center gap-2 mb-3 text-slate-400 text-xs font-bold uppercase tracking-wider">
-                    <span className="w-2 h-2 rounded-full bg-slate-500" />
-                    Standard Information Websites
-                  </div>
-                  <blockquote className="text-base sm:text-lg text-slate-300 font-medium italic mb-4">
-                    &ldquo;Here are the documents you may need.&rdquo;
-                  </blockquote>
-                  <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
-                    Leaves you guessing whether your specific bank statement has enough funds, whether your photo meets the exact millimeter ratio, or if your employer letter has the right wording.
-                  </p>
-                </div>
-                <div className="mt-6 pt-4 border-t border-slate-800 flex items-center gap-2 text-xs font-bold text-rose-400">
-                  <span>✕ Leaves compliance verification up to guesswork</span>
-                </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="p-6 rounded-2xl bg-white border border-slate-200">
+                <p className="text-sm font-medium text-slate-500 mb-3">Generic checklist</p>
+                <p className="text-lg text-slate-700 mb-4">&ldquo;Here are the documents you may need.&rdquo;</p>
+                <p className="text-sm text-slate-500 leading-relaxed">
+                  You still have to guess whether your bank balance, photo size or employer letter wording is right.
+                </p>
               </div>
-
-              {/* PixPassport */}
-              <div className="p-6 sm:p-7 rounded-3xl bg-gradient-to-br from-slate-950 to-slate-900 border-2 border-lime-500/40 shadow-xl shadow-lime-500/5 flex flex-col justify-between relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-lime-500/10 rounded-full blur-2xl pointer-events-none" />
-                <div>
-                  <div className="flex items-center gap-2 mb-3 text-lime-400 text-xs font-bold uppercase tracking-wider">
-                    <span className="w-2 h-2 rounded-full bg-lime-400 animate-pulse" />
-                    PixPassport Pre-Submission Audit
-                  </div>
-                  <blockquote className="text-base sm:text-lg text-white font-extrabold mb-4">
-                    &ldquo;Here is what <span className="text-lime-400">YOU have</span>, what you&apos;re <span className="text-amber-300">missing</span>, and what <span className="text-rose-400">needs attention</span>.&rdquo;
-                  </blockquote>
-                  <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                    Automated biometric photo validation, document quality checks, date &amp; name consistency audits, and missing-document detection before embassy submission.
-                  </p>
-                </div>
-                <div className="mt-6 pt-4 border-t border-slate-800 flex items-center gap-2 text-xs font-bold text-lime-400">
-                  <span>✓ 100% Peace of mind before submitting your application</span>
-                </div>
+              <div className="p-6 rounded-2xl bg-white border border-lime-300 ring-4 ring-lime-500/10">
+                <p className="text-sm font-medium text-lime-700 mb-3">PixPassport audit</p>
+                <p className="text-lg text-slate-900 font-medium mb-4">
+                  &ldquo;Here is what you have, what&apos;s missing, and what needs fixing.&rdquo;
+                </p>
+                <p className="text-sm text-slate-600 leading-relaxed">
+                  Photo checks, document quality, date and name consistency, and missing items flagged before you submit.
+                </p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* ── Main Country Checklists Directory ── */}
-        <main id="country-directory" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20">
-          <div className="text-center max-w-3xl mx-auto mb-10">
-            <span className="text-xs font-black text-lime-600 uppercase tracking-widest block mb-2">
-              OFFICIAL EMBASSY DIRECTORY
-            </span>
-            <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight">
-              Select Your Destination Country
-            </h2>
-            <p className="text-slate-500 text-sm sm:text-base mt-2">
-              Browse complete document checklists, official visa fees, processing times, and biometric photo specs for 50+ countries.
-            </p>
-          </div>
-
-          {/* Directory Search & Filters */}
-          <VisaChecklistDirectoryClient countries={countries} />
-
-          {/* ── 4-Step Preparation Blueprint ── */}
-          <section className="mt-16 sm:mt-20 pt-14 border-t border-slate-200">
-            <div className="text-center max-w-3xl mx-auto mb-10">
-              <span className="text-xs font-black text-lime-600 uppercase tracking-widest block mb-2">
-                APPLICATION SUCCESS BLUEPRINT
-              </span>
-              <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-                How to Prepare a Bulletproof Visa Application
-              </h2>
-              <p className="text-slate-500 text-sm sm:text-base mt-2">
-                Follow this standardized 4-stage document verification roadmap before submitting your visa file.
+        <main className="px-4 sm:px-6 lg:px-8">
+          {/* ── Country directory ── */}
+          <section id="country-directory" className="max-w-6xl mx-auto py-16 sm:py-24 scroll-mt-20">
+            <div className="text-center max-w-2xl mx-auto mb-10">
+              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3">Choose your destination</h2>
+              <p className="text-slate-600">
+                Document checklists, fees, processing times and photo specs for {countries.length} countries, with more being added.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-              <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-2xs relative group hover:border-lime-400 transition-all">
-                <div className="w-9 h-9 rounded-xl bg-lime-50 text-lime-700 font-black flex items-center justify-center text-base mb-3.5">
-                  1
-                </div>
-                <h3 className="text-sm sm:text-base font-extrabold text-slate-900 mb-1.5">Select Visa Category</h3>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Choose your destination country and specific visa category (Tourist, Student, Business, Work, or Super Visa).
-                </p>
-              </div>
-
-              <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-2xs relative group hover:border-lime-400 transition-all">
-                <div className="w-9 h-9 rounded-xl bg-lime-50 text-lime-700 font-black flex items-center justify-center text-base mb-3.5">
-                  2
-                </div>
-                <h3 className="text-sm sm:text-base font-extrabold text-slate-900 mb-1.5">Audit Financial Dossier</h3>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Verify 6 months bank statements, eliminate unexplained lump-sum deposits, and attach 3 years of income tax returns.
-                </p>
-              </div>
-
-              <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-2xs relative group hover:border-lime-400 transition-all">
-                <div className="w-9 h-9 rounded-xl bg-lime-50 text-lime-700 font-black flex items-center justify-center text-base mb-3.5">
-                  3
-                </div>
-                <h3 className="text-sm sm:text-base font-extrabold text-slate-900 mb-1.5">Check Biometric Photos</h3>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Ensure photo dimensions, chin-to-crown percentages, and background color strictly match the destination consulate rules.
-                </p>
-              </div>
-
-              <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-2xs relative group hover:border-lime-400 transition-all">
-                <div className="w-9 h-9 rounded-xl bg-lime-50 text-lime-700 font-black flex items-center justify-center text-base mb-3.5">
-                  4
-                </div>
-                <h3 className="text-sm sm:text-base font-extrabold text-slate-900 mb-1.5">Print &amp; Submit</h3>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Use our interactive checklist to tick off documents, export your customized printable checklist, and attend your VAC appointment.
-                </p>
-              </div>
-            </div>
+            <VisaChecklistDirectoryClient countries={countries} />
           </section>
 
-          {/* ── High-Impact Biometric CTA Banner ── */}
-          <section className="mt-16 sm:mt-20 p-6 sm:p-10 lg:p-14 bg-slate-950 rounded-3xl text-center relative overflow-hidden group border border-lime-500/20 shadow-2xl">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-lime-500/10 rounded-full blur-3xl group-hover:scale-125 transition-transform duration-700" />
-            <div className="absolute bottom-0 left-0 w-64 h-64 bg-emerald-600/10 rounded-full blur-3xl group-hover:scale-125 transition-transform duration-700" />
+          {/* ── 4 steps ── */}
+          <section className="max-w-6xl mx-auto py-16 sm:py-20 border-t border-slate-100">
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-center mb-12">
+              How to prepare your application
+            </h2>
 
-            <div className="relative z-10 max-w-2xl mx-auto">
-              <span className="inline-block text-lime-400 text-xs font-black uppercase tracking-wider mb-2.5">
-                Biometric Photo Verification
-              </span>
-              <h2 className="text-xl sm:text-3xl font-black text-white mb-3 leading-tight">
-                Don&apos;t Let a Photo Rejection Delay Your Visa
-              </h2>
-              <p className="text-slate-300 text-xs sm:text-sm leading-relaxed mb-6">
-                PixPassport AI automatically crops to official millimeter specifications, cleans background shadows, and guarantees 100% biometric compliance for any embassy worldwide.
-              </p>
+            <ol className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6">
+              {[
+                {
+                  title: "Pick your visa",
+                  body: "Choose the country and visa category: tourist, student, business, work or super visa.",
+                },
+                {
+                  title: "Check your finances",
+                  body: "Six months of bank statements, explained large deposits, and recent tax returns.",
+                },
+                {
+                  title: "Get the photo right",
+                  body: "Size, head height and background must match the consulate's exact rules.",
+                },
+                {
+                  title: "Print and submit",
+                  body: "Tick off each document, save your checklist as PDF and bring it to your appointment.",
+                },
+              ].map((step, i) => (
+                <li key={step.title}>
+                  <span className="inline-flex w-8 h-8 items-center justify-center rounded-full bg-slate-900 text-white text-sm font-semibold mb-4">
+                    {i + 1}
+                  </span>
+                  <h3 className="font-semibold mb-1.5">{step.title}</h3>
+                  <p className="text-sm text-slate-600 leading-relaxed">{step.body}</p>
+                </li>
+              ))}
+            </ol>
+          </section>
+
+          {/* ── Photo CTA ── */}
+          <section className="max-w-6xl mx-auto">
+            <div className="rounded-3xl bg-lime-50 border border-lime-100 px-6 py-12 sm:px-12 sm:py-14 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+              <div className="max-w-xl">
+                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-2">
+                  Don&apos;t let the photo delay your visa
+                </h2>
+                <p className="text-slate-600">
+                  Upload a selfie and get a photo cropped to your embassy&apos;s exact size, with a clean background.
+                </p>
+              </div>
               <Link
                 href="/passport-photo-online"
-                className="inline-flex items-center justify-center bg-lime-500 hover:bg-lime-400 text-slate-950 font-black text-sm sm:text-base py-3.5 px-8 rounded-xl transition-all shadow-xl shadow-lime-500/20 group/btn"
+                className="shrink-0 inline-flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm py-3.5 px-6 rounded-xl transition-colors"
               >
-                Create Compliant Visa Photo Online
-                <svg
-                  className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={3}
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
+                Make my visa photo
+                <span aria-hidden="true">→</span>
               </Link>
             </div>
           </section>
 
-          {/* ── Global Visa FAQs ── */}
-          <section className="mt-16 sm:mt-20 pt-14 border-t border-slate-200">
-            <div className="max-w-3xl mx-auto">
-              <div className="flex items-center gap-2.5 mb-7">
-                <div className="w-1.5 h-7 bg-lime-500 rounded-full" />
-                <h2 className="text-xl sm:text-2xl font-black text-slate-900">
-                  Frequently Asked Questions About Visa Checklists
-                </h2>
-              </div>
-              <FaqAccordion faqs={GLOBAL_FAQS} />
-            </div>
+          {/* ── FAQ ── */}
+          <section className="max-w-3xl mx-auto py-16 sm:py-24">
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-center mb-10">
+              Frequently asked questions
+            </h2>
+            <FaqAccordion faqs={GLOBAL_FAQS} />
           </section>
         </main>
       </div>

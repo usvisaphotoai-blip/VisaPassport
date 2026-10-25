@@ -1,5 +1,6 @@
 ---
 title: "US B1/B2 Tourist & Business Visa Document Checklist 2026"
+seoTitle: "US B1/B2 Visa Checklist 2026: Documents, Fees & Photo"
 shortTitle: "US B1/B2 Visa Checklist"
 slug: "us-b1-b2-tourist-visa-checklist"
 country: "United States"

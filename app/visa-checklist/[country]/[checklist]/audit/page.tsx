@@ -31,7 +31,7 @@ export async function generateMetadata({
   }
 
   const title = `Free AI Document Audit: ${checklist.title}`;
-  const description = `Instant AI pre-submission document audit for ${checklist.title}. Find missing clauses, bank statement discrepancies, and ${checklist.photoRequirements.size} biometric photo compliance.`;
+  const description = `Instant AI pre-submission document audit for ${checklist.title}. Find missing clauses, bank statement discrepancies, and biometric photo compliance.`;
 
   return {
     title: `${title} | PixPassport`,
@@ -39,6 +39,8 @@ export async function generateMetadata({
     alternates: {
       canonical: `${APP_URL}/visa-checklist/${countrySlug}/${checklistSlug}/audit`,
     },
+    // Tool page that duplicates the checklist's keywords; keep the checklist page as the ranking URL.
+    robots: { index: false, follow: true },
   };
 }
 

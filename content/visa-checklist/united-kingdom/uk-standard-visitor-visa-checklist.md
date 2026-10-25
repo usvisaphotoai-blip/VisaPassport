@@ -1,5 +1,6 @@
 ---
 title: "UK Standard Visitor Visa Document Checklist 2026 (6 Months)"
+seoTitle: "UK Visitor Visa Checklist 2026: Documents, Fees & Photo"
 shortTitle: "UK Visitor Visa Checklist"
 slug: "uk-standard-visitor-visa-checklist"
 country: "United Kingdom"
@@ -105,12 +106,12 @@ The **UK Standard Visitor Visa** permits short-term visits to England, Scotland,
 └──────────────────────┴───────────────────────────────────────────────── ┘
 ```
 
-### What changed from the earlier version of this page
-- **Fee increased**: the 6-month fee rose from £127 to **£135**, and long-term visas rose to **£506 / £903 / £1,128**, as part of the Home Office's fee update effective **8 April 2026**. The previous £115 figure is outdated.
-- **No official fixed financial-document checklist**: gov.uk does not publish a required list such as "6 months of bank statements" or "2–3 years of tax returns" for standard visitors — it asks for income and trip-cost information in the online form and may request supporting evidence based on individual circumstances. Items like this are now labelled as common practice, not mandatory UKVI documents.
-- **Photo background corrected**: gov.uk explicitly allows **white, cream, or light grey** backgrounds — there is no rule against pure white, so that earlier claim has been removed.
-- **No published minimum bank balance**: figures like "£100–£150 per day" are third-party guidance, not something UKVI states officially — this has been reframed in the FAQ.
-- **Passport blank-page requirement removed**: this was tied to older sticker/vignette visas; current visas are typically issued as eVisas, and gov.uk does not state a blank-page requirement for Standard Visitor applications.
+### Key UK visitor visa changes and myths (2026)
+- **Fee increased**: the 6-month fee rose from £127 to **£135**, and long-term visas rose to **£506 / £903 / £1,128**, as part of the Home Office's fee update effective **8 April 2026**. Older figures such as £115 are out of date.
+- **No official fixed financial-document checklist**: gov.uk does not publish a required list such as "6 months of bank statements" or "2–3 years of tax returns" for standard visitors — it asks for income and trip-cost information in the online form and may request supporting evidence based on individual circumstances. On this page, items like these are labelled as common practice, not mandatory UKVI documents.
+- **Photo background**: gov.uk allows **white, cream, or light grey** backgrounds — there is no rule against pure white.
+- **No published minimum bank balance**: figures like "£100–£150 per day" are third-party guidance, not something UKVI states officially.
+- **No blank-page requirement**: this was tied to older sticker/vignette visas; current visas are typically issued as eVisas, and gov.uk does not state a blank-page requirement for Standard Visitor applications.
 
 > Need compliant UK digital photos? Use our [UK Passport & Visa Photo Tool](/uk) for correct sizing (600x750px digital / 35x45mm printed) and a compliant light-coloured background.
 

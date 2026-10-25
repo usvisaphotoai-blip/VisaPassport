@@ -1,5 +1,6 @@
 ---
 title: "Canada Student Visa Document Checklist 2026 (Study Permit & SDS)"
+seoTitle: "Canada Study Permit Checklist 2026: Documents & Fees"
 shortTitle: "Canada Student Visa Checklist"
 slug: "canada-student-visa-checklist"
 country: "Canada"
