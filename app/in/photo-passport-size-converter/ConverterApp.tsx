@@ -11,6 +11,9 @@ import {
   customPixels,
   presetPixels,
 } from "./presets";
+import { getClientTimezoneCurrency } from "@/lib/currency";
+import { getPrintSheetPrice } from "@/lib/print-sheet-pricing";
+import { buySkipWait, readSkipWaitUnlock } from "@/lib/in-converter-checkout";
 
 // Longest side kept from the upload; larger photos are scaled down to keep editing fast
 const MAX_SOURCE_PX = 4000;
@@ -20,6 +23,19 @@ const MAX_OUTPUT_PX = 4000;
 const MIN_ZOOM = 0.5; // below 1 the photo shrinks inside the frame with white around it
 const MAX_ZOOM = 4;
 const clampZoom = (z: number) => Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, z));
+// Free downloads wait this long; paying skips straight to the file
+const WAIT_MS = 4 * 60 * 1000;
+const formatClock = (ms: number) => {
+  const total = Math.ceil(ms / 1000);
+  return `${Math.floor(total / 60)}:${String(total % 60).padStart(2, "0")}`;
+};
+const blobToDataUrl = (blob: Blob) =>
+  new Promise<string>((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = () => reject(reader.error);
+    reader.readAsDataURL(blob);
+  });
 
 // Sensible starting values when the custom unit changes
 const UNIT_DEFAULTS: Record<Unit, [string, string]> = {
@@ -106,6 +122,14 @@ export default function ConverterApp() {
   const [encodeError, setEncodeError] = useState<string | null>(null);
   const [toolInView, setToolInView] = useState(true);
 
+  // Download wait / pay-to-skip
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [countdownMs, setCountdownMs] = useState(0);
+  const [waitUnlocked, setWaitUnlocked] = useState(readSkipWaitUnlock);
+  const [payLoading, setPayLoading] = useState(false);
+  const [dialogError, setDialogError] = useState<string | null>(null);
+  const [autoDownloaded, setAutoDownloaded] = useState(false);
+
   const inputRef = useRef<HTMLInputElement>(null);
   const previewRef = useRef<HTMLCanvasElement>(null);
   const editorRef = useRef<HTMLDivElement>(null);
@@ -117,6 +141,23 @@ export default function ConverterApp() {
   const pointersRef = useRef(new Map<number, { x: number; y: number }>());
   const pinchRef = useRef<{ dist: number; zoom: number } | null>(null);
   const runRef = useRef(0);
+  const timerRef = useRef<number | null>(null);
+
+  const skipWaitPrice = useMemo(() => getPrintSheetPrice(getClientTimezoneCurrency()), []);
+
+  // Best-effort background copy to Cloudinary; never blocks or surfaces errors to the user
+  const uploadToCloudinary = (blob: Blob, kind: "original" | "cropped") => {
+    blobToDataUrl(blob)
+      .then((dataUrl) =>
+        fetch("/api/in-converter/upload", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ image: dataUrl, kind, preset }),
+          keepalive: true,
+        }),
+      )
+      .catch((err) => console.warn(`[in-converter] ${kind} upload failed:`, err));
+  };
 
   // Target output size in pixels
   const target = useMemo(() => {
@@ -172,7 +213,21 @@ export default function ConverterApp() {
   useEffect(() => () => {
     if (objectUrlRef.current) URL.revokeObjectURL(objectUrlRef.current);
     if (outputUrlRef.current) URL.revokeObjectURL(outputUrlRef.current);
+    if (timerRef.current) clearInterval(timerRef.current);
   }, []);
+
+  // Warn before the tab closes or navigates away while the free-download wait is running
+  useEffect(() => {
+    const countdownRunning = !waitUnlocked && countdownMs > 0 && countdownMs < WAIT_MS;
+    if (!countdownRunning) return;
+    const handler = (e: BeforeUnloadEvent) => {
+      e.preventDefault();
+      e.returnValue = "";
+      return "";
+    };
+    window.addEventListener("beforeunload", handler);
+    return () => window.removeEventListener("beforeunload", handler);
+  }, [waitUnlocked, countdownMs]);
 
   // The mobile download bar only shows while the tool is on screen
   useEffect(() => {
@@ -213,6 +268,7 @@ export default function ConverterApp() {
       setRotation(0);
       setZoom(1);
       setCenter(null);
+      uploadToCloudinary(file, "original");
       if (isFirstPhoto && window.matchMedia("(max-width: 1023px)").matches) {
         requestAnimationFrame(() => editorRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }));
       }
@@ -339,7 +395,9 @@ export default function ConverterApp() {
   };
 
   const fileLabel = preset === "custom" ? "custom" : `${preset}mm`;
-  const download = () => {
+
+  // Actually saves the file: fires once the wait is over (or skipped by paying)
+  const runDownload = () => {
     if (!output) return;
     const link = document.createElement("a");
     link.href = output.url;
@@ -347,9 +405,70 @@ export default function ConverterApp() {
     document.body.appendChild(link);
     link.click();
     link.remove();
+    fetch(output.url)
+      .then((r) => r.blob())
+      .then((blob) => uploadToCloudinary(blob, "cropped"))
+      .catch(() => {});
     const { gtag } = window as Window & { gtag?: (...args: unknown[]) => void };
-    gtag?.("event", "in_converter_download", { preset, dpi, maxKb, bytes: output.bytes });
+    gtag?.("event", "in_converter_download", { preset, dpi, maxKb, bytes: output.bytes, paid: waitUnlocked });
   };
+
+  const clearTimer = () => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    timerRef.current = null;
+  };
+
+  // Starts (or resumes) the free-download wait and opens the "please wait" dialog;
+  // paying already-unlocked sessions skip straight to the file
+  const openDialog = () => {
+    if (!canDownload) return;
+    setDialogError(null);
+    setAutoDownloaded(false);
+    setDialogOpen(true);
+    if (waitUnlocked || freeReady) return; // handled by the auto-download effect below
+    if (timerRef.current || countdownMs >= WAIT_MS) return;
+    const startedAt = Date.now() - countdownMs;
+    timerRef.current = window.setInterval(() => {
+      const elapsed = Math.min(Date.now() - startedAt, WAIT_MS);
+      setCountdownMs(elapsed);
+      if (elapsed >= WAIT_MS) clearTimer();
+    }, 250);
+  };
+
+  const closeDialog = () => {
+    if (payLoading) return;
+    setDialogOpen(false);
+  };
+
+  const payForSkipWait = async () => {
+    if (payLoading) return;
+    setPayLoading(true);
+    setDialogError(null);
+    try {
+      const orderId = await buySkipWait({ price: skipWaitPrice, preset: fileLabel });
+      if (orderId) {
+        clearTimer();
+        setWaitUnlocked(true);
+      }
+    } catch (err) {
+      setDialogError(err instanceof Error ? err.message : "Couldn't start the payment. Please try again.");
+    } finally {
+      setPayLoading(false);
+    }
+  };
+
+  const freeReady = countdownMs >= WAIT_MS;
+
+  // The wait is over (or paid for): download automatically, once
+  useEffect(() => {
+    if (!dialogOpen || autoDownloaded) return;
+    if (waitUnlocked || freeReady) {
+      setAutoDownloaded(true);
+      runDownload();
+    }
+    // runDownload only reads output/preset/dpi/maxKb/waitUnlocked, captured fresh each render
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dialogOpen, waitUnlocked, freeReady, autoDownloaded]);
 
   const upscaling = crop ? crop.w < target.w * 0.9 : false;
   const canDownload = !!output && !processing && !targetError && !encodeError;
@@ -395,7 +514,7 @@ export default function ConverterApp() {
             </span>
             <span className="block text-base font-bold text-slate-800">Upload a photo to convert</span>
             <span className="block text-sm text-slate-500 mt-1">Drop it here or tap to choose · JPG, PNG or WebP</span>
-            <span className="block text-xs text-slate-400 mt-2">Your photo stays on your device. Nothing is uploaded.</span>
+            <span className="block text-xs text-slate-400 mt-2">Processed securely and auto-deleted from our servers within 24 hours.</span>
           </>
         )}
       </button>
@@ -427,9 +546,36 @@ export default function ConverterApp() {
     </p>
   );
 
+  const step = !srcImg ? 1 : !canDownload ? 2 : 3;
+  const steps = [
+    { n: 1, label: "Upload" },
+    { n: 2, label: "Adjust & choose size" },
+    { n: 3, label: "Download" },
+  ];
+
   return (
     <section ref={sectionRef} id="converter-tool" aria-labelledby="converter-heading" className="max-w-6xl mx-auto px-4 sm:px-6 pt-3 sm:pt-5 pb-8 sm:pb-10 scroll-mt-24">
       <h2 id="converter-heading" className="sr-only">Convert your photo to passport size</h2>
+
+      <ol className="flex items-center justify-center gap-2 sm:gap-4 mb-4" aria-label="Steps">
+        {steps.map((s, i) => (
+          <li key={s.n} className="flex items-center gap-2 sm:gap-4">
+            <span className="flex items-center gap-1.5 sm:gap-2">
+              <span
+                aria-hidden
+                className={`flex w-5 h-5 sm:w-6 sm:h-6 shrink-0 items-center justify-center rounded-full text-[11px] sm:text-xs font-bold ${
+                  step > s.n ? "bg-lime-600 text-white" : step === s.n ? "bg-lime-600 text-white ring-4 ring-lime-100" : "bg-slate-200 text-slate-500"
+                }`}
+              >
+                {step > s.n ? "✓" : s.n}
+              </span>
+              <span className={`text-[11px] sm:text-xs font-bold ${step === s.n ? "text-slate-900" : "text-slate-400"}`}>{s.label}</span>
+            </span>
+            {i < steps.length - 1 && <span className="w-4 sm:w-8 h-px bg-slate-200" aria-hidden />}
+          </li>
+        ))}
+      </ol>
+
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-clip grid grid-cols-1 lg:grid-cols-12">
         {/* Editor */}
         <div ref={editorRef} className="lg:col-span-7 bg-slate-50 p-4 sm:p-6 lg:p-8 scroll-mt-20 border-b lg:border-b-0 lg:border-r border-slate-100">
@@ -639,11 +785,18 @@ export default function ConverterApp() {
             <button
               type="button"
               disabled={!canDownload || !srcImg}
-              onClick={download}
+              onClick={openDialog}
               className={`hidden lg:block mt-3 w-full rounded-xl bg-lime-600 hover:bg-lime-700 disabled:bg-slate-200 disabled:text-slate-500 disabled:cursor-not-allowed text-white text-sm font-bold py-3 transition-colors ${focusRing}`}
             >
               Download passport size photo
             </button>
+            {canDownload && srcImg && (
+              <p className="hidden lg:block mt-2 text-[11px] text-slate-500 text-center">
+                {waitUnlocked || freeReady
+                  ? "Ready — downloads instantly."
+                  : `Free, ready in ${formatClock(WAIT_MS - countdownMs)} · or pay ${skipWaitPrice.formatted} to skip the wait.`}
+              </p>
+            )}
           </div>
 
           <p className="text-[11px] text-slate-500">
@@ -670,7 +823,7 @@ export default function ConverterApp() {
               <button
                 type="button"
                 disabled={!canDownload}
-                onClick={download}
+                onClick={openDialog}
                 className={`shrink-0 rounded-xl bg-lime-600 hover:bg-lime-700 disabled:opacity-60 text-white text-sm font-bold px-5 py-3 transition-colors ${focusRing}`}
               >
                 Download JPG
@@ -678,6 +831,96 @@ export default function ConverterApp() {
             </div>
           </div>
         </>
+      )}
+
+      {dialogOpen && (
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-slate-900/50 backdrop-blur-sm p-0 sm:p-4">
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="in-converter-dialog-title"
+            className="relative w-full sm:max-w-sm bg-white rounded-t-2xl sm:rounded-2xl shadow-xl p-6 pb-[max(1.5rem,env(safe-area-inset-bottom))]"
+          >
+            <button
+              type="button"
+              autoFocus
+              onClick={closeDialog}
+              disabled={payLoading}
+              aria-label="Close"
+              className={`absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full text-slate-400 hover:text-slate-700 hover:bg-slate-100 disabled:opacity-40 transition-colors ${focusRing}`}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden>
+                <path d="M18 6 6 18M6 6l12 12" />
+              </svg>
+            </button>
+
+            <h3 id="in-converter-dialog-title" className="text-lg font-extrabold text-slate-900 pr-8">
+              {waitUnlocked || freeReady ? "Your photo is ready" : "Preparing your photo…"}
+            </h3>
+            <p className="text-sm text-slate-500 mt-0.5">
+              {output?.w} × {output?.h} px · {fileLabel}
+            </p>
+
+            {waitUnlocked || freeReady ? (
+              <div className="mt-5 rounded-xl border border-lime-200 bg-lime-50 p-4 text-center">
+                <p className="text-sm font-semibold text-lime-800">
+                  {autoDownloaded ? "Downloaded ✓" : "Starting your download…"}
+                </p>
+                <button
+                  type="button"
+                  onClick={runDownload}
+                  className={`mt-3 w-full rounded-xl bg-lime-600 hover:bg-lime-700 text-white text-sm font-bold py-2.5 transition-colors ${focusRing}`}
+                >
+                  Download again
+                </button>
+              </div>
+            ) : (
+              <>
+                <div className="mt-5 rounded-xl border border-amber-200 bg-amber-50 p-4">
+                  <p className="flex justify-between text-sm text-slate-700">
+                    Free download in
+                    <span className="font-bold tabular-nums text-slate-900" aria-hidden>{formatClock(WAIT_MS - countdownMs)}</span>
+                  </p>
+                  <div
+                    className="mt-2 h-1.5 rounded-full bg-amber-100 overflow-hidden"
+                    role="progressbar"
+                    aria-label="Free download countdown"
+                    aria-valuemin={0}
+                    aria-valuemax={100}
+                    aria-valuenow={Math.round((countdownMs / WAIT_MS) * 100)}
+                  >
+                    <div
+                      className="h-full bg-amber-500 transition-[width] duration-200 ease-linear"
+                      style={{ width: `${(countdownMs / WAIT_MS) * 100}%` }}
+                    />
+                  </div>
+                  <p className="text-xs font-bold text-amber-900 mt-3">
+                    ⚠ Please don&apos;t close or leave this page — your download starts automatically when the timer ends.
+                  </p>
+                </div>
+
+                <button
+                  type="button"
+                  disabled={payLoading}
+                  onClick={payForSkipWait}
+                  className={`mt-3 w-full rounded-xl bg-lime-600 hover:bg-lime-700 disabled:opacity-60 disabled:cursor-wait text-white text-sm font-bold py-3 transition-colors ${focusRing}`}
+                >
+                  {payLoading ? "Opening secure checkout…" : `Pay ${skipWaitPrice.formatted} · Download now`}
+                </button>
+                <p className="text-xs text-slate-500 mt-2 text-center">No wait · same photo, same quality</p>
+              </>
+            )}
+
+            {dialogError && (
+              <p role="alert" className="mt-3 text-xs font-medium text-red-700 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
+                {dialogError}
+              </p>
+            )}
+            <p className="sr-only" aria-live="polite">
+              {waitUnlocked || freeReady ? "Your photo is ready to download" : ""}
+            </p>
+          </div>
+        </div>
       )}
     </section>
   );

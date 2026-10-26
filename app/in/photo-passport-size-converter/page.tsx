@@ -83,8 +83,12 @@ const faqs = [
     a: "It varies by form, so always check the official notification. Many exam and job forms ask for a JPG photo of about 20–50 KB, and some give exact pixels such as 200 × 230 px. Use 'Custom size' in px together with the KB limit to match it exactly.",
   },
   {
-    q: "Is this passport size photo converter free and private?",
-    a: "Yes. It is completely free with no sign-up and no watermark. Your photo is processed in your own browser and is never uploaded to our servers.",
+    q: "Is this passport size photo converter free and secure?",
+    a: "Yes. It is completely free with no sign-up and no watermark. Your photo is processed securely and automatically deleted from our servers within 24 hours.",
+  },
+  {
+    q: "Why does the free download take a few minutes?",
+    a: "Free downloads are ready about 4 minutes after you click Download, so please keep the page open until it finishes. If you don't want to wait, you can pay a small one-time fee to download your photo instantly — the price is shown in the download window.",
   },
   {
     q: "Can it change the photo background to white?",
@@ -175,7 +179,7 @@ export default function PhotoPassportSizeConverterPage() {
               </p>
             </div>
             <ul className="flex flex-wrap gap-1.5 shrink-0" aria-label="Highlights">
-              {["Free", "100% private", "300 DPI", "KB resize"].map((t) => (
+              {["Free", "Secure & auto-deleted", "300 DPI", "KB resize"].map((t) => (
                 <li key={t} className="text-[11px] sm:text-xs font-bold text-lime-800 bg-lime-50 border border-lime-200 rounded-full px-2.5 py-1">
                   {t}
                 </li>
@@ -247,7 +251,9 @@ export default function PhotoPassportSizeConverterPage() {
               <li>
                 <strong>Set the KB limit and download.</strong> If the form
                 gives a maximum file size, select it. The converter shows the
-                final pixel size and KB before you download the JPG.
+                final pixel size and KB before you download the JPG. Free
+                downloads are ready in about 4 minutes; pay a small fee to
+                skip the wait and download instantly.
               </li>
             </ol>
 

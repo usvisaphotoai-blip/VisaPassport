@@ -897,6 +897,12 @@
     "id": "us-passport",
     "name": "United States Passport",
     "country": "United States",
+    "title": "US Passport Photo Tool Free 2x2 Photo Editor & Maker",
+    "h1": "Free US Passport Photo Tool Create, Crop and Edit 2x2 Photos Online",
+    "meta_description": "Create a US passport photo online with easy 2x2-inch cropping, photo resizing, and background editing. Prepare passport, DS-160 visa, and green card photos.",
+    "keywords": [
+      "us passport photo tool"
+    ],
     "flag": "🇺🇸",
     "width_mm": 51,
     "height_mm": 51,
@@ -909,7 +915,8 @@
     "bg_color": "white",
     "price": 6.99,
     "print_size": "A4",
-    "dpi": 300
+    "dpi": 300,
+    "hero_photo": "https://res.cloudinary.com/dipzpwbbk/image/upload/v1792744005/us_passport_photo_example_1_pmj70g.webp"
   },
   {
     "id": "us-visa",
