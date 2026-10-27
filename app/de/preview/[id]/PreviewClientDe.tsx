@@ -89,6 +89,7 @@ export default function PreviewClientDe({
   const { loading, handlePayment } = usePayment({
     photoId, localPrice: isExpertPlan ? expertPrice : localPrice, isExpert: isExpertPlan, guestEmail,
     status: status === "authenticated" ? "authenticated" : status === "loading" ? "loading" : "unauthenticated", session, setHasPaid,
+    locale: "de",
   });
 
   const onPaymentClick = () => {
@@ -135,7 +136,7 @@ export default function PreviewClientDe({
     const emailTo = window.prompt(de.result.emailPrompt);
     if (!emailTo) return;
     try {
-      const res = await fetch("/api/send-photo", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email: emailTo, photoUrl: previewUrl, documentType, photoId }) });
+      const res = await fetch("/api/send-photo", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email: emailTo, photoUrl: previewUrl, documentType, photoId, locale: "de" }) });
       alert(res.ok ? de.result.emailSent : de.result.emailFailed);
     } catch { alert(de.result.emailFailed); }
   };

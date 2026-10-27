@@ -512,8 +512,15 @@
   },
   {
     "id": "netherlands-passport",
-    "name": "Netherlands Passport",
+    "name": "Netherlands Passport Photo",
     "country": "Netherlands",
+    "title": "Netherlands Passport Photo | Dutch 35x45 mm Online Tool",
+    "h1": "Netherlands Passport Photo: Make a Dutch 35x45 mm Photo Online",
+    "meta_description": "Create a compliant Netherlands passport photo online in seconds. 35x45 mm, light gray background, head size checked. Print at home .",
+    "keywords": [
+      "netherlands passport photo",
+      "dutch passport photo"
+    ],
     "flag": "🇳🇱",
     "width_mm": 35,
     "height_mm": 45,
@@ -526,13 +533,18 @@
     "bg_color": "light-gray",
     "price": 6.99,
     "print_size": "A4",
-    "hero_photo": "https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/45_35_passport_photo_ogdxnu.jpg",
-    "dpi": 300
+    "hero_photo": "https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/45_35_passport_photo_ogdxnu.jpg"
   },
   {
     "id": "new-zealand-passport",
     "name": "New Zealand Passport",
     "country": "New Zealand",
+    "title": "New Zealand Passport Photo tool online",
+    "h1": "New Zealand Passport Photo: Make a DIA-Compliant Passport Photo Online",
+    "meta_description": "Make a DIA-compliant New Zealand passport photo online. Get the 35x45 mm size, a light background, and a built-in NZ passport photo checker.",
+    "keywords": [
+      "new zealand passport photo"
+    ],
     "flag": "🇳🇿",
     "width_mm": 35,
     "height_mm": 45,
@@ -545,7 +557,7 @@
     "bg_color": "white",
     "price": 6.99,
     "print_size": "A4",
-    "hero_photo": "https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/45_35_passport_photo_ogdxnu.jpg",
+    "hero_photo": "https://res.cloudinary.com/dipzpwbbk/image/upload/v1779008016/c24d89b1-ab0e-4f1d-9035-5814bc7b91ca_preview_ip9ogs.jpg",
     "dpi": 600
   },
   {

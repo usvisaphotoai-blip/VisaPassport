@@ -1,4 +1,5 @@
 import { formatCurrency } from "@/lib/currency-formatter";
+import { EmailLocale, getEmailStrings, backgroundLabel } from "@/lib/email-templates/email-i18n";
 
 // App theme: Tailwind lime-600 / lime-700. Inline styles are the light theme;
 // the <style> block in the shell swaps them for dark mode via the class names.
@@ -56,6 +57,8 @@ interface PhotoDeliveryEmailParams {
   } | null;
   invoiceAttached: boolean;
   invoiceDownloadUrl?: string;
+  /** Customer language — DE/FR buyers get the email in their language. Defaults to English. */
+  locale?: EmailLocale;
 }
 
 // Dark-mode overrides. Apple Mail / iOS / Outlook (mac, iOS) honour the media query;
@@ -104,20 +107,22 @@ const row = (label: string, value: string, top = false) => {
 };
 
 /** Compact support line shown in every customer email after payment. */
-export function renderSupportBlock(appUrl: string) {
+export function renderSupportBlock(appUrl: string, locale: EmailLocale = "en") {
+  const t = getEmailStrings(locale);
   return card(`
-    <p class="e-t" style="margin:0 0 4px;font-size:14px;font-weight:700;color:${BRAND.text};">Photo rejected? Just reply to this email.</p>
-    <p class="e-m" style="margin:0;font-size:13px;line-height:1.55;color:${BRAND.muted};">If your ICAO-standard photo is rejected by the authorities, or the crop/background isn't right, reply to this email and we'll fix or redo it for free. You can also write to ${link(`mailto:${SUPPORT_EMAIL}?subject=Help%20with%20my%20photo`, SUPPORT_EMAIL)} · ${link(`${appUrl}/contact`, "Contact us")}. We usually reply within 15 minutes to 1 hour.</p>
+    <p class="e-t" style="margin:0 0 4px;font-size:14px;font-weight:700;color:${BRAND.text};">${t.supportTitle}</p>
+    <p class="e-m" style="margin:0;font-size:13px;line-height:1.55;color:${BRAND.muted};">${t.supportBody(link(`mailto:${SUPPORT_EMAIL}?subject=Help%20with%20my%20photo`, SUPPORT_EMAIL), link(`${appUrl}/contact`, t.contactUs))}</p>
   `, { soft: true, pad: "16px 20px" });
 }
 
-export function renderEmailShell(appUrl: string, body: string, preheader = "") {
+export function renderEmailShell(appUrl: string, body: string, preheader = "", locale: EmailLocale = "en") {
+  const t = getEmailStrings(locale);
   const logo = getEmailLogoUrl(appUrl);
   const sep = `<span class="e-m" style="color:${BRAND.muted};">&nbsp;·&nbsp;</span>`;
   const footLink = (href: string, label: string) =>
     `<a href="${href}" class="e-m" style="color:${BRAND.muted};text-decoration:none;">${label}</a>`;
   return `<!DOCTYPE html>
-<html lang="en"><head>
+<html lang="${t.htmlLang}"><head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="color-scheme" content="light dark" />
@@ -139,9 +144,9 @@ export function renderEmailShell(appUrl: string, body: string, preheader = "") {
       ${body}
       <tr><td align="center" style="padding:8px 16px 0;">
         <p style="margin:0 0 6px;font-size:12px;">
-          ${link(appUrl, "pixpassport.com")}${sep}${link("https://pixpassport.uk/", "pixpassport.uk")}${sep}${footLink(`${appUrl}/faq`, "FAQ")}${sep}${footLink(`${appUrl}/refund-policy`, "Refund Policy")}
+          ${link(locale === "en" ? appUrl : `${appUrl}/${locale}`, "pixpassport.com")}${sep}${link("https://pixpassport.uk/", "pixpassport.uk")}${sep}${footLink(`${appUrl}/faq`, t.faq)}${sep}${footLink(`${appUrl}/refund-policy`, t.refundPolicy)}
         </p>
-        <p class="e-m" style="margin:0;font-size:11px;line-height:1.5;color:${BRAND.muted};">You're receiving this because you purchased a photo on PixPassport.<br/>© ${new Date().getFullYear()} PixPassport</p>
+        <p class="e-m" style="margin:0;font-size:11px;line-height:1.5;color:${BRAND.muted};">${t.receivingBecause}<br/>© ${new Date().getFullYear()} PixPassport</p>
       </td></tr>
     </table>
   </td></tr>
@@ -151,48 +156,103 @@ export function renderEmailShell(appUrl: string, body: string, preheader = "") {
 
 export function renderPhotoDeliveryEmail(p: PhotoDeliveryEmailParams) {
   const { spec } = p;
+  const locale: EmailLocale = p.locale || "en";
+  const t = getEmailStrings(locale);
   const hasMm = spec.width_mm && spec.width_mm !== "unspecified";
-  const bg = spec.bg_color ? spec.bg_color.charAt(0).toUpperCase() + spec.bg_color.slice(1) : "White";
   const specLine = [
     hasMm ? `${spec.width_mm}×${spec.height_mm} mm` : null,
     `${spec.width_px}×${spec.height_px} px`,
-    `${bg} background`,
+    backgroundLabel(spec.bg_color, locale),
     `${spec.dpi || 300} DPI JPEG`,
   ].filter(Boolean).join(" · ");
 
   // Hero + the exact (unwatermarked) file the customer downloads, in one card.
   const main = card(`
-    <p style="margin:0 0 6px;font-size:12px;font-weight:700;letter-spacing:0.6px;text-transform:uppercase;color:${BRAND.primary};">✓ Payment successful</p>
-    <h1 class="e-t" style="margin:0 0 4px;font-size:22px;line-height:1.3;font-weight:800;letter-spacing:-0.4px;color:${BRAND.text};">Your ${p.documentName} photo is ready</h1>
-    <p class="e-m" style="margin:0 0 18px;font-size:14px;line-height:1.5;color:${BRAND.muted};">${p.countryName} compliant · ${specLine}</p>
+    <p style="margin:0 0 6px;font-size:12px;font-weight:700;letter-spacing:0.6px;text-transform:uppercase;color:${BRAND.primary};">${t.paymentSuccessful}</p>
+    <h1 class="e-t" style="margin:0 0 4px;font-size:22px;line-height:1.3;font-weight:800;letter-spacing:-0.4px;color:${BRAND.text};">${t.photoReady(p.documentName)}</h1>
+    <p class="e-m" style="margin:0 0 18px;font-size:14px;line-height:1.5;color:${BRAND.muted};">${t.compliant(p.countryName)} · ${specLine}</p>
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 18px;">
       <tr><td align="center" class="e-soft" bgcolor="${BRAND.primarySoft}" style="padding:20px;background:${BRAND.primarySoft};border-radius:12px;">
         <a href="${p.photoUrl}" style="text-decoration:none;">
-          <img src="${p.photoUrl}" alt="Your ${p.documentName} photo" width="170" style="display:block;width:100%;max-width:170px;height:auto;border-radius:4px;border:4px solid #ffffff;" />
+          <img src="${p.photoUrl}" alt="${t.photoAlt(p.documentName)}" width="170" style="display:block;width:100%;max-width:170px;height:auto;border-radius:4px;border:4px solid #ffffff;" />
         </a>
       </td></tr>
     </table>
-    ${primaryButton(p.photoUrl, "⬇&nbsp; Download photo")}
+    ${primaryButton(p.photoUrl, t.downloadPhoto)}
     <p class="e-m" style="margin:14px 0 0;font-size:13px;line-height:1.6;text-align:center;color:${BRAND.muted};">
-      ${link(p.previewLink, "View online")} (available for 7 days)${p.originalUrl ? ` · ${link(p.originalUrl, "Original upload")}` : ""}
+      ${link(p.previewLink, t.viewOnline)} ${t.available7Days}${p.originalUrl ? ` · ${link(p.originalUrl, t.originalUpload)}` : ""}
     </p>
-    <p class="e-m" style="margin:6px 0 0;font-size:12px;line-height:1.5;text-align:center;color:${BRAND.muted};">Upload it to the official ${p.countryName} portal${hasMm ? ` or print it at ${spec.width_mm}×${spec.height_mm} mm` : ""}.</p>
+    <p class="e-m" style="margin:6px 0 0;font-size:12px;line-height:1.5;text-align:center;color:${BRAND.muted};">${t.uploadHint(p.countryName, hasMm ? `${spec.width_mm}×${spec.height_mm} mm` : undefined)}</p>
   `);
 
   const invoice = p.invoice ? card(`
-    <p class="e-t" style="margin:0 0 8px;font-size:14px;font-weight:700;color:${BRAND.text};">Receipt</p>
+    <p class="e-t" style="margin:0 0 8px;font-size:14px;font-weight:700;color:${BRAND.text};">${t.receipt}</p>
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
-      ${row("Invoice", p.invoice.invoiceNumber)}
-      ${row("Item", p.documentName)}
-      ${row("Method", p.invoice.paymentMethod || "UPI / Card")}
-      ${row("Paid", `<span style="color:${BRAND.success};font-size:11px;font-weight:700;">● PAID</span>&nbsp; ${formatCurrency(p.invoice.total, p.invoice.currency)}`, true)}
+      ${row(t.invoice, p.invoice.invoiceNumber)}
+      ${row(t.item, p.documentName)}
+      ${row(t.method, p.invoice.paymentMethod || t.defaultMethod)}
+      ${row(t.paid, `<span style="color:${BRAND.success};font-size:11px;font-weight:700;">${t.paidBadge}</span>&nbsp; ${formatCurrency(p.invoice.total, p.invoice.currency)}`, true)}
     </table>
-    <p class="e-m" style="margin:10px 0 0;font-size:12px;color:${BRAND.muted};">${p.invoiceAttached ? "📎 Tax invoice PDF attached." : "Tax invoice PDF available for your records."}${p.invoiceDownloadUrl ? ` ${link(p.invoiceDownloadUrl, "Download PDF")}` : ""}</p>
+    <p class="e-m" style="margin:10px 0 0;font-size:12px;color:${BRAND.muted};">${p.invoiceAttached ? t.invoiceAttached : t.invoiceAvailable}${p.invoiceDownloadUrl ? ` ${link(p.invoiceDownloadUrl, t.downloadPdf)}` : ""}</p>
   `, { pad: "18px 20px" }) : "";
 
   return renderEmailShell(
     p.appUrl,
-    main + invoice + renderSupportBlock(p.appUrl),
-    `Your ${p.documentName} photo is ready to download.`
+    main + invoice + renderSupportBlock(p.appUrl, locale),
+    t.deliveryPreheader(p.documentName),
+    locale
   );
+}
+
+interface ExpertOrderEmailParams {
+  appUrl: string;
+  countryName: string;
+  documentName: string;
+  originalUrl?: string;
+  invoice?: {
+    invoiceNumber: string;
+    total: number;
+    currency: string;
+    paymentMethod?: string;
+  } | null;
+  invoiceAttached: boolean;
+  invoiceDownloadUrl?: string;
+  locale?: EmailLocale;
+}
+
+/** "Expert edit order confirmed" email sent right after an expert-plan payment. */
+export function renderExpertOrderEmail(p: ExpertOrderEmailParams) {
+  const t = getEmailStrings(p.locale || "en");
+  return `
+    <div lang="${t.htmlLang}" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #1e293b; background: #f8fafc; padding: 32px 24px; border-radius: 16px;">
+      <div style="text-align: center; margin-bottom: 24px;">
+        <img src="${p.appUrl}/logo.png" alt="PixPassport" style="width: 54px; height: 54px; border-radius: 12px; margin-bottom: 12px; display: inline-block; object-fit: contain;" />
+        <h2 style="font-size: 22px; font-weight: 800; color: #0f172a; margin: 0 0 6px;">${t.expertHeading}</h2>
+        <p style="color: #64748b; font-size: 14px; margin: 0;">${t.orderFor(p.countryName, p.documentName)}</p>
+      </div>
+
+      <div style="background: #ffffff; border-radius: 12px; padding: 24px; border: 1px solid #e2e8f0; margin-bottom: 20px;">
+        <p style="margin: 0 0 12px; font-size: 15px; color: #334155;">${t.hiThere}</p>
+        <p style="margin: 0 0 16px; font-size: 14px; color: #475569; line-height: 1.6;">${t.expertBody(p.countryName, p.documentName)}</p>
+        ${p.originalUrl ? `<p style="margin: 0 0 12px; font-size: 13px;"><strong>${t.originalImage}</strong> <a href="${p.originalUrl}" style="color: #2563eb; text-decoration: underline;">${t.viewUpload}</a></p>` : ""}
+      </div>
+
+      ${p.invoice ? `
+      <div style="background: #ffffff; border-radius: 12px; padding: 20px; border: 1px solid #e2e8f0; margin-bottom: 20px;">
+        <h3 style="margin: 0 0 10px; font-size: 15px; font-weight: 700; color: #0f172a;">${t.paymentReceipt}</h3>
+        <table style="width: 100%; font-size: 13px; color: #475569; margin-bottom: 12px; border-collapse: collapse;">
+          <tr><td style="padding: 5px 0; color: #64748b;">${t.invoiceNumber}</td><td style="padding: 5px 0; text-align: right; font-weight: 700; color: #0f172a;">${p.invoice.invoiceNumber}</td></tr>
+          <tr><td style="padding: 5px 0; color: #64748b;">${t.amountPaid}</td><td style="padding: 5px 0; text-align: right; font-weight: 700; color: #059669;">${formatCurrency(p.invoice.total, p.invoice.currency)} ${t.paidCheck}</td></tr>
+          <tr><td style="padding: 5px 0; color: #64748b;">${t.paymentMethod}</td><td style="padding: 5px 0; text-align: right; font-weight: 600;">${p.invoice.paymentMethod || t.defaultMethod}</td></tr>
+        </table>
+        <p style="margin: 0 0 14px; font-size: 12px; color: #64748b;">${p.invoiceAttached ? t.invoicePdfAttached : t.invoicePdfDownloadBelow}</p>
+        ${p.invoiceDownloadUrl ? `<div style="text-align: center;"><a href="${p.invoiceDownloadUrl}" style="display: inline-block; background: #0f172a; color: #ffffff; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-size: 12px; font-weight: 700;">${t.downloadInvoicePdf}</a></div>` : ""}
+      </div>
+      ` : ""}
+
+      <div style="text-align: center; padding-top: 16px; border-top: 1px solid #e2e8f0;">
+        <p style="font-size: 11px; color: #94a3b8; margin: 0;">${t.footerTagline}</p>
+      </div>
+    </div>
+  `;
 }

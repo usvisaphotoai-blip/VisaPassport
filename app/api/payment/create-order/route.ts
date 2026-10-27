@@ -25,7 +25,11 @@ export async function POST(req: Request) {
 
     const session = await getServerSession(authOptions);
 
-    const { photoId, currencyOverride, isExpert, guestEmail, gaClientId } = await req.json();
+    const { photoId, currencyOverride, isExpert, guestEmail, gaClientId, locale: rawLocale } = await req.json();
+
+    // Language of the page the customer is buying from — drives the email language
+    const { normalizeEmailLocale, localeFromReferer } = await import("@/lib/email-templates/email-i18n");
+    const locale = rawLocale ? normalizeEmailLocale(rawLocale) : (localeFromReferer(req.headers.get("referer")) || "en");
 
     if (!photoId) {
       return NextResponse.json({ error: "Missing photoId" }, { status: 400 });
@@ -72,6 +76,7 @@ export async function POST(req: Request) {
         ...(guestEmail ? { guestEmail } : {}),
         ...(gaClientId ? { gaClientId } : {}),
         priceVariant: localPrice.variant || "A",
+        locale,
       },
     };
 
@@ -126,6 +131,7 @@ export async function POST(req: Request) {
       photo.guestEmail = guestEmail;
     }
     photo.isExpert = isExpert;
+    photo.locale = locale;
     await photo.save();
 
     return NextResponse.json({

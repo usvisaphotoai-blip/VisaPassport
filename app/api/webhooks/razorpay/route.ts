@@ -8,7 +8,8 @@ import Order from "@/models/Order";
 import Payment from "@/models/Payment";
 import Dispute from "@/models/Dispute";
 import { sendEmail } from "@/lib/mail";
-import { renderPhotoDeliveryEmail } from "@/lib/email-templates/photo-delivery";
+import { renderPhotoDeliveryEmail, renderExpertOrderEmail } from "@/lib/email-templates/photo-delivery";
+import { normalizeEmailLocale, localizedDocNames, localizedPreviewPath, getEmailStrings } from "@/lib/email-templates/email-i18n";
 import { getSafeSpec } from "@/lib/specs";
 import { sendGA4PurchaseEvent } from "@/lib/ga4";
 import { logAuditEvent, claimEmailSend, releaseEmailClaim } from "@/lib/audit";
@@ -184,10 +185,15 @@ export async function POST(req: Request) {
           if (userEmail) {
             const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://pixpassport.com';
             const photoDownloadUrl = photo.secureUrl || '';
-            const previewLink = `${appUrl}/preview/${photoId}`;
+            // Language the customer bought in (stored at create-order)
+            const emailLocale = normalizeEmailLocale(photo.locale || notes.locale);
+            const previewLink = `${appUrl}${localizedPreviewPath(emailLocale, String(photoId))}`;
             const spec = getSafeSpec(photo.documentType);
             const documentName = spec.name || "Passport Photo";
             const countryName = spec.country || spec.name || "Passport Photo";
+            // Customer-facing names in the buyer's language (admin email stays English)
+            const localNames = localizedDocNames(spec, photo.documentType, emailLocale);
+            const t = getEmailStrings(emailLocale);
             const invoicePdfDownloadUrl = invoiceCloudinaryUrl || (invoiceData ? `${appUrl}/api/invoices/${invoiceData._id}/download` : "");
             
             try {
@@ -218,39 +224,17 @@ export async function POST(req: Request) {
                 const mailRes = await sendEmail({
                   to: userEmail,
                   bcc: 'usvisaphotoai@gmail.com',
-                  subject: "Your Expert Photo Edit Order is Confirmed - PixPassport",
-                  html: `
-                    <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #1e293b; background: #f8fafc; padding: 32px 24px; border-radius: 16px;">
-                      <div style="text-align: center; margin-bottom: 24px;">
-                        <img src="${appUrl}/logo.png" alt="PixPassport" style="width: 54px; height: 54px; border-radius: 12px; margin-bottom: 12px; display: inline-block; object-fit: contain;" />
-                        <h2 style="font-size: 22px; font-weight: 800; color: #0f172a; margin: 0 0 6px;">Your Expert Edit Order is Confirmed! 🌟</h2>
-                        <p style="color: #64748b; font-size: 14px; margin: 0;">Order for ${countryName} (${documentName})</p>
-                      </div>
-
-                      <div style="background: #ffffff; border-radius: 12px; padding: 24px; border: 1px solid #e2e8f0; margin-bottom: 20px;">
-                        <p style="margin: 0 0 12px; font-size: 15px; color: #334155;">Hi there,</p>
-                        <p style="margin: 0 0 16px; font-size: 14px; color: #475569; line-height: 1.6;">We have received your payment for the expert photo edit for your <strong>${countryName} (${documentName})</strong>. Our team is working on your photo now and will email it back to you as soon as it is ready.</p>
-                        ${photo.originalUrl ? `<p style="margin: 0 0 12px; font-size: 13px;"><strong>Original Image:</strong> <a href="${photo.originalUrl}" style="color: #2563eb; text-decoration: underline;">View Upload</a></p>` : ''}
-                      </div>
-
-                      ${invoiceData ? `
-                      <div style="background: #ffffff; border-radius: 12px; padding: 20px; border: 1px solid #e2e8f0; margin-bottom: 20px;">
-                        <h3 style="margin: 0 0 10px; font-size: 15px; font-weight: 700; color: #0f172a;">🧾 Payment Receipt</h3>
-                        <table style="width: 100%; font-size: 13px; color: #475569; margin-bottom: 12px; border-collapse: collapse;">
-                          <tr><td style="padding: 5px 0; color: #64748b;">Invoice Number:</td><td style="padding: 5px 0; text-align: right; font-weight: 700; color: #0f172a;">${invoiceData.invoiceNumber}</td></tr>
-                          <tr><td style="padding: 5px 0; color: #64748b;">Amount Paid:</td><td style="padding: 5px 0; text-align: right; font-weight: 700; color: #059669;">${formatCurrency(invoiceData.total, invoiceData.currency)} (PAID ✓)</td></tr>
-                          <tr><td style="padding: 5px 0; color: #64748b;">Payment Method:</td><td style="padding: 5px 0; text-align: right; font-weight: 600;">${invoiceData.paymentMethod || "UPI / Card"}</td></tr>
-                        </table>
-                        <p style="margin: 0 0 14px; font-size: 12px; color: #64748b;">${invoicePdfBuffer ? 'Your official Tax Invoice PDF is attached to this email.' : 'Download your official Tax Invoice PDF using the button below.'}</p>
-                        ${invoicePdfDownloadUrl ? `<div style="text-align: center;"><a href="${invoicePdfDownloadUrl}" style="display: inline-block; background: #0f172a; color: #ffffff; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-size: 12px; font-weight: 700;">⬇ Download Tax Invoice PDF</a></div>` : ''}
-                      </div>
-                      ` : ''}
-
-                      <div style="text-align: center; padding-top: 16px; border-top: 1px solid #e2e8f0;">
-                        <p style="font-size: 11px; color: #94a3b8; margin: 0;">PixPassport — Professional Visa Photo Processing</p>
-                      </div>
-                    </div>
-                  `,
+                  subject: t.expertSubject,
+                  html: renderExpertOrderEmail({
+                    appUrl,
+                    countryName: localNames.countryName,
+                    documentName: localNames.documentName,
+                    originalUrl: photo.originalUrl,
+                    invoice: invoiceData,
+                    invoiceAttached: !!invoicePdfBuffer,
+                    invoiceDownloadUrl: invoicePdfDownloadUrl,
+                    locale: emailLocale,
+                  }),
                   attachments: invoicePdfBuffer && invoiceData ? [
                     {
                       filename: `Tax-Invoice-${invoiceData.invoiceNumber}.pdf`,
@@ -269,8 +253,9 @@ export async function POST(req: Request) {
                     actor: "webhook",
                     metadata: {
                       recipient: userEmail,
-                      subject: "Your Expert Photo Edit Order is Confirmed - PixPassport",
+                      subject: t.expertSubject,
                       template: "expert_order",
+                      locale: emailLocale,
                       invoiceNumber: invoiceData?.invoiceNumber,
                       status: "sent",
                     },
@@ -296,11 +281,11 @@ export async function POST(req: Request) {
                 const deliveryMailRes = await sendEmail({
                   to: userEmail,
                   bcc: 'usvisaphotoai@gmail.com',
-                  subject: `Your ${countryName} (${documentName}) photo is ready — Download now! 🎉`,
+                  subject: t.deliverySubject(localNames.countryName, localNames.documentName),
                   html: renderPhotoDeliveryEmail({
                     appUrl,
-                    countryName,
-                    documentName,
+                    countryName: localNames.countryName,
+                    documentName: localNames.documentName,
                     spec,
                     photoUrl: photoDownloadUrl,
                     originalUrl: photo.originalUrl,
@@ -308,6 +293,7 @@ export async function POST(req: Request) {
                     invoice: invoiceData,
                     invoiceAttached: !!invoicePdfBuffer,
                     invoiceDownloadUrl: invoicePdfDownloadUrl,
+                    locale: emailLocale,
                   }),
                   attachments: invoicePdfBuffer && invoiceData ? [
                     {
@@ -328,8 +314,9 @@ export async function POST(req: Request) {
                     actor: "webhook",
                     metadata: {
                       recipient: userEmail,
-                      subject: `Your ${countryName} (${documentName}) photo is ready — Download now! 🎉`,
+                      subject: t.deliverySubject(localNames.countryName, localNames.documentName),
                       template: "delivery",
+                      locale: emailLocale,
                       invoiceNumber: invoiceData?.invoiceNumber,
                       status: "sent",
                     },

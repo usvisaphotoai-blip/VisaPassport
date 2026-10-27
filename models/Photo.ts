@@ -75,6 +75,12 @@ const PhotoSchema = new Schema(
       required: false,
       index: true,
     },
+    // Site language the customer bought from (/de, /fr) — used to localize emails
+    locale: {
+      type: String,
+      enum: ["en", "de", "fr"],
+      required: false,
+    },
   },
   { timestamps: true }
 );

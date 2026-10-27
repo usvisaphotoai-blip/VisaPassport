@@ -528,6 +528,12 @@ export async function POST(req: NextRequest) {
 
     const downloadToken = crypto.randomBytes(24).toString("hex");
 
+    const { localeFromReferer, normalizeEmailLocale } = await import("@/lib/email-templates/email-i18n");
+    const rawFormLocale = formData.get("locale") as string | null;
+    const initialLocale = rawFormLocale
+      ? normalizeEmailLocale(rawFormLocale)
+      : (localeFromReferer(req.headers.get("referer")) || "en");
+
     const photoRecord = await Photo.create({
       documentType: formData.get("type") as string || "general",
       secureUrl,
@@ -535,6 +541,7 @@ export async function POST(req: NextRequest) {
       printSheetUrl,
       originalUrl,
       downloadToken,
+      locale: initialLocale,
       metrics: {
         headSizePct: finalHeadPct.toFixed(1),
         eyeLevelPct: finalEyeFromBottomPct.toFixed(1),

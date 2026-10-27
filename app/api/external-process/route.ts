@@ -52,6 +52,12 @@ export async function POST(req: NextRequest) {
     const crypto = await import("crypto");
     const downloadToken = crypto.randomBytes(24).toString("hex");
     
+    const { localeFromReferer, normalizeEmailLocale } = await import("@/lib/email-templates/email-i18n");
+    const rawFormLocale = formData.get("locale") as string | null;
+    const initialLocale = rawFormLocale
+      ? normalizeEmailLocale(rawFormLocale)
+      : (localeFromReferer(req.headers.get("referer")) || "en");
+
     const photoRecord = await Photo.create({
       documentType: fullDocId || `${countryCode}-${documentType}`,
       secureUrl: result.image_url,
@@ -59,6 +65,7 @@ export async function POST(req: NextRequest) {
       printSheetUrl: result.print_sheet_url,
       originalUrl,
       downloadToken,
+      locale: initialLocale,
       externalResultId: result.result_id,
       metrics: {
         headSizePct: result.metrics.head_height_pct,

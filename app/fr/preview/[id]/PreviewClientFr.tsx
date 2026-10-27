@@ -88,6 +88,7 @@ export default function PreviewClientFr({
   const { loading, handlePayment } = usePayment({
     photoId, localPrice: isExpertPlan ? expertPrice : localPrice, isExpert: isExpertPlan, guestEmail,
     status: status === "authenticated" ? "authenticated" : status === "loading" ? "loading" : "unauthenticated", session, setHasPaid,
+    locale: "fr",
   });
 
   const onPaymentClick = () => {
@@ -134,7 +135,7 @@ export default function PreviewClientFr({
     const emailTo = window.prompt("Entrez votre adresse email pour recevoir la photo :");
     if (!emailTo) return;
     try {
-      const res = await fetch("/api/send-photo", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email: emailTo, photoUrl: previewUrl, documentType, photoId }) });
+      const res = await fetch("/api/send-photo", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email: emailTo, photoUrl: previewUrl, documentType, photoId, locale: "fr" }) });
       alert(res.ok ? "Photo envoyée ! Vérifiez votre boîte de réception." : "Échec de l'envoi. Veuillez réessayer.");
     } catch { alert("Erreur lors de l'envoi de l'email."); }
   };

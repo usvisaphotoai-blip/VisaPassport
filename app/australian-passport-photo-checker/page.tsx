@@ -277,6 +277,12 @@ export default function AustralianPassportPhotoCheckerPage() {
             icon: "🇬🇧",
           },
           {
+            title: "NZ Passport Photo Checker",
+            desc: "Verify 3:4 portrait ratio and 900×1200 px digital New Zealand requirements.",
+            href: "/new-zealand-passport-photo-checker",
+            icon: "🇳🇿",
+          },
+          {
             title: "Visa Photo Checker",
             desc: "Check a visa photo for Schengen, India, China and more.",
             href: "/visa-photo-validator",

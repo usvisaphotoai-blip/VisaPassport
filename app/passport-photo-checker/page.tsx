@@ -52,6 +52,7 @@ const COUNTRY_RULES = [
   { country: "United Kingdom", flag: "🇬🇧", size: "35 × 45 mm", head: "29–34 mm", background: "Cream or light grey", href: "/uk-passport-photo-checker-online-free" },
   { country: "Canada", flag: "🇨🇦", size: "50 × 70 mm", head: "31–36 mm", background: "White or light-coloured", href: "/ca/canada-passport-photo-requirements" },
   { country: "Australia", flag: "🇦🇺", size: "35 × 45 mm", head: "32–36 mm", background: "Plain white or light grey", href: "/australian-passport-photo-checker" },
+  { country: "New Zealand", flag: "🇳🇿", size: "900 × 1200 px (3:4)", head: "Face 70–80% of frame", background: "Plain, light-coloured", href: "/new-zealand-passport-photo-checker" },
   { country: "India", flag: "🇮🇳", size: "35 × 45 mm", head: "Face ~80% of frame", background: "Plain white", href: "/india-passport-photo-editor" },
   { country: "Germany / EU", flag: "🇪🇺", size: "35 × 45 mm", head: "32–36 mm", background: "Plain light grey", href: "/germany-passport-photo-editor" },
 ];
@@ -254,6 +255,12 @@ export default function PassportPhotoCheckerPage() {
             desc: "2×2 inch photos for USCIS forms like I-485 and I-765.",
             href: "/us-check-photo-green-card",
             icon: "🟢",
+          },
+          {
+            title: "NZ Passport Photo Checker",
+            desc: "Official DIA 3:4 portrait ratio & digital requirements.",
+            href: "/new-zealand-passport-photo-checker",
+            icon: "🇳🇿",
           },
           {
             title: "DV Lottery Photo Checker",

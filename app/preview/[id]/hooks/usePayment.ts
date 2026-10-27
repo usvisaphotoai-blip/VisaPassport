@@ -18,6 +18,8 @@ interface PaymentOptions {
   session: any;
   setHasPaid: (paid: boolean) => void;
   onSuccess?: (data: any) => void;
+  /** Site language ("de" / "fr") so the confirmation email is sent in the buyer's language. */
+  locale?: "en" | "de" | "fr";
 }
 
 export function usePayment({
@@ -29,6 +31,7 @@ export function usePayment({
   session,
   setHasPaid,
   onSuccess,
+  locale = "en",
 }: PaymentOptions) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -86,6 +89,7 @@ export function usePayment({
           isExpert,
           guestEmail: status === "authenticated" ? undefined : emailToUse,
           gaClientId, // Pass it here
+          locale,
         }),
       });
       const orderData = await orderRes.json();
@@ -146,7 +150,7 @@ export function usePayment({
             const verifyRes = await fetch("/api/payment/verify", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ ...response, photoId, gaClientId }),
+              body: JSON.stringify({ ...response, photoId, gaClientId, locale }),
             });
             const verifyData = await verifyRes.json().catch(() => ({}));
             if (verifyRes.ok) {
