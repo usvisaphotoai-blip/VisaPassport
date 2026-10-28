@@ -127,7 +127,7 @@ const EXPERT_PRICES: Record<string, { amount: number; symbol: string; decimals: 
   NOK: { amount: 99, symbol: "kr", decimals: 0 },
   DKK: { amount: 69, symbol: "kr", decimals: 0 },
   
-  INR: { amount: 699, symbol: "₹", decimals: 0 },
+  INR: { amount: 10, symbol: "₹", decimals: 0 },
   CNY: { amount: 49, symbol: "¥", decimals: 0 },
   BRL: { amount: 45, symbol: "R$", decimals: 0 },
   MXN: { amount: 149, symbol: "$", decimals: 0 },
