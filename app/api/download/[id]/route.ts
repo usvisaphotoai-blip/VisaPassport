@@ -84,6 +84,8 @@ export async function GET(
         headers: {
           "Content-Type": contentType,
           "Content-Disposition": `attachment; filename="${fileName}"`,
+          // Paid biometric photo behind a token: never let the CDN keep a copy past the 24h deletion
+          "Cache-Control": "private, no-store",
         },
       });
     } catch (fetchError) {

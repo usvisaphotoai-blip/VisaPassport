@@ -515,18 +515,47 @@ export default function PrintTemplateApp() {
   const loadPhotoFromUrl = (url: string) => {
     setImageSrc(url);
     setImageLoadError(null);
-    loadImage(url)
-      .then((img) => setImageObj(img))
-      .catch(async () => {
+    setPaidPhotoExpired(false);
+    // Fetch once and decode the bytes, so the status we explain is the one that actually failed
+    // (a second request could succeed and hide it), and ride out cold starts / blips with retries
+    const fetchPhoto = async (): Promise<{ img: HTMLImageElement | null; status: number }> => {
+      let status = 0;
+      for (let attempt = 0; attempt < 3; attempt++) {
+        if (attempt > 0) await new Promise((r) => setTimeout(r, 800 * attempt));
+        try {
+          const res = await fetch(url, { cache: "no-store" });
+          status = res.status;
+          if (res.ok) {
+            const objectUrl = URL.createObjectURL(await res.blob());
+            try {
+              return { img: await loadImage(objectUrl), status };
+            } catch {
+              return { img: null, status }; // Downloaded but not a decodable image
+            }
+          }
+          if (status < 500) break; // 4xx won't change on retry
+        } catch {
+          status = 0; // Network or CORS error
+        }
+      }
+      // Cross-origin links without CORS can still be shown by an image element
+      if (status === 0) {
+        try {
+          return { img: await loadImage(url), status };
+        } catch {
+          // Fall through to the error message
+        }
+      }
+      return { img: null, status };
+    };
+    fetchPhoto()
+      .then(({ img, status }) => {
+        if (img) {
+          setImageObj(img);
+          return;
+        }
         setImageObj(null);
         setImageSrc(null);
-        // The image element hides the HTTP status, so ask again to explain what went wrong
-        let status = 0;
-        try {
-          status = (await fetch(url, { cache: "no-store" })).status;
-        } catch {
-          // Network error: fall through to the generic message
-        }
         // /api/download checks token and payment before expiry, so 410 means a paid order
         if (status === 410 && PAID_PHOTO_LINK.test(url)) {
           setPaidPhotoExpired(true);
