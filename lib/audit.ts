@@ -65,6 +65,8 @@ export async function claimEmailSend(
     const query: Record<string, any> = {
       eventType: "email_sent",
       "metadata.template": template,
+      // A logged "failed" send must not count as a claim, or that email could never be retried
+      "metadata.status": { $ne: "failed" },
     };
 
     if (filter.photoId) {
@@ -77,7 +79,7 @@ export async function claimEmailSend(
       return true; // No identifier to dedup on — allow sending
     }
 
-    // Atomic upsert: { new: false } returns the OLD doc (null if just inserted)
+    // Atomic upsert: returnDocument "before" returns the OLD doc (null if just inserted)
     const existing = await AuditEvent.findOneAndUpdate(
       query,
       {
@@ -93,7 +95,7 @@ export async function claimEmailSend(
           },
         },
       },
-      { upsert: true, new: false }
+      { upsert: true, returnDocument: "before" }
     );
 
     // If existing is null, the document was just created — we own the claim
@@ -102,6 +104,31 @@ export async function claimEmailSend(
     console.error("[AUDIT] claimEmailSend error (fail-open):", err);
     // Fail-open: allow sending to avoid blocking emails entirely
     return true;
+  }
+}
+
+/**
+ * Number of logged failed sends for an email — callers stop retrying after a few,
+ * so a permanently bad address isn't retried by every webhook / reconcile run.
+ */
+export async function countFailedEmailSends(
+  filter: { photoId?: string; orderId?: any },
+  template: string
+): Promise<number> {
+  try {
+    await dbConnect();
+    const query: Record<string, any> = {
+      eventType: "email_sent",
+      "metadata.template": template,
+      "metadata.status": "failed",
+    };
+    if (filter.photoId) query.photoId = filter.photoId.toString();
+    else if (filter.orderId) query.orderId = filter.orderId;
+    else return 0;
+    return await AuditEvent.countDocuments(query);
+  } catch (err) {
+    console.error("[AUDIT] countFailedEmailSends error:", err);
+    return 0;
   }
 }
 

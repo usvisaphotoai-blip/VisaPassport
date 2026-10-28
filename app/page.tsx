@@ -269,25 +269,7 @@ export default async function Home() {
                   </p>
                 </div>
               </Link>
-              <Link 
-                href="/singapore-passport-photo"
-                className="group bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 hover:border-lime-400 hover:shadow-md transition-all flex flex-col justify-between"
-              >
-                <div>
-                  <div className="flex items-center gap-2.5 mb-2">
-                    <div className="w-7 h-7 sm:w-8 sm:h-8 bg-lime-100/80 rounded-lg flex items-center justify-center text-sm sm:text-base shrink-0 group-hover:scale-105 transition-transform">
-                      🇸🇬
-                    </div>
-                    <h3 className="font-bold text-xs sm:text-sm text-slate-900 group-hover:text-lime-700 transition-colors line-clamp-1 leading-snug">
-                      Singapore Passport Photo
-                    </h3>
-                  </div>
-                  <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">
-                    Official 35 × 45 mm (413 × 531 px) ICA-approved photo maker with instant background whitening.
-                  </p>
-                </div>
-              </Link>
-              <Link 
+              <Link
                 href="/resize-passport-photo-singapore"
                 className="group bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 hover:border-lime-400 hover:shadow-md transition-all flex flex-col justify-between"
               >
@@ -323,8 +305,8 @@ export default async function Home() {
                   </p>
                 </div>
               </Link>
-              <Link 
-                href="/singapore-passport-photo"
+              <Link
+                href="/resize-passport-photo-singapore"
                 className="group bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 hover:border-lime-400 hover:shadow-md transition-all flex flex-col justify-between"
               >
                 <div>
@@ -333,11 +315,11 @@ export default async function Home() {
                       🇸🇬
                     </div>
                     <h3 className="font-bold text-xs sm:text-sm text-slate-900 group-hover:text-lime-700 transition-colors line-clamp-1 leading-snug">
-                      Singapore Passport Photo Maker
+                      Singapore Passport Photo Resizer
                     </h3>
                   </div>
                   <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">
-                    Make 35 × 45 mm (413 × 531 px) biometric photos with pure white background for MyICA online.
+                    Resize to 35 × 45 mm (413 × 531 px) with pure white background for MyICA online.
                   </p>
                 </div>
               </Link>

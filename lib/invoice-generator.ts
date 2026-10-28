@@ -195,11 +195,18 @@ export async function generateInvoiceForPayment(
     const docTitle = spec.name || "Passport Photo";
     const isExpert = Boolean(order?.isExpert || photo?.isExpert);
 
-    const serviceTitle = isExpert
+    // Standalone products (HD print sheet, instant download) carry their own line item
+    const product = payment.metadata?.product as { name?: string; description?: string } | undefined;
+
+    const serviceTitle = product?.name
+      ? product.name
+      : isExpert
       ? `${countryName} (${docTitle}) - Expert Manual Review & Biometric Editing`
       : `${countryName} (${docTitle}) - AI Biometric Photo & Print Template`;
 
-    const serviceDescription = isExpert
+    const serviceDescription = product?.name
+      ? product.description || ""
+      : isExpert
       ? `Precision biometric validation, expert manual photo review, AI background enhancement, high-resolution digital master (${spec.width_px}x${spec.height_px}px), and ready-to-cut A4 printable template.`
       : `Instant biometric compliance validation, AI background enhancement, official spec formatting (${spec.width_px}x${spec.height_px}px, ${spec.dpi || 300} DPI), and downloadable 20-photo A4 print template.`;
 
@@ -238,7 +245,11 @@ export async function generateInvoiceForPayment(
     }
 
     const processingEvent = auditEvents.find((e) => e.eventType === "processing");
-    const emailEvent = auditEvents.find((e) => e.eventType === "email_sent" && e.metadata?.status === "sent");
+    // Delivery evidence only — not payment-failed notices or other mail
+    const DELIVERY_TEMPLATES = ["delivery", "expert_order", "direct_delivery", "tax_invoice"];
+    const emailEvent = auditEvents.find(
+      (e) => e.eventType === "email_sent" && e.metadata?.status === "sent" && DELIVERY_TEMPLATES.includes(e.metadata?.template)
+    );
     const downloadEvents = auditEvents.filter((e) => e.eventType === "download");
 
     const firstDownload = downloadEvents[0];
@@ -319,7 +330,7 @@ export async function generateInvoiceForPayment(
       existingInvoice.customerName = customerName;
       existingInvoice.customerEmail = customerEmail;
       existingInvoice.customerPhone = customerPhone;
-      existingInvoice.customerCountry = countryName;
+      existingInvoice.customerCountry = product?.name ? undefined : countryName;
       existingInvoice.amount = total;
       existingInvoice.currency = currency;
       existingInvoice.subtotal = subtotal;
@@ -345,7 +356,7 @@ export async function generateInvoiceForPayment(
           customerName,
           customerEmail,
           customerPhone,
-          customerCountry: countryName,
+          customerCountry: product?.name ? undefined : countryName,
           amount: total,
           currency,
           subtotal,

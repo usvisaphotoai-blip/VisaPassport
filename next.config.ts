@@ -298,7 +298,13 @@ const nextConfig: NextConfig = {
       // Programmatic Singapore passport page duplicated the hand-built hub's intent ("Singapore passport photo maker")
       {
         source: "/singapore-passport-photo-editor",
-        destination: "/singapore-passport-photo",
+        destination: "/resize-passport-photo-singapore",
+        permanent: true,
+      },
+      // Singapore passport photo hub retired, consolidated into the resize tool
+      {
+        source: "/singapore-passport-photo",
+        destination: "/resize-passport-photo-singapore",
         permanent: true,
       },
     ];

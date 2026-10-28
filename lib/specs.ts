@@ -127,6 +127,15 @@ export const CA_DOC_NAMES: Record<string, string> = {
   "canada-security": "Canada Security Guard Licence",
 };
 
+export const DE_DOC_NAMES: Record<string, string> = {
+  "germany-id-card": "Germany ID Card (Personalausweis)",
+  "germany-driving-license": "Germany Driving Licence (Führerschein)",
+  "germany-health-insurance": "Germany Health Insurance Card (eGK)",
+  "germany-cv": "Germany CV / Application Photo (Bewerbungsfoto)",
+  "germany-student-id": "Germany Student ID (Studierendenausweis)",
+  "germany-visa": "Germany Visa",
+};
+
 export function getSpecById(id: string): CountrySpec | undefined {
   if (!id) return undefined;
   const cleanId = id.toLowerCase().trim();
@@ -161,6 +170,19 @@ export function getSpecById(id: string): CountrySpec | undefined {
         ...caSpec,
         id: cleanId,
         name: customName || caSpec.name,
+      };
+    }
+  }
+
+  // 0.3 Germany sub-documents (/de tool) all share the germany-passport spec
+  if (cleanId.startsWith("germany-")) {
+    const deSpec = allSpecs.find((s) => s.id === "germany-passport");
+    if (deSpec) {
+      const customName = DE_DOC_NAMES[cleanId];
+      return {
+        ...deSpec,
+        id: cleanId,
+        name: customName || deSpec.name,
       };
     }
   }

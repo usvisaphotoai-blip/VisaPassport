@@ -1,8 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
-import HomeSections from "./HomeSections";
-import HomeFAQ from "./HomeFAQ";
 import LongformSection from "./LongformSection";      // ← NEW
+import StickyCta from "./StickyCta";
 import { SpecEntry, getSpecH1, getSpecMetaDescription } from "../../lib/slug-utils";
 import "../home.css";
 import { generateLongformContent } from "@/lib/content-weaver";
@@ -98,8 +97,7 @@ export default function ProgrammaticLandingPage({ spec, slug }: Props) {
               <div className="flex flex-col sm:flex-row gap-4 mb-8">
                 <Link
                   href={`/passport-photo-online?type=${spec.id}`}
-                  className="inline-flex items-center justify-center bg-lime-700 hover:bg-lime-800 text-white text-sm font-semibold px-6 py-3 rounded transition-colors"
-    
+                  className="relative group inline-flex items-center justify-center overflow-hidden bg-lime-700 hover:bg-lime-800 text-white text-sm font-semibold px-6 py-3 rounded transition-colors"
                 >
                   <span className="relative z-10 flex items-center">
                     Upload Your Photo Now
@@ -107,11 +105,7 @@ export default function ProgrammaticLandingPage({ spec, slug }: Props) {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                     </svg>
                   </span>
-                  <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-                  <span className="absolute -top-1 -right-1 flex h-4 w-4">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-4 w-4 bg-indigo-500"></span>
-                  </span>
+                  <div className="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out"></div>
                 </Link>
               </div>
 
@@ -127,8 +121,7 @@ export default function ProgrammaticLandingPage({ spec, slug }: Props) {
               </div>
             </div>
 
-            <div className="w-full lg:w-auto flex flex-col items-center gap-3">
-          
+            <div className="relative w-full lg:w-auto flex flex-col items-center gap-3">
               <Image
                 src={spec.hero_photo || "/us_non_imigrant.png"}
                 alt={`Official ${countryName} ${docName} photo compliance example`}
@@ -153,17 +146,53 @@ export default function ProgrammaticLandingPage({ spec, slug }: Props) {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
-              { label: "Dimensions", val: `${spec.width_mm} × ${spec.height_mm} mm` },
-              { label: "Background", val: spec.bg_color },
-              { label: "Head Size", val: `${spec.head_min_pct}% - ${spec.head_max_pct}%` },
-              { label: "Resolution", val: `${spec.width_px} × ${spec.height_px} px` },
+              {
+                label: "Dimensions",
+                val: `${spec.width_mm} × ${spec.height_mm} mm`,
+                icon: (
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 8V4h4M16 4h4v4M20 16v4h-4M8 20H4v-4" />
+                ),
+              },
+              {
+                label: "Background",
+                val: spec.bg_color,
+                icon: (
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 4h16v16H4z" />
+                ),
+              },
+              {
+                label: "Head Size",
+                val: `${spec.head_min_pct}% - ${spec.head_max_pct}%`,
+                icon: (
+                  <>
+                    <circle cx="12" cy="8" r="4" strokeLinecap="round" strokeLinejoin="round" />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6" />
+                  </>
+                ),
+              },
+              {
+                label: "Resolution",
+                val: `${spec.width_px} × ${spec.height_px} px`,
+                icon: (
+                  <>
+                    <rect x="3" y="5" width="18" height="14" rx="2" strokeLinecap="round" strokeLinejoin="round" />
+                    <circle cx="9" cy="11" r="1.5" />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 16l-5-4-4 3-3-2-3 3" />
+                  </>
+                ),
+              },
             ].map((s, i) => (
-              <div key={i} className="bg-white p-6 rounded-xl border border-lime-400 text-center ">
-                <div className="w-10 h-10 mx-auto rounded-full bg-indigo-50 flex items-center justify-center mb-4">
-                  <div className="w-4 h-4 rounded-full bg-indigo-500 opacity-20"></div>
+              <div
+                key={i}
+                className="bg-white p-6 rounded-xl border border-slate-200 text-center transition-colors hover:border-slate-300"
+              >
+                <div className="w-9 h-9 mx-auto rounded-lg bg-slate-50 flex items-center justify-center mb-4">
+                  <svg className="w-4.5 h-4.5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
+                    {s.icon}
+                  </svg>
                 </div>
-                <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">{s.label}</p>
-                <p className="text-lg md:text-xl font-black text-slate-900">{s.val}</p>
+                <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-wide mb-2">{s.label}</p>
+                <p className="text-lg font-bold text-slate-900">{s.val}</p>
               </div>
             ))}
           </div>
@@ -225,21 +254,7 @@ export default function ProgrammaticLandingPage({ spec, slug }: Props) {
    
 
       {/* ── STICKY CTA ────────────────────────────────────── */}
-      <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-md px-4 pointer-events-none">
-        <Link
-          href={`/passport-photo-online?type=${spec.id}`}
-          className="pointer-events-auto flex items-center justify-between w-full bg-slate-900 text-white p-2.5 pl-6 rounded-2xl shadow-2xl hover:bg-slate-800 transition-all border border-slate-700 hover:-translate-y-1 transform group"
-        >
-          <div className="flex flex-col">
-            <span className="font-bold text-sm">  Create {countryName} Passport size Photo</span>
-            <span className="text-[10px] text-slate-400 font-medium animate-pulse">No signup required</span>
-          </div>
-          <span className="relative bg-indigo-600 group-hover:bg-indigo-500 transition-colors px-5 py-2.5 rounded-xl text-sm font-black shadow-[0_4px_14px_0_rgb(79,70,229,0.39)] overflow-hidden">
-            <span className="relative z-10">Upload photo</span>
-            <span className="absolute inset-0 bg-white/10 animate-pulse"></span>
-          </span>
-        </Link>
-      </div>
+      <StickyCta href={`/passport-photo-online?type=${spec.id}`} countryName={countryName} docName={docName} />
     </main>
   );
 }

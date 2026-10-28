@@ -8,13 +8,6 @@ interface SingaporeRelatedLinksProps {
 // Anchor text names the destination's own keyword so each Singapore page keeps its intent.
 const singaporeLinks = [
   {
-    href: "/singapore-passport-photo",
-    title: "Singapore Passport Photo Maker",
-    badge: "Make a Photo",
-    icon: "🇸🇬",
-    desc: "Make a Singapore passport photo online on a white background, free to preview.",
-  },
-  {
     href: "/singapore-ica-photo",
     title: "ICA Photo Requirements",
     badge: "Rules",

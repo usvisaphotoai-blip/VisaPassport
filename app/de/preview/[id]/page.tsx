@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import dbConnect from "@/lib/mongodb";
 import Photo from "@/models/Photo";
+import { reconcilePhotoPayment } from "@/lib/payment-reconcile";
 import PreviewClientDe from "./PreviewClientDe";
 import { getLocalPrice } from "@/lib/currency";
 import { getServerSession } from "next-auth/next";
@@ -25,6 +26,11 @@ export default async function DePreviewPage(props: { params: Promise<{ id: strin
 
   if (!photoRecord) {
     redirect("/de/passbild-online");
+  }
+
+  // Paid at Razorpay but never confirmed here (tab closed during checkout) — recover now
+  if (photoRecord.status !== "paid" && photoRecord.razorpayOrderId && (await reconcilePhotoPayment(photoRecord))) {
+    photoRecord = (await Photo.findById(params.id)) || photoRecord;
   }
 
   const session = await getServerSession(authOptions);

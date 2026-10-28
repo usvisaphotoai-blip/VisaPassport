@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import dbConnect from "@/lib/mongodb";
 import Photo from "@/models/Photo";
+import { reconcilePhotoPayment } from "@/lib/payment-reconcile";
 import PreviewClient from "./PreviewClient";
 import { getLocalPrice } from "@/lib/currency";
 import { getServerSession } from "next-auth/next";
@@ -22,6 +23,11 @@ export default async function PreviewPage(props: { params: Promise<{ id: string 
 
   if (!photoRecord) {
     redirect("/passport-photo-online");
+  }
+
+  // Paid at Razorpay but never confirmed here (tab closed during checkout) — recover now
+  if (photoRecord.status !== "paid" && photoRecord.razorpayOrderId && (await reconcilePhotoPayment(photoRecord))) {
+    photoRecord = (await Photo.findById(params.id)) || photoRecord;
   }
 
   const session = await getServerSession(authOptions);

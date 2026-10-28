@@ -145,7 +145,7 @@ export default function SingaporeIcaPhotoPage() {
 
       <SingaporeBreadcrumb
         trail={[
-          { label: "Singapore Passport Photo", href: "/singapore-passport-photo" },
+          { label: "Singapore Passport Photo", href: "/resize-passport-photo-singapore" },
           { label: "ICA Photo Requirements" },
         ]}
       />
@@ -308,8 +308,8 @@ export default function SingaporeIcaPhotoPage() {
           </div>
           <p className="text-sm text-slate-600 text-center mt-8">
             Making a passport photo? Use the{" "}
-            <Link href="/singapore-passport-photo" className="text-emerald-700 font-semibold underline">
-              Singapore passport photo maker
+            <Link href="/resize-passport-photo-singapore" className="text-emerald-700 font-semibold underline">
+              Singapore passport photo resizer
             </Link>
             . Applying for a visa to visit Singapore? See the{" "}
             <Link href="/singapore-visa-photo-editor" className="text-emerald-700 font-semibold underline">

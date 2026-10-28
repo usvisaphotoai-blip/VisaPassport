@@ -1,18 +1,20 @@
 import { NextResponse } from "next/server";
 import crypto from "crypto";
+import mongoose from "mongoose";
 import dbConnect from "@/lib/mongodb";
 import Photo from "@/models/Photo";
 import ExpertOrder from "@/models/ExpertOrder";
-import PrintSheetOrder from "@/models/PrintSheetOrder";
 import Order from "@/models/Order";
 import Payment from "@/models/Payment";
 import Dispute from "@/models/Dispute";
 import { sendEmail } from "@/lib/mail";
-import { renderPhotoDeliveryEmail, renderExpertOrderEmail } from "@/lib/email-templates/photo-delivery";
-import { normalizeEmailLocale, localizedDocNames, localizedPreviewPath, getEmailStrings } from "@/lib/email-templates/email-i18n";
 import { getSafeSpec } from "@/lib/specs";
 import { sendGA4PurchaseEvent } from "@/lib/ga4";
 import { logAuditEvent, claimEmailSend, releaseEmailClaim } from "@/lib/audit";
+import { fulfillPhotoPayment } from "@/lib/photo-fulfillment";
+import { fulfillProductPayment } from "@/lib/product-fulfillment";
+import { PRINT_SHEET_PRODUCT, PRINT_SHEET_PRODUCT_NAME } from "@/lib/print-sheet-pricing";
+import { IN_CONVERTER_PRODUCT, IN_CONVERTER_PRODUCT_NAME } from "@/lib/in-converter-checkout";
 import { autoGenerateAndStoreInvoice } from "@/lib/invoice-automation";
 import { formatCurrency, SUPPORTED_CURRENCIES } from "@/lib/currency-formatter";
 import { getPaymentFailureInfo, renderPaymentFailedEmail } from "@/lib/payment-failure";
@@ -59,303 +61,16 @@ export async function POST(req: Request) {
       await dbConnect();
 
       if (photoId) {
-        const photo = await Photo.findById(photoId);
-        if (photo && photo.status !== "paid") {
-          photo.status = "paid";
-          photo.razorpayPaymentId = paymentEntity.id;
-
-          const userEmail = (photo as any).guestEmail || paymentEntity.email;
-
-          // Update or create permanent Order record
-          let permanentOrder = photo.orderId ? await Order.findById(photo.orderId) : null;
-          if (!permanentOrder) {
-            permanentOrder = await Order.findOne({
-              $or: [
-                { "metadata.razorpayOrderId": paymentEntity.order_id },
-                { photoId: photo._id },
-              ],
-            });
-          }
-
-          if (permanentOrder) {
-            permanentOrder.status = "paid";
-            await permanentOrder.save();
-          } else {
-            permanentOrder = await Order.create({
-              orderNumber: `ORD-${Date.now()}-${Math.random().toString(36).substring(2, 7).toUpperCase()}`,
-              userId: photo.userId,
-              guestEmail: userEmail || paymentEntity.email || "customer@pixpassport.com",
-              documentType: photo.documentType,
-              isExpert: Boolean(photo.isExpert),
-              amount: paymentEntity.amount ? paymentEntity.amount / 100 : (photo.isExpert ? 9.99 : 6.99),
-              currency: paymentEntity.currency || "USD",
-              status: "paid",
-              photoId: photo._id,
-              metadata: { razorpayOrderId: paymentEntity.order_id },
-            });
-          }
-
-          photo.orderId = permanentOrder._id;
-          await photo.save();
-
-          // Update or create permanent Payment record
-          let permanentPayment = await Payment.findOne({ gatewayPaymentId: paymentEntity.id });
-          if (!permanentPayment && paymentEntity.order_id) {
-            permanentPayment = await Payment.findOne({ gatewayOrderId: paymentEntity.order_id });
-          }
-
-          if (permanentPayment) {
-            permanentPayment.status = "captured";
-            permanentPayment.gatewayPaymentId = paymentEntity.id;
-            permanentPayment.orderId = permanentOrder._id;
-            if (paymentEntity.method) permanentPayment.method = paymentEntity.method;
-            if (userEmail) permanentPayment.email = userEmail;
-            await permanentPayment.save();
-          } else {
-            permanentPayment = await Payment.create({
-              orderId: permanentOrder._id,
-              photoId: photo._id,
-              gateway: "razorpay",
-              gatewayOrderId: paymentEntity.order_id || `order_${photo._id}`,
-              gatewayPaymentId: paymentEntity.id,
-              amount: paymentEntity.amount ? paymentEntity.amount / 100 : permanentOrder.amount,
-              currency: paymentEntity.currency || permanentOrder.currency,
-              status: "captured",
-              method: paymentEntity.method,
-              email: userEmail || paymentEntity.email,
-              metadata: paymentEntity,
-            });
-          }
-
-          // Fire GA4 Purchase Event
-          if (notes.gaClientId) {
-            const spec = getSafeSpec(photo.documentType);
-            await sendGA4PurchaseEvent({
-              clientId: notes.gaClientId,
-              transactionId: paymentEntity.id,
-              amount: paymentEntity.amount / 100,
-              currency: paymentEntity.currency,
-              items: [
-                {
-                  item_id: photoId,
-                  item_name: `${spec.name || "Passport Photo"} ${photo.isExpert ? "(Expert Review)" : "(Standard)"}`,
-                  price: paymentEntity.amount / 100,
-                  quantity: 1,
-                  item_category: photo.isExpert ? "Expert Edit" : "Standard Photo",
-                },
-              ],
-            });
-          }
-
-          // Auto-generate invoice silently in background and upload to Cloudinary
-          let invoiceData: any = null;
-          let invoicePdfBuffer: Buffer | undefined = undefined;
-          let invoiceCloudinaryUrl: string | undefined = undefined;
-
-          try {
-            const invoiceAutoRes = await autoGenerateAndStoreInvoice({
-              paymentIdOrGatewayId: paymentEntity.id || permanentPayment._id.toString(),
-              userEmail,
-              actor: "webhook",
-            });
-
-            if (invoiceAutoRes.success && invoiceAutoRes.invoice) {
-              invoiceData = invoiceAutoRes.invoice;
-              invoicePdfBuffer = invoiceAutoRes.pdfBuffer;
-              invoiceCloudinaryUrl = invoiceAutoRes.cloudinaryUrl;
-              console.log(`[WEBHOOK] Background invoice created: ${invoiceData.invoiceNumber}, Cloudinary: ${invoiceCloudinaryUrl || "Local"}`);
-            }
-          } catch (invErr) {
-            console.error("[WEBHOOK] Background invoice generation warning (non-fatal):", invErr);
-          }
-
-          // Bug 1 fix: atomic email claim — prevents duplicate emails from concurrent verify + webhook
-          const emailTemplate = photo.isExpert ? "expert_order" : "delivery";
-          const canSendEmail = await claimEmailSend(
-            { photoId: photo._id.toString() },
-            emailTemplate,
-            "webhook"
-          );
-
-          if (!canSendEmail) {
-            console.log(`[WEBHOOK] Email already claimed for photo ${photoId}, skipping duplicate`);
-            return NextResponse.json({ success: true });
-          }
-
-          if (userEmail) {
-            const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://pixpassport.com';
-            const photoDownloadUrl = photo.secureUrl || '';
-            // Language the customer bought in (stored at create-order)
-            const emailLocale = normalizeEmailLocale(photo.locale || notes.locale);
-            const previewLink = `${appUrl}${localizedPreviewPath(emailLocale, String(photoId))}`;
-            const spec = getSafeSpec(photo.documentType);
-            const documentName = spec.name || "Passport Photo";
-            const countryName = spec.country || spec.name || "Passport Photo";
-            // Customer-facing names in the buyer's language (admin email stays English)
-            const localNames = localizedDocNames(spec, photo.documentType, emailLocale);
-            const t = getEmailStrings(emailLocale);
-            const invoicePdfDownloadUrl = invoiceCloudinaryUrl || (invoiceData ? `${appUrl}/api/invoices/${invoiceData._id}/download` : "");
-            
-            try {
-              if (photo.isExpert) {
-                const adminHtml = `
-                  <h2>New Expert Edit Order (Photo Upgrade - Webhook)</h2>
-                  <p><strong>Photo ID:</strong> ${photo._id}</p>
-                  <p><strong>Customer Email:</strong> ${userEmail}</p>
-                  <p><strong>Selected Country:</strong> ${countryName}</p>
-                  <p><strong>Document Type:</strong> ${documentName}</p>
-                  ${invoiceData ? `<p><strong>Tax Invoice:</strong> ${invoiceData.invoiceNumber} (${invoiceData.currency} ${invoiceData.total})</p>` : ''}
-                  <p><strong>Photos:</strong></p>
-                  <ul>
-                    ${photo.originalUrl ? `<li><strong>Original Image:</strong> <a href="${photo.originalUrl}">${photo.originalUrl}</a></li>` : ''}
-                    <li><strong>Processed Image:</strong> <a href="${photo.secureUrl}">${photo.secureUrl}</a></li>
-                  </ul>
-                `;
-
-                const adminEmail = process.env.ADMIN_EMAILS || process.env.RESEND_REPLY_TO;
-                if (adminEmail) {
-                  await sendEmail({
-                    to: adminEmail,
-                    subject: `New Expert Edit Order: ${photo._id} (${countryName})`,
-                    html: adminHtml,
-                  });
-                }
-
-                const mailRes = await sendEmail({
-                  to: userEmail,
-                  bcc: 'usvisaphotoai@gmail.com',
-                  subject: t.expertSubject,
-                  html: renderExpertOrderEmail({
-                    appUrl,
-                    countryName: localNames.countryName,
-                    documentName: localNames.documentName,
-                    originalUrl: photo.originalUrl,
-                    invoice: invoiceData,
-                    invoiceAttached: !!invoicePdfBuffer,
-                    invoiceDownloadUrl: invoicePdfDownloadUrl,
-                    locale: emailLocale,
-                  }),
-                  attachments: invoicePdfBuffer && invoiceData ? [
-                    {
-                      filename: `Tax-Invoice-${invoiceData.invoiceNumber}.pdf`,
-                      content: invoicePdfBuffer,
-                      contentType: "application/pdf",
-                    }
-                  ] : undefined,
-                });
-                if (mailRes.success) {
-                  console.log(`[WEBHOOK] Expert emails sent successfully for photo ${photoId}`);
-                  await logAuditEvent({
-                    eventType: "email_sent",
-                    orderId: permanentOrder?._id,
-                    paymentId: permanentPayment?._id,
-                    photoId: photo._id,
-                    actor: "webhook",
-                    metadata: {
-                      recipient: userEmail,
-                      subject: t.expertSubject,
-                      template: "expert_order",
-                      locale: emailLocale,
-                      invoiceNumber: invoiceData?.invoiceNumber,
-                      status: "sent",
-                    },
-                  });
-                } else {
-                  console.error(`[WEBHOOK] Expert email returned failure for photo ${photoId}:`, mailRes.error);
-                  await releaseEmailClaim({ photoId: photo._id.toString() }, emailTemplate);
-                  await logAuditEvent({
-                    eventType: "email_sent",
-                    orderId: permanentOrder?._id,
-                    paymentId: permanentPayment?._id,
-                    photoId: photo._id,
-                    actor: "webhook",
-                    metadata: {
-                      recipient: userEmail,
-                      template: "expert_order",
-                      status: "failed",
-                      error: String(mailRes.error),
-                    },
-                  });
-                }
-              } else {
-                const deliveryMailRes = await sendEmail({
-                  to: userEmail,
-                  bcc: 'usvisaphotoai@gmail.com',
-                  subject: t.deliverySubject(localNames.countryName, localNames.documentName),
-                  html: renderPhotoDeliveryEmail({
-                    appUrl,
-                    countryName: localNames.countryName,
-                    documentName: localNames.documentName,
-                    spec,
-                    photoUrl: photoDownloadUrl,
-                    originalUrl: photo.originalUrl,
-                    previewLink,
-                    invoice: invoiceData,
-                    invoiceAttached: !!invoicePdfBuffer,
-                    invoiceDownloadUrl: invoicePdfDownloadUrl,
-                    locale: emailLocale,
-                  }),
-                  attachments: invoicePdfBuffer && invoiceData ? [
-                    {
-                      filename: `Tax-Invoice-${invoiceData.invoiceNumber}.pdf`,
-                      content: invoicePdfBuffer,
-                      contentType: "application/pdf",
-                    }
-                  ] : undefined,
-                });
-                // Bug 8/9 fix: check sendEmail return value before logging "sent"
-                if (deliveryMailRes.success) {
-                  console.log(`[WEBHOOK] Email with invoice attached sent successfully for photo ${photoId}`);
-                  await logAuditEvent({
-                    eventType: "email_sent",
-                    orderId: permanentOrder?._id,
-                    paymentId: permanentPayment?._id,
-                    photoId: photo._id,
-                    actor: "webhook",
-                    metadata: {
-                      recipient: userEmail,
-                      subject: t.deliverySubject(localNames.countryName, localNames.documentName),
-                      template: "delivery",
-                      locale: emailLocale,
-                      invoiceNumber: invoiceData?.invoiceNumber,
-                      status: "sent",
-                    },
-                  });
-                } else {
-                  console.error(`[WEBHOOK] Delivery email returned failure for photo ${photoId}:`, deliveryMailRes.error);
-                  await releaseEmailClaim({ photoId: photo._id.toString() }, emailTemplate);
-                  await logAuditEvent({
-                    eventType: "email_sent",
-                    orderId: permanentOrder?._id,
-                    paymentId: permanentPayment?._id,
-                    photoId: photo._id,
-                    actor: "webhook",
-                    metadata: {
-                      recipient: userEmail,
-                      template: "delivery",
-                      status: "failed",
-                      error: String(deliveryMailRes.error),
-                    },
-                  });
-                }
-              }
-            } catch (err) {
-              console.error(`[WEBHOOK] Failed to send email for photo ${photoId}:`, err);
-              await releaseEmailClaim({ photoId: photo._id.toString() }, emailTemplate);
-              await logAuditEvent({
-                eventType: "email_sent",
-                orderId: permanentOrder?._id,
-                paymentId: permanentPayment?._id,
-                photoId: photo._id,
-                actor: "webhook",
-                metadata: {
-                  recipient: userEmail,
-                  status: "failed",
-                  error: String(err),
-                },
-              });
-            }
-          }
+        // Always run fulfillment (idempotent): it also completes orders whose browser
+        // verify marked the photo paid but crashed before the invoice / email.
+        if (paymentEntity.id) {
+          await fulfillPhotoPayment({
+            photoId,
+            razorpayOrderId: paymentEntity.order_id,
+            razorpayPaymentId: paymentEntity.id,
+            actor: "webhook",
+            paymentEntity,
+          });
         }
       } else if (expertOrderId) {
         const order = await ExpertOrder.findById(expertOrderId);
@@ -574,13 +289,34 @@ export async function POST(req: Request) {
             });
           }
         }
-      } else if (notes.printSheetOrderId) {
-        // Backup for HD print sheet payments whose in-browser verify never ran
-        const sheetOrder = await PrintSheetOrder.findById(notes.printSheetOrderId);
-        if (sheetOrder && sheetOrder.status !== "paid") {
-          sheetOrder.status = "paid";
-          sheetOrder.razorpayPaymentId = paymentEntity.id;
-          await sheetOrder.save();
+      } else if ((notes.printSheetOrderId || notes.inConverterOrderId) && paymentEntity.id) {
+        // HD print sheet / instant-download payments: mark paid, record payment, invoice + receipt email
+        const isPrintSheet = Boolean(notes.printSheetOrderId);
+        const { firstToMarkPaid } = await fulfillProductPayment({
+          kind: isPrintSheet ? "print_sheet" : "in_converter",
+          productOrderId: notes.printSheetOrderId || notes.inConverterOrderId,
+          razorpayPaymentId: paymentEntity.id,
+          paymentEntity,
+          actor: "webhook",
+        });
+        // Browser verify never ran for this order, so send the server-side GA4 purchase here
+        if (firstToMarkPaid && notes.gaClientId) {
+          const value = paymentEntity.amount / 10 ** (SUPPORTED_CURRENCIES[String(paymentEntity.currency).toUpperCase()]?.decimals ?? 2);
+          await sendGA4PurchaseEvent({
+            clientId: notes.gaClientId,
+            transactionId: paymentEntity.id,
+            amount: value,
+            currency: paymentEntity.currency,
+            items: [
+              {
+                item_id: isPrintSheet ? PRINT_SHEET_PRODUCT : IN_CONVERTER_PRODUCT,
+                item_name: isPrintSheet ? PRINT_SHEET_PRODUCT_NAME : IN_CONVERTER_PRODUCT_NAME,
+                price: value,
+                quantity: 1,
+                item_category: isPrintSheet ? "Print Sheet" : "Instant Download",
+              },
+            ],
+          }).catch((gaErr) => console.error("[WEBHOOK] GA4 event warning:", gaErr));
         }
       }
     } else if (event.event === "payment.failed") {
@@ -607,18 +343,21 @@ export async function POST(req: Request) {
 
       await dbConnect();
 
-      if (photoId) {
-        const photo = await Photo.findById(photoId);
-        if (photo && photo.status !== "paid") {
-          photo.status = "payment_failed";
-          await photo.save();
-
-          // Update permanent Order & Payment status
+      if (photoId && mongoose.isValidObjectId(photoId)) {
+        // Atomic: a late failed-attempt webhook must never downgrade a photo that got paid
+        // (customers often retry a declined card inside the same Razorpay order)
+        const photo = await Photo.findOneAndUpdate(
+          { _id: photoId, status: { $ne: "paid" } },
+          { $set: { status: "payment_failed" } },
+          { returnDocument: "after" }
+        );
+        if (photo) {
+          // Update permanent Order & Payment status — never overwrite paid / captured records
           if (photo.orderId) {
-            await Order.findByIdAndUpdate(photo.orderId, { status: "failed" });
+            await Order.findOneAndUpdate({ _id: photo.orderId, status: { $ne: "paid" } }, { status: "failed" });
           }
           if (paymentEntity.order_id) {
-            await Payment.findOneAndUpdate({ gatewayOrderId: paymentEntity.order_id }, { status: "failed" });
+            await Payment.findOneAndUpdate({ gatewayOrderId: paymentEntity.order_id, status: { $ne: "captured" } }, { status: "failed" });
           }
 
           const userEmail = (photo as any).guestEmail || paymentEntity.email;
@@ -669,14 +408,16 @@ export async function POST(req: Request) {
           }
         }
       } else if (expertOrderId) {
-        const order = await ExpertOrder.findById(expertOrderId);
-        if (order && order.status !== "paid") {
-          order.status = "payment_failed";
-          await order.save();
+        const order = await ExpertOrder.findOneAndUpdate(
+          { _id: expertOrderId, status: { $ne: "paid" } },
+          { $set: { status: "payment_failed" } },
+          { returnDocument: "after" }
+        );
+        if (order) {
 
-          await Order.findOneAndUpdate({ "metadata.expertOrderId": expertOrderId }, { status: "failed" });
+          await Order.findOneAndUpdate({ "metadata.expertOrderId": expertOrderId, status: { $ne: "paid" } }, { status: "failed" });
           if (paymentEntity.order_id) {
-            await Payment.findOneAndUpdate({ gatewayOrderId: paymentEntity.order_id }, { status: "failed" });
+            await Payment.findOneAndUpdate({ gatewayOrderId: paymentEntity.order_id, status: { $ne: "captured" } }, { status: "failed" });
           }
 
           const userEmail = order.email || paymentEntity.email;

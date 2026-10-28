@@ -7,7 +7,7 @@ export default function Footer() {
       title: "Passport & Visa Photos",
       items: [
         { label: "passport photo for indian passport", href: "/indian-passport-size-photograph" },
-        { label: "Singapore Passport Photo", href: "/singapore-passport-photo" },
+        { label: "Singapore Passport Photo", href: "/resize-passport-photo-singapore" },
         { label: "India Passport Photo", href: "/india-passport-photo-editor" },
         { label: "Canada Passport Photo", href: "/ca" },
         { label: "UK Passport Photo", href: "/uk" },

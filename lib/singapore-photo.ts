@@ -1,11 +1,10 @@
 // Shared facts + JSON-LD for the hand-built Singapore pages.
 //
 // Keyword ownership (keep it this way to avoid cannibalisation):
-//   /singapore-passport-photo        → "singapore passport photo", maker / online / size  (hub)
+//   /resize-passport-photo-singapore → "singapore passport photo", resize / convert / 400x514 pixels  (hub)
 //   /singapore-ica-photo             → "ICA photo requirements", ICA photo guidelines, NRIC / IC photo
-//   /resize-passport-photo-singapore → resize / convert / 400x514 pixels
 //   /singapore-visa-photo-editor     → Singapore visa (SAVE) photo  (programmatic [slug] page)
-// /singapore-passport-photo-editor 301s to the hub (see next.config.ts).
+// /singapore-passport-photo and /singapore-passport-photo-editor both 301 to the hub (see next.config.ts).
 //
 // Only facts stated on ica.gov.sg go in ICA_FACTS. Re-check them before editing:
 //   https://www.ica.gov.sg/photo-guidelines
@@ -35,7 +34,7 @@ export const SG_OG_IMAGE = {
   height: 630,
 };
 
-export const SG_HUB = { name: "Singapore Passport Photo", url: `${SITE}/singapore-passport-photo` };
+export const SG_HUB = { name: "Singapore Passport Photo", url: `${SITE}/resize-passport-photo-singapore` };
 
 type Crumb = { name: string; url: string };
 type Faq = { q: string; a: string };

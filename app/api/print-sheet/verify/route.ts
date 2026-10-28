@@ -3,6 +3,7 @@ import crypto from "crypto";
 import dbConnect from "@/lib/mongodb";
 import PrintSheetOrder from "@/models/PrintSheetOrder";
 import { sendGA4PurchaseEvent } from "@/lib/ga4";
+import { fulfillProductPayment } from "@/lib/product-fulfillment";
 import { PRINT_SHEET_PRODUCT, PRINT_SHEET_PRODUCT_NAME } from "@/lib/print-sheet-pricing";
 
 export async function POST(req: Request) {
@@ -43,13 +44,16 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Payment does not match this order" }, { status: 400 });
     }
 
-    const alreadyPaid = order.status === "paid";
-    order.status = "paid";
-    order.razorpayPaymentId = razorpay_payment_id;
-    await order.save();
+    // Marks paid, records the payment, generates the invoice and emails the receipt
+    const { firstToMarkPaid } = await fulfillProductPayment({
+      kind: "print_sheet",
+      productOrderId: order._id.toString(),
+      razorpayPaymentId: razorpay_payment_id,
+      actor: "system",
+    });
 
     // Server-side GA4 purchase as a backup to the client event (once per order)
-    if (!alreadyPaid) {
+    if (firstToMarkPaid) {
       sendGA4PurchaseEvent({
         clientId: gaClientId,
         transactionId: razorpay_payment_id,

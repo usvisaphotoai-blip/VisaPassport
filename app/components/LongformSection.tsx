@@ -98,60 +98,51 @@ export default function LongformSection({
                     <aside className="hidden lg:block">
                         <div className="sticky top-24">
                             {/* Card */}
-                            <div className="rounded-2xl border border-slate-100 bg-slate-50/80 backdrop-blur-sm overflow-hidden shadow-sm">
-                                <div className="px-6 py-4 border-b border-slate-100 bg-white">
-                                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">
+                            <div className="rounded-xl border border-slate-200 bg-white overflow-hidden">
+                                <div className="px-5 py-3.5 border-b border-slate-100">
+                                    <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">
                                         In this guide
                                     </p>
                                 </div>
-                                <nav className="px-4 py-4 space-y-0.5">
-                                    {tableOfContents.map((item, i) => {
+                                <nav className="py-2">
+                                    {tableOfContents.map((item) => {
                                         const isActive = activeId === item.id;
                                         return (
                                             <a
                                                 key={item.id}
                                                 href={`#${item.id}`}
                                                 className={`
-                          group flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200
+                          block border-l-2 px-5 py-2 text-sm leading-snug transition-colors duration-150
                           ${isActive
-                                                        ? "bg-indigo-600 text-white shadow-md shadow-indigo-500/30"
-                                                        : "text-slate-500 hover:text-slate-900 hover:bg-white hover:shadow-sm"
+                                                        ? "border-indigo-600 text-indigo-600 font-semibold bg-indigo-50/60"
+                                                        : "border-transparent text-slate-500 hover:text-slate-900 hover:border-slate-200"
                                                     }
                         `}
                                             >
-                                                <span
-                                                    className={`flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-black
-                            ${isActive ? "bg-white/20 text-white" : "bg-slate-200 text-slate-500 group-hover:bg-indigo-100 group-hover:text-indigo-600"}
-                          `}
-                                                >
-                                                    {i + 1}
-                                                </span>
-                                                <span className="leading-tight">{item.text}</span>
+                                                {item.text}
                                             </a>
                                         );
                                     })}
                                 </nav>
 
-                                {/* Progress pill */}
-                                <div className="px-6 py-4 border-t border-slate-100 bg-white">
+                                {/* Progress */}
+                                <div className="px-5 py-4 border-t border-slate-100">
                                     <div className="flex items-center justify-between mb-2">
-                                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                                        <span className="text-[11px] font-medium text-slate-400">
                                             Reading progress
                                         </span>
-                                        <span className="text-[10px] font-black text-indigo-600">
+                                        <span className="text-[11px] font-semibold text-slate-500">
                                             {Math.round(readProgress)}%
                                         </span>
                                     </div>
-                                    <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                                    <div className="h-1 bg-slate-100 rounded-full overflow-hidden">
                                         <div
-                                            className="h-full bg-gradient-to-r from-indigo-500 to-violet-500 rounded-full transition-all duration-300"
+                                            className="h-full bg-indigo-500 rounded-full transition-all duration-300"
                                             style={{ width: `${readProgress}%` }}
                                         />
                                     </div>
                                 </div>
                             </div>
-
-
                         </div>
                     </aside>
 

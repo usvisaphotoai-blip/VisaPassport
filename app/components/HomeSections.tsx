@@ -381,8 +381,8 @@ export default function HomeSections({
         </p>
         <p className="hc-seo-p">
           <strong>Singapore &amp; Asia-Pacific applicants:</strong> prepare your MyICA submissions with our dedicated{" "}
-          <a href="/singapore-passport-photo" style={{ color: "#2f6f57", fontWeight: 600 }}>
-            Singapore passport photo maker
+          <a href="/resize-passport-photo-singapore" style={{ color: "#2f6f57", fontWeight: 600 }}>
+            Singapore passport photo resizer
           </a>
           , resize any selfie with our{" "}
           <a href="/resize-passport-photo-singapore" style={{ color: "#2f6f57", fontWeight: 600 }}>
@@ -407,7 +407,7 @@ export default function HomeSections({
           to print multiple copies of your passport photo on a single A4
           sheet at any pharmacy or print shop. Explore country-specific tools
           in our{" "}
-          <a href="/singapore-passport-photo" style={{ color: "#2f6f57", fontWeight: 600 }}>
+          <a href="/resize-passport-photo-singapore" style={{ color: "#2f6f57", fontWeight: 600 }}>
             Singapore
           </a>
           ,{" "}
