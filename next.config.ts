@@ -289,6 +289,12 @@ const nextConfig: NextConfig = {
         destination: "/usa-driver-license-photo-editor",
         permanent: true,
       },
+      // Same search intent as /passport-size-photo-maker; consolidated to pass link equity
+      {
+        source: "/passport-photo-maker",
+        destination: "/passport-size-photo-maker",
+        statusCode: 301,
+      },
       // Singapore pixel dimension consolidation
       {
         source: "/singapore-passport-photo-pixels",
