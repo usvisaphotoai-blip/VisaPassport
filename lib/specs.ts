@@ -11,7 +11,7 @@ export const SUPPORTED_COUNTRIES = Array.from(
     "JP", "KZ", "LV", "LT", "LU", "MW", "MT", "MX", "NP", "NL", "NZ", "NO", "PL",
     "PT", "RO", "RU", "SA", "EU", "SG", "SK", "SI", "KR", "ES", "LK", "SE", "CHE", "CH",
     "TJ", "TH", "TR", "AE", "GB", "US", "NI", "NG", "PE", "PER", "UK", "ZA", "AR", "HK",
-    "CO", "PH", "MY", "IS", "BH", "BR", "BR-3*4", "IE"
+    "CO", "PH", "MY", "IS", "BH", "BR", "BR-3*4", "IE", "YE"
   ])
 );
 

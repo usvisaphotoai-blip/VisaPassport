@@ -278,31 +278,19 @@
     <loc>https://www.pixpassport.com/austria-passport-photo-editor</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/austria-passport-photo-editor" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/austria-passport-photo-editor" />
-    <lastmod>2026-04-27</lastmod>
+    <lastmod>2026-10-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-  
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
-    </image:image>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
-    </image:image>
+
   </url>
   <url>
     <loc>https://www.pixpassport.com/austria-visa-photo-editor</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/austria-visa-photo-editor" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/austria-visa-photo-editor" />
-    <lastmod>2026-04-27</lastmod>
+    <lastmod>2026-10-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
-    </image:image>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
-    </image:image>
   </url>
 
   
@@ -1493,16 +1481,11 @@
     <loc>https://www.pixpassport.com/switzerland-passport-photo-editor</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/switzerland-passport-photo-editor" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/switzerland-passport-photo-editor" />
-    <lastmod>2026-04-19</lastmod>
+    <lastmod>2026-10-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
-    </image:image>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
-    </image:image>
+
   </url>
 
  <url>
@@ -1530,16 +1513,10 @@
     <loc>https://www.pixpassport.com/switzerland-visa-photo-editor</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/switzerland-visa-photo-editor" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/switzerland-visa-photo-editor" />
-    <lastmod>2026-04-19</lastmod>
+    <lastmod>2026-10-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/45_35_passport_photo_ogdxnu.jpg</image:loc>
-    </image:image>
-    <image:image>
-      <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/q_auto/Gemini_Generated_Image_a5y45xa5y45xa5y4_l3xfdz.png</image:loc>
-    </image:image>
   </url>
 
   <url>
@@ -1659,7 +1636,7 @@
     <loc>https://www.pixpassport.com/yemen-passport-photo-editor</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/yemen-passport-photo-editor" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/yemen-passport-photo-editor" />
-    <lastmod>2026-04-12</lastmod>
+    <lastmod>2026-10-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -1667,7 +1644,7 @@
     <loc>https://www.pixpassport.com/yemen-visa-photo-editor</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/yemen-visa-photo-editor" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/yemen-visa-photo-editor" />
-    <lastmod>2026-04-12</lastmod>
+    <lastmod>2026-10-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

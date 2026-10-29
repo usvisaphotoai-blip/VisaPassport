@@ -56,10 +56,42 @@
     "dpi": 300
   },
   {
+    "id": "austria-visa",
+    "name": "Austria Visa",
+    "country": "Austria",
+    "flag": "🇦🇹",
+    "title": "Austria Visa Photo size maker tool online",
+    "h1": "Austria Visa Photo maker tool online Size, Requirements ",
+    "meta_description": "Austria visa photo size: 35×45 mm, head 30–36 mm (aim for 34 mm), white background, 2 prints. Match VFS rules and create your photo online.",
+    "keywords": [
+      "passbild visum österreich",
+      "biometrisches foto visum österreich"
+    ],
+    "width_mm": 35,
+    "height_mm": 45,
+    "width_px": 413,
+    "height_px": 531,
+    "head_min_pct": 70,
+    "head_max_pct": 80,
+    "eye_min_pct": 56,
+    "eye_max_pct": 69,
+    "bg_color": "white",
+    "price": 6.99,
+    "print_size": "A4",
+    "hero_photo": "https://res.cloudinary.com/dipzpwbbk/image/upload/v1785222261/uk_passport_photo_face_ratio_rule_mf79wj.jpg",
+    "dpi": 300
+  },
+  {
     "id": "austria-passport",
     "name": "Austria Passport",
     "country": "Austria",
     "flag": "🇦🇹",
+    "title": "Austria Passport Photo Size & Requirements | Passbild 35x45",
+    "h1": "Austria Passport Photo maker tool Size, Requirements & Passbild Vorgaben",
+    "meta_description": "Austrian passport photo size: 35×45 mm, head 32–36 mm, light background. Alle Passbild Anforderungen für den Reisepass plus FAQ. Create yours online.",
+    "keywords": [
+      "austria passport photo"
+    ],
     "width_mm": 35,
     "height_mm": 45,
     "width_px": 413,
@@ -71,7 +103,7 @@
     "bg_color": "light-gray",
     "price": 6.99,
     "print_size": "A4",
-    "hero_photo": "https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/45_35_passport_photo_ogdxnu.jpg",
+    "hero_photo": "https://res.cloudinary.com/dipzpwbbk/image/upload/v1783567124/nepal-visa-photo-and-passport-size-photo_httfhm.jpg",
     "dpi": 300
   },
   {
@@ -803,7 +835,41 @@
     "bg_color": "light-gray",
     "price": 6.99,
     "print_size": "A4",
-    "hero_photo": "https://res.cloudinary.com/dipzpwbbk/image/upload/f_webp/45_35_passport_photo_ogdxnu.jpg",
+    "title": "Passport Photo Size Switzerland: 35x45 mm Swiss Photo Tool",
+    "h1": "Passport Photo Size Switzerland: 35×45 mm Swiss Passfoto Guide and tool",
+    "meta_description": "Passport photo size Switzerland: 35×45 mm, face 29–34 mm, plain light background. Create your Swiss passport or ID photo online. Download in seconds.",
+    "keywords": [
+      "biometrisches passfoto schweiz",
+      "passfoto identitätskarte schweiz",
+      "fotomustertafel schweiz"
+    ],
+    "hero_photo": "https://res.cloudinary.com/dipzpwbbk/image/upload/v1793167573/switzerland-passport-photo-example_phs83y.webp",
+    "dpi": 300
+  },
+  {
+    "id": "switzerland-visa",
+    "name": "Switzerland visa",
+    "country": "Switzerland",
+    "flag": "🇨🇭",
+    "width_mm": 35,
+    "height_mm": 45,
+    "width_px": 413,
+    "height_px": 531,
+    "head_min_pct": 70,
+    "head_max_pct": 80,
+    "eye_min_pct": 56,
+    "eye_max_pct": 69,
+    "bg_color": "light-gray",
+    "price": 6.99,
+    "print_size": "A4",
+    "title": "Swiss Visa Photo: Size 35x45 mm & Requirements Guide",
+    "h1": "Swiss Visa Photo: Size, Requirements & Online Photo Tool",
+    "meta_description": "Swiss visa photo: 35×45 mm, white or light grey background, face 32–36 mm, 2 prints. Check Swiss visa photo requirements and create yours online.",
+    "keywords": [
+      "swiss visa photo",
+      "swiss visa photo requirements"
+    ],
+    "hero_photo": "https://res.cloudinary.com/dipzpwbbk/image/upload/v1793167573/switzerland-visa-photo-example_v0zevg.webp",
     "dpi": 300
   },
   {
@@ -1044,10 +1110,20 @@
     "dpi": 300
   },
   {
-    "id": "yemen-passport",
-    "name": "Yemen Passport",
+    "id": "yemen-visa",
+    "name": "Yemen Visa Photo",
     "country": "Yemen",
     "flag": "🇾🇪",
+    "title": "Yemen Passport & Visa Photo Size: 60x40 mm Online Tool",
+    "h1": "Yemen Passport & Visa Photo Size: 60×40 mm Guide and Tool",
+    "meta_description": "Yemen passport photo size: 60×40 mm landscape, white background, face 32–36 mm. Create a compliant Yemeni passport or visa photo online in seconds.",
+    "keywords": [
+      "yemen passport photo size",
+      "yemen passport photo size 2026",
+      "yemen passport photo online",
+      "صورة جواز يمني",
+      "مقاس صورة التأشيرة اليمنية"
+    ],
     "width_mm": 35,
     "height_mm": 45,
     "width_px": 413,
@@ -1059,7 +1135,31 @@
     "bg_color": "white",
     "price": 2.99,
     "print_size": "A4",
+    "hero_photo": "https://res.cloudinary.com/dipzpwbbk/image/upload/v1792940874/hijab-passport-photo_anledf.webp",
     "dpi": 600
+  },
+  {
+    "id": "yemen-passport",
+    "name": "Yemen Passport ",
+    "country": "Yemen",
+    "flag": "🇾🇪",
+    "title": "Create Yemen Passport Photo 60x40 mm Online Tool",
+    "h1": "Create Yemen Passport  Photo online 60×40 mm Guide and Tool",
+    "meta_description": "Yemen passport photo size: 60×40 mm landscape, white background, face 32–36 mm. Create a compliant Yemeni passport or visa photo online in seconds.",
+    "keywords": [],
+    "width_mm": 35,
+    "height_mm": 45,
+    "width_px": 413,
+    "height_px": 531,
+    "head_min_pct": 50,
+    "head_max_pct": 70,
+    "eye_min_pct": 55,
+    "eye_max_pct": 60,
+    "bg_color": "white",
+    "price": 2.99,
+    "print_size": "A4",
+    "dpi": 600,
+    "hero_photo": "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786118129/final_result_vzs9an.jpg"
   },
   {
     "id": "bhutan-passport",

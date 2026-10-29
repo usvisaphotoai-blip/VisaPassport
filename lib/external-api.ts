@@ -238,6 +238,8 @@ export const countryMapping: Record<string, string> = {
   usa: "US",
   "united-states": "US",
   general: "US",
+  yemen: "YE",
+  ye: "YE",
 };
 
 export async function processExternalPhoto(
