@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import {
   Hero, Section, SectionHeader, StepsGrid, CheckList, DataTable,
-  FaqList, CtaBand, JsonLd, btnPrimary, textLink, ArrowRight,
+  FaqList, CtaBand, JsonLd, btnPrimary, textLink, ArrowRight, RelatedPages,
 } from "../components/ui";
 
 /* ─────────────────────────────────────────────
@@ -223,6 +223,8 @@ export default function PassfotoAppKostenlosPage() {
           <Link href="/de/biometrisches-passbild" className={textLink}>Biometrisches Passbild</Link>.
         </p>
       </Section>
+
+      <RelatedPages keys={["home", "fuehrerschein", "visum", "ratgeber"]} />
 
       <CtaBand
         title="Passfoto kostenlos prüfen und erstellen"

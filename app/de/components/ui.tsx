@@ -368,3 +368,37 @@ export function Breadcrumb({ items }: { items: { label: string; href?: string }[
 export function JsonLd({ data }: { data: object }) {
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }} />;
 }
+
+/* ─── Internal linking: contextual "related pages" block ─── */
+export const relatedPages = {
+  home: { href: "/de", title: "Passbild online erstellen", desc: "Biometrisches Passbild nach BMI-Vorgabe prüfen und erstellen." },
+  biometrisch: { href: "/de/biometrisches-passbild", title: "Biometrisches Passbild: Anforderungen & Maße", desc: "Alle Vorgaben zu Format, Gesichtshöhe, Hintergrund, Brille und Kinderfotos." },
+  selber: { href: "/de/passfoto-selber-machen", title: "Passfoto selber machen", desc: "Schritt-für-Schritt-Anleitung für Licht, Abstand und Hintergrund zu Hause." },
+  app: { href: "/de/passfoto-app-kostenlos", title: "Passfoto-App kostenlos – worauf achten?", desc: "Abo-Fallen und Wasserzeichen erkennen, Alternative ohne Download." },
+  fuehrerschein: { href: "/de/fuehrerschein-foto", title: "Führerscheinfoto für den Umtausch", desc: "Biometrisches Foto für Erstantrag und Pflichtumtausch." },
+  visum: { href: "/de/visum-foto", title: "Visumfoto nach Land", desc: "Schengen, USA, China und weitere Länder im Überblick." },
+  bewerbung: { href: "/de/bewerbungsfoto", title: "Bewerbungsfoto erstellen", desc: "Tipps zu Kleidung, Licht, Hintergrund und Format für die Bewerbung." },
+  egk: { href: "/de/gesundheitskarte-foto", title: "Foto für die Gesundheitskarte (eGK)", desc: "Vorgaben und Upload für AOK, TK, Barmer, DAK und weitere Kassen." },
+  schweiz: { href: "/de/passfoto-schweiz-online", title: "Passfoto Schweiz", desc: "Format und Anforderungen nach fedpol-Fotomustertafel." },
+  dokSchweiz: { href: "/de/dokumentenfoto-schweiz", title: "Dokumentenfoto Schweiz", desc: "ID, Führerausweis, Aufenthaltsbewilligung und Visum." },
+  ratgeber: { href: "/de/guides", title: "Ratgeber zu Passbild & Visumfoto", desc: "Amtliche Vorgaben und Praxistipps für Deutschland, Österreich und die Schweiz." },
+} as const;
+
+export function RelatedPages({ keys, title = "Das könnte Sie auch interessieren" }: { keys: (keyof typeof relatedPages)[]; title?: string }) {
+  return (
+    <Section muted width="5xl" labelledBy="related-h2">
+      <SectionHeader id="related-h2" title={title} />
+      <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {keys.map((k) => {
+          const r = relatedPages[k];
+          return (
+            <li key={k} className={card}>
+              <Link href={r.href} className={textLink}>{r.title}</Link>
+              <p className="mt-2 text-sm leading-relaxed text-slate-600">{r.desc}</p>
+            </li>
+          );
+        })}
+      </ul>
+    </Section>
+  );
+}

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import {
   Hero, Section, SectionHeader, StepsGrid, CheckList, DoDont, DataTable, Badge,
-  FaqList, CtaBand, JsonLd, card, textLink, ArrowRight,
+  FaqList, CtaBand, JsonLd, card, textLink, ArrowRight, RelatedPages,
 } from "../components/ui";
 
 /* ─── Metadata ─── */
@@ -271,6 +271,8 @@ export default function VisumFotoPage() {
         <SectionHeader id="faq-h2" eyebrow="Häufige Fragen" title="FAQ zum Visumfoto" />
         <FaqList items={faqs} />
       </Section>
+
+      <RelatedPages keys={["selber", "app", "schweiz", "bewerbung", "ratgeber"]} />
 
       <CtaBand
         title="Ihr Visumfoto in 30 Sekunden"

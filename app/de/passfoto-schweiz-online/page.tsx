@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
-  Hero, Section, SectionHeader, StepsGrid, CardGrid, CheckList, FaqList, CtaBand, JsonLd, Badge, card, textLink,
+  Hero, Section, SectionHeader, StepsGrid, CardGrid, CheckList, FaqList, CtaBand, JsonLd, Badge, card, textLink, RelatedPages,
 } from "../components/ui";
 
 const ctaHref = "/de/passbild-online?type=switzerland-passport";
@@ -257,6 +257,8 @@ export default function PassfotoSchweizPage() {
           Format: <Badge>35 × 45 mm</Badge> · Gesichtshöhe: <Badge>29–34 mm</Badge>
         </p>
       </Section>
+
+      <RelatedPages keys={["dokSchweiz", "biometrisch", "visum", "ratgeber"]} />
 
       <CtaBand
         title="Passfoto online vorbereiten"

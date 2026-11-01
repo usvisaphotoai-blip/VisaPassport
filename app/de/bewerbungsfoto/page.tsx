@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import {
   Hero, StatsBand, Section, SectionHeader, StepsGrid, CheckList, DataTable,
-  FaqList, CtaBand, JsonLd, Prose, card, textLink, btnPrimary, ArrowRight,
+  FaqList, CtaBand, JsonLd, Prose, card, textLink, btnPrimary, ArrowRight, RelatedPages,
 } from "../components/ui";
 
 export const metadata: Metadata = {
@@ -356,6 +356,8 @@ export default function BewerbungsfotoPage() {
         />
         <FaqList items={faqItems} />
       </Section>
+
+      <RelatedPages keys={["biometrisch", "selber", "visum", "ratgeber"]} />
 
       <CtaBand
         title="Bereit für Ihre nächste Bewerbung?"

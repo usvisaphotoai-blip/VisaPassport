@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import {
   Hero, Section, SectionHeader, StepsGrid, CardGrid, CheckList, DoDont, DataTable, Badge,
-  FaqList, CtaBand, JsonLd, Prose, textLink,
+  FaqList, CtaBand, JsonLd, Prose, textLink, RelatedPages,
 } from "../components/ui";
 
 /* ─── Metadata ─── */
@@ -354,6 +354,8 @@ export default function BiometrischesPassbildPage() {
         />
         <FaqList items={faqs} />
       </Section>
+
+      <RelatedPages keys={["selber", "app", "egk", "schweiz", "ratgeber"]} />
 
       <CtaBand
         title="Ihr Foto jetzt prüfen lassen"

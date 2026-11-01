@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import {
   Hero, StatsBand, Section, SectionHeader, StepsGrid, CardGrid, CheckList, DataTable,
-  FaqList, CtaBand, JsonLd, Prose, btnPrimary, textLink, ArrowRight,
+  FaqList, CtaBand, JsonLd, Prose, btnPrimary, textLink, ArrowRight, RelatedPages,
 } from "./components/ui";
 
 /* ─────────────────────────────────────────────
@@ -101,12 +101,12 @@ const docs = [
   {
     icon: "🛂",
     name: "Reisepass",
-    detail: "ICAO-Format · hellgrauer Hintergrund · 35 × 45 mm",
+    detail: "ICAO-Format · hellgrauer Hintergrund · 35 × 45 mm · Abgabe digital über Fotodienstleister oder Amt",
   },
   {
     icon: "🪪",
     name: "Personalausweis",
-    detail: "Biometrisch nach BMI-Vorgabe",
+    detail: "Biometrisch nach BMI-Vorgabe · Abgabe digital über Fotodienstleister oder Amt",
   },
   {
     icon: "✈️",
@@ -127,7 +127,7 @@ const reviews = [
     name: "Michael S.",
     city: "München",
     stars: 5,
-    text: "Mein Passbild wurde beim ersten Versuch für den Reisepass akzeptiert. Schnell und ohne Stress.",
+    text: "Mein Foto für den Führerscheinumtausch wurde beim ersten Versuch akzeptiert. Schnell und ohne Stress.",
   },
   {
     name: "Julia B.",
@@ -222,7 +222,7 @@ const faqItems = [
   },
   {
     q: "Was passiert, wenn mein Passbild abgelehnt wird?",
-    a: "Lehnt eine deutsche Behörde Ihr mit PixPassport erstelltes Foto ab, erstatten wir den vollen Kaufpreis ohne Rückfragen. Unsere Akzeptanzrate liegt bei über 99 Prozent.",
+    a: "Lehnt eine deutsche Behörde Ihr mit PixPassport erstelltes Foto ab, erstatten wir den vollen Kaufpreis ohne Rückfragen. Die Akzeptanzrate liegt bei 99,8 Prozent. Die Erstattung gilt nach den Bedingungen unserer Erstattungsrichtlinie.",
   },
 ];
 
@@ -305,7 +305,7 @@ export default function DeHomePage() {
       <Hero
         eyebrow="Biometrisch · 35 × 45 mm · nach BMI-Vorgabe"
         title="Passbild online erstellen – für Reisepass, Ausweis & Visum"
-        intro="Erstellen Sie Ihr biometrisches Passbild in nur 30 Sekunden. Unsere Software prüft automatisch alle amtlichen Vorgaben: Hintergrund, Format 35 × 45 mm, Gesichtsposition und Belichtung. Ergebnis kostenlos ansehen, erst dann bezahlen."
+        intro="Erstellen Sie Ihr biometrisches Passbild in nur 30 Sekunden. Unsere Software prüft automatisch alle amtlichen Vorgaben: Hintergrund, Format 35 × 45 mm, Gesichtsposition und Belichtung. Ergebnis kostenlos ansehen, erst dann bezahlen. Für Reisepass und Personalausweis gilt seit Mai 2025 die digitale Abgabe über das Amt oder einen registrierten Fotodienstleister – für Führerschein, Visum, Gesundheitskarte und Bewerbung genügt Ihre geprüfte Bilddatei."
         primary={{ href: ctaHref, label: "Jetzt Passbild erstellen" }}
         secondary={{ href: "#anforderungen", label: "Anforderungen ansehen" }}
         note="Ab 6,99 € · Kein Abo · Geld zurück bei Ablehnung"
@@ -384,7 +384,10 @@ export default function DeHomePage() {
           <Link href="/de/fuehrerschein-foto" className={textLink}>Führerscheinfoto</Link>,{" "}
           <Link href="/de/visum-foto" className={textLink}>Visumfoto</Link>,{" "}
           <Link href="/de/gesundheitskarte-foto" className={textLink}>Gesundheitskarte</Link>,{" "}
-          <Link href="/de/passfoto-schweiz-online" className={textLink}>Passfoto Schweiz</Link>.
+          <Link href="/de/passfoto-schweiz-online" className={textLink}>Passfoto Schweiz</Link>.{" "}
+          Ausführlich erklärt: <Link href="/de/biometrisches-passbild" className={textLink}>biometrisches Passbild und Maße</Link>,{" "}
+          <Link href="/de/passfoto-selber-machen" className={textLink}>Passfoto selber machen</Link> und{" "}
+          <Link href="/de/passfoto-app-kostenlos" className={textLink}>Passfoto-App kostenlos</Link>.
         </p>
       </Section>
 
@@ -461,6 +464,8 @@ export default function DeHomePage() {
           anderen Behörden. Welche Übermittlungswege Ihre Behörde akzeptiert, erfahren Sie direkt bei Ihrem Bürgeramt.
         </p>
       </Section>
+
+      <RelatedPages keys={["biometrisch", "selber", "app", "fuehrerschein", "visum", "ratgeber"]} />
 
       <CtaBand
         title="Ihr Passbild in 30 Sekunden"

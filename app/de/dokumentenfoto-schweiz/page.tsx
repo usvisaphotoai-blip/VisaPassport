@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import {
-  Hero, Section, SectionHeader, StepsGrid, CheckList, FaqList, CtaBand, JsonLd, Badge, Prose, card,
+  Hero, Section, SectionHeader, StepsGrid, CheckList, FaqList, CtaBand, JsonLd, Badge, Prose, card, RelatedPages,
 } from "../components/ui";
 
 const ctaHref = "/de/passbild-online?type=switzerland-passport";
@@ -227,6 +227,8 @@ export default function DokumentenfotoSchweizPage() {
         <SectionHeader id="faq-h2" eyebrow="Häufige Fragen" title="Dokumentenfoto Schweiz: FAQ" />
         <FaqList items={faqs} />
       </Section>
+
+      <RelatedPages keys={["schweiz", "biometrisch", "visum", "ratgeber"]} />
 
       <CtaBand
         title="Mit einer klaren Aufnahme beginnen"

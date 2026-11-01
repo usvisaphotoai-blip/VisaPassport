@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import {
   Hero, Section, SectionHeader, StepsGrid, CheckList, DoDont, DataTable, Badge,
-  FaqList, CtaBand, JsonLd, Prose, Note, card,
+  FaqList, CtaBand, JsonLd, Prose, Note, card, RelatedPages,
 } from "../components/ui";
 
 /* ─── Metadata ─── */
@@ -372,6 +372,8 @@ export default function FuehrerscheinFotoPage() {
         />
         <FaqList items={faqs} />
       </Section>
+
+      <RelatedPages keys={["biometrisch", "selber", "egk", "visum", "ratgeber"]} />
 
       <CtaBand
         title="Führerscheinfoto jetzt online erstellen"

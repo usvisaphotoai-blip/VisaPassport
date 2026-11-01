@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import {
   Hero, Section, SectionHeader, StepsGrid, DoDont, DataTable,
-  FaqList, CtaBand, JsonLd, Prose, btnPrimary, textLink, ArrowRight,
+  FaqList, CtaBand, JsonLd, Prose, btnPrimary, textLink, ArrowRight, RelatedPages,
 } from "../components/ui";
 
 /* ─────────────────────────────────────────────
@@ -243,6 +243,8 @@ export default function PassfotoSelberMachenPage() {
           <Link href="/de/visum-foto" className={textLink}>Visumfoto</Link>.
         </p>
       </Section>
+
+      <RelatedPages keys={["egk", "bewerbung", "schweiz", "ratgeber"]} />
 
       <CtaBand
         title="Ihr Passfoto in 30 Sekunden"
