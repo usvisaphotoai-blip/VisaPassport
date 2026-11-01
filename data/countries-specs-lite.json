@@ -990,7 +990,17 @@
     "bg_color": "white",
     "price": 7.99,
     "print_size": "A4",
-    "dpi": 300
+    "dpi": 300,
+    "visa_title": "Turkey Visa Photo: Size 50x60 mm & Requirements Guide",
+    "visa_h1": "Turkey Visa Photo: Size, Requirements & Online Photo Tool",
+    "visa_meta_description": "Turkey visa photo: 50×60 mm, plain white background, no glasses, taken within 6 months. The e-Visa needs no photo. Check the rules and create yours online.",
+    "visa_keywords": [
+      "turkey visa photo",
+      "turkey visa photo size",
+      "turkey visa photo requirements",
+      "türkiye visa photo",
+      "turkish visa photo 50x60"
+    ]
   },
   {
     "id": "uae-passport",
@@ -1603,7 +1613,16 @@
     "price": 14.99,
     "print_size": "4x6",
     "hero_photo": "https://res.cloudinary.com/dipzpwbbk/image/upload/v1783080978/visa-photo-using-pixpassport_qgrqmf.jpg",
-    "dpi": 300
+    "dpi": 300,
+    "visa_title": "Slovenia Visa Photo: Size 35x45 mm & Requirements Guide",
+    "visa_h1": "Slovenia Visa Photo: Size, Requirements & Online Photo Tool",
+    "visa_meta_description": "Slovenia visa photo: 35×45 mm, white or light background, face 32–36 mm, 1 photo for Type C and D visas. Check the requirements and create yours online.",
+    "visa_keywords": [
+      "slovenia visa photo",
+      "slovenia visa photo size",
+      "slovenia visa photo requirements",
+      "slovenia schengen visa photo"
+    ]
   },
   {
     "id": "spain-passport",
