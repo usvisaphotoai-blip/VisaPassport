@@ -13,7 +13,7 @@ export const btnSecondary =
   "inline-flex items-center justify-center gap-2 rounded-lg border-2 border-slate-300 bg-white px-6 py-3 text-base font-semibold text-slate-700 transition-colors hover:border-slate-400 hover:bg-slate-50";
 export const card = "rounded-xl border-2 border-slate-200 bg-white p-6";
 export const textLink = "font-semibold text-lime-700 underline underline-offset-2 hover:text-lime-800";
-export const h2Class = "text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl";
+export const h2Class = "text-2xl font-extrabold tracking-tight text-balance break-words text-slate-900 sm:text-3xl";
 export const eyebrowClass = "mb-2 text-xs font-bold uppercase tracking-widest text-lime-700";
 export const proseClass = "text-base leading-relaxed text-slate-600";
 
@@ -122,16 +122,16 @@ export function Hero({
 }) {
   return (
     <section aria-labelledby="hero-h1" className="border-b-2 border-slate-200 bg-white">
-      <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-8 px-4 py-10 sm:px-6 lg:grid-cols-2 lg:gap-12 lg:px-8 lg:py-16">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-8 px-4 py-10 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8 lg:py-16">
         <div>
           {breadcrumb && <Breadcrumb items={breadcrumb} />}
           <p className="mb-4 inline-flex items-center gap-2 rounded-md border border-lime-200 bg-lime-50 px-3 py-1 text-xs font-bold uppercase tracking-wide text-lime-800">
             {eyebrow}
           </p>
-          <h1 id="hero-h1" className="text-3xl font-extrabold leading-tight tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
+          <h1 id="hero-h1" className="text-3xl font-extrabold leading-tight tracking-tight text-balance break-words text-slate-900 sm:text-4xl">
             {title}
           </h1>
-          <p className="mt-5 max-w-xl text-base leading-relaxed text-slate-600 sm:text-lg">{intro}</p>
+          <p className="mt-4 max-w-2xl text-base leading-relaxed text-slate-600">{intro}</p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link href={primary.href} className={btnPrimary}>
               {primary.label} <ArrowRight />
@@ -145,7 +145,7 @@ export function Hero({
           {note && <p className="mt-4 text-sm text-slate-500">{note}</p>}
           {children}
         </div>
-        <div className={`mx-auto w-full ${image.height >= image.width ? "max-w-sm" : ""}`}>
+        <div className={`mx-auto w-full ${image.height >= image.width ? "max-w-sm" : "max-w-md lg:max-w-none"}`}>
           <Image
             src={image.src}
             alt={image.alt}
@@ -250,16 +250,20 @@ export function DataTable({
   head,
   rows,
   caption,
+  stack = false,
 }: {
   head: string[];
   rows: ReactNode[][];
   caption?: string;
+  /** Below md, render each row as a labelled card instead of a scrolling table. */
+  stack?: boolean;
 }) {
+  const s = (cls: string) => (stack ? ` ${cls}` : "");
   return (
-    <div className="overflow-x-auto rounded-xl border-2 border-slate-200 bg-white">
-      <table className="w-full border-collapse text-left text-sm">
+    <div className={`rounded-xl border-2 border-slate-200 bg-white ${stack ? "md:overflow-x-auto" : "overflow-x-auto"}`}>
+      <table className={`w-full border-collapse text-left text-sm${s("max-md:block")}`}>
         {caption && <caption className="sr-only">{caption}</caption>}
-        <thead className="border-b-2 border-slate-200 bg-slate-50">
+        <thead className={`border-b-2 border-slate-200 bg-slate-50${s("max-md:hidden")}`}>
           <tr>
             {head.map((h, i) => (
               <th key={i} scope="col" className="px-4 py-3 font-bold text-slate-800 sm:px-5">
@@ -268,16 +272,24 @@ export function DataTable({
             ))}
           </tr>
         </thead>
-        <tbody className="divide-y divide-slate-200">
+        <tbody className={`divide-y divide-slate-200${s("max-md:block")}`}>
           {rows.map((row, r) => (
-            <tr key={r}>
+            <tr key={r} className={s("max-md:block max-md:px-4 max-md:py-4").trim()}>
               {row.map((cell, c) =>
                 c === 0 ? (
-                  <th key={c} scope="row" className="px-4 py-3 align-top font-semibold text-slate-800 sm:px-5">
+                  <th
+                    key={c}
+                    scope="row"
+                    className={`px-4 py-3 align-top font-semibold text-slate-800 sm:px-5${s("max-md:block max-md:p-0 max-md:pb-1 max-md:text-base max-md:font-bold max-md:text-slate-900")}`}
+                  >
                     {cell}
                   </th>
                 ) : (
-                  <td key={c} className="px-4 py-3 align-top text-slate-600 sm:px-5">
+                  <td
+                    key={c}
+                    data-label={head[c]}
+                    className={`px-4 py-3 align-top text-slate-600 sm:px-5${s("max-md:flex max-md:items-baseline max-md:gap-3 max-md:px-0 max-md:py-1.5 max-md:before:w-28 max-md:before:shrink-0 max-md:before:text-xs max-md:before:font-semibold max-md:before:text-slate-500 max-md:before:content-[attr(data-label)]")}`}
+                  >
                     {cell}
                   </td>
                 ),
@@ -328,6 +340,24 @@ export function Note({ children }: { children: ReactNode }) {
   return <p className="mt-4 text-sm leading-relaxed text-slate-500">{children}</p>;
 }
 
+export function QuickFacts({ items, title = "Auf einen Blick" }: { items: { label: string; value: string }[]; title?: string }) {
+  return (
+    <section aria-labelledby="facts-h2" className="border-b-2 border-slate-200 bg-slate-50 px-4 py-6 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-6xl">
+        <h2 id="facts-h2" className={eyebrowClass}>{title}</h2>
+        <dl className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          {items.map((i) => (
+            <div key={i.label} className="flex flex-col-reverse rounded-lg border-2 border-slate-200 bg-white px-4 py-3">
+              <dt className="mt-1 text-xs leading-snug text-slate-600">{i.label}</dt>
+              <dd className="text-base font-extrabold leading-tight text-slate-900 sm:text-lg">{i.value}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </section>
+  );
+}
+
 export function CtaBand({ title, text, href, label }: { title: string; text: string; href: string; label: string }) {
   return (
     <section className="border-t-2 border-lime-200 bg-lime-50 px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
@@ -373,6 +403,9 @@ export function JsonLd({ data }: { data: object }) {
 export const relatedPages = {
   home: { href: "/de", title: "Passbild online erstellen", desc: "Biometrisches Passbild nach BMI-Vorgabe prüfen und erstellen." },
   biometrisch: { href: "/de/biometrisches-passbild", title: "Biometrisches Passbild: Anforderungen & Maße", desc: "Alle Vorgaben zu Format, Gesichtshöhe, Hintergrund, Brille und Kinderfotos." },
+  reisepass: { href: "/de/reisepass-foto", title: "Foto für den Reisepass erstellen", desc: "Reisepassfoto für Deutschland, Österreich und die Schweiz: Maße, Kinder, Brille." },
+  personalausweis: { href: "/de/personalausweis-foto", title: "Foto für den Personalausweis", desc: "Digitaler Ablauf seit 2025, Kosten, Kinderregeln und Vorgaben für AT und CH." },
+  brille: { href: "/de/passbild-mit-brille", title: "Passbild mit Brille", desc: "Wann die Brille erlaubt ist, Tipps gegen Spiegelungen und Länder wie die USA." },
   selber: { href: "/de/passfoto-selber-machen", title: "Passfoto selber machen", desc: "Schritt-für-Schritt-Anleitung für Licht, Abstand und Hintergrund zu Hause." },
   app: { href: "/de/passfoto-app-kostenlos", title: "Passfoto-App kostenlos – worauf achten?", desc: "Abo-Fallen und Wasserzeichen erkennen, Alternative ohne Download." },
   fuehrerschein: { href: "/de/fuehrerschein-foto", title: "Führerscheinfoto für den Umtausch", desc: "Biometrisches Foto für Erstantrag und Pflichtumtausch." },
@@ -384,9 +417,17 @@ export const relatedPages = {
   ratgeber: { href: "/de/guides", title: "Ratgeber zu Passbild & Visumfoto", desc: "Amtliche Vorgaben und Praxistipps für Deutschland, Österreich und die Schweiz." },
 } as const;
 
-export function RelatedPages({ keys, title = "Das könnte Sie auch interessieren" }: { keys: (keyof typeof relatedPages)[]; title?: string }) {
+export function RelatedPages({
+  keys,
+  title = "Das könnte Sie auch interessieren",
+  muted = true,
+}: {
+  keys: (keyof typeof relatedPages)[];
+  title?: string;
+  muted?: boolean;
+}) {
   return (
-    <Section muted width="5xl" labelledBy="related-h2">
+    <Section muted={muted} width="5xl" labelledBy="related-h2">
       <SectionHeader id="related-h2" title={title} />
       <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {keys.map((k) => {

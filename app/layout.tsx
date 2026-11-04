@@ -73,6 +73,13 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <meta name="yandex-verification" content="0483efdc76375d14" />
+        {/* Root <html> is shared by every locale; set the real document language before paint
+            so /de and /fr pages are not announced as English to crawlers and screen readers. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){var m=location.pathname.match(/^\\/(de|fr)(\\/|$)/);if(m)document.documentElement.lang=m[1]})();`,
+          }}
+        />
         {/* Browser translation (Chrome/Google Translate, Edge, Safari) moves React's text nodes
             into <font> wrappers; the next re-render then throws "removeChild: The node to be
             removed is not a child of this node" and the whole page becomes "Application error".

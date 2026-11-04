@@ -7,6 +7,9 @@ export default function FooterDe() {
       title: de.footer.sections.popularServices,
       items: [
         { label: "Biometrisches Passbild", href: "/de/biometrisches-passbild" },
+        { label: "Reisepassfoto", href: "/de/reisepass-foto" },
+        { label: "Personalausweis-Foto", href: "/de/personalausweis-foto" },
+        { label: "Passbild mit Brille", href: "/de/passbild-mit-brille" },
         { label: "Passfoto selber machen", href: "/de/passfoto-selber-machen" },
         { label: "Führerscheinfoto", href: "/de/fuehrerschein-foto" },
         { label: "Visumfoto", href: "/de/visum-foto" },

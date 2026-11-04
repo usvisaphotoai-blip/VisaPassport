@@ -355,7 +355,7 @@ export default function BiometrischesPassbildPage() {
         <FaqList items={faqs} />
       </Section>
 
-      <RelatedPages keys={["selber", "app", "egk", "schweiz", "ratgeber"]} />
+      <RelatedPages keys={["reisepass", "personalausweis", "selber", "egk", "schweiz", "ratgeber"]} />
 
       <CtaBand
         title="Ihr Foto jetzt prüfen lassen"
