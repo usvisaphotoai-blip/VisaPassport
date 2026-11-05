@@ -239,7 +239,26 @@ export default function PrintTemplateGeneratorPage() {
                 >
                   Passport Photo Online tool
                 </a>{" "}
-                to crop and format your image automatically.
+                to crop and format your image automatically. For a US-size
+                photo, start with this{" "}
+                <a
+                  href="https://idphoto.us/tool/2x2-photo-maker"
+                  target="_blank"
+                  rel="noopener"
+                  className="text-lime-600 underline"
+                >
+                  2x2 photo maker
+                </a>
+                ; for a European visa, check the{" "}
+                <a
+                  href="https://idphoto.us/tool/schengen-visa-photo-size"
+                  target="_blank"
+                  rel="noopener"
+                  className="text-lime-600 underline"
+                >
+                  Schengen visa photo size
+                </a>{" "}
+                (35×45 mm) before you print.
               </p>
 
               <h3 className="text-xl font-bold text-slate-800">

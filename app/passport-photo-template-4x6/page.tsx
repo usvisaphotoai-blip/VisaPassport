@@ -305,7 +305,16 @@ export default function PassportPhotoTemplate4x6Page() {
               <li>
                 <strong>Pick the photo size.</strong> Choose 2×2 inch for the
                 US, 35×45 mm for the UK, Europe, India and Australia, or one
-                of the other sizes. The sheet fills automatically.
+                of the other sizes. The sheet fills automatically. Need a US
+                photo first? Create one with this{" "}
+                <a href="https://idphoto.us/tool/2x2-photo-maker" target="_blank" rel="noopener">
+                  2x2 photo maker
+                </a>
+                , or confirm the{" "}
+                <a href="https://idphoto.us/tool/schengen-visa-photo-size" target="_blank" rel="noopener">
+                  Schengen visa photo size
+                </a>{" "}
+                before printing for a European visa.
               </li>
               <li>
                 <strong>Choose the layout.</strong> Keep the print-safe margin
