@@ -4,10 +4,16 @@ import { getAllCAPages } from "@/lib/ca-content";
 import CAEmbeddedTool from "./components/CAEmbeddedTool";
 import CABeforeAfterSlider from "./components/CABeforeAfterSlider";
 
+/* ------------------------------------------------------------------ */
+/*  SEO                                                                */
+/*  Primary:   canada passport photo                                   */
+/*  Secondary: canada passport photo specification / specs,            */
+/*             canada passport pic, photo for canada visa              */
+/* ------------------------------------------------------------------ */
 export const metadata: Metadata = {
-  title: "Canada Passport Photo Online: 50x70mm Size Checker | PixPassport",
+  title: "Canada Passport Photo: 50x70 mm Specs & Online Tool | PixPassport",
   description:
-    "Make Canada passport, visa, PR card and citizenship photos online. Auto-crop to 50x70mm or 35x45mm and check face size and background against IRCC rules.",
+    "Canada passport photo size, specifications and a free online checker. See the 50x70 mm rules, face-size range and what to know about a photo for a Canada visa.",
   alternates: {
     canonical: "https://www.pixpassport.com/ca",
     languages: {
@@ -17,20 +23,18 @@ export const metadata: Metadata = {
     },
   },
   keywords:
-    "canada passport photo, canada passport photo maker, canadian passport photo size 50x70mm, ircc photo requirements, canada visa photo, pr card photo, canada citizenship photo",
+    "canada passport photo, canada passport photo specification, canada passport photo specs, canada passport pic, photo for canada visa, canada passport photo size 50x70mm",
   twitter: {
     card: "summary_large_image",
-    title: "Canada Passport & Visa Photo Maker | PixPassport",
+    title: "Canada Passport Photo: Size, Specs & Online Tool | PixPassport",
     description:
-      "Create IRCC & Service Canada compliant 50x70mm passport photos online.",
-    images: [
-      "https://www.pixpassport.com/og-image.jpg",
-    ],
+      "Check your Canada passport photo size and specs, or prepare a photo for a Canada visa.",
+    images: ["https://www.pixpassport.com/og-image.jpg"],
   },
   openGraph: {
-    title: "Canada Passport & Visa Photo Maker | PixPassport",
+    title: "Canada Passport Photo: Size, Specs & Online Tool | PixPassport",
     description:
-      "Create Canada passport, visa, PR card, and citizenship photos online. 100% compliant for Service Canada, IRCC, and RCMP.",
+      "Canada passport photo size (50x70 mm), specifications and a photo for Canada visa applications, explained in plain language.",
     url: "https://www.pixpassport.com/ca",
     siteName: "PixPassport Canada",
     locale: "en_CA",
@@ -40,43 +44,157 @@ export const metadata: Metadata = {
         url: "https://www.pixpassport.com/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Canada Passport Size Photo Maker",
+        alt: "Canada passport photo size and specifications",
       },
     ],
   },
 };
 
-const officialCASources = [
+/* ------------------------------------------------------------------ */
+/*  Content                                                            */
+/* ------------------------------------------------------------------ */
+const quickFacts = [
+  { value: "50 × 70 mm", label: "Passport photo size" },
+  { value: "31–36 mm", label: "Chin to crown" },
+  { value: "6 months", label: "Max age of photo" },
+  { value: "2 photos", label: "Needed per application" },
+];
+
+const specRows = [
   {
-    agency: "Government of Canada — Passport Program",
-    doc: "Passport Photo Rules & Specifications",
-    url: "https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-passports/photos.html",
-    note: "Official Canadian standards for 50×70 mm passport photos and guarantor requirements.",
-    badge: "Service Canada",
+    item: "Photo size",
+    passport: "50 mm wide × 70 mm high",
+    digital: "At least 1,200 × 1,800 px, 3:2 portrait",
+    visa: "Frame at least 35 × 45 mm",
   },
   {
-    agency: "IRCC — Immigration & Citizenship",
-    doc: "Visa & PR Card Photo Specifications",
-    url: "https://www.canada.ca/en/immigration-refugees-citizenship/services/application/application-forms-guides/temporary-resident-visa-application-photograph-specifications.html",
-    note: "Official specifications for Temporary Resident Visas (TRV), Study/Work Permits, and PR cards.",
-    badge: "IRCC",
+    item: "Face height (chin to crown)",
+    passport: "31–36 mm",
+    digital: "45–50% of photo height",
+    visa: "31–36 mm",
   },
   {
-    agency: "RCMP — Canadian Firearms Program",
-    doc: "PAL Firearms Licence Photo Standards",
-    url: "https://rcmp.ca/en/firearms",
-    note: "Official photo guidelines for Canadian Possession and Acquisition Licence (PAL) cards.",
-    badge: "RCMP",
+    item: "Background",
+    passport: "Plain white or light-coloured",
+    digital: "Plain white or light-coloured",
+    visa: "Plain white or light-coloured",
   },
   {
-    agency: "International Civil Aviation Org",
-    doc: "Doc 9303 Biometric Specifications",
-    url: "https://www.icao.int/publications/doc-series/doc-9303",
-    note: "Global biometric standard enforced across all Canadian machine-readable travel documents.",
-    badge: "ICAO",
+    item: "Colour",
+    passport: "Colour or black and white",
+    digital: "Colour or black and white",
+    visa: "Colour or black and white",
+  },
+  {
+    item: "How recent",
+    passport: "Within 6 months of applying",
+    digital: "Within 6 months of applying",
+    visa: "Within 6 months of applying",
+  },
+  {
+    item: "File / print",
+    passport: "Professional print on photo paper",
+    digital: "JPG, 200 KB – 5 MB, straight from the camera",
+    visa: "Print on quality photo paper",
   },
 ];
 
+const steps = [
+  {
+    title: "Upload a photo",
+    text: "Use a clear, front-facing photo from any phone.",
+    img: "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786116243/uk_before_image_passport_photo_d4sqnr.webp",
+    alt: "Original selfie before it is checked",
+  },
+  {
+    title: "We check face size and position",
+    text: "The tool measures chin-to-crown height and centring.",
+    img: "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786118128/passport_photo_biometric_check_truryq.webp",
+    alt: "Face measurement overlay on a passport photo",
+  },
+  {
+    title: "Get the 50×70 mm layout",
+    text: "See your photo framed to Canada's size and head-height range.",
+    img: "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786116374/uk_passport_photo_after_atvxmj.webp",
+    alt: "Passport photo cropped to 50x70 mm",
+  },
+  {
+    title: "Download or print",
+    text: "Save a digital file or a print sheet for the lab.",
+    img: "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786118129/final_result_vzs9an.jpg",
+    alt: "Print-ready photo sheet",
+  },
+];
+
+const doList = [
+  "Face the camera squarely, shoulders level and centred.",
+  "Keep a neutral expression: eyes open, mouth closed, no smile or frown.",
+  "Use even light with no shadows on your face, ears, shoulders or the wall.",
+  "Wear clothes that contrast with the background, so avoid white tops.",
+  "Keep hair off your face so its edges are visible.",
+  "Glasses are fine if your eyes are clear and there is no glare.",
+];
+
+const dontList = [
+  "Sunglasses or tinted lenses, even prescription ones.",
+  "Hats or head coverings, unless worn daily for religious or medical reasons.",
+  "Shadows, flash reflections or red-eye.",
+  "Hands in the shot (especially for children's photos).",
+  "A tilted head or a face that is off-centre.",
+  "Filters, retouching or AI edits.",
+];
+
+const faqs = [
+  {
+    q: "What is the Canada passport photo size?",
+    a: "Canadian passport photos are 50 mm wide by 70 mm high (2 × 2¾ inches), which is taller than the common 35×45 mm format. The face must measure 31–36 mm from chin to crown.",
+  },
+  {
+    q: "What are the Canada passport photo specifications?",
+    a: "Beyond size, the photo must be sharp, evenly lit and shadow-free, with a plain white or light-coloured background, a neutral expression and your face centred and square to the camera. It must be no more than 6 months old, and you submit 2 identical copies.",
+  },
+  {
+    q: "Can I take my own Canada passport pic at home?",
+    a: "For a standard passport application, the Passport Program says the photo must be taken by a commercial photographer or studio and printed professionally. It also rejects photos that have been edited in any way, including cropping, background changes and AI tools. Use PixPassport to learn the framing and check your shot, then have the final photo taken by a studio.",
+  },
+  {
+    q: "What photo do I need for a Canada visa?",
+    a: "For a temporary resident visa, IRCC asks for two identical photos taken in the last 6 months, on a plain white or light-coloured background. The frame should be at least 35 × 45 mm, with the head measuring 31–36 mm from chin to crown. Requirements can differ by application type, so check the form you are filling in.",
+  },
+  {
+    q: "Does the passport photo have to be printed?",
+    a: "For in-person and mail applications, yes: two professionally printed photos on plain, high-quality photo paper. Home printing is not accepted. A digital photo is only needed if you renew your passport online.",
+  },
+  {
+    q: "Can I wear glasses or a head covering?",
+    a: "Non-tinted glasses are accepted if your eyes are clearly visible and there is no glare. Head coverings are accepted if worn daily for religious or medical reasons, as long as your full face is visible and the covering casts no shadows.",
+  },
+];
+
+const officialSources = [
+  {
+    badge: "Passport Program",
+    title: "Passport photo requirements",
+    url: "https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-passports/photos.html",
+    note: "Size, quality, expression and digital photo rules.",
+  },
+  {
+    badge: "IRCC",
+    title: "Temporary resident visa photo specifications",
+    url: "https://www.canada.ca/en/immigration-refugees-citizenship/services/application/application-forms-guides/temporary-resident-visa-application-photograph-specifications.html",
+    note: "Photo size and head size for visa applications.",
+  },
+  {
+    badge: "ICAO",
+    title: "Doc 9303 travel document standard",
+    url: "https://www.icao.int/publications/doc-series/doc-9303",
+    note: "The international standard behind neutral expressions.",
+  },
+];
+
+/* ------------------------------------------------------------------ */
+/*  Page                                                               */
+/* ------------------------------------------------------------------ */
 export default function CAIndexPage() {
   const pages = getAllCAPages();
 
@@ -84,93 +202,78 @@ export default function CAIndexPage() {
     {
       "@context": "https://schema.org",
       "@type": "SoftwareApplication",
-      name: "PixPassport Canada Passport Photo Maker",
+      name: "PixPassport Canada Passport Photo Tool",
       url: "https://www.pixpassport.com/ca",
       applicationCategory: "UtilitiesApplication",
       operatingSystem: "All",
-      offers: { "@type": "Offer", price: "6.99", priceCurrency: "CAD" },
+      offers: { "@type": "Offer", price: "9.99", priceCurrency: "CAD" },
     },
     {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
       itemListElement: [
         { "@type": "ListItem", position: 1, name: "Home", item: "https://www.pixpassport.com/" },
-        { "@type": "ListItem", position: 2, name: "Canada Photo Tools", item: "https://www.pixpassport.com/ca" },
+        { "@type": "ListItem", position: 2, name: "Canada passport photo", item: "https://www.pixpassport.com/ca" },
       ],
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faqs.map((f) => ({
+        "@type": "Question",
+        name: f.q,
+        acceptedAnswer: { "@type": "Answer", text: f.a },
+      })),
     },
   ];
 
   return (
-    <div className="bg-slate-50 min-h-screen pb-10">
+    <div className="bg-stone-50 text-slate-800 min-h-screen">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      {/* Canada red top accent bar */}
-      <div className="h-1 bg-lime-700 w-full" />
+      <div className="h-1 bg-red-700 w-full" aria-hidden="true" />
 
-      {/* ── HERO SECTION ── */}
-      <section className="bg-white border-b border-slate-200 py-8 lg:py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* ───────── HERO ───────── */}
+      <section className="bg-white border-b border-stone-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-14">
           <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
-            {/* Left Column: Headline & 2 CTAs */}
-            <div className="flex-1 w-full text-left">
-              <div className="inline-flex items-center gap-2 bg-lime-50 border border-lime-200 rounded-full px-3 py-1 mb-4">
-                <span className="w-2 h-2 rounded-full bg-lime-700 animate-pulse" />
-                <span className="text-xs font-extrabold text-lime-800 tracking-wide uppercase">
-               Canada Passport & Visa Photo Tool · Based on IRCC & Passport Program Requirements
-                </span>
-              </div>
-
-              <h1 className="text-3xl sm:text-4xl lg:text-4xl font-black text-slate-800 leading-tight tracking-tight mb-3">
-                Create Canada Passport Photo Online &amp; Canada Visa Photo Checker
+            <div className="flex-1 w-full">
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 leading-[1.1] tracking-tight">
+                Canada passport photo: size, specs and an online checker
               </h1>
-              <p className="text-lg sm:text-xl text-slate-600 font-normal mb-5 leading-snug">
-                Create and check your Canadian passport &amp; IRCC visa photo online in under a minute — free to try
+              <p className="mt-4 text-base sm:text-lg text-slate-600 leading-relaxed max-w-xl">
+                Canada uses a taller 50×70 mm photo than most countries. Upload yours to see
+                whether the framing, face size and background are on track, or read the full
+                Canada passport photo specifications below.
               </p>
 
-              <p className="text-sm sm:text-base text-slate-600 leading-relaxed mb-7 max-w-lg">
-                Automated biometric checks against official Canadian government rules — 50×70 mm &amp; 35×45 mm sizing, chin-to-crown 31–36 mm, background removal, and face alignment processed instantly.
-              </p>
-
-              {/* 2 CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-3.5 mb-7">
+              <div className="mt-6 flex flex-col sm:flex-row gap-3">
                 <a
                   href="#ca-tool"
-                  className="inline-flex items-center justify-center bg-lime-700 hover:bg-lime-800 text-white text-sm sm:text-base font-bold px-4 py-3 rounded-xl transition-all active:scale-95 gap-2 shadow-sm"
+                  className="inline-flex items-center justify-center rounded-lg bg-red-700 px-6 py-3 text-base font-bold text-white shadow-sm hover:bg-red-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-700 focus-visible:ring-offset-2 transition-colors"
                 >
-                  <span>Upload &amp; Create Photo</span>
+                  Check my photo
                 </a>
                 <a
-                  href="/ca/canada-passport-photo-requirements"
-                  className="inline-flex items-center justify-center bg-white border-2 border-slate-300 hover:border-lime-600 hover:text-lime-700 text-slate-800 text-sm sm:text-base font-bold px-4 py-3 rounded-xl transition-all active:scale-95 gap-2"
+                  href="#specs"
+                  className="inline-flex items-center justify-center rounded-lg border border-slate-300 bg-white px-6 py-3 text-base font-bold text-slate-800 hover:border-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 transition-colors"
                 >
-                  <span>Canada Visa Photo Guide</span>
+                  See photo specifications
                 </a>
               </div>
 
-              {/* Star Rating */}
-              <div className="flex items-center gap-3 mb-2">
-                <div className="flex gap-0.5">
-                  {[1, 2, 3, 4, 5].map((i) => (
-                    <svg
-                      key={i}
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24"
-                      fill="#15803d"
-                    >
-                      <path d="M12 2l2.9 8.9H23l-7.4 5.4 2.8 8.7L12 19.6l-6.4 5.4 2.8-8.7L2 10.9h8.1z" />
-                    </svg>
-                  ))}
-                </div>
-                <span className="text-sm text-slate-700 font-bold">
-                  4.9 
-                </span>
-              </div>
+              <dl className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-x-6 gap-y-4 border-t border-stone-200 pt-6">
+                {quickFacts.map((f) => (
+                  <div key={f.label}>
+                    <dt className="text-xs text-slate-500">{f.label}</dt>
+                    <dd className="text-lg font-extrabold text-slate-900">{f.value}</dd>
+                  </div>
+                ))}
+              </dl>
             </div>
 
-            {/* Right Column: Before & After Slider */}
             <div className="w-full lg:w-auto flex justify-center">
               <CABeforeAfterSlider />
             </div>
@@ -178,372 +281,251 @@ export default function CAIndexPage() {
         </div>
       </section>
 
-      {/* ── MAIN EMBEDDED PHOTO GENERATOR TOOL ── */}
-      <section id="ca-tool" className="max-w-7xl mx-auto px-1 sm:px-2 lg:px-4 py-6 scroll-mt-6">
+      {/* ───────── HONEST NOTICE ───────── */}
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+        <div
+          role="note"
+          className="rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-950 leading-relaxed"
+        >
+          <p className="font-bold">Applying for a Canadian passport? Read this first.</p>
+          <p className="mt-1">
+            The Passport Program requires photos taken in person by a commercial photographer
+            and professionally printed. It does not accept edited photos, including cropping,
+            background changes or AI tools. Use this page to learn the specs and check your
+            framing, then have the final photo taken by a studio.{" "}
+            <Link href="/ca/canada-passport-photo-requirements" className="font-bold underline">
+              Read the full requirements
+            </Link>
+          </p>
+        </div>
+      </section>
+
+      {/* ───────── TOOL ───────── */}
+      <section id="ca-tool" className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6 py-8 scroll-mt-6">
         <CAEmbeddedTool />
       </section>
 
-      {/* ── EXAMPLE OUTPUT SECTION (RESPONSIVE 4-STEP FLOW PROCESS) ── */}
-      <section className="bg-white border-y border-slate-200 py-10 px-4 sm:px-6 lg:px-8">
+      {/* ───────── HOW IT WORKS ───────── */}
+      <section className="bg-white border-y border-stone-200 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-7">
-            <span className="text-xs font-black text-lime-700 uppercase tracking-widest block mb-1">
-              Automatic Photo Transformation Flow
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
-              4-Step Canada Photo Processing Pipeline
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-500 max-w-md mx-auto mt-1">
-              From raw selfie to biometric verification, 50×70 mm / 35×45 mm compliance, and print-ready output.
-            </p>
-          </div>
+          <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
+            How the Canada passport pic tool works
+          </h2>
+          <p className="mt-2 text-slate-600 max-w-2xl">
+            Four quick steps from a phone photo to a layout sized for Canada.
+          </p>
 
-          {/* 4 Cards Grid Flow */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
-            {/* Step 1: Normal Camera Upload */}
-            <div className="group relative border border-slate-200 rounded-xl overflow-hidden bg-slate-50/50 hover:border-lime-500 hover:shadow-xs transition-all flex flex-col justify-between">
-              <div>
-                <div className="aspect-[50/70] relative bg-slate-100 overflow-hidden">
+          <ol className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
+            {steps.map((s, i) => (
+              <li key={s.title} className="flex flex-col">
+                <div className="relative aspect-[50/70] overflow-hidden rounded-lg bg-stone-100 border border-stone-200">
                   <img
-                    src="https://res.cloudinary.com/dipzpwbbk/image/upload/v1786116243/uk_before_image_passport_photo_d4sqnr.webp"
-                    alt="1. Camera Upload - Raw Selfie"
+                    src={s.img}
+                    alt={s.alt}
                     width={500}
                     height={700}
                     loading="lazy"
                     decoding="async"
-                    className="w-full h-full object-cover transition-transform duration-300"
+                    className="h-full w-full object-cover"
                   />
-                  <span className="absolute top-2 left-2 bg-slate-900/80 text-white text-[10px] font-black px-2 py-0.5 rounded">
-                    STEP 1
-                  </span>
                 </div>
-                <div className="p-3">
-                  <h3 className="text-xs sm:text-sm font-bold text-slate-900 leading-tight">
-                    1. Camera Upload
-                  </h3>
-                  <p className="text-[11px] text-slate-500 mt-1 leading-snug">
-                    Casual selfie or portrait photo from any smartphone.
-                  </p>
-                </div>
-              </div>
-              <div className="px-3 pb-3 hidden md:flex items-center text-[10px] font-bold text-lime-700">
-                Next: Biometric scan →
-              </div>
-            </div>
-
-            {/* Step 2: Biometric Check */}
-            <div className="group relative border border-slate-200 rounded-xl overflow-hidden bg-slate-50/50 hover:border-lime-500 hover:shadow-xs transition-all flex flex-col justify-between">
-              <div>
-                <div className="aspect-[50/70] relative bg-slate-100 overflow-hidden">
-                  <img
-                    src="https://res.cloudinary.com/dipzpwbbk/image/upload/v1786118128/passport_photo_biometric_check_truryq.webp"
-                    alt="2. Biometric Scan & Analysis"
-                    width={500}
-                    height={700}
-                    loading="lazy"
-                    decoding="async"
-                    className="w-full h-full object-cover transition-transform duration-300"
-                  />
-                  <span className="absolute top-2 left-2 bg-blue-700/80 text-white text-[10px] font-black px-2 py-0.5 rounded">
-                    STEP 2
-                  </span>
-                </div>
-                <div className="p-3">
-                  <h3 className="text-xs sm:text-sm font-bold text-slate-900 leading-tight">
-                    2. Biometric Scan
-                  </h3>
-                  <p className="text-[11px] text-slate-500 mt-1 leading-snug">
-                    Chin-to-crown (31–36 mm) &amp; eye position AI scan.
-                  </p>
-                </div>
-              </div>
-              <div className="px-3 pb-3 hidden md:flex items-center text-[10px] font-bold text-lime-700">
-                Next: IRCC Crop →
-              </div>
-            </div>
-
-            {/* Step 3: Compliant 50x70mm Photo */}
-            <div className="group relative border border-slate-200 rounded-xl overflow-hidden bg-slate-50/50 hover:border-lime-500 hover:shadow-xs transition-all flex flex-col justify-between">
-              <div>
-                <div className="aspect-[50/70] relative bg-slate-100 overflow-hidden">
-                  <img
-                    src="https://res.cloudinary.com/dipzpwbbk/image/upload/v1786116374/uk_passport_photo_after_atvxmj.webp"
-                    alt="3. Compliant 50x70mm Canada Passport Photo"
-                    width={500}
-                    height={700}
-                    loading="lazy"
-                    decoding="async"
-                    className="w-full h-full object-cover transition-transform duration-300"
-                  />
-                  <span className="absolute top-2 left-2 bg-lime-700 text-white text-[10px] font-black px-2 py-0.5 rounded">
-                    STEP 3
-                  </span>
-                </div>
-                <div className="p-3">
-                  <h3 className="text-xs sm:text-sm font-bold text-slate-900 leading-tight">
-                    3. Compliant 50×70mm
-                  </h3>
-                  <p className="text-[11px] text-slate-500 mt-1 leading-snug">
-                    Plain white background &amp; 100% IRCC ready.
-                  </p>
-                </div>
-              </div>
-              <div className="px-3 pb-3 hidden md:flex items-center text-[10px] font-bold text-lime-700">
-                Next: Print template →
-              </div>
-            </div>
-
-            {/* Step 4: Print-Ready Sheet */}
-            <div className="group relative border border-slate-200 rounded-xl overflow-hidden bg-slate-50/50 hover:border-lime-500 hover:shadow-xs transition-all flex flex-col justify-between">
-              <div>
-                <div className="aspect-[50/70] relative bg-slate-100 overflow-hidden">
-                  <img
-                    src="https://res.cloudinary.com/dipzpwbbk/image/upload/v1786118129/final_result_vzs9an.jpg"
-                    alt="4. Print-Ready Template"
-                    width={500}
-                    height={700}
-                    loading="lazy"
-                    decoding="async"
-                    className="w-full h-full object-cover transition-transform duration-300"
-                  />
-                  <span className="absolute top-2 left-2 bg-emerald-700 text-white text-[10px] font-black px-2 py-0.5 rounded">
-                    STEP 4
-                  </span>
-                </div>
-                <div className="p-3">
-                  <h3 className="text-xs sm:text-sm font-bold text-slate-900 leading-tight">
-                    4. Print Sheet / Digital JPEG
-                  </h3>
-                  <p className="text-[11px] text-slate-500 mt-1 leading-snug">
-                    Print-ready copy for Shoppers Drug Mart, Walmart, or home.
-                  </p>
-                </div>
-              </div>
-              <div className="px-3 pb-3 hidden md:flex items-center text-[10px] font-bold text-emerald-700">
-                Ready to submit ✓
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── VERIFIED OFFICIAL SOURCES ── */}
-      <section className="bg-white border-y border-slate-200 py-6 sm:py-8 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-5">
-            <span className="text-[11px] font-black text-lime-700 uppercase tracking-widest block mb-0.5">
-              Official Canadian Specifications
-            </span>
-            <h2 className="text-lg sm:text-xl font-bold text-slate-900">
-              Verified Against Official Canadian Authorities
-            </h2>
-            <p className="text-slate-500 text-xs max-w-md mx-auto mt-0.5">
-              Rules sourced directly from IRCC, Service Canada, RCMP, and ICAO publications.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3">
-            {officialCASources.map((src, i) => (
-              <a
-                key={i}
-                href={src.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block p-3 sm:p-3.5 bg-lime-50/40 border border-lime-200/80 rounded-xl hover:border-lime-400 transition-all flex flex-col justify-between"
-              >
-                <div>
-                  <div className="flex justify-between items-center mb-1.5">
-                    <span className="text-[9px] font-black text-lime-800 bg-lime-100 px-2 py-0.5 rounded-md uppercase tracking-wider">
-                      {src.badge}
-                    </span>
-                    <span className="text-[10px] text-lime-700 font-bold">↗</span>
-                  </div>
-                  <div className="text-[11px] font-bold text-slate-900 leading-tight">
-                    {src.agency}
-                  </div>
-                  <div className="text-xs font-extrabold text-lime-900 mt-0.5 mb-1 leading-tight">
-                    {src.doc}
-                  </div>
-                </div>
-                <p className="text-[11px] text-slate-600 leading-snug mt-1">
-                  {src.note}
-                </p>
-              </a>
+                <h3 className="mt-3 text-sm font-bold text-slate-900">
+                  {i + 1}. {s.title}
+                </h3>
+                <p className="mt-1 text-sm text-slate-600 leading-snug">{s.text}</p>
+              </li>
             ))}
-          </div>
+          </ol>
         </div>
       </section>
 
-      {/* ── CANADA PASSPORT PHOTO SIZE & GUIDELINES ── */}
-      <section className="bg-white border-b border-slate-200 py-10 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto space-y-8 text-slate-800">
-          {/* Section 1: Canadian Photo Size Requirements */}
-          <div>
-            <div className="flex items-center gap-2 mb-3">
-              <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
-                Canada Passport Photo Online Requirements
-              </h2>
-            </div>
-            <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
-              Photo size must be exactly <strong>50 millimetres (mm) wide × 70 millimetres (mm) high</strong> (2 inches × 2 3/4 inches).
-            </p>
-            <p className="text-sm sm:text-base text-slate-600 leading-relaxed mt-2">
-              A close-up of your head and shoulders so that your face, from the bottom of your chin to your crown, is between <strong>31 mm and 36 mm high</strong> (44% to 51% of photo height).
-            </p>
+      {/* ───────── SPECS TABLE ───────── */}
+      <section id="specs" className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 scroll-mt-6">
+        <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
+          Canada passport photo specifications
+        </h2>
+        <p className="mt-2 text-slate-600 max-w-2xl">
+          The Canada passport photo specs at a glance, with the matching rules for online
+          renewal and for a photo for a Canada visa.
+        </p>
 
-            {/* Helpful Crop Tool Box */}
-            <div className="mt-4 p-4 rounded-xl bg-lime-50 border border-lime-200 text-lime-900 text-xs sm:text-sm font-semibold flex items-start gap-3">
-              <span className="text-lg">💡</span>
-              <div>
-                <p className="font-bold">Automated Biometric Sizing:</p>
-                <p className="text-slate-700 font-normal mt-0.5">
-                  You don&apos;t need to manually measure millimeters. Our online tool crops and aligns your photo to exact Canadian specifications automatically.
-                </p>
-                <div className="mt-2.5 flex flex-wrap items-center gap-3 text-xs">
-                  <a href="#ca-tool" className="text-lime-800 font-extrabold hover:underline">
-                    Create Canada Passport Photo →
-                  </a>
-                  <a href="/ca/canada-passport-photo-requirements" className="text-lime-800 font-extrabold hover:underline">
-                    Check Canada Visa Photo Specs →
-                  </a>
-                  <a href="/passport-photos" className="text-slate-600 hover:text-slate-900 underline font-medium">
-                    Check photo requirements for other countries
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div className="mt-6 overflow-x-auto rounded-xl border border-stone-200 bg-white">
+          <table className="w-full min-w-[640px] text-left text-sm">
+            <caption className="sr-only">
+              Canada passport, digital passport and visa photo specifications compared
+            </caption>
+            <thead className="bg-stone-100 text-slate-700">
+              <tr>
+                <th scope="col" className="px-4 py-3 font-bold">Spec</th>
+                <th scope="col" className="px-4 py-3 font-bold">Passport (print)</th>
+                <th scope="col" className="px-4 py-3 font-bold">Passport (online renewal)</th>
+                <th scope="col" className="px-4 py-3 font-bold">Visa (TRV)</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-stone-200">
+              {specRows.map((r) => (
+                <tr key={r.item}>
+                  <th scope="row" className="px-4 py-3 font-semibold text-slate-900">{r.item}</th>
+                  <td className="px-4 py-3 text-slate-700">{r.passport}</td>
+                  <td className="px-4 py-3 text-slate-700">{r.digital}</td>
+                  <td className="px-4 py-3 text-slate-700">{r.visa}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="mt-3 text-xs text-slate-500">
+          Source: Passport Program and IRCC photo pages on Canada.ca. Rules for other
+          applications (PR card, citizenship, permits) can differ, so always check the form
+          you are using.
+        </p>
 
-          {/* Section 2: Take Passport Photo Guidelines */}
-          <div className="pt-6 border-t border-slate-100">
-            <div className="flex items-center gap-2 mb-3">
-              <h2 className="text-xl sm:text-2xl font-bold text-slate-900">
-                How to Take a Canadian Passport Photo at Home
-              </h2>
-            </div>
-            <p className="text-xs sm:text-sm text-slate-500 mb-4">
-              Follow these official Canadian Passport Program photo guidelines using any digital camera or smartphone:
-            </p>
-
-            <ul className="grid sm:grid-cols-2 gap-3 text-xs sm:text-sm text-slate-700 font-medium">
-              <li className="flex items-start gap-2 bg-slate-50 p-3 rounded-xl border border-slate-200">
-                <span className="text-lime-600 font-bold shrink-0">✓</span>
-                <span>Passport photo must be in full color (24-bit sRGB).</span>
-              </li>
-              <li className="flex items-start gap-2 bg-slate-50 p-3 rounded-xl border border-slate-200">
-                <span className="text-lime-600 font-bold shrink-0">✓</span>
-                <span>Plain, solid white or light-coloured background with no decorations or patterns.</span>
-              </li>
-              <li className="flex items-start gap-2 bg-slate-50 p-3 rounded-xl border border-slate-200">
-                <span className="text-lime-600 font-bold shrink-0">✓</span>
-                <span>Look straight at the camera. Both sides of the face and ears should be visible.</span>
-              </li>
-              <li className="flex items-start gap-2 bg-slate-50 p-3 rounded-xl border border-slate-200">
-                <span className="text-lime-600 font-bold shrink-0">✓</span>
-                <span>Neutral facial expression with mouth closed and no smiling.</span>
-              </li>
-              <li className="flex items-start gap-2 bg-slate-50 p-3 rounded-xl border border-slate-200">
-                <span className="text-lime-600 font-bold shrink-0">✓</span>
-                <span>Both eyes fully open and looking directly into the camera lens.</span>
-              </li>
-              <li className="flex items-start gap-2 bg-slate-50 p-3 rounded-xl border border-slate-200">
-                <span className="text-lime-600 font-bold shrink-0">✓</span>
-                <span>No hats or headgear except for verified religious or medical reasons.</span>
-              </li>
-              <li className="flex items-start gap-2 bg-slate-50 p-3 rounded-xl border border-slate-200">
-                <span className="text-lime-600 font-bold shrink-0">✓</span>
-                <span>Remove eyeglasses if possible. No glare, tint, or thick frames allowed.</span>
-              </li>
-              <li className="flex items-start gap-2 bg-slate-50 p-3 rounded-xl border border-slate-200">
-                <span className="text-lime-600 font-bold shrink-0">✓</span>
-                <span>Forehead and eyebrows clearly visible — do not cover with bangs or hair.</span>
-              </li>
-              <li className="flex items-start gap-2 bg-slate-50 p-3 rounded-xl border border-slate-200">
-                <span className="text-lime-600 font-bold shrink-0">✓</span>
-                <span>No shadows on face, under chin, or behind head on the background.</span>
-              </li>
-              <li className="flex items-start gap-2 bg-slate-50 p-3 rounded-xl border border-slate-200">
-                <span className="text-lime-600 font-bold shrink-0">✓</span>
-                <span>Taken within the last six (6) months of application.</span>
-              </li>
+        {/* Do / Don't */}
+        <div className="mt-10 grid md:grid-cols-2 gap-5">
+          <div className="rounded-xl border border-stone-200 bg-white p-5">
+            <h3 className="text-lg font-bold text-slate-900">What a good Canada passport pic looks like</h3>
+            <ul className="mt-3 space-y-2 text-sm text-slate-700">
+              {doList.map((t) => (
+                <li key={t} className="flex gap-2">
+                  <span aria-hidden="true" className="font-bold text-emerald-700">✓</span>
+                  <span>{t}</span>
+                </li>
+              ))}
             </ul>
           </div>
-
-          {/* Section 3: Lighting and Positioning */}
-          <div className="pt-6 border-t border-slate-100">
-            <div className="flex items-center gap-2 mb-3">
-              <h2 className="text-xl sm:text-2xl font-bold text-slate-900">
-                Lighting and Positioning Tips
-              </h2>
-            </div>
-            <div className="grid sm:grid-cols-2 gap-3 text-xs sm:text-sm text-slate-700">
-              <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-200">
-                <p className="font-bold text-slate-900 mb-1">☀️ Bright Natural Light</p>
-                <p className="text-slate-600 text-xs">Take the photo facing a window for natural, even illumination across both sides of the face.</p>
-              </div>
-              <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-200">
-                <p className="font-bold text-slate-900 mb-1">📏 Stand 1–1.5 Metres Away</p>
-                <p className="text-slate-600 text-xs">Stand about 3–4 feet from the wall to prevent casting a shadow on the background.</p>
-              </div>
-              <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-200">
-                <p className="font-bold text-slate-900 mb-1">📷 Camera at Eye Level</p>
-                <p className="text-slate-600 text-xs">Position the camera directly at eye level to eliminate perspective distortion.</p>
-              </div>
-              <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-200">
-                <p className="font-bold text-slate-900 mb-1">🖼️ Leave Headroom</p>
-                <p className="text-slate-600 text-xs">Leave ample space around your head and upper shoulders so our AI can accurately position the 31–36 mm facial crop.</p>
-              </div>
-            </div>
+          <div className="rounded-xl border border-stone-200 bg-white p-5">
+            <h3 className="text-lg font-bold text-slate-900">What gets photos rejected</h3>
+            <ul className="mt-3 space-y-2 text-sm text-slate-700">
+              {dontList.map((t) => (
+                <li key={t} className="flex gap-2">
+                  <span aria-hidden="true" className="font-bold text-red-700">✕</span>
+                  <span>{t}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </section>
 
-      {/* ── CANADA MARKDOWN GUIDES DIRECTORY ── */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        <div className="text-center mb-5">
-          <span className="text-[11px] font-black text-lime-700 uppercase tracking-widest block mb-0.5">
-            Comprehensive Knowledge Base
-          </span>
-          <h2 className="text-lg sm:text-xl font-bold text-slate-900">
-            Canada Passport &amp; Document Guides
-          </h2>
-          <p className="text-slate-500 text-xs mt-0.5">
-            Step-by-step guides on Canadian passport, visa, PR card and citizenship photo rules.
-          </p>
+      {/* ───────── PHOTO FOR CANADA VISA ───────── */}
+      <section className="bg-white border-y border-stone-200 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-8 items-start">
+          <div>
+            <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
+              Photo for a Canada visa
+            </h2>
+            <p className="mt-3 text-slate-600 leading-relaxed">
+              A visa photo is smaller than a passport photo. IRCC asks for two identical photos
+              taken within the last six months, with a frame of at least 35 × 45 mm and a head
+              measuring 31–36 mm from chin to crown.
+            </p>
+            <p className="mt-3 text-slate-600 leading-relaxed">
+              Your face should sit in the middle of the frame, square to the camera, with the
+              tops of your shoulders showing and a plain white or light background behind you.
+              Digital photos must not be altered.
+            </p>
+            <Link
+              href="/ca/canada-passport-photo-requirements"
+              className="mt-5 inline-flex font-bold text-red-700 hover:text-red-800 underline underline-offset-4"
+            >
+              Visa and PR photo guide
+            </Link>
+          </div>
+          <div className="rounded-xl bg-stone-50 border border-stone-200 p-5">
+            <h3 className="text-lg font-bold text-slate-900">Passport vs visa photo</h3>
+            <dl className="mt-3 space-y-3 text-sm">
+              <div className="flex justify-between gap-4 border-b border-stone-200 pb-2">
+                <dt className="text-slate-600">Passport</dt>
+                <dd className="font-bold text-slate-900">50 × 70 mm</dd>
+              </div>
+              <div className="flex justify-between gap-4 border-b border-stone-200 pb-2">
+                <dt className="text-slate-600">Visa (TRV)</dt>
+                <dd className="font-bold text-slate-900">35 × 45 mm minimum</dd>
+              </div>
+              <div className="flex justify-between gap-4">
+                <dt className="text-slate-600">Head height (both)</dt>
+                <dd className="font-bold text-slate-900">31–36 mm</dd>
+              </div>
+            </dl>
+          </div>
         </div>
+      </section>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+      {/* ───────── FAQ ───────── */}
+      <section className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
+          Canada passport photo questions
+        </h2>
+        <div className="mt-6 divide-y divide-stone-200 rounded-xl border border-stone-200 bg-white">
+          {faqs.map((f) => (
+            <details key={f.q} className="group p-4">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-bold text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-700 rounded">
+                <span>{f.q}</span>
+                <span aria-hidden="true" className="text-slate-400 transition-transform group-open:rotate-45 text-xl leading-none">+</span>
+              </summary>
+              <p className="mt-3 text-sm text-slate-600 leading-relaxed">{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+
+      {/* ───────── OFFICIAL SOURCES ───────── */}
+      <section className="bg-white border-y border-stone-200 py-10 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-xl font-bold text-slate-900">Where these rules come from</h2>
+          <p className="mt-1 text-sm text-slate-600">
+            Every spec on this page is taken from the official sources below.
+          </p>
+          <ul className="mt-5 grid sm:grid-cols-3 gap-3">
+            {officialSources.map((s) => (
+              <li key={s.url}>
+                <a
+                  href={s.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block h-full rounded-xl border border-stone-200 p-4 hover:border-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 transition-colors"
+                >
+                  <span className="text-xs font-bold text-red-700">{s.badge}</span>
+                  <span className="mt-1 block text-sm font-bold text-slate-900">{s.title}</span>
+                  <span className="mt-1 block text-sm text-slate-600">{s.note}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* ───────── GUIDES ───────── */}
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h2 className="text-xl sm:text-2xl font-bold text-slate-900">More Canada photo guides</h2>
+        <p className="mt-1 text-sm text-slate-600">
+          Passport, visa, PR card and citizenship photo rules explained step by step.
+        </p>
+        <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
           {pages.map((page) => (
             <Link
               key={page.slug}
               href={`/ca/${page.slug}`}
-              className="group bg-white rounded-xl p-3.5 border border-slate-200 hover:border-lime-500 transition-all flex flex-col justify-between shadow-xs"
+              className="group flex flex-col justify-between rounded-xl border border-stone-200 bg-white p-4 hover:border-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 transition-colors"
             >
               <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="px-2 py-0.5 rounded bg-lime-100 text-lime-800 text-[10px] font-bold uppercase">
-                    {page.category}
-                  </span>
-                  <span className="text-[10px] text-slate-400 font-semibold">
-                    🇨🇦 Canada Spec
-                  </span>
-                </div>
-                <h3 className="text-xs font-bold text-slate-900 group-hover:text-lime-700 transition-colors line-clamp-1 leading-snug">
+                <span className="text-xs font-semibold text-red-700">{page.category}</span>
+                <h3 className="mt-1 text-sm font-bold text-slate-900 line-clamp-2">
                   {page.h1 || page.title}
                 </h3>
-                <p className="text-[11px] text-slate-500 mt-1 line-clamp-2 leading-snug">
-                  {page.description}
-                </p>
+                <p className="mt-1 text-sm text-slate-600 line-clamp-2">{page.description}</p>
               </div>
-              <div className="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-[10px] font-bold text-slate-400">
-                <span>{page.readingTime} read</span>
-                <span className="text-lime-700 group-hover:translate-x-0.5 transition-transform">
-                  Read guide →
-                </span>
-              </div>
+              <span className="mt-4 text-xs font-semibold text-slate-500">
+                {page.readingTime} read
+              </span>
             </Link>
           ))}
         </div>
+        <p className="mt-6 text-sm">
+          <Link href="/passport-photos" className="text-slate-600 underline underline-offset-4 hover:text-slate-900">
+            Photo requirements for other countries
+          </Link>
+        </p>
       </section>
     </div>
   );
