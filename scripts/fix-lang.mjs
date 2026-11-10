@@ -107,6 +107,33 @@ const ROUTE_EQUIVALENTS = [
       'x-default': `${BASE_URL}/blog`,
     },
     paths: ['/blog', '/fr/guides', '/de/guides']
+  },
+  // Switzerland: passport photo (Swiss German + Swiss French)
+  {
+    urls: {
+      'de-CH': `${BASE_URL}/de/passfoto-schweiz-online`,
+      'fr-CH': `${BASE_URL}/fr/photo-passeport-suisse`,
+      'x-default': `${BASE_URL}/de/passfoto-schweiz-online`,
+    },
+    paths: ['/de/passfoto-schweiz-online', '/fr/photo-passeport-suisse']
+  },
+  // Switzerland: ID / document photo (Swiss German + Swiss French)
+  {
+    urls: {
+      'de-CH': `${BASE_URL}/de/dokumentenfoto-schweiz`,
+      'fr-CH': `${BASE_URL}/fr/photo-identite-suisse`,
+      'x-default': `${BASE_URL}/de/dokumentenfoto-schweiz`,
+    },
+    paths: ['/de/dokumentenfoto-schweiz', '/fr/photo-identite-suisse']
+  },
+  // Switzerland (Swiss French only): baby passport photo, SwissPass photo
+  {
+    urls: { 'fr-CH': `${BASE_URL}/fr/photo-passeport-bebe-suisse`, 'x-default': `${BASE_URL}/fr/photo-passeport-bebe-suisse` },
+    paths: ['/fr/photo-passeport-bebe-suisse']
+  },
+  {
+    urls: { 'fr-CH': `${BASE_URL}/fr/photo-swisspass`, 'x-default': `${BASE_URL}/fr/photo-swisspass` },
+    paths: ['/fr/photo-swisspass']
   }
 ];
 
@@ -118,11 +145,10 @@ function getSitemapHreflangTags(pathname) {
   let tags = [];
   
   if (group) {
-    if (group.urls.en) tags.push(`    <xhtml:link rel="alternate" hreflang="en" href="${group.urls.en}" />`);
-    if (group.urls.fr) tags.push(`    <xhtml:link rel="alternate" hreflang="fr" href="${group.urls.fr}" />`);
-    if (group.urls.de) tags.push(`    <xhtml:link rel="alternate" hreflang="de" href="${group.urls.de}" />`);
-    if (group.urls.es) tags.push(`    <xhtml:link rel="alternate" hreflang="es" href="${group.urls.es}" />`);
-    if (group.urls['pt-BR']) tags.push(`    <xhtml:link rel="alternate" hreflang="pt-BR" href="${group.urls['pt-BR']}" />`);
+    // Emit every language/region in the group (e.g. en, fr, de-CH, fr-CH), x-default last
+    for (const [lang, href] of Object.entries(group.urls)) {
+      if (lang !== 'x-default') tags.push(`    <xhtml:link rel="alternate" hreflang="${lang}" href="${href}" />`);
+    }
     if (group.urls['x-default']) tags.push(`    <xhtml:link rel="alternate" hreflang="x-default" href="${group.urls['x-default']}" />`);
   } else {
     // Standalone page
@@ -136,9 +162,6 @@ function getSitemapHreflangTags(pathname) {
       tags.push(`    <xhtml:link rel="alternate" hreflang="x-default" href="${fullUrl}" />`);
     } else if (cleanPath.startsWith('/de')) {
       tags.push(`    <xhtml:link rel="alternate" hreflang="de" href="${fullUrl}" />`);
-      if (cleanPath.includes('schweiz')) {
-        tags.push(`    <xhtml:link rel="alternate" hreflang="de-CH" href="${fullUrl}" />`);
-      }
       tags.push(`    <xhtml:link rel="alternate" hreflang="x-default" href="${fullUrl}" />`);
     } else {
       tags.push(`    <xhtml:link rel="alternate" hreflang="en" href="${fullUrl}" />`);

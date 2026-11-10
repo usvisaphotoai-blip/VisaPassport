@@ -14,6 +14,8 @@ export const metadata: Metadata = {
     canonical: "https://www.pixpassport.com/de/passfoto-schweiz-online",
     languages: {
       "de-CH": "https://www.pixpassport.com/de/passfoto-schweiz-online",
+      "fr-CH": "https://www.pixpassport.com/fr/photo-passeport-suisse",
+      "x-default": "https://www.pixpassport.com/de/passfoto-schweiz-online",
     },
   },
   openGraph: {
@@ -46,7 +48,7 @@ const specifications = [
   ["Format", "35 × 45 mm", "Hochformat, ohne Rand, randscharf zugeschnitten"],
   ["Gesichtshöhe", "29–34 mm", "Von der Kinnspitze bis zur Schädeldecke"],
   ["Fotoalter", "Max. 12 Monate", "Muss das aktuelle Aussehen zeigen"],
-  ["Hintergrund", "Hell & einfarbig", "Ohne Schatten, Muster oder Gegenstände"],
+  ["Hintergrund", "Einfarbig & neutral", "Klar vom Kopf getrennt, ohne Schatten"],
 ];
 
 const requirements = [
@@ -59,12 +61,12 @@ const requirements = [
     text: "Der Mund bleibt geschlossen, das Gesicht wirkt entspannt. Ein neutraler Ausdruck hält alle Gesichtsmerkmale klar erkennbar.",
   },
   {
-    title: "Keine Brille",
-    text: "Seit 2010 sind Brillen auf Schweizer Passfotos grundsätzlich nicht mehr zulässig, da Fassung und Reflexionen die Augen verdecken können. Nur bei zwingender medizinischer Notwendigkeit ist eine Ausnahme möglich.",
+    title: "Brille nur unter Bedingungen",
+    text: "Brillen sind erlaubt, wenn das Gestell die Augen nicht verdeckt und die Gläser weder spiegeln noch getönt sind. Sonnenbrillen sind verboten; nur Menschen mit Sehbehinderung dürfen verdunkelte Gläser tragen.",
   },
   {
     title: "Kopf frei sichtbar",
-    text: "Mützen, Kappen und Hüte sind nicht erlaubt. Religiöse oder medizinisch begründete Kopfbedeckungen sind zulässig, sofern das Gesicht von Kinn bis Stirn und von Ohr zu Ohr vollständig sichtbar bleibt.",
+    text: "Mützen, Kappen und Hüte sind nicht erlaubt. Religiöse oder medizinisch begründete Kopfbedeckungen sind zulässig, sofern das Gesicht mindestens von der unteren Kinnkante bis zum Haaransatz erkennbar bleibt. Auch Stirnbänder und auf den Kopf geschobene Brillen sind nicht erlaubt.",
   },
   {
     title: "Gleichmässiges Licht",
@@ -86,23 +88,23 @@ const steps = [
 const faqs = [
   {
     q: "Wie gross muss ein Passfoto in der Schweiz sein?",
-    a: "Für Schweizer Pässe und Identitätskarten gilt laut fedpol-Fotomustertafel das Format 35 × 45 mm ohne Rand. Die Gesichtshöhe von der Kinnspitze bis zur Schädeldecke liegt bei Erwachsenen zwischen 29 und 34 mm. Für Säuglinge und Kinder bis 11 Jahre gelten bei Kopfhaltung und Ausdruck teils gelockerte Vorgaben.",
+    a: "Für Schweizer Pässe und Identitätskarten gilt laut fedpol-Fotomustertafel das Format 35 × 45 mm ohne Rand. Die Gesichtshöhe von der Kinnspitze bis zur Schädeldecke liegt bei Erwachsenen zwischen 29 und 34 mm. Bei Kindern unter 11 Jahren muss die Gesichtshöhe mindestens 23 mm betragen; bei Kleinkindern sind Abweichungen bei Blickrichtung, Ausdruck und Kopfgrösse zulässig.",
   },
   {
     q: "Kann ich das Schweizer Passfoto online vorbereiten?",
-    a: "Sie können eine geeignete Datei online aus einem sauberen Originalfoto vorbereiten. Ob ein eigenes Foto für Ihren Antrag akzeptiert wird, hängt jedoch von Dokument und Kanton ab: Für den biometrischen Pass nehmen die meisten Passbüros das Foto vor Ort auf, da gleichzeitig Fingerabdrücke erfasst werden. Für die Identitätskarte akzeptieren viele Gemeinden ein mitgebrachtes Foto, sofern es der Fotomustertafel entspricht.",
+    a: "Sie können eine geeignete Datei online aus einem sauberen Originalfoto vorbereiten. Ob ein eigenes Foto für Ihren Antrag akzeptiert wird, hängt jedoch von Dokument und Kanton ab: Für den Pass und die neue Identitätskarte mit Chip (seit 2. November 2026) nimmt das kantonale Biometriezentrum das Foto vor Ort auf, da gleichzeitig Fingerabdrücke erfasst werden. Für die Identitätskarte ohne Chip, die je nach Kanton weiterhin bei der Gemeinde bestellt werden kann, ist meist ein mitgebrachtes Papierfoto nötig.",
   },
   {
     q: "Darf ich auf dem Schweizer Passfoto eine Brille tragen?",
-    a: "Nein. Seit 2010 sind Brillen auf Passfotos in der Schweiz grundsätzlich verboten, weil Fassung und Glasreflexionen die Augenpartie verdecken können. Nur bei zwingender medizinischer Notwendigkeit ist eine Ausnahme möglich, wobei die Augen dabei vollständig und ohne Spiegelung sichtbar bleiben müssen.",
+    a: "Ja, unter Bedingungen: Laut fedpol darf das Brillengestell die Augen nicht verdecken, die Gläser dürfen nicht spiegeln und nicht getönt sein. Sonnenbrillen sind nicht erlaubt; Menschen mit Sehbehinderung dürfen verdunkelte Gläser tragen.",
   },
   {
     q: "Sind Kopftuch, Kippa oder Turban auf dem Foto erlaubt?",
-    a: "Religiös oder medizinisch begründete Kopfbedeckungen sind zulässig. Voraussetzung ist, dass das Gesicht von der Kinnspitze bis zum Haaransatz und von Ohr zu Ohr vollständig sichtbar bleibt, damit die Gesichtserkennung nicht beeinträchtigt wird.",
+    a: "Religiös oder medizinisch begründete Kopfbedeckungen sind zulässig. Voraussetzung ist, dass das Gesicht von der Kinnspitze bis zum Haaransatz erkennbar bleibt und keine Schatten auf dem Gesicht entstehen.",
   },
   {
     q: "Welcher Hintergrund ist für ein Schweizer Passfoto geeignet?",
-    a: "Der Hintergrund muss hell, einfarbig und gleichmässig ausgeleuchtet sein. Er darf keine Schatten, Muster oder Gegenstände enthalten und muss sich klar von Kopf und Haaren abheben.",
+    a: "Der Hintergrund muss einfarbig, einheitlich und neutral sein; ein zu heller Hintergrund mit mangelndem Kontrast wird abgelehnt. Er darf keine Schatten, Muster oder Gegenstände enthalten und muss sich klar von Kopf und Haaren abheben.",
   },
   {
     q: "Wie aktuell muss das Passfoto sein?",
@@ -159,7 +161,7 @@ const jsonLd = {
 const checklist = [
   "Termin- oder Einreichungshinweise der zuständigen Stelle vorab lesen.",
   "Nur die scharfe Originaldatei verwenden, nicht aus einem Messenger oder Screenshot weiterleiten.",
-  "Brille abnehmen und Kopfbedeckung nur bei religiösem oder medizinischem Grund tragen.",
+  "Spiegelnde oder getönte Brillen abnehmen und Kopfbedeckung nur bei religiösem oder medizinischem Grund tragen.",
   "Bei Ausdruck: Fotopapier, Anzahl der Bilder und rechtwinklige Ecken nach Vorgabe prüfen.",
   "Bei Unsicherheit vor dem Termin direkt beim Passbüro oder der Einwohnerkontrolle nachfragen.",
 ];
@@ -173,20 +175,21 @@ export default function PassfotoSchweizPage() {
         breadcrumb={[{ label: "Startseite", href: "/de" }, { label: "Passfoto Schweiz" }]}
         eyebrow="Schweizer Passfoto · fedpol-Fotomustertafel"
         title="Passfoto Schweiz: richtiges Format, klarer Ablauf"
-        intro="Die fedpol-Fotomustertafel schreibt für Schweizer Pass und Identitätskarte ein Format von 35 × 45 mm vor: frontal, ohne Brille und mit hellem, gleichmässigem Hintergrund. Bereiten Sie eine saubere Aufnahme vor und klären Sie den Einreichungsweg vorab mit Ihrer kantonalen Stelle."
+        intro="Die fedpol-Fotomustertafel schreibt für Schweizer Pass und Identitätskarte ein Format von 35 × 45 mm vor: frontal, mit neutralem Ausdruck und einfarbigem, neutralem Hintergrund. Bereiten Sie eine saubere Aufnahme vor und klären Sie den Einreichungsweg vorab mit Ihrer kantonalen Stelle."
         primary={{ href: ctaHref, label: "Passfoto vorbereiten" }}
         secondary={{ href: "#anforderungen", label: "Anforderungen ansehen" }}
-        note="Ab CHF 15.99 · Ergebnis vorher kostenlos ansehen"
+        note="Ab CHF 8.99 · Ergebnis vorher kostenlos ansehen"
         image={{
           src: "https://res.cloudinary.com/dipzpwbbk/image/upload/v1779008016/c24d89b1-ab0e-4f1d-9035-5814bc7b91ca_preview_ip9ogs.jpg",
-          alt: "Schweizer Passfoto im Format 35 × 45 mm mit Maßlinien für die Gesichtshöhe",
+          alt: "Schweizer Passfoto im Format 35 × 45 mm mit Masslinien für die Gesichtshöhe",
           width: 843,
           height: 671,
         }}
       >
         <p className="mt-6 rounded-xl border-2 border-amber-200 bg-amber-50 p-4 text-sm leading-relaxed text-amber-900">
           <strong>Wichtig:</strong> Beim biometrischen Pass nimmt das Passbüro das Foto meist vor Ort auf, da gleichzeitig
-          Fingerabdrücke erfasst werden. Für die Identitätskarte akzeptieren viele Gemeinden ein mitgebrachtes Foto.
+          Fingerabdrücke erfasst werden. Das gilt seit dem 2. November 2026 auch für die neue Identitätskarte mit Chip.
+          Für die Identitätskarte ohne Chip akzeptieren viele Gemeinden ein mitgebrachtes Foto.
         </p>
       </Hero>
 
@@ -241,6 +244,8 @@ export default function PassfotoSchweizPage() {
                 Speichern Sie Ihre Originaldatei in hoher Auflösung und klären Sie, ob Ihre Behörde einen Ausdruck, eine
                 digitale Datei oder die Aufnahme vor Ort verlangt. Für weitere Ausweise lesen Sie unseren{" "}
                 <Link href="/de/dokumentenfoto-schweiz" className={textLink}>Guide zum Dokumentenfoto Schweiz</Link>.
+                {" "}Diese Seite gibt es auch auf Französisch:{" "}
+                <Link href="/fr/photo-passeport-suisse" className={textLink} hrefLang="fr-CH" lang="fr-CH">Photo passeport Suisse</Link>.
               </>
             }
           />

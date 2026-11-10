@@ -17,6 +17,10 @@ export default function FooterFr() {
         { label: "Photo d'identité bébé", href: "/fr/photo-bebe" },
         { label: "Photo permis de conduire", href: "/fr/photo-permis-de-conduire" },
         { label: "Photo titre de séjour", href: "/fr/photo-titre-de-sejour" },
+        { label: "Photo passeport Suisse", href: "/fr/photo-passeport-suisse" },
+        { label: "Photo d'identité Suisse", href: "/fr/photo-identite-suisse" },
+        { label: "Photo passeport bébé Suisse", href: "/fr/photo-passeport-bebe-suisse" },
+        { label: "Photo SwissPass", href: "/fr/photo-swisspass" },
       ],
     },
     {

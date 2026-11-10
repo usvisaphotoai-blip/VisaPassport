@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import {
   Hero, Section, SectionHeader, StepsGrid, CheckList, FaqList, CtaBand, JsonLd, Badge, Prose, card, RelatedPages,
 } from "../components/ui";
@@ -13,6 +14,8 @@ export const metadata: Metadata = {
     canonical: "https://www.pixpassport.com/de/dokumentenfoto-schweiz",
     languages: {
       "de-CH": "https://www.pixpassport.com/de/dokumentenfoto-schweiz",
+      "fr-CH": "https://www.pixpassport.com/fr/photo-identite-suisse",
+      "x-default": "https://www.pixpassport.com/de/dokumentenfoto-schweiz",
     },
   },
   openGraph: {
@@ -44,9 +47,9 @@ export const metadata: Metadata = {
 const documents = [
   {
     code: "01",
-    title: "Identitätskarte",
+    title: "Identitätskarte ohne Chip",
     format: "35 × 45 mm",
-    text: "Viele Gemeinden akzeptieren ein mitgebrachtes Foto auf Fotopapier nach fedpol-Fotomustertafel. Manche erstellen es auch direkt am Schalter. Fragen Sie vor dem Termin bei Ihrer Einwohnerkontrolle nach.",
+    text: "Die Identitätskarte ohne Chip kann je nach Kanton weiterhin bei der Gemeinde bestellt werden. Die neue Karte mit Chip (seit 2. November 2026) wird dagegen wie der Pass im kantonalen Biometriezentrum erfasst – dort wird das Foto vor Ort aufgenommen. Für die Karte ohne Chip akzeptieren viele Gemeinden ein mitgebrachtes Foto auf Fotopapier nach fedpol-Fotomustertafel. Manche erstellen es auch direkt am Schalter. Fragen Sie vor dem Termin bei Ihrer Einwohnerkontrolle nach.",
   },
   {
     code: "02",
@@ -97,11 +100,11 @@ const faqs = [
   },
   {
     q: "Darf ich ein selbst erstelltes Foto für den Schweizer Pass einreichen?",
-    a: "Beim biometrischen Pass nimmt das kantonale Passbüro das Foto meist direkt beim Termin auf, da gleichzeitig Fingerabdrücke erfasst werden. Für die Identitätskarte akzeptieren dagegen viele Gemeinden ein mitgebrachtes Foto. Prüfen Sie dies vor dem Termin bei Ihrer zuständigen Pass- oder Einwohnerstelle.",
+    a: "Beim biometrischen Pass nimmt das kantonale Passbüro das Foto meist direkt beim Termin auf, da gleichzeitig Fingerabdrücke erfasst werden. Das gilt seit dem 2. November 2026 auch für die neue Identitätskarte mit Chip. Für die Identitätskarte ohne Chip akzeptieren dagegen viele Gemeinden ein mitgebrachtes Foto. Prüfen Sie dies vor dem Termin bei Ihrer zuständigen Pass- oder Einwohnerstelle.",
   },
   {
     q: "Darf ich auf dem Foto eine Brille tragen?",
-    a: "Für Pass, Identitätskarte und Führerausweis grundsätzlich nicht: Seit 2010 sind Brillen auf Schweizer Ausweisfotos verboten, weil Fassung und Reflexionen die Augen verdecken können. Eine Ausnahme gilt nur bei zwingender medizinischer Notwendigkeit.",
+    a: "Ja, unter Bedingungen: Laut fedpol darf das Brillengestell die Augen nicht verdecken, die Gläser dürfen nicht spiegeln und nicht getönt sein. Sonnenbrillen sind nicht erlaubt; Menschen mit Sehbehinderung dürfen verdunkelte Gläser tragen.",
   },
 ];
 
@@ -158,7 +161,7 @@ export default function DokumentenfotoSchweizPage() {
         intro="Bereiten Sie ein passendes Foto für ID, Führerausweis oder Visum direkt mit dem Smartphone vor. Für Aufenthaltsbewilligungen gilt eine Ausnahme: Dort erfasst ein kantonales Zentrum das Foto persönlich. Verbindlich ist stets die ausstellende Stelle."
         primary={{ href: ctaHref, label: "Foto vorbereiten" }}
         secondary={{ href: "#dokumente", label: "Dokument auswählen" }}
-        note="Ab CHF 15.99 · Ergebnis vorher kostenlos ansehen"
+        note="Ab CHF 8.99 · Ergebnis vorher kostenlos ansehen"
         image={{
           src: "https://res.cloudinary.com/dipzpwbbk/image/upload/v1785679205/MakePassportPhoto_ph2uog_ryefxt.webp",
           alt: "Druckbogen mit mehreren Dokumentenfotos im Format 35 × 45 mm",
@@ -176,6 +179,10 @@ export default function DokumentenfotoSchweizPage() {
             werden dagegen persönlich in einem kantonalen Ausweiszentrum erfasst, und Visa richten sich nach den Vorgaben
             des Ziellands. Mit einer sauberen Ausgangsaufnahme sparen Sie überall dort Zeit, wo ein eigenes Foto zulässig
             ist.
+          </p>
+          <p>
+            Diese Seite gibt es auch auf Französisch:{" "}
+            <Link href="/fr/photo-identite-suisse" hrefLang="fr-CH" lang="fr-CH">Photo d&apos;identité Suisse</Link>.
           </p>
         </Prose>
       </Section>

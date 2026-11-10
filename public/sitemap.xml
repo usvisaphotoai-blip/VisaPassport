@@ -2232,22 +2232,60 @@
 
   <url>
     <loc>https://www.pixpassport.com/de/passfoto-schweiz-online</loc>
-    <xhtml:link rel="alternate" hreflang="de" href="https://www.pixpassport.com/de/passfoto-schweiz-online" />
     <xhtml:link rel="alternate" hreflang="de-CH" href="https://www.pixpassport.com/de/passfoto-schweiz-online" />
+    <xhtml:link rel="alternate" hreflang="fr-CH" href="https://www.pixpassport.com/fr/photo-passeport-suisse" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/de/passfoto-schweiz-online" />
-    <lastmod>2026-10-06</lastmod>
+    <lastmod>2026-11-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://www.pixpassport.com/de/dokumentenfoto-schweiz</loc>
-    <xhtml:link rel="alternate" hreflang="de" href="https://www.pixpassport.com/de/dokumentenfoto-schweiz" />
     <xhtml:link rel="alternate" hreflang="de-CH" href="https://www.pixpassport.com/de/dokumentenfoto-schweiz" />
+    <xhtml:link rel="alternate" hreflang="fr-CH" href="https://www.pixpassport.com/fr/photo-identite-suisse" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/de/dokumentenfoto-schweiz" />
-    <lastmod>2026-10-06</lastmod>
+    <lastmod>2026-11-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://www.pixpassport.com/fr/photo-passeport-suisse</loc>
+    <xhtml:link rel="alternate" hreflang="de-CH" href="https://www.pixpassport.com/de/passfoto-schweiz-online" />
+    <xhtml:link rel="alternate" hreflang="fr-CH" href="https://www.pixpassport.com/fr/photo-passeport-suisse" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/de/passfoto-schweiz-online" />
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://www.pixpassport.com/fr/photo-identite-suisse</loc>
+    <xhtml:link rel="alternate" hreflang="de-CH" href="https://www.pixpassport.com/de/dokumentenfoto-schweiz" />
+    <xhtml:link rel="alternate" hreflang="fr-CH" href="https://www.pixpassport.com/fr/photo-identite-suisse" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/de/dokumentenfoto-schweiz" />
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://www.pixpassport.com/fr/photo-passeport-bebe-suisse</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CH" href="https://www.pixpassport.com/fr/photo-passeport-bebe-suisse" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/fr/photo-passeport-bebe-suisse" />
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.pixpassport.com/fr/photo-swisspass</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CH" href="https://www.pixpassport.com/fr/photo-swisspass" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/fr/photo-swisspass" />
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
 
     <url>

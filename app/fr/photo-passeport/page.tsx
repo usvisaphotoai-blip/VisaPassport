@@ -322,6 +322,11 @@ export default function PhotoPasseportPage() {
             <Link href="/fr/imprimer-photo-identite" className="text-lime-600 hover:underline">imprimer une photo d&apos;identité</Link>{" "}
             sans la déformer.
           </p>
+          <p className="text-slate-600 leading-relaxed mt-4">
+            Vous demandez un passeport suisse ? Les règles diffèrent (visage de 29 à 34 mm, photo prise au centre
+            cantonal de biométrie) : consultez notre guide{" "}
+            <Link href="/fr/photo-passeport-suisse" className="text-lime-600 hover:underline">photo passeport Suisse</Link>.
+          </p>
         </div>
       </section>
 
