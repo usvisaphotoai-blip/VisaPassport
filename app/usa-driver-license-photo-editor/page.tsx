@@ -5,22 +5,25 @@ export const viewport: Viewport = {
   themeColor: "#ffffff",
 };
 
+const PAGE_URL = "https://www.pixpassport.com/usa-driver-license-photo-editor";
+const LAST_UPDATED = "2026-11-11";
+
 export const metadata: Metadata = {
-  title: "Driver's License Photo Editor (USA) – 2×2 REAL ID & DMV Photo",
+  title: "US Driver's License Photo Maker – 2×2 DMV & REAL ID Photo",
   description:
-    "Make a US driver's license or REAL ID photo online. Auto-crop to 2×2 in (600×600 px), white background, and a 4×6 print sheet for any state DMV. Free preview.",
+    "Make a 2×2 in (600×600 px) driver's license photo for AAA International Driving Permits, mail-in renewals and DMV prep. White background + 4×6 print sheet. Free preview.",
   alternates: {
-    canonical: "https://www.pixpassport.com/usa-driver-license-photo-editor",
+    canonical: PAGE_URL,
     languages: {
-      en: "https://www.pixpassport.com/usa-driver-license-photo-editor",
-      "x-default": "https://www.pixpassport.com/usa-driver-license-photo-editor",
+      "en-US": PAGE_URL,
+      "x-default": PAGE_URL,
     },
   },
   openGraph: {
-    title: "USA Driver's License Photo Editor – Online Real ID & DMV Photo Maker",
+    title: "US Driver's License Photo Maker – 2×2 DMV & REAL ID Photo",
     description:
-      "Easily create compliant 2×2 in Real ID and US driver's license photos online. Auto-crops, removes background, and generates 4×6 print templates for local printing.",
-    url: "https://www.pixpassport.com/usa-driver-license-photo-editor",
+      "Turn a phone photo into a 2×2 inch driver's license, REAL ID or International Driving Permit photo. White background, correct head size, 4×6 print sheet.",
+    url: PAGE_URL,
     siteName: "PixPassport",
     locale: "en_US",
     type: "website",
@@ -29,15 +32,15 @@ export const metadata: Metadata = {
         url: "https://www.pixpassport.com/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "USA Driver's License Photo Editor Online",
+        alt: "2×2 inch US driver's license photo made online with PixPassport",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "USA Driver's License Photo Editor – Real ID & DMV Maker",
+    title: "US Driver's License Photo Maker – 2×2 DMV & REAL ID Photo",
     description:
-      "Instant online editor for 2×2 inch US driver's license and Real ID photos with automatic background removal and 300 DPI export.",
+      "2×2 inch driver's license and International Driving Permit photos with a white background, correct head size and a 4×6 print sheet.",
     images: ["https://www.pixpassport.com/og-image.jpg"],
   },
 };
@@ -45,95 +48,102 @@ export const metadata: Metadata = {
 export default function USADriverLicensePhotoEditorPage() {
   const faqs = [
     {
-      question: "What are the photo dimensions for a USA Driver's License and Real ID?",
+      question: "What size is a US driver's license photo?",
       answer:
-        "The standard photo size for a US Driver's License, Real ID, and State ID card is 2×2 inches (51×51 mm). In digital pixels at 300 DPI, this is exactly 600×600 pixels (up to 1200×1200 pixels). The head must take up between 50% and 69% of the photo's total height (1 inch to 1 3/8 inches from the bottom of the chin to the top of the head).",
+        "When a state or agency asks you to supply your own photo, the standard is the US passport format: 2×2 inches (51×51 mm), or 600×600 pixels for a digital file. Your head should measure 1 to 1⅜ inches (25–35 mm) from chin to crown, which is 50%–69% of the photo height, on a plain white or off-white background.",
     },
     {
-      question: "Can I bring my own printed photo to the DMV?",
+      question: "Can I bring my own photo to the DMV for my driver's license?",
       answer:
-        "Yes, in many states and for mail-in or online driver's license renewals, you can submit your own compliant 2×2 inch photograph. In states where the DMV camera takes your picture on-site, having your photo pre-formatted and ready ensures you have a compliant reference image and can preview your appearance before your appointment.",
+        "Usually not. In most states the photo printed on your driver's license, REAL ID or state ID is taken by the DMV camera at the counter. Self-supplied 2×2 photos are mainly accepted for specific cases such as some out-of-state or military mail-in renewals (for example in Texas and Ohio) and the AAA International Driving Permit. Always check your state DMV's current instructions before sending a photo.",
     },
     {
-      question: "Are eyeglasses permitted for US Driver's License and Real ID photos?",
+      question: "When do I actually need my own 2×2 driver's license photo?",
       answer:
-        "Rules vary by state. Many DMVs ask you to remove eyeglasses for your photo, and sunglasses or tinted lenses are never allowed. Removing glasses is the safest choice because lens glare and reflections can block your eyes and interfere with facial recognition software.",
+        "The most common reasons are: applying for an International Driving Permit through AAA (two identical 2×2 photos, signed on the back); renewing or replacing a license by mail while living out of state or serving in the military, where your state allows it; and practicing your pose, outfit and framing before a DMV appointment so you know how your license photo will look.",
     },
     {
-      question: "What background color is required for a US Driver's License photo?",
+      question: "Does the AAA International Driving Permit need passport photos?",
       answer:
-        "State DMVs require a plain, smooth white or off-white background with even lighting and no visible shadows behind the head or shoulders. Our tool automatically detects and replaces your background with a compliant, uniform backdrop.",
+        "Yes. The AAA paper application asks for two identical, recent passport-type photos measuring 2×2 inches, each signed on the back. Our tool produces a compliant 2×2 photo and a 4×6 print sheet with several copies, so you can print both photos in one go.",
     },
     {
-      question: "Can I smile in my USA DMV picture?",
+      question: "Is a REAL ID photo different from a regular driver's license photo?",
       answer:
-        "Most state motor vehicle departments allow a natural, relaxed expression with a subtle, closed-mouth smile. Avoid a wide open-mouth smile or bared teeth, since these disrupt the facial landmarks that state biometric software measures. Keep your eyes open and look straight at the camera for the cleanest result.",
+        "No. A REAL ID is a federally compliant license or ID card marked with a star, but the photo rules are set by each state and are the same as for a standard license: a front-facing, full-face photo on a plain light background with a neutral expression. REAL ID has been required for domestic flights and federal facilities since May 7, 2025.",
     },
     {
-      question: "What color should I wear for my DMV and driver's license picture?",
+      question: "Can I wear glasses in my driver's license photo?",
       answer:
-        "Wear everyday casual clothing in solid dark or rich colors (like navy, dark green, black, burgundy, or royal blue) that contrast cleanly with the white background. Avoid wearing white shirts, light cream pastels, camouflage patterns, or uniforms.",
+        "Most states now ask you to remove glasses for license photos, and sunglasses or tinted lenses are never allowed. Some states make a medical exception with a doctor's note. Removing glasses is the safest option because lens glare can hide your eyes and interfere with facial recognition.",
     },
     {
-      question: "How should I style my hair for a DMV picture?",
+      question: "Can I smile in my DMV photo?",
       answer:
-        "Pull your hair away from your face so both eyes, both eyebrows, your cheeks, and your full jawline stay visible. Skip tall updos, wide buns, or voluminous styles that push past the top or sides of the 2×2 inch frame.",
+        "Several states, including California, New York, Texas and Florida, allow a natural closed-mouth smile, while others such as Virginia and North Carolina ask for a neutral expression. If you are unsure, keep a relaxed neutral face with your mouth closed and both eyes open; that is accepted everywhere.",
     },
     {
-      question: "Do all 50 states follow the same Real ID photo rules?",
+      question: "Can I wear a religious head covering in my license photo?",
       answer:
-        "The core requirements are very similar nationwide: a 2×2 inch photo, 50%–69% head height, a plain white or light background, a neutral expression, and no sunglasses or hats. Agencies such as CA DMV, NYS DMV, TX DPS, FL DHSMV, and PA PennDOT may add small state-specific rules, so check your state's website before your appointment.",
+        "Yes. Every state allows religious head coverings as long as your full face is visible from hairline to chin and no shadows fall across it. Some states ask for a short statement or affidavit, so check your DMV's instructions before your visit.",
     },
     {
-      question: "Can I upload this photo for an online driver's license renewal?",
+      question: "What should I wear for my driver's license photo?",
       answer:
-        "Yes. Many state DMVs and motor vehicle portals now accept self-submitted digital uploads for online renewals and duplicate card requests, provided the JPEG file is 600×600 px with a solid white background and meets no-glasses rules.",
+        "Wear everyday clothing in solid, darker colors such as navy, black, burgundy or dark green that contrast with the white or light background. Avoid white or pale tops, busy patterns, uniforms, hats and large jewelry that reflects light.",
     },
     {
-      question: "How do I print my driver's license photo on 4×6 photo paper?",
+      question: "How do I print a 2×2 driver's license photo?",
       answer:
-        "PixPassport generates a standard 4×6 inch print template containing 4 identical 2×2 inch photos. You can send this 4×6 file to your local Walgreens, CVS, Walmart, or Target photo kiosk for under $0.50 and cut the photos out with scissors.",
+        "Download the 4×6 inch print sheet and order a standard 4×6 print at Walgreens, CVS, Walmart or Target, usually for under $0.50. Print at actual size (do not scale to fit), then cut out the 2×2 inch photos along the guides.",
     },
     {
-      question: "What happens if a photo gets rejected at the DMV counter?",
+      question: "How long does it take and what does it cost?",
       answer:
-        "If an in-office photo taken by a clerk does not meet standards, they will simply retake it on the spot. Preparing a pre-formatted, compliant photo with our tool ensures your appearance and biometric framing are perfected in advance for mail-in, online, or in-person renewals.",
+        "Processing takes about 30 seconds. You can preview the finished photo for free, and you only pay a one-time fee of $7.99 if you want to download the digital 2×2 photo and the 4×6 print sheet.",
     },
     {
-      question: "How often do I need a new DMV picture?",
+      question: "What happens to my photo after I upload it?",
       answer:
-        "You typically need a fresh photo each time you renew your driver's license or state ID card, generally every 4 to 8 years depending on your state. A new photo is also required after legal name changes, card replacements, or REAL ID upgrades.",
-    },
-    {
-      question: "What is the turnaround time for generating my license photo?",
-      answer:
-        "Our automated AI processing engine detects your facial landmarks, crops to exact dimensions, replaces the background, and generates both digital and 4×6 print files in under 30 seconds.",
+        "Your original upload is deleted automatically within 24 hours, download links expire, and we never sell or share your images or biometric data.",
     },
   ];
 
   const schemas = [
     {
       "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      name: "USA Driver's License Photo Editor",
-      url: "https://www.pixpassport.com/usa-driver-license-photo-editor",
+      "@type": "WebApplication",
+      name: "US Driver's License Photo Maker",
+      url: PAGE_URL,
       description:
-        "Online tool to crop, edit, and format photos for US Driver's Licenses and Real IDs across all 50 US states.",
-      applicationCategory: "UtilitiesApplication",
-      operatingSystem: "All",
+        "Online tool that crops a photo to 2×2 inches (600×600 px), replaces the background with white and creates a 4×6 print sheet for US driver's license, REAL ID and International Driving Permit photos.",
+      applicationCategory: "PhotographyApplication",
+      operatingSystem: "Any (web browser)",
+      browserRequirements: "Requires JavaScript",
       offers: {
         "@type": "Offer",
         price: "7.99",
         priceCurrency: "USD",
+        url: PAGE_URL,
+        availability: "https://schema.org/InStock",
       },
+      publisher: { "@type": "Organization", name: "PixPassport", url: "https://www.pixpassport.com/" },
     },
     {
       "@context": "https://schema.org",
       "@type": "WebPage",
-      name: "USA Driver's License Photo Editor – REAL ID & DMV Standards",
-      url: "https://www.pixpassport.com/usa-driver-license-photo-editor",
+      name: "US Driver's License Photo Maker – 2×2 DMV & REAL ID Photo",
+      url: PAGE_URL,
       inLanguage: "en-US",
+      dateModified: LAST_UPDATED,
+      primaryImageOfPage: "https://www.pixpassport.com/us_non_imigrant.png",
+      about: [
+        { "@type": "Thing", name: "Driver's license photo" },
+        { "@type": "Thing", name: "REAL ID" },
+        { "@type": "Thing", name: "International Driving Permit" },
+      ],
       isPartOf: { "@type": "WebSite", name: "PixPassport", url: "https://www.pixpassport.com/" },
+      publisher: { "@type": "Organization", name: "PixPassport", url: "https://www.pixpassport.com/" },
     },
     {
       "@context": "https://schema.org",
@@ -160,8 +170,8 @@ export default function USADriverLicensePhotoEditorPage() {
         {
           "@type": "ListItem",
           position: 2,
-          name: "USA Driver's License Photo Editor",
-          item: "https://www.pixpassport.com/usa-driver-license-photo-editor",
+          name: "US Driver's License Photo Maker",
+          item: PAGE_URL,
         },
       ],
     },
@@ -173,7 +183,7 @@ export default function USADriverLicensePhotoEditorPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas) }}
       />
-      <USADriverLicensePhotoClient faqs={faqs} />
+      <USADriverLicensePhotoClient faqs={faqs} lastUpdated={LAST_UPDATED} />
     </>
   );
 }

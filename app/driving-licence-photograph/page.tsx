@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import ComparisonSlider from "@/app/components/ComparisonSlider";
+import DrivingLicenceTool from "./DrivingLicenceTool";
 
 const PAGE_URL = "https://www.pixpassport.com/driving-licence-photograph";
 const OG_IMAGE =
@@ -26,20 +27,7 @@ export const metadata: Metadata = {
   title: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
   keywords: [
-    "driving licence photo",
-    "driving licence photograph",
-    "driving licence photo maker",
-    "uk driving licence photo size",
-    "uk driving licence photo requirements",
-    "us dmv photo requirements",
-    "dmv driver license photo size",
-    "india driving licence photo sarathi",
-    "can you smile on a driving licence photo",
-    "can i wear glasses on driving licence photo",
-    "change your driving licence photo",
-    "how to change driving licence photo",
-    "provisional driving licence photo",
-    "international driving permit photo size",
+   
   ],
   alternates: {
     canonical: PAGE_URL,
@@ -83,7 +71,7 @@ const supportedDocuments = [
     flag: "🇺🇸",
     size: "2 × 2 in (51 × 51 mm)",
     note: "DMV takes the licence photo; use 2×2 for supporting IDs",
-    link: "/passport-photo-online?type=us-passport",
+    link: "#tool:us-driver-license",
   },
   {
     id: "uk-driving",
@@ -91,7 +79,7 @@ const supportedDocuments = [
     flag: "🇬🇧",
     size: "35 × 45 mm",
     note: "Head 29–34 mm, cream or light grey background",
-    link: "/passport-photo-online?type=uk-driving",
+    link: "#tool:uk-driving",
   },
   {
     id: "in-driving",
@@ -99,7 +87,7 @@ const supportedDocuments = [
     flag: "🇮🇳",
     size: "35 × 45 mm",
     note: "Upload limits vary by form, so check the portal",
-    link: "/passport-photo-online?type=india-passport",
+    link: "#tool:india-driving",
   },
   {
     id: "idp-photo",
@@ -107,7 +95,7 @@ const supportedDocuments = [
     flag: "🌍",
     size: "Varies by issuer",
     note: "Check your issuer’s photo rules before printing",
-    link: "/passport-photo-online?type=uk-driving",
+    link: "#tool:us-idp",
   },
   {
     id: "de-driving",
@@ -115,7 +103,7 @@ const supportedDocuments = [
     flag: "🇩🇪",
     size: "35 × 45 mm",
     note: "Standard European biometric size",
-    link: "/passport-photo-online?type=germany-passport",
+    link: "#tool:germany-driving",
   },
   {
     id: "fr-driving",
@@ -123,7 +111,7 @@ const supportedDocuments = [
     flag: "🇫🇷",
     size: "35 × 45 mm",
     note: "Standard European biometric size",
-    link: "/passport-photo-online?type=france-passport",
+    link: "#tool:france-driving",
   },
 ];
 
@@ -449,6 +437,7 @@ const comparisonRows = [
 ];
 
 const tocItems = [
+  { label: "Make Photo", href: "#tool" },
   { label: "US Rules", href: "#us" },
   { label: "UK Rules", href: "#uk" },
   { label: "India Rules", href: "#india" },
@@ -509,35 +498,35 @@ export default function DrivingLicencePhotographPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
               <div className="lg:col-span-7 space-y-5 sm:space-y-6">
-                <div className="inline-flex items-start sm:items-center gap-2 bg-lime-50 border border-lime-300/80 rounded-2xl px-3.5 py-1.5">
+                <div className="inline-flex items-start sm:items-center gap-2 bg-slate-50 border border-slate-200 rounded-2xl px-3.5 py-1.5">
                   <span
-                    className="w-2 h-2 mt-1.5 sm:mt-0 rounded-full bg-lime-600 shrink-0"
+                    className="w-2 h-2 mt-1.5 sm:mt-0 rounded-full bg-slate-400 shrink-0"
                     aria-hidden="true"
                   />
-                  <span className="text-xs font-bold text-lime-900 tracking-wide">
+                  <span className="text-xs font-bold text-slate-700 tracking-wide">
                     Updated for 2026 US, UK &amp; India rules
                   </span>
                 </div>
 
                 <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-[1.15]">
                   Driving Licence Photo Maker:{" "}
-                  <span className="text-lime-700">
+                  <span className="text-slate-600">
                     US, UK &amp; India Size and Rules
                   </span>
                 </h1>
 
-                <p className="text-lg sm:text-xl text-slate-600 font-medium leading-snug">
+                <p className="text-base sm:text-lg text-slate-600 font-medium leading-snug max-w-2xl">
                   Crop and size your driving licence photo in seconds. Get the
                   US 2×2&nbsp;in photo, the UK 35×45&nbsp;mm photo and India
                   upload-ready files.
                 </p>
 
-                <p className="text-sm sm:text-base text-slate-600 leading-relaxed max-w-2xl">
+                <p className="text-xs sm:text-sm text-slate-500 leading-relaxed max-w-2xl">
                   Upload one portrait. PixPassport crops it to your country’s
                   size, centres your head and builds a{" "}
                   <Link
                     href="/passport-photo-template-4x6"
-                    className="text-lime-700 underline"
+                    className="text-slate-900 font-semibold underline decoration-slate-300 underline-offset-2 hover:decoration-slate-500"
                   >
                     4×6 inch print sheet
                   </Link>
@@ -546,16 +535,16 @@ export default function DrivingLicencePhotographPage() {
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-3 pt-1">
-                  <Link
-                    href="/passport-photo-online?type=us-passport"
+                  <a
+                    href="#tool"
                     className="inline-flex items-center justify-center gap-2 bg-lime-700 hover:bg-lime-800 text-white font-bold text-base px-7 py-4 rounded-xl shadow-md hover:shadow-lg transition-all active:scale-[0.99] text-center focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-700"
                   >
                     <span>Make My Driving Photo</span>
                     <span aria-hidden="true">→</span>
-                  </Link>
+                  </a>
                   <Link
                     href="/passport-photo-checker"
-                    className="inline-flex items-center justify-center gap-2 bg-white hover:bg-slate-50 text-slate-700 font-semibold text-base px-6 py-4 rounded-xl border border-slate-300 transition-colors text-center focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-700"
+                    className="inline-flex items-center justify-center gap-2 bg-white hover:bg-slate-50 text-slate-700 font-semibold text-base px-6 py-4 rounded-xl border border-slate-300 transition-colors text-center focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-700"
                   >
                     <span>Free Photo Validator</span>
                   </Link>
@@ -565,7 +554,7 @@ export default function DrivingLicencePhotographPage() {
                   {[
                     { icon: "🔒", text: "24h auto-delete" },
                     { icon: "⚡", text: "Fast results" },
-                    { icon: "📐", text: "US, UK & India sizes" },
+                    { icon: "📐", text: "9 licence sizes" },
                     { icon: "🖨️", text: "4×6 print sheet" },
                   ].map((badge) => (
                     <div
@@ -596,6 +585,9 @@ export default function DrivingLicencePhotographPage() {
             </div>
           </div>
         </header>
+
+        {/* ── PHOTO TOOL (client) ── */}
+        <DrivingLicenceTool />
 
         {/* ── QUICK ANSWER ── */}
         <section
@@ -1281,13 +1273,13 @@ export default function DrivingLicencePhotographPage() {
                     </p>
                   </div>
                   <div className="pt-4 mt-3 border-t border-slate-100">
-                    <Link
+                    <a
                       href={doc.link}
                       className="inline-flex items-center justify-between w-full min-h-[44px] text-xs font-bold text-lime-700 hover:text-lime-800 transition-colors"
                     >
-                      <span>Create photo</span>
+                      <span>Make this photo</span>
                       <span aria-hidden="true">→</span>
-                    </Link>
+                    </a>
                   </div>
                 </div>
               ))}
@@ -1372,12 +1364,12 @@ export default function DrivingLicencePhotographPage() {
             </div>
 
             <div className="mt-10 text-center">
-              <Link
-                href="/passport-photo-online?type=us-passport"
+              <a
+                href="#tool"
                 className="inline-flex items-center justify-center bg-lime-700 hover:bg-lime-800 text-white font-bold text-sm px-7 py-3.5 rounded-xl shadow-sm transition-all"
               >
                 Create my photo now →
-              </Link>
+              </a>
             </div>
           </div>
         </section>
@@ -1970,13 +1962,13 @@ export default function DrivingLicencePhotographPage() {
               print sheet for the US, UK or India.
             </p>
             <div className="pt-2">
-              <Link
-                href="/passport-photo-online?type=us-passport"
+              <a
+                href="#tool"
                 className="inline-flex items-center justify-center gap-2 bg-lime-600 hover:bg-lime-500 text-white font-bold text-base px-8 sm:px-9 py-4 rounded-xl shadow-lg transition-all active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               >
                 <span>Make My Driving Photo</span>
                 <span aria-hidden="true">→</span>
-              </Link>
+              </a>
             </div>
           </div>
         </section>

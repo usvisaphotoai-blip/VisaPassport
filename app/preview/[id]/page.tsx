@@ -8,6 +8,8 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getAllCountryDocuments, getSiteCodes, getSiteConfig } from "@/lib/country-sites";
 import { resolvePreviewStrings } from "@/lib/preview-strings";
+import { getDriverLicenseUseLabel } from "@/app/usa-driver-license-photo-editor/photoUses";
+import { getLicenceDoc } from "@/app/driving-licence-photograph/licenceDocs";
 
 export default async function PreviewPage(props: { params: Promise<{ id: string }>, searchParams: Promise<{ [key: string]: string | string[] | undefined }> }) {
   const params = await props.params;
@@ -45,6 +47,16 @@ export default async function PreviewPage(props: { params: Promise<{ id: string 
     site?.tool.documents.find((d) => d.id === photoRecord.documentType) ||
     (site ? (await getAllCountryDocuments(site)).find((d) => d.id === photoRecord.documentType) : undefined);
 
+  // The US driver's license tool reuses the US passport spec; show what the user picked instead of "Passport"
+  const isDriverLicenseTool = from === "usa-driver-license-photo-editor";
+  const useParam = typeof searchParams.use === "string" ? searchParams.use : undefined;
+  // Same idea for the multi-country driving licence page
+  const licenceDoc = from === "driving-licence-photograph" ? getLicenceDoc(useParam) : undefined;
+  const documentLabel = isDriverLicenseTool
+    ? getDriverLicenseUseLabel(useParam)
+    : licenceDoc?.label ?? siteDoc?.label;
+  const documentFlag = isDriverLicenseTool ? "🇺🇸" : licenceDoc?.flag ?? siteDoc?.flag;
+
   return (
     <>
     {/* Root layout renders <html lang="en">; set the real language before paint so Chrome doesn't offer translation */}
@@ -63,8 +75,8 @@ export default async function PreviewPage(props: { params: Promise<{ id: string 
       downloadToken={downloadToken}
       strings={strings}
       lang={site?.lang}
-      documentLabel={siteDoc?.label}
-      documentFlag={siteDoc?.flag}
+      documentLabel={documentLabel}
+      documentFlag={documentFlag}
     />
     </>
   );

@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { compressImage } from "@/lib/compressImage";
 import "@/app/home.css";
+import { photoUses, stateRules } from "./photoUses";
 
 interface FAQ {
   question: string;
@@ -222,33 +223,47 @@ const exampleOutputs = [
   },
 ];
 
-const stateDmvList = [
-  { id: "us-real-id", label: "REAL ID Driver's License" },
-  { id: "us-standard-dl", label: "Standard Driver's License (All 50 States)" },
-  { id: "us-cdl", label: "Commercial Driver's License (CDL)" },
-  { id: "us-permit", label: "Learner's Permit / Junior License" },
-  { id: "ca-dmv", label: "California DMV" },
-  { id: "ny-dmv", label: "New York DMV (NYS DMV)" },
-  { id: "tx-dps", label: "Texas DPS" },
-  { id: "fl-dhsmv", label: "Florida DHSMV" },
-  { id: "il-sos", label: "Illinois Secretary of State (SOS)" },
-  { id: "pa-penndot", label: "Pennsylvania PennDOT" },
-  { id: "oh-bmv", label: "Ohio BMV" },
-  { id: "ga-dds", label: "Georgia DDS" },
-  { id: "nc-dmv", label: "North Carolina DMV" },
-  { id: "wa-dol", label: "Washington State DOL" },
-  { id: "va-dmv", label: "Virginia DMV" },
-  { id: "nj-mvc", label: "New Jersey MVC" },
-  { id: "az-mvd", label: "Arizona MVD" },
-  { id: "co-dmv", label: "Colorado DMV" },
-  { id: "mi-sos", label: "Michigan SOS" },
-  { id: "ma-rmv", label: "Massachusetts RMV" },
+const useCases = [
+  {
+    icon: "🌍",
+    title: "International Driving Permit",
+    body: "AAA's IDP application needs two identical 2×2 in passport-type photos, signed on the back. Print both from one 4×6 sheet.",
+  },
+  {
+    icon: "✉️",
+    title: "Out-of-State & Military Renewal",
+    body: "Some states let you renew or replace a license by mail while away (for example Texas and Ohio military renewals) and ask for a 2×2 photo.",
+  },
+  {
+    icon: "🪪",
+    title: "Preview Before the DMV",
+    body: "Most DMVs shoot your card photo at the counter. Test your outfit, glasses-free look and framing at home first so there are no surprises.",
+  },
+  {
+    icon: "📄",
+    title: "Other Forms That Ask for a Photo",
+    body: "Permit, CDL and ID programs that request a passport-style photo all use the same 2×2 in, white-background format.",
+  },
+];
+
+const jumpLinks = [
+  { href: "#when-you-need-it", label: "When you need it" },
+  { href: "#requirements", label: "Photo requirements" },
+  { href: "#state-rules", label: "State rules" },
+  { href: "#how-it-works", label: "How it works" },
+  { href: "#faq", label: "FAQ" },
+];
+
+const preflightChecks = [
+  "Face looking straight at the camera",
+  "No glasses, hats or headphones",
+  "Head and top of shoulders in frame",
 ];
 
 const PROCESSING_MESSAGES = [
   "Analyzing portrait & facial landmarks...",
   "Detecting eye line & biometric proportions...",
-  "Removing background & evening shadows...",
+  "Removing background & evening out shadows...",
   "Cropping to 2×2 in at 300 DPI...",
   "Generating printable 4×6 sheet template...",
 ];
@@ -277,7 +292,21 @@ function SectionHeader({
   );
 }
 
-export default function USADriverLicensePhotoClient({ faqs }: { faqs: FAQ[] }) {
+function formatUpdated(iso: string) {
+  return new Date(`${iso}T00:00:00Z`).toLocaleDateString("en-US", {
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+}
+
+export default function USADriverLicensePhotoClient({
+  faqs,
+  lastUpdated,
+}: {
+  faqs: FAQ[];
+  lastUpdated: string;
+}) {
   const router = useRouter();
 
   // Slider state
@@ -288,16 +317,120 @@ export default function USADriverLicensePhotoClient({ faqs }: { faqs: FAQ[] }) {
   const rafRef = useRef<number | null>(null);
 
   // Tool state
-  const [selectedDocId, setSelectedDocId] = useState(stateDmvList[0].id);
+  const [selectedUseId, setSelectedUseId] = useState(photoUses[0].id);
+  const selectedUse = photoUses.find((u) => u.id === selectedUseId) ?? photoUses[0];
+  const [useQuery, setUseQuery] = useState("");
+  const [comboOpen, setComboOpen] = useState(false);
+  const [activeIdx, setActiveIdx] = useState(0);
+  const [highlightUpload, setHighlightUpload] = useState(false);
+  const comboRef = useRef<HTMLDivElement>(null);
+  const comboInputRef = useRef<HTMLInputElement>(null);
+  const uploadRef = useRef<HTMLDivElement>(null);
+  const dropzoneRef = useRef<HTMLLabelElement>(null);
+  const highlightTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const normalizedQuery = useQuery.trim().toLowerCase();
+  const filteredUses = useMemo(
+    () =>
+      normalizedQuery
+        ? photoUses.filter((u) => `${u.label} ${u.keywords}`.toLowerCase().includes(normalizedQuery))
+        : photoUses,
+    [normalizedQuery],
+  );
+  const [showStickyCta, setShowStickyCta] = useState(false);
+  const heroRef = useRef<HTMLElement>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [dragOver, setDragOver] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
+  const isProcessingRef = useRef(false);
   const [processingIndex, setProcessingIndex] = useState(0);
   const [errorMsg, setErrorMsg] = useState("");
   const [highlightTool, setHighlightTool] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const toolRef = useRef<HTMLElement>(null);
+
+  // Close the photo-use combobox on outside click
+  useEffect(() => {
+    if (!comboOpen) return;
+    const onDown = (e: MouseEvent | TouchEvent) => {
+      if (comboRef.current && !comboRef.current.contains(e.target as Node)) {
+        setComboOpen(false);
+        setUseQuery("");
+      }
+    };
+    document.addEventListener("mousedown", onDown);
+    document.addEventListener("touchstart", onDown);
+    return () => {
+      document.removeEventListener("mousedown", onDown);
+      document.removeEventListener("touchstart", onDown);
+    };
+  }, [comboOpen]);
+
+  // Keep the keyboard-active option visible in the list
+  useEffect(() => {
+    if (!comboOpen) return;
+    const opt = filteredUses[activeIdx];
+    if (opt) document.getElementById(`dl-use-opt-${opt.id}`)?.scrollIntoView({ block: "nearest" });
+  }, [activeIdx, comboOpen, filteredUses]);
+
+  useEffect(() => () => {
+    if (highlightTimer.current) clearTimeout(highlightTimer.current);
+  }, []);
+
+  const selectUse = (id: string) => {
+    setSelectedUseId(id);
+    setComboOpen(false);
+    setUseQuery("");
+    comboInputRef.current?.blur();
+    // Guide the user to the next step: scroll to the upload area and pulse it
+    requestAnimationFrame(() => {
+      uploadRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+      dropzoneRef.current?.focus({ preventScroll: true });
+    });
+    setHighlightUpload(true);
+    if (highlightTimer.current) clearTimeout(highlightTimer.current);
+    highlightTimer.current = setTimeout(() => setHighlightUpload(false), 2000);
+  };
+
+  const onComboKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      if (!comboOpen) setComboOpen(true);
+      else setActiveIdx((i) => Math.min(i + 1, filteredUses.length - 1));
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setActiveIdx((i) => Math.max(i - 1, 0));
+    } else if (e.key === "Enter") {
+      if (comboOpen && filteredUses[activeIdx]) {
+        e.preventDefault();
+        selectUse(filteredUses[activeIdx].id);
+      }
+    } else if (e.key === "Escape") {
+      setComboOpen(false);
+      setUseQuery("");
+    }
+  };
+
+  // Sticky mobile CTA: visible once the hero is scrolled past, hidden while the tool is on screen
+  useEffect(() => {
+    const hero = heroRef.current;
+    const tool = toolRef.current;
+    if (!hero || !tool || typeof IntersectionObserver === "undefined") return;
+    let heroVisible = true;
+    let toolVisible = false;
+    const update = () => setShowStickyCta(!heroVisible && !toolVisible);
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.target === hero) heroVisible = entry.isIntersecting;
+        if (entry.target === tool) toolVisible = entry.isIntersecting;
+      }
+      update();
+    });
+    observer.observe(hero);
+    observer.observe(tool);
+    return () => observer.disconnect();
+  }, []);
 
   // Animated processing text cycle
   useEffect(() => {
@@ -409,6 +542,8 @@ export default function USADriverLicensePhotoClient({ faqs }: { faqs: FAQ[] }) {
     }
     setSelectedFile(file);
     setErrorMsg("");
+    // Start processing immediately, no extra click needed
+    void processFile(file);
   };
 
   const clearFile = () => {
@@ -416,13 +551,14 @@ export default function USADriverLicensePhotoClient({ faqs }: { faqs: FAQ[] }) {
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
-  const processFile = async () => {
-    if (!selectedFile) return;
+  async function processFile(fileToProcess: File | null = selectedFile) {
+    if (!fileToProcess || isProcessingRef.current) return;
+    isProcessingRef.current = true;
     setErrorMsg("");
     setIsProcessing(true);
 
     try {
-      const compressed = await compressImage(selectedFile);
+      const compressed = await compressImage(fileToProcess);
 
       const formData = new FormData();
       formData.append("image", compressed);
@@ -444,12 +580,15 @@ export default function USADriverLicensePhotoClient({ faqs }: { faqs: FAQ[] }) {
         throw new Error("Failed to load generated photo details.");
       }
 
-      router.push(`/preview/${data.photoId}?from=usa-driver-license-photo-editor`);
+      router.push(
+        `/preview/${data.photoId}?from=usa-driver-license-photo-editor&use=${encodeURIComponent(selectedUseId)}`,
+      );
     } catch (err) {
       setErrorMsg(err instanceof Error && err.message ? err.message : "Something went wrong. Please try again.");
       setIsProcessing(false);
+      isProcessingRef.current = false;
     }
-  };
+  }
 
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
@@ -460,7 +599,7 @@ export default function USADriverLicensePhotoClient({ faqs }: { faqs: FAQ[] }) {
   return (
     <div className="hcr">
       {/* ── HERO ── */}
-      <section className="bg-white border-b border-slate-200">
+      <section ref={heroRef} className="bg-white border-b border-slate-200">
         <div className="h-1 bg-lime-700 w-full" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-16">
@@ -472,7 +611,7 @@ export default function USADriverLicensePhotoClient({ faqs }: { faqs: FAQ[] }) {
               </li>
               <li aria-hidden="true">/</li>
               <li aria-current="page" className="text-slate-700 font-medium">
-                USA Driver&apos;s License Photo Editor
+                US Driver&apos;s License Photo Maker
               </li>
             </ol>
           </nav>
@@ -483,15 +622,23 @@ export default function USADriverLicensePhotoClient({ faqs }: { faqs: FAQ[] }) {
               <div className="inline-flex items-center gap-2 bg-lime-50 border border-lime-200 rounded px-3 py-1.5 mb-5">
                 <span className="w-2 h-2 rounded-full bg-lime-600 inline-block" aria-hidden="true" />
                 <span className="text-xs font-semibold text-lime-800 tracking-wide uppercase">
-                  DMV &amp; REAL ID Photo Tool · All 50 States
+                  DMV · REAL ID · International Driving Permit
                 </span>
               </div>
 
-              <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 leading-tight tracking-tight mb-3">
-                USA Driver&apos;s License Photo Editor: Make 2×2 in REAL ID Photos
+              <h1 className="text-3xl sm:text-4xl lg:text-[2.75rem] font-bold text-slate-900 leading-tight tracking-tight mb-3">
+                US Driver&apos;s License Photo Maker{" "}
+                <span className="text-lime-700">2×2 in, Ready in 30 Seconds</span>
               </h1>
-              <p className="text-lg sm:text-xl text-slate-600 mb-6 leading-snug max-w-xl">
-                Crop, remove the background, and format your driver&apos;s license picture in 30 seconds — 600×600 px, pure white background, correct head size.
+              <p className="text-lg sm:text-xl text-slate-600 mb-4 leading-snug max-w-xl">
+                Turn a phone photo into a 2×2 inch (600×600 px) license photo with a pure white background and correct head size, plus a 4×6 sheet to print at any pharmacy.
+              </p>
+              <p className="text-sm text-slate-500 mb-6 max-w-xl leading-relaxed">
+                <span className="font-semibold text-slate-700">Good to know:</span> most DMVs take your card photo on-site. Use this for{" "}
+                <a href="#when-you-need-it" className="text-lime-700 font-medium underline underline-offset-2 hover:text-lime-800">
+                  IDP applications, mail-in renewals and DMV prep
+                </a>
+                .
               </p>
 
               {/* CTAs */}
@@ -538,6 +685,10 @@ export default function USADriverLicensePhotoClient({ faqs }: { faqs: FAQ[] }) {
                   </li>
                 ))}
               </ul>
+
+              <p className="mt-5 text-xs text-slate-500">
+                Updated <time dateTime={lastUpdated}>{formatUpdated(lastUpdated)}</time> · Checked against state DMV and AAA photo guidance
+              </p>
             </div>
 
             {/* ── BEFORE / AFTER SLIDER ── */}
@@ -685,6 +836,22 @@ export default function USADriverLicensePhotoClient({ faqs }: { faqs: FAQ[] }) {
               </p>
             </div>
           </div>
+
+          {/* On-page navigation */}
+          <nav aria-label="On this page" className="mt-10 pt-6 border-t border-slate-100">
+            <ul className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1 [scrollbar-width:none]">
+              {jumpLinks.map((l) => (
+                <li key={l.href} className="shrink-0">
+                  <a
+                    href={l.href}
+                    className="inline-block rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-xs font-semibold text-slate-700 hover:border-lime-500 hover:text-lime-800 transition-colors"
+                  >
+                    {l.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
         </div>
       </section>
 
@@ -692,16 +859,16 @@ export default function USADriverLicensePhotoClient({ faqs }: { faqs: FAQ[] }) {
       <section
         ref={toolRef}
         id="tool"
-        className="bg-slate-50 py-12 border-b border-slate-200 scroll-mt-20"
+        className="bg-slate-50 py-12 lg:py-16 border-b border-slate-200 scroll-mt-20"
         aria-labelledby="tool-heading"
       >
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div
-            className={`bg-white rounded-2xl p-6 sm:p-10 border shadow-md transition-all duration-500 ${
+            className={`bg-white rounded-2xl p-5 sm:p-8 lg:p-10 border shadow-md transition-all duration-500 ${
               highlightTool ? "border-lime-500 ring-4 ring-lime-200" : "border-slate-200"
             }`}
           >
-            <div className="text-center mb-8">
+            <div className="text-center mb-8 lg:mb-10">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-lime-100 text-lime-800 mb-3">
                 <span aria-hidden="true">✂️</span> Free Preview · Pay Only If You Like It
               </span>
@@ -709,50 +876,116 @@ export default function USADriverLicensePhotoClient({ faqs }: { faqs: FAQ[] }) {
                 Crop &amp; Format Your Driver&apos;s License Photo
               </h2>
               <p className="text-sm sm:text-base text-slate-600">
-                Choose your license type, upload a photo, and we&apos;ll size it to 2×2 inches automatically.
+                Tell us what it&apos;s for, upload a photo, and we&apos;ll size it to 2×2 inches automatically.
               </p>
             </div>
 
-            <div className="max-w-xl mx-auto space-y-6">
-              {/* State / license type */}
-              <div>
-                <label
-                  htmlFor="dl-license-type"
-                  className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2"
-                >
-                  <span className="text-lime-700 mr-1">1.</span> State / License Type
-                </label>
-                <select
-                  id="dl-license-type"
-                  value={selectedDocId}
-                  onChange={(e) => setSelectedDocId(e.target.value)}
-                  className="w-full bg-slate-50 border border-slate-300 rounded-xl text-slate-900 py-3.5 px-4 font-semibold text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-lime-500"
-                >
-                  {stateDmvList.map((opt) => (
-                    <option key={opt.id} value={opt.id}>{opt.label}</option>
-                  ))}
-                </select>
-                <p className="mt-1.5 text-xs text-slate-500">
-                  All states use the same 2×2 in (600×600 px) format.
-                </p>
-              </div>
+            <div className="grid gap-8 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:gap-10">
+              {/* ── LEFT: purpose + photo guide ── */}
+              <div className="space-y-6">
+                {/* Step 1: searchable photo-use combobox */}
+                <div ref={comboRef} className="relative">
+                  <label
+                    id="dl-photo-use-label"
+                    htmlFor="dl-photo-use"
+                    className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2"
+                  >
+                    <span className="text-lime-700 mr-1">1.</span> What is the photo for?
+                  </label>
+                  <div className="relative">
+                    <svg className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35M17 10.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z" />
+                    </svg>
+                    <input
+                      ref={comboInputRef}
+                      id="dl-photo-use"
+                      type="text"
+                      role="combobox"
+                      autoComplete="off"
+                      aria-autocomplete="list"
+                      aria-expanded={comboOpen}
+                      aria-controls="dl-photo-use-list"
+                      aria-activedescendant={
+                        comboOpen && filteredUses[activeIdx] ? `dl-use-opt-${filteredUses[activeIdx].id}` : undefined
+                      }
+                      aria-describedby="dl-photo-use-hint"
+                      value={comboOpen ? useQuery : selectedUse.label}
+                      placeholder={comboOpen ? `Search: Texas, IDP, CDL…` : undefined}
+                      onFocus={() => {
+                        setComboOpen(true);
+                        setUseQuery("");
+                        setActiveIdx(0);
+                      }}
+                      onClick={() => setComboOpen(true)}
+                      onChange={(e) => {
+                        setUseQuery(e.target.value);
+                        setActiveIdx(0);
+                        setComboOpen(true);
+                      }}
+                      onKeyDown={onComboKeyDown}
+                      className="w-full bg-slate-50 border border-slate-300 rounded-xl text-slate-900 py-3.5 pl-10 pr-10 font-semibold text-base sm:text-sm placeholder:font-normal placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-lime-500 focus:bg-white"
+                    />
+                    <svg className={`pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 transition-transform ${comboOpen ? "rotate-180" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                    </svg>
+                  </div>
 
-              {/* Upload */}
-              <div>
-                <span id="dl-upload-label" className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
-                  <span className="text-lime-700 mr-1">2.</span> Upload Photo
-                </span>
-                <input
-                  ref={fileInputRef}
-                  id="dl-upload"
-                  type="file"
-                  accept="image/jpeg,image/png,image/webp,image/heic,image/heif,.heic,.heif"
-                  onChange={(e) => acceptFile(e.target.files?.[0])}
-                  className="sr-only"
-                  aria-labelledby="dl-upload-label"
-                />
-                {!previewUrl && (
-                  <div className="grid grid-cols-2 gap-3 mb-4">
+                  {comboOpen && (
+                    <ul
+                      id="dl-photo-use-list"
+                      role="listbox"
+                      aria-labelledby="dl-photo-use-label"
+                      className="absolute z-30 mt-1.5 w-full max-h-72 overflow-y-auto rounded-xl border border-slate-200 bg-white py-1.5 shadow-xl"
+                    >
+                      {filteredUses.length === 0 ? (
+                        <li className="px-4 py-3 text-sm text-slate-500">
+                          No matches. Try a state name, &quot;IDP&quot; or &quot;CDL&quot;.
+                        </li>
+                      ) : (
+                        filteredUses.map((opt, i) => {
+                          const showGroup = i === 0 || filteredUses[i - 1].group !== opt.group;
+                          const isSelected = opt.id === selectedUseId;
+                          return (
+                            <li key={opt.id} role="presentation">
+                              {showGroup && (
+                                <div className="px-4 pt-2 pb-1 text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                                  {opt.group === "Purpose" ? "By purpose" : "By state"}
+                                </div>
+                              )}
+                              <div
+                                id={`dl-use-opt-${opt.id}`}
+                                role="option"
+                                aria-selected={isSelected}
+                                onMouseDown={(e) => e.preventDefault()}
+                                onClick={() => selectUse(opt.id)}
+                                onMouseEnter={() => setActiveIdx(i)}
+                                className={`mx-1.5 flex cursor-pointer items-center justify-between gap-3 rounded-lg px-3 py-2.5 text-sm ${
+                                  i === activeIdx ? "bg-lime-50 text-lime-900" : "text-slate-700"
+                                } ${isSelected ? "font-bold" : "font-medium"}`}
+                              >
+                                <span>{opt.label}</span>
+                                {isSelected && <span className="text-lime-700" aria-hidden="true">✓</span>}
+                              </div>
+                            </li>
+                          );
+                        })
+                      )}
+                    </ul>
+                  )}
+
+                  <p
+                    id="dl-photo-use-hint"
+                    className="mt-2 flex gap-2 rounded-lg bg-lime-50 border border-lime-200 px-3 py-2 text-xs sm:text-sm text-lime-900 leading-snug"
+                  >
+                    <span aria-hidden="true">💡</span>
+                    <span>{selectedUse.hint}</span>
+                  </p>
+                </div>
+
+                {/* Photo guide (hidden on mobile after upload to keep the flow short) */}
+                <div className={previewUrl ? "hidden lg:block" : "block"}>
+                  <p className="text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">Photo guide</p>
+                  <div className="grid grid-cols-2 gap-3">
                     {uploadExamples.map((ex) => (
                       <figure
                         key={ex.label}
@@ -760,7 +993,7 @@ export default function USADriverLicensePhotoClient({ faqs }: { faqs: FAQ[] }) {
                           ex.ok ? "border-lime-500" : "border-rose-400"
                         }`}
                       >
-                        <div className="relative h-32 sm:h-40 bg-slate-100">
+                        <div className="relative h-32 sm:h-40 lg:h-44 bg-slate-100">
                           <Image
                             src={ex.src}
                             alt={ex.alt}
@@ -791,84 +1024,184 @@ export default function USADriverLicensePhotoClient({ faqs }: { faqs: FAQ[] }) {
                       </figure>
                     ))}
                   </div>
-                )}
-                {!previewUrl ? (
-                  <label
-                    htmlFor="dl-upload"
-                    tabIndex={0}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter" || e.key === " ") {
-                        e.preventDefault();
-                        fileInputRef.current?.click();
-                      }
-                    }}
-                    onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
-                    onDragLeave={() => setDragOver(false)}
-                    onDrop={handleDrop}
-                    className={`block border-2 border-dashed rounded-2xl p-8 text-center cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lime-500 ${
-                      dragOver ? "border-lime-500 bg-lime-50/50" : "border-slate-300 hover:border-lime-500 hover:bg-slate-50/80 bg-slate-50/40"
-                    }`}
-                  >
-                    <div className="w-14 h-14 mx-auto rounded-full bg-lime-100 text-lime-700 flex items-center justify-center mb-3" aria-hidden="true">
-                      <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
-                      </svg>
-                    </div>
-                    <p className="text-base font-bold text-slate-900 mb-1">
-                      <span className="sm:hidden">Tap to take or choose a photo</span>
-                      <span className="hidden sm:inline">Click to upload or drag &amp; drop</span>
-                    </p>
-                    <p className="text-xs text-slate-500">JPG, PNG, WEBP, or HEIC · up to {MAX_FILE_SIZE_MB} MB</p>
-                  </label>
-                ) : (
-                  <div className="relative rounded-2xl overflow-hidden border border-slate-200 bg-slate-900">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={previewUrl} alt="Your uploaded photo" className="w-full h-64 object-contain" />
-                    <button
-                      type="button"
-                      onClick={clearFile}
-                      className="absolute top-3 right-3 bg-black/70 hover:bg-black text-white px-3 py-1.5 rounded-full text-xs font-semibold transition-colors"
-                    >
-                      ✕ Change Photo
-                    </button>
-                  </div>
-                )}
+                </div>
               </div>
 
-              {errorMsg && (
-                <div role="alert" className="p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-sm font-medium">
-                  {errorMsg}
+              {/* ── RIGHT: upload + generate ── */}
+              <div className="space-y-5">
+                <div
+                  ref={uploadRef}
+                  className={`rounded-2xl transition-all duration-500 scroll-mt-24 ${
+                    highlightUpload ? "ring-4 ring-lime-300 ring-offset-4 ring-offset-white" : ""
+                  }`}
+                >
+                  <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+                    <span id="dl-upload-label" className="block text-xs font-bold uppercase tracking-wider text-slate-700">
+                      <span className="text-lime-700 mr-1">2.</span> Upload Photo
+                    </span>
+                    <span
+                      className={`inline-flex max-w-full items-center gap-1 truncate rounded-full px-2.5 py-0.5 text-[11px] font-semibold transition-colors ${
+                        highlightUpload ? "bg-lime-600 text-white" : "bg-slate-100 text-slate-600"
+                      }`}
+                    >
+                      <span aria-hidden="true">✓</span>
+                      <span className="truncate">For: {selectedUse.label}</span>
+                    </span>
+                  </div>
+                  <input
+                    ref={fileInputRef}
+                    id="dl-upload"
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp,image/heic,image/heif,.heic,.heif"
+                    onChange={(e) => acceptFile(e.target.files?.[0])}
+                    className="sr-only"
+                    aria-labelledby="dl-upload-label"
+                  />
+                  {!previewUrl ? (
+                    <label
+                      ref={dropzoneRef}
+                      htmlFor="dl-upload"
+                      tabIndex={0}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          fileInputRef.current?.click();
+                        }
+                      }}
+                      onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
+                      onDragLeave={() => setDragOver(false)}
+                      onDrop={handleDrop}
+                      className={`flex min-h-[220px] lg:min-h-[300px] flex-col items-center justify-center border-2 border-dashed rounded-2xl p-8 text-center cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lime-500 ${
+                        dragOver || highlightUpload
+                          ? "border-lime-500 bg-lime-50/60"
+                          : "border-slate-300 hover:border-lime-500 hover:bg-slate-50/80 bg-slate-50/40"
+                      }`}
+                    >
+                      <div
+                        className={`w-16 h-16 mx-auto rounded-full bg-lime-100 text-lime-700 flex items-center justify-center mb-4 ${
+                          highlightUpload ? "animate-bounce" : ""
+                        }`}
+                        aria-hidden="true"
+                      >
+                        <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+                        </svg>
+                      </div>
+                      <p className="text-base sm:text-lg font-bold text-slate-900 mb-1">
+                        <span className="sm:hidden">Tap to take or choose a photo</span>
+                        <span className="hidden sm:inline">Click to upload or drag &amp; drop</span>
+                      </p>
+                      <p className="text-xs sm:text-sm text-slate-500">JPG, PNG, WEBP, or HEIC · up to {MAX_FILE_SIZE_MB} MB</p>
+                      <p className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-lime-100 px-3 py-1 text-xs font-semibold text-lime-800">
+                        <span aria-hidden="true">⚡</span> Processing starts automatically
+                      </p>
+                    </label>
+                  ) : (
+                    <div className="relative rounded-2xl overflow-hidden border border-slate-200 bg-slate-900">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={previewUrl} alt="Your uploaded photo" className="w-full h-64 lg:h-[300px] object-contain" />
+                      <button
+                        type="button"
+                        onClick={clearFile}
+                        className="absolute top-3 right-3 bg-black/70 hover:bg-black text-white px-3 py-1.5 rounded-full text-xs font-semibold transition-colors"
+                      >
+                        ✕ Change Photo
+                      </button>
+                    </div>
+                  )}
                 </div>
-              )}
 
-              <button
-                type="button"
-                disabled={!selectedFile || isProcessing}
-                onClick={processFile}
-                className={`w-full py-4 px-6 rounded-xl font-bold text-base text-center transition-all flex items-center justify-center gap-2.5 ${
-                  !selectedFile || isProcessing
-                    ? "bg-slate-200 text-slate-500 cursor-not-allowed"
-                    : "bg-lime-700 hover:bg-lime-800 text-white shadow-lg shadow-lime-700/25 active:scale-[0.99] cursor-pointer"
-                }`}
-              >
-                <span>{selectedFile ? "Generate 2×2 License Photo" : "Upload a photo to continue"}</span>
-                {selectedFile && (
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} aria-hidden="true">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                  </svg>
+                {previewUrl && (
+                  <div className="rounded-xl border border-slate-200 bg-slate-50 p-3.5">
+                    <p className="text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">
+                      Check these, then try again
+                    </p>
+                    <ul className="space-y-1.5">
+                      {preflightChecks.map((c) => (
+                        <li key={c} className="flex items-center gap-2 text-sm text-slate-700">
+                          <span className="w-4 h-4 rounded-full bg-lime-600 text-white text-[10px] flex items-center justify-center shrink-0" aria-hidden="true">✓</span>
+                          {c}
+                        </li>
+                      ))}
+                    </ul>
+                    <p className="mt-2 text-xs text-slate-500">
+                      Background, crop and lighting are fixed automatically.
+                    </p>
+                  </div>
                 )}
-              </button>
 
-              <p className="flex items-center justify-center gap-1.5 text-xs text-slate-500">
-                <span aria-hidden="true">🔒</span> Photos are auto-deleted after 24 hours
-              </p>
+                {errorMsg && (
+                  <div role="alert" className="p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-sm font-medium">
+                    {errorMsg}
+                  </div>
+                )}
+
+                {selectedFile && (
+                <button
+                  type="button"
+                  disabled={isProcessing}
+                  onClick={() => processFile()}
+                  className={`w-full py-4 px-6 rounded-xl font-bold text-base text-center transition-all flex items-center justify-center gap-2.5 ${
+                    !selectedFile || isProcessing
+                      ? "bg-slate-200 text-slate-500 cursor-not-allowed"
+                      : "bg-lime-700 hover:bg-lime-800 text-white shadow-lg shadow-lime-700/25 active:scale-[0.99] cursor-pointer"
+                  }`}
+                >
+                  <span>{selectedFile ? "Try Again" : "Upload a photo to start"}</span>
+                  {selectedFile && (
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
+                  )}
+                </button>
+                )}
+
+                <p className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-xs text-slate-500">
+                  <span><span aria-hidden="true">👀</span> Free preview</span>
+                  <span><span aria-hidden="true">💳</span> $7.99 only if you download</span>
+                  <span><span aria-hidden="true">🔒</span> Auto-deleted in 24 h</span>
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
+      {/* ── WHEN YOU NEED IT ── */}
+      <section
+        id="when-you-need-it"
+        className="bg-white border-b border-slate-200 py-14 scroll-mt-20"
+      >
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionHeader
+            eyebrow="Use Cases"
+            title="When do you need your own driver's license photo?"
+            subtitle="Most state DMVs photograph you at the counter. These are the times a 2×2 inch photo you bring yourself is useful."
+          />
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {useCases.map((u) => (
+              <div key={u.title} className="rounded-2xl border border-slate-200 bg-slate-50 p-6">
+                <div className="text-3xl mb-3" aria-hidden="true">{u.icon}</div>
+                <h3 className="text-base font-bold text-slate-900 mb-2">{u.title}</h3>
+                <p className="text-sm text-slate-600 leading-relaxed">{u.body}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-6 flex gap-3 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900 leading-relaxed">
+            <span aria-hidden="true" className="text-lg leading-none">⚠️</span>
+            <p>
+              <span className="font-bold">Check your state first.</span> Rules on self-supplied photos change and differ by state and by
+              application type. Your DMV&apos;s official form or website is always the final word, see the{" "}
+              <a href="#state-rules" className="font-semibold underline underline-offset-2">state quick reference</a> below.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* ── EXAMPLE OUTPUT ── */}
-      <section className="bg-white border-b border-slate-200 py-14 px-4">
+      <section className="bg-slate-50 border-b border-slate-200 py-14 px-4">
         <div className="max-w-5xl mx-auto">
           <SectionHeader
             eyebrow="Example Output"
@@ -901,7 +1234,7 @@ export default function USADriverLicensePhotoClient({ faqs }: { faqs: FAQ[] }) {
       </section>
 
       {/* ── HOW IT WORKS ── */}
-      <section className="bg-slate-50 py-14 border-b border-slate-200">
+      <section id="how-it-works" className="bg-white py-14 border-b border-slate-200 scroll-mt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
             eyebrow="Step-by-Step"
@@ -911,7 +1244,7 @@ export default function USADriverLicensePhotoClient({ faqs }: { faqs: FAQ[] }) {
 
           <ol className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
             {steps.map((s) => (
-              <li key={s.num} className="bg-white p-6 rounded-xl border border-slate-200">
+              <li key={s.num} className="bg-slate-50 p-6 rounded-xl border border-slate-200">
                 <div className="flex items-center justify-between mb-4">
                   <span className="text-2xl" aria-hidden="true">{s.icon}</span>
                   <span className="text-xs font-black text-lime-700 bg-lime-100 px-2 py-0.5 rounded">
@@ -927,7 +1260,7 @@ export default function USADriverLicensePhotoClient({ faqs }: { faqs: FAQ[] }) {
       </section>
 
       {/* ── SPECIFICATIONS ── */}
-      <section className="bg-white py-14 border-b border-slate-200">
+      <section id="requirements" className="bg-slate-50 py-14 border-b border-slate-200 scroll-mt-20">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
             eyebrow="Photo Requirements"
@@ -955,7 +1288,7 @@ export default function USADriverLicensePhotoClient({ faqs }: { faqs: FAQ[] }) {
 
             <dl className="grid grid-cols-2 gap-4">
               {specs.map((spec) => (
-                <div key={spec.label} className="bg-slate-50 p-5 rounded-xl border border-slate-200 text-center">
+                <div key={spec.label} className="bg-white p-5 rounded-xl border border-slate-200 text-center">
                   <dt className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">
                     {spec.label}
                   </dt>
@@ -964,6 +1297,69 @@ export default function USADriverLicensePhotoClient({ faqs }: { faqs: FAQ[] }) {
                 </div>
               ))}
             </dl>
+          </div>
+        </div>
+      </section>
+
+      {/* ── STATE QUICK REFERENCE ── */}
+      <section id="state-rules" className="bg-white py-14 border-b border-slate-200 scroll-mt-20">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionHeader
+            eyebrow="State Rules"
+            title="Driver's License Photo Rules by State"
+            subtitle="The 2×2 inch format is the same everywhere. Expression, glasses and head-covering rules vary. Here's a quick reference for the largest states."
+          />
+
+          <div className="overflow-x-auto rounded-xl border border-slate-200">
+            <table className="w-full text-left text-sm">
+              <caption className="sr-only">Driver&apos;s license photo rules for selected US states</caption>
+              <thead className="bg-slate-50 text-xs uppercase tracking-wider text-slate-600">
+                <tr>
+                  <th scope="col" className="px-4 py-3 font-bold">State</th>
+                  <th scope="col" className="px-4 py-3 font-bold">Expression</th>
+                  <th scope="col" className="px-4 py-3 font-bold">Official agency</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {stateRules.map((r) => (
+                  <tr key={r.state} className="bg-white">
+                    <th scope="row" className="px-4 py-3 font-semibold text-slate-900 whitespace-nowrap">{r.state}</th>
+                    <td className="px-4 py-3 text-slate-600 whitespace-nowrap">{r.smile}</td>
+                    <td className="px-4 py-3">
+                      <a
+                        href={r.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-lime-700 font-medium underline underline-offset-2 hover:text-lime-800 whitespace-nowrap"
+                      >
+                        {r.state} {r.agency} ↗
+                      </a>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div className="mt-6 grid gap-4 sm:grid-cols-3">
+            <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
+              <h3 className="text-sm font-bold text-slate-900 mb-1">👓 Glasses</h3>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                Most states now ask you to remove them. A medical exception may need a doctor&apos;s note.
+              </p>
+            </div>
+            <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
+              <h3 className="text-sm font-bold text-slate-900 mb-1">🧕 Head coverings</h3>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                Religious coverings are allowed everywhere if your face is fully visible from hairline to chin.
+              </p>
+            </div>
+            <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
+              <h3 className="text-sm font-bold text-slate-900 mb-1">⭐ REAL ID</h3>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                Same photo rules as a standard license. Required for domestic flights since May 7, 2025.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -1050,13 +1446,13 @@ export default function USADriverLicensePhotoClient({ faqs }: { faqs: FAQ[] }) {
       </section>
 
       {/* ── FAQ ── */}
-      <section className="bg-white py-14 border-b border-slate-200">
+      <section id="faq" className="bg-white py-14 border-b border-slate-200 scroll-mt-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader eyebrow="Common Questions" title="Driver's License Photo FAQ" />
 
           <div className="space-y-3">
-            {faqs.map((faq) => (
-              <details key={faq.question} className="group bg-white border border-slate-200 rounded-xl open:shadow-sm open:border-lime-300 transition-all">
+            {faqs.map((faq, i) => (
+              <details key={faq.question} open={i === 0} className="group bg-white border border-slate-200 rounded-xl open:shadow-sm open:border-lime-300 transition-all">
                 <summary className="flex items-center justify-between p-5 cursor-pointer list-none [&::-webkit-details-marker]:hidden text-sm sm:text-base font-bold text-slate-900 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lime-500">
                   <h3 className="pr-4">{faq.question}</h3>
                   <span className="w-7 h-7 rounded-full bg-slate-100 text-slate-700 flex items-center justify-center shrink-0 group-open:bg-lime-700 group-open:text-white transition-colors" aria-hidden="true">
@@ -1096,10 +1492,10 @@ export default function USADriverLicensePhotoClient({ faqs }: { faqs: FAQ[] }) {
       {/* ── FINAL CTA ── */}
       <section className="bg-lime-700 py-12 px-4 text-center">
         <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3">
-          Ready for your DMV appointment?
+          Need a 2×2 license or IDP photo today?
         </h2>
         <p className="text-lime-50 text-sm sm:text-base mb-6 max-w-lg mx-auto">
-          Get a 2×2 inch driver&apos;s license photo and a 4×6 print sheet in about 30 seconds. Preview it free.
+          Get a 2×2 inch driver&apos;s license photo and a 4×6 print sheet in about 30 seconds. Preview it free, pay only if you download.
         </p>
         <button
           type="button"
@@ -1109,6 +1505,23 @@ export default function USADriverLicensePhotoClient({ faqs }: { faqs: FAQ[] }) {
           Create License Photo Now →
         </button>
       </section>
+
+      {/* ── STICKY MOBILE CTA ── */}
+      <div
+        className={`fixed inset-x-0 bottom-0 z-40 border-t border-slate-200 bg-white/95 backdrop-blur px-4 py-3 shadow-[0_-4px_12px_rgba(0,0,0,0.06)] transition-transform duration-300 sm:hidden ${
+          showStickyCta && !isProcessing ? "translate-y-0" : "translate-y-full"
+        }`}
+        aria-hidden={!showStickyCta}
+      >
+        <button
+          type="button"
+          onClick={scrollToTool}
+          tabIndex={showStickyCta ? 0 : -1}
+          className="w-full rounded-xl bg-lime-700 py-3 text-base font-bold text-white shadow-sm active:scale-[0.99]"
+        >
+          Make My 2×2 Photo · Free Preview
+        </button>
+      </div>
 
       {/* ── PROCESSING OVERLAY ── */}
       {isProcessing && (
