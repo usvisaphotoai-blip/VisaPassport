@@ -12,7 +12,8 @@
     "lint": "eslint",
     "sites:check": "node scripts/validate-sites.mjs",
     "seo:duplicates": "node scripts/audit-duplicates.mjs",
-    "sitemap:sites": "node scripts/gen-sitemap-sites.mjs"
+    "sitemap:sites": "node scripts/gen-sitemap-sites.mjs",
+    "sitemap:seed": "node scripts/seed-sitemap-lastmod.mjs"
   },
   "dependencies": {
     "@mediapipe/tasks-vision": "^0.10.34",

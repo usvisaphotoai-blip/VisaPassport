@@ -9,6 +9,7 @@ import { getLocalPrice } from "@/lib/currency";
 import Breadcrumbs from "../components/Breadcrumbs";
 import ToolPageRenderer from "../components/ToolPageRenderer";
 import { extractFaqsFromContent } from "@/lib/tool-faqs";
+import UKPageFinder from "../uk/components/UKPageFinder";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -235,6 +236,7 @@ export default async function Page({ params }: PageProps) {
               <ToolPageRenderer html={toolPage.content} />
             </div>
           </div>
+          {slug === "uk-passport-photo-requirements-tool" && <UKPageFinder current="/uk-passport-photo-requirements-tool" />}
         </div>
       );
     }
@@ -265,6 +267,7 @@ export default async function Page({ params }: PageProps) {
             dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
           />
           <ProgrammaticLandingPage spec={enrichedSpec} slug={slug} />
+          {route.canonicalSlug === "uk-passport-photo-editor" && <UKPageFinder current="/uk-passport-photo-editor" />}
         </>
       );
     }

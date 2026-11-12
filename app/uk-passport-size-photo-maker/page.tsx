@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Breadcrumbs from "../components/Breadcrumbs";
 import UKDocumentClient from "./UKDocumentClient";
+import UKPageFinder from "../uk/components/UKPageFinder";
 import { ukDocuments, ukFaqs } from "./data";
 
 const PAGE_URL = "https://www.pixpassport.com/uk-passport-size-photo-maker";
@@ -301,6 +302,8 @@ export default function UKPage() {
               Whichever UK document you&apos;re applying for, the photo rules exist to keep identification consistent, not to slow you down. Choose your document type above, upload a photo, and let the tool handle the crop, size, and background check, so your application moves forward on the first try.
             </p>
           </article>
+
+          <UKPageFinder current="/uk-passport-size-photo-maker" />
 
           <nav aria-labelledby="related-uk-tools" className="mt-12">
             <h2 id="related-uk-tools" className="text-xl font-semibold text-slate-900 mb-4">Related UK photo tools</h2>

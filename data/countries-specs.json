@@ -1136,6 +1136,10 @@
   },
   {
     "id": "uk-passport",
+    "passport_title": "UK Passport Photo Editor: Crop & Fix Your Photo Online",
+    "passport_h1": "UK Passport Photo Editor: Crop, Resize and Fix the Background",
+    "passport_meta_description": "Already have a photo? Edit it into a UK passport photo: crop it, replace the background with light grey and check it before you apply.",
+    "passport_keywords": ["uk passport photo editor", "edit uk passport photo", "crop passport photo uk", "change passport photo background uk"],
     "name": "United Kingdom Passport",
     "country": "United Kingdom",
     "flag": "🇬🇧",

@@ -4,6 +4,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import ReadingProgressBar from '@/app/components/ReadingProgressBar';
 import ArticleToc from '@/app/components/ArticleToc';
+import UKPageFinder from '@/app/uk/components/UKPageFinder';
 import GuidePhotoTool from '@/app/components/guides/GuidePhotoTool';
 import FaqAccordion from '@/app/components/FaqAccordion';
 import {
@@ -464,6 +465,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               </section>
             </div>
           </article>
+
+          {post.slug === 'uk-digital-passport-photo' && <UKPageFinder current="/blog/uk-digital-passport-photo" />}
 
           {/* Related articles */}
           {relatedPosts.length > 0 && (

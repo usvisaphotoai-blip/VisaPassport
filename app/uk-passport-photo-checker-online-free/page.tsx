@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import UKPassportPhotoCheckerClient from "./UKPassportPhotoCheckerClient";
+import UKPageFinder from "../uk/components/UKPageFinder";
 import { FAQ_ITEMS } from "./content";
 
 export const viewport: Viewport = {
@@ -124,6 +125,7 @@ export default function UKPassportPhotoCheckerPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas) }}
       />
       <UKPassportPhotoCheckerClient />
+      <UKPageFinder current="/uk-passport-photo-checker-online-free" />
     </>
   );
 }
