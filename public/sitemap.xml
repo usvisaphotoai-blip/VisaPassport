@@ -1739,7 +1739,7 @@
     <loc>https://www.pixpassport.com/us-check-photo-green-card</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/us-check-photo-green-card" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/us-check-photo-green-card" />
-    <lastmod>2026-10-07</lastmod>
+    <lastmod>2026-11-12</lastmod>
   </url>
   <url>
     <loc>https://www.pixpassport.com/driving-licence-photograph</loc>
@@ -1864,6 +1864,30 @@
     <xhtml:link rel="alternate" hreflang="de" href="https://www.pixpassport.com/de/visum-foto" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/visa-photo" />
     <lastmod>2026-10-07</lastmod>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/us</loc>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://www.pixpassport.com/us" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/us" />
+    <lastmod>2026-11-12</lastmod>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/us/ead-i-765-photo-requirements</loc>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://www.pixpassport.com/us/ead-i-765-photo-requirements" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/us/ead-i-765-photo-requirements" />
+    <lastmod>2026-11-12</lastmod>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/us/green-card-photo-requirements</loc>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://www.pixpassport.com/us/green-card-photo-requirements" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/us/green-card-photo-requirements" />
+    <lastmod>2026-11-12</lastmod>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/us/uscis-photo-requirements</loc>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://www.pixpassport.com/us/uscis-photo-requirements" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/us/uscis-photo-requirements" />
+    <lastmod>2026-11-12</lastmod>
   </url>
   <url>
     <loc>https://www.pixpassport.com/br/foto-3x4</loc>

@@ -362,6 +362,12 @@ for (const site of COUNTRY_SITES) {
   walkDir(path.join(NEXT_SERVER_DIR, 'sites', site.code), site.lang);
 }
 
+// English regional sections (app/us, app/in): <html lang> matches their en-US / en-IN hreflang
+for (const [code, lang] of [['us', 'en-US'], ['in', 'en-IN']]) {
+  processFile(path.join(NEXT_SERVER_DIR, `${code}.html`), lang);
+  walkDir(path.join(NEXT_SERVER_DIR, code), lang);
+}
+
 // 2. Process sitemap
 updateSitemap();
 

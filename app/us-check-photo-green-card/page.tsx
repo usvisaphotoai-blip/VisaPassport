@@ -8,7 +8,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   title: "Green Card Photo Checker – Free USCIS I-485, I-130 & I-765 Photo Test",
   description:
-    "Check your green card photo free before you file. Test the 2×2 inch size, 1–1⅜ inch head height, white background and no-glasses rule used for USCIS Forms I-485, I-130, I-765, I-131 and I-90.",
+    "Check your green card photo free before you file. Test the 2×2 inch size, 1–1⅜ inch head height, white background and no-glasses rule used for USCIS Forms I-485, I-130, I-765 and I-131.",
   alternates: {
     canonical: "https://www.pixpassport.com/us-check-photo-green-card",
     languages: {
@@ -52,7 +52,7 @@ export default function USGreenCardPhotoCheckerPage() {
     {
       question: "Which forms actually require this photo?",
       answer:
-        "You'll need this exact 2×2 inch photo for Form I-485 (adjustment of status), I-130 (relative petition), I-765 (work permit), I-131 (advance parole), I-90 (green card replacement), I-751 (removing conditions), and the same 2×2 inch standard is used for immigrant visa applications filed through DS-260. Diversity Visa lottery entries use a digital-only 600×600 px photo — use our DV Lottery Photo Checker for that.",
+        "You'll need this exact 2×2 inch photo for Form I-485 (adjustment of status), I-130 (relative petition), I-765 (work permit), I-131 (advance parole), I-751 (removing conditions, when filed from overseas), and the same 2×2 inch standard is used for immigrant visa applications filed through DS-260. Diversity Visa lottery entries use a digital-only 600×600 px photo — use our DV Lottery Photo Checker for that.",
     },
     {
       question: "Can a bad photo really delay or reject my application?",
@@ -123,7 +123,7 @@ export default function USGreenCardPhotoCheckerPage() {
       name: "Green Card Photo Checker",
       url: "https://www.pixpassport.com/us-check-photo-green-card",
       description:
-        "Free green card photo checker that verifies the 2×2 inch size, 50–69% head height, plain white background, and no-glasses rule for USCIS Forms I-485, I-130, I-765, I-131 and I-90.",
+        "Free green card photo checker that verifies the 2×2 inch size, 50–69% head height, plain white background, and no-glasses rule for USCIS Forms I-485, I-130, I-765 and I-131.",
       applicationCategory: "UtilitiesApplication",
       operatingSystem: "All",
       offers: {
@@ -235,7 +235,7 @@ export default function USGreenCardPhotoCheckerPage() {
           {
             icon: "🗓️",
             title: "Accepted Across USCIS Forms",
-            desc: "The same 2×2 inch photo standard covers I-485, I-130, I-765, I-131, I-90 and I-751.",
+            desc: "The same 2×2 inch photo standard covers I-485, I-130, I-765, I-131 and I-751. Form I-90 needs no photos: USCIS takes one at biometrics.",
           },
         ]}
         requirementsHeading="What the Green Card Photo Checker Verifies"
@@ -250,6 +250,24 @@ export default function USGreenCardPhotoCheckerPage() {
         faqs={faqs}
         relatedHeading="More US Photo Checkers & Tools"
         relatedTools={[
+          {
+            title: "Green Card Photo Requirements",
+            desc: "Form I-485 photo rules, photos per form and the December 2025 USCIS change.",
+            href: "/us/green-card-photo-requirements",
+            icon: "📋",
+          },
+          {
+            title: "EAD (I-765) Photo Requirements",
+            desc: "Work permit photos for first, renewal and replacement EADs.",
+            href: "/us/ead-i-765-photo-requirements",
+            icon: "💼",
+          },
+          {
+            title: "USCIS Photo Requirements",
+            desc: "Which USCIS forms need photos, and how many.",
+            href: "/us/uscis-photo-requirements",
+            icon: "🗂️",
+          },
           {
             title: "DV Lottery Photo Checker",
             desc: "600×600 px digital photo check for the Diversity Visa entry.",

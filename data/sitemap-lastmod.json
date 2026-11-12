@@ -855,9 +855,13 @@
     "hash": "4dd2a2ae39b41be2",
     "lastmod": "2026-11-08"
   },
+  "https://www.pixpassport.com/us": {
+    "hash": "16d919612d9aed80",
+    "lastmod": "2026-11-12"
+  },
   "https://www.pixpassport.com/us-check-photo-green-card": {
-    "hash": "bd72275408d875b3",
-    "lastmod": "2026-10-07"
+    "hash": "f068469b8fa72d63",
+    "lastmod": "2026-11-12"
   },
   "https://www.pixpassport.com/us-passport-photo-editor": {
     "hash": "c136d2d0984a0eb0",
@@ -866,6 +870,18 @@
   "https://www.pixpassport.com/us-visa-photo-editor": {
     "hash": "0a83559427622240",
     "lastmod": "2026-10-26"
+  },
+  "https://www.pixpassport.com/us/ead-i-765-photo-requirements": {
+    "hash": "f5579a5585e43442",
+    "lastmod": "2026-11-12"
+  },
+  "https://www.pixpassport.com/us/green-card-photo-requirements": {
+    "hash": "24b98eef2f19cf91",
+    "lastmod": "2026-11-12"
+  },
+  "https://www.pixpassport.com/us/uscis-photo-requirements": {
+    "hash": "28e7e907e08e0a24",
+    "lastmod": "2026-11-12"
   },
   "https://www.pixpassport.com/usa-driver-license-photo-editor": {
     "hash": "4215d78b2f2ff271",
