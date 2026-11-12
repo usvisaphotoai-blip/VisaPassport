@@ -1,4 +1,5 @@
 import { getFilteredSpecs } from "@/lib/specs";
+import { hasEditorPage } from "@/lib/slug-utils";
 import MasterDirectory from "../components/MasterDirectory";
 import { Metadata } from "next";
 import Link from "next/link";
@@ -37,7 +38,8 @@ export const metadata: Metadata = {
 
 export default function VisaDirectoryPage() {
   // Show ALL countries, but de-duplicate by country name so we have 1 entry per nation
-  const uniqueSpecs = Array.from(new Map(getFilteredSpecs().map(s => [s.country, s])).values());
+  const uniqueSpecs = Array.from(new Map(getFilteredSpecs().map(s => [s.country, s])).values())
+    .filter((s) => hasEditorPage(s.country, "visa")); // only countries with a page (no 404 links)
   const displaySpecs = uniqueSpecs;
 
   return (

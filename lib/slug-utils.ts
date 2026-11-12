@@ -320,3 +320,12 @@ export function getAllSlugs(): string[] {
   return Array.from(slugs);
 }
 
+
+/**
+ * True when /<country>-<type>-photo-editor is a real route. Some countries exist only in the photo
+ * tool's registry (lib/countries-registry.ts) and have no spec page; linking them gives a 404.
+ */
+export function hasEditorPage(country: string, type: "passport" | "visa"): boolean {
+  const base = getShortId(country.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, ""));
+  return getAllSlugs().includes(`${base}-${type}-photo-editor`);
+}

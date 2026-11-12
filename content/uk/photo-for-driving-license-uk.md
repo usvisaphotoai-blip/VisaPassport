@@ -4,7 +4,7 @@ description: "Make a UK driving license photo online: 35 x 45 mm, 600 x 750 px m
 slug: "photo-for-driving-license-uk"
 h1: "UK Driving License Photo Size: Make a DVLA-Ready Driving Licence Photo Online"
 date: "2026-10-26"
-updated: "2026-10-26"
+updated: "2026-11-12"
 author: "PixPassport UK Team"
 category: "DVLA Driving Licence"
 readingTime: "8 Min."
@@ -69,7 +69,7 @@ The DVLA photo requirements follow the standard UK passport photo rules on gov.u
 - have no shadows on your face or behind you, no red-eye, and no other people or objects.
 - have no head covering unless it is worn for religious or medical reasons.
 
-Glasses and smiling are the two most common questions, so we answer both directly in the [FAQs below](#11-driving-licence-photo-faqs). For hair, makeup, jewellery and clothing, read our full [UK driving licence photo rules](/uk/driving-licence-photo-rules).
+Glasses and smiling are the two most common questions, so we answer both directly in the [FAQs below](#11-driving-licence-photo-faqs). For hair, makeup, jewellery and clothing, read our full [UK driving licence photo rules](/driving-licence-photograph).
 
 ## 3. Provisional License Photo Rules
 
@@ -81,7 +81,7 @@ Provisional license photo rules are the same as for a full licence: a recent pas
 - **By post:** use a D1 form from a Post Office that handles DVLA applications and attach a printed passport-style photo. Follow the D1 instructions on whether your photo needs to be countersigned.
 - **After your test:** your first full licence is free by post if you keep your provisional photo, or £17 if you send a different one.
 
-Already have a passport photo? See our [provisional licence photo guide](/uk/provisional-driving-licence-photo-guide) for when you can reuse it and when you should upload a new one.
+Already have a passport photo? When you apply online, gov.uk lets you use your passport photo or upload a new one.
 
 ## 4. Make Your Driving Licence Photo Online with Our Photo Maker
 
@@ -135,7 +135,7 @@ For a postal application, attach **one recent printed photo** at 35 x 45 mm to y
 - Cut along the edges. Do not staple the photo to the form unless the D1 instructions say so.
 - Keep it unmarked on both sides, unless it needs to be countersigned.
 
-Read the instructions on your form too, because forms are updated from time to time. For what to write on the back and who can sign, see the [provisional licence photo guide](/uk/provisional-driving-licence-photo-guide).
+Read the instructions on your form too, because forms are updated from time to time. For what to write on the back and who can sign, see the instructions printed on your D1 form.
 
 ## 7. Photo Driving Licence Renewal: When You May Need a New Photo
 
