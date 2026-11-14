@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { getClientTimezoneCurrency } from "@/lib/currency";
 import { getPrintSheetPrice } from "@/lib/print-sheet-pricing";
@@ -19,11 +19,168 @@ const MIN_PRINT_DPI = 200;
 // Free downloads wait this long and render at FREE_DPI; paid HD downloads are instant at full DPI
 const FREE_DELAY_MS = 270_000;
 const FREE_DPI = 200;
+// Interactive preview uses a size-capped copy so dragging/zooming stays smooth on large phone photos
+const PREVIEW_MAX_PX = 2000;
+const MIN_ZOOM = 0.5; // below 1 the photo shrinks inside each cell with white around it
+const MAX_ZOOM = 4;
+const ZOOM_STEP = 0.05;
+const PAN_STEP = 0.025; // fraction of the cell per button tap
+
+const clampZoom = (z: number) => Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, z));
+
+type CenterPoint = { x: number; y: number } | null;
+
+function computeCrop(
+  imageObj: HTMLImageElement | null,
+  photoW: number,
+  photoH: number,
+  zoom: number,
+  center: CenterPoint,
+) {
+  if (!imageObj) return null;
+  const W = imageObj.naturalWidth;
+  const H = imageObj.naturalHeight;
+  const targetRatio = photoW / photoH;
+  const baseW = Math.min(W, H * targetRatio);
+  const sw = baseW / zoom;
+  const sh = sw / targetRatio;
+
+  // Crop smaller than the image: stay inside it. Larger (zoomed out): keep the image inside the cell.
+  const axisBounds = (size: number, full: number): [number, number] =>
+    size <= full ? [size / 2, full - size / 2] : [full - size / 2, size / 2];
+
+  const [minX, maxX] = axisBounds(sw, W);
+  const [minY, maxY] = axisBounds(sh, H);
+  const clampX = (x: number) => Math.min(maxX, Math.max(minX, x));
+  const clampY = (y: number) => Math.min(maxY, Math.max(minY, y));
+
+  const cx = clampX(center?.x ?? W / 2);
+  const cy = clampY(center?.y ?? H / 2);
+  return {
+    sx: cx - sw / 2,
+    sy: cy - sh / 2,
+    sw,
+    sh,
+    cx,
+    cy,
+    minX,
+    maxX,
+    minY,
+    maxY,
+    clampX,
+    clampY,
+  };
+}
 
 const formatClock = (ms: number) => {
   const total = Math.ceil(ms / 1000);
   return `${Math.floor(total / 60)}:${String(total % 60).padStart(2, "0")}`;
 };
+
+// Button that triggers once on tap/keyboard and repeats smoothly while held down
+function RepeatableButton({
+  onAction,
+  disabled,
+  label,
+  title,
+  className = "",
+  children,
+}: {
+  onAction: () => void;
+  disabled?: boolean;
+  label: string;
+  title?: string;
+  className?: string;
+  children: React.ReactNode;
+}) {
+  const actionRef = useRef(onAction);
+  const delayRef = useRef<number | null>(null);
+  const repeatRef = useRef<number | null>(null);
+  const suppressClickRef = useRef(false);
+  const clearSuppressRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    actionRef.current = onAction;
+  }, [onAction]);
+
+  const stopHold = useCallback(() => {
+    if (delayRef.current) {
+      clearTimeout(delayRef.current);
+      delayRef.current = null;
+    }
+    if (repeatRef.current) {
+      clearInterval(repeatRef.current);
+      repeatRef.current = null;
+    }
+  }, []);
+
+  useEffect(() => {
+    if (disabled) stopHold();
+  }, [disabled, stopHold]);
+
+  useEffect(() => {
+    return () => {
+      stopHold();
+      if (clearSuppressRef.current) clearTimeout(clearSuppressRef.current);
+    };
+  }, [stopHold]);
+
+  const handlePointerDown = (e: React.PointerEvent<HTMLButtonElement>) => {
+    if (disabled || e.button !== 0) return;
+    stopHold();
+    if (clearSuppressRef.current) {
+      clearTimeout(clearSuppressRef.current);
+      clearSuppressRef.current = null;
+    }
+    suppressClickRef.current = true;
+    actionRef.current();
+
+    delayRef.current = window.setTimeout(() => {
+      repeatRef.current = window.setInterval(() => actionRef.current(), 55);
+    }, 260);
+
+    const onRelease = () => {
+      stopHold();
+      window.removeEventListener("pointerup", onRelease);
+      window.removeEventListener("pointercancel", onRelease);
+      window.removeEventListener("blur", onRelease);
+      clearSuppressRef.current = window.setTimeout(() => {
+        suppressClickRef.current = false;
+        clearSuppressRef.current = null;
+      }, 350);
+    };
+    window.addEventListener("pointerup", onRelease);
+    window.addEventListener("pointercancel", onRelease);
+    window.addEventListener("blur", onRelease);
+  };
+
+  const handleClick = () => {
+    if (suppressClickRef.current) {
+      suppressClickRef.current = false;
+      if (clearSuppressRef.current) {
+        clearTimeout(clearSuppressRef.current);
+        clearSuppressRef.current = null;
+      }
+      return;
+    }
+    if (!disabled) actionRef.current();
+  };
+
+  return (
+    <button
+      type="button"
+      disabled={disabled}
+      aria-label={label}
+      title={title ?? label}
+      onPointerDown={handlePointerDown}
+      onPointerLeave={stopHold}
+      onClick={handleClick}
+      className={className}
+    >
+      {children}
+    </button>
+  );
+}
 
 export default function Template4x6App() {
   const [imageObj, setImageObj] = useState<HTMLImageElement | null>(null);
@@ -33,6 +190,9 @@ export default function Template4x6App() {
   const [borderless, setBorderless] = useState(false);
   const [cropLines, setCropLines] = useState(true);
   const [copies, setCopies] = useState<number>(0); // 0 = fill the sheet
+  const [zoom, setZoom] = useState(1);
+  const [center, setCenter] = useState<CenterPoint>(null);
+  const [isSheetDragging, setIsSheetDragging] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [countdownMs, setCountdownMs] = useState(0); // elapsed time of the free-download countdown
@@ -46,26 +206,39 @@ export default function Template4x6App() {
   const objectUrlRef = useRef<string | null>(null);
   const timerRef = useRef<number | null>(null);
   const scrollToPreviewRef = useRef(false);
+  const pointersRef = useRef(new Map<number, { x: number; y: number }>());
+  const dragRef = useRef<{ x: number; y: number; cx: number; cy: number; ratio: number } | null>(null);
+  const pinchRef = useRef<{ dist: number; zoom: number } | null>(null);
 
   const photo = PHOTO_SIZES[size];
   const fit = bestFit(size, borderless);
   const count = copies === 0 ? fit.max : Math.min(copies, fit.max);
 
-  // Center-crop of the source to the target aspect ratio, so photos never stretch
-  const crop = (() => {
+  // Downscaled copy for smooth 60fps preview dragging/zooming; downloads always read imageObj at full resolution
+  const previewSource = useMemo(() => {
     if (!imageObj) return null;
-    const targetRatio = photo.width / photo.height;
-    const srcRatio = imageObj.naturalWidth / imageObj.naturalHeight;
-    let sx = 0, sy = 0, sw = imageObj.naturalWidth, sh = imageObj.naturalHeight;
-    if (srcRatio > targetRatio) {
-      sw = imageObj.naturalHeight * targetRatio;
-      sx = (imageObj.naturalWidth - sw) / 2;
-    } else if (srcRatio < targetRatio) {
-      sh = imageObj.naturalWidth / targetRatio;
-      sy = (imageObj.naturalHeight - sh) / 2;
+    const W = imageObj.naturalWidth;
+    const H = imageObj.naturalHeight;
+    const scale = Math.min(1, PREVIEW_MAX_PX / Math.max(W, H));
+    if (scale === 1) {
+      return { el: imageObj as CanvasImageSource, width: W, height: H };
     }
-    return { sx, sy, sw, sh };
-  })();
+    const c = document.createElement("canvas");
+    c.width = Math.max(1, Math.round(W * scale));
+    c.height = Math.max(1, Math.round(H * scale));
+    const ctx = c.getContext("2d");
+    if (!ctx) {
+      return { el: imageObj as CanvasImageSource, width: W, height: H };
+    }
+    ctx.imageSmoothingQuality = "high";
+    ctx.drawImage(imageObj, 0, 0, c.width, c.height);
+    return { el: c as CanvasImageSource, width: c.width, height: c.height };
+  }, [imageObj]);
+
+  const crop = useMemo(
+    () => computeCrop(imageObj, photo.width, photo.height, zoom, center),
+    [imageObj, photo.width, photo.height, zoom, center],
+  );
   const printDpi = crop ? Math.round(crop.sw / (photo.width / 25.4)) : null;
   const hdPrice = useMemo(() => getPrintSheetPrice(getClientTimezoneCurrency()), []);
 
@@ -73,6 +246,19 @@ export default function Template4x6App() {
     if (objectUrlRef.current) URL.revokeObjectURL(objectUrlRef.current);
     if (timerRef.current) clearInterval(timerRef.current);
   }, []);
+
+  // Trackpad pinch-to-zoom on the preview canvas without hijacking normal vertical page scrolling
+  useEffect(() => {
+    const el = canvasRef.current;
+    if (!el) return;
+    const onWheel = (e: WheelEvent) => {
+      if (!e.ctrlKey && !e.metaKey) return;
+      e.preventDefault();
+      setZoom((z) => clampZoom(z * Math.exp(-e.deltaY * 0.01)));
+    };
+    el.addEventListener("wheel", onWheel, { passive: false });
+    return () => el.removeEventListener("wheel", onWheel);
+  }, [imageObj]);
 
   const selectSize = (key: PhotoSizeKey) => {
     setSize(key);
@@ -96,9 +282,15 @@ export default function Template4x6App() {
       if (objectUrlRef.current) URL.revokeObjectURL(objectUrlRef.current);
       objectUrlRef.current = url;
       const isFirstPhoto = !imageObj;
+      pointersRef.current.clear();
+      dragRef.current = null;
+      pinchRef.current = null;
+      setIsSheetDragging(false);
       setImageObj(img);
       setFileName(file.name);
       setUploadError(null);
+      setZoom(1);
+      setCenter(null);
       // On small screens the preview sits above the controls; bring it into view once
       scrollToPreviewRef.current = isFirstPhoto && window.matchMedia("(max-width: 1023px)").matches;
     };
@@ -121,7 +313,7 @@ export default function Template4x6App() {
   }, [imageObj]);
 
   // Draws the sheet onto a canvas at the given DPI
-  const renderSheet = (canvas: HTMLCanvasElement, dpi: number) => {
+  const renderSheet = (canvas: HTMLCanvasElement, dpi: number, fullResolution = false) => {
     const ctx = canvas.getContext("2d");
     if (!imageObj || !crop || !ctx) return;
     const px = (mm: number) => Math.round((mm * dpi) / 25.4);
@@ -141,13 +333,43 @@ export default function Template4x6App() {
     const x0 = Math.round((cW - gridW) / 2);
     const y0 = Math.round((cH - gridH) / 2);
 
+    const srcEl = !fullResolution && previewSource ? previewSource.el : imageObj;
+    const srcW = !fullResolution && previewSource ? previewSource.width : imageObj.naturalWidth;
+    const srcH = !fullResolution && previewSource ? previewSource.height : imageObj.naturalHeight;
+    const scaleX = srcW / imageObj.naturalWidth;
+    const scaleY = srcH / imageObj.naturalHeight;
+
+    const sx = crop.sx * scaleX;
+    const sy = crop.sy * scaleY;
+    const sw = crop.sw * scaleX;
+    const sh = crop.sh * scaleY;
+
+    // Intersect with source bounds so zoomed-out padding stays strictly in-bounds across browsers
+    const visSx = Math.max(0, sx);
+    const visSy = Math.max(0, sy);
+    const visEx = Math.min(srcW, sx + sw);
+    const visEy = Math.min(srcH, sy + sh);
+    const visSw = visEx - visSx;
+    const visSh = visEy - visSy;
+
     ctx.imageSmoothingQuality = "high";
     let drawn = 0;
     for (let r = 0; r < fit.rows && drawn < count; r++) {
       for (let c = 0; c < fit.cols && drawn < count; c++) {
         const x = x0 + c * pW;
         const y = y0 + r * pH;
-        ctx.drawImage(imageObj, crop.sx, crop.sy, crop.sw, crop.sh, x, y, pW, pH);
+        if (visSw > 0 && visSh > 0) {
+          ctx.save();
+          ctx.beginPath();
+          ctx.rect(x, y, pW, pH);
+          ctx.clip();
+          const destX = x + ((visSx - sx) / sw) * pW;
+          const destY = y + ((visSy - sy) / sh) * pH;
+          const destW = (visSw / sw) * pW;
+          const destH = (visSh / sh) * pH;
+          ctx.drawImage(srcEl, visSx, visSy, visSw, visSh, destX, destY, destW, destH);
+          ctx.restore();
+        }
         if (cropLines) {
           ctx.strokeStyle = "#000000";
           ctx.lineWidth = Math.max(1, px(0.15));
@@ -169,16 +391,97 @@ export default function Template4x6App() {
 
   // The on-screen preview stays at free quality so the HD file is only available after payment
   useEffect(() => {
-    if (canvasRef.current) renderSheet(canvasRef.current, FREE_DPI);
+    if (canvasRef.current) renderSheet(canvasRef.current, FREE_DPI, false);
     // renderSheet only reads these values
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [imageObj, size, fit.cols, fit.rows, fit.sheetW, fit.sheetH, count, cropLines]);
+  }, [imageObj, previewSource, crop, size, fit.cols, fit.rows, fit.sheetW, fit.sheetH, count, cropLines]);
+
+  const stepZoom = useCallback((delta: number) => {
+    setZoom((z) => clampZoom(Math.round((z + delta) * 1000) / 1000));
+  }, []);
+
+  const nudgePhoto = useCallback(
+    (dxFactor: number, dyFactor: number) => {
+      if (!imageObj) return;
+      setCenter((prev) => {
+        const c = computeCrop(imageObj, photo.width, photo.height, zoom, prev);
+        if (!c) return prev;
+        return {
+          x: c.clampX(c.cx + c.sw * dxFactor),
+          y: c.clampY(c.cy + c.sh * dyFactor),
+        };
+      });
+    },
+    [imageObj, photo.width, photo.height, zoom],
+  );
+
+  const resetAdjustment = useCallback(() => {
+    setZoom(1);
+    setCenter(null);
+  }, []);
+
+  const pointerDistance = () => {
+    const [a, b] = [...pointersRef.current.values()];
+    return Math.hypot(a.x - b.x, a.y - b.y);
+  };
+
+  const onSheetPointerDown = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    if (!crop) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    if (rect.width <= 0) return;
+    e.currentTarget.setPointerCapture(e.pointerId);
+    pointersRef.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (pointersRef.current.size === 2) {
+      dragRef.current = null;
+      setIsSheetDragging(false);
+      pinchRef.current = { dist: Math.max(1, pointerDistance()), zoom };
+    } else if (pointersRef.current.size === 1) {
+      // Scale pointer CSS delta by 1 cell's width on screen so dragging matches the finger/cursor 1:1
+      const ratio = (crop.sw * fit.sheetW) / (rect.width * photo.width);
+      dragRef.current = { x: e.clientX, y: e.clientY, cx: crop.cx, cy: crop.cy, ratio };
+      setIsSheetDragging(true);
+    }
+  };
+
+  const onSheetPointerMove = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    if (!pointersRef.current.has(e.pointerId) || !crop) return;
+    pointersRef.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    const pinch = pinchRef.current;
+    if (pinch && pointersRef.current.size >= 2) {
+      setZoom(clampZoom((pinch.zoom * pointerDistance()) / pinch.dist));
+      return;
+    }
+    const d = dragRef.current;
+    if (!d) return;
+    setCenter({
+      x: crop.clampX(d.cx - (e.clientX - d.x) * d.ratio),
+      y: crop.clampY(d.cy - (e.clientY - d.y) * d.ratio),
+    });
+  };
+
+  const endSheetDrag = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    pointersRef.current.delete(e.pointerId);
+    if (pointersRef.current.size < 2) pinchRef.current = null;
+    dragRef.current = null;
+    setIsSheetDragging(false);
+  };
+
+  const onSheetKeyDown = (e: React.KeyboardEvent<HTMLCanvasElement>) => {
+    if (!crop) return;
+    if (e.key === "ArrowUp") { e.preventDefault(); nudgePhoto(0, PAN_STEP); }
+    else if (e.key === "ArrowDown") { e.preventDefault(); nudgePhoto(0, -PAN_STEP); }
+    else if (e.key === "ArrowLeft") { e.preventDefault(); nudgePhoto(PAN_STEP, 0); }
+    else if (e.key === "ArrowRight") { e.preventDefault(); nudgePhoto(-PAN_STEP, 0); }
+    else if (e.key === "+" || e.key === "=") { e.preventDefault(); stepZoom(ZOOM_STEP); }
+    else if (e.key === "-" || e.key === "_") { e.preventDefault(); stepZoom(-ZOOM_STEP); }
+    else if (e.key === "0") { e.preventDefault(); resetAdjustment(); }
+  };
 
   const download = async (format: Format, hd: boolean) => {
     setDialogError(null);
     try {
       const canvas = document.createElement("canvas");
-      renderSheet(canvas, hd ? DPI : FREE_DPI);
+      renderSheet(canvas, hd ? DPI : FREE_DPI, true);
       const base = `pixpassport-4x6-passport-photo-template-${size}${hd ? "-hd" : ""}`;
       if (format === "jpg") {
         const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, "image/jpeg", 0.95));
@@ -253,8 +556,17 @@ export default function Template4x6App() {
   const freeReady = countdownMs >= FREE_DELAY_MS;
   const countdownRunning = !hdUnlocked && countdownMs > 0 && !freeReady;
 
+  const canMoveUp = crop ? crop.cy < crop.maxY - 0.5 : false;
+  const canMoveDown = crop ? crop.cy > crop.minY + 0.5 : false;
+  const canMoveLeft = crop ? crop.cx < crop.maxX - 0.5 : false;
+  const canMoveRight = crop ? crop.cx > crop.minX + 0.5 : false;
+  const hasHorizontalSlack = crop ? crop.maxX - crop.minX > 1 : false;
+  const hasVerticalSlack = crop ? crop.maxY - crop.minY > 1 : false;
+  const isAdjusted = Math.abs(zoom - 1) > 0.005 || center !== null;
+
   const stepLabel = "text-xs font-bold uppercase tracking-wide text-slate-500 mb-2";
   const focusRing = "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lime-700 focus-visible:ring-offset-2";
+  const adjustBtn = `inline-flex items-center justify-center gap-1 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 hover:border-lime-700 hover:text-lime-800 active:bg-lime-50 disabled:opacity-40 disabled:pointer-events-none text-xs font-semibold text-slate-700 transition-colors select-none cursor-pointer ${focusRing}`;
 
   const openPicker = () => inputRef.current?.click();
   const dragHandlers = {
@@ -439,18 +751,158 @@ export default function Template4x6App() {
           className="lg:col-span-7 bg-slate-100 p-4 sm:p-6 lg:p-8 scroll-mt-20 order-first lg:order-none"
         >
           <div className="lg:sticky lg:top-24 flex flex-col items-center justify-center lg:min-h-[480px]">
+            <p className="text-[11px] sm:text-xs font-medium text-slate-500 mb-2.5 text-center">
+              Drag on the photos to move · use controls below to zoom &amp; align
+            </p>
             <canvas
               ref={canvasRef}
-              role="img"
-              aria-label={`Preview: ${count} passport photos at ${photo.label} on a 4x6 inch sheet`}
-              className={`bg-white shadow-lg h-auto w-full ${fit.orientation === "portrait" ? "max-w-[240px] sm:max-w-[300px]" : "max-w-[360px] sm:max-w-[460px]"}`}
+              role="application"
+              tabIndex={0}
+              aria-label={`4x6 sheet preview with ${count} passport photos at ${photo.label}. Drag or use arrow keys to move the photo inside each cell, pinch or use plus and minus to zoom.`}
+              onPointerDown={onSheetPointerDown}
+              onPointerMove={onSheetPointerMove}
+              onPointerUp={endSheetDrag}
+              onPointerCancel={endSheetDrag}
+              onKeyDown={onSheetKeyDown}
+              style={{
+                maxWidth: `max(180px, min(var(--sheet-w), calc((100svh - 330px) * ${fit.sheetW / fit.sheetH})))`,
+              }}
+              className={`bg-white shadow-lg h-auto w-full touch-none select-none transition-shadow ${
+                isSheetDragging
+                  ? "cursor-grabbing ring-2 ring-lime-700"
+                  : "cursor-grab ring-1 ring-slate-300/70 hover:ring-lime-600/60"
+              } ${focusRing} ${
+                fit.orientation === "portrait"
+                  ? "[--sheet-w:240px] sm:[--sheet-w:300px]"
+                  : "[--sheet-w:360px] sm:[--sheet-w:460px]"
+              }`}
             />
-            <p className="text-[11px] sm:text-xs text-slate-500 mt-3 sm:mt-4 text-center">
+            <p className="text-[11px] sm:text-xs text-slate-500 mt-2.5 text-center">
               {fit.orientation === "portrait" ? "4 × 6 in" : "6 × 4 in"} · {fit.cols} × {fit.rows} grid · {count} photo{count === 1 ? "" : "s"}
             </p>
+
+            {/* Zoom and position controls applied uniformly to every cell on the sheet */}
+            <div className="w-full max-w-[380px] sm:max-w-[420px] mt-3 bg-white rounded-xl border border-slate-200 p-3 sm:p-3.5 shadow-2xs space-y-2.5">
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-[11px] font-bold uppercase tracking-wide text-slate-500">
+                  Adjust photo in each cell
+                </span>
+                <button
+                  type="button"
+                  onClick={resetAdjustment}
+                  disabled={!isAdjusted}
+                  className={`text-xs font-semibold text-lime-700 hover:text-lime-800 disabled:text-slate-300 disabled:pointer-events-none cursor-pointer ${focusRing} rounded px-1`}
+                >
+                  Reset
+                </button>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-semibold text-slate-600 w-10 shrink-0">Zoom</span>
+                <RepeatableButton
+                  label="Zoom out"
+                  title="Zoom out"
+                  disabled={zoom <= MIN_ZOOM + 0.001}
+                  onAction={() => stepZoom(-ZOOM_STEP)}
+                  className={`${adjustBtn} w-8 h-8 shrink-0`}
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden>
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                  </svg>
+                </RepeatableButton>
+                <input
+                  type="range"
+                  min={MIN_ZOOM}
+                  max={MAX_ZOOM}
+                  step={0.01}
+                  value={zoom}
+                  onChange={(e) => setZoom(clampZoom(Number(e.target.value)))}
+                  aria-label="Zoom"
+                  className="flex-1 min-w-0 accent-lime-700 cursor-pointer"
+                />
+                <RepeatableButton
+                  label="Zoom in"
+                  title="Zoom in"
+                  disabled={zoom >= MAX_ZOOM - 0.001}
+                  onAction={() => stepZoom(ZOOM_STEP)}
+                  className={`${adjustBtn} w-8 h-8 shrink-0`}
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden>
+                    <line x1="12" y1="5" x2="12" y2="19" />
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                  </svg>
+                </RepeatableButton>
+                <span className="text-xs font-bold tabular-nums text-slate-700 w-10 text-right shrink-0">
+                  {Math.round(zoom * 100)}%
+                </span>
+              </div>
+
+              <div className="grid grid-cols-4 gap-1.5" role="group" aria-label="Move photo inside each cell">
+                <RepeatableButton
+                  label="Move photo up"
+                  title="Move photo up"
+                  disabled={!canMoveUp}
+                  onAction={() => nudgePhoto(0, PAN_STEP)}
+                  className={`${adjustBtn} py-2 px-1.5`}
+                >
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                    <path d="M12 19V5" /><path d="m5 12 7-7 7 7" />
+                  </svg>
+                  <span>Up</span>
+                </RepeatableButton>
+                <RepeatableButton
+                  label="Move photo down"
+                  title="Move photo down"
+                  disabled={!canMoveDown}
+                  onAction={() => nudgePhoto(0, -PAN_STEP)}
+                  className={`${adjustBtn} py-2 px-1.5`}
+                >
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                    <path d="M12 5v14" /><path d="m19 12-7 7-7-7" />
+                  </svg>
+                  <span>Down</span>
+                </RepeatableButton>
+                <RepeatableButton
+                  label="Move photo left"
+                  title="Move photo left"
+                  disabled={!canMoveLeft}
+                  onAction={() => nudgePhoto(PAN_STEP, 0)}
+                  className={`${adjustBtn} py-2 px-1.5`}
+                >
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                    <path d="M19 12H5" /><path d="m12 19-7-7 7-7" />
+                  </svg>
+                  <span>Left</span>
+                </RepeatableButton>
+                <RepeatableButton
+                  label="Move photo right"
+                  title="Move photo right"
+                  disabled={!canMoveRight}
+                  onAction={() => nudgePhoto(-PAN_STEP, 0)}
+                  className={`${adjustBtn} py-2 px-1.5`}
+                >
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                    <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
+                  </svg>
+                  <span>Right</span>
+                </RepeatableButton>
+              </div>
+
+              {!hasHorizontalSlack && !hasVerticalSlack ? (
+                <p className="text-[11px] text-slate-500 text-center">
+                  Zoom in or out to move the photo inside each cell.
+                </p>
+              ) : zoom < 1 ? (
+                <p className="text-[11px] text-slate-500 text-center">
+                  Zoomed out: empty area inside each cell is filled with white.
+                </p>
+              ) : null}
+            </div>
+
             {printDpi !== null && printDpi < MIN_PRINT_DPI && (
               <p role="status" className="mt-3 max-w-sm text-center text-xs font-medium text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
-                Low resolution: this photo prints at about {printDpi} DPI and may look blurry. Use the original, full-size photo for a sharp print.
+                Low resolution: this photo prints at about {printDpi} DPI and may look blurry.{" "}
+                {zoom > 1 ? "Zoom out or use a higher-resolution photo." : "Use the original, full-size photo for a sharp print."}
               </p>
             )}
           </div>
