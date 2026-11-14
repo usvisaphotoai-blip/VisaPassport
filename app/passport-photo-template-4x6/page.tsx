@@ -103,7 +103,7 @@ const faqs = [
   },
   {
     q: "What if my photo isn't cropped to passport size yet?",
-    a: "The template fits your photo without stretching and lets you zoom in, zoom out, and move it up, down, left, or right inside each cell. However, it doesn't fix the background or run compliance checks. For an accepted photo, format it first with our passport photo online tool, then come back to make the 4x6 sheet.",
+    a: "The template fits your photo without stretching, lets you zoom and move it inside each cell, and lets you remove the background and pick a solid background color. If you also need automatic head sizing or compliance checks, format it first with our passport photo online tool, then come back to make the 4x6 sheet.",
   },
 ];
 
@@ -123,6 +123,7 @@ const jsonLd = {
         "4x6 / 6x4 / 4R passport photo sheet",
         "2×2 in, 35×45 mm, 33×48 mm, 35×50 mm and 50×70 mm photo sizes",
         "Zoom and reposition photo inside each cell",
+        "Background removal and background color selection",
         "Edge-to-edge layout for 6 US 2×2 photos",
         "Crop lines for easy cutting",
         "300 DPI JPG and PDF download",

@@ -21,14 +21,26 @@ const FREE_DELAY_MS = 270_000;
 const FREE_DPI = 200;
 // Interactive preview uses a size-capped copy so dragging/zooming stays smooth on large phone photos
 const PREVIEW_MAX_PX = 2000;
+// Cap background-removal uploads well under Vercel's 4.5 MB body limit while keeping 300+ DPI headroom
+const REMOVE_BG_MAX_PX = 2400;
+const REMOVE_BG_MAX_BYTES = 3.5 * 1024 * 1024;
 const MIN_ZOOM = 0.5; // below 1 the photo shrinks inside each cell with white around it
 const MAX_ZOOM = 4;
 const ZOOM_STEP = 0.05;
 const PAN_STEP = 0.025; // fraction of the cell per button tap
 
+const BG_PRESETS = [
+  { id: "white", label: "White", hex: "#ffffff" },
+  { id: "light-gray", label: "Light Gray", hex: "#f3f4f6" },
+  { id: "light-blue", label: "Light Blue", hex: "#dbeafe" },
+  { id: "blue", label: "Blue", hex: "#0047ab" },
+  { id: "red", label: "Red", hex: "#dc2626" },
+] as const;
+
 const clampZoom = (z: number) => Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, z));
 
-type CenterPoint = { x: number; y: number } | null;
+// Stored normalized (0..1) so framing stays identical if original and cutout dimensions differ
+type CenterPoint = { nx: number; ny: number } | null;
 
 function computeCrop(
   imageObj: HTMLImageElement | null,
@@ -54,9 +66,11 @@ function computeCrop(
   const clampX = (x: number) => Math.min(maxX, Math.max(minX, x));
   const clampY = (y: number) => Math.min(maxY, Math.max(minY, y));
 
-  const cx = clampX(center?.x ?? W / 2);
-  const cy = clampY(center?.y ?? H / 2);
+  const cx = clampX((center?.nx ?? 0.5) * W);
+  const cy = clampY((center?.ny ?? 0.5) * H);
   return {
+    W,
+    H,
     sx: cx - sw / 2,
     sy: cy - sh / 2,
     sw,
@@ -70,6 +84,49 @@ function computeCrop(
     clampX,
     clampY,
   };
+}
+
+function makePreviewSource(img: HTMLImageElement | null) {
+  if (!img) return null;
+  const W = img.naturalWidth;
+  const H = img.naturalHeight;
+  const scale = Math.min(1, PREVIEW_MAX_PX / Math.max(W, H));
+  if (scale === 1) {
+    return { el: img as CanvasImageSource, width: W, height: H };
+  }
+  const c = document.createElement("canvas");
+  c.width = Math.max(1, Math.round(W * scale));
+  c.height = Math.max(1, Math.round(H * scale));
+  const ctx = c.getContext("2d");
+  if (!ctx) {
+    return { el: img as CanvasImageSource, width: W, height: H };
+  }
+  ctx.imageSmoothingQuality = "high";
+  ctx.drawImage(img, 0, 0, c.width, c.height);
+  return { el: c as CanvasImageSource, width: c.width, height: c.height };
+}
+
+async function prepareRemoveBgFile(img: HTMLImageElement): Promise<File> {
+  const W = img.naturalWidth;
+  const H = img.naturalHeight;
+  const scale = Math.min(1, REMOVE_BG_MAX_PX / Math.max(W, H));
+  const c = document.createElement("canvas");
+  c.width = Math.max(1, Math.round(W * scale));
+  c.height = Math.max(1, Math.round(H * scale));
+  const ctx = c.getContext("2d");
+  if (!ctx) throw new Error("Canvas is unavailable in this browser.");
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(0, 0, c.width, c.height);
+  ctx.imageSmoothingQuality = "high";
+  ctx.drawImage(img, 0, 0, c.width, c.height);
+
+  for (const q of [0.92, 0.85, 0.75, 0.65]) {
+    const blob = await new Promise<Blob | null>((resolve) => c.toBlob(resolve, "image/jpeg", q));
+    if (blob && (blob.size <= REMOVE_BG_MAX_BYTES || q === 0.65)) {
+      return new File([blob], "photo.jpg", { type: "image/jpeg" });
+    }
+  }
+  throw new Error("Could not prepare photo for background removal.");
 }
 
 const formatClock = (ms: number) => {
@@ -184,6 +241,12 @@ function RepeatableButton({
 
 export default function Template4x6App() {
   const [imageObj, setImageObj] = useState<HTMLImageElement | null>(null);
+  const [cutoutImg, setCutoutImg] = useState<HTMLImageElement | null>(null);
+  const [bgMode, setBgMode] = useState<"original" | "color">("original");
+  const [bgColor, setBgColor] = useState<string>("#ffffff");
+  const [customColor, setCustomColor] = useState<string>("#e0f2fe");
+  const [bgLoading, setBgLoading] = useState(false);
+  const [bgError, setBgError] = useState<string | null>(null);
   const [fileName, setFileName] = useState<string>("");
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [size, setSize] = useState<PhotoSizeKey>("us");
@@ -204,6 +267,10 @@ export default function Template4x6App() {
   const inputRef = useRef<HTMLInputElement>(null);
   const previewRef = useRef<HTMLDivElement>(null);
   const objectUrlRef = useRef<string | null>(null);
+  const cutoutUrlRef = useRef<string | null>(null);
+  const bgAbortRef = useRef<AbortController | null>(null);
+  const bgRequestIdRef = useRef(0);
+  const bgLoadingRef = useRef(false);
   const timerRef = useRef<number | null>(null);
   const scrollToPreviewRef = useRef(false);
   const pointersRef = useRef(new Map<number, { x: number; y: number }>());
@@ -214,36 +281,25 @@ export default function Template4x6App() {
   const fit = bestFit(size, borderless);
   const count = copies === 0 ? fit.max : Math.min(copies, fit.max);
 
-  // Downscaled copy for smooth 60fps preview dragging/zooming; downloads always read imageObj at full resolution
-  const previewSource = useMemo(() => {
-    if (!imageObj) return null;
-    const W = imageObj.naturalWidth;
-    const H = imageObj.naturalHeight;
-    const scale = Math.min(1, PREVIEW_MAX_PX / Math.max(W, H));
-    if (scale === 1) {
-      return { el: imageObj as CanvasImageSource, width: W, height: H };
-    }
-    const c = document.createElement("canvas");
-    c.width = Math.max(1, Math.round(W * scale));
-    c.height = Math.max(1, Math.round(H * scale));
-    const ctx = c.getContext("2d");
-    if (!ctx) {
-      return { el: imageObj as CanvasImageSource, width: W, height: H };
-    }
-    ctx.imageSmoothingQuality = "high";
-    ctx.drawImage(imageObj, 0, 0, c.width, c.height);
-    return { el: c as CanvasImageSource, width: c.width, height: c.height };
-  }, [imageObj]);
+  const useCutout = bgMode === "color" && !!cutoutImg;
+  const activeImageObj = useCutout ? cutoutImg : imageObj;
+
+  // Downscaled copies for smooth 60fps preview dragging/zooming; downloads always use full resolution
+  const origPreviewSource = useMemo(() => makePreviewSource(imageObj), [imageObj]);
+  const cutoutPreviewSource = useMemo(() => makePreviewSource(cutoutImg), [cutoutImg]);
+  const activePreviewSource = useCutout ? cutoutPreviewSource : origPreviewSource;
 
   const crop = useMemo(
-    () => computeCrop(imageObj, photo.width, photo.height, zoom, center),
-    [imageObj, photo.width, photo.height, zoom, center],
+    () => computeCrop(activeImageObj, photo.width, photo.height, zoom, center),
+    [activeImageObj, photo.width, photo.height, zoom, center],
   );
   const printDpi = crop ? Math.round(crop.sw / (photo.width / 25.4)) : null;
   const hdPrice = useMemo(() => getPrintSheetPrice(getClientTimezoneCurrency()), []);
 
   useEffect(() => () => {
     if (objectUrlRef.current) URL.revokeObjectURL(objectUrlRef.current);
+    if (cutoutUrlRef.current) URL.revokeObjectURL(cutoutUrlRef.current);
+    bgAbortRef.current?.abort();
     if (timerRef.current) clearInterval(timerRef.current);
   }, []);
 
@@ -281,18 +337,30 @@ export default function Template4x6App() {
     img.onload = () => {
       if (objectUrlRef.current) URL.revokeObjectURL(objectUrlRef.current);
       objectUrlRef.current = url;
-      const isFirstPhoto = !imageObj;
+      if (cutoutUrlRef.current) {
+        URL.revokeObjectURL(cutoutUrlRef.current);
+        cutoutUrlRef.current = null;
+      }
+      bgAbortRef.current?.abort();
+      bgAbortRef.current = null;
+      bgRequestIdRef.current += 1;
+      bgLoadingRef.current = false;
       pointersRef.current.clear();
       dragRef.current = null;
       pinchRef.current = null;
       setIsSheetDragging(false);
       setImageObj(img);
+      setCutoutImg(null);
+      setBgMode("original");
+      setBgColor("#ffffff");
+      setBgLoading(false);
+      setBgError(null);
       setFileName(file.name);
       setUploadError(null);
       setZoom(1);
       setCenter(null);
       // On small screens the preview sits above the controls; bring it into view once
-      scrollToPreviewRef.current = isFirstPhoto && window.matchMedia("(max-width: 1023px)").matches;
+      scrollToPreviewRef.current = !imageObj && window.matchMedia("(max-width: 1023px)").matches;
     };
     img.onerror = () => {
       URL.revokeObjectURL(url);
@@ -305,6 +373,81 @@ export default function Template4x6App() {
     img.src = url;
   };
 
+  const handleRemoveBg = async (targetColor: string) => {
+    if (!imageObj || bgLoadingRef.current) return;
+    bgAbortRef.current?.abort();
+    const controller = new AbortController();
+    bgAbortRef.current = controller;
+    const reqId = ++bgRequestIdRef.current;
+
+    bgLoadingRef.current = true;
+    setBgLoading(true);
+    setBgError(null);
+    setBgColor(targetColor);
+
+    try {
+      const uploadFile = await prepareRemoveBgFile(imageObj);
+      if (reqId !== bgRequestIdRef.current) return;
+
+      const form = new FormData();
+      form.append("image", uploadFile);
+
+      const res = await fetch("/api/remove-bg", {
+        method: "POST",
+        body: form,
+        signal: controller.signal,
+      });
+
+      if (!res.ok) {
+        const errData = (await res.json().catch(() => null)) as { error?: string } | null;
+        throw new Error(errData?.error || "Could not remove the background. Please try again.");
+      }
+
+      const blob = await res.blob();
+      const cutoutUrl = URL.createObjectURL(blob);
+      const cutout = await new Promise<HTMLImageElement>((resolve, reject) => {
+        const el = new Image();
+        el.onload = () => resolve(el);
+        el.onerror = () => {
+          URL.revokeObjectURL(cutoutUrl);
+          reject(new Error("Could not read the processed image. Please try again."));
+        };
+        el.src = cutoutUrl;
+      });
+
+      if (reqId !== bgRequestIdRef.current) {
+        URL.revokeObjectURL(cutoutUrl);
+        return;
+      }
+
+      if (cutoutUrlRef.current) URL.revokeObjectURL(cutoutUrlRef.current);
+      cutoutUrlRef.current = cutoutUrl;
+      setCutoutImg(cutout);
+      setBgMode("color");
+    } catch (err: unknown) {
+      if (err instanceof DOMException && err.name === "AbortError") return;
+      if (reqId === bgRequestIdRef.current) {
+        setBgError(err instanceof Error ? err.message : "Background removal failed. Please try again.");
+      }
+    } finally {
+      if (reqId === bgRequestIdRef.current) {
+        bgLoadingRef.current = false;
+        setBgLoading(false);
+      }
+    }
+  };
+
+  const handleSelectBgColor = (hex: string) => {
+    if (bgLoadingRef.current) return;
+    setBgColor(hex);
+    setBgError(null);
+    if (cutoutImg) {
+      setBgMode("color");
+    } else {
+      void handleRemoveBg(hex);
+    }
+  };
+
   // Runs after the post-upload layout has mounted, so previewRef is set
   useEffect(() => {
     if (!imageObj || !scrollToPreviewRef.current) return;
@@ -315,7 +458,7 @@ export default function Template4x6App() {
   // Draws the sheet onto a canvas at the given DPI
   const renderSheet = (canvas: HTMLCanvasElement, dpi: number, fullResolution = false) => {
     const ctx = canvas.getContext("2d");
-    if (!imageObj || !crop || !ctx) return;
+    if (!activeImageObj || !crop || !ctx) return;
     const px = (mm: number) => Math.round((mm * dpi) / 25.4);
 
     const cW = px(fit.sheetW);
@@ -333,11 +476,11 @@ export default function Template4x6App() {
     const x0 = Math.round((cW - gridW) / 2);
     const y0 = Math.round((cH - gridH) / 2);
 
-    const srcEl = !fullResolution && previewSource ? previewSource.el : imageObj;
-    const srcW = !fullResolution && previewSource ? previewSource.width : imageObj.naturalWidth;
-    const srcH = !fullResolution && previewSource ? previewSource.height : imageObj.naturalHeight;
-    const scaleX = srcW / imageObj.naturalWidth;
-    const scaleY = srcH / imageObj.naturalHeight;
+    const srcEl = !fullResolution && activePreviewSource ? activePreviewSource.el : activeImageObj;
+    const srcW = !fullResolution && activePreviewSource ? activePreviewSource.width : activeImageObj.naturalWidth;
+    const srcH = !fullResolution && activePreviewSource ? activePreviewSource.height : activeImageObj.naturalHeight;
+    const scaleX = srcW / activeImageObj.naturalWidth;
+    const scaleY = srcH / activeImageObj.naturalHeight;
 
     const sx = crop.sx * scaleX;
     const sy = crop.sy * scaleY;
@@ -358,16 +501,22 @@ export default function Template4x6App() {
       for (let c = 0; c < fit.cols && drawn < count; c++) {
         const x = x0 + c * pW;
         const y = y0 + r * pH;
-        if (visSw > 0 && visSh > 0) {
+        if (useCutout || visSw > 0 && visSh > 0) {
           ctx.save();
           ctx.beginPath();
           ctx.rect(x, y, pW, pH);
           ctx.clip();
-          const destX = x + ((visSx - sx) / sw) * pW;
-          const destY = y + ((visSy - sy) / sh) * pH;
-          const destW = (visSw / sw) * pW;
-          const destH = (visSh / sh) * pH;
-          ctx.drawImage(srcEl, visSx, visSy, visSw, visSh, destX, destY, destW, destH);
+          if (useCutout) {
+            ctx.fillStyle = bgColor;
+            ctx.fillRect(x, y, pW, pH);
+          }
+          if (visSw > 0 && visSh > 0) {
+            const destX = x + ((visSx - sx) / sw) * pW;
+            const destY = y + ((visSy - sy) / sh) * pH;
+            const destW = (visSw / sw) * pW;
+            const destH = (visSh / sh) * pH;
+            ctx.drawImage(srcEl, visSx, visSy, visSw, visSh, destX, destY, destW, destH);
+          }
           ctx.restore();
         }
         if (cropLines) {
@@ -394,7 +543,7 @@ export default function Template4x6App() {
     if (canvasRef.current) renderSheet(canvasRef.current, FREE_DPI, false);
     // renderSheet only reads these values
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [imageObj, previewSource, crop, size, fit.cols, fit.rows, fit.sheetW, fit.sheetH, count, cropLines]);
+  }, [activeImageObj, activePreviewSource, useCutout, bgColor, crop, size, fit.cols, fit.rows, fit.sheetW, fit.sheetH, count, cropLines]);
 
   const stepZoom = useCallback((delta: number) => {
     setZoom((z) => clampZoom(Math.round((z + delta) * 1000) / 1000));
@@ -402,17 +551,17 @@ export default function Template4x6App() {
 
   const nudgePhoto = useCallback(
     (dxFactor: number, dyFactor: number) => {
-      if (!imageObj) return;
+      if (!activeImageObj) return;
       setCenter((prev) => {
-        const c = computeCrop(imageObj, photo.width, photo.height, zoom, prev);
+        const c = computeCrop(activeImageObj, photo.width, photo.height, zoom, prev);
         if (!c) return prev;
         return {
-          x: c.clampX(c.cx + c.sw * dxFactor),
-          y: c.clampY(c.cy + c.sh * dyFactor),
+          nx: c.clampX(c.cx + c.sw * dxFactor) / c.W,
+          ny: c.clampY(c.cy + c.sh * dyFactor) / c.H,
         };
       });
     },
-    [imageObj, photo.width, photo.height, zoom],
+    [activeImageObj, photo.width, photo.height, zoom],
   );
 
   const resetAdjustment = useCallback(() => {
@@ -454,8 +603,8 @@ export default function Template4x6App() {
     const d = dragRef.current;
     if (!d) return;
     setCenter({
-      x: crop.clampX(d.cx - (e.clientX - d.x) * d.ratio),
-      y: crop.clampY(d.cy - (e.clientY - d.y) * d.ratio),
+      nx: crop.clampX(d.cx - (e.clientX - d.x) * d.ratio) / crop.W,
+      ny: crop.clampY(d.cy - (e.clientY - d.y) * d.ratio) / crop.H,
     });
   };
 
@@ -563,6 +712,8 @@ export default function Template4x6App() {
   const hasHorizontalSlack = crop ? crop.maxX - crop.minX > 1 : false;
   const hasVerticalSlack = crop ? crop.maxY - crop.minY > 1 : false;
   const isAdjusted = Math.abs(zoom - 1) > 0.005 || center !== null;
+  const isCustomBgActive =
+    useCutout && !BG_PRESETS.some((p) => p.hex.toLowerCase() === bgColor.toLowerCase());
 
   const stepLabel = "text-xs font-bold uppercase tracking-wide text-slate-500 mb-2";
   const focusRing = "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lime-700 focus-visible:ring-offset-2";
@@ -640,13 +791,18 @@ export default function Template4x6App() {
       <h2 id="tool-heading" className="sr-only">Make your 4×6 passport photo sheet</h2>
       <div className={`bg-white rounded-2xl border shadow-sm overflow-clip grid grid-cols-1 lg:grid-cols-12 transition-colors ${isDragging ? "border-lime-700 ring-2 ring-lime-700" : "border-slate-200"}`}>
         {/* Controls */}
-        <div className="lg:col-span-5 min-w-0 p-4 sm:p-6 border-t lg:border-t-0 lg:border-r border-slate-100 space-y-6">
+        <div className="lg:col-span-5 min-w-0 p-4 sm:p-6 border-t lg:border-t-0 lg:border-r border-slate-100 space-y-5">
 
           {/* Photo */}
           <div>
             <div className="flex items-center gap-3">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={imageObj.src} alt="" className="w-11 h-11 object-cover rounded-lg border border-slate-200 shrink-0" />
+              <img
+                src={(useCutout ? cutoutImg : imageObj).src}
+                alt=""
+                style={useCutout ? { backgroundColor: bgColor } : undefined}
+                className="w-11 h-11 object-cover rounded-lg border border-slate-200 shrink-0"
+              />
               <span className="min-w-0 flex-1 text-sm font-semibold text-slate-800 truncate">{fileName}</span>
               <button
                 type="button"
@@ -657,6 +813,143 @@ export default function Template4x6App() {
               </button>
             </div>
             {fileInput}
+          </div>
+
+          {/* Background removal & color */}
+          <div role="group" aria-labelledby="bg-heading" className="min-w-0">
+            <div className="flex items-center justify-between gap-2 mb-2">
+              <span id="bg-heading" className="text-xs font-bold uppercase tracking-wide text-slate-500">
+                Background
+              </span>
+              {cutoutImg && !bgLoading && (
+                <button
+                  type="button"
+                  onClick={() => setBgMode((m) => (m === "color" ? "original" : "color"))}
+                  className={`text-xs font-semibold text-lime-700 hover:text-lime-800 cursor-pointer rounded px-1 ${focusRing}`}
+                >
+                  {bgMode === "color" ? "Show original" : "Use removed BG"}
+                </button>
+              )}
+            </div>
+
+            {!cutoutImg && (
+              <button
+                type="button"
+                disabled={bgLoading}
+                onClick={() => void handleRemoveBg(bgColor)}
+                className={`w-full flex items-center justify-center gap-2 rounded-xl border border-lime-700 bg-lime-50/70 hover:bg-lime-100/80 disabled:opacity-60 disabled:cursor-wait text-lime-800 text-xs sm:text-sm font-bold py-2.5 px-3 transition-colors cursor-pointer ${focusRing}`}
+              >
+                {bgLoading ? (
+                  <>
+                    <span className="w-3.5 h-3.5 rounded-full border-2 border-lime-700 border-t-transparent animate-spin" aria-hidden />
+                    <span>Removing background…</span>
+                  </>
+                ) : (
+                  <>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                      <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
+                    </svg>
+                    <span>Remove background</span>
+                  </>
+                )}
+              </button>
+            )}
+
+            <div className={cutoutImg ? "" : "mt-2.5"}>
+              <p className="text-[11px] font-medium text-slate-500 mb-1.5">
+                {cutoutImg
+                  ? "Background color"
+                  : "Or pick a color (removes background automatically)"}
+              </p>
+              <div className="grid grid-cols-3 sm:grid-cols-6 lg:grid-cols-3 gap-1.5">
+                {BG_PRESETS.map((preset) => {
+                  const active = useCutout && bgColor.toLowerCase() === preset.hex;
+                  const pending = bgLoading && bgColor.toLowerCase() === preset.hex;
+                  return (
+                    <button
+                      key={preset.id}
+                      type="button"
+                      disabled={bgLoading}
+                      aria-pressed={active}
+                      onClick={() => handleSelectBgColor(preset.hex)}
+                      className={`flex items-center gap-1.5 rounded-lg border px-2 py-1.5 text-left transition-colors cursor-pointer disabled:opacity-50 ${focusRing} ${
+                        active || pending
+                          ? "border-lime-700 bg-lime-50 text-slate-900 ring-1 ring-lime-700"
+                          : "border-slate-200 bg-white hover:border-lime-600/60 hover:bg-slate-50 text-slate-700"
+                      }`}
+                    >
+                      <span
+                        className="w-4 h-4 rounded-full border border-slate-300 shrink-0 shadow-inner"
+                        style={{ backgroundColor: preset.hex }}
+                        aria-hidden
+                      />
+                      <span className="text-[11px] font-semibold truncate">{preset.label}</span>
+                    </button>
+                  );
+                })}
+
+                {cutoutImg ? (
+                  <label
+                    className={`relative flex items-center gap-1.5 rounded-lg border px-2 py-1.5 cursor-pointer transition-colors focus-within:ring-2 focus-within:ring-lime-700 focus-within:ring-offset-2 ${
+                      isCustomBgActive
+                        ? "border-lime-700 bg-lime-50 text-slate-900 ring-1 ring-lime-700"
+                        : "border-slate-200 bg-white hover:border-lime-600/60 hover:bg-slate-50 text-slate-700"
+                    }`}
+                  >
+                    <span
+                      className="w-4 h-4 rounded-full border border-slate-300 shrink-0 shadow-inner"
+                      style={{
+                        background: isCustomBgActive
+                          ? bgColor
+                          : "conic-gradient(from 0deg, #ef4444, #f59e0b, #10b981, #3b82f6, #8b5cf6, #ef4444)",
+                      }}
+                      aria-hidden
+                    />
+                    <span className="text-[11px] font-semibold truncate">Custom</span>
+                    <input
+                      type="color"
+                      aria-label="Choose custom background color"
+                      value={isCustomBgActive ? bgColor : customColor}
+                      onClick={() => setBgMode("color")}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        setCustomColor(val);
+                        setBgColor(val);
+                        setBgMode("color");
+                      }}
+                      className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                    />
+                  </label>
+                ) : (
+                  <button
+                    type="button"
+                    disabled={bgLoading}
+                    onClick={() => handleSelectBgColor(customColor)}
+                    className={`flex items-center gap-1.5 rounded-lg border px-2 py-1.5 text-left transition-colors cursor-pointer disabled:opacity-50 ${focusRing} ${
+                      bgLoading && bgColor.toLowerCase() === customColor.toLowerCase()
+                        ? "border-lime-700 bg-lime-50 text-slate-900 ring-1 ring-lime-700"
+                        : "border-slate-200 bg-white hover:border-lime-600/60 hover:bg-slate-50 text-slate-700"
+                    }`}
+                  >
+                    <span
+                      className="w-4 h-4 rounded-full border border-slate-300 shrink-0 shadow-inner"
+                      style={{
+                        background:
+                          "conic-gradient(from 0deg, #ef4444, #f59e0b, #10b981, #3b82f6, #8b5cf6, #ef4444)",
+                      }}
+                      aria-hidden
+                    />
+                    <span className="text-[11px] font-semibold truncate">Custom</span>
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {bgError && (
+              <p role="alert" className="mt-2 text-xs font-medium text-red-700 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
+                {bgError}
+              </p>
+            )}
           </div>
 
           {/* Size */}

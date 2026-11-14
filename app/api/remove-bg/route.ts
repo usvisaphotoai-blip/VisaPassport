@@ -41,42 +41,53 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Uploaded file must be a valid image" }, { status: 400 });
     }
 
-    const apiUrl = process.env.REMOVE_BG_API_URL;
-    const apiToken = process.env.REMOVE_BG_API_TOKEN;
+    const apiBase = (process.env.PASSPORT_API_URL || "https://api.pixpassport.com").replace(/\/$/, "");
+    const apiKey = process.env.PASSPORT_API_KEY;
 
-    if (!apiUrl || !apiToken) {
-      console.error("Missing REMOVE_BG_API_URL or REMOVE_BG_API_TOKEN configuration");
+    if (!apiKey) {
+      console.error("Missing PASSPORT_API_KEY configuration");
       return NextResponse.json({ error: "Background removal service is not configured" }, { status: 500 });
     }
 
     const backendFormData = new FormData();
-    backendFormData.append("image", file);
+    backendFormData.append("image", file, file.name || "photo.jpg");
 
-    const res = await fetch(apiUrl, {
+    const res = await fetch(`${apiBase}/remove-bg`, {
       method: "POST",
       headers: {
-        "accept": "application/json",
-        "Authorization": `Bearer ${apiToken}`,
+        accept: "image/png",
+        "X-API-Key": apiKey,
       },
       body: backendFormData,
+      signal: AbortSignal.timeout(45_000),
     });
 
     if (!res.ok) {
-      const errorData = await res.text();
-      console.error("BG removal API failed:", res.status, errorData);
-      return NextResponse.json({ error: "Background removal API failed", details: errorData }, { status: res.status });
+      const errorText = await res.text();
+      let message = "Background removal API failed";
+      try {
+        const parsed = JSON.parse(errorText) as Record<string, unknown>;
+        if (typeof parsed.error === "string" && parsed.error) message = parsed.error;
+        else if (typeof parsed.detail === "string" && parsed.detail) message = parsed.detail;
+        else if (typeof parsed.message === "string" && parsed.message) message = parsed.message;
+      } catch {
+        // Upstream returned non-JSON error body
+      }
+      console.error("BG removal API failed:", res.status, errorText);
+      return NextResponse.json({ error: message, details: errorText }, { status: res.status });
     }
 
     const buffer = await res.arrayBuffer();
-    
+
     return new NextResponse(buffer, {
       headers: {
         "Content-Type": "image/png",
+        "Cache-Control": "no-store",
       },
     });
-
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error("Proxy remove-bg error:", err);
-    return NextResponse.json({ error: "Failed to process background removal", details: err.message }, { status: 500 });
+    const details = err instanceof Error ? err.message : "Unknown error";
+    return NextResponse.json({ error: "Failed to process background removal", details }, { status: 500 });
   }
 }
