@@ -21,6 +21,8 @@ interface Props {
   photoPreviewUrl?: string | null;
   /** "gauge" shows a GOV.UK-style Poor / Okay / Good dial instead of the score ring. */
   scoreDisplay?: "ring" | "gauge";
+  /** Render flat cards with border-only styling and no shadow elevation. */
+  flatCards?: boolean;
 }
 
 import PriceDisplay from "@/app/components/PriceDisplay";
@@ -155,7 +157,7 @@ function ScoreGauge({ score }: { score: number }) {
 
 // ─── Metric Card ───────────────────────────────────────────────────────────────
 
-function MetricCard({ metric }: { metric: ValidationMetric }) {
+function MetricCard({ metric, flatCards = false }: { metric: ValidationMetric; flatCards?: boolean }) {
   const statusConfig: Record<string, any> = {
     success: {
       bg: "bg-emerald-50",
@@ -225,8 +227,8 @@ function MetricCard({ metric }: { metric: ValidationMetric }) {
   return (
     <motion.div
       variants={itemVariants}
-      whileHover={{ y: -2, transition: { duration: 0.2 } }}
-      className={`rounded-xl p-4 border ${cfg.bg} ${cfg.border} transition-shadow hover:shadow-md`}
+      whileHover={flatCards ? undefined : { y: -2, transition: { duration: 0.2 } }}
+      className={`rounded-xl p-4 border ${cfg.bg} ${cfg.border} ${flatCards ? "" : "transition-shadow hover:shadow-md"}`}
     >
       <div className="flex items-start justify-between mb-3">
         <span className="text-[9px] font-black text-slate-400 uppercase tracking-[0.15em] leading-tight max-w-[80%]">
@@ -255,7 +257,7 @@ function MetricCard({ metric }: { metric: ValidationMetric }) {
 
 // ─── Summary List ──────────────────────────────────────────────────────────────
 
-function SummaryList({ items, title, dark = false }: { items: string[]; title: string; dark?: boolean }) {
+function SummaryList({ items, title, dark = false, flatCards = false }: { items: string[]; title: string; dark?: boolean; flatCards?: boolean }) {
   const icon = dark ? (
     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
       <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
@@ -270,7 +272,11 @@ function SummaryList({ items, title, dark = false }: { items: string[]; title: s
   return (
     <motion.div
       variants={itemVariants}
-      className={`rounded-xl p-4 sm:p-5 ${dark ? "bg-slate-900 shadow-xl" : "bg-white border border-slate-100 shadow-lg shadow-slate-200/40"}`}
+      className={`rounded-xl p-4 sm:p-5 ${
+        dark
+          ? `bg-slate-900 ${flatCards ? "border border-slate-800" : "shadow-xl"}`
+          : `bg-white ${flatCards ? "border border-slate-200" : "border border-slate-100 shadow-lg shadow-slate-200/40"}`
+      }`}
     >
       <h3 className={`text-sm font-black mb-4 flex items-center gap-2 ${dark ? "text-white" : "text-slate-900"}`}>
         <span
@@ -325,7 +331,7 @@ const CREATE_STEPS = [
 
 const STEP_INTERVAL_MS = 2200;
 
-function CreatePhotoOverlay({ previewUrl, done }: { previewUrl?: string | null; done: boolean }) {
+function CreatePhotoOverlay({ previewUrl, done, flatCards = false }: { previewUrl?: string | null; done: boolean; flatCards?: boolean }) {
   const [step, setStep] = useState(0);
 
   // Advance through the steps, holding on the last one until the request finishes
@@ -359,7 +365,7 @@ function CreatePhotoOverlay({ previewUrl, done }: { previewUrl?: string | null; 
       aria-label="Creating your passport photo"
     >
       <motion.div
-        className="w-full max-w-md bg-white rounded-xl border border-slate-100 shadow-xl shadow-slate-200/40 overflow-hidden"
+        className={`w-full max-w-md bg-white rounded-xl overflow-hidden ${flatCards ? "border border-slate-200" : "border border-slate-100 shadow-xl shadow-slate-200/40"}`}
         initial={{ opacity: 0, y: 24, scale: 0.96 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
@@ -454,7 +460,7 @@ function CreatePhotoOverlay({ previewUrl, done }: { previewUrl?: string | null; 
 
 // ─── Main Report Component ─────────────────────────────────────────────────────
 
-export default function ValidationReportView({ report, onReset, selectedDocId, selectedDocPrice, photo, photoPreviewUrl, scoreDisplay = "ring" }: Props) {
+export default function ValidationReportView({ report, onReset, selectedDocId, selectedDocPrice, photo, photoPreviewUrl, scoreDisplay = "ring", flatCards = false }: Props) {
   const router = useRouter();
   const [isCreating, setIsCreating] = useState(false);
   const [createError, setCreateError] = useState("");
@@ -501,13 +507,13 @@ export default function ValidationReportView({ report, onReset, selectedDocId, s
       aria-label="Validation report"
     >
       <AnimatePresence>
-        {isCreating && <CreatePhotoOverlay previewUrl={photoPreviewUrl} done={isCreateDone} />}
+        {isCreating && <CreatePhotoOverlay previewUrl={photoPreviewUrl} done={isCreateDone} flatCards={flatCards} />}
       </AnimatePresence>
 
       {/* ── Header Card ──────────────────────────────────────────── */}
       <motion.div
         variants={itemVariants}
-        className="bg-white rounded-xl p-4 sm:p-6 border border-slate-100 shadow-xl shadow-slate-200/40"
+        className={`bg-white rounded-xl p-4 sm:p-6 ${flatCards ? "border border-slate-200" : "border border-slate-100 shadow-xl shadow-slate-200/40"}`}
       >
         <div className="flex flex-row items-center gap-4 sm:gap-8 justify-between">
           {/* Pass / Fail badge */}
@@ -519,8 +525,8 @@ export default function ValidationReportView({ report, onReset, selectedDocId, s
               transition={{ duration: 0.5, delay: 0.2, type: "spring", stiffness: 250 }}
               className={`flex items-center gap-2.5 px-5 py-2.5 rounded-full font-black text-sm tracking-widest uppercase ${
                 isPass
-                  ? "bg-emerald-500 text-white shadow-lg shadow-emerald-200"
-                  : "bg-red-500 text-white shadow-lg shadow-red-200"
+                  ? `bg-emerald-500 text-white ${flatCards ? "" : "shadow-lg shadow-emerald-200"}`
+                  : `bg-red-500 text-white ${flatCards ? "" : "shadow-lg shadow-red-200"}`
               }`}
             >
               {isPass ? (
@@ -604,7 +610,7 @@ export default function ValidationReportView({ report, onReset, selectedDocId, s
               }}
               disabled={isCreating}
               whileTap={{ scale: 0.98 }}
-              className="group mt-4 w-full h-13 sm:h-14 rounded-xl bg-lime-700 hover:bg-lime-800 disabled:opacity-70 disabled:cursor-wait text-white font-bold text-base transition-colors flex items-center justify-center gap-2 shadow-lg shadow-lime-700/25 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lime-700 focus-visible:ring-offset-2"
+              className={`group mt-4 w-full h-13 sm:h-14 rounded-xl bg-lime-700 hover:bg-lime-800 disabled:opacity-70 disabled:cursor-wait text-white font-bold text-base transition-colors flex items-center justify-center gap-2 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lime-700 focus-visible:ring-offset-2 ${flatCards ? "" : "shadow-lg shadow-lime-700/25"}`}
             >
               {isCreating && (
                 <span className="w-4 h-4 rounded-full border-2 border-white/40 border-t-white animate-spin" aria-hidden />
@@ -656,7 +662,7 @@ export default function ValidationReportView({ report, onReset, selectedDocId, s
           </p>
           <div className="grid grid-cols-2 gap-2 sm:gap-3">
             {orderedMetrics.map(([key, metric]) => (
-              <MetricCard key={key} metric={metric} />
+              <MetricCard key={key} metric={metric} flatCards={flatCards} />
             ))}
           </div>
         </motion.div>
@@ -664,8 +670,8 @@ export default function ValidationReportView({ report, onReset, selectedDocId, s
 
       {/* ── Summary & Suggestions ─────────────────────────────────── */}
       <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
-        <SummaryList items={summary} title="Compliance Summary" />
-        <SummaryList items={suggestions} title="Improvement Actions" dark />
+        <SummaryList items={summary} title="Compliance Summary" flatCards={flatCards} />
+        <SummaryList items={suggestions} title="Improvement Actions" dark flatCards={flatCards} />
       </div>
 
       {/* ── Action Footer ─────────────────────────────────────────── */}
@@ -675,7 +681,7 @@ export default function ValidationReportView({ report, onReset, selectedDocId, s
       >
         <button
           onClick={onReset}
-          className="w-full sm:flex-1 h-12 sm:h-14 rounded-xl bg-blue-600 text-white font-bold text-sm uppercase tracking-widest hover:bg-blue-700 active:scale-[0.98] transition-all flex items-center justify-center gap-2.5 shadow-lg shadow-blue-500/30"
+          className={`w-full sm:flex-1 h-12 sm:h-14 rounded-xl bg-blue-600 text-white font-bold text-sm uppercase tracking-widest hover:bg-blue-700 active:scale-[0.98] transition-all flex items-center justify-center gap-2.5 ${flatCards ? "" : "shadow-lg shadow-blue-500/30"}`}
           aria-label="Validate another photo"
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">

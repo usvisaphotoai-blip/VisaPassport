@@ -60,6 +60,9 @@ export interface PhotoCheckerToolProps {
   faqHeading?: string;
   relatedHeading?: string;
 
+  // Visual style
+  flatCards?: boolean;
+
   // Page-specific server-rendered content shown between "How it works" and the FAQ
   children?: React.ReactNode;
 }
@@ -216,6 +219,7 @@ function UploadZone({
   onDragEnter,
   onDragLeave,
   onDrop,
+  flatCards = false,
 }: {
   previewUrl: string | null;
   onFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -223,6 +227,7 @@ function UploadZone({
   onDragEnter: (e: React.DragEvent) => void;
   onDragLeave: (e: React.DragEvent) => void;
   onDrop: (e: React.DragEvent) => void;
+  flatCards?: boolean;
 }) {
   return (
     <div className="relative group">
@@ -250,10 +255,10 @@ function UploadZone({
             <img
               src={previewUrl}
               alt="Passport photo preview"
-              className="h-full w-auto object-contain rounded-md shadow-sm"
+              className={`h-full w-auto object-contain rounded-md ${flatCards ? "border border-slate-200" : "shadow-sm"}`}
             />
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-200 flex items-center justify-center rounded-xl">
-              <span className="bg-white/95 backdrop-blur-sm rounded-lg px-3 py-1.5 text-xs font-bold text-slate-800 shadow-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none flex items-center gap-1.5">
+              <span className={`bg-white/95 backdrop-blur-sm rounded-lg px-3 py-1.5 text-xs font-bold text-slate-800 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none flex items-center gap-1.5 ${flatCards ? "border border-slate-200" : "shadow-md"}`}>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" />
                 </svg>
@@ -263,7 +268,7 @@ function UploadZone({
           </div>
         ) : (
           <div className="text-center px-4 py-6 flex flex-col items-center gap-2.5">
-            <div className="w-11 h-11 bg-white rounded-xl shadow-sm border border-slate-100 flex items-center justify-center text-slate-400 group-hover:text-lime-800 group-hover:border-lime-200 transition-all duration-200">
+            <div className={`w-11 h-11 bg-white rounded-xl flex items-center justify-center text-slate-400 group-hover:text-lime-800 group-hover:border-lime-200 transition-all duration-200 ${flatCards ? "border border-slate-200" : "shadow-sm border border-slate-100"}`}>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
                 <polyline points="17 8 12 3 7 8" />
@@ -345,6 +350,7 @@ export default function PhotoCheckerTool({
   steps = DEFAULT_STEPS,
   faqHeading = "Frequently Asked Questions",
   relatedHeading = "Related Photo Tools & Creators",
+  flatCards = false,
   children,
 }: PhotoCheckerToolProps) {
   const [selectedCountry, setSelectedCountry] = useState(initialCountry);
@@ -468,11 +474,11 @@ export default function PhotoCheckerTool({
       </section>
 
       {/* ── TOOL & CHECKER SECTION ── */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+      <section id="photo-checker" className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8 scroll-mt-16">
         <div className="grid lg:grid-cols-12 gap-4 lg:gap-6 items-start">
 
           {/* LEFT: Upload & Config Card */}
-          <div className="lg:col-span-6 bg-white rounded-2xl border border-slate-200 p-4 sm:p-6 shadow-sm lg:sticky lg:top-20">
+          <div className={`lg:col-span-6 bg-white rounded-2xl border border-slate-200 p-4 sm:p-6 lg:sticky lg:top-20 ${flatCards ? "" : "shadow-sm"}`}>
             <h2 className="text-base sm:text-lg font-bold text-slate-900 mb-3 sm:mb-4 flex items-center gap-2.5 pb-3 border-b border-slate-100">
               <span className="w-6 h-6 rounded-full bg-lime-700 text-white flex items-center justify-center text-xs font-bold">1</span>
               Step 1: Check Photo Requirements
@@ -543,6 +549,7 @@ export default function PhotoCheckerTool({
               onDragEnter={(e) => { e.preventDefault(); setIsDragging(true); }}
               onDragLeave={() => setIsDragging(false)}
               onDrop={handleDrop}
+              flatCards={flatCards}
             />
 
             {/* Checklist Chips */}
@@ -563,10 +570,10 @@ export default function PhotoCheckerTool({
               type="button"
               onClick={handleVerify}
               disabled={!file || isProcessing}
-              className={`w-full mt-4 h-12 rounded-lg font-bold text-sm tracking-wide transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-lime-700/30 flex items-center justify-center gap-2 shadow-sm ${
+              className={`w-full mt-4 h-12 rounded-lg font-bold text-sm tracking-wide transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-lime-700/30 flex items-center justify-center gap-2 ${flatCards ? "" : "shadow-sm"} ${
                 !file || isProcessing
                   ? "bg-slate-100 text-slate-400 cursor-not-allowed border border-slate-200"
-                  : "bg-lime-700 hover:bg-lime-800 text-white shadow-lime-700/20 active:scale-[0.99]"
+                  : `bg-lime-700 hover:bg-lime-800 text-white active:scale-[0.99] ${flatCards ? "" : "shadow-lime-700/20"}`
               }`}
               aria-busy={isProcessing}
             >
@@ -599,7 +606,7 @@ export default function PhotoCheckerTool({
           {/* RIGHT: Validation Report OR Specs Overview */}
           <div className="lg:col-span-6">
             {report ? (
-              <div className="bg-white rounded-2xl border border-slate-200 p-4 sm:p-6 shadow-sm">
+              <div className={`bg-white rounded-2xl border border-slate-200 p-4 sm:p-6 ${flatCards ? "" : "shadow-sm"}`}>
                 <ValidationReportView
                   photo={file}
                   photoPreviewUrl={previewUrl}
@@ -607,10 +614,11 @@ export default function PhotoCheckerTool({
                   onReset={handleReset}
                   selectedDocId={selectedDocId}
                   selectedDocPrice={selectedDocPrice}
+                  flatCards={flatCards}
                 />
               </div>
             ) : (
-              <div className="bg-white rounded-2xl border border-slate-200 p-4 sm:p-6 shadow-sm">
+              <div className={`bg-white rounded-2xl border border-slate-200 p-4 sm:p-6 ${flatCards ? "" : "shadow-sm"}`}>
                 <div className="flex items-center gap-3 pb-3 mb-4 border-b border-slate-100">
                   <div className="w-10 h-10 rounded-xl bg-lime-50 text-lime-700 border border-lime-100 flex items-center justify-center text-lg font-bold shrink-0">
                     📐
@@ -695,9 +703,9 @@ export default function PhotoCheckerTool({
               {requirements.map((r) => (
                 <div
                   key={r.title}
-                  className="bg-white rounded-xl border border-slate-200 p-5 hover:border-lime-400 hover:shadow-md transition-all group"
+                  className={`bg-white rounded-xl border border-slate-200 p-5 hover:border-lime-400 transition-all group ${flatCards ? "" : "hover:shadow-md"}`}
                 >
-                  <div className="w-10 h-10 rounded-lg bg-lime-50 text-lime-700 flex items-center justify-center text-xl mb-3 group-hover:scale-105 transition-transform">
+                  <div className={`w-10 h-10 rounded-lg bg-lime-50 text-lime-700 flex items-center justify-center text-xl mb-3 ${flatCards ? "" : "group-hover:scale-105 transition-transform"}`}>
                     {r.icon}
                   </div>
                   <h3 className="text-base font-bold text-slate-900 mb-1.5">{r.title}</h3>
@@ -722,7 +730,7 @@ export default function PhotoCheckerTool({
 
         <div className="grid sm:grid-cols-3 gap-6">
           {steps.map((s, i) => (
-            <div key={s.title} className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
+            <div key={s.title} className={`bg-white rounded-xl border border-slate-200 p-6 ${flatCards ? "" : "shadow-sm"}`}>
               <span className="text-xs font-black text-lime-700 bg-lime-50 px-2.5 py-1 rounded border border-lime-100 inline-block mb-3">
                 STEP {String(i + 1).padStart(2, "0")}
               </span>
@@ -777,11 +785,11 @@ export default function PhotoCheckerTool({
                 <Link
                   key={tool.href}
                   href={tool.href}
-                  className="group bg-white p-4 rounded-xl border border-slate-200 hover:border-lime-400 hover:shadow-md transition-all flex flex-col justify-between"
+                  className={`group bg-white p-4 rounded-xl border border-slate-200 hover:border-lime-400 transition-all flex flex-col justify-between ${flatCards ? "" : "hover:shadow-md"}`}
                 >
                   <div>
                     <div className="flex items-center gap-2.5 mb-2">
-                      <div className="w-8 h-8 bg-lime-100/80 rounded-lg flex items-center justify-center text-base shrink-0 group-hover:scale-105 transition-transform">
+                      <div className={`w-8 h-8 bg-lime-100/80 rounded-lg flex items-center justify-center text-base shrink-0 ${flatCards ? "" : "group-hover:scale-105 transition-transform"}`}>
                         {tool.icon || "📸"}
                       </div>
                       <h3 className="text-sm font-bold text-slate-900 group-hover:text-lime-800 transition-colors line-clamp-1">
