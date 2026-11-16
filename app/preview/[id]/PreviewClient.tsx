@@ -1166,14 +1166,7 @@ export default function PreviewClient({
   const { data: session, status } = useSession();
   const [hasPaid, setHasPaid] = useState(initialIsPaid || false);
   const [downloadToken, setDownloadToken] = useState(initialDownloadToken || "");
-  const [emailInput, setEmailInput] = useState<string | null>(null);
-  const guestEmail =
-    emailInput !== null
-      ? emailInput
-      : status === "authenticated"
-        ? session?.user?.email || ""
-        : "";
-  const setGuestEmail = setEmailInput;
+  const [guestEmail, setGuestEmail] = useState("");
   const [timeLeft, setTimeLeft] = useState(20 * 60);
   const [localPrice, setLocalPrice] = useState<LocalPrice>(initialLocalPrice);
   const [expertPrice, setExpertPrice] =
