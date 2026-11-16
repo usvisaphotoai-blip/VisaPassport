@@ -82,7 +82,8 @@ export async function POST(req: Request) {
 
     const order = await razorpay.orders.create(options);
 
-    const customerEmail = (session?.user?.email || guestEmail || "").trim();
+    const cleanGuestEmail = typeof guestEmail === "string" ? guestEmail.trim() : "";
+    const customerEmail = (cleanGuestEmail || session?.user?.email || "").trim();
 
     // Create permanent Order record
     const permanentOrder = await Order.create({
@@ -124,11 +125,13 @@ export async function POST(req: Request) {
     if (session && session.user) {
       // @ts-ignore
       photo.userId = session.user.id;
-      if (session.user.email) {
+      if (cleanGuestEmail) {
+        photo.guestEmail = cleanGuestEmail;
+      } else if (session.user.email) {
         photo.guestEmail = session.user.email;
       }
-    } else if (guestEmail) {
-      photo.guestEmail = guestEmail;
+    } else if (cleanGuestEmail) {
+      photo.guestEmail = cleanGuestEmail;
     }
     photo.isExpert = isExpert;
     photo.locale = locale;

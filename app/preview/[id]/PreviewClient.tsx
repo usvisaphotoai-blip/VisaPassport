@@ -289,20 +289,17 @@ function PhotoPanel({
 }
 
 function OrderPanel({
-  productName,
   docCategory,
   localPrice,
   expertPrice,
   isExpertPlan,
   setIsExpertPlan,
   hasPaid,
-  timeLeft,
   loading,
   verifying,
   handlePayment,
   documentType,
   photoId,
-  status,
   guestEmail,
   setGuestEmail,
   handleEmailPhoto,
@@ -312,6 +309,30 @@ function OrderPanel({
   downloadToken,
   t,
 }: any) {
+  const [showEmailForm, setShowEmailForm] = useState(false);
+  const [sendEmailOverride, setSendEmailOverride] = useState<string | null>(null);
+  const [sendingEmail, setSendingEmail] = useState(false);
+  const [emailStatus, setEmailStatus] = useState<{ type: "success" | "error"; text: string } | null>(null);
+  const sendEmailInput = sendEmailOverride !== null ? sendEmailOverride : (guestEmail || "");
+
+  const onSendEmailSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const trimmed = sendEmailInput.trim();
+    if (!trimmed || !trimmed.includes("@") || !trimmed.includes(".")) {
+      setEmailStatus({ type: "error", text: t.invalidEmail });
+      return;
+    }
+    setSendingEmail(true);
+    setEmailStatus(null);
+    const result = await handleEmailPhoto(trimmed);
+    setSendingEmail(false);
+    if (result?.ok) {
+      setEmailStatus({ type: "success", text: t.emailSent });
+    } else {
+      setEmailStatus({ type: "error", text: result?.error || t.emailFailed });
+    }
+  };
+
   return (
     <div className="w-full lg:w-[38%] space-y-4">
       <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden lg:sticky lg:top-6">
@@ -477,21 +498,25 @@ function OrderPanel({
                 </div>
               </div>
 
-              {/* Guest Email */}
-              {status !== "authenticated" && (
-                <div>
-                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">
-                    {t.emailForDelivery}
-                  </label>
-                  <input
-                    type="email"
-                    value={guestEmail}
-                    onChange={(e: any) => setGuestEmail(e.target.value)}
-                    placeholder={t.emailPlaceholder}
-                    className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-lime-500 focus:border-transparent outline-none transition-all"
-                  />
-                </div>
-              )}
+              {/* Delivery Email */}
+              <div>
+                <label
+                  htmlFor="delivery-email-desktop"
+                  className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5"
+                >
+                  {t.emailForDelivery}
+                </label>
+                <input
+                  id="delivery-email-desktop"
+                  type="email"
+                  autoComplete="email"
+                  inputMode="email"
+                  value={guestEmail}
+                  onChange={(e: any) => setGuestEmail(e.target.value)}
+                  placeholder={t.emailPlaceholder}
+                  className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-lime-500 focus:border-transparent outline-none transition-all"
+                />
+              </div>
 
               {/* CTA */}
               <div className="space-y-1 pt-1 hidden lg:block">
@@ -586,7 +611,65 @@ function OrderPanel({
                 {t.printSheet}
               </a>
 
-             
+              <div className="pt-1 space-y-2.5">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowEmailForm((prev) => !prev);
+                    setEmailStatus(null);
+                  }}
+                  aria-expanded={showEmailForm}
+                  className="w-full border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-bold py-3.5 px-4 rounded-xl text-sm flex items-center justify-center gap-2 transition-colors cursor-pointer"
+                >
+                  <Icon d={ICONS.mail} size={15} />
+                  <span>{t.emailMe || "Email Me My Photo"}</span>
+                </button>
+
+                {showEmailForm && (
+                  <form
+                    onSubmit={onSendEmailSubmit}
+                    className="rounded-xl border border-slate-200 bg-slate-50 p-3.5 space-y-2.5"
+                  >
+                    <label
+                      htmlFor="paid-send-email"
+                      className="block text-[11px] font-semibold text-slate-600"
+                    >
+                      {t.emailPrompt}
+                    </label>
+                    <div className="flex gap-2">
+                      <input
+                        id="paid-send-email"
+                        type="email"
+                        autoComplete="email"
+                        inputMode="email"
+                        value={sendEmailInput}
+                        onChange={(e) => setSendEmailOverride(e.target.value)}
+                        placeholder={t.dialogPlaceholder}
+                        required
+                        className="flex-1 min-w-0 px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm text-slate-900 focus:ring-2 focus:ring-lime-500 focus:border-transparent outline-none"
+                      />
+                      <button
+                        type="submit"
+                        disabled={sendingEmail}
+                        className="px-4 py-2 rounded-lg bg-slate-900 hover:bg-black text-white text-xs font-bold transition-colors disabled:opacity-50 shrink-0 cursor-pointer"
+                      >
+                        {sendingEmail ? (t.sending || "Sending...") : (t.send || "Send")}
+                      </button>
+                    </div>
+                    {emailStatus && (
+                      <p
+                        role="status"
+                        className={cx(
+                          "text-xs font-medium",
+                          emailStatus.type === "success" ? "text-emerald-700" : "text-rose-600",
+                        )}
+                      >
+                        {emailStatus.text}
+                      </p>
+                    )}
+                  </form>
+                )}
+              </div>
             </div>
           )}
         </div>
@@ -696,6 +779,7 @@ export const ExpertsFixModal = memo(function ExpertsFixModal({
   guestEmail,
   setGuestEmail,
   status,
+  requireEmail,
   t,
 }: {
   isOpen: boolean;
@@ -706,8 +790,10 @@ export const ExpertsFixModal = memo(function ExpertsFixModal({
   guestEmail: string;
   setGuestEmail: (email: string) => void;
   status?: string;
+  requireEmail?: boolean;
   t: PreviewStrings;
 }) {
+  const shouldAskEmail = requireEmail ?? status !== "authenticated";
   const [emailInput, setEmailInput] = useState(guestEmail || "");
 
   useEffect(() => {
@@ -740,7 +826,7 @@ export const ExpertsFixModal = memo(function ExpertsFixModal({
     if (e) e.preventDefault();
     const trimmed = (emailInput || "").trim();
     if (
-      status !== "authenticated" &&
+      shouldAskEmail &&
       (!trimmed || !trimmed.includes("@") || !trimmed.includes("."))
     ) {
       alert(t.invalidEmail);
@@ -866,7 +952,7 @@ export const ExpertsFixModal = memo(function ExpertsFixModal({
             </div>
 
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3 grow max-w-xl">
-              {status !== "authenticated" && (
+              {shouldAskEmail && (
                 <div className="relative grow">
                   <Icon
                     d={ICONS.mail}
@@ -980,7 +1066,6 @@ function MobileCTA({
   isExpertPlan,
   loading,
   handlePayment,
-  status,
   guestEmail,
   setGuestEmail,
   t,
@@ -990,17 +1075,18 @@ function MobileCTA({
     <>
       <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-slate-200 px-4 pt-3 pb-4 lg:hidden">
         <div className="max-w-lg mx-auto">
-          {status !== "authenticated" && (
-            <div className="mb-2.5">
-              <input
-                type="email"
-                value={guestEmail || ""}
-                onChange={(e: any) => setGuestEmail(e.target.value)}
-                placeholder={t.mobileEmailPlaceholder}
-                className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 outline-none transition-all"
-              />
-            </div>
-          )}
+          <div className="mb-2.5">
+            <input
+              type="email"
+              autoComplete="email"
+              inputMode="email"
+              aria-label={t.emailForDelivery}
+              value={guestEmail || ""}
+              onChange={(e: any) => setGuestEmail(e.target.value)}
+              placeholder={t.mobileEmailPlaceholder}
+              className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+            />
+          </div>
           <div className="flex items-center gap-3">
             <div className="shrink-0">
               <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">
@@ -1080,7 +1166,14 @@ export default function PreviewClient({
   const { data: session, status } = useSession();
   const [hasPaid, setHasPaid] = useState(initialIsPaid || false);
   const [downloadToken, setDownloadToken] = useState(initialDownloadToken || "");
-  const [guestEmail, setGuestEmail] = useState("");
+  const [emailInput, setEmailInput] = useState<string | null>(null);
+  const guestEmail =
+    emailInput !== null
+      ? emailInput
+      : status === "authenticated"
+        ? session?.user?.email || ""
+        : "";
+  const setGuestEmail = setEmailInput;
   const [timeLeft, setTimeLeft] = useState(20 * 60);
   const [localPrice, setLocalPrice] = useState<LocalPrice>(initialLocalPrice);
   const [expertPrice, setExpertPrice] =
@@ -1190,7 +1283,7 @@ export default function PreviewClient({
       trimmed.includes("@") &&
       trimmed.includes(".")
     );
-    if (status !== "authenticated" && !isEmailValid) {
+    if (!isEmailValid) {
       setIsEmailDialogOpen(true);
       return;
     }
@@ -1243,11 +1336,7 @@ export default function PreviewClient({
     return () => clearInterval(interval);
   }, []);
 
-  const handleEmailPhoto = async () => {
-    const emailTo = window.prompt(
-      t.emailPrompt,
-    );
-    if (!emailTo) return;
+  const handleEmailPhoto = async (emailTo: string): Promise<{ ok: boolean; error?: string }> => {
     try {
       const res = await fetch("/api/send-photo", {
         method: "POST",
@@ -1257,15 +1346,14 @@ export default function PreviewClient({
           photoUrl: previewUrl,
           documentType,
           photoId,
+          ...(lang ? { locale: lang } : {}),
         }),
       });
-      alert(
-        res.ok
-          ? t.emailSent
-          : t.emailFailed,
-      );
+      if (res.ok) return { ok: true };
+      const errData = await res.json().catch(() => ({}));
+      return { ok: false, error: errData?.error || t.emailFailed };
     } catch {
-      alert(t.emailError);
+      return { ok: false, error: t.emailError };
     }
   };
 
@@ -1395,6 +1483,7 @@ export default function PreviewClient({
         status={
           status === "authenticated" ? "authenticated" : "unauthenticated"
         }
+        requireEmail
         t={t}
       />
 

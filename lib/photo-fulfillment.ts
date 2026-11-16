@@ -110,7 +110,7 @@ async function completeFulfillment({
 
   const isRealEmail = (e?: string) => Boolean(e && !PLACEHOLDER_EMAILS.includes(e.toLowerCase()));
   const userEmail: string | undefined =
-    [opts.sessionEmail, photo.guestEmail, paymentEntity?.email].find(isRealEmail) || undefined;
+    [photo.guestEmail, opts.sessionEmail, paymentEntity?.email].find(isRealEmail) || undefined;
 
   // Repeat calls (webhook after verify, reconcile) stop early once everything is done
   if (!firstToMarkPaid) {

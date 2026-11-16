@@ -55,7 +55,7 @@ const COUNTRY_TO_CURRENCY: Record<string, string> = {
 const FIXED_PRICES: Record<string, { amount: number; symbol: string; decimals: number }> = {
   // Tier 1: Base ($6.99)
   USD: { amount: 7.99, symbol: "$", decimals: 2 },
-  EUR: { amount: 6.99, symbol: "€", decimals: 2 },
+  EUR: { amount: 7.99, symbol: "€", decimals: 2 },
   GBP: { amount: 6.99, symbol: "£", decimals: 2 },
   CHF: { amount: 8.99, symbol: "CHF", decimals: 2 },
   CAD: { amount: 9.99, symbol: "C$", decimals: 2 },

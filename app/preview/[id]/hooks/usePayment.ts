@@ -87,7 +87,7 @@ export function usePayment({
           photoId,
           currencyOverride: localPrice?.currency || "USD",
           isExpert,
-          guestEmail: status === "authenticated" ? undefined : emailToUse,
+          guestEmail: emailToUse || undefined,
           gaClientId, // Pass it here
           locale,
         }),
@@ -197,7 +197,7 @@ export function usePayment({
         },
         prefill: {
           name: session?.user?.name || "",
-          email: session?.user?.email || emailToUse,
+          email: emailToUse || session?.user?.email || "",
         },
         theme: { color: "#84cc16" },
       });
