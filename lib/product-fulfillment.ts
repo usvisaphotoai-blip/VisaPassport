@@ -4,6 +4,7 @@ import Order from "@/models/Order";
 import Payment from "@/models/Payment";
 import PrintSheetOrder from "@/models/PrintSheetOrder";
 import InConverterOrder from "@/models/InConverterOrder";
+import BusinessOrder from "@/models/BusinessOrder";
 import AuditEvent from "@/models/AuditEvent";
 import Invoice from "@/models/Invoice";
 import { claimEmailSend, releaseEmailClaim, countFailedEmailSends, logAuditEvent } from "@/lib/audit";
@@ -12,8 +13,9 @@ import { autoGenerateAndStoreInvoice, sendOfficialInvoiceEmail } from "@/lib/inv
 import { fetchRazorpayPayment } from "@/lib/razorpay-lookup";
 import { PRINT_SHEET_PRODUCT_NAME } from "@/lib/print-sheet-pricing";
 import { IN_CONVERTER_PRODUCT_NAME } from "@/lib/in-converter-checkout";
+import { BUSINESS_PRODUCT_NAME } from "@/lib/business-plans";
 
-export type ProductKind = "print_sheet" | "in_converter";
+export type ProductKind = "print_sheet" | "in_converter" | "business_plan";
 
 const MAX_EMAIL_FAILURES = 3;
 
@@ -31,6 +33,13 @@ const PRODUCTS: Record<ProductKind, { model: any; documentType: string; name: st
     name: IN_CONVERTER_PRODUCT_NAME,
     description: "Instant download of the converted passport-size photo, no waiting period.",
     noteKey: "inConverterOrderId",
+  },
+  business_plan: {
+    model: BusinessOrder,
+    documentType: "business-plan",
+    name: BUSINESS_PRODUCT_NAME,
+    description: "PixPassport Business cloud workspace subscription (30-day access period).",
+    noteKey: "businessOrderId",
   },
 };
 

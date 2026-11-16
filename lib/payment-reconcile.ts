@@ -2,9 +2,11 @@ import dbConnect from "@/lib/mongodb";
 import Payment from "@/models/Payment";
 import PrintSheetOrder from "@/models/PrintSheetOrder";
 import InConverterOrder from "@/models/InConverterOrder";
+import BusinessOrder from "@/models/BusinessOrder";
 import { fetchCapturedPaymentForOrder } from "@/lib/razorpay-lookup";
 import { fulfillPhotoPayment } from "@/lib/photo-fulfillment";
 import { fulfillProductPayment } from "@/lib/product-fulfillment";
+import { activateBusinessOrder } from "@/lib/business-fulfillment";
 
 /**
  * Safety net for payments that were captured at Razorpay but never fulfilled here —
@@ -35,6 +37,17 @@ async function fulfillCaptured(captured: any, actor: string): Promise<boolean> {
       paymentEntity: captured,
       actor,
     });
+    return res.success;
+  }
+  if (notes.businessOrderId) {
+    const res = await fulfillProductPayment({
+      kind: "business_plan",
+      productOrderId: notes.businessOrderId,
+      razorpayPaymentId: captured.id,
+      paymentEntity: captured,
+      actor,
+    });
+    if (res.success) await activateBusinessOrder(notes.businessOrderId).catch(() => undefined);
     return res.success;
   }
   if (notes.printSheetOrderId || notes.inConverterOrderId) {
@@ -102,7 +115,7 @@ export async function reconcileRecentPayments(lookbackHours = DEFAULT_LOOKBACK_H
   }).select("gatewayOrderId").limit(500).lean();
   for (const p of unpaidPayments as any[]) if (p.gatewayOrderId) orderIds.add(p.gatewayOrderId);
 
-  for (const model of [PrintSheetOrder, InConverterOrder] as any[]) {
+  for (const model of [PrintSheetOrder, InConverterOrder, BusinessOrder] as any[]) {
     const pending = await model.find({
       status: { $ne: "paid" },
       razorpayOrderId: { $exists: true },
@@ -159,7 +172,7 @@ export async function reconcileRecentPayments(lookbackHours = DEFAULT_LOOKBACK_H
   }).select("gatewayPaymentId metadata").limit(500).lean();
   for (const p of productPayments as any[]) {
     const notes = p.metadata?.notes || {};
-    const productOrderId = p.metadata.product.orderId || notes.printSheetOrderId || notes.inConverterOrderId;
+    const productOrderId = p.metadata.product.orderId || notes.printSheetOrderId || notes.inConverterOrderId || notes.businessOrderId;
     if (!productOrderId) continue;
     try {
       const res = await fulfillProductPayment({
@@ -169,6 +182,9 @@ export async function reconcileRecentPayments(lookbackHours = DEFAULT_LOOKBACK_H
         actor: "reconcile",
       });
       if (res.success) summary.completed++;
+      if (res.success && p.metadata.product.kind === "business_plan") {
+        await activateBusinessOrder(productOrderId).catch(() => undefined);
+      }
     } catch (err: any) {
       summary.errors.push(`${p.gatewayPaymentId}: ${err?.message || err}`);
     }

@@ -62,6 +62,8 @@ export default function Footer() {
       title: "Company",
       items: [
         { label: "About Us", href: "/about" },
+        { label: "PixPassport for Business", href: "/business" },
+        { label: "Business Software", href: "/business/passport-photo-software-for-business" },
         { label: "Contact Us", href: "/contact" },
         { label: "Support Hub", href: "/support" },
         { label: "FAQ", href: "/faq" },

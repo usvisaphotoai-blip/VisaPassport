@@ -16,6 +16,7 @@ import { fulfillProductPayment } from "@/lib/product-fulfillment";
 import { PRINT_SHEET_PRODUCT, PRINT_SHEET_PRODUCT_NAME } from "@/lib/print-sheet-pricing";
 import { IN_CONVERTER_PRODUCT, IN_CONVERTER_PRODUCT_NAME } from "@/lib/in-converter-checkout";
 import { autoGenerateAndStoreInvoice } from "@/lib/invoice-automation";
+import { activateBusinessOrder } from "@/lib/business-fulfillment";
 import { formatCurrency, SUPPORTED_CURRENCIES } from "@/lib/currency-formatter";
 import { getPaymentFailureInfo, renderPaymentFailedEmail } from "@/lib/payment-failure";
 
@@ -289,6 +290,18 @@ export async function POST(req: Request) {
             });
           }
         }
+      } else if (notes.businessOrderId && paymentEntity.id) {
+        // Business cloud plan: mark paid, record payment, invoice + receipt, then activate (once)
+        await fulfillProductPayment({
+          kind: "business_plan",
+          productOrderId: notes.businessOrderId,
+          razorpayPaymentId: paymentEntity.id,
+          paymentEntity,
+          actor: "webhook",
+        });
+        await activateBusinessOrder(notes.businessOrderId).catch((bizErr) =>
+          console.error("[WEBHOOK] Business activation error:", bizErr)
+        );
       } else if ((notes.printSheetOrderId || notes.inConverterOrderId) && paymentEntity.id) {
         // HD print sheet / instant-download payments: mark paid, record payment, invoice + receipt email
         const isPrintSheet = Boolean(notes.printSheetOrderId);
