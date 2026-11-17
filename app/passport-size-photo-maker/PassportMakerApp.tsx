@@ -613,7 +613,7 @@ export default function PassportMakerApp({
             <div className="mt-4 sm:mt-5 flex flex-col sm:flex-row items-center md:items-start gap-2.5">
               <button
                 onClick={scrollToUpload}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 sm:py-3 bg-lime-700 text-white text-xs sm:text-sm font-bold rounded-sm hover:bg-lime-600 active:scale-95 transition-all"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 sm:py-3 bg-amber-500 text-slate-950 text-xs sm:text-sm font-bold rounded-sm cursor-pointer hover:bg-amber-400 active:scale-95 transition-all"
               >
                 Start with your photo
                 <svg
