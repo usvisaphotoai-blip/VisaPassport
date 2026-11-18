@@ -237,20 +237,23 @@ function PhotoPanel({
           className="relative cursor-zoom-in group mx-4 mb-4 rounded-xl overflow-hidden bg-white flex items-center justify-center"
           onClick={onZoom}
         >
-          {/* The 1026×1040 preview has wide white margins around the diagram.
-              Crop to the content box (x 100–1015, y 120–1000) so the photo
-              renders larger without adding page height. */}
+          {/* The 1026×1040 preview has wide white margins and is asymmetric:
+              the photo is centred at x≈483 but the right side carries two
+              dimension labels (out to x≈1005). Use a 1050px-wide window
+              centred on the photo (x -42…1008, padded white on the left) and
+              trim the vertical margins (y 120…1000) so the photo itself sits
+              in the middle of the card. */}
           <div
-            className="relative w-full max-w-[460px] mx-auto overflow-hidden"
-            style={{ aspectRatio: "915 / 880" }}
+            className="relative w-full max-w-[460px] mx-auto overflow-hidden bg-white"
+            style={{ aspectRatio: "1050 / 880" }}
           >
             <img
               src={previewUrl}
               alt={t.photoAlt}
               className="absolute max-w-none select-none pointer-events-none block"
               style={{
-                width: `${(1026 / 915) * 100}%`,
-                left: `${(-100 / 915) * 100}%`,
+                width: `${(1026 / 1050) * 100}%`,
+                left: `${(42 / 1050) * 100}%`,
                 top: `${(-120 / 880) * 100}%`,
               }}
               draggable={false}
