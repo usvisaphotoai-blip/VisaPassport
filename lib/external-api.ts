@@ -1,12 +1,16 @@
 const EXTERNAL_API_BASE_URL = process.env.PASSPORT_API_URL || "https://api.pixpassport.com";
 const EXTERNAL_API_KEY = process.env.PASSPORT_API_KEY || "";
 
-const EXTERNAL_US_API_BASE_URL = process.env.PASSPORT_US_API_URL || "https://api.photoresizer.us";
-const EXTERNAL_US_API_KEY = process.env.PASSPORT_API_KEY || "";
+const EXTERNAL_US_API_BASE_URL = process.env.PASSPORT_US_API_URL || "https://api.pixpassport.com";
+const EXTERNAL_US_API_KEY = process.env.PASSPORT_US_API_KEY || process.env.PASSPORT_API_KEY || "";
+
+function isUsCountry(countryCode: string): boolean {
+  const normalized = countryCode?.toUpperCase();
+  return normalized === "US" || normalized === "USA";
+}
 
 export function getApiConfigForCountry(countryCode: string) {
-  const normalized = countryCode?.toUpperCase();
-  if (normalized === "US" || normalized === "USA") {
+  if (isUsCountry(countryCode)) {
     return {
       baseUrl: EXTERNAL_US_API_BASE_URL,
       apiKey: EXTERNAL_US_API_KEY,
@@ -29,7 +33,7 @@ export interface ExternalProcessResponse {
   status: string;
   result_id: string;
   image_url: string;
-  print_sheet_url: string;
+  print_sheet_url?: string;
   preview_url: string;
   dimensions: string;
   format: string;
@@ -256,16 +260,22 @@ export async function processExternalPhoto(
     );
   }
 
+  const isUs = isUsCountry(countryCode);
+  // The US endpoint (/us/process) takes only the image; no country/document fields.
+  const processUrl = isUs ? `${baseUrl}/us/process` : `${baseUrl}/process`;
+
   const formData = new FormData();
   formData.append("image", imageFile);
-  formData.append("country_code", countryCode);
-  // NOTE: documentType param is accepted but the API always uses "passport".
-  // Kept for forward-compatibility; change the hardcoded value if the API
-  // starts honouring the document_type field.
-  formData.append("document_type", "passport");
+  if (!isUs) {
+    formData.append("country_code", countryCode);
+    // NOTE: documentType param is accepted but the API always uses "passport".
+    // Kept for forward-compatibility; change the hardcoded value if the API
+    // starts honouring the document_type field.
+    formData.append("document_type", "passport");
 
-  for (const [key, value] of Object.entries(extraFields)) {
-    formData.append(key, value);
+    for (const [key, value] of Object.entries(extraFields)) {
+      formData.append(key, value);
+    }
   }
 
   const headers: Record<string, string> = {
@@ -275,7 +285,7 @@ export async function processExternalPhoto(
     headers["X-API-Key"] = apiKey;
   }
 
-  const response = await fetch(`${baseUrl}/process`, {
+  const response = await fetch(processUrl, {
     method: "POST",
     headers,
     body: formData,
@@ -290,8 +300,8 @@ export async function processExternalPhoto(
       (typeof errorData.error === "string" && errorData.error) ||
       `Processing failed: ${response.status} ${response.statusText}`;
 
-    // Fallback to "US" standard config if external API lacks config for the requested country
-    if (countryCode !== "US" && message.includes("No config found for country")) {
+    // Fallback to "EU" standard config (non-US only) if external API lacks config for the requested country
+    if (!isUs && message.includes("No config found for country")) {
       console.warn(`[external-api] ${message} — falling back to country_code "EU"`);
       formData.set("country_code", "EU");
       const fallbackRes = await fetch(`${baseUrl}/process`, {
