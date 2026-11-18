@@ -1,7 +1,7 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { useState, useEffect, useMemo, useCallback, startTransition, memo } from "react";
+import { useState, useEffect, useMemo, useCallback, useRef, startTransition, memo } from "react";
 import { getClientTimezoneCurrency } from "@/lib/currency";
 import { getSpecById } from "@/lib/specs";
 import { usePayment, LocalPrice } from "./hooks/usePayment";
@@ -215,7 +215,7 @@ function PhotoPanel({
       {/* Photo Card — flat, single hairline border, no shadow */}
       <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
         {/* Top bar */}
-        <div className="px-5 pt-5 pb-3 flex items-center justify-between">
+        <div className="px-5 pt-4 pb-1 flex items-center justify-between">
           <div>
             <p className="text-sm font-bold text-slate-900 flex items-center gap-1.5">
               <span>{flag || spec?.flag || "📄"}</span>{" "}
@@ -231,24 +231,36 @@ function PhotoPanel({
         </div>
 
         {/* Photo */}
+        {/* The preview image is a self-contained annotated diagram on a white
+            background, so the frame stays white and lets the image fill it. */}
         <div
-          className="relative cursor-zoom-in group mx-5 mb-5 rounded-xl overflow-hidden bg-slate-50 border border-slate-200 flex items-center justify-center"
+          className="relative cursor-zoom-in group mx-4 mb-4 rounded-xl overflow-hidden bg-white flex items-center justify-center"
           onClick={onZoom}
-          style={{ minHeight: 240 }}
         >
-          <img
-            src={previewUrl}
-            alt={t.photoAlt}
-            className="max-h-[420px] w-auto max-w-full object-contain select-none pointer-events-none block"
-            draggable={false}
-            onContextMenu={(e) => e.preventDefault()}
-          />
+          {/* The 1026×1040 preview has wide white margins around the diagram.
+              Crop to the content box (x 100–1015, y 120–1000) so the photo
+              renders larger without adding page height. */}
+          <div
+            className="relative w-full max-w-[460px] mx-auto overflow-hidden"
+            style={{ aspectRatio: "915 / 880" }}
+          >
+            <img
+              src={previewUrl}
+              alt={t.photoAlt}
+              className="absolute max-w-none select-none pointer-events-none block"
+              style={{
+                width: `${(1026 / 915) * 100}%`,
+                left: `${(-100 / 915) * 100}%`,
+                top: `${(-120 / 880) * 100}%`,
+              }}
+              draggable={false}
+              onContextMenu={(e) => e.preventDefault()}
+            />
+          </div>
 
-          {/* Hover zoom hint */}
-          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors flex items-center justify-center">
-            <div className="bg-white border border-slate-200 rounded-full p-2.5 opacity-0 group-hover:opacity-100 transition-opacity">
-              <Icon d={ICONS.zoom} size={18} className="text-slate-800" />
-            </div>
+          {/* Zoom hint — corner badge so it never covers the face */}
+          <div className="absolute top-3 right-3 bg-white/90 border border-slate-200 rounded-full p-2 shadow-sm opacity-70 group-hover:opacity-100 transition-opacity">
+            <Icon d={ICONS.zoom} size={16} className="text-slate-700" />
           </div>
         </div>
       </div>
@@ -315,6 +327,20 @@ function OrderPanel({
   const [emailStatus, setEmailStatus] = useState<{ type: "success" | "error"; text: string } | null>(null);
   const sendEmailInput = sendEmailOverride !== null ? sendEmailOverride : (guestEmail || "");
 
+  // Desktop: show a floating pay bar whenever the in-panel CTA is off-screen.
+  const ctaRef = useRef<HTMLDivElement>(null);
+  const [ctaInView, setCtaInView] = useState(true);
+  useEffect(() => {
+    const el = ctaRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+    const io = new IntersectionObserver(([entry]) => setCtaInView(entry.isIntersecting), {
+      threshold: 0.6,
+    });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [hasPaid]);
+  const activePrice = isExpertPlan ? expertPrice : localPrice;
+
   const onSendEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const trimmed = sendEmailInput.trim();
@@ -335,6 +361,55 @@ function OrderPanel({
 
   return (
     <div className="w-full lg:w-[38%] space-y-4">
+      {/* Floating desktop pay card — aligned with the order column */}
+      {!hasPaid && (
+        <div
+          className={cx(
+            "hidden lg:block fixed bottom-5 inset-x-0 z-40 px-4 pointer-events-none transition-all duration-300 ease-out",
+            ctaInView ? "translate-y-6 opacity-0" : "translate-y-0 opacity-100",
+          )}
+          aria-hidden={ctaInView}
+        >
+          <div className="max-w-6xl mx-auto flex justify-end">
+            <div
+              className={cx(
+                "w-[38%] rounded-2xl bg-white border border-slate-200 shadow-[0_12px_40px_-8px_rgba(15,23,42,0.25)] p-2.5 pl-4 flex items-center gap-3",
+                ctaInView ? "pointer-events-none" : "pointer-events-auto",
+              )}
+            >
+              <div className="min-w-0 flex-1">
+                <p className="text-[11px] font-semibold text-slate-500 truncate">
+                  {isExpertPlan ? t.premiumPack : t.standardPack}
+                </p>
+                <p className="text-xl font-black text-slate-900 leading-tight tabular-nums">
+                  {activePrice?.formatted || "..."}
+                </p>
+              </div>
+              <button
+                onClick={handlePayment}
+                disabled={loading || verifying}
+                tabIndex={ctaInView ? -1 : 0}
+                className={cx(
+                  "shrink-0 h-12 px-5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-colors disabled:opacity-50 cursor-pointer",
+                  isExpertPlan
+                    ? "bg-lime-600 hover:bg-lime-700 text-white"
+                    : "bg-slate-900 hover:bg-black text-white",
+                )}
+              >
+                {loading ? (
+                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                ) : (
+                  <>
+                    <Icon d={ICONS.lock} size={14} className="shrink-0" />
+                    <span>{isExpertPlan ? t.ctaExpert : t.ctaStandard}</span>
+                    <Icon d={ICONS.arrowRight} size={14} stroke={2.5} className="shrink-0" />
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden lg:sticky lg:top-6">
         <div className="p-5 sm:p-6">
           {!hasPaid ? (
@@ -520,6 +595,7 @@ function OrderPanel({
 
               {/* CTA */}
               <div className="space-y-1 pt-1 hidden lg:block">
+                <div ref={ctaRef}>
                 <button
                   onClick={handlePayment}
                   disabled={loading || verifying}
@@ -545,6 +621,7 @@ function OrderPanel({
                     </>
                   )}
                 </button>
+                </div>
 
                 <TrustBadges from={from} spec={spec} documentType={documentType} t={t} />
 
@@ -1028,7 +1105,7 @@ function ZoomOverlay({
         className="relative max-w-full max-h-full flex flex-col items-center justify-center"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="relative rounded-2xl overflow-hidden bg-slate-900/90 border border-white/15 shadow-2xl flex items-center justify-center max-w-[92vw] sm:max-w-[80vw] md:max-w-[560px] max-h-[75vh] sm:max-h-[80vh]">
+        <div className="relative rounded-2xl overflow-hidden bg-white border border-white/15 shadow-2xl flex items-center justify-center max-w-[92vw] sm:max-w-[80vw] md:max-w-[680px] max-h-[75vh] sm:max-h-[80vh]">
           <img
             src={url}
             alt={t.zoomAlt}
@@ -1036,16 +1113,6 @@ function ZoomOverlay({
             onContextMenu={(e) => e.preventDefault()}
             className="w-auto h-auto max-w-full max-h-[75vh] sm:max-h-[80vh] object-contain block select-none pointer-events-none"
           />
-          {!hasPaid && (
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
-              <span
-                className="text-white/20 text-xs sm:text-sm md:text-base font-black tracking-[0.35em] uppercase select-none drop-shadow"
-                style={{ transform: "rotate(-30deg)" }}
-              >
-                {t.previewOnly}
-              </span>
-            </div>
-          )}
         </div>
         <div className="flex items-center gap-2 mt-3 sm:mt-4 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/10 backdrop-blur-sm text-white/80 text-[11px] sm:text-xs font-medium">
           <span className="w-1.5 h-1.5 rounded-full bg-lime-400 animate-pulse" />
