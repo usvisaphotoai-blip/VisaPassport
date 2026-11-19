@@ -290,6 +290,19 @@ export default function DVLotteryPhotoCheckerPage() {
           },
         ]}
       />
+      <section className="max-w-3xl mx-auto px-4 pb-12 text-sm leading-relaxed text-gray-600">
+        <p>
+          Want a second opinion before you submit? Run the same file through an independent{" "}
+          <a href="https://passport-photo-checker.com/" target="_blank" rel="noopener">
+            passport photo checker online free
+          </a>{" "}
+          to compare results across countries, or use a dedicated{" "}
+          <a href="https://passport-photo-checker.com/checker/dv-photo" target="_blank" rel="noopener">
+            dv lottery photo checker
+          </a>{" "}
+          to cross-check the 600×600 px, head height and background rules before uploading on dvprogram.state.gov.
+        </p>
+      </section>
     </>
   );
 }
