@@ -206,6 +206,12 @@ export default function AustralianPassportPhotoCheckerPage() {
             icon: "🌍",
           },
           {
+            title: "Australian Passport Photo Maker",
+            desc: "Crop a photo to 35 x 45 mm with a 32-36 mm head, for visa and citizenship uploads or as a pre-check before prints.",
+            href: "/australian-passport-photo",
+            icon: "🇦🇺",
+          },
+          {
             title: "Australia Visa Photo Maker",
             desc: "Crop a 35 x 45 mm digital photo for visa uploads. Check it against your visa's upload limits.",
             href: "/australia-visa-photo-editor",
