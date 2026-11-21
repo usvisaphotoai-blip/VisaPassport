@@ -1,118 +1,97 @@
 import type { Metadata, Viewport } from "next";
+import Link from "next/link";
 import PhotoCheckerTool from "@/app/components/PhotoCheckerTool";
 
 export const viewport: Viewport = {
   themeColor: "#ffffff",
 };
 
+const PAGE_URL = "https://www.pixpassport.com/australian-passport-photo-checker";
+const PAGE_TITLE = "Australian Passport Photo Checker: Size and Head Check";
+const PAGE_DESCRIPTION =
+  "Free Australian passport photo checker. Test head height (32-36 mm chin to crown), background, lighting and glasses against the Passport Office guidelines before you apply.";
+const OG_IMAGE = "https://res.cloudinary.com/dipzpwbbk/image/upload/v1785679206/icao_visa_photo_example_whvfqt.jpg";
+const APO_GUIDELINES = "https://www.passports.gov.au/PhotoGuidelines";
+
 export const metadata: Metadata = {
-  title: "Australian Passport Photo Checker – Free DFAT & APO Photo Test",
-  description:
-    "Free Australian passport photo checker. Verify the 35×45mm size, 32–36mm face height, plain white background, and every official DFAT and Australian Passport Office rule before you apply.",
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
   alternates: {
-    canonical: "https://www.pixpassport.com/australian-passport-photo-checker",
+    canonical: PAGE_URL,
     languages: {
-      en: "https://www.pixpassport.com/australian-passport-photo-checker",
-      "x-default": "https://www.pixpassport.com/australian-passport-photo-checker",
+      "en-AU": PAGE_URL,
+      "x-default": PAGE_URL,
     },
   },
   openGraph: {
-    title: "Australian Passport Photo Checker – Free DFAT & APO Photo Test",
-    description:
-      "Check your Australian passport or visa photo before you submit it. Free test against the 35×45mm size, 32–36mm face height, and background rules the APO enforces.",
-    url: "https://www.pixpassport.com/australian-passport-photo-checker",
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+    url: PAGE_URL,
     siteName: "PixPassport",
     locale: "en_AU",
     type: "website",
-    images: [
-      {
-        url: "https://res.cloudinary.com/dipzpwbbk/image/upload/v1785679206/icao_visa_photo_example_whvfqt.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Australian Passport Photo Checker Online Free",
-      },
-    ],
+    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: "Australian passport photo checker" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Australian Passport Photo Checker – Free DFAT & APO Photo Test",
-    description:
-      "Free Australian passport photo test. Checks 35×45mm size, 32–36mm face height, and background against official APO standards.",
-    images: ["https://res.cloudinary.com/dipzpwbbk/image/upload/v1785679206/icao_visa_photo_example_whvfqt.jpg"],
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+    images: [OG_IMAGE],
   },
 };
+
+const GUIDES = [
+  { label: "Australian passport photo requirements", href: "/guides/australian-passport-photo-requirements" },
+  { label: "Australian passport photo size", href: "/guides/australian-passport-photo-size" },
+  { label: "Online or at home: what is allowed", href: "/guides/australian-passport-photo-online" },
+  { label: "Australia visa photo requirements", href: "/guides/australia-visa-photo-requirements" },
+  { label: "Australian citizenship photo requirements", href: "/guides/australian-citizenship-photo-requirements" },
+  { label: "Baby and newborn passport photo", href: "/guides/australian-baby-passport-photo" },
+  { label: "Passport photo mistakes and fixes", href: "/guides/australian-passport-photo-mistakes" },
+  { label: "Where to get an Australian passport photo", href: "/guides/where-to-get-australian-passport-photo" },
+];
 
 export default function AustralianPassportPhotoCheckerPage() {
   const faqs = [
     {
+      question: "Is the Australian passport photo checker free?",
+      answer:
+        "Yes. The checker is free to use, with no account needed. Upload a photo, read the results, fix anything it flags and check again as many times as you like.",
+    },
+    {
+      question: "Does a pass mean my photo will be accepted?",
+      answer:
+        "No. A pass means your photo has a good chance of meeting the guidelines we can test, such as head height, background, lighting and glasses. The Passport Office makes the final decision, and the checker cannot test print quality, paper or how recent the photo is.",
+    },
+    {
       question: "What size does an Australian passport photo need to be?",
       answer:
-        "Every Australian passport photo needs to measure exactly 35mm wide by 45mm tall. If you're uploading a digital file rather than a printed photo, that translates to a minimum of 413 × 531 pixels at 300 DPI, saved as a JPEG. Anything smaller, or cropped to a different ratio, will be knocked back at the printing or upload stage.",
+        "The photo must be 35-40 mm wide x 45-50 mm high, with the head measuring 32-36 mm from chin to crown. A 35 x 45 mm photo is inside this range. The head height is the part people most often get wrong, especially when they use a template made for another country.",
     },
     {
-      question: "What is the 32–36mm face height rule the APO enforces?",
+      question: "Can I wear glasses in an Australian passport photo?",
       answer:
-        "The Australian Passport Office measures the distance from the bottom of your chin straight up to the top of your head — including hair — and requires that measurement to sit between 32mm and 36mm within the 45mm-tall frame. Stand too close to the camera and your face fills more than 36mm; stand too far back and it falls under 32mm. Either way, the photo is rejected before it even reaches a human reviewer.",
+        "Not unless you cannot remove them for medical reasons. Needing glasses to see is not enough on its own. If you must wear them, the frames must not cover your eyes and the lenses must have no reflections. The checker flags glasses so you can retake the photo without them.",
     },
     {
-      question: "Am I allowed to wear glasses in an Australian passport photo?",
+      question: "Can I use the checker for an Australian visa photo?",
       answer:
-        "Generally, no. Since mid-2016 the Australian Government has banned eyeglasses in passport photos, including ordinary prescription lenses and reading glasses, so that automated SmartGate systems at airports can read your eyes without any interference. The only exception is a documented medical condition, and in that case you'll need a signed certificate from a doctor or optometrist submitted alongside your application.",
+        "Yes, as a pre-check of head position, background and lighting. Visa photo rules depend on your visa checklist and upload screen, and there is no single official file size for every visa. Check your file against the limits shown in your own application before you submit it.",
     },
     {
-      question: "What background does the Australian Passport Office require?",
+      question: "Can the checker make my passport prints?",
       answer:
-        "The background has to be plain white or a very light, neutral color, lit evenly with no visible shadow, texture, or pattern anywhere behind you. A shadow cast onto the wall from overhead lighting or a nearby object is consistently one of the top reasons the APO sends photos back, so it's worth checking the backdrop as carefully as your framing.",
+        "No. Australian passports need 2 colour prints made by dye sublimation on glossy paper of at least 200 gsm. A professional provider, such as a post office, photographer or camera store, can make these. Use the checker to test a photo before you pay for prints, or to check the prints you get back.",
     },
     {
-      question: "Does this checker also work for ImmiAccount visa photos?",
+      question: "Can I check a printed or booth photo?",
       answer:
-        "Yes. The Department of Home Affairs applies the same 35×45mm dimensions and 32–36mm face height rule to visa photos uploaded through ImmiAccount as the Australian Passport Office uses for passport applications, so a photo that passes this check is set up correctly for either submission.",
+        "Yes. Photograph the print flat, straight on and in even light, then upload it. The checker looks at the face, head height and background. It cannot judge the print itself, so check for streaks, ink marks and damage by eye, and confirm the paper and print type with your provider.",
     },
     {
-      question: "What expression and head position does the photo need?",
+      question: "Is my photo stored?",
       answer:
-        "A neutral expression with your mouth closed is expected, along with both eyes open and looking directly at the camera. Your head should be facing forward without a tilt, and your shoulders should sit level and square to the camera rather than angled off to one side.",
-    },
-    {
-      question: "Can children's passport photos follow the same rules?",
-      answer:
-        "Mostly, yes, though the APO does allow a little more flexibility for infants and very young children who can't hold a neutral expression or sit unsupported. A parent's hands or another support can be present in the frame as long as they're not visible in the final photo, and the same 35×45mm size and background requirements still apply.",
-    },
-    {
-      question: "How recent does my Australian passport photo need to be?",
-      answer:
-        "Your photo should have been taken within the last six months and needs to be a genuine likeness of how you currently look, including your hairstyle and any facial hair. Reusing an old photo, or one that's been retouched to change your appearance, is treated the same way as submitting a non-compliant image.",
-    },
-    {
-      question: "Can I take my Australian passport photo with a phone camera?",
-      answer:
-        "Yes, a recent phone camera has more than enough resolution. Position yourself around 1.5 meters from a plain, evenly lit wall, have someone else hold the phone at eye level rather than shooting a selfie, and avoid using flash directly on your face, since that's a common cause of the glare and shadow issues that lead to rejection.",
-    },
-    {
-      question: "What happens if the checker flags my photo?",
-      answer:
-        "You'll be shown exactly which rule the photo failed — whether that's the face height being outside 32–36mm, a background that isn't plain white, or glasses being detected — along with a plain explanation of what to fix. You can then retake the photo or adjust it and upload the new version to check again, at no cost and with no limit on attempts.",
-    },
-    {
-      question: "Is this Australian passport photo checker free to use?",
-      answer:
-        "Yes, completely free with unlimited checks. There's no account to create, no card details to enter, and no watermark added to your image — you can keep testing revisions until you're confident it will pass at the post office or through ImmiAccount.",
-    },
-    {
-      question: "What happens to my photo after I upload it?",
-      answer:
-        "Your photo is sent over an encrypted connection to run the check. We never sell it, and we don't share it with the Australian Passport Office, the Department of Home Affairs, or advertisers.",
-    },
-    {
-      question: "Can I check a photo booth photo instead of a phone photo?",
-      answer:
-        "Yes. Photograph the printed strip clearly under good lighting, or scan it if a scanner is available, then upload that image the same way you would a digital shot. The checker measures proportions and background tone the same way regardless of whether the original image came from a photo booth, a professional studio, or your own camera.",
-    },
-    {
-      question: "Why do so many Australian passport applications get sent back over photos?",
-      answer:
-        "Because the tolerances are tight and unforgiving — a face height that's a couple of millimetres outside 32–36mm, a background with a faint shadow, or glasses left on by habit are all enough to fail the check on their own, and none of them are obvious to the naked eye when you're taking the photo yourself. Running the photo through a checker before you print or upload it catches these issues while they're still easy to fix.",
+        "Your photo is sent over an encrypted connection to run the check. We never sell it, and we do not share it with the Australian Passport Office, the Department of Home Affairs or advertisers. See our privacy policy for full details on how we handle images.",
     },
   ];
 
@@ -120,27 +99,21 @@ export default function AustralianPassportPhotoCheckerPage() {
     {
       "@context": "https://schema.org",
       "@type": "SoftwareApplication",
-      name: "Australian Passport Photo Checker Online Free",
-      url: "https://www.pixpassport.com/australian-passport-photo-checker",
-      description:
-        "Free online Australian passport photo checker that verifies the 35×45mm size, 32–36mm chin-to-crown face height, plain white background, and other APO and DFAT requirements.",
+      name: "Australian Passport Photo Checker",
+      url: PAGE_URL,
+      description: PAGE_DESCRIPTION,
       applicationCategory: "UtilitiesApplication",
       operatingSystem: "All",
-      offers: {
-        "@type": "Offer",
-        price: "0",
-        priceCurrency: "AUD",
-      },
+      inLanguage: "en-AU",
+      offers: { "@type": "Offer", price: "0", priceCurrency: "AUD" },
     },
     {
       "@context": "https://schema.org",
       "@type": "WebPage",
       name: "Australian Passport Photo Checker",
-      url: "https://www.pixpassport.com/australian-passport-photo-checker",
-      citation: [
-        "https://www.passports.gov.au/getting-passport-how-it-works/photo-guidelines",
-        "https://immi.homeaffairs.gov.au/",
-      ],
+      url: PAGE_URL,
+      inLanguage: "en-AU",
+      citation: [APO_GUIDELINES],
     },
     {
       "@context": "https://schema.org",
@@ -148,137 +121,105 @@ export default function AustralianPassportPhotoCheckerPage() {
       mainEntity: faqs.map((f) => ({
         "@type": "Question",
         name: f.question,
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: f.answer,
-        },
+        acceptedAnswer: { "@type": "Answer", text: f.answer },
       })),
     },
     {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
       itemListElement: [
-        {
-          "@type": "ListItem",
-          position: 1,
-          name: "Home",
-          item: "https://www.pixpassport.com/",
-        },
-        {
-          "@type": "ListItem",
-          position: 2,
-          name: "Australian Passport Photo Checker",
-          item: "https://www.pixpassport.com/australian-passport-photo-checker",
-        },
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://www.pixpassport.com/" },
+        { "@type": "ListItem", position: 2, name: "Australian Passport Photo Checker", item: PAGE_URL },
       ],
     },
   ];
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas) }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas).replace(/</g, "\\u003c") }} />
       <PhotoCheckerTool
         initialCountry="AU"
         lockCountry
         countryName="Australia"
         countryFlag="🇦🇺"
         initialDocType="passport"
-        badgeText="🇦🇺 Built on Official DFAT & APO Rules · Free & Instant"
+        badgeText="🇦🇺 Based on the Australian Passport Office guidelines · Free"
         title="Australian Passport Photo Checker"
-        highlightTitle="Free DFAT & APO Compliance Test"
-        subtitle="Post offices and ImmiAccount both apply the same strict rulebook, and a photo that misses it by even a millimetre gets sent back. Upload yours here first to confirm the 35×45mm size, 32–36mm face height, background, and expression all meet the Australian Passport Office standard before you pay for a printed submission or lodge it online."
+        highlightTitle="Size, Head Height and Background"
+        subtitle="Upload a photo to check the 32-36 mm head height, background, lighting and glasses before you apply. The Passport Office recommends a professional provider for passport photos and does not recommend online services or apps, so use this as a pre-check, then confirm your photo against the official guidelines."
         specs={[
-          { label: "Dimensions", value: "35 × 45 mm" },
-          { label: "Face Height", value: "32 – 36 mm (chin to crown)" },
-          { label: "Background", value: "Plain White or Light Grey" },
-          { label: "Eyeglasses", value: "Strictly Prohibited" },
-          { label: "Digital Size", value: "Min 413 × 531 px (300 DPI)" },
-          { label: "Expression", value: "Neutral, mouth closed" },
+          { label: "Photo Size", value: "35–40 × 45–50 mm" },
+          { label: "Head Height", value: "32–36 mm (chin to crown)" },
+          { label: "Background", value: "Plain white or light grey" },
+          { label: "Glasses", value: "Not allowed (medical exceptions)" },
+          { label: "Prints", value: "2 × dye-sublimation, 200 gsm glossy" },
+          { label: "Expression", value: "Neutral, eyes open" },
         ]}
         requirements={[
           {
             icon: "📐",
-            title: "Exact 35×45 mm Frame",
-            desc: "Confirms your printed or digital photo matches the precise APO dimensions before it's rejected for being off by even a fraction of a millimetre.",
+            title: "Photo Size and Shape",
+            desc: "Checks that your photo has the portrait shape of an Australian passport photo, which is 35–40 mm wide x 45–50 mm high.",
           },
           {
             icon: "📏",
-            title: "32–36 mm Chin-to-Crown",
-            desc: "Maps facial landmarks to check your head height falls within the mandatory range, catching the too-close and too-far mistakes that account for most fails.",
+            title: "32–36 mm Head Height",
+            desc: "Maps facial landmarks to estimate your chin-to-crown height, catching photos taken too close or too far away.",
           },
           {
             icon: "🎨",
-            title: "Plain White Background",
-            desc: "Scans for even lighting and flags shadows, tinted walls, or texture behind you — the single most common reason the APO sends photos back.",
+            title: "Background and Lighting",
+            desc: "Looks for a plain white or light grey background and flags shadows, patterns and uneven light.",
           },
           {
-            icon: "🕶️",
-            title: "No Eyeglasses (APO Ban)",
-            desc: "Detects any eyewear in the frame to enforce the Australian Government's strict no-glasses policy used for SmartGate biometric matching.",
+            icon: "👓",
+            title: "Glasses",
+            desc: "Detects glasses so you can retake the photo without them. Glasses are only allowed if they cannot be removed for medical reasons.",
           },
           {
             icon: "😐",
-            title: "Neutral Facial Expression",
-            desc: "Checks that your mouth is closed, both eyes are open and facing the camera, and your head isn't tilted or turned off-center.",
-          },
-          {
-            icon: "🖥️",
-            title: "ImmiAccount & APO Ready",
-            desc: "Prepares your file format and proportions for direct upload to both the passport renewal portal and Department of Home Affairs visa applications.",
+            title: "Pose and Expression",
+            desc: "Checks that your face is centred and straight on, with your eyes open and a neutral expression.",
           },
           {
             icon: "🗓️",
-            title: "Six-Month Rule",
-            desc: "The APO expects a photo taken in the last six months that matches how you look today — the checker can't date a photo, so make sure yours is recent.",
-          },
-          {
-            icon: "🎯",
-            title: "Clear Fix Guidance",
-            desc: "Every flagged issue comes with a plain-language explanation of the cause, so you know exactly what to adjust before your next attempt.",
+            title: "What It Cannot Check",
+            desc: "Print type, paper weight and the 6-month rule. Confirm these with your provider: dye-sublimation prints, glossy 200 gsm paper, taken in the last 6 months.",
           },
         ]}
-        requirementsHeading="What the Australian Passport Photo Checker Verifies"
-        requirementsIntro="Each check is based on the Australian Passport Office photo guidelines, which ImmiAccount visa photos also follow."
-        stepsHeading="How to Check an Australian Passport Photo"
+        requirementsHeading="What Does the Checker Test?"
+        requirementsIntro="Each check is based on the Australian Passport Office photo guidelines. A pass means your photo has a good chance of meeting the guidelines we can test. It is not an approval."
+        stepsHeading="How Do You Use the Checker?"
         steps={[
-          { title: "Take or Pick a Photo", desc: "Stand about 1.5 m from a plain white or light grey wall and have someone else take the photo at eye level." },
-          { title: "Upload It Here", desc: "The checker measures your 32–36 mm face height, background, eyes and expression against APO rules." },
-          { title: "Fix and Re-check", desc: "Correct anything flagged, then print or lodge it at Australia Post or through ImmiAccount." },
+          { title: "Upload a Clear Photo", desc: "Use a front-facing photo taken by someone else, against a plain white or light grey wall, in even light." },
+          { title: "Read the Results", desc: "The checker shows head height, background, lighting and glasses results, with a plain explanation of anything it flags." },
+          { title: "Fix and Recheck", desc: "Retake the photo to fix problems (do not edit it), then check again before you get professional prints." },
         ]}
-        faqHeading="Australian Passport Photo FAQ"
+        faqHeading="Australian Passport Photo Checker FAQ"
         faqs={faqs}
-        relatedHeading="More Photo Checkers & Australia Tools"
+        relatedHeading="More Photo Checkers and Tools"
         relatedTools={[
           {
             title: "Passport Photo Checker",
-            desc: "Universal biometric passport photo compliance validator for 50+ countries.",
+            desc: "Check a passport photo against the rules for 50+ countries.",
             href: "/passport-photo-checker",
             icon: "🌍",
           },
           {
-            title: "DV Lottery Photo Checker",
-            desc: "Validate 600×600 px digital requirements for the US Green Card lottery.",
-            href: "/diversity-visa-lottery-photo-checker",
-            icon: "🎟️",
-          },
-          {
-            title: "Australia Passport Photo Maker",
-            desc: "Crop, fix background, and generate compliant 35×45mm Australian photos.",
-            href: "/australia-passport-photo-editor",
+            title: "Australia Visa Photo Maker",
+            desc: "Crop a 35 x 45 mm digital photo for visa uploads. Check it against your visa's upload limits.",
+            href: "/australia-visa-photo-editor",
             icon: "🇦🇺",
           },
           {
             title: "UK Passport Photo Checker",
-            desc: "Official GOV.UK 35×45mm passport photo compliance checker.",
+            desc: "Check a photo against the UK 35 x 45 mm rules.",
             href: "/uk-passport-photo-checker-online-free",
             icon: "🇬🇧",
           },
           {
             title: "NZ Passport Photo Checker",
-            desc: "Verify 3:4 portrait ratio and 900×1200 px digital New Zealand requirements.",
+            desc: "Check the 3:4 ratio and digital file rules for New Zealand passports.",
             href: "/new-zealand-passport-photo-checker",
             icon: "🇳🇿",
           },
@@ -289,7 +230,68 @@ export default function AustralianPassportPhotoCheckerPage() {
             icon: "🌐",
           },
         ]}
-      />
+      >
+        <section className="bg-white border-t border-slate-200 py-12 sm:py-16">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 space-y-8">
+            <blockquote className="border-l-4 border-lime-500 bg-lime-50/60 rounded-r-lg px-5 py-4 text-sm sm:text-base text-slate-700 leading-relaxed">
+              <strong className="text-slate-900">Important:</strong> The Australian Passport Office recommends a professional
+              passport photo provider and does not recommend online photo services or apps. Use our tool to check or prepare a
+              photo, but always confirm it meets the{" "}
+              <a href={APO_GUIDELINES} target="_blank" rel="noopener noreferrer" className="font-semibold text-lime-700 hover:text-lime-800">
+                official guidelines
+              </a>{" "}
+              before you apply.
+            </blockquote>
+
+            <div>
+              <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight mb-4">What the Checker Cannot Do</h2>
+              <div className="grid md:grid-cols-3 gap-4">
+                <div className="bg-slate-50 rounded-2xl border border-slate-200 p-5">
+                  <h3 className="text-base font-bold text-slate-900 mb-2">It cannot make a dye-sublimation print</h3>
+                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                    Australian passports need 2 colour prints made by dye sublimation (not inkjet) on glossy paper of at least
+                    200 gsm. Home printing and digital files do not meet this rule.
+                  </p>
+                </div>
+                <div className="bg-slate-50 rounded-2xl border border-slate-200 p-5">
+                  <h3 className="text-base font-bold text-slate-900 mb-2">It does not replace the official guidelines</h3>
+                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                    The Passport Office makes the final decision. A pass means your photo has a good chance of meeting the
+                    guidelines we can test, not that it will be accepted.
+                  </p>
+                </div>
+                <div className="bg-slate-50 rounded-2xl border border-slate-200 p-5">
+                  <h3 className="text-base font-bold text-slate-900 mb-2">Where to get professional prints</h3>
+                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                    Post offices, professional photographers, camera stores, some pharmacies and some chain stores take
+                    passport photos.{" "}
+                    <Link href="/guides/where-to-get-australian-passport-photo" className="font-semibold text-lime-700 hover:text-lime-800">
+                      See what to ask for
+                    </Link>
+                    .
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight mb-4">Australian Photo Guides</h2>
+              <ul className="grid sm:grid-cols-2 gap-2">
+                {GUIDES.map((g) => (
+                  <li key={g.href}>
+                    <Link
+                      href={g.href}
+                      className="block border border-slate-200 hover:border-lime-600 rounded-lg px-4 py-3 text-sm font-semibold text-slate-700 hover:text-lime-700 transition-colors"
+                    >
+                      {g.label} →
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+      </PhotoCheckerTool>
     </>
   );
 }

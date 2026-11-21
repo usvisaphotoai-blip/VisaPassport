@@ -49,6 +49,7 @@ export default function Footer() {
       title: "Guides & Resources",
       items: [
         { label: "Passport Photo Guides", href: "/guides" },
+        { label: "Australian Passport Photo Guide", href: "/guides/australian-passport-photo-requirements" },
         { label: "How to Print Passport Photos", href: "/how-to-print-passport-photos" },
         { label: "Blog & Guides", href: "/blog" },
         { label: "Passport Photo Directory", href: "/passport-photos" },

@@ -50,7 +50,7 @@ export default function GuideArticle({ guide }: { guide: GuideDetail }) {
         image: [guide.image.url],
         datePublished: guide.datePublished,
         dateModified: guide.dateModified,
-        inLanguage: "en",
+        inLanguage: guide.locale,
         articleSection: guide.category,
         keywords: guide.keywords.join(", ") || undefined,
         author: { "@type": "Organization", name: guide.author, url: SITE_URL },
@@ -162,6 +162,19 @@ export default function GuideArticle({ guide }: { guide: GuideDetail }) {
                   </ul>
                 </section>
               )}
+
+              <Link
+                href={guide.makerCta.href}
+                className="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-lg border-2 border-amber-200 bg-amber-50 p-4 sm:p-5 hover:border-amber-500 transition-colors"
+              >
+                <span>
+                  <span className="block text-base sm:text-lg font-black text-slate-900">{guide.makerCta.title}</span>
+                  <span className="block text-sm text-slate-600">{guide.makerCta.text}</span>
+                </span>
+                <span className="shrink-0 text-center bg-amber-700 text-white font-bold px-5 py-2.5 rounded-lg text-sm">
+                  {guide.makerCta.buttonLabel}
+                </span>
+              </Link>
 
               <article className={PROSE_CLASSES} dangerouslySetInnerHTML={{ __html: guide.contentHtml }} />
 

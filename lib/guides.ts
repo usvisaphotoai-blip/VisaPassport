@@ -85,9 +85,13 @@ export interface GuideDetail extends GuideMeta {
   keyTakeaways: string[];
   faq: GuideFaq[];
   cta: GuideCta;
+  /** Box linking to the full photo maker (/passport-photo-online) */
+  makerCta: GuideCta;
   relatedLinks: GuideLink[];
   /** Document id preselected in the embedded photo tool, e.g. "uk-passport" */
   toolDocument?: string;
+  /** BCP 47 language tag of the content, e.g. "en-AU" (default "en") */
+  locale: string;
 }
 
 /** Markdown may be written as one string or as an array of paragraphs/lines (easier to edit in JSON). */
@@ -118,14 +122,23 @@ interface GuideInput {
   keyTakeaways?: string[];
   faq?: GuideFaq[];
   cta?: Partial<GuideCta>;
+  makerCta?: Partial<GuideCta>;
   relatedLinks?: GuideLink[];
   toolDocument?: string;
+  locale?: string;
 }
 
 const DEFAULT_CTA: GuideCta = {
   title: "Make your passport photo online",
   text: "Upload a selfie and get a compliant passport or visa photo in seconds, checked against official rules.",
   buttonLabel: "Create my photo →",
+  href: "/passport-photo-online",
+};
+
+const DEFAULT_MAKER_CTA: GuideCta = {
+  title: "Create your passport photo online",
+  text: "Upload any photo. We crop it to the official size, fix the background and check it against the rules for 50+ countries.",
+  buttonLabel: "Make my photo →",
   href: "/passport-photo-online",
 };
 
@@ -277,8 +290,10 @@ function readGuide(slug: string): GuideDetail | null {
     keyTakeaways: input.keyTakeaways ?? [],
     faq: input.faq ?? [],
     cta: { ...DEFAULT_CTA, ...input.cta },
+    makerCta: { ...DEFAULT_MAKER_CTA, ...input.makerCta },
     relatedLinks: input.relatedLinks ?? [],
     toolDocument: input.toolDocument,
+    locale: input.locale || "en",
   };
 }
 
@@ -345,14 +360,18 @@ export function buildGuideMetadata(guide: GuideDetail): Metadata {
     description: guide.metaDescription,
     keywords: guide.keywords,
     authors: [{ name: guide.author }],
-    alternates: { canonical: guide.url },
+    alternates: {
+      canonical: guide.url,
+      // Regional guides declare their language so the sitemap and search engines see e.g. en-AU, not plain en
+      ...(guide.locale !== "en" && { languages: { [guide.locale]: guide.url, "x-default": guide.url } }),
+    },
     ...(guide.draft && { robots: { index: false, follow: true } }),
     openGraph: {
       title: guide.metaTitle,
       description: guide.metaDescription,
       url: guide.url,
       siteName: "PixPassport",
-      locale: "en_US",
+      locale: guide.locale === "en" ? "en_US" : guide.locale.replace("-", "_"),
       type: "article",
       publishedTime: guide.datePublished,
       modifiedTime: guide.dateModified,

@@ -238,7 +238,7 @@ export default function GuidePhotoTool({ defaultDoc, title = "Make your passport
                   className="sr-only"
                   onChange={(e) => processFile(e.target.files?.[0])}
                 />
-                <span className="inline-flex items-center gap-2 rounded-lg bg-lime-700 px-5 py-2.5 text-sm font-bold text-white shadow-sm">
+                <span className="inline-flex items-center gap-2 rounded-lg bg-amber-700 px-5 py-2.5 text-sm font-bold text-white shadow-sm">
                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M12 4v12m0-12l-4 4m4-4l4 4" />
                   </svg>
