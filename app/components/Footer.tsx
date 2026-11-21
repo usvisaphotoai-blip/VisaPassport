@@ -38,6 +38,7 @@ export default function Footer() {
         { label: "Create Photo Online", href: "/passport-photo-online" },
         { label: "Print Template Generator", href: "/passport-photo-print-template-generator" },
         { label: "4x6 Passport Photo Template", href: "/passport-photo-template-4x6" },
+        { label: "Australian Passport Photo Maker", href: "/australian-passport-photo" },
         { label: "Passport Size Photo Converter", href: "/in/photo-passport-size-converter" },
         { label: "Resize Singapore Photo", href: "/resize-passport-photo-singapore" },
         { label: "Singapore ICA Photo", href: "/singapore-ica-photo" },

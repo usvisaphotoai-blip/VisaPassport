@@ -283,6 +283,12 @@ export default function NewZealandPassportPhotoCheckerPage() {
             icon: "🇦🇺",
           },
           {
+            title: "Australian Passport Photo Maker",
+            desc: "Crop a photo to 35×45 mm with a 32–36 mm head for Australian visa and citizenship uploads.",
+            href: "/australian-passport-photo",
+            icon: "🇦🇺",
+          },
+          {
             title: "Universal Passport Photo Checker",
             desc: "Validate biometric passport and visa photo compliance across 50+ countries worldwide.",
             href: "/passport-photo-checker",

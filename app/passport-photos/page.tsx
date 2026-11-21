@@ -107,6 +107,9 @@ export default function PassportDirectoryPage() {
             <Link href="/australian-passport-photo-checker" className="text-xs font-semibold text-slate-700 hover:text-blue-600 bg-white p-3 rounded-xl border border-slate-200 shadow-xs transition-colors">
               Australian Photo Checker
             </Link>
+            <Link href="/australian-passport-photo" className="text-xs font-semibold text-slate-700 hover:text-blue-600 bg-white p-3 rounded-xl border border-slate-200 shadow-xs transition-colors">
+              Australian Photo Maker
+            </Link>
             <Link href="/diversity-visa-lottery-photo-checker" className="text-xs font-semibold text-slate-700 hover:text-blue-600 bg-white p-3 rounded-xl border border-slate-200 shadow-xs transition-colors">
               DV Lottery Checker
             </Link>

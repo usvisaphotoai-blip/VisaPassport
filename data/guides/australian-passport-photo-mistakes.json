@@ -8,9 +8,9 @@
   "category": "Australia",
   "makerCta": {
     "title": "Need a digital photo for a visa or citizenship upload?",
-    "text": "Create a correctly sized digital photo online. For an Australian passport, you still need 2 professional dye-sublimation prints.",
+    "text": "Crop a photo to 35 x 45 mm with a 32-36 mm head for a visa or citizenship upload. For an Australian passport, you still need 2 professional dye-sublimation prints.",
     "buttonLabel": "Make a digital photo →",
-    "href": "/passport-photo-online"
+    "href": "/australian-passport-photo"
   },
   "title": "Australian Passport Photo Mistakes: Examples and Fixes",
   "metaTitle": "Australian Passport Photo Rejected? 26 Mistakes and Fixes",
@@ -197,7 +197,7 @@
         {
           "heading": "Check it before you apply",
           "content": [
-            "Our [Australian passport photo checker](/australian-passport-photo-checker) flags common problems such as head height, background, lighting and glasses.",
+            "Our [Australian passport photo checker](/australian-passport-photo-checker) flags common problems such as head height, background, lighting and glasses. If the head size or framing is wrong, re-crop the photo with the [Australian passport photo maker](/australian-passport-photo).",
             "It cannot check print quality or paper, and a pass is not an approval, but it catches many of the faults above."
           ]
         }
@@ -260,6 +260,10 @@
     {
       "label": "Australian Passport Photo Checker",
       "href": "/australian-passport-photo-checker"
+    },
+    {
+      "label": "Australian Passport Photo Maker",
+      "href": "/australian-passport-photo"
     },
     {
       "label": "Australian passport photo requirements",

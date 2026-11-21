@@ -105,6 +105,9 @@ export default function VisaDirectoryPage() {
             <Link href="/australian-passport-photo-checker" className="text-xs font-semibold text-slate-700 hover:text-emerald-600 bg-white p-3 rounded-xl border border-slate-200 shadow-xs transition-colors">
               Australian Photo Checker
             </Link>
+            <Link href="/australian-passport-photo" className="text-xs font-semibold text-slate-700 hover:text-emerald-600 bg-white p-3 rounded-xl border border-slate-200 shadow-xs transition-colors">
+              Australian Photo Maker
+            </Link>
             <Link href="/us-check-photo-green-card" className="text-xs font-semibold text-slate-700 hover:text-emerald-600 bg-white p-3 rounded-xl border border-slate-200 shadow-xs transition-colors">
               Green Card Photo Checker
             </Link>
