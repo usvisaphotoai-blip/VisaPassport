@@ -349,7 +349,12 @@ export default function PrintTemplateGeneratorPage() {
               color printer, and quality photo paper. Once you have your
               formatted photo, this tool builds a print-ready sheet with
               multiple copies and clean crop lines, so you never have to
-              manually align or resize images yourself.
+              manually align or resize images yourself. If you just need a
+              standard 4×6 inch sheet, use our{" "}
+              <a href="/passport-photo-template-4x6" className="text-lime-600 underline">
+                ready-made 4×6 passport photo template
+              </a>
+              .
             </p>
 
             <p>

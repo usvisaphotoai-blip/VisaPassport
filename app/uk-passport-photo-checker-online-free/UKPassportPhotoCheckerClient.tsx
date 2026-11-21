@@ -751,6 +751,21 @@ export default function UKPassportPhotoCheckerClient() {
                   Every result is scored against the UK specification, giving you a clear pass, warning, or fail report you can act on before you submit your application.
                 </p>
                 <p>
+                  Failed a check? See the full{" "}
+                  <Link href="/uk-passport-photo-requirements-tool" className="text-lime-800 font-bold underline hover:text-lime-900">
+                    UK passport photo size and rules
+                  </Link>
+                  , which follow the{" "}
+                  <Link href="/icao-standard-photograph" className="text-lime-800 font-bold underline hover:text-lime-900">
+                    ICAO photo standard
+                  </Link>
+                  . Once your photo passes, put four copies on a{" "}
+                  <Link href="/passport-photo-template-4x6" className="text-lime-800 font-bold underline hover:text-lime-900">
+                    4×6 passport photo template
+                  </Link>{" "}
+                  to print at home or at a photo lab.
+                </p>
+                <p>
                   Applying online through GOV.UK? Get a ready-to-upload{" "}
                   <a
                     href="https://pixpassport.uk/tool/digital-passport-photo"
@@ -828,6 +843,24 @@ export default function UKPassportPhotoCheckerClient() {
               </div>
               <span className="text-xs font-bold text-lime-700 mt-3 flex items-center gap-1">
                 Check Passport Photo →
+              </span>
+            </Link>
+
+            <Link
+              href="/uk/photo-for-driving-license-uk"
+              className="bg-white p-4 rounded-xl border border-slate-200 hover:border-lime-400 hover:shadow-md transition-all flex flex-col justify-between group"
+            >
+              <div>
+                <span className="text-base mb-1.5 block">🪪</span>
+                <h4 className="font-bold text-sm text-slate-900 group-hover:text-lime-800 transition-colors">
+                  UK Driving Licence Photo Rules
+                </h4>
+                <p className="text-xs text-slate-500 font-medium mt-1">
+                  DVLA photo size and upload rules, using the same 35×45 mm spec.
+                </p>
+              </div>
+              <span className="text-xs font-bold text-lime-700 mt-3 flex items-center gap-1">
+                See DVLA Photo Rules →
               </span>
             </Link>
 

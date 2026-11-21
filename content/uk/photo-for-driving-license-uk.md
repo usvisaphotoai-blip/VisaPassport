@@ -98,7 +98,7 @@ Take a fresh photo or upload a recent one from your gallery. Choose a sharp imag
 
 ### 4.2 Step 2: Auto-Crop and Check Against the 35 x 45 mm DVLA Size
 
-Not sure your current picture works? Treat the preview as a quick driving licence photo checker. The tool prepares your image to the size the DVLA expects. It will:
+Not sure your current picture works? Run it through our [free UK photo checker](/uk-passport-photo-checker-online-free) first, since the DVLA uses the same 35 x 45 mm biometric rules as a UK passport, or treat the preview as a quick driving licence photo checker. The tool prepares your image to the size the DVLA expects. It will:
 
 - **Crop** your photo to **35 x 45 mm** (7:9 ratio).
 - **Set** a plain light background.

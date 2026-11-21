@@ -533,7 +533,9 @@ export default function HowToPrintPassportPhotosPage() {
               Print your passport photo sheet on <strong>photo paper</strong> at{" "}
               <strong>100% (actual size)</strong>, with <strong>&quot;fit to page&quot; turned off</strong>.
               No printer? Upload the sheet to a store photo app and order a standard{" "}
-              <strong>4×6 print</strong>. Either way, measure one photo before you cut.
+              <strong>4×6 print</strong>. For a ready-made layout, start from the{" "}
+              <Link href="/passport-photo-template-4x6" className="font-bold text-lime-700 underline hover:text-lime-800">4×6 passport photo template</Link>.
+              Either way, measure one photo before you cut.
             </p>
             <nav aria-label="On this page" className="bg-slate-50 border border-slate-200 rounded-xl p-4">
               <p className="text-sm font-bold text-slate-900 mb-2">On this page</p>

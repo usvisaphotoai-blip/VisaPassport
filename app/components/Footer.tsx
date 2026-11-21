@@ -28,6 +28,7 @@ export default function Footer() {
         { label: "Australian Passport Photo Checker", href: "/australian-passport-photo-checker" },
         { label: "DV Lottery Photo Checker", href: "/diversity-visa-lottery-photo-checker" },
         { label: "UK Passport Photo Checker", href: "/uk-passport-photo-checker-online-free" },
+        { label: "ICAO Standard Photo", href: "/icao-standard-photograph" },
         { label: "Digital US Visa Specs 2026", href: "/digital-visa-photo-specs-2026" },
       ],
     },
