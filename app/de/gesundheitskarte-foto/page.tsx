@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import {
   Hero, Section, SectionHeader, StepsGrid, CheckList, DoDont, DataTable, Badge,
-  FaqList, CtaBand, JsonLd, Prose, Note, card, RelatedPages,
+  FaqList, CtaBand, JsonLd, Prose, Note, card, textLink, RelatedPages,
 } from "../components/ui";
 
 /* ─── Metadata ─── */
@@ -113,7 +114,7 @@ const specs = [
 const kassen = [
   { name: "AOK", portal: "Meine AOK", pfad: "Gesundheitskarte → Foto hochladen" },
   { name: "Techniker Krankenkasse (TK)", portal: "Meine TK", pfad: "Versichertenkarte → Foto hinzufügen" },
-  { name: "Barmer", portal: "Barmer-App / Online-Portal", pfad: "Meine Gesundheitskarte → Foto einreichen" },
+  { name: "Barmer", portal: "lichtbild.barmer.de", pfad: "Auftragsnummer + Geburtsdatum eingeben → Foto hochladen" },
   { name: "DAK-Gesundheit", portal: "Mein DAK", pfad: "eGK → Bild hochladen" },
   { name: "IKK / BKK / KKH / hkk", portal: "Jeweiliges Online-Portal", pfad: "Versichertenbereich → Gesundheitskarte" },
   { name: "Alle anderen GKV", portal: "Versichertenportal", pfad: "Benachrichtigungsschreiben beachten" },
@@ -342,6 +343,13 @@ export default function GesundheitskarteFotoPage() {
           * Die Menüpfade können sich ändern – maßgeblich ist das Schreiben Ihrer Kasse. Alternativ ist bei allen Kassen
           der Postweg möglich. Die Karte selbst ist für Versicherte kostenlos.
         </Note>
+        <p className="mt-4 text-base text-slate-600">
+          Bei der Barmer?{" "}
+          <Link href="/de/barmer-lichtbild-hochladen" className={textLink}>
+            So laden Sie Ihr Lichtbild bei der Barmer hoch
+          </Link>{" "}
+          – mit Auftragsnummer, Vorgaben und Dateiformat.
+        </p>
       </Section>
 
       <Section labelledBy="check-h2">

@@ -14,6 +14,7 @@ export default function FooterFr() {
         { label: "Code ePhoto ANTS", href: "/fr/ephoto-ants" },
         { label: "Photo carte d'identité", href: "/fr/photo-carte-identite" },
         { label: "Photo biométrique", href: "/fr/photo-passeport-biometrique" },
+        { label: "Photo norme OACI", href: "/fr/photo-norme-oaci" },
         { label: "Photo d'identité bébé", href: "/fr/photo-bebe" },
         { label: "Photo permis de conduire", href: "/fr/photo-permis-de-conduire" },
         { label: "Photo titre de séjour", href: "/fr/photo-titre-de-sejour" },

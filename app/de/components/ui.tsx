@@ -9,6 +9,8 @@ import type { ReactNode } from "react";
 /* ─── Class tokens ─── */
 export const btnPrimary =
   "inline-flex items-center justify-center gap-2 rounded-lg bg-lime-700 px-6 py-3.5 text-base font-bold text-white transition-colors hover:bg-lime-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-700";
+export const btnPrimaryAmber =
+  "inline-flex items-center justify-center gap-2 rounded-lg bg-amber-700 px-6 py-3.5 text-base font-bold text-white transition-colors hover:bg-amber-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-700";
 export const btnSecondary =
   "inline-flex items-center justify-center gap-2 rounded-lg border-2 border-slate-300 bg-white px-6 py-3 text-base font-semibold text-slate-700 transition-colors hover:border-slate-400 hover:bg-slate-50";
 export const card = "rounded-xl border-2 border-slate-200 bg-white p-6";
@@ -109,7 +111,9 @@ export function Hero({
   image,
   breadcrumb,
   children,
+  accent,
 }: {
+  accent?: "amber";
   breadcrumb?: { label: string; href?: string }[];
   eyebrow: string;
   title: ReactNode;
@@ -133,7 +137,7 @@ export function Hero({
           </h1>
           <p className="mt-4 max-w-2xl text-base leading-relaxed text-slate-600">{intro}</p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Link href={primary.href} className={btnPrimary}>
+            <Link href={primary.href} className={accent === "amber" ? btnPrimaryAmber : btnPrimary}>
               {primary.label} <ArrowRight />
             </Link>
             {secondary && (
@@ -358,7 +362,19 @@ export function QuickFacts({ items, title = "Auf einen Blick" }: { items: { labe
   );
 }
 
-export function CtaBand({ title, text, href, label }: { title: string; text: string; href: string; label: string }) {
+export function CtaBand({
+  title,
+  text,
+  href,
+  label,
+  accent,
+}: {
+  title: string;
+  text: string;
+  href: string;
+  label: string;
+  accent?: "amber";
+}) {
   return (
     <section className="border-t-2 border-lime-200 bg-lime-50 px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
       <div className="mx-auto flex max-w-5xl flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
@@ -366,7 +382,7 @@ export function CtaBand({ title, text, href, label }: { title: string; text: str
           <h2 className={h2Class}>{title}</h2>
           <p className={`mt-2 ${proseClass}`}>{text}</p>
         </div>
-        <Link href={href} className={`${btnPrimary} shrink-0`}>
+        <Link href={href} className={`${accent === "amber" ? btnPrimaryAmber : btnPrimary} shrink-0`}>
           {label} <ArrowRight />
         </Link>
       </div>

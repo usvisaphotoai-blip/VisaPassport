@@ -142,8 +142,10 @@ export default function PhotoBiometriquePage() {
   </ul>
 
   <p className="mb-4">
-    Le non-respect de ces critères peut entraîner un rejet de votre demande de passeport ou de visa. 
+    Le non-respect de ces critères peut entraîner un rejet de votre demande de passeport ou de visa.
     C’est pourquoi il est crucial d’utiliser un outil fiable pour générer votre photo biométrique.
+    Pour le détail de chaque critère et une vérification gratuite, consultez notre page{" "}
+    <Link href="/fr/photo-norme-oaci" className="text-lime-600 hover:underline">photo aux normes OACI</Link>.
   </p>
 
   <h2 className="text-2xl font-semibold mt-8 mb-4">

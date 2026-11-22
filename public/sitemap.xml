@@ -729,7 +729,7 @@
     <loc>https://www.pixpassport.com/nepal-passport-photo-editor</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/nepal-passport-photo-editor" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/nepal-passport-photo-editor" />
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-22</lastmod>
   </url>
   <url>
     <loc>https://www.pixpassport.com/nepal-visa-photo-editor</loc>
@@ -850,6 +850,18 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/philippines-passport-photo-editor" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/philippines-passport-photo-editor" />
     <lastmod>2026-04-18</lastmod>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/bangladesh-passport-photo-size</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/bangladesh-passport-photo-size" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/bangladesh-passport-photo-size" />
+    <lastmod>2026-11-22</lastmod>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/philippines-passport-photo-size</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/philippines-passport-photo-size" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/philippines-passport-photo-size" />
+    <lastmod>2026-11-22</lastmod>
   </url>
   <url>
     <loc>https://www.pixpassport.com/philippines-visa-photo-editor</loc>
@@ -1023,7 +1035,19 @@
     <loc>https://www.pixpassport.com/sri-lanka-passport-photo-editor</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/sri-lanka-passport-photo-editor" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/sri-lanka-passport-photo-editor" />
-    <lastmod>2026-10-15</lastmod>
+    <lastmod>2026-11-22</lastmod>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/ireland-passport-photo-requirements</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/ireland-passport-photo-requirements" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/ireland-passport-photo-requirements" />
+    <lastmod>2026-11-22</lastmod>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/sri-lanka-passport-photo-size</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/sri-lanka-passport-photo-size" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/sri-lanka-passport-photo-size" />
+    <lastmod>2026-11-22</lastmod>
   </url>
   <url>
     <loc>https://www.pixpassport.com/sri-lanka-visa-photo-editor</loc>
@@ -1323,7 +1347,7 @@
     <loc>https://www.pixpassport.com/blog/country-wise-visa-photo-requirements-comparison-2026</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/blog/country-wise-visa-photo-requirements-comparison-2026" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/blog/country-wise-visa-photo-requirements-comparison-2026" />
-    <lastmod>2026-08-26</lastmod>
+    <lastmod>2026-11-22</lastmod>
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1777027958/Complete_Australia_visa_photo_guide_2026._Official_size_vdcr5s.webp</image:loc>
     </image:image>
@@ -1415,9 +1439,14 @@
     </image:image>
   </url>
   <url>
+    <loc>https://www.pixpassport.com/fr/photo-norme-oaci</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.pixpassport.com/fr/photo-norme-oaci" />
+    <lastmod>2026-11-22</lastmod>
+  </url>
+  <url>
     <loc>https://www.pixpassport.com/fr/photo-passeport-biometrique</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.pixpassport.com/fr/photo-passeport-biometrique" />
-    <lastmod>2026-10-07</lastmod>
+    <lastmod>2026-11-22</lastmod>
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1779008016/c24d89b1-ab0e-4f1d-9035-5814bc7b91ca_preview_ip9ogs.jpg</image:loc>
     </image:image>
@@ -1518,7 +1547,7 @@
     <loc>https://www.pixpassport.com/passport-photo-print-template-generator</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/passport-photo-print-template-generator" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/passport-photo-print-template-generator" />
-    <lastmod>2026-11-21</lastmod>
+    <lastmod>2026-11-22</lastmod>
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1785679205/MakePassportPhoto_ph2uog_ryefxt.webp</image:loc>
     </image:image>
@@ -1527,10 +1556,16 @@
     <loc>https://www.pixpassport.com/passport-photo-template-4x6</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/passport-photo-template-4x6" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/passport-photo-template-4x6" />
-    <lastmod>2026-11-14</lastmod>
+    <lastmod>2026-11-22</lastmod>
     <image:image>
       <image:loc>https://res.cloudinary.com/dipzpwbbk/image/upload/v1785679205/MakePassportPhoto_ph2uog_ryefxt.webp</image:loc>
     </image:image>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/passport-photo-a4-print-template</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pixpassport.com/passport-photo-a4-print-template" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/passport-photo-a4-print-template" />
+    <lastmod>2026-11-22</lastmod>
   </url>
   <url>
     <loc>https://www.pixpassport.com/how-to-print-passport-photos</loc>
@@ -1595,7 +1630,13 @@
     <loc>https://www.pixpassport.com/de/gesundheitskarte-foto</loc>
     <xhtml:link rel="alternate" hreflang="de" href="https://www.pixpassport.com/de/gesundheitskarte-foto" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/de/gesundheitskarte-foto" />
-    <lastmod>2026-11-01</lastmod>
+    <lastmod>2026-11-22</lastmod>
+  </url>
+  <url>
+    <loc>https://www.pixpassport.com/de/barmer-lichtbild-hochladen</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.pixpassport.com/de/barmer-lichtbild-hochladen" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.pixpassport.com/de/barmer-lichtbild-hochladen" />
+    <lastmod>2026-11-22</lastmod>
   </url>
   <url>
     <loc>https://www.pixpassport.com/de/passbild-online</loc>

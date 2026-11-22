@@ -283,8 +283,8 @@ export default function PassportPhotoTemplate4x6Page() {
             </div>
             <p className="text-xs text-slate-500 mt-3">
               Need more copies on one sheet? Use{" "}
-              <Link href="/passport-photo-print-template-generator" className="text-lime-700 underline">
-                A4 or Letter paper
+              <Link href="/passport-photo-a4-print-template" className="text-lime-700 underline">
+                A4 paper
               </Link>{" "}
               instead.
             </p>

@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import Link from "next/link";
 import PrintTemplateApp from "./PrintTemplateApp";
 import { Suspense } from "react";
 
@@ -404,7 +405,10 @@ export default function PrintTemplateGeneratorPage() {
             <ul>
               <li>4 passport photos on one sheet</li>
               <li>6 passport photos on 4×6 paper</li>
-              <li>8 passport photos on A4</li>
+              <li>
+                32 passport photos on A4 (35×45 mm) –{" "}
+                <Link href="/passport-photo-a4-print-template" className="text-lime-700 underline">free A4 template</Link>
+              </li>
               <li>12 passport photos on one page</li>
               <li>16 passport photos on one sheet</li>
               <li>20 passport photos on one sheet</li>

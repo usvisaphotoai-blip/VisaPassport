@@ -38,6 +38,7 @@ export default function Footer() {
         { label: "Create Photo Online", href: "/passport-photo-online" },
         { label: "Print Template Generator", href: "/passport-photo-print-template-generator" },
         { label: "4x6 Passport Photo Template", href: "/passport-photo-template-4x6" },
+        { label: "A4 Passport Photo Template", href: "/passport-photo-a4-print-template" },
         { label: "Australian Passport Photo Maker", href: "/australian-passport-photo" },
         { label: "Passport Size Photo Converter", href: "/in/photo-passport-size-converter" },
         { label: "Resize Singapore Photo", href: "/resize-passport-photo-singapore" },
@@ -51,6 +52,10 @@ export default function Footer() {
       items: [
         { label: "Passport Photo Guides", href: "/guides" },
         { label: "Australian Passport Photo Guide", href: "/guides/australian-passport-photo-requirements" },
+        { label: "Sri Lanka Passport Photo Size", href: "/sri-lanka-passport-photo-size" },
+        { label: "Philippines Passport Photo Size", href: "/philippines-passport-photo-size" },
+        { label: "Irish Passport Photo Requirements", href: "/ireland-passport-photo-requirements" },
+        { label: "Bangladesh Passport Photo Size", href: "/bangladesh-passport-photo-size" },
         { label: "How to Print Passport Photos", href: "/how-to-print-passport-photos" },
         { label: "Blog & Guides", href: "/blog" },
         { label: "Passport Photo Directory", href: "/passport-photos" },

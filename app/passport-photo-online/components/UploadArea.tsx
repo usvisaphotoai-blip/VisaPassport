@@ -111,7 +111,10 @@ const UploadArea: React.FC<UploadAreaProps> = ({
             className={
               flat
                 ? "bg-lime-700 group-hover:bg-lime-800 text-white text-sm font-bold px-6 py-3 rounded-lg transition-colors"
-                : "bg-slate-900 text-white text-xs font-bold px-6 py-2.5 rounded-full shadow-lg group-hover:shadow-lime-900/10 transition-shadow"
+                : locale === "fr"
+                  ? // /fr: dark amber / orange CTA
+                    "bg-orange-600 group-hover:bg-orange-700 text-white text-xs font-bold px-6 py-2.5 rounded-full shadow-lg shadow-orange-600/25 transition-colors"
+                  : "bg-slate-900 text-white text-xs font-bold px-6 py-2.5 rounded-full shadow-lg group-hover:shadow-lime-900/10 transition-shadow"
             }
           >
             {t.buttonText}

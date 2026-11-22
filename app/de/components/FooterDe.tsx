@@ -15,6 +15,7 @@ export default function FooterDe() {
         { label: "Visumfoto", href: "/de/visum-foto" },
         { label: "Bewerbungsfoto", href: "/de/bewerbungsfoto" },
         { label: "Foto für die Gesundheitskarte", href: "/de/gesundheitskarte-foto" },
+        { label: "Barmer Lichtbild hochladen", href: "/de/barmer-lichtbild-hochladen" },
         { label: "Passfoto Schweiz", href: "/de/passfoto-schweiz-online" },
         { label: "Dokumentenfoto Schweiz", href: "/de/dokumentenfoto-schweiz" },
       ],
