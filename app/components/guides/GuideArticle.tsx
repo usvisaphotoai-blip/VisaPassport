@@ -1,6 +1,13 @@
+import Image from "next/image";
 import Link from "next/link";
 import GuidePhotoTool from "./GuidePhotoTool";
 import { GUIDES_BASE_PATH, GUIDES_HUB, SITE_URL, formatDate, getPublishedGuides, jsonLdScript, type GuideDetail } from "@/lib/guides";
+
+const HERO_TRUST = [
+  { icon: "🔒", text: "Deleted after 24h" },
+  { icon: "✅", text: "30+ checks" },
+  { icon: "🌍", text: "100+ countries" },
+];
 
 const PROSE_CLASSES = `prose prose-sm sm:prose-base max-w-none prose-slate min-w-0 break-words
   prose-headings:text-slate-900 prose-headings:font-extrabold prose-headings:tracking-tight prose-headings:scroll-mt-24
@@ -13,7 +20,8 @@ const PROSE_CLASSES = `prose prose-sm sm:prose-base max-w-none prose-slate min-w
   [&_table]:block [&_table]:w-full [&_table]:overflow-x-auto [&_table]:my-5 [&_table]:border-collapse
   [&_th]:bg-slate-100 [&_th]:px-2.5 [&_th]:py-2 [&_th]:text-left [&_th]:border [&_th]:border-slate-200 [&_th]:text-xs sm:[&_th]:text-sm [&_th]:whitespace-nowrap
   [&_td]:px-2.5 [&_td]:py-2 [&_td]:border [&_td]:border-slate-200 [&_td]:text-xs sm:[&_td]:text-sm
-  [&_img]:rounded-lg [&_img]:mx-auto [&_img]:border [&_img]:border-slate-200`;
+  [&_img]:rounded-lg [&_img]:mx-auto [&_img]:border [&_img]:border-slate-200
+  prose-figure:my-6 prose-figcaption:text-center prose-figcaption:text-xs sm:prose-figcaption:text-sm prose-figcaption:text-slate-500`;
 
 function TocLinks({ guide, compact = false }: { guide: GuideDetail; compact?: boolean }) {
   return (
@@ -100,20 +108,41 @@ export default function GuideArticle({ guide }: { guide: GuideDetail }) {
             <span aria-current="page" className="text-slate-900 font-bold truncate">{guide.title}</span>
           </nav>
 
-          {/* Mobile order: header → tool → content. Desktop: tool and TOC in a sticky right column. */}
-          <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_340px] gap-x-10 gap-y-6">
-            <header className="min-w-0 lg:col-start-1">
-              <div className="flex flex-wrap items-center gap-2 mb-3">
-                <span className="bg-lime-50 border border-lime-200 text-lime-800 px-2 py-0.5 rounded text-[11px] font-bold uppercase tracking-wider">
-                  {guide.category}
+          {/* Hero: split text / image, same layout as the tool pages */}
+          <header className="grid md:grid-cols-2 gap-5 sm:gap-6 md:gap-8 items-center mb-8 sm:mb-10">
+            {/* Left: text + CTA */}
+            <div className="min-w-0 text-center md:text-left">
+              <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 mb-2 sm:mb-3">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-lime-50 border border-lime-200 px-2.5 py-0.5 sm:px-3 sm:py-1 text-[10px] sm:text-[11px] font-bold uppercase tracking-wide text-lime-700">
+                  <span className="w-1.5 h-1.5 rounded-full bg-lime-500" />
+                  {guide.category} guide
                 </span>
                 <span className="text-xs text-slate-500 font-semibold">{guide.readingTime}</span>
               </div>
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight mb-3 break-words">
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight sm:leading-[1.15] break-words">
                 {guide.title}
               </h1>
-              <p className="text-sm sm:text-base text-slate-600 leading-relaxed mb-3">{guide.excerpt}</p>
-              <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-slate-500">
+              <p className="mt-2 sm:mt-3 text-xs sm:text-base text-slate-500 max-w-md mx-auto md:mx-0">{guide.excerpt}</p>
+
+              <div className="mt-4 sm:mt-5 flex flex-col sm:flex-row items-center justify-center md:justify-start gap-2.5">
+                <a
+                  href="#photo-tool"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 sm:py-3 bg-amber-500 text-slate-950 text-xs sm:text-sm font-bold rounded-sm hover:bg-amber-400 active:scale-95 transition-all"
+                >
+                  Start with your photo
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
+                </a>
+                <Link
+                  href={guide.makerCta.href}
+                  className="w-full sm:w-auto inline-flex items-center justify-center px-5 py-2.5 sm:py-3 border border-slate-300 text-slate-800 text-xs sm:text-sm font-bold rounded-sm hover:border-lime-600 hover:text-lime-700 transition-colors"
+                >
+                  {guide.makerCta.buttonLabel}
+                </Link>
+              </div>
+
+              <p className="mt-4 sm:mt-5 flex flex-wrap items-center justify-center md:justify-start gap-x-2 gap-y-1 text-xs text-slate-500">
                 <span>By <strong className="text-slate-800">{guide.author}</strong></span>
                 <span aria-hidden="true">·</span>
                 {guide.dateModified !== guide.datePublished ? (
@@ -122,9 +151,34 @@ export default function GuideArticle({ guide }: { guide: GuideDetail }) {
                   <span>Published <time dateTime={guide.datePublished} className="font-semibold text-slate-800">{formatDate(guide.datePublished)}</time></span>
                 )}
               </p>
-            </header>
 
-            <aside className="min-w-0 lg:col-start-2 lg:row-start-1 lg:row-span-2">
+              <div className="mt-3 flex flex-wrap items-center justify-center md:justify-start gap-x-4 gap-y-1.5">
+                {HERO_TRUST.map(({ icon, text }) => (
+                  <span key={text} className="flex items-center gap-1.5 text-xs text-slate-500 font-semibold">
+                    <span aria-hidden="true">{icon}</span>
+                    {text}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Right: guide image */}
+            <div className="relative mx-auto w-full max-w-sm sm:max-w-md md:max-w-lg">
+              <Image
+                src={guide.image.url}
+                alt={guide.image.alt}
+                width={guide.image.width}
+                height={guide.image.height}
+                sizes="(min-width: 768px) 50vw, 100vw"
+                priority
+                className="w-full h-auto max-h-[550px] object-contain rounded-lg"
+              />
+            </div>
+          </header>
+
+          {/* Mobile order: tool → content. Desktop: tool and TOC in a sticky right column. */}
+          <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_340px] gap-x-10 gap-y-6">
+            <aside className="min-w-0 lg:col-start-2 lg:row-start-1">
               <div className="lg:sticky lg:top-24 space-y-4">
                 <GuidePhotoTool defaultDoc={guide.toolDocument} />
                 {guide.toc.length > 0 && (
@@ -136,7 +190,7 @@ export default function GuideArticle({ guide }: { guide: GuideDetail }) {
               </div>
             </aside>
 
-            <div className="min-w-0 lg:col-start-1">
+            <div className="min-w-0 lg:col-start-1 lg:row-start-1">
               {guide.toc.length > 0 && (
                 <details className="lg:hidden mb-6 bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 group">
                   <summary className="text-sm font-bold text-slate-900 cursor-pointer list-none flex items-center justify-between gap-3">

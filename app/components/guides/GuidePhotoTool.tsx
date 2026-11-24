@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
 import { documentTypes } from "@/app/passport-photo-online/constants";
 import { processPhotoForDocument } from "@/lib/processPhoto";
@@ -31,6 +32,8 @@ export default function GuidePhotoTool({ defaultDoc, title = "Make your passport
   const [stage, setStage] = useState(-1);
   const [errorMsg, setErrorMsg] = useState("");
   const [showStickyBar, setShowStickyBar] = useState(false);
+  // Full-size popup view, opened by any link to #photo-tool (e.g. the hero CTA)
+  const [expanded, setExpanded] = useState(false);
   const rootRef = useRef<HTMLElement>(null);
   const pickerRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLInputElement>(null);
@@ -93,6 +96,35 @@ export default function GuidePhotoTool({ defaultDoc, title = "Make your passport
     return () => clearInterval(timer);
   }, [isProcessing]);
 
+  // Links to #photo-tool open the full-size view instead of scrolling (no-JS fallback: plain anchor scroll)
+  useEffect(() => {
+    const onClick = (e: MouseEvent) => {
+      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      const link = (e.target as Element | null)?.closest?.('a[href="#photo-tool"]');
+      if (!link) return;
+      e.preventDefault();
+      setExpanded(true);
+    };
+    document.addEventListener("click", onClick);
+    return () => document.removeEventListener("click", onClick);
+  }, []);
+
+  useEffect(() => {
+    if (!expanded) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    rootRef.current?.focus();
+    const onKey = (e: KeyboardEvent) => {
+      // Escape first closes the country picker, then the popup
+      if (e.key === "Escape" && !pickerRef.current?.contains(document.activeElement)) setExpanded(false);
+    };
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [expanded]);
+
   useEffect(() => () => { if (previewUrl) URL.revokeObjectURL(previewUrl); }, [previewUrl]);
 
   const selectDoc = (id: string) => {
@@ -122,22 +154,38 @@ export default function GuidePhotoTool({ defaultDoc, title = "Make your passport
     }
   };
 
-  const scrollToTool = () => rootRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  const scrollToTool = () => setExpanded(true);
 
-  return (
-    <>
+  const card = (
       <section
         ref={rootRef}
-        id="photo-tool"
+        id={expanded ? undefined : "photo-tool"}
+        tabIndex={-1}
         aria-labelledby="photo-tool-title"
-        className="scroll-mt-24 rounded-xl border-2 border-lime-600 bg-white shadow-sm overflow-visible"
+        className={`rounded-xl border-2 border-lime-600 bg-white outline-none ${
+          expanded ? "w-full max-w-xl shadow-2xl max-h-[calc(100dvh-2rem)] overflow-y-auto" : "scroll-mt-24 shadow-sm overflow-visible"
+        }`}
       >
-        <div className="flex items-center justify-between gap-2 rounded-t-[10px] bg-lime-700 px-4 py-2.5">
-          <h2 id="photo-tool-title" className="text-sm sm:text-base lg:text-sm font-extrabold text-white leading-tight">{title}</h2>
-          <span className="shrink-0 rounded bg-white/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white">Free check</span>
+        <div className={`flex items-center justify-between gap-2 rounded-t-[10px] bg-lime-700 ${expanded ? "px-5 py-3.5 sm:px-6" : "px-4 py-2.5"}`}>
+          <h2 id="photo-tool-title" className={`font-extrabold text-white leading-tight ${expanded ? "text-lg sm:text-xl" : "text-sm sm:text-base lg:text-sm"}`}>{title}</h2>
+          <span className="flex shrink-0 items-center gap-2">
+            <span className="rounded bg-white/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white">Free check</span>
+            {expanded && (
+              <button
+                type="button"
+                onClick={() => setExpanded(false)}
+                aria-label="Close"
+                className="flex h-8 w-8 items-center justify-center rounded-full text-white hover:bg-white/15"
+              >
+                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            )}
+          </span>
         </div>
 
-        <div className="p-3 sm:p-4 space-y-3">
+        <div className={expanded ? "p-5 sm:p-6 space-y-5" : "p-3 sm:p-4 space-y-3"}>
           {/* Step 1: document */}
           <div ref={pickerRef} className="relative">
             <p className="mb-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-500">1 · Country &amp; document</p>
@@ -227,7 +275,7 @@ export default function GuidePhotoTool({ defaultDoc, title = "Make your passport
                   setDragOver(false);
                   processFile(e.dataTransfer.files?.[0]);
                 }}
-                className={`flex cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed px-3 py-5 text-center transition-colors ${
+                className={`flex cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed px-3 ${expanded ? "py-12 sm:py-16" : "py-5"} text-center transition-colors ${
                   dragOver ? "border-lime-600 bg-lime-50" : "border-slate-300 bg-slate-50 hover:border-lime-500 hover:bg-lime-50/50"
                 }`}
               >
@@ -255,13 +303,39 @@ export default function GuidePhotoTool({ defaultDoc, title = "Make your passport
             <p role="alert" className="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-xs font-medium text-red-700">{errorMsg}</p>
           )}
 
-          <ul className="flex flex-wrap justify-center gap-x-3 gap-y-1 text-[11px] font-semibold text-slate-500">
+          <ul className={`flex flex-wrap justify-center gap-x-3 gap-y-1 font-semibold text-slate-500 ${expanded ? "text-xs" : "text-[11px]"}`}>
             <li>✓ Size &amp; background fixed</li>
             <li>✓ Checked against official rules</li>
             <li>🔒 Secure upload</li>
           </ul>
         </div>
       </section>
+  );
+
+  return (
+    <>
+      {expanded ? (
+        <>
+          {/* Keeps the sidebar slot (and the #photo-tool anchor) while the card is shown in the popup */}
+          <div id="photo-tool" className="scroll-mt-24 rounded-xl border-2 border-dashed border-lime-300 bg-lime-50/50 p-4 text-center text-xs font-semibold text-lime-800">
+            Photo tool is open
+          </div>
+          {createPortal(
+            <div
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="photo-tool-title"
+              className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/60 p-4 backdrop-blur-sm"
+              onMouseDown={(e) => { if (e.target === e.currentTarget) setExpanded(false); }}
+            >
+              {card}
+            </div>,
+            document.body,
+          )}
+        </>
+      ) : (
+        card
+      )}
 
       {/* Mobile sticky CTA */}
       <div

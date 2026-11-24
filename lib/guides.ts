@@ -209,6 +209,11 @@ function renderMarkdown(markdown: string): { html: string; toc: GuideTocItem[] }
         const rel = external ? ` target="_blank" rel="noopener noreferrer"` : "";
         return `<a href="${escapeAttr(href)}"${titleAttr}${rel}>${text}</a>`;
       },
+      // Content images sit below the fold: lazy-load them; a markdown title becomes the caption
+      image({ href, title, text }) {
+        const img = `<img src="${escapeAttr(href)}" alt="${escapeAttr(text)}" loading="lazy" decoding="async">`;
+        return title ? `<figure>${img}<figcaption>${title}</figcaption></figure>` : img;
+      },
     },
   });
 

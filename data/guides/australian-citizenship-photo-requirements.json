@@ -16,6 +16,12 @@
   "metaTitle": "Australian Citizenship Photo Requirements: Size and Upload",
   "metaDescription": "Australian citizenship photo rules: under 6 months old, light grey or neutral background, JPEG 70 KB to 3.5 MB online, 35-40 x 45-50 mm on paper.",
   "excerpt": "What photo you need for an Australian citizenship application, online or on paper: file type, file size, print size, head size and the pose rules Home Affairs sets.",
+  "image": {
+    "url": "https://res.cloudinary.com/dipzpwbbk/image/upload/v1793167573/switzerland-visa-photo-example_v0zevg.webp",
+    "alt": "Example citizenship photo: a woman with a neutral expression and eyes open, facing the camera against a plain light background, with 35 mm x 45 mm photo dimensions marked",
+    "width": 1312,
+    "height": 1199
+  },
   "keywords": [
     "australian citizenship photo",
     "australian citizenship photo size",
@@ -123,6 +129,7 @@
         {
           "heading": "Size 35-40 mm wide x 45-50 mm high",
           "content": [
+            "![A 3.5 x 4.5 cm passport-style photo of a woman on a plain white background, next to a print sheet of 12 copies of the same photo](https://res.cloudinary.com/dipzpwbbk/image/upload/v1792159017/australian-passport-photo-uk_cxbkk4.webp \"A 35 x 45 mm photo sits inside the 35-40 mm x 45-50 mm range for a printed citizenship photo.\")",
             "A printed citizenship photo must be 35-40 mm wide and 45-50 mm high. A 35 x 45 mm photo sits inside this range.",
             "For the size in cm and inches, see our [Australian passport photo size](/guides/australian-passport-photo-size) guide, which uses the same measurements."
           ]
@@ -130,6 +137,7 @@
         {
           "heading": "Head size 32-36 mm",
           "content": [
+            "![Australian passport-style photo diagram: 35 mm wide x 45 mm high, with the head measuring 32-36 mm from chin to crown](https://res.cloudinary.com/dipzpwbbk/image/upload/v1795257780/Australian_Passport_Photo_Online_Banner_iyjk47.webp \"Measure from the bottom of the chin to the top of the head: it must be 32-36 mm on the print.\")",
             "Measure from the bottom of your chin to the top of your head (the crown). It must be 32-36 mm on the print.",
             "This is the measurement people most often get wrong when they reuse a photo made for another country."
           ]
@@ -200,6 +208,7 @@
         {
           "heading": "Getting a digital copy for an online application",
           "content": [
+            "![A digital passport-style photo and the same photo laid out 6 times on a 4 x 6 inch print sheet](https://res.cloudinary.com/dipzpwbbk/image/upload/v1795257780/Australian_Passport_Photo_Print_Guide_cilpz8.webp \"One photo, two formats: a digital file for an online application and prints for a paper one.\")",
             "If you are applying online, ask the provider whether they can give you a digital file as well as prints. Check that it is a JPEG between 70 KB and 3.5 MB before you upload it.",
             "Do not photograph or scan the prints instead. That is not accepted."
           ]

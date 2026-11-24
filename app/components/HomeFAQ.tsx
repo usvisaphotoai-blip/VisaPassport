@@ -5,10 +5,22 @@ interface FAQ {
   a: string;
 }
 
-const defaultFaqs: FAQ[] = [
+export const defaultFaqs: FAQ[] = [
+  {
+    q: "How do I make a passport photo online?",
+    a: "Take a selfie against a plain wall in daylight, choose your country and document, then upload it. PixPassport crops your head to the official size, replaces the background, and checks the result against that country's rules. You see the result before paying, then download the digital photo and a printable 4x6 or A4 sheet.",
+  },
   {
     q: "Is the passport photo validation really free?",
-    a: "Yes! Our online passport and visa photo checker is 100% free for all supported countries. You only pay a small fee if you want to download the processed, fully compliant photo and a home-printable sheet.",
+    a: "Yes. The compliance check is free for every supported country. You only pay a one-time fee (from $6.99 in the US) to download the processed, compliant photo and a home-printable sheet. No subscription and no sign-up needed to check.",
+  },
+  {
+    q: "What if my photo is rejected?",
+    a: "If a photo you bought from PixPassport is rejected for an official passport, visa or ID application, you get a 100% refund of the price you paid. Request it within 30 days of purchase.",
+  },
+  {
+    q: "Is it cheaper than a pharmacy or photo studio?",
+    a: "Usually, yes. Pharmacy and post office passport photos in the US typically cost around $15 to $17 for two prints. With PixPassport you pay once for the digital file and a print sheet, and can print copies at home or at a print kiosk for well under a dollar.",
   },
   {
     q: "What are ICAO standards for a passport photo?",

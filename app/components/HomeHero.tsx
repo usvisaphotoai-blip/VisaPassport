@@ -3,15 +3,28 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import DocSearchSelect, { type DocOption } from "./DocSearchSelect";
 
 const trustBadges = [
-  { icon: "🔒", text: "Secure & Private" },
-  { icon: "⚡", text: "Results in 30s" },
+  { icon: "💯", text: "Money-Back Guarantee" },
+  { icon: "🔒", text: "Photos Deleted in 24h" },
   { icon: "🌍", text: "50+ Countries" },
   { icon: "🆓", text: "Free Validation" },
 ];
 
-export default function HomeHero() {
+const POPULAR_DOCS = [
+  "us-passport",
+  "us-visa",
+  "uk-passport",
+  "india-passport",
+  "australia-passport",
+  "canada-passport",
+  "schengen-visa",
+  "singapore-passport",
+  "icao-passport",
+];
+
+export default function HomeHero({ docOptions = [] }: { docOptions?: DocOption[] }) {
   const [sliderPos, setSliderPos] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
   const [hasInteracted, setHasInteracted] = useState(false);
@@ -95,45 +108,57 @@ export default function HomeHero() {
 
             {/* ── TEXT COLUMN ── */}
             <div className="flex-1 w-full">
-              {/* Official badge */}
+              {/* Standards badge */}
               <div className="inline-flex items-center gap-2 bg-lime-50 border border-lime-200 rounded px-3 py-1.5 mb-5">
                 <span className="w-2 h-2 rounded-full bg-lime-600 inline-block" />
                 <span className="text-xs font-semibold text-lime-800 tracking-wide uppercase">
-                  Official Biometric Photo Tool · ICAO Compliant
+                  Checked against ICAO &amp; government photo rules
                 </span>
               </div>
 
               <h1 className="text-3xl sm:text-4xl lg:text-4xl font-bold text-slate-900 leading-tight tracking-tight mb-3">
-                Passport size photo maker online
+                Passport Photo Maker Online
               </h1>
               <p className="text-lg sm:text-xl text-slate-500 font-normal mb-5 leading-snug">
-                Create ICAO compliant passport size photo online in 30 seconds
+                Turn a selfie into a compliant passport or visa photo in 30 seconds
               </p>
 
-              <p className="text-sm sm:text-base text-slate-600 leading-relaxed mb-7 max-w-lg">
-                Create a passport photo online with our passport size photo
-                maker. Convert photos to passport size, edit and crop passport
-                pictures, and create digital passport and US, UK, IN, AU, CA,
-                FR, DE, ES, IT, IE visa photos online. Check photo dimensions,
-                background, face position, and eye level against requirements
-                for 50+ countries in seconds.
+              <p className="text-sm sm:text-base text-slate-600 leading-relaxed mb-6 max-w-lg">
+                Pick your country and document, upload a photo taken on your
+                phone, and we crop it to the right size, swap in a plain
+                background and check it against the official rules. See the
+                result free before you pay. No studio, no sign-up.
               </p>
 
-              {/* CTA */}
-              <div className="flex flex-col sm:flex-row gap-3 mb-7">
-                <Link
-                  href="/passport-photo-online"
+              {/* Document picker: start the tool straight from the homepage */}
+              <form
+                action="/passport-photo-online"
+                method="get"
+                className="flex flex-col sm:flex-row gap-3 mb-3 max-w-lg"
+              >
+                <DocSearchSelect
+                  name="type"
+                  options={docOptions}
+                  popularIds={POPULAR_DOCS}
+                  defaultId="us-passport"
+                />
+                <button
+                  type="submit"
                   className="inline-flex items-center justify-center bg-lime-700 hover:bg-lime-800 text-white text-sm font-semibold px-6 py-3 rounded transition-colors"
                 >
-                  Get Your ID Photo Now →
+                  Make my photo →
+                </button>
+              </form>
+              <p className="text-xs text-slate-500 mb-7">
+                Free compliance check ·{" "}
+                <Link href="/refund-policy" className="underline hover:text-slate-700">
+                  100% money back if rejected
+                </Link>{" "}
+                ·{" "}
+                <Link href="/visa-photo-validator" className="underline hover:text-slate-700">
+                  Just check my photo
                 </Link>
-                <Link
-                  href="/visa-photo-validator"
-                  className="inline-flex items-center justify-center border border-slate-300 hover:border-slate-400 text-slate-700 text-sm font-semibold px-6 py-3 rounded transition-colors"
-                >
-                  Free Validator
-                </Link>
-              </div>
+              </p>
 
               {/* Stars */}
               <div className="flex items-center gap-3 mb-5">
@@ -151,7 +176,7 @@ export default function HomeHero() {
                   ))}
                 </div>
                 <span className="text-sm text-slate-600 font-medium">
-                  4.9 · Trusted by 17,000+ users
+                  4.9/5 from 170 ratings · 40,000+ photos processed
                 </span>
               </div>
 

@@ -89,6 +89,9 @@
     },
     {
       "heading": "How do you take a baby passport photo?",
+      "content": [
+        "![Infographic showing 5 steps to take a newborn passport photo at home: find soft natural light, use a plain white background, lay the baby on a white sheet, take the photo from above with a phone, and crop to 35 x 45 mm. It also shows good examples (face centred, eyes open, neutral expression) and mistakes to avoid (looking to the side, shadows on the face, busy background).](https://res.cloudinary.com/dipzpwbbk/image/upload/v1795507609/Australia-Newborn-Passport-Photo-Guide_qacy6o.webp \"Taking a baby passport photo at home: from setup to a 35 x 45 mm photo.\")"
+      ],
       "subsections": [
         {
           "heading": "Use a plain white or light grey background",
@@ -234,5 +237,11 @@
       "label": "Where to get your photo",
       "href": "/guides/where-to-get-australian-passport-photo"
     }
-  ]
+  ],
+  "image": {
+    "url": "https://res.cloudinary.com/dipzpwbbk/image/upload/v1795507611/Newborn-Passport-Photo-Guide_ntb8yb.webp",
+    "alt": "Example baby passport photo: a newborn facing the camera with eyes open and a neutral expression against a plain white background, cropped to 35 x 45 mm",
+    "width": 1106,
+    "height": 1422
+  }
 }

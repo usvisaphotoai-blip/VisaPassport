@@ -1,13 +1,22 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Head from "next/head";
+import { defaultFaqs as homeFaqs } from "./components/HomeFAQ";
 
 export const metadata: Metadata = {
-  title:
-    "Passport Size Photo Maker & Visa ID Photo Creator Online",
+  title: "Passport Photo Maker Online – Free AI Check | PixPassport",
 
-description:
-  "Passport size photo maker for 50+ countries. Create visa, ID, and passport photos with AI biometric validation, background removal, and auto crop.",
+  description:
+    "Make a passport or visa photo online for 50+ countries. Free AI check, white background and auto crop. From $6.99, 100% money back if rejected.",
+
+  openGraph: {
+    title: "Passport Photo Maker Online – Free AI Check | PixPassport",
+    description:
+      "Upload a selfie, get a compliant passport or visa photo for 50+ countries. Free check, money back if rejected.",
+    url: "https://www.pixpassport.com/",
+    siteName: "PixPassport",
+    type: "website",
+    images: [{ url: "https://www.pixpassport.com/og-image.jpg", width: 1200, height: 630, alt: "PixPassport passport photo maker" }],
+  },
 
   alternates: {
     canonical: "https://www.pixpassport.com/",
@@ -26,59 +35,63 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "SoftwareApplication",
+      "@type": "Organization",
+      "@id": "https://www.pixpassport.com/#organization",
       "name": "PixPassport",
-      "applicationCategory": "UtilitiesApplication",
-      "operatingSystem": "All",
+      "url": "https://www.pixpassport.com/",
+      "logo": "https://www.pixpassport.com/icon.png",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer support",
+        "url": "https://www.pixpassport.com/contact",
+      },
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://www.pixpassport.com/#website",
+      "name": "PixPassport",
+      "url": "https://www.pixpassport.com/",
+      "publisher": { "@id": "https://www.pixpassport.com/#organization" },
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://www.pixpassport.com/#webpage",
+      "url": "https://www.pixpassport.com/",
+      "name": "Passport Photo Maker Online – Free AI Check | PixPassport",
+      "isPartOf": { "@id": "https://www.pixpassport.com/#website" },
+      "about": { "@id": "https://www.pixpassport.com/#app" },
+      "publisher": { "@id": "https://www.pixpassport.com/#organization" },
+    },
+    {
+      "@type": "WebApplication",
+      "@id": "https://www.pixpassport.com/#app",
+      "name": "PixPassport Passport Photo Maker",
+      "url": "https://www.pixpassport.com/passport-photo-online",
+      "applicationCategory": "PhotographyApplication",
+      "operatingSystem": "Any (web browser)",
+      "publisher": { "@id": "https://www.pixpassport.com/#organization" },
       "offers": {
         "@type": "Offer",
         "price": "6.99",
         "priceCurrency": "USD",
+        "description": "Free compliance check. Paid HD photo download and print sheet.",
       },
       "aggregateRating": {
         "@type": "AggregateRating",
         "ratingValue": "4.9",
-        "ratingCount": "170"
-      }
+        "ratingCount": "170",
+        "bestRating": "5",
+      },
     },
     {
       "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "What are the common passport photo requirements?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Requirements vary by country. Common standards include specific dimensions (e.g., 35x45mm or 2x2in), a plain white or light-colored background, a neutral expression, and specific head-to-image ratios for biometric scanning."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "How does this tool validate my photo?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "We use AI to run automated checks against official government specifications for over 50 countries: dimensions, file size, background uniformity, face detection, eye position, and sharp focus — all in under 5 seconds."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Is the validation really free?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes! Photo validation is 100% free for all countries. You only pay a small fee (starting at $2.99) if you want to download a processed, fully compliant photo and print sheet."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Are my photos safe?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Absolutely. All original photos are auto-deleted after 24 hours. We are fully GDPR and CCPA compliant. We never store or share your personal photos permanently."
-          }
-        }
-      ]
-    }
-  ]
+      "mainEntity": homeFaqs.map((f) => ({
+        "@type": "Question",
+        "name": f.q,
+        "acceptedAnswer": { "@type": "Answer", "text": f.a },
+      })),
+    },
+  ],
 };
 
 import HomeHero from "./components/HomeHero";
@@ -88,13 +101,15 @@ import HomeGuides from "./components/guides/HomeGuides";
 import toolPages from "../data/tool-seo-pages.json";
 import "./home.css";
 
-import { getLocalPrice } from "@/lib/currency";
+import { getDocSearchOptions } from "@/lib/doc-search-options";
 
 export default async function Home() {
   // Use skipHeaders: true to keep the page static
   // We no longer need the full localPrice object here for display, 
   // as HomeSections will handle it via PriceDisplay client component.
   const basePrice = 6.99;
+  // Built on the server so the full spec list is not bundled into the homepage JS.
+  const docOptions = getDocSearchOptions();
 
   return (
     <>
@@ -103,7 +118,52 @@ export default async function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <div className="hcr">
-        <HomeHero />
+        <HomeHero docOptions={docOptions} />
+
+        {/* Price comparison + guarantee: the main reason searchers pick an online maker */}
+        <section aria-labelledby="compare-heading" className="bg-white py-12 border-b border-slate-100">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 id="compare-heading" className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight text-center mb-2">
+              Online passport photo vs pharmacy or studio
+            </h2>
+            <p className="text-sm text-slate-500 text-center max-w-2xl mx-auto mb-8">
+              Same official size and background rules, without the trip or the queue.
+            </p>
+            <div className="overflow-x-auto">
+              <table className="w-full min-w-[520px] text-sm border border-slate-200">
+                <thead className="bg-slate-50 text-slate-700">
+                  <tr>
+                    <th scope="col" className="text-left font-semibold px-4 py-3"></th>
+                    <th scope="col" className="text-left font-semibold px-4 py-3 text-lime-800">PixPassport</th>
+                    <th scope="col" className="text-left font-semibold px-4 py-3">Pharmacy / post office</th>
+                    <th scope="col" className="text-left font-semibold px-4 py-3">Photo studio</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100 text-slate-600">
+                  {[
+                    ["Typical price (US)", "From $6.99, check is free", "About $15–17", "$20+"],
+                    ["Time", "About 30 seconds", "Trip + wait", "Appointment"],
+                    ["See result before paying", "Yes", "No", "Sometimes"],
+                    ["Checked against your country's rules", "Automatic, 50+ countries", "Depends on staff", "Depends on staff"],
+                    ["Digital file for online forms", "Included", "Rarely", "Extra cost"],
+                    ["If the photo is rejected", "100% refund", "Retake, often paid", "Varies"],
+                  ].map(([label, ...cols]) => (
+                    <tr key={label}>
+                      <th scope="row" className="text-left font-medium text-slate-800 px-4 py-3">{label}</th>
+                      <td className="px-4 py-3 font-semibold text-lime-800">{cols[0]}</td>
+                      <td className="px-4 py-3">{cols[1]}</td>
+                      <td className="px-4 py-3">{cols[2]}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p className="text-xs text-slate-500 text-center mt-4">
+              Pharmacy and studio prices are typical US ranges and vary by location. Refund terms:{" "}
+              <Link href="/refund-policy" className="underline hover:text-slate-700">money-back guarantee</Link>.
+            </p>
+          </div>
+        </section>
         
         {/* Master Directory Entry Points */}
         <section className="bg-white py-12 border-y border-slate-50">
@@ -269,24 +329,6 @@ export default async function Home() {
                   </p>
                 </div>
               </Link>
-              <Link
-                href="/resize-passport-photo-singapore"
-                className="group bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 hover:border-lime-400 hover:shadow-md transition-all flex flex-col justify-between"
-              >
-                <div>
-                  <div className="flex items-center gap-2.5 mb-2">
-                    <div className="w-7 h-7 sm:w-8 sm:h-8 bg-lime-100/80 rounded-lg flex items-center justify-center text-sm sm:text-base shrink-0 group-hover:scale-105 transition-transform">
-                      ✂️
-                    </div>
-                    <h3 className="font-bold text-xs sm:text-sm text-slate-900 group-hover:text-lime-700 transition-colors line-clamp-1 leading-snug">
-                      Resize Singapore Photo
-                    </h3>
-                  </div>
-                  <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">
-                    Crop and resize any selfie to Singapore ICA specifications for MyICA, NRIC &amp; Visas.
-                  </p>
-                </div>
-              </Link>
               <Link 
                 href="/singapore-ica-photo"
                 className="group bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 hover:border-lime-400 hover:shadow-md transition-all flex flex-col justify-between"
@@ -351,11 +393,11 @@ export default async function Home() {
                       🪪
                     </div>
                     <h3 className="font-bold text-xs sm:text-sm text-slate-900 group-hover:text-lime-700 transition-colors line-clamp-1 leading-snug">
-                      Passport Photo Online: Free Passport Photo Maker
+                      IDPhoto.us – Our Sister Site
                     </h3>
                   </div>
                   <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">
-                    Create a free, compliant passport photo online with IDPhoto.us.
+                    US-focused ID photo tools from the PixPassport team: 2×2 photos, driver&apos;s licence and more.
                   </p>
                 </div>
               </a>

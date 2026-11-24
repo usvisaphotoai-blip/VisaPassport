@@ -107,15 +107,18 @@ const privacyItems = [
   },
 ];
 
+// Labels slugify to document ids in lib/specs.ts (e.g. "UK Passport" -> uk-passport).
 const docPills = [
+  "US Passport",
   "India Passport",
   "Singapore Passport",
   "UK Passport",
   "US Visa",
   "Schengen Visa",
   "Australia Passport",
-  "UAE Visa",
-  "China Visa",
+  "Canada Passport",
+  "UAE Passport",
+  "China Passport",
   "France Passport",
 ];
 
@@ -380,23 +383,17 @@ export default function HomeSections({
           crops your image to the exact required ratio automatically.
         </p>
         <p className="hc-seo-p">
-          <strong>Singapore &amp; Asia-Pacific applicants:</strong> prepare your MyICA submissions with our dedicated{" "}
+          <strong>Singapore applicants:</strong> MyICA uploads need a
+          35x45mm photo with a plain white background.
+          Our{" "}
           <a href="/resize-passport-photo-singapore" style={{ color: "#2f6f57", fontWeight: 600 }}>
             Singapore passport photo resizer
-          </a>
-          , resize any selfie with our{" "}
-          <a href="/resize-passport-photo-singapore" style={{ color: "#2f6f57", fontWeight: 600 }}>
-            Singapore photo resizer
-          </a>
-          , or inspect exact specifications with our{" "}
-          <a href="/resize-passport-photo-singapore#specifications" style={{ color: "#2f6f57", fontWeight: 600 }}>
-            413x531 pixel dimension guide
           </a>{" "}
-          and{" "}
+          handles the crop, and the{" "}
           <a href="/singapore-ica-photo" style={{ color: "#2f6f57", fontWeight: 600 }}>
             ICA photo requirements
-          </a>
-          .
+          </a>{" "}
+          page lists every rule.
         </p>
         <p className="hc-seo-p">
           Once your photo passes, you can download a print-ready file or use
@@ -407,8 +404,8 @@ export default function HomeSections({
           to print multiple copies of your passport photo on a single A4
           sheet at any pharmacy or print shop. Explore country-specific tools
           in our{" "}
-          <a href="/resize-passport-photo-singapore" style={{ color: "#2f6f57", fontWeight: 600 }}>
-            Singapore
+          <a href="/us-passport-photo-editor" style={{ color: "#2f6f57", fontWeight: 600 }}>
+            US
           </a>
           ,{" "}
           <a href="/india-passport-photo-editor" style={{ color: "#2f6f57", fontWeight: 600 }}>
@@ -456,11 +453,11 @@ export default function HomeSections({
       <section className="hc-strip">
         <div className="hc-strip-in">
           {[
-            { stat: "12,000+", label: "Photos Processed" },
+            { stat: "40,000+", label: "Photos Processed" },
             { stat: "99.8%", label: "Acceptance Rate" },
             { stat: "50+", label: "Countries Supported" },
             { stat: "30s", label: "Ready in Seconds" },
-            { stat: "Official", label: "ICAO Compliant" },
+            { stat: "100%", label: "Money Back if Rejected" },
           ].map((s, i) => (
             <div key={i} className="hc-strip-item">
               <div className="hc-strip-stat">{s.stat}</div>
