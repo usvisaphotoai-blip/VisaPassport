@@ -29,6 +29,8 @@ export interface RegionConfig {
   hubDescription: string;
   author: string;
   defaultImage: string;
+  /** Alt text for defaultImage, used when a page sets no imageAlt */
+  defaultImageAlt?: string;
 }
 
 export const REGIONS: Record<string, RegionConfig> = {
@@ -40,7 +42,8 @@ export const REGIONS: Record<string, RegionConfig> = {
     hubTitle: "US Passport, Visa & USCIS Photo Requirements",
     hubDescription: "Photo rules for U.S. passports, green cards, work permits and other USCIS forms, checked against the official instructions.",
     author: "PixPassport US Team",
-    defaultImage: "https://res.cloudinary.com/dipzpwbbk/image/upload/v1785679206/icao_visa_photo_example_whvfqt.jpg",
+    defaultImage: "https://res.cloudinary.com/dipzpwbbk/image/upload/v1790578095/us_passport_size_phoro_novzyr.webp",
+    defaultImageAlt: "Example 2 x 2 inch (51 x 51 mm) photo on a white background, with the head height of 1 to 1 3/8 inches (25-35 mm) marked from chin to top of head",
   },
   in: {
     code: "in",
@@ -173,7 +176,7 @@ function toMeta(region: string, file: string, data: Record<string, any>): Region
     lastVerified: data.lastVerified ? iso(data.lastVerified) : undefined,
     author: data.author || config.author,
     image: data.image || config.defaultImage,
-    imageAlt: data.imageAlt,
+    imageAlt: data.imageAlt || (data.image ? undefined : config.defaultImageAlt),
     spec: data.spec,
     quickAnswer: (data.quickAnswer || []).map(t),
     officialSources: data.officialSources || [],

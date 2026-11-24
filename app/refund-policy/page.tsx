@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Refund Policy",
-  description: "PixPassport refund policy — 100% money-back guarantee on rejected photos.",
+  description: "PixPassport refund policy: a 100% refund if a government agency rejects your processed photo. How to claim within 30 days and how long refunds take.",
   alternates: {
     canonical: "https://www.pixpassport.com/refund-policy",
     languages: {
@@ -19,7 +19,7 @@ export default function RefundPolicyPage() {
       <section className="bg-gray-50 border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
           <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900">Refund Policy</h1>
-          <p className="mt-3 text-gray-500">Last updated: February 23, 2026</p>
+          <p className="mt-3 text-gray-500">Last updated: November 24, 2026</p>
         </div>
       </section>
 
@@ -30,7 +30,7 @@ export default function RefundPolicyPage() {
               <h2 className="text-xl font-bold text-slate-900 mb-3">1. Our 100% Money-Back Guarantee</h2>
               <div className="bg-lime-50 border border-lime-200 rounded-xl p-5 mb-4">
                 <p className="text-sm text-lime-900 leading-relaxed">
-                  We stand fully behind our photos. If your processed photo is rejected by any government agency (e.g., for passport, visa, or ID applications), you'll receive a <strong>100% refund</strong> of your original purchase price — no partial credits, no fine print.
+                  We stand fully behind our photos. If your processed photo is rejected by any government agency (e.g., for passport, visa, or ID applications), you&apos;ll receive a <strong>100% refund</strong> of your original purchase price — no partial credits, no fine print.
                 </p>
               </div>
             </div>
@@ -50,7 +50,7 @@ export default function RefundPolicyPage() {
             <div>
               <h2 className="text-xl font-bold text-slate-900 mb-3">3. No Hidden Deductions</h2>
               <p className="text-sm text-gray-600 leading-relaxed">
-                Unlike many services that only offer partial refunds, we refund the <strong>full amount</strong> you paid — 100%, every time your photo is rejected for official use. We absorb the processing costs ourselves because we'd rather earn your trust than nickel-and-dime you.
+                Unlike many services that only offer partial refunds, we refund the <strong>full amount</strong> you paid — 100%, every time your photo is rejected for official use. We absorb the processing costs ourselves because we&apos;d rather earn your trust than nickel-and-dime you.
               </p>
             </div>
 
@@ -58,14 +58,14 @@ export default function RefundPolicyPage() {
               <h2 className="text-xl font-bold text-slate-900 mb-3">4. Processing Time and Method</h2>
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-600">
                 <li>Approved refunds are processed within <strong>5 to 10 business days</strong> of approval.</li>
-                <li>Your refund goes back to the <strong>original payment method</strong> used during the transaction. We're unable to issue refunds to alternate cards or accounts.</li>
+                <li>Your refund goes back to the <strong>original payment method</strong> used during the transaction. We&apos;re unable to issue refunds to alternate cards or accounts.</li>
               </ul>
             </div>
 
             <div>
               <h2 className="text-xl font-bold text-slate-900 mb-3">5. Other Refund Reasons</h2>
               <p className="text-sm text-gray-600 leading-relaxed">
-                Because our service delivers immediate digital downloads, refund requests for reasons other than official photo rejection (e.g., changing your mind, accidental duplicate purchases, or finding an alternative service) are reviewed on a case-by-case basis. We're happy to work with you — just reach out and explain your situation.
+                Because our service delivers immediate digital downloads, refund requests for reasons other than official photo rejection (e.g., changing your mind, accidental duplicate purchases, or finding an alternative service) are reviewed on a case-by-case basis. We&apos;re happy to work with you — just reach out and explain your situation.
               </p>
             </div>
 

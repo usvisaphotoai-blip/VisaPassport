@@ -6,6 +6,7 @@ import SpecTable from "./SpecTable";
 import SpecDiagram from "./SpecDiagram";
 import UscisFormTable from "./UscisFormTable";
 import GuideEmbeddedTool from "./GuideEmbeddedTool";
+import RegionalHero from "./RegionalHero";
 import { FaqList, OfficialSources, QuickAnswer, RelatedPages, plainText } from "./GuideBlocks";
 
 /** Markdown places data-driven blocks with a paragraph of its own: {{block:specTable}} */
@@ -97,6 +98,7 @@ export default function RegionalGuidePage({ page }: { page: RegionalPage }) {
 
   const parts = splitBlocks(page.contentHtml);
   const docs = page.tool ? guideToolDocs(page.region) : [];
+  const tool = docs.length > 0 ? page.tool : undefined;
 
   return (
     <div className="bg-slate-50 min-h-screen pb-16">
@@ -113,30 +115,34 @@ export default function RegionalGuidePage({ page }: { page: RegionalPage }) {
         />
       </div>
 
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 pt-8 sm:pt-12 overflow-x-clip">
-        <header>
-          <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-900 leading-tight">{page.h1}</h1>
-          {page.intro && <p className="mt-4 text-base sm:text-lg leading-relaxed text-slate-600">{page.intro}</p>}
-          <p className="mt-4 flex flex-wrap gap-x-4 gap-y-1 text-xs font-semibold text-slate-500">
+      <RegionalHero
+        badge={tool ? "Free Photo Check" : "Photo Requirements"}
+        secondaryBadge={`Updated ${monthYear(page.updatedAt, region.lang)}`}
+        h1={page.h1}
+        intro={page.intro}
+        cta={{ href: "/passport-photo-online", label: "Upload Your Photo Now" }}
+        image={page.image}
+        imageAlt={page.imageAlt || page.h1}
+        meta={
+          <p className="flex flex-wrap gap-x-4 gap-y-1">
             {lastVerifiedLabel && (
               <span>
                 Last verified: <time dateTime={page.lastVerified}>{lastVerifiedLabel}</time>
               </span>
             )}
-            <span>
-              Updated <time dateTime={page.updatedAt}>{monthYear(page.updatedAt, region.lang)}</time>
-            </span>
             <span>By {page.author}</span>
           </p>
-        </header>
+        }
+      />
 
-        <div className="mt-8">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 pt-8 sm:pt-12 overflow-x-clip">
+        <div>
           <QuickAnswer items={page.quickAnswer} />
         </div>
 
-        {page.tool && docs.length > 0 && (
+        {tool && (
           <div id="tool" className="mt-8 scroll-mt-24">
-            <GuideEmbeddedTool docs={docs} defaultDoc={page.tool.doc} from={region.code} title={page.tool.title} subtitle={page.tool.subtitle} />
+            <GuideEmbeddedTool docs={docs} defaultDoc={tool.doc} from={region.code} title={tool.title} subtitle={tool.subtitle} />
           </div>
         )}
 
@@ -145,6 +151,19 @@ export default function RegionalGuidePage({ page }: { page: RegionalPage }) {
             i % 2 === 1 ? <div key={i}>{renderBlock(part, page.spec, region.lang)}</div> : part.trim() && <div key={i} dangerouslySetInnerHTML={{ __html: part }} />
           )}
         </article>
+
+        {tool && (
+          <a
+            href="#tool"
+            className="mt-10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-lg border-2 border-lime-200 bg-lime-50 p-4 sm:p-5 hover:border-lime-500 transition-colors"
+          >
+            <span>
+              <span className="block text-base sm:text-lg font-black text-slate-900">{tool.title}</span>
+              {tool.subtitle && <span className="block text-sm text-slate-600">{tool.subtitle}</span>}
+            </span>
+            <span className="shrink-0 text-center bg-lime-700 text-white font-bold px-5 py-2.5 rounded-lg text-sm">Upload my photo ↑</span>
+          </a>
+        )}
 
         <FaqList items={page.faq} />
         <OfficialSources sources={page.officialSources} lastVerified={page.lastVerified} lastVerifiedLabel={lastVerifiedLabel} />

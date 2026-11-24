@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Breadcrumbs from "@/app/components/Breadcrumbs";
+import RegionalHero from "@/app/components/guide/RegionalHero";
 import { BASE_URL, REGIONS, getRegionalPages } from "@/lib/regional-content";
 
 const region = REGIONS.us;
@@ -48,15 +49,19 @@ export default function USHub() {
       <div className="bg-white border-b border-slate-200">
         <Breadcrumbs items={[{ label: region.name, href: "/us" }]} />
       </div>
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-8 sm:pt-12">
-        <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-900">{region.hubTitle}</h1>
-        <p className="mt-4 text-base sm:text-lg leading-relaxed text-slate-600">
-          Most U.S. documents use the same 2 × 2 inch photo, but the rules around it differ. Passports, USCIS forms and
-          the DV lottery each set their own limits on how old the photo can be, how you send it and how many copies you
-          need. Pick your document below.
-        </p>
+      <RegionalHero
+        badge="2 × 2 inch photos"
+        secondaryBadge="Passport · Visa · USCIS"
+        h1={region.hubTitle}
+        intro="Most U.S. documents use the same 2 × 2 inch photo, but the rules around it differ. Passports, USCIS forms and the DV lottery each set their own limits on how old the photo can be, how you send it and how many copies you need. Pick your document below."
+        cta={{ href: "/passport-photo-online", label: "Upload Your Photo Now" }}
+        secondaryCta={{ href: "#guides", label: "Browse photo guides" }}
+        image={region.defaultImage}
+        imageAlt={region.defaultImageAlt || region.hubTitle}
+      />
 
-        <h2 className="mt-10 text-xl font-black text-slate-900">Photo requirement guides</h2>
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-8 sm:pt-12">
+        <h2 id="guides" className="scroll-mt-24 text-xl font-black text-slate-900">Photo requirement guides</h2>
         <ul className="mt-4 grid gap-3 sm:grid-cols-2">
           {pages.map((p) => (
             <li key={p.slug}>

@@ -4,7 +4,7 @@ import { getLocalPrice } from "@/lib/currency";
 
 export const metadata: Metadata = {
   title: "Terms of Service",
-  description: "PixPassport terms of service. Terms, conditions, and usage policies for our US visa and passport photo validation service.",
+  description: "PixPassport terms of service: how the passport, visa and ID photo service works, payments, the 100% refund guarantee, photo deletion and your responsibilities.",
   alternates: {
     canonical: "https://www.pixpassport.com/terms",
     languages: {
@@ -23,7 +23,7 @@ export default async function TermsPage() {
       <section className="bg-gray-50 border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
           <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900">Terms of Service</h1>
-          <p className="mt-3 text-gray-500">Last updated: February 22, 2026</p>
+          <p className="mt-3 text-gray-500">Last updated: November 24, 2026</p>
         </div>
       </section>
 
@@ -45,6 +45,7 @@ export default async function TermsPage() {
               <ul className="list-disc pl-5 space-y-1 text-sm text-gray-600 mt-3">
                 <li><strong>Free tier:</strong> Photo validation and compliance reports at no cost</li>
                 <li><strong>Paid tier:</strong> 1 processed, compliant photo download for {localPrice.formatted} per purchase. <strong>Processed digital photos are delivered instantly via download after successful payment.</strong></li>
+                <li><strong>Optional services:</strong> such as Expert Edit, where a member of our team reviews and edits your photo, and printed or business orders. The price is shown before you pay</li>
               </ul>
             </div>
 
@@ -65,7 +66,7 @@ export default async function TermsPage() {
                 <li>The photo processing and download fee is <strong>{localPrice.formatted} ({localPrice.currency})</strong> per photo</li>
                 <li>Each purchase includes <strong>1 processed digital photo + A4 print sheet (20 photos)</strong> — compliant, cropped, and ready for submission</li>
                 <li>Payment is a one-time charge — there are no subscriptions or recurring fees</li>
-                <li>Payment is processed securely via our third-party payment provider</li>
+                <li>Payments are processed securely by Razorpay. Prices may be shown in your local currency</li>
               </ul>
             </div>
 
@@ -73,7 +74,7 @@ export default async function TermsPage() {
               <h2 className="text-xl font-bold text-slate-900 mb-3">5. Refund Policy</h2>
               <div className="bg-blue-50 border border-blue-200 rounded-xl p-5 mb-4">
                 <p className="text-sm text-blue-800 leading-relaxed">
-                  <strong>Photo Rejection Guarantee:</strong> If your processed photo is rejected by any government agency (e.g., during passport application, visa submission, or national ID registration), you are eligible for a <strong>50% refund</strong> of your purchase price.
+                  <strong>Photo Rejection Guarantee:</strong> If your processed photo is rejected by any government agency (e.g., during passport application, visa submission, or national ID registration), you are eligible for a <strong>100% refund</strong> of your purchase price.
                 </p>
               </div>
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-600">
@@ -99,9 +100,10 @@ export default async function TermsPage() {
                 You retain full ownership of all photos you upload. By uploading photos, you grant us a temporary, limited license to process them solely for the purpose of providing the Service.
               </p>
               <ul className="list-disc pl-5 space-y-2 text-sm text-gray-600 mt-3">
-                <li><strong>Automatic deletion:</strong> All uploaded and processed images are <strong>automatically deleted from our servers within 24 hours</strong> of creation via an automated cleanup process</li>
+                <li><strong>Automatic deletion:</strong> Uploaded and processed images are deleted by an automatic daily job once they are <strong>more than 24 hours old</strong>, so they are normally gone within 48 hours. Your download link stops working after 24 hours</li>
+                <li><strong>Expert Edit:</strong> photos sent for an Expert Edit are kept for 30 days so we can complete the order, then deleted automatically</li>
                 <li>After deletion, photos cannot be recovered — please download your processed photo promptly after purchase</li>
-                <li>We do not sell, share, or use your photos for any purpose other than providing the Service</li>
+                <li>We do not sell your photos or use them for any purpose other than providing the Service. See our <Link href="/privacy-policy" className="text-blue-600 underline">Privacy Policy</Link> for the providers that store or deliver them for us</li>
                 <li>We do not retain any facial biometric data beyond the processing session</li>
               </ul>
             </div>
@@ -116,7 +118,7 @@ export default async function TermsPage() {
             <div>
               <h2 className="text-xl font-bold text-slate-900 mb-3">9. Service Availability</h2>
               <p className="text-sm text-gray-600 leading-relaxed">
-                We strive to maintain 99.9% uptime but do not guarantee uninterrupted service. We reserve the right to modify, suspend, or discontinue the Service at any time with reasonable notice. Scheduled maintenance will be communicated in advance when possible.
+                We work to keep the Service available but do not guarantee uninterrupted service. We reserve the right to modify, suspend, or discontinue the Service at any time with reasonable notice. Scheduled maintenance will be communicated in advance when possible.
               </p>
             </div>
 

@@ -9,6 +9,8 @@ export interface IExpertOrder extends Document {
   amount?: number;
   currency?: string;
   country?: string;
+  /** Set when the order's photos were deleted by the cleanup cron (30 days after the order) */
+  photosPurgedAt?: Date;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -27,6 +29,7 @@ const ExpertOrderSchema: Schema = new Schema(
     amount: { type: Number },
     currency: { type: String },
     country: { type: String },
+    photosPurgedAt: { type: Date },
   },
   { timestamps: true }
 );

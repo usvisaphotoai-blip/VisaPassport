@@ -1,109 +1,145 @@
 ---
-title: "UK Application Registration Card (ARC) Photo: Size & Requirements 2026"
-description: "Check UK Application Registration Card (ARC) photo requirements, size, background and Home Office rules for asylum seekers. Create a compliant passport-size photo online in minutes."
+title: "UK ARC Card Photo: Who Takes It & When You Need Your Own (2026)"
+description: "Do you need a photo for a UK Application Registration Card (ARC)? No, the Home Office photographs you at screening. See what to do if your ARC photo is wrong, plus UK 35 x 45 mm photo rules for solicitor and other forms."
 slug: "uk-application-registration-card-passport-size-photo"
-h1: "Create UK Application Registration Card (ARC) Photo"
+h1: "UK Application Registration Card (ARC) Photo: What You Actually Need"
 date: "2026-08-18"
+updatedAt: "2026-11-24"
 author: "PixPassport UK Team"
 category: "UK Immigration & Asylum Documents"
-readingTime: "5 Min."
-keywords: "uk application registration card, application registration card uk, asylum arc card uk, uk border agency application registration card, uk arc photo"
+readingTime: "7 Min."
+keywords: "uk application registration card, application registration card uk, arc card photo uk, asylum arc card uk, application registration card photo requirements, uk border agency application registration card, uk arc photo, arc card wrong photo, arc card replacement"
 defaultDoc: "uk-arc"
-toolTitle: "UK Passport-Size Photo Generator for ARC Applications"
-toolSubtitle: "Upload your portrait photo and get a Home Office-compliant, passport-size photo in seconds — ready for your ARC paperwork, solicitor, or dependant's application."
+toolTitle: "UK 35 x 45 mm Passport-Size Photo Maker (for forms that ask for one)"
+toolSubtitle: "Your ARC photo is taken by the Home Office at screening. Use this tool only when a solicitor, college, or another form separately asks you for a UK-standard 35 x 45 mm photo."
 image: "https://res.cloudinary.com/dipzpwbbk/image/upload/v1784690540/uk-hero_m4cc8l.webp"
 faq:
   - question: "Do I need to bring my own photo for my UK Application Registration Card (ARC)?"
-    answer: "No. Your ARC photo is captured biometrically by Home Office staff at your asylum screening interview, along with your fingerprints. You don't upload or submit a photo yourself for the card to be produced."
+    answer: "No. GOV.UK says you will be photographed and have your fingerprints taken at your asylum screening. The card is produced from that Home Office image. The GOV.UK list of documents to bring to screening does not include passport photos."
+  - question: "Can I upload or send a photo to change the picture on my ARC?"
+    answer: "No. If the photograph on your ARC is wrong, report it through the Home Office ARC enquiry form on GOV.UK. The Home Office says you may need to provide fingerprints and a facial image again; you cannot fix it by posting or uploading your own photo."
+  - question: "How long does it take to get an ARC after screening?"
+    answer: "GOV.UK says the ARC is posted to your UK address after screening unless you are detained. If it has not arrived within 3 working days, use Royal Mail tracking if you have a tracking number, or complete the ARC enquiry form. If you live in a hotel or hostel, check with reception first."
   - question: "What size is a standard UK passport-size photo?"
-    answer: "A standard UK passport-size photo is 35 x 45 mm, with a head height of 29-34 mm from chin to crown. This is the same format used across most UK ID documents, and it's useful to have ready for solicitor forms and supporting evidence."
-  - question: "Can I wear glasses in my ARC biometric photo?"
-    answer: "No. Home Office biometric photo standards for the ARC follow ICAO passport rules, which require a full face, front-facing image with eyes open and no glasses. Bring your glasses to your appointment if you need them, but expect to remove them for the photograph."
-  - question: "What if the photo on my ARC isn't me, or looks wrong?"
-    answer: "If the photo on your card doesn't match you, you may need to attend a further appointment so Home Office can re-verify your identity using biometric data. Report the issue using the ARC enquiry form on gov.uk."
+    answer: "GOV.UK's printed passport photo rules are 45 mm high by 35 mm wide, with your head (chin to crown) between 29 mm and 34 mm, taken against a plain cream or light grey background. Digital photos for UK online applications must be at least 600 x 750 pixels."
+  - question: "Can I wear glasses in my ARC or UK passport-size photo?"
+    answer: "GOV.UK photo guidance says not to wear glasses unless you have to. If you must, they cannot be sunglasses or tinted, and the frames, glare or shadows must not cover your eyes. At a Home Office biometric appointment, follow the staff's instructions."
+  - question: "What should I do if the name, date of birth or nationality on my ARC is wrong?"
+    answer: "GOV.UK says to email the Asylum Central Communication Hub with details of the incorrect information. Use the ARC enquiry form for a card that is lost, stolen, damaged, expired or shows the wrong photograph or work concession."
+  - question: "Is the ARC the same as an eVisa or BRP?"
+    answer: "No. The ARC is for people whose asylum claim is still pending. The Home Office stopped issuing BRPs, and people granted refugee status now get an eVisa accessed through a UKVI account instead of a physical card."
+  - question: "Is the ARC proof of identity?"
+    answer: "The Home Office ARC guidance says the card holds information about your identity or claimed identity but is not evidence of identity, so banks and others may ask for additional documents. It does show that you have claimed asylum and whether you are allowed to work."
 ---
+
+**Quick answer:** you do **not** need to supply a photo for a UK Application Registration Card (ARC). GOV.UK says you will be photographed and fingerprinted at your asylum screening, and the card is made from that Home Office image. A passport-size photo of your own is only useful when a *different* organisation, such as a solicitor, college or another form, asks for one.
+
+**[Make a 35 x 45 mm UK passport-size photo](/uk-passport-size-photo-maker)** · **[Check an existing photo free](/uk-passport-photo-checker-online-free)**
 
 ## What Is a UK Application Registration Card (ARC)?
 
-The Application Registration Card, usually shortened to ARC card, is a credit-card-sized document issued by the Home Office to people who have claimed asylum in the UK, and to their dependants. It shows that you're an asylum claimant while your case is being decided, and it's checked by employers, healthcare staff, educators and Home Office officials to confirm your status. It is not, technically, an identity document — but it is one of the few pieces of paperwork most asylum seekers carry day to day.
+The Application Registration Card, usually called the ARC card, is a credit-card-sized plastic card the Home Office issues to people who have claimed asylum in the UK, and to their dependants. According to the Home Office's [ARC guidance](https://www.gov.uk/government/publications/application-registration-card-arc/application-registration-card-arc), it certifies that you are an asylum claimant and can stay in the UK while your claim is pending.
 
-Because the ARC includes a photograph, people searching for a "UK ARC photo" often assume they need to submit one themselves, the way they would for a passport or driving licence. That's not quite how it works, so this guide explains exactly where your ARC photo comes from — and when you might still need a proper passport-size photo of your own.
+The ARC is used to:
+
+- show that you have applied for asylum
+- show whether you have permission to work (this appears in the "Remarks" section of the card)
+- help you access healthcare and education services
+- be taken to your Home Office reporting events, which is mandatory ([GOV.UK: after your screening](https://www.gov.uk/claim-asylum/after-your-screening))
+
+The same Home Office guidance says the ARC holds information about your identity or *claimed* identity but is **not evidence of identity**, so a bank may ask for other documents too.
 
 ## Do You Need to Provide Your Own Photo for an ARC?
 
-In almost all cases, **no**. Your ARC is issued after your asylum screening interview, where Home Office staff take your fingerprints and photograph you as part of your biometric enrolment. This applies to adults and to children over the age of five who are included in a dependant's application. The image captured at that appointment is what appears on your card — you don't upload a digital file or bring a printed photo along for the ARC itself.
+**No.** GOV.UK's [asylum screening page](https://www.gov.uk/claim-asylum/screening) says that at screening you will "be photographed" and "have your fingerprints taken". The list of [documents to bring](https://www.gov.uk/claim-asylum/documents) covers passports, travel documents, ID documents and supporting evidence. It does not mention passport photos.
 
-Where a passport-size photo of your own does come in useful:
-
-- Supporting documents your solicitor or caseworker asks you to provide
-- Evidence submitted for a dependant's asylum application
-- Other UK visa, permit or registration forms you may be completing alongside your asylum claim
-- Personal records, in case you're asked to confirm your identity again later
-
-Our tool above can generate a photo in the standard **35 x 45 mm** UK format for any of these situations, even though it won't be used for the ARC card itself.
-
-## ARC Biometric Photo Requirements (Taken by Home Office)
-
-The photograph captured for your ARC follows the same ICAO (International Civil Aviation Organization) standard used for UK passports. Home Office staff are responsible for meeting these standards during your appointment, but it helps to know what to expect:
-
-| Requirement | Detail |
+| Question | Answer (from GOV.UK) |
 |---|---|
-| Framing | Full face, front view, centred |
-| Eyes | Open and clearly visible |
-| Expression | Neutral |
-| Glasses | Not permitted in the biometric image |
-| Head coverings | Only for religious reasons; face must stay visible |
+| Who takes the ARC photo? | Home Office staff, at your asylum screening |
+| Do I bring printed photos for the ARC? | Not listed in the documents you must bring |
+| Do I upload a digital photo? | No, there is no photo upload for the ARC |
+| Are dependants photographed? | Dependants claiming asylum must attend screening with you |
+| How is the card delivered? | Posted to your UK address, unless you are detained |
+| Wrong photo on the card? | Report it with the ARC enquiry form; you may need to give your biometrics again |
 
-### Glasses Are Not Permitted
+### When a passport-size photo of your own *is* useful
 
-Unlike a UK driving licence photo, glasses are **not allowed** in the ARC biometric image, even if you normally wear them. Bring them to your appointment for identification purposes if needed, but expect Home Office staff to ask you to remove them before the photo is taken.
+Even though the ARC itself never uses a photo you supply, asylum claimants are sometimes asked for a standard UK photo by other organisations, for example:
 
-### Religious Headwear
+- a solicitor, legal adviser or charity that keeps a photo on file
+- a college, university or training provider enrolment form
+- a library card, travel pass or local membership scheme
+- a separate UK immigration application made later, which has its own photo rules
 
-Hijabs, turbans and other religious head coverings are permitted, provided your full face remains visible from chin to forehead, with no shadow cast across your features.
+If one of these asks for a "passport-size photo", it normally means the UK standard below. Always check the exact wording on the form.
 
-### Children
+## UK Passport-Size Photo Requirements (35 x 45 mm)
 
-Children over five who are included in a dependant's application are also fingerprinted and photographed as part of the same process.
+These are GOV.UK's [printed passport photo rules](https://www.gov.uk/photos-for-passports/printed-photos), which most UK organisations follow when they ask for a "passport-size" photo:
 
-## Standard UK Passport-Size Photo Requirements
+| Rule | Requirement |
+|---|---|
+| Print size | 45 mm high x 35 mm wide, not cut down from a larger picture |
+| Head size | 29–34 mm from chin to crown |
+| Background | Plain cream or light grey, in clear contrast to you |
+| Paper | Professional-standard print, in colour, on plain white photographic paper, no border |
+| Expression | Plain expression, mouth closed, eyes open and visible |
+| Glasses | Avoid unless you have to; no sunglasses or tinted lenses; eyes must not be covered by frames, glare or shadow |
+| Head coverings | Only for religious or medical reasons, with your full face visible |
+| Editing | Must not be altered by computer software |
+| Digital version | At least 600 x 750 pixels ([GOV.UK digital photo rules](https://www.gov.uk/photos-for-passports)) |
 
-If you need a separate photo — for a solicitor, a dependant's file, or another form — it should follow the same format used across UK government ID documents:
+For HM Passport Office applications the photo must also have been taken in the last month. Other organisations set their own time limits.
 
-- **Print size:** 35 mm wide x 45 mm tall
-- **Head height:** 29-34 mm from chin to crown
-- **Colour only**, plain light grey or cream background
-- **JPEG format**, minimum 600 x 750 pixels for digital submission
-- Neutral expression, mouth closed, eyes open and visible
-- No hats; religious headwear allowed if the face stays fully visible
+Our [UK passport-size photo maker](/uk-passport-size-photo-maker) crops your picture to 35 x 45 mm with the correct head size and a plain light background. You can also run an existing photo through the [free UK photo checker](/uk-passport-photo-checker-online-free). Both are for forms that accept a photo you provide. **Neither can be used to change the photo on your ARC.**
 
-Our tool applies these standards automatically, cropping your photo to size and replacing the background so it's ready to submit alongside any paperwork that asks for a UK-standard passport photo.
+## ARC Biometric Photo: What to Expect at Screening
+
+The Home Office captures the image, so you do not have to meet print-size rules yourself. It still helps to arrive ready:
+
+- **Face visible:** hair away from your eyes and nothing covering your face.
+- **Glasses:** GOV.UK photo guidance says not to wear glasses unless you have to. Expect staff to ask you to remove them if they cause glare.
+- **Religious or medical head coverings:** allowed under UK photo rules as long as your full face is visible. You can ask for a male or female interviewer, but GOV.UK says this may not always be possible.
+- **Children:** dependants claiming asylum must come to screening with you. If you are helping a child register their own claim, you can go with them.
 
 ## How the ARC Is Issued: Step by Step
 
-1. **Make your asylum claim.** You cannot apply for an ARC directly — it follows from claiming asylum.
-2. **Attend your screening interview.** This is where the Home Office records your identity, background and reasons for claiming asylum.
-3. **Biometric enrolment.** Fingerprints and a photograph are taken during or shortly after screening.
-4. **Card production and delivery.** Once your details are processed, your ARC is typically produced and sent to your registered address, unless you're in detention.
+1. **Claim asylum.** You cannot apply for an ARC on its own. It follows from an asylum claim.
+2. **Attend screening.** You are photographed, fingerprinted and interviewed about your identity and route to the UK.
+3. **Card produced and posted.** GOV.UK says the ARC is sent to your UK address unless you are detained. If the Home Office cannot send it straight away, you will get an appointment letter explaining the next step.
+4. **Not arrived after 3 working days?** Use Royal Mail tracking if you have a tracking number. Otherwise complete the [ARC enquiry form](https://www.gov.uk/government/publications/asylum-registration-card-arc-enquiry) with your current address. Hotel or hostel residents should check with reception first.
 
-If you haven't received your card within a few days of screening, check with staff at your accommodation first, since cards for those in Home Office housing are often delivered there.
+## What to Do If Your ARC Photo or Details Are Wrong
 
-## What to Do If Your ARC Photo Is Wrong
+| Problem | What GOV.UK says to do |
+|---|---|
+| Photograph on the ARC is wrong | Use the [ARC enquiry form](https://www.gov.uk/government/publications/asylum-registration-card-arc-enquiry). You may need to provide fingerprints and a facial image again |
+| Name, date of birth, place of birth, gender or nationality wrong | Email the Asylum Central Communication Hub (address on the [ARC guidance page](https://www.gov.uk/government/publications/application-registration-card-arc/application-registration-card-arc)) with the incorrect details |
+| Work concession wrong | ARC enquiry form |
+| Lost, stolen, seized or damaged card | ARC enquiry form |
+| Card expired or expiring soon | ARC enquiry form |
+| Given the right to work but no updated card within 5 days | Contact the team that granted permission to work |
 
-If the photograph on your card doesn't look like you, or your details are incorrect, you can raise this through the ARC enquiry form on gov.uk. Depending on the issue:
+Have your Home Office or port reference number ready, plus your ARC reference if you know it. Charities such as [Migrant Help](https://www.migranthelpuk.org/arc) explain the same steps in plain language, but they cannot issue or fix cards themselves.
 
-- **Wrong photo or identity mismatch:** you may be asked to attend a further appointment so your identity can be re-verified using biometric data.
-- **Incorrect personal details** (name, date of birth, place of birth, gender, nationality): your caseworker will verify the correct information before a replacement is issued.
-- **Lost, stolen or damaged card:** report this through the same enquiry form to request a replacement.
+## ARC vs eVisa vs BRP
 
-You cannot fix or replace an ARC by submitting your own photo — any correction involving your image goes through a Home Office appointment, not a photo upload.
+| | ARC | eVisa | BRP |
+|---|---|---|---|
+| Who it is for | Asylum claimants and dependants whose claim is pending | People with UK immigration status, including those granted refugee status | Older physical permit, now replaced by eVisas |
+| Form | Physical plastic card | Online record accessed through a UKVI account | Physical card (no longer issued) |
+
+If you are granted refugee status, you will not get a new card with your photo on it. Your status is held as an eVisa. You may still need your ARC until that changes, so keep it safe and follow the instructions in your decision letter.
 
 ## UK Border Agency and the ARC
 
-The ARC scheme predates the creation of UK Visas and Immigration (UKVI), and older guidance sometimes still refers to the "UK Border Agency application registration card." UKBA was replaced by the Home Office's immigration directorates in 2013, but the ARC itself has continued largely unchanged in purpose: it's issued and administered by the Home Office to asylum claimants and their dependants, and the biometric photo rules above still apply.
+Older guidance sometimes says "UK Border Agency application registration card". The UK Border Agency was abolished in 2013 and its work moved into the Home Office, which now issues and administers the ARC. The process above is the current one.
 
-## Why Keep a Spare Passport-Size Photo on Hand
+## Key Takeaways
 
-Even though you won't submit a photo for the ARC itself, asylum claimants often need a compliant passport-size photo at short notice — for a solicitor's file, a dependant's supporting evidence, or a related immigration form. Having one ready in the correct 35 x 45 mm format, on a plain background and to Home Office specifications, can save a delay later in your case.
+- You **do not** provide a photo for an ARC. The Home Office photographs you at screening.
+- A wrong photo is fixed through the **ARC enquiry form**, and you may have to give your biometrics again. Uploading your own picture will not fix it.
+- A separate **35 x 45 mm UK photo** is only needed if another organisation asks for one. [Create one here](/uk-passport-size-photo-maker) or [check one you already have](/uk-passport-photo-checker-online-free).
+- Home Office processes change. Confirm details with your legal representative or on [GOV.UK](https://www.gov.uk/claim-asylum) before you act.
 
-Always confirm the latest requirements for your specific form or appointment with your solicitor, caseworker or the official gov.uk guidance, since Home Office processes can change without notice.
+*Last reviewed 24 November 2026 against GOV.UK asylum screening, ARC guidance and passport photo pages. PixPassport is not affiliated with the Home Office.*

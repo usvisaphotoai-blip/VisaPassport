@@ -1,129 +1,134 @@
 ---
 title: "Passbild selbst prüfen: Checkliste, Maße & häufige Ablehnungsgründe"
-description: "Mit dieser Checkliste prüfen Sie Ihr Passbild selbst: Maße, Gesichtshöhe, Hintergrund, Kinderregeln und die häufigsten Gründe, warum Bürgerämter Fotos ablehnen."
+description: "Mit dieser Checkliste prüfen Sie Ihr Passbild selbst: 35 x 45 mm, Gesichtshöhe, Hintergrund, Brille, Kopfbedeckung, Kinderregeln und die häufigsten Gründe, warum Fotos abgelehnt werden."
 slug: "biometrisches-passbild-alle-anforderungen"
 date: "2026-08-16"
-updatedAt: "2026-10-06"
+updatedAt: "2026-11-24"
 author: "PixPassport Redaktion"
 category: "Passfoto & Dokumente"
-readingTime: "6 Min. Lesezeit"
+readingTime: "8 Min. Lesezeit"
 image: "https://res.cloudinary.com/dipzpwbbk/image/upload/v1779008016/c24d89b1-ab0e-4f1d-9035-5814bc7b91ca_preview_ip9ogs.jpg"
-keywords: "passbild prüfen, passbild checkliste, passbild abgelehnt, biometrisches passbild prüfen, passbild maße, passbild kinder"
+keywords: "passbild prüfen, passbild checkliste, passbild abgelehnt, biometrisches passbild prüfen, passbild maße, passbild gesichtshöhe, passbild schablone, passbild kinder, passbild brille"
 faq:
-  - question: "Welche Größe hat ein biometrisches Passbild?"
-    answer: "Das Foto misst 35 x 45 mm im Hochformat. Das Gesicht nimmt davon 70 bis 80 Prozent der Bildhöhe ein, gemessen vom Kinn bis zum Scheitel."
-  - question: "Kann ich ein biometrisches Passbild online erstellen?"
-    answer: "Ja. Online-Generatoren prüfen Maße, Hintergrund und Position automatisch und liefern eine druckfertige Datei. Für die digitale Übermittlung an das Bürgeramt muss der Anbieter allerdings die technischen Vorgaben der Behörden erfüllen."
-  - question: "Wie prüfe ich, ob mein Passbild biometrisch gültig ist?"
-    answer: "Prüfen Sie Kopfgröße, Blickrichtung, Hintergrundfarbe, Beleuchtung und Gesichtsausdruck gegen die ICAO-Norm. Ein Online-Prüftool erkennt die häufigsten Fehler in Sekunden."
-  - question: "Muss ich für ein biometrisches Passbild persönlich zum Fotografen?"
-    answer: "Nicht zwingend. Sie können das Foto selbst mit dem Smartphone aufnehmen und über eine geprüfte Online-Plattform auf die korrekten Maße und Vorgaben bringen lassen."
-  - question: "Warum wird mein Passbild beim Bürgeramt abgelehnt?"
-    answer: "Häufigste Gründe sind ein zu kleiner oder zu großer Gesichtsanteil, Schatten im Gesicht, ein unruhiger Hintergrund oder ein nicht neutraler Gesichtsausdruck."
+  - question: "Welche Maße hat ein biometrisches Passbild?"
+    answer: "Das Foto ist 35 mm breit und 45 mm hoch (Hochformat). Bei Erwachsenen nimmt das Gesicht vom Kinn bis zum Scheitel 70 bis 80 Prozent der Bildhöhe ein, das entspricht 32 bis 36 mm. Bei Kindern unter 10 Jahren sind 50 bis 80 Prozent zulässig."
+  - question: "Darf man auf dem Passbild lächeln?"
+    answer: "Nein. Vorgeschrieben ist ein neutraler Gesichtsausdruck mit geschlossenem Mund. Ein Lächeln mit sichtbaren Zähnen oder ein geöffneter Mund gilt als Fehler. Nur bei Kindern unter 6 Jahren sind Abweichungen beim Gesichtsausdruck zulässig."
+  - question: "Ist ein weißer Hintergrund beim Passbild erlaubt?"
+    answer: "Vorgeschrieben ist ein einfarbiger, heller Hintergrund ohne Muster und Schatten, der sich deutlich von Gesicht und Haaren abhebt. Bewährt hat sich ein neutrales Hellgrau. Bei sehr hellen Haaren kann ein rein weißer Hintergrund zu wenig Kontrast bieten."
+  - question: "Darf ich auf dem Passbild eine Brille tragen?"
+    answer: "Ja, Brillen sind nicht ausgeschlossen. Die Augen müssen aber deutlich sichtbar sein, der Rahmen darf sie nicht verdecken, die Gläser dürfen nicht getönt sein und es dürfen keine Spiegelungen entstehen. Sonnenbrillen sind nicht erlaubt."
+  - question: "Welche Regeln gelten für Passbilder von Babys und Kleinkindern?"
+    answer: "Bis zum vollendeten 6. Lebensjahr sind Abweichungen bei Kopfhaltung, Gesichtsausdruck und Sichtbarkeit der Augen zulässig. Das Foto muss aber frontal aufgenommen sein, und es dürfen keine zweite Person, keine Hände der Eltern und keine Gegenstände im Bild sein."
+  - question: "Warum wird mein Passbild abgelehnt?"
+    answer: "Häufige Gründe sind ein zu kleiner oder zu großer Kopf im Bild, Schatten im Gesicht oder auf dem Hintergrund, ein nicht neutraler Gesichtsausdruck, Spiegelungen in der Brille, Haare über den Augen sowie bearbeitete oder gefilterte Fotos. Für Reisepass und Personalausweis wird außerdem jedes Foto abgelehnt, das nicht digital übermittelt wurde."
+  - question: "Wie alt darf ein Passbild sein?"
+    answer: "Das Foto muss Sie so zeigen, wie Sie aktuell aussehen. Viele Behörden empfehlen als Faustregel, dass es nicht älter als sechs Monate sein sollte. Nach deutlichen Veränderungen, etwa durch einen neuen Bart oder eine neue Brille, brauchen Sie ein neues Foto."
 ---
 
-Ein Reisepass, Personalausweis oder Aufenthaltstitel lässt sich in Deutschland nur mit einem gültigen **biometrischen Passbild** beantragen. Die Anforderungen sind streng geregelt, und schon kleine Abweichungen bei Größe, Hintergrund oder Gesichtsausdruck führen zur Ablehnung durch das Bürgeramt. Dieser Ratgeber zeigt alle Vorgaben für 2026 im Überblick, erklärt den Unterschied zwischen Fotostudio und Online-Erstellung und liefert eine Checkliste, mit der Sie Ihr Foto vor der Abgabe selbst prüfen.
+Ein Passbild wird nicht wegen eines einzelnen großen Fehlers abgelehnt, sondern meist wegen Kleinigkeiten: der Kopf ein paar Millimeter zu klein, ein Schatten hinter dem Ohr, eine Spiegelung in der Brille. Dieser Ratgeber fasst die amtlichen Bildregeln aus der Fotomustertafel zusammen (Stand November 2026) und gibt Ihnen eine Checkliste, mit der Sie jedes Foto vor dem Termin selbst prüfen können, ob vom Fotografen, aus der Drogerie oder selbst aufgenommen.
+
+> **Wichtig für Reisepass und Personalausweis:** Seit Mai 2025 nehmen die Bürgerämter nur noch digital übermittelte Fotos an. Selbst gemachte Fotos sind dafür nicht mehr zulässig. Wie das Verfahren abläuft und was es kostet, lesen Sie im Ratgeber [Digitales Passbild seit Mai 2025: Ablauf, Kosten & wo Sie es bekommen](/de/guides/biometrisches-passfoto-anforderungen-deutschland). Die Bildregeln unten gelten aber für jedes biometrische Foto, auch beim Fotografen.
 
 ## Was macht ein Passbild biometrisch?
 
-Ein biometrisches Passbild ist mehr als ein gutes Foto. Es folgt der internationalen ICAO-Norm, die eine maschinelle Gesichtserkennung ermöglicht. Kopfhaltung, Beleuchtung, Hintergrund und Mimik müssen exakt definierten Werten entsprechen, damit die Software im Chip des Ausweisdokuments das Gesicht eindeutig zuordnen kann. Ein normales Porträtfoto erfüllt diese Kriterien in der Regel nicht.
+Ein biometrisches Passbild folgt der internationalen ICAO-Norm, damit Grenzkontrollen und Behörden das Gesicht maschinell mit dem im Chip gespeicherten Bild abgleichen können. Kopfhaltung, Ausleuchtung, Hintergrund und Mimik müssen deshalb festen Regeln folgen. In Deutschland sind diese Regeln in der sogenannten **Fotomustertafel** festgelegt, die als [Anlage 8 der Passverordnung](https://www.gesetze-im-internet.de/passv_2007/anlage_8.html) amtlich veröffentlicht ist. 2025 wurde die Tafel neu gestaltet und um Beispiele häufiger Fehler ergänzt, die Anforderungen selbst blieben laut Bundesregierung unverändert.
 
-## Die wichtigsten Anforderungen auf einen Blick
+Zum Nachmessen gibt es außerdem die **Passbild-Schablone** (Lichtbildschablone) für Erwachsene und für Kinder, die Fotografen, Behörden und Auslandsvertretungen nutzen.
+
+## Die Anforderungen auf einen Blick
 
 | Merkmal | Vorgabe |
 |---|---|
 | Format | 35 x 45 mm, Hochformat |
-| Gesichtshöhe (ab 10 Jahren) | 32–36 mm, Kinn bis Scheitel |
-| Gesichtshöhe (6 bis 9 Jahre) | 22–36 mm |
-| Hintergrund | Einfarbig hellgrau bis weiß, ohne Schatten |
-| Blickrichtung | Frontal in die Kamera, Kopf gerade |
-| Gesichtsausdruck | Neutral, Mund geschlossen |
-| Beleuchtung | Gleichmäßig, keine Schlagschatten |
-| Auflösung (digital) | Mindestens 600 x 800 Pixel |
+| Gesichtshöhe Erwachsene | 70–80 % der Bildhöhe, also 32–36 mm vom Kinn bis zum Scheitel |
+| Gesichtshöhe Kinder unter 10 Jahren | 50–80 % der Bildhöhe, also rund 22–36 mm |
+| Kopfposition | Mittig, gerade, frontal, beide Gesichtshälften sichtbar |
+| Gesichtsausdruck | Neutral, Mund geschlossen, Augen offen, Blick in die Kamera |
+| Ausleuchtung | Gleichmäßig, keine Schatten, keine Reflexionen, keine roten Augen |
+| Hintergrund | Einfarbig hell, ohne Muster und Schatten, deutlicher Kontrast zu Gesicht und Haaren |
+| Bildqualität | Scharf, kontrastreich, natürliche Hautfarbe, keine Filter oder Retusche |
+| Brille | Erlaubt, wenn Augen sichtbar, keine getönten Gläser, keine Spiegelungen |
+| Kopfbedeckung | Nur aus religiösen Gründen, Gesicht von Kinn bis Stirn sichtbar |
 
-## Maße und Format im Detail
+## Maße und Gesichtshöhe richtig messen
 
-Das Standardformat bleibt bei 35 x 45 mm. Entscheidend ist jedoch nicht nur die Bildgröße, sondern der Anteil, den das Gesicht einnimmt. Ab zehn Jahren liegt die Gesichtshöhe zwischen 32 und 36 Millimetern, gemessen vom Kinn bis zum Scheitel. Für Kinder von sechs bis neun Jahren gibt es eine eigene Lichtbild-Schablone mit einem größeren Spielraum von 22 bis 36 Millimetern. Wird dieser Bereich unter- oder überschritten, lehnt das Bürgeramt das Foto in der Regel ab.
+Das Format von 35 x 45 mm ist schnell erreicht, scheitern Fotos meist an der **Gesichtshöhe**. Gemessen wird von der Kinnspitze bis zum oberen Kopfende (Scheitel, ohne Haarvolumen darüber). Bei Erwachsenen muss dieser Bereich 70 bis 80 Prozent der Bildhöhe ausmachen, auf dem fertigen Foto also 32 bis 36 mm.
 
-Der Kopf steht mittig im Bild, die Augenlinie verläuft waagerecht. Eine leichte Neigung nach links oder rechts reicht bereits aus, um das Foto ungültig zu machen.
+So prüfen Sie das selbst:
 
-## Hintergrund und Beleuchtung richtig wählen
+1. Foto in Originalgröße ausdrucken oder am Bildschirm auf 35 x 45 mm skalieren.
+2. Mit einem Lineal von der Kinnspitze bis zum Scheitel messen.
+3. Liegt der Wert unter 32 mm, ist der Kopf zu klein (häufig bei Selfies mit ausgestrecktem Arm). Über 36 mm ist er zu groß, oft wird dann das Kinn oder der Haaransatz abgeschnitten.
+4. Kopf mittig, Augenlinie waagerecht: Eine Neigung zur Seite oder ein gedrehter Kopf gilt als Fehler.
 
-Der Hintergrund muss einfarbig sein, meist hellgrau oder weiß, und darf keine Muster, Schatten oder Gegenstände zeigen. Fotografieren Sie möglichst vor einer glatten Wand mit ausreichend Abstand, damit kein eigener Schatten auf den Hintergrund fällt.
+## Hintergrund und Ausleuchtung
 
-Bei der Beleuchtung gilt: gleichmäßiges, weiches Licht von vorne. Direktes Blitzlicht erzeugt harte Schatten unter Kinn und Nase und führt oft zur Ablehnung. Tageslicht durch ein Fenster funktioniert in der Regel besser als künstliches Licht aus einer einzigen Richtung.
+Der Hintergrund muss **einfarbig und hell** sein, ohne Muster, Gegenstände oder Schatten, und sich deutlich von Gesicht und Haaren abheben. Ein neutrales Hellgrau funktioniert bei fast allen Haarfarben. Weiß ist möglich, kann bei hellblonden oder grauen Haaren aber zu wenig Kontrast bieten.
 
-## Erlaubte und verbotene Merkmale
+Bei der Ausleuchtung gilt: Das Gesicht muss **an allen Stellen gleichmäßig** hell sein. Typische Fehler laut Fotomustertafel sind Schlagschatten, ein zu dunkles Bild und Reflexionen auf der Haut. Direktes Blitzlicht von vorne erzeugt oft glänzende Stellen auf Stirn und Nase, seitliches Licht einen Schatten auf einer Gesichtshälfte. Weiches Tageslicht von vorne, zum Beispiel vor einem Fenster, ist meist die beste Lösung.
 
-Ein neutraler Gesichtsausdruck ist Pflicht. Der Mund bleibt geschlossen, ein Lächeln mit sichtbaren Zähnen führt zur Ablehnung. Beide Augen müssen vollständig geöffnet und deutlich sichtbar sein.
+## Bildqualität: keine Filter, keine Retusche
 
-- **Brille:** erlaubt, sofern keine Reflexionen die Augen verdecken und der Rahmen die Augenpartie nicht verdeckt
-- **Kopfbedeckung:** grundsätzlich verboten, Ausnahme für religiöse Kopfbedeckungen, wenn das Gesicht vollständig sichtbar bleibt
-- **Make-up:** dezent und natürlich, keine starke farbliche Veränderung der Gesichtsform
-- **Haare:** dürfen die Augen, Augenbrauen oder Gesichtskonturen nicht verdecken
+Das Foto muss scharf sein, gut kontrastiert und die Hautfarbe natürlich wiedergeben. Die Fotomustertafel nennt ausdrücklich **Retusche, Filter, Weichzeichner und zu geringe Auflösung** als Fehler. Digitale Fotos müssen farbig sein. Beauty-Modi von Smartphone-Kameras sollten Sie deshalb ausschalten.
 
-## Biometrisches Passbild erstellen: Die Optionen im Vergleich
+## Gesichtsausdruck, Brille, Haare und Kopfbedeckung
 
-Für die Erstellung stehen grundsätzlich drei Wege offen, die sich in Aufwand, Kosten und Kontrolle unterscheiden.
+- **Gesichtsausdruck:** neutral, Mund geschlossen, beide Augen offen, Blick gerade in die Kamera. Ein Lächeln, hochgezogene Augenbrauen oder zusammengekniffene Augen führen zur Ablehnung.
+- **Brille:** nicht verboten, aber die Augen müssen klar erkennbar sein. Keine getönten Gläser, keine Sonnenbrille, keine Spiegelungen, der Rahmen darf die Augen nicht verdecken. Tipps dazu im Ratgeber [Passbild mit Brille](/de/passbild-mit-brille).
+- **Haare:** dürfen Augen und Augenbrauen nicht verdecken. Lange Haare am besten hinter die Schultern legen.
+- **Kopfbedeckung:** grundsätzlich nicht erlaubt. Ausnahme aus religiösen Gründen: Das Gesicht muss von der unteren Kinnkante bis zur Stirn sichtbar sein, ohne Schatten.
+- **Make-up und Schmuck:** dezent, das Gesicht darf nicht verfremdet wirken.
 
-| Option | Vorteil | Nachteil |
-|---|---|---|
-| Fotostudio | Persönliche Beratung, sofortige Korrektur vor Ort | Termin nötig, meist teurer |
-| Fotoautomat | Schnell verfügbar, kein Termin | Wenig Kontrolle über Ergebnis, oft schlechte Beleuchtung |
-| Online-Tool | Selbstständig mit dem Smartphone, sofortige Prüfung, günstig | Erfordert ein einigermaßen scharfes Ausgangsfoto |
+## Regeln für Kinder und Babys
 
-Bei einem Online-Tool laden Sie ein selbst aufgenommenes Foto hoch, das System prüft Kopfgröße, Hintergrund und Position automatisch und passt das Bild auf die exakten Maße an. Das spart Zeit gegenüber einem Termin im Fotostudio und liefert eine sofort druckfertige oder digital einreichbare Datei. Eine weitere Möglichkeit ist [Biometrisches Passbild online erstellen – in wenigen Minuten](https://fotoklar.de/).
+Für Kinder gelten Erleichterungen, die die Fotomustertafel in zwei Altersstufen festlegt:
 
-## Biometrisches Passbild für Kinder und Babys
+| Alter | Was gilt |
+|---|---|
+| Bis zum vollendeten 10. Lebensjahr | Gesicht nimmt 50–80 % der Bildhöhe ein, kleinere Abweichungen sind zulässig |
+| Bis zum vollendeten 6. Lebensjahr | Zusätzlich Abweichungen bei Kopfhaltung, Gesichtsausdruck und Sichtbarkeit der Augen zulässig, das Foto muss aber frontal sein |
 
-Für Kinder gelten dieselben Grundregeln wie für Erwachsene, allerdings mit Anpassungen bei Größe und Mimik. Bei Kindern von sechs bis neun Jahren darf die Gesichtshöhe zwischen 22 und 36 Millimetern liegen. Bei Kindern bis einschließlich fünf Jahren wird die Biometrietauglichkeit nicht vollständig geprüft: Abweichungen bei Kopfhaltung, Gesichtsausdruck und Blickrichtung sind zulässig, Format, Schärfe, Ausleuchtung und Hintergrund müssen aber stimmen. Wichtig bleibt trotzdem ein einfarbiger Hintergrund ohne Spielzeug, Hände der Eltern oder andere Ablenkungen im Bild. Bei sehr jungen Babys reicht es oft, das Kind auf einer neutralen Unterlage liegend von oben zu fotografieren und den Bildausschnitt anschließend passend zuzuschneiden.
-
-## Was kostet ein biometrisches Passbild?
-
-Die Preise unterscheiden sich je nach Anbieter deutlich. Ein Fototermin im Fotostudio kostet meist zwischen 8 und 15 Euro pro Fotosatz, inklusive Beratung und mehrerer Abzüge. Ein Fotoautomat ist mit 5 bis 10 Euro oft günstiger, bietet aber keine Kontrolle über das Ergebnis und keine Korrekturmöglichkeit vor Ort. Online-Tools liegen meist im Bereich von 3 bis 8 Euro und liefern zusätzlich eine sofortige automatische Prüfung der Maße, was das Risiko einer Ablehnung deutlich senkt. Wer mehrere Dokumente gleichzeitig beantragt, etwa Reisepass und Personalausweis, kann ein einziges gültiges Foto meist für beide Anträge verwenden, solange es nicht älter als sechs Monate ist.
-
-## Wie lange ist ein biometrisches Passbild gültig?
-
-Ein aktuelles Foto sollte bei der Antragstellung nicht älter als sechs Monate sein. Manche Bürgerämter akzeptieren auch ältere Fotos, sofern die Person noch eindeutig erkennbar ist, verlangen jedoch häufig ein neues Bild bei sichtbaren Veränderungen im Gesicht, etwa durch einen neuen Bart oder eine deutliche Gewichtsveränderung. Da die Anforderungen an Reisepass, Personalausweis und Aufenthaltstitel identisch sind, lohnt es sich, bei mehreren gleichzeitig anstehenden Anträgen nur einmal ein neues Foto anfertigen zu lassen.
-
-## Digitale Übermittlung: Was sich 2025/2026 geändert hat
-
-Seit Mai 2025 läuft die Abgabe des Passbilds für viele Ausweisdokumente digital. Statt eines Papierabzugs übermittelt ein zugelassener Fotodienstleister das Bild direkt an das zuständige Bürgeramt. Ein klassisches Foto aus dem Automaten reicht für Neubeantragungen daher oft nicht mehr aus, wenn der Anbieter nicht an das digitale Verfahren angeschlossen ist. Prüfen Sie vor dem Termin, ob Ihr Fotoservice die digitale Übermittlung unterstützt, um einen zweiten Weg zum Amt zu vermeiden.
+Auch bei Babys gilt: **keine zweite Person** im Bild (also keine Hände der Eltern), kein Spielzeug, keine Kopfbedeckung, ein heller einfarbiger Hintergrund. Bewährt hat sich, das Baby auf eine helle, glatte Unterlage zu legen und von oben frontal zu fotografieren. Für Reisepass und Personalausweis muss auch das Kinderfoto digital übermittelt werden. Da die Terminals in vielen Ämtern für Kleinkinder nicht geeignet sind, ist ein Fotostudio hier oft der bessere Weg.
 
 ## Checkliste: So prüfen Sie Ihr Foto selbst
 
-Vor der Abgabe lohnt sich ein kurzer Eigencheck:
+Gehen Sie diese Punkte durch, bevor Sie das Foto einreichen oder beim Fotografen abnehmen:
 
-1. Ist der Hintergrund einfarbig und schattenfrei?
-2. Liegt die Gesichtshöhe im vorgeschriebenen Bereich?
-3. Sind beide Augen offen und gut sichtbar?
-4. Ist der Gesichtsausdruck neutral, ohne Lächeln?
-5. Fällt kein Schatten auf Gesicht oder Hintergrund?
-6. Verdeckt weder Haar noch Kopfbedeckung Teile des Gesichts?
+1. **Format:** 35 x 45 mm, Hochformat?
+2. **Gesichtshöhe:** 32–36 mm vom Kinn bis zum Scheitel (Kinder unter 10: mind. rund 22 mm)?
+3. **Position:** Kopf mittig, gerade, nicht gedreht oder geneigt?
+4. **Augen:** beide offen, deutlich sichtbar, nicht von Haaren oder Brillenrahmen verdeckt?
+5. **Ausdruck:** neutral, Mund geschlossen?
+6. **Licht:** keine Schatten im Gesicht oder auf dem Hintergrund, keine glänzenden Stellen, keine roten Augen?
+7. **Hintergrund:** einfarbig hell, ohne Muster und Gegenstände, deutlicher Kontrast zu den Haaren?
+8. **Brille:** keine Spiegelung, keine getönten Gläser?
+9. **Bildqualität:** scharf, natürliche Farben, keine Filter oder Retusche?
+10. **Aktualität:** Zeigt das Foto Sie so, wie Sie heute aussehen?
+11. **Übermittlungsweg:** Für Reisepass oder Personalausweis haben Sie einen Code eines registrierten Anbieters oder nehmen das Foto im Amt auf?
 
-Ein Online-Prüftool übernimmt diese sechs Punkte automatisch und zeigt sofort an, welche Kriterien nicht erfüllt sind, bevor Sie das Foto einreichen.
+> **Foto automatisch prüfen lassen:** Mit dem [PixPassport Passfoto-Generator](/de/passbild-online) laden Sie ein Foto hoch, das Tool prüft Kopfgröße, Position und Hintergrund und schneidet es auf 35 x 45 mm zu. Ideal für Führerschein, Visum, Gesundheitskarte oder als Vorab-Check, bevor Sie zum Fotografen gehen. **[Jetzt Passbild online erstellen →](/de/passbild-online)**
 
-## Häufige Ablehnungsgründe vermeiden
+## Die häufigsten Ablehnungsgründe
 
-Die meisten abgelehnten Passbilder scheitern an denselben Fehlern: ein zu kleiner oder zu großer Gesichtsanteil, ein unruhiger oder farbiger Hintergrund, Schlagschatten durch direktes Blitzlicht oder ein zu breites Lächeln. Wer diese Punkte vor der Aufnahme beachtet, spart sich einen zweiten Anlauf und zusätzliche Wartezeit beim Bürgeramt.
+| Fehler | Wie Sie ihn vermeiden |
+|---|---|
+| Kopf zu klein oder zu groß | Gesichtshöhe nachmessen, nicht aus kurzer Distanz fotografieren |
+| Schatten im Gesicht oder auf dem Hintergrund | Gleichmäßiges Licht von vorne, Abstand zur Wand halten |
+| Lächeln oder geöffneter Mund | Entspannt neutral blicken, Mund locker schließen |
+| Spiegelung in der Brille | Kopf minimal senken oder Brille abnehmen |
+| Haare über Augen oder Augenbrauen | Haare aus dem Gesicht kämmen |
+| Unruhiger, farbiger oder zu dunkler Hintergrund | Vor heller, glatter Wand fotografieren |
+| Filter, Beauty-Modus, Retusche | Kamera-Effekte ausschalten |
+| Zweite Person oder Gegenstand im Bild (bei Kindern) | Unterlage nutzen statt Kind festzuhalten |
+| Papierfoto für Reisepass oder Personalausweis | Foto im Amt aufnehmen oder Code vom registrierten Anbieter mitbringen |
 
-## Häufig gestellte Fragen
+## Für welche Dokumente können Sie das Foto selbst erstellen?
 
-**Welche Größe hat ein biometrisches Passbild?**
-Das Foto misst 35 x 45 mm im Hochformat, das Gesicht nimmt 70 bis 80 Prozent der Bildhöhe ein.
-
-**Kann ich ein biometrisches Passbild online erstellen?**
-Ja, ein Online-Generator prüft Maße, Hintergrund und Position automatisch und liefert eine druckfertige oder digital übermittelbare Datei.
-
-**Wie prüfe ich, ob mein Passbild gültig ist?**
-Kontrollieren Sie Kopfgröße, Blickrichtung, Hintergrundfarbe, Beleuchtung und Gesichtsausdruck gegen die ICAO-Norm, am schnellsten über ein automatisches Prüftool.
-
-**Muss ich für ein biometrisches Passbild persönlich zum Fotografen?**
-Nein, ein selbst aufgenommenes Smartphone-Foto lässt sich über eine geprüfte Online-Plattform auf die korrekten Maße bringen.
-
-**Warum wird mein Passbild beim Bürgeramt abgelehnt?**
-Die häufigsten Gründe sind ein falscher Gesichtsanteil, Schatten im Gesicht, ein unruhiger Hintergrund oder ein nicht neutraler Gesichtsausdruck.
+Die Bildregeln gelten überall, der Übermittlungsweg nicht. Für Reisepass, Personalausweis und elektronischen Aufenthaltstitel brauchen Sie seit Mai 2025 ein digital übermitteltes Foto aus dem Amt oder von einem registrierten Anbieter. Für viele andere Zwecke ist ein selbst erstelltes, korrekt zugeschnittenes Foto weiterhin möglich, etwa für den [Führerschein](/de/fuehrerschein-foto), die [Gesundheitskarte](/de/gesundheitskarte-foto), viele [Visa](/de/visum-foto) oder Bewerbungen. Prüfen Sie dabei immer die Vorgaben der jeweiligen Stelle. Tipps zur eigenen Aufnahme finden Sie unter [Passfoto selber machen](/de/passfoto-selber-machen).
 
 ## Fazit
 
-Ein gültiges biometrisches Passbild folgt klaren, prüfbaren Regeln zu Maßen, Hintergrund, Beleuchtung und Mimik. Mit der richtigen Vorbereitung, egal ob im Fotostudio, am Fotoautomaten oder über ein Online-Tool, lässt sich ein Foto erstellen, das beim ersten Versuch akzeptiert wird und den Weg zum neuen Ausweisdokument spürbar verkürzt. Wer die Checkliste vor der Abgabe einmal durchgeht, spart sich in den meisten Fällen einen zweiten Termin beim Bürgeramt und die damit verbundene Wartezeit.
+Ein gültiges Passbild folgt klaren, messbaren Regeln: 35 x 45 mm, 32 bis 36 mm Gesichtshöhe, neutraler Blick, gleichmäßiges Licht und ein heller, einfarbiger Hintergrund. Wer das Foto mit der Checkliste prüft, erkennt die typischen Fehler, bevor das Amt sie bemängelt. Für Reisepass und Personalausweis kommt seit Mai 2025 der digitale Übermittlungsweg hinzu, für alle anderen Dokumente zählt vor allem, dass das Foto die Vorgaben erfüllt.
+
+**Quellen:** [Passverordnung, Anlage 8 (Fotomustertafel)](https://www.gesetze-im-internet.de/passv_2007/anlage_8.html) · [Bundesrat, Drucksache 344/25 (Aktualisierung der Fotomustertafel)](https://dserver.bundestag.de/brd/2025/0344-25.pdf) · [Verbraucherzentrale: Digitale Passbilder Pflicht seit Mai 2025](https://www.verbraucherzentrale.de/aktuelle-meldungen/digitale-welt/datenschutz/digitale-passbilder-pflicht-seit-mai-2025-was-muessen-sie-wissen-108147)

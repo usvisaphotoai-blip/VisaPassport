@@ -6,6 +6,9 @@ import Photo from "@/models/Photo";
 import cloudinary from "@/lib/cloudinary";
 import { logAuditEvent } from "@/lib/audit";
 
+/** Days an expert-edit order keeps its photos before the cleanup deletes them (stated in the privacy policy) */
+const EXPERT_EDIT_RETENTION_DAYS = 30;
+
 /**
  * Helper to extract Cloudinary public ID from secureUrl / previewUrl
  */
@@ -100,12 +103,41 @@ export async function GET(req: Request) {
       console.warn("[cron/cleanup] Error querying validation records:", valErr);
     }
 
+    // 1c. Expert-edit photos are kept for 30 days so the editor can finish the order, then deleted
+    let expertOrdersPurgedCount = 0;
+    try {
+      const ExpertOrder = (await import("@/models/ExpertOrder")).default;
+      const expertCutoff = new Date(Date.now() - EXPERT_EDIT_RETENTION_DAYS * 24 * 60 * 60 * 1000);
+      const expiredExpertOrders = await ExpertOrder.find({
+        createdAt: { $lt: expertCutoff },
+        photosPurgedAt: { $exists: false },
+      })
+        .select("photos")
+        .limit(100);
+
+      for (const order of expiredExpertOrders) {
+        for (const url of order.photos ?? []) {
+          const publicId = extractCloudinaryPublicId(url);
+          if (publicId && !publicIdsToDelete.includes(publicId)) publicIdsToDelete.push(publicId);
+        }
+        // updateOne skips the schema's `required` check on the now-empty photos array
+        await ExpertOrder.updateOne({ _id: order._id }, { $set: { photos: [], photosPurgedAt: new Date() } });
+        expertOrdersPurgedCount++;
+      }
+    } catch (expertErr) {
+      console.warn("[cron/cleanup] Error purging expert-edit photos:", expertErr);
+    }
+
     // 2. Delete remote image assets from Cloudinary
     let cloudinaryDeletedCount = 0;
     if (publicIdsToDelete.length > 0 && process.env.CLOUDINARY_API_KEY) {
       try {
-        const deleteResult = await cloudinary.api.delete_resources(publicIdsToDelete);
-        cloudinaryDeletedCount = publicIdsToDelete.length;
+        // The Admin API accepts at most 100 public IDs per delete call
+        for (let i = 0; i < publicIdsToDelete.length; i += 100) {
+          const batch = publicIdsToDelete.slice(i, i + 100);
+          await cloudinary.api.delete_resources(batch);
+          cloudinaryDeletedCount += batch.length;
+        }
         console.log(`[cron/cleanup] Purged ${cloudinaryDeletedCount} image files from Cloudinary storage.`);
       } catch (cloudErr) {
         console.warn("[cron/cleanup] Error deleting resources from Cloudinary:", cloudErr);
@@ -143,6 +175,7 @@ export async function GET(req: Request) {
         photosPurgedCount,
         cloudinaryAssetsPurged: cloudinaryDeletedCount,
         processingFilesDeleted: tempFilesDeleted,
+        expertOrdersPurgedCount,
         cutoffDate: cutoff.toISOString(),
         permanentDataPreserved: ["Order", "Payment", "Dispute", "AuditEvent"],
       },
@@ -158,6 +191,7 @@ export async function GET(req: Request) {
       photosPurgedCount,
       cloudinaryAssetsPurged: cloudinaryDeletedCount,
       processingFilesDeleted: tempFilesDeleted,
+      expertOrdersPurgedCount,
       cutoffDate: cutoff.toISOString(),
       permanentRecordsPreserved: true,
     });

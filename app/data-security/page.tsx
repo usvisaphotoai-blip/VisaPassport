@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Data Security & Privacy Protection | PixPassport",
   description:
-    "Learn how PixPassport protects your passport and ID photos with 256-bit SSL encryption, 24-hour auto-deletion, PCI-DSS payment security, and a 100% zero data selling guarantee.",
+    "How PixPassport protects your passport and ID photos: HTTPS encryption, automatic photo deletion, Razorpay payments, and no selling of your data or photos.",
   alternates: {
     canonical: "https://www.pixpassport.com/data-security",
     languages: {
@@ -23,15 +23,15 @@ export default function DataSecurityPage() {
           <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
         </svg>
       ),
-      badge: "256-Bit SSL / TLS 1.3",
-      title: "Bank-Grade Encryption",
+      badge: "HTTPS encryption",
+      title: "Encrypted Connections",
       description:
-        "Every byte of data transferred between your device and our processing servers is secured with industry-standard TLS 1.3 and 256-bit SSL encryption. During transient processing, files are protected using AES-256 encryption at rest in isolated, firewalled server environments.",
+        "Every upload and download travels over an encrypted HTTPS connection. Photos and records are stored with cloud providers (Cloudinary and MongoDB Atlas) that encrypt data at rest.",
       highlights: [
-        "TLS 1.3 transport security for all uploads & downloads",
-        "AES-256 encryption for data at rest during processing",
-        "HTTPS-only strict transport security (HSTS) enforced",
-        "Isolated processing containers with zero public exposure",
+        "HTTPS for all uploads, downloads and payments",
+        "Data encrypted at rest by our storage providers",
+        "Photo files are not listed or searchable on the public web",
+        "Admin access limited to the PixPassport team",
       ],
     },
     {
@@ -41,15 +41,15 @@ export default function DataSecurityPage() {
           <path strokeLinecap="round" strokeLinejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
         </svg>
       ),
-      badge: "PCI-DSS Level 1 Compliant",
+      badge: "Processed by Razorpay",
       title: "Payment Security & Financial Protection",
       description:
-        "Your financial transactions are handled exclusively through world-class, PCI-DSS Level 1 certified payment gateways (Stripe & trusted partners). PixPassport never receives, stores, or processes your credit card numbers, CVVs, or bank credentials.",
+        "Payments are handled by Razorpay, a PCI-DSS compliant payment gateway. PixPassport never receives or stores your card number, CVV or bank login details.",
       highlights: [
-        "Zero payment card data stored on PixPassport servers",
-        "Tokenized end-to-end checkout flow via Stripe",
-        "Encrypted credit card & digital wallet processing",
-        "Instant digital receipt & fraud prevention protection",
+        "No card numbers or CVVs stored on PixPassport servers",
+        "Checkout runs on Razorpay's secure payment page",
+        "Cards, UPI, net banking and wallets supported by Razorpay",
+        "Email receipt and invoice for every order",
       ],
     },
     {
@@ -59,15 +59,15 @@ export default function DataSecurityPage() {
           <path strokeLinecap="round" strokeLinejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
         </svg>
       ),
-      badge: "Strict Ephemeral Storage",
+      badge: "Short-term storage",
       title: "Temporary Image Retention",
       description:
-        "We understand that passport and ID photos contain sensitive biometric information. Images are retained strictly for the time required to perform AI compliance checks, background removal, and sizing. Download links are cryptographically signed and automatically expire after 1 hour.",
+        "Passport and ID photos are sensitive, so we keep them only as long as you need them. Your download link works for 24 hours after you create your photo. After that the photo is no longer available.",
       highlights: [
-        "Images stored only long enough to complete processing & download",
-        "Signed, temporary download URLs expiring after 60 minutes",
-        "Zero permanent cloud storage or permanent archive databases",
-        "Strict employee access restriction — zero manual viewing without consent",
+        "Photos kept only long enough to process and download them",
+        "Download links stop working after 24 hours",
+        "No long-term photo archive",
+        "Our team only views a photo when you order an Expert Edit or ask for help",
       ],
     },
     {
@@ -77,15 +77,15 @@ export default function DataSecurityPage() {
           <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
         </svg>
       ),
-      badge: "Automated 24-Hour Purge",
+      badge: "Automatic deletion",
       title: "Automatic Permanent Deletion",
       description:
-        "Our system features an automated background purge engine that permanently deletes uploaded photos, processed templates, and cached files from our storage disks within 24 hours. Deleted files cannot be recovered by anyone—including our engineers.",
+        "An automatic job runs every day and deletes uploaded and processed photos that are more than 24 hours old, so photos are normally gone within 48 hours. Photos sent for an Expert Edit are kept for 30 days so we can complete the order, then deleted.",
       highlights: [
-        "Automated continuous deletion scripts running 24/7",
-        "Complete disk overwrite & cache purge within 24 hours",
-        "Manual instant delete button available directly on your preview screen",
-        "No residual backup snapshots kept of user biometric photos",
+        "Daily automatic deletion of photos older than 24 hours",
+        "Expert Edit photos deleted after 30 days",
+        "Ask us to delete your photos sooner at any time by email",
+        "Order and invoice records are kept for accounting, without the photos",
       ],
     },
     {
@@ -95,15 +95,15 @@ export default function DataSecurityPage() {
           <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
         </svg>
       ),
-      badge: "100% Privacy Guarantee",
+      badge: "Never sold",
       title: "No Selling User Data & No AI Model Training",
       description:
-        "Your privacy is not for sale. We pledge that your photos, facial data, email addresses, and personal information are NEVER sold, rented, leased, or shared with third-party advertisers, data brokers, or marketing firms. Furthermore, your photos are NEVER used to train public AI models.",
+        "Your photos, email address and personal information are never sold or rented, and never shared with advertisers or data brokers. Your photos are never used to train AI or facial recognition models.",
       highlights: [
-        "Zero data monetization — we sell photo processing, not your data",
-        "Zero sharing with ad networks, data brokers, or marketing partners",
-        "Prohibited use of photos for public AI or facial recognition model training",
-        "Full compliance with GDPR (EU), CCPA/CPRA (California), & global privacy laws",
+        "We sell photo processing, not your data",
+        "No sharing with ad networks, data brokers or marketing partners",
+        "Photos never used for AI or facial recognition training",
+        "Request access to or deletion of your data under GDPR and CCPA",
       ],
     },
   ];
@@ -111,19 +111,19 @@ export default function DataSecurityPage() {
   const faqs = [
     {
       q: "Is it safe to upload my passport or ID photo to PixPassport?",
-      a: "Yes, absolutely. PixPassport utilizes bank-level 256-bit SSL encryption to transfer your photos securely. Your images are held in temporary memory solely to perform automated sizing and compliance checks, and are permanently wiped within 24 hours.",
+      a: "Your photo is sent over an encrypted HTTPS connection, used only to create and check your photo, and deleted automatically by a daily job once it is more than 24 hours old (normally within 48 hours). We never sell photos or use them for AI training.",
     },
     {
       q: "Does PixPassport store my credit card details?",
-      a: "No. All payment processing is conducted through Stripe, a PCI-DSS Level 1 certified payment platform. Your payment details are encrypted directly by Stripe—PixPassport servers never touch or store card numbers or banking secrets.",
+      a: "No. Payments are processed by Razorpay, a PCI-DSS compliant payment gateway. PixPassport never receives or stores your card number or CVV.",
     },
     {
       q: "How fast are my uploaded images deleted?",
-      a: "Original uploads and processed photo sheets are automatically purged from our servers within 24 hours. You can also trigger immediate instant deletion right from your order preview screen as soon as you download your file.",
+      a: "A daily automatic job deletes uploaded and processed photos once they are more than 24 hours old, so they are normally gone within 48 hours. Your download link stops working after 24 hours. Expert Edit photos are kept for 30 days, then deleted. To have your photos deleted sooner, email support@pixpassport.com.",
     },
     {
       q: "Can PixPassport employees view my uploaded passport photo?",
-      a: "No. Photo processing is completely automated by our AI validation engines. Our staff cannot access or view your uploaded images unless you explicitly open a support request asking our team to inspect a processing issue.",
+      a: "Standard photos are processed automatically, and our team does not look at them unless you ask us for help with a problem. If you order an Expert Edit, a member of our team views and edits your photo to complete the order.",
     },
     {
       q: "Will my photo be used to train facial recognition software or AI models?",
@@ -142,32 +142,32 @@ export default function DataSecurityPage() {
               <svg className="w-4 h-4 text-lime-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
               </svg>
-              Maximum Identity & Data Protection ⭐⭐⭐⭐⭐
+              How we protect your photos
             </div>
             <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight mb-6">
               Data Security &amp; Privacy Safeguards
             </h1>
             <p className="text-base sm:text-lg text-slate-300 leading-relaxed mb-8">
-              Uploading passport and official ID photos requires total confidence. We protect your photos and personal details with bank-level encryption, ephemeral processing, 24-hour auto-deletion, and an absolute zero data-selling policy.
+              Uploading passport and ID photos takes trust. Here is exactly how we protect them: encrypted connections, automatic deletion, secure payments through Razorpay, and no selling of your data.
             </p>
 
             {/* Quick Stat Badges */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
               <div className="bg-slate-800/80 border border-slate-700/60 rounded-xl p-3 text-center">
-                <p className="text-xl sm:text-2xl font-black text-lime-400">256-Bit</p>
+                <p className="text-xl sm:text-2xl font-black text-lime-400">HTTPS</p>
                 <p className="text-xs text-slate-400 font-medium">SSL / TLS Encryption</p>
               </div>
               <div className="bg-slate-800/80 border border-slate-700/60 rounded-xl p-3 text-center">
                 <p className="text-xl sm:text-2xl font-black text-lime-400">PCI-DSS</p>
-                <p className="text-xs text-slate-400 font-medium">Level 1 Payment Gateway</p>
+                <p className="text-xs text-slate-400 font-medium">Payments via Razorpay</p>
               </div>
               <div className="bg-slate-800/80 border border-slate-700/60 rounded-xl p-3 text-center">
-                <p className="text-xl sm:text-2xl font-black text-lime-400">24 Hours</p>
-                <p className="text-xs text-slate-400 font-medium">Auto Image Purge</p>
+                <p className="text-xl sm:text-2xl font-black text-lime-400">Daily</p>
+                <p className="text-xs text-slate-400 font-medium">Automatic photo deletion</p>
               </div>
               <div className="bg-slate-800/80 border border-slate-700/60 rounded-xl p-3 text-center">
                 <p className="text-xl sm:text-2xl font-black text-lime-400">0%</p>
-                <p className="text-xs text-slate-400 font-medium">Data Selling &amp; Ads</p>
+                <p className="text-xs text-slate-400 font-medium">Photos or data sold</p>
               </div>
             </div>
           </div>
@@ -189,12 +189,12 @@ export default function DataSecurityPage() {
                 Why We Place Passport &amp; ID Security First
               </h2>
               <p className="text-sm text-slate-600 leading-relaxed mb-3">
-                Many users upload passport, visa, and national identity photos containing sensitive facial biometric features. We handle your files with the same privacy protocols expected by official government authorities. Your image is never stored longer than necessary, never indexed, and never linked to external advertising profiles.
+                Many users upload passport, visa, and national identity photos containing sensitive facial biometric features. We keep your image only as long as you need it, never make it searchable, and never link it to advertising profiles.
               </p>
               <div className="flex flex-wrap gap-4 text-xs font-semibold text-lime-800">
-                <span className="inline-flex items-center gap-1">✓ No biometric indexing</span>
+                <span className="inline-flex items-center gap-1">✓ No face database</span>
                 <span className="inline-flex items-center gap-1">✓ No public web access</span>
-                <span className="inline-flex items-center gap-1">✓ Instant file wipe on demand</span>
+                <span className="inline-flex items-center gap-1">✓ Deletion on request</span>
               </div>
             </div>
           </div>
@@ -280,22 +280,22 @@ export default function DataSecurityPage() {
               <tbody className="divide-y divide-gray-200">
                 <tr className="bg-white">
                   <td className="py-4 px-6 font-semibold text-slate-900">Encryption in Transit &amp; Rest</td>
-                  <td className="py-4 px-6 text-lime-700 font-bold bg-lime-50/50">TLS 1.3 + 256-Bit SSL / AES-256</td>
+                  <td className="py-4 px-6 text-lime-700 font-bold bg-lime-50/50">HTTPS + encrypted storage</td>
                   <td className="py-4 px-6 text-slate-500">HTTP / Basic SSL</td>
                 </tr>
                 <tr className="bg-slate-50/50">
                   <td className="py-4 px-6 font-semibold text-slate-900">Photo Auto-Deletion Window</td>
-                  <td className="py-4 px-6 text-lime-700 font-bold bg-lime-50/50">Permanent Purge within 24h (or Instant)</td>
+                  <td className="py-4 px-6 text-lime-700 font-bold bg-lime-50/50">Deleted daily once older than 24h</td>
                   <td className="py-4 px-6 text-slate-500">Stored indefinitely</td>
                 </tr>
                 <tr className="bg-white">
                   <td className="py-4 px-6 font-semibold text-slate-900">Payment Card Handling</td>
-                  <td className="py-4 px-6 text-lime-700 font-bold bg-lime-50/50">Zero Stored Cards (100% Stripe Tokenized)</td>
+                  <td className="py-4 px-6 text-lime-700 font-bold bg-lime-50/50">No stored cards (Razorpay checkout)</td>
                   <td className="py-4 px-6 text-slate-500">Vulnerable on-server storage</td>
                 </tr>
                 <tr className="bg-slate-50/50">
                   <td className="py-4 px-6 font-semibold text-slate-900">Selling / Sharing User Data</td>
-                  <td className="py-4 px-6 text-lime-700 font-bold bg-lime-50/50">Strictly Prohibited &amp; Guaranteed Never</td>
+                  <td className="py-4 px-6 text-lime-700 font-bold bg-lime-50/50">Never sold or shared with advertisers</td>
                   <td className="py-4 px-6 text-slate-500">Mined for advertising &amp; third parties</td>
                 </tr>
                 <tr className="bg-white">
@@ -383,7 +383,7 @@ export default function DataSecurityPage() {
             </Link>
             <Link href="/contact" className="group p-4 bg-gray-50 rounded-xl border border-gray-200 hover:border-lime-300 hover:bg-lime-50/50 transition-all">
               <span className="text-sm font-bold text-slate-900 group-hover:text-lime-700">Contact Us</span>
-              <p className="text-xs text-slate-500 mt-1">24/7 Support</p>
+              <p className="text-xs text-slate-500 mt-1">Email support</p>
             </Link>
           </div>
         </div>

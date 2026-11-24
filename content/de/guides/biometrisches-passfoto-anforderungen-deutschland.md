@@ -1,119 +1,158 @@
 ---
-title: "Passbild seit Mai 2025: Digitale Übermittlung & wo Sie es bekommen"
-description: "Seit Mai 2025 gilt das digitale Passbild: was sich geändert hat, wer Passfotos übermitteln darf und wo Sie ein gültiges Passbild bekommen."
+title: "Digitales Passbild seit Mai 2025: Ablauf, Kosten & wo Sie es bekommen"
+description: "Seit Mai 2025 nehmen Bürgerämter Passbilder für Reisepass und Personalausweis nur noch digital an. Wer das Foto übermitteln darf, was es kostet und wo Sie es bekommen."
 slug: "biometrisches-passfoto-anforderungen-deutschland"
 date: "2026-08-07"
-updatedAt: "2026-10-06"
+updatedAt: "2026-11-24"
 author: "PixPassport Redaktion"
 category: "Passfoto & Dokumente"
-readingTime: "7 Min. Lesezeit"
+readingTime: "8 Min. Lesezeit"
 image: "https://res.cloudinary.com/dipzpwbbk/image/upload/v1779008016/c24d89b1-ab0e-4f1d-9035-5814bc7b91ca_preview_ip9ogs.jpg"
-keywords: "digitales passbild, passbild digital übermitteln, passbild mai 2025, passbild in der nähe, passfoto bürgeramt, e-passbild"
+keywords: "digitales passbild, e-passbild, passbild digital übermitteln, passbild mai 2025, passbild bürgeramt terminal, passbild code, passbild in der nähe, passbild kosten bürgeramt"
 faq:
-  - question: "Welche Maße hat ein biometrisches Passfoto in Deutschland?"
-    answer: "Das Standardformat ist 35 x 45 mm im Hochformat. Die Gesichtshöhe vom Kinn bis zum Scheitel sollte bei Erwachsenen zwischen 32 und 36 mm liegen, bei Kindern von 6 bis 9 Jahren zwischen 22 und 36 mm."
-  - question: "Kann ich mein biometrisches Passfoto noch als Papierabzug einreichen?"
-    answer: "Für neue Anträge auf Reisepass, Personalausweis oder Aufenthaltstitel ist seit Mai 2025 die digitale Übermittlung durch die Behörde oder einen registrierten Fotodienstleister vorgeschrieben. Klassische Papierfotos aus dem Fotoautomaten werden für die Neubeantragung in der Regel nicht mehr akzeptiert."
-  - question: "Wo bekomme ich ein biometrisches Passbild in meiner Nähe?"
-    answer: "Registrierte Fotostudios, viele Drogerien mit Fotoservice sowie manche Bürgerämter bieten die Erstellung und digitale Übermittlung an. Achten Sie darauf, dass der Anbieter für den digitalen Übermittlungsweg zugelassen ist."
-  - question: "Darf ich auf dem Passfoto lächeln?"
-    answer: "Nein. Vorgeschrieben ist ein neutraler Gesichtsausdruck mit geschlossenem Mund und offenen Augen. Ein breites Lächeln kann zur Ablehnung des Fotos führen."
+  - question: "Werden Papierfotos für Personalausweis und Reisepass noch angenommen?"
+    answer: "Nein. Seit dem 1. Mai 2025 nehmen die Pass- und Personalausweisbehörden in Deutschland nur noch digitale Lichtbilder an. Die Übergangsfrist, in der Papierfotos noch akzeptiert wurden, endete am 31. Juli 2025. Das gilt auch für elektronische Aufenthaltstitel."
+  - question: "Was kostet das digitale Passbild beim Bürgeramt?"
+    answer: "Wird das Foto direkt in der Behörde am Selbstbedienungsterminal aufgenommen, fällt eine Gebühr von 6 Euro pro Lichtbild an, die zusammen mit der Ausweisgebühr bezahlt wird. Fotostudios und Drogerien legen ihre Preise für das digitale Passbild selbst fest."
+  - question: "Wie bekomme ich mein digitales Passbild zum Bürgeramt?"
+    answer: "Entweder lassen Sie das Foto direkt im Amt am Terminal aufnehmen, oder ein registrierter Fotodienstleister lädt es verschlüsselt in eine zertifizierte Cloud hoch. Sie erhalten dann einen Code (meist einen DataMatrix-Code), den Sie beim Termin vorlegen. Die Behörde ruft das Foto damit ab."
+  - question: "Wie lange ist der Passbild-Code gültig?"
+    answer: "Das hängt vom Anbieter und der Behörde ab. Die Stadt Köln nennt zum Beispiel sechs Monate für Fotos von Fotografen in der Cloud und 14 Tage für Fotos vom Terminal im Kundenzentrum. Fragen Sie beim Fotografen nach und planen Sie den Behördentermin möglichst zeitnah."
+  - question: "Darf ich mein Passbild für den Personalausweis selbst machen?"
+    answer: "Nein. Selbst erstellte Fotos, Handy-Fotos oder App-Fotos werden für Reisepass, Personalausweis und elektronischen Aufenthaltstitel nicht mehr akzeptiert. Für andere Zwecke, etwa Führerschein, Visum oder Gesundheitskarte, ist ein selbst erstelltes Foto oft weiterhin möglich."
+  - question: "Brauche ich für den Führerschein auch ein digitales Passbild?"
+    answer: "Für den Führerschein gilt die Digitalpflicht nach Angaben der Verbraucherzentrale und vieler Kommunen nicht: Dort können Sie weiterhin ein gedrucktes biometrisches Foto mitbringen. Für den internationalen Führerschein wird in der Regel ein gedrucktes Foto benötigt. Fragen Sie im Zweifel bei Ihrer Führerscheinstelle nach."
+  - question: "Kann ich am Fotoautomaten noch ein Passbild machen?"
+    answer: "Nur, wenn der Automat als Fotodienstleister registriert ist und das Bild digital über die zertifizierte Cloud übermittelt. Dann erhalten Sie statt oder zusätzlich zum Ausdruck einen Code. Ein reiner Papierausdruck aus dem Automaten reicht für Reisepass und Personalausweis nicht mehr."
 ---
 
-Ob Reisepass, Personalausweis oder Aufenthaltstitel: In Deutschland kommt kein amtliches Dokument ohne ein **biometrisches Passfoto** aus. Anders als beim klassischen Erinnerungsfoto gelten hier feste Vorgaben zu Größe, Hintergrund, Beleuchtung und Mimik – und wer diese nicht einhält, riskiert eine Ablehnung durch das Bürgeramt. In diesem Ratgeber erfahren Sie, welche Anforderungen 2026 aktuell gelten, worauf Sie bei der Aufnahme achten sollten und wie Sie ein gültiges Foto bekommen, egal ob im Fotostudio, bei der Behörde oder online.
+Seit dem 1. Mai 2025 hat sich beim Passbild vor allem eines geändert: **der Weg zur Behörde**. Für Reisepass, Personalausweis und elektronischen Aufenthaltstitel nehmen die Bürgerämter keine Papierfotos mehr an. Das Foto wird entweder direkt im Amt aufgenommen oder von einem registrierten Fotodienstleister digital übermittelt. Dieser Ratgeber erklärt Stand November 2026, wie das Verfahren abläuft, was es kostet, wo Sie ein gültiges Passbild bekommen und für welche Dokumente weiterhin ein Papierfoto reicht.
 
----
-
-## Was ist ein biometrisches Passfoto überhaupt?
-
-Ein biometrisches Passbild ist ein standardisiertes Lichtbild, das eine eindeutige, maschinenlesbare Identifikation der abgebildeten Person ermöglicht. Es muss so aufgenommen werden, dass Gesicht, Augen, Kopfhaltung und Gesichtsausdruck eindeutig erkennbar sind, weshalb klare Anforderungen gelten. Im Alltag werden die Begriffe "Passbild", "Passfoto" und "biometrisches Passbild" oft synonym verwendet – für offizielle Dokumente wie Reisepass, Personalausweis oder Aufenthaltstitel ist jedoch ausdrücklich ein biometrisches Passbild erforderlich,  während ein einfaches Passbild etwa für einen Vereins- oder Schülerausweis genügen kann.
-
-Benötigt wird das biometrische Foto unter anderem für:
-
-- Reisepass
-- Personalausweis
-- Führerschein-Umtausch
-- Aufenthaltstitel
-- Kinder- und Baby-Ausweisdokumente
+> **Sie möchten nur wissen, ob Ihr Foto die Maße und Bildregeln erfüllt?** Die Vorgaben zu Gesichtshöhe, Hintergrund, Brille und Kinderfotos haben wir in einem eigenen Ratgeber gesammelt: [Passbild selbst prüfen: Checkliste, Maße & häufige Ablehnungsgründe](/de/guides/biometrisches-passbild-alle-anforderungen).
 
 ---
 
-## Die aktuellen Maße: 35 x 45 mm
+## Das Wichtigste in Kürze
 
-Die Standardmaße für ein deutsches Passfoto sind weiterhin 35 mm × 45 mm, also 3,5 × 4,5 cm im Hochformat. Entscheidend ist dabei nicht nur die Außenkante des Bildes, sondern vor allem die **Gesichtshöhe** – gemessen vom Kinn bis zum Scheitel. Ab zehn Jahren muss diese zwischen 32 und 36 mm liegen, bei Kindern von sechs bis neun Jahren zwischen 22 und 36 mm. Genau an diesem Punkt scheitern viele selbst gemachte Fotos: Der Kopf ist zu klein, zu groß oder nicht mittig im Bild positioniert – Handy-Selfies aus kurzer Distanz zeigen das Gesicht oft zu klein oder perspektivisch verzerrt.
-
-Für den Druck gilt außerdem ein hoher Qualitätsanspruch: Die Auflösung sollte mindestens 600 dpi betragen.
-
----
-
-## Digitale Übermittlung statt Papierfoto
-
-Ein zentraler Punkt, den viele 2026 noch nicht wissen: Seit Mai 2025 wird das biometrische Lichtbild für neue hoheitliche Dokumente digital erstellt und sicher an die Behörde übermittelt. Passfotos dürfen seither nur noch von registrierten Anbietern erstellt und digital übermittelt oder direkt auf dem Amt aufgenommen werden.
-
-Das hat praktische Konsequenzen: Klassische Fotoautomaten sind 2026 häufig eine Kostenfalle, denn das Foto kann optisch in Ordnung wirken, wird aber wegen des falschen Übermittlungswegs oder technischer Inkompatibilität abgelehnt – mit der Folge eines zweiten Termins oder zusätzlicher Gebühren. Wer ein Papierfoto mitbringt, sollte sich vorher unbedingt erkundigen, ob es überhaupt noch akzeptiert wird. Fragen Sie im Zweifel vor dem Termin, ob die Behörde das Foto direkt vor Ort erstellen kann oder ob Sie zu einem registrierten Fotodienstleister gehen müssen.
+- **Seit 1. Mai 2025** sind für Reisepass, Personalausweis und elektronischen Aufenthaltstitel nur noch digitale Lichtbilder zulässig. Die Übergangsfrist für Papierfotos endete am **31. Juli 2025**.
+- Das Foto kommt auf **zwei Wegen** zur Behörde: Aufnahme am Selbstbedienungsterminal im Amt oder Übermittlung durch einen **registrierten Fotodienstleister** über eine zertifizierte Cloud.
+- Am Terminal im Amt kostet das Foto **6 Euro pro Lichtbild**.
+- **Selbst gemachte Fotos** (Handy, App, eigener Ausdruck) werden für diese Dokumente nicht mehr angenommen.
+- **Führerschein, Visum, Gesundheitskarte** und viele andere Anträge sind nicht betroffen. Dort ist oft weiterhin ein gedrucktes oder selbst erstelltes Foto möglich.
+- Die **biometrischen Anforderungen** selbst (35 x 45 mm, neutraler Blick, heller Hintergrund) sind unverändert geblieben.
 
 ---
 
-## Hintergrund, Beleuchtung und Bildqualität
+## Was hat sich am 1. Mai 2025 geändert?
 
-Neben den Maßen prüfen die Behörden auch die technische Qualität des Fotos genau:
+Mit dem Gesetz zur Modernisierung des Pass-, Ausweis- und ausländerrechtlichen Dokumentenwesens wurde das Lichtbildverfahren bundesweit umgestellt. Ziel ist vor allem der Schutz vor manipulierten Fotos, etwa vor sogenanntem Morphing, bei dem die Gesichter zweier Personen zu einem Bild verschmolzen werden.
 
-- **Hintergrund:** Der Hintergrund muss hell, einfarbig und frei von Schatten oder Mustern sein. Bevorzugt wird ein hellgrauer Hintergrund.
-- **Beleuchtung:** Das Foto muss scharf, kontrastreich und gleichmäßig ausgeleuchtet sein. Vermeiden Sie harte Schlagschatten durch seitliches Licht oder Blitz.
-- **Kopfhaltung:** Der Kopf muss gerade und frontal zur Kamera ausgerichtet sein, die Augen offen und klar sichtbar.
-- **Aktualität:** Das Foto sollte nicht älter als sechs Monate sein und Sie aktuell und unverfälscht zeigen.
+Konkret bedeutet das:
+
+| Dokument | Seit Mai 2025 |
+|---|---|
+| Personalausweis | Nur digitales Lichtbild |
+| Reisepass | Nur digitales Lichtbild |
+| Elektronischer Aufenthaltstitel | Nur digitales Lichtbild |
+| Führerschein | Papierfoto weiterhin möglich |
+| Visum, Gesundheitskarte, Bewerbung, Vereinsausweis | Nicht betroffen, Vorgaben der jeweiligen Stelle beachten |
+
+An den Bildregeln hat sich dagegen nichts Grundlegendes geändert. Die sogenannte Fotomustertafel wurde 2025 zwar neu gestaltet, laut Begründung der Bundesregierung sind die biometrischen Anforderungen aber unverändert geblieben. Die amtliche Fassung finden Sie in [Anlage 8 der Passverordnung](https://www.gesetze-im-internet.de/passv_2007/anlage_8.html) (für den Personalausweis gilt eine inhaltsgleiche Anlage der Personalausweisverordnung).
 
 ---
 
-## Der richtige Gesichtsausdruck
+## So kommt Ihr Passbild zur Behörde: zwei Wege
 
-Anders als beim privaten Foto ist Emotion hier fehl am Platz. Vorgeschrieben ist ein neutraler Gesichtsausdruck; ein breites Lächeln oder ein geöffneter Mund kann zur Ablehnung des Fotos führen. Auch hochgezogene Augenbrauen, ein schiefer Kopf oder zusammengekniffene Augen gelten als problematisch. Ziel ist ein ruhiger, klar erkennbarer Ausdruck mit geschlossenem Mund und geradeaus gerichtetem Blick.
+### Weg 1: Foto direkt im Bürgeramt (Selbstbedienungsterminal)
 
-**Praktische Tipps für die Aufnahme:**
+Die meisten Pass- und Ausweisbehörden haben inzwischen ein Fototerminal. Nach Angaben der Bundesregierung (Antwort auf eine Kleine Anfrage, [Bundestag, hib 466/2026](https://www.bundestag.de/presse/hib/kurzmeldungen-1184066)) waren rund 4.950 von etwa 6.500 Behördenstandorten mit dem PointID-System der Bundesdruckerei ausgestattet. Ob Ihr Amt eines hat, entscheidet die Kommune selbst.
 
-- Blicken Sie entspannt und direkt in die Kamera.
-- Lassen Sie Mund und Kiefer locker, ohne zu lächeln.
-- Nehmen Sie Kopfbedeckungen ab (Ausnahmen gelten nur aus religiösen Gründen, dabei muss das Gesicht vollständig sichtbar bleiben).
-- Bei Brillenträgern: keine getönten Gläser und keine Reflexionen im Glas.
-- Offene Haare aus der Stirn kämmen, damit die Augenbrauen sichtbar bleiben.
+- Sie nehmen das Foto beim Termin selbst am Terminal auf, das System prüft die Biometrie direkt.
+- Die Gebühr beträgt **6 Euro pro Lichtbild** und wird mit der Ausweisgebühr bezahlt.
+- Vorteil: kein zusätzlicher Weg, kein Code, den Sie verlieren können.
+- Einschränkung: Für Kleinkinder sind die Terminals oft nicht geeignet. Die Stadt Köln weist etwa darauf hin, dass ihre Terminals für Kinder unter 6 Jahren nicht nutzbar sind.
+
+### Weg 2: Registrierter Fotodienstleister (Fotostudio, Drogerie, Automat)
+
+Fotostudios, viele Drogeriefilialen und einzelne Fotoautomaten sind als Dienstleister für das digitale Verfahren registriert.
+
+1. Das Foto wird digital aufgenommen und auf die biometrischen Vorgaben geprüft.
+2. Der Anbieter lädt das Bild **verschlüsselt** in eine zertifizierte Cloud hoch.
+3. Sie erhalten einen **Code** (meist einen DataMatrix-Code, ähnlich einem QR-Code), oft zusätzlich mit Ausdrucken für private Zwecke.
+4. Beim Behördentermin legen Sie den Code vor, die Behörde ruft das Foto damit ab.
+
+Wie lange der Code gültig ist, hängt vom Anbieter ab. Die Stadt Köln nennt zum Beispiel sechs Monate für Fotos von Fotografen in der Cloud. Fragen Sie bei der Aufnahme nach und behandeln Sie den Code wie ein Dokument: Geht er verloren, brauchen Sie in der Regel ein neues Foto.
+
+---
+
+## Was kostet das digitale Passbild?
+
+| Weg | Kosten |
+|---|---|
+| Terminal im Bürgeramt | 6 Euro pro Lichtbild (bundesweit einheitliche Gebühr) |
+| Fotostudio, Drogerie, registrierter Automat | Preis legt der Anbieter fest, vor Ort erfragen |
+
+Zur Einordnung: Die 6 Euro decken nach Angaben der Bundesregierung den Betrieb der Systeme und die Aufnahme in der Behörde ab. Bei privaten Anbietern ist oft eine Beratung oder eine zweite Aufnahme inklusive, wenn das erste Foto nicht passt. Die Ausweisgebühr selbst kommt in jedem Fall hinzu.
 
 ---
 
 ## Biometrisches Passbild in der Nähe finden
 
-Wer ein gültiges Passbild in der Nähe sucht, hat verschiedene Optionen:
+Wenn Sie ein Passbild in der Nähe suchen, haben Sie drei Möglichkeiten:
 
-1. **Bürgeramt/Konsulat:** Viele Ämter bieten inzwischen die Fotoaufnahme direkt vor Ort mit anschließender digitaler Übermittlung an.
-2. **Registrierte Fotostudios:** Klassische Fotografen, die für den digitalen Übermittlungsweg zugelassen sind.
-3. **Drogerien mit Fotoservice:** Einige größere Filialen bieten ebenfalls zertifizierte biometrische Passbilder an.
+1. **Ihr Bürgeramt:** Fragen Sie bei der Terminbuchung, ob vor Ort ein Fototerminal steht. Das ist meist der einfachste Weg.
+2. **Registrierte Fotostudios:** Viele Kommunen verweisen auf Suchportale für registrierte Fotografen. Für Babys, Kleinkinder und Menschen mit Einschränkungen ist ein Fotostudio oft die bessere Wahl, weil sich der Fotograf Zeit nehmen kann.
+3. **Drogerien mit Fotoservice:** Viele Filialen großer Drogerieketten bieten das digitale Passbild mit Code an. Das Angebot unterscheidet sich jedoch je nach Filiale.
 
-Fragen Sie vor Ort immer nach, ob der Anbieter für die digitale Übermittlung an die zuständige Behörde registriert ist – nur dann ist das Foto für Reisepass oder Personalausweis gültig.
-
----
-
-## Passfoto online erstellen: Worauf Sie achten sollten
-
-Auch wenn viele Online-Tools damit werben, ein Passfoto per App oder KI zu erstellen: Für **hoheitliche Dokumente** wie Reisepass und Personalausweis ist inzwischen ausschließlich der offizielle, digitale Übermittlungsweg über Behörde oder registrierten Dienstleister zulässig. Online-Tools können dennoch sinnvoll sein, um:
-
-- ein Selbstfoto vorab auf Maße, Hintergrund und Bildausschnitt zu prüfen,
-- Passbilder für **nicht-hoheitliche** Zwecke zu erstellen, etwa für Bewerbungen, Studentenausweise, Visa-Anträge außerhalb Deutschlands oder Vereinsausweise,
-- sich einen ersten Eindruck zu verschaffen, bevor man einen Termin beim registrierten Fotografen bucht.
+Wichtig ist bei Studio, Drogerie und Automat dieselbe Frage: **Erhalte ich einen Code für die digitale Übermittlung an die Behörde?** Nur dann ist das Foto für Reisepass und Personalausweis verwendbar.
 
 ---
 
-## Häufige Ablehnungsgründe im Überblick
+## Für welche Dokumente reicht weiterhin ein Papierfoto?
 
-| Fehler | Folge |
-|---|---|
-| Gesichtshöhe außerhalb 32–36 mm | Foto wird abgelehnt |
-| Lächeln oder geöffneter Mund | Foto wird abgelehnt |
-| Unruhiger oder dunkler Hintergrund | Foto wird abgelehnt |
-| Schatten im Gesicht | Foto wird abgelehnt |
-| Falscher Übermittlungsweg (z. B. Fotoautomat) | Zweittermin/Zusatzkosten |
-| Kopfbedeckung ohne religiösen Grund | Foto wird abgelehnt |
+Die Digitalpflicht gilt nur für Reisepass, Personalausweis und elektronischen Aufenthaltstitel bei deutschen Behörden. Für viele andere Anträge können Sie weiterhin ein gedrucktes oder selbst erstelltes Foto verwenden, sofern es die jeweiligen Vorgaben erfüllt:
+
+- **Führerschein:** Laut Verbraucherzentrale und vielen Kommunen weiterhin mit Papierfoto möglich. Für den internationalen Führerschein wird in der Regel ein gedrucktes Foto verlangt. Mehr dazu im Ratgeber [Führerschein-Foto](/de/fuehrerschein-foto).
+- **Elektronische Gesundheitskarte:** Die Krankenkassen nehmen das Foto meist per Upload entgegen, siehe [Gesundheitskarte-Foto](/de/gesundheitskarte-foto).
+- **Visa für andere Länder:** Hier gelten die Vorgaben des jeweiligen Konsulats, siehe [Visum-Foto](/de/visum-foto).
+- **Anträge bei deutschen Auslandsvertretungen:** Botschaften und Konsulate haben eigene Hinweise zum Lichtbild. Prüfen Sie vor dem Termin die Website der zuständigen Vertretung.
+
+> **Foto für Führerschein, Visum oder Gesundheitskarte?** Mit dem [PixPassport Passfoto-Generator](/de/passbild-online) laden Sie ein Foto hoch, lassen Maße, Hintergrund und Kopfposition automatisch prüfen und erhalten eine Datei zum Drucken oder Hochladen. **[Jetzt Passbild online erstellen →](/de/passbild-online)**
+
+---
+
+## Was bleibt bei den Bildregeln gleich?
+
+Auch beim digitalen Verfahren muss das Foto die biometrischen Vorgaben erfüllen. Der Fotograf oder das Terminal prüft das zwar, Sie können aber viel dafür tun, dass das Foto auf Anhieb passt:
+
+- **Format 35 x 45 mm**, Gesicht nimmt 70 bis 80 Prozent der Bildhöhe ein (bei Erwachsenen 32 bis 36 mm vom Kinn bis zum Scheitel).
+- **Neutraler Gesichtsausdruck**, Mund geschlossen, Augen offen, Blick in die Kamera.
+- **Heller, einfarbiger Hintergrund** ohne Schatten.
+- **Brille** nur ohne Spiegelungen und getönte Gläser, Augen deutlich sichtbar.
+- **Keine Kopfbedeckung**, Ausnahme aus religiösen Gründen.
+
+Alle Details mit Checkliste, Kinderregeln und den häufigsten Ablehnungsgründen finden Sie im Ratgeber [Passbild selbst prüfen](/de/guides/biometrisches-passbild-alle-anforderungen).
+
+---
+
+## Tipps für den Termin
+
+- **Vorher fragen:** Steht im Amt ein Terminal, oder sollen Sie das Foto mitbringen? Das steht meist in der Terminbestätigung.
+- **Code und Ausweis bereithalten:** Bringen Sie den Code des Fotografen und Ihren alten Ausweis oder Reisepass mit.
+- **Mehrere Dokumente:** Wenn Sie Reisepass und Personalausweis gleichzeitig beantragen, fragen Sie beim Fotografen, ob der Code für beide Anträge genutzt werden kann. Die Regelungen dazu unterscheiden sich je nach Anbieter.
+- **Brillenträger:** Probieren Sie vorab, ob die Brille spiegelt. Notfalls nehmen Sie sie für das Foto ab. Mehr dazu unter [Passbild mit Brille](/de/passbild-mit-brille).
+- **Kinder:** Für Babys und Kleinkinder lieber ein Fotostudio wählen und vorher fragen, ob dort Kinderfotos angeboten werden.
+
+---
+
+## Datenschutz: Was passiert mit dem Foto?
+
+Das Foto wird vor dem Hochladen verschlüsselt und nur über den Code abgerufen. In der Cloud werden nach Angaben der Verbraucherzentrale keine weiteren personenbezogenen Daten gespeichert. Wie lange ein Anbieter das Bild vorhält, legt er in seinen Bedingungen fest. Auf Behördenseite wird das Foto nur für das Antragsverfahren benötigt und anschließend im Chip des Dokuments gespeichert.
 
 ---
 
 ## Fazit
 
-Ein **biometrisches Passfoto** in Deutschland folgt klaren, unveränderten Grundmaßen von 35 x 45 mm – doch seit der Umstellung auf die digitale Übermittlung zählt 2026 nicht mehr nur das Bild selbst, sondern auch der korrekte Weg zur Behörde. Wer auf neutralen Ausdruck, hellen Hintergrund, korrekte Gesichtshöhe und einen registrierten Anbieter achtet, spart sich einen zweiten Termin und unnötige Zusatzkosten.
+Seit Mai 2025 zählt beim Passbild für Reisepass und Personalausweis nicht nur das Foto, sondern auch der **richtige Übermittlungsweg**. Am einfachsten ist das Terminal im Bürgeramt für 6 Euro. Alternativ übermittelt ein registrierter Fotograf oder eine Drogerie das Bild per Code. Ein selbst gemachtes Foto reicht für diese Dokumente nicht mehr, für Führerschein, Visum oder Gesundheitskarte dagegen oft schon.
+
+**Quellen:** [Passverordnung, Anlage 8](https://www.gesetze-im-internet.de/passv_2007/anlage_8.html) · [Deutscher Bundestag, hib 466/2026](https://www.bundestag.de/presse/hib/kurzmeldungen-1184066) · [Verbraucherzentrale: Digitale Passbilder Pflicht seit Mai 2025](https://www.verbraucherzentrale.de/aktuelle-meldungen/digitale-welt/datenschutz/digitale-passbilder-pflicht-seit-mai-2025-was-muessen-sie-wissen-108147) · [Stadt Köln: Biometrisches E-Passbild](https://www.stadt-koeln.de/service/adressen/einwohnerangelegenheiten/biometrisches-e-passbild)

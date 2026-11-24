@@ -77,7 +77,7 @@ export default function SupportPage() {
             </div>
             <div>
               <p className="text-xl mb-1">💳</p>
-              <p className="text-xs font-bold text-slate-900 uppercase">Stripe Protected</p>
+              <p className="text-xs font-bold text-slate-900 uppercase">Razorpay Secured</p>
               <p className="text-[10px] text-slate-500">PCI-DSS Level 1 security</p>
             </div>
             <div>

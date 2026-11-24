@@ -30,7 +30,7 @@ const getCategories = (price: string) => [
     faqs: [
       { q: "How much does it cost?", a: `Photo processing and download costs a one-time fee of ${price} per photo — including auto-cropping, resizing, background removal, and file optimization.` },
       { q: "What payment methods are accepted?", a: "We accept all major credit cards, debit cards, and PayPal through our secure payment processor." },
-      { q: "Can I get a refund?", a: "If your processed photo is rejected by a government agency, you are eligible for a 50% refund. Contact support@pixpassport.com with your transaction ID and rejection proof within 30 days. The 50% deduction covers non-recoverable server processing costs." },
+      { q: "Can I get a refund?", a: "If your processed photo is rejected by a government agency, you are eligible for a 100% refund of your purchase price. Email refund@pixpassport.com with your transaction ID and proof of the rejection within 30 days of purchase. Approved refunds go back to your original payment method within 5 to 10 business days." },
       { q: "How long are download links valid?", a: "Download links are valid for 1 hour after they are generated. After that, they expire for security. You can generate new links from your dashboard within 24 hours." },
     ],
   },

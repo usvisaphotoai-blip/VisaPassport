@@ -1,132 +1,173 @@
 ---
-title: "Canada Passport Photo: Size, Requirements & Guidelines 2026"
-description: "Complete guide to Canadian passport photo requirements: 50x70mm size, chin-to-crown 31-36mm, white background, glasses, guarantor rules, PR card and citizenship photo specs."
+title: "Canada Passport Photo Requirements 2026: 50 x 70 mm Print & Online Renewal Specs"
+description: "Official Canadian passport photo rules: 50 x 70 mm print, 31–36 mm chin to crown, photographer stamp on the back, guarantor signature, glasses, and the digital photo specs for online renewal (open to all eligible adults since July 2026)."
 slug: "canada-passport-photo-requirements"
-h1: "Canada Passport Photo: Requirements, Size & Guidelines"
-date: "2026-08-19"
+h1: "Canada Passport Photo Requirements: Size, Rules & Online Renewal Specs"
+date: "2026-11-24"
+updatedAt: "2026-11-24"
 author: "PixPassport Canada Team"
 category: "Canadian Passport & Citizenship"
-readingTime: "7 Min."
-keywords: "canada passport photo, canadian passport photo size, canada passport photo requirements, canada passport photo guidelines, canada passport photo regulations, canadian passport picture specifications, canada passport photo dimensions, passport photos calgary, canada citizenship photo, canada passport pic, canada permanent resident photo requirements, canada passport photo online, canada visa photo size online free, canada passport photo specification"
+readingTime: "9 Min."
+keywords: "canada passport photo, canadian passport photo size, canada passport photo requirements, canadian passport photo size 50 x 70 mm, canada passport photo guidelines, canada passport photo dimensions, canada passport photo online renewal, canadian passport digital photo requirements, canada passport photo back stamp, canada passport photo guarantor, canada passport photo glasses, canada citizenship photo, canada permanent resident photo requirements, canada visa photo size"
 faq:
   - question: "What is the official size of a Canada passport photo?"
-    answer: "A Canadian passport photo measures 50 mm wide by 70 mm high (2 inches by 2 3/4 inches). The face, measured from the chin to the crown of the head, must be between 31 mm and 36 mm."
+    answer: "Printed Canadian passport photos must be 50 mm wide by 70 mm high (2 inches by 2¾ inches). Your face, measured from chin to crown (top of the head), must be between 31 mm and 36 mm. You need 2 identical, unaltered photos."
+  - question: "Can I renew my Canadian passport online with a digital photo?"
+    answer: "Yes, if you are eligible. Since 28 July 2026 online renewal is open to all eligible adults in Canada. You need a digital photo taken in person by a commercial photographer within the last 6 months: a JPEG, 3:2 portrait ratio, at least 1,200 x 1,800 pixels and no more than 3,000 x 4,500, 200 KB to 5 MB, with your head 45–50% of the image height. Scans of printed photos and selfies are not accepted."
+  - question: "Can I take my own Canadian passport photo at home or with my phone?"
+    answer: "No. Canada.ca says to go to a commercial photographer or photo studio, and the photo must be printed professionally on photographic paper. Online renewals also need a digital file from a commercial photographer. Home-printed photos, selfies and app-edited images are not accepted for passports."
+  - question: "What goes on the back of a Canadian passport photo?"
+    answer: "On one of the two photos, the photographer must write or stamp the date the photo was taken and the studio's name and complete address. If your application needs a guarantor, they write 'I certify this to be a true likeness of (applicant's name)' and sign on the back of that same photo."
+  - question: "Do I need a guarantor to sign my passport photo for a renewal?"
+    answer: "No. Canada.ca says adult renewals do not need a guarantor. First-time adult applications and child applications do, so check the instructions for your specific form."
   - question: "Can I wear glasses in my Canada passport photo?"
-    answer: "Yes. Canada.ca accepts glasses as long as your eyes are clearly visible and there is no glare on the lenses. Sunglasses and tinted eyeglasses, including tinted prescription lenses, are not accepted."
+    answer: "Yes. Canada.ca accepts glasses if your eyes are clearly visible and there is no glare on the lenses. Sunglasses and tinted lenses are not accepted, including tinted prescription lenses, even when your eyes can be seen."
   - question: "What background colour do I need for a Canadian passport photo?"
-    answer: "The background must be plain white or light-coloured, with a clear contrast between your face and the background. No patterns, shadows, or objects are allowed."
+    answer: "Plain white or light-coloured, with clear contrast between your face and the background, and no shadows, patterns or objects."
   - question: "How old can a Canada passport photo be?"
-    answer: "Your photo must have been taken within the last 6 months of your application date."
-  - question: "Can I take my own Canadian passport photo at home?"
-    answer: "No. The Passport Program requires your photo to be taken in person by a commercial photographer or photo studio and printed on quality photographic paper. Home-printed or selfie-style photos are not accepted for standard applications."
+    answer: "No more than 6 months old on the date you submit your application. This applies to printed photos and to the digital photo used for online renewal."
+  - question: "Can I edit or remove the background of my Canadian passport photo?"
+    answer: "No. Canada.ca rejects any altered photo, including changes made with editing software, filters or AI tools, background removal, cropping, red-eye removal, or changes to brightness or contrast. Your photographer must deliver an original, unedited photo."
+  - question: "Is a Canadian passport photo the same size as a Canada visa photo?"
+    answer: "No. Passport photos are 50 x 70 mm. Visa and other temporary residence applications to IRCC use a 35 x 45 mm format. Use the specification on the form you are actually submitting."
 ---
 
-Applying for a new Canadian passport, renewing one, or updating your permanent resident card? Immigration, Refugees and Citizenship Canada (IRCC) enforces detailed photo specifications through the Passport Program, and even a minor error is one of the most common reasons applications get delayed or returned. This guide walks through every current rule so your Canada passport photo, PR card photo, or citizenship photo passes the first time.
+**Quick answer:** a Canadian passport photo is **50 mm wide x 70 mm high**, with your face **31–36 mm from chin to crown**, on a plain white or light background. It must be taken **in person by a commercial photographer** no more than 6 months before you apply. For a paper application, the photographer's details go on the back of one of the two prints. For an **online renewal**, you upload the photographer's original digital file instead.
 
-## Canada Passport Photo Size and Dimensions
+> **How our tool fits:** Canada does **not** accept self-made or edited passport photos, so our online tool cannot replace your photographer for a Canadian passport. Use the free [passport photo checker](/passport-photo-checker) to measure the photographer's print or file before you submit. Use the [Canada photo tool](/ca) for forms that allow you to supply your own photo, such as some IRCC visa and citizenship uploads.
 
-The official Canadian passport photo dimensions are unlike most other countries, so never reuse a photo taken for a US or European application.
+Source: [Canada.ca – Passport photo requirements](https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-passports/photos.html) (page modified 23 September 2026).
 
-- **Width:** 50 mm (2 inches)
-- **Height:** 70 mm (2 3/4 inches)
-- **Face length, chin to crown of head:** 31 mm to 36 mm
-- **Orientation:** Portrait, with a 5:7 aspect ratio
+## Canada Passport Photo Specifications at a Glance
 
-This 50×70 mm canada passport photo dimensions format is larger than the US 51×51 mm square and different from the 35×45 mm size used for Canadian visa photos, so double-check which document you're preparing before you print anything.
+| Specification | Printed photo (in person / mail) | Digital photo (online renewal) |
+|---|---|---|
+| Size | 50 mm x 70 mm (2" x 2¾") | 3:2 portrait ratio, 1,200 x 1,800 px minimum, 3,000 x 4,500 px maximum |
+| Face / head size | 31–36 mm chin to crown | Chin to crown 45–50% of image height |
+| Quantity | 2 identical, unaltered photos | 1 digital file |
+| File / paper | Professionally printed on plain, high-quality photo paper (no home printing, no heavyweight paper) | JPEG (.jpg/.jpeg), 200 KB – 5 MB, original camera file |
+| Who takes it | Commercial photographer or studio | Commercial photographer, in person |
+| Age of photo | Max. 6 months | Max. 6 months |
+| Background | Plain white or light-coloured | Plain white or light-coloured |
+| Back of photo / details | Photographer's date + studio name and full address on one photo; guarantor declaration if required | Studio name, address and photo date entered during the online application |
+| Scanned prints accepted? | n/a | No |
 
-## Canada Passport Photo Requirements: Core Rules
+The 50 x 70 mm size is larger than the 35 x 45 mm used by the UK and Schengen countries and the 2 x 2 inch US format, so a photo taken for another country cannot be reused.
 
-The following canada passport photo specification points come directly from IRCC's published guidance and apply to nearly every application type.
+## Who Must Take the Photo (and Why a Home Photo Won't Work)
 
-### Who Must Take the Photo
+Canada.ca says: go to a **commercial photographer or photo studio**. The photo must be "an original photo that isn't altered or edited in any way", and printed professionally. Because of this:
 
-Your photo must be taken **in person by a commercial photographer or photo studio**, no more than 6 months before you submit your application. Selfies, home printouts, and photos edited from an existing image are not accepted for standard paper applications. Some eligible adult renewals allow a digital photo captured directly by a commercial photographer, but the in-person requirement still applies — the photographer's file simply gets uploaded instead of printed.
+- Selfies, phone photos and home-printed photos are not accepted.
+- Photos run through background-removal, retouching, filters or AI tools count as altered and will be refused.
+- The photographer's identity and studio address are part of the application, on the back of the print or entered online.
 
-### Pose and Expression
+Common places that offer Canadian passport photos include independent photo studios, pharmacy photo counters and retail photo centres. Whichever you choose, ask for **both a printed set and the digital file**. Canada.ca recommends this so you can switch to applying in person or by mail if online renewal doesn't work for you.
 
-- Face and shoulders centred and squared to the camera, with no tilting
-- Neutral facial expression: eyes open and clearly visible, mouth closed, no smiling
-- Full face visible, with no hair, hands, or accessories covering any facial feature
+## Pose, Expression and Lighting
 
-### Lighting and Background
-
-- Uniform lighting with no shadows, glare, or flash reflections
-- Clear, sharp focus and natural skin tones
-- A plain white or light-coloured background with clear contrast between your face and the backdrop
+- Face and shoulders centred and square to the camera, not tilted
+- Neutral expression: eyes open and visible, looking at the camera, mouth closed, not smiling or frowning
+- Uniform lighting with **no** shadows, glare or flash reflections
+- Clear, sharp focus with natural skin tones
+- Plain white or light-coloured background with clear contrast to your face
 
 ### Glasses
 
-Contrary to what many outdated guides claim, glasses are still permitted. Canada.ca accepts photos where **your eyes are clearly visible and there is no glare on the lenses**. Sunglasses and tinted eyeglasses, including tinted prescription lenses, are rejected outright.
+Glasses **are allowed** if your eyes are clearly visible and there is no glare on the lenses. Several 2026 guides wrongly say glasses are banned. The current Canada.ca page does not ban them. Sunglasses and tinted lenses are refused, and Canada.ca says this includes tinted prescription lenses "even when your eyes are clearly visible". If you can't avoid glare, removing your glasses is the simplest fix.
 
 ### Hair and Head Coverings
 
-Hair can be worn down or up, provided it stays off your face so the edges of your face remain visible. Hats and head coverings are only accepted when worn daily for religious beliefs or medical reasons, and even then your full face must be clearly visible with no shadows cast across it.
+Hair must be off your face so its edges are visible. Head coverings are only accepted if worn daily for religious beliefs or medical reasons, with your full face visible and no shadows on it.
 
-### Special Circumstances
+### Medical Conditions and Accessibility
 
-- **Wheelchair users** can place a plain white blanket behind their head so their facial features and the outline of their face stay visible.
-- **Medical conditions** that prevent you from meeting a specific rule (for example, keeping your eyes fully open) should be explained in writing with your application.
+- **Wheelchair users:** a white blanket can be placed behind your head.
+- **Medical headwear or a nasal cannula:** include a signed letter explaining why. Your eyes must still be clearly visible, and a doctor's letter may be requested.
+- If a medical condition stops you from meeting another rule, explain it in writing with your application.
 
-## What You Can't Do to a Canadian Passport Photo
+## Babies and Children
 
-IRCC rejects photos that show:
+The same 50 x 70 mm size and 31–36 mm face height apply to children. Canada.ca adds:
 
-- Sunglasses or tinted eyewear, including tinted prescription lenses
-- Red-eye effects, or any red-eye correction or editing
-- Head coverings not worn daily for religious or medical reasons
-- Shadows around the ears, across the face or shoulders, or in the background
-- Any alteration, including background swaps, retouching, or shadow removal
+- No hands, yours or the child's, may appear in the photo.
+- Newborns may have a range of expressions.
+- A newborn can be photographed in a car seat if a white blanket covers the seat behind the head, with no shadows around the ears, face, shoulders or background.
+- A child's passport application needs a guarantor declaration on the back of one photo.
 
-## The Back of the Photo: Guarantor and Photographer Requirements
+## What Makes Canada Reject a Passport Photo
 
-This is the step most applicants miss, and it makes Canada's canada passport photo regulations unusual compared with most countries.
+Canada.ca treats **any** of these as an altered or non-compliant photo:
 
-On the **back of one of your two photos**:
+- changes to colour, brightness, contrast or sharpness
+- cropping, cutting out or replacing the background
+- editing facial features, removing red-eye, scars or blemishes
+- changing clothing colours or removing shadows
+- sunglasses, tinted lenses, or glare covering the eyes
+- head coverings not worn daily for religious or medical reasons
+- shadows on the face, around the ears or in the background
+- a print that is not 50 x 70 mm, or a face outside the 31–36 mm range
 
-- The photographer must write or stamp the date the photo was taken and the name and complete address of the photo studio.
-- If your application requires a guarantor, they must write **"I certify this to be a true likeness of (applicant's name)"** and sign the back of that same photo.
+## The Back of the Photo: Photographer and Guarantor
 
-A guarantor must be at least 18 years old, have known you personally for at least two years, hold Canadian citizenship, and have a valid 5-year or 10-year Canadian passport. Standard adult renewals and several online renewal streams do not require a guarantor signature, but new applications and most paper submissions still do.
+For in-person and mail applications, on the **back of one of your two photos**:
 
-## Digital and Online Considerations
+1. **Photographer:** clearly writes or stamps the date the photo was taken and the studio's name and complete address.
+2. **Guarantor (if your application needs one):** writes "I certify this to be a true likeness of (applicant's name)" and signs.
 
-Because "canada passport photo online" is a common search, it's worth being precise: IRCC has not moved standard adult applications to a fully digital selfie-upload system. Every route still requires an in-person session with a commercial photographer. What has changed is that some eligible online renewals accept an original digital JPEG file straight from the photographer's camera instead of a printed copy — but that file cannot be resized, filtered, retouched, or run through background-replacement or AI-editing tools, since IRCC checks that it's an unaltered original.
+Canada.ca says **adult renewals do not need a guarantor**. First-time adult and child applications do. Who can act as a guarantor is set out on Canada.ca's [references and guarantors page](https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-passports/travel-documents-references-guarantors.html). Check it before asking someone, because the rules are specific.
 
-That said, online resizing and compliance-checking tools remain genuinely useful for one thing: confirming your photographer's print or file actually meets the 50×70 mm, 31–36 mm face-height, and background rules before you submit it, so you catch a sizing problem before it becomes a rejected application.
+## Online Passport Renewal: Digital Photo Requirements (2026)
+
+On **28 July 2026** the Government of Canada [removed the cap on online renewals](https://www.canada.ca/en/immigration-refugees-citizenship/news/2026/07/canada-expands-online-passport-renewal-to-all-eligible-adults.html), so online renewal is now open to all eligible adults in Canada. The announcement repeats that "all passport applications require commercially taken photos."
+
+To [renew online](https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-passports/renew-adult-passport/submit-form-fees/renew-online.html) you must, among other conditions, have a home and mailing address in Canada. You must also be renewing your own regular passport, issued within the last 15 years when you were 16 or older, with no change to your name, date of birth, place of birth or gender identifier. Your digital photo must:
+
+- be **taken in person by a commercial photographer**, no more than 6 months before you apply
+- **not** be a scanned copy of a printed photo
+- be a **JPEG** saved directly from the camera's original file
+- be **3:2 portrait**, at least **1,200 px wide x 1,800 px high**, and no larger than 3,000 x 4,500 px
+- be between **200 KB and 5 MB** (colour or black and white is accepted)
+- show your head (chin to crown) at **45–50% of the photo's height**
+
+The photographer can send you the file by email, a file-sharing link or a USB drive. You'll enter the studio's name, address and the photo date when you upload it. Don't resize, compress or crop the file yourself, because that counts as altering it.
 
 ## Canada Visa Photo Size: A Different Specification
 
-If you're applying for a temporary resident visa rather than a passport, don't use your passport photo. Canadian visa photos use a separate 35 mm × 45 mm format, generally following the same posture, expression, and background rules as passport photos, with glasses permitted under the same clear-eyes, no-glare condition. If you search for a "canada visa photo size online free" tool, make sure it's set to the 35×45 mm visa preset rather than the 50×70 mm passport preset, since submitting the wrong dimensions is a frequent cause of processing delays.
+Temporary resident visas, study and work permits, and other IRCC immigration applications use a **35 x 45 mm** photo, not the 50 x 70 mm passport size. See our [Canada visa photo requirements guide](/ca/canada-visa-photo-requirements) for the details. Make sure any tool or studio is set to the visa preset, not the passport preset.
 
-## Canada Permanent Resident (PR) Card Photo Requirements
+## Canada Permanent Resident (PR) Card Photos
 
-Permanent resident card renewals and replacements also use the 50 mm × 70 mm format with the same 31–36 mm face-height range, neutral expression, and plain background rules that apply to passports. Two identical photos are required, and one must carry the photographer's information on the back. Because PR card applications don't always need a guarantor signature, check the current instructions on your specific application form before your photo session, so the photographer knows exactly what to write on the back.
+PR card applications follow their own IRCC photo specification, not the Passport Program page, so what goes on the back of the photo and whether a digital file is accepted can differ from passports. Read the photo specifications in your PR card application guide, or our [PR card photo requirements page](/ca/canada-pr-card-photo-requirements), before your photo session.
 
-## Canada Citizenship Photo Requirements
+## Canada Citizenship Photos
 
-A Canadian citizenship photo — needed for citizenship certificate applications and proof-of-citizenship requests — follows the same core specification as the passport photo: 50 mm × 70 mm, chin-to-crown face height of 31–36 mm, plain light background, and a neutral expression. As with passport and PR photos, take it to a professional photographer rather than printing one at home, and confirm on your application form whether a guarantor declaration is required for your specific citizenship document.
+Citizenship grant and proof-of-citizenship applications have separate photo specifications for mail and online applications. For example, the [citizenship grant online specification](https://www.canada.ca/en/immigration-refugees-citizenship/services/application/application-forms-guides/citizenship-application-photograph-specifications/grant-online.html) asks for a JPEG of at least 420 x 540 pixels, no more than 4 MB. It recommends a digital file from a commercial photographer and allows a scan of a printed photo if one isn't available. Always use the specification linked from your own application.
 
-## Where to Get Your Canada Passport Photo Taken
+## Checking Your Photo Before You Submit
 
-Since a commercial photographer must capture the photo in person, most applicants use one of the following:
+A refused photo means delays. Before you hand over your application:
 
-- Independent photo studios and portrait photographers in their city
-- Pharmacy photo counters, such as Shoppers Drug Mart or London Drugs
-- Retail photo centres at Costco or Walmart
-- Camera and print shops that offer passport-photo services
+1. Measure the print: exactly 50 x 70 mm, with the face 31–36 mm chin to crown.
+2. Confirm the photographer's date, studio name and full address are on the back of one photo.
+3. For online renewal, check the file is JPEG, 1,200 x 1,800 px or larger, 200 KB–5 MB, and unedited.
+4. Run a photo of the print, or the digital file, through our free [passport photo checker](/passport-photo-checker) to catch head-size, framing or background problems. Then ask the photographer to retake it if needed, because you must not edit it yourself.
 
-If you're located in Alberta, passport photos Calgary services are widely available through local photo studios, pharmacy photo counters, and dedicated passport-photo shops across the city, most of which know the 50×70 mm format and the back-of-photo stamping requirement well. Wherever you go, bring a printed copy of the official IRCC photo specification sheet so the photographer can match every measurement exactly.
+**[Check my Canada passport photo free →](/passport-photo-checker)**
 
-## Summary Checklist for Canadian Passport Photos
+No checker, including ours, can guarantee that IRCC will accept a photo. The final decision rests with the Passport Program.
 
-✔ Size is exactly 50 mm wide × 70 mm high, portrait orientation
-✔ Face length, chin to crown, measures 31–36 mm
-✔ Plain white or light-coloured background with clear contrast
-✔ Neutral expression: eyes open, mouth closed, no smiling
-✔ Glasses allowed only if eyes are clearly visible with no glare; no tinted or sunglasses
+## Summary Checklist
+
+✔ 50 mm wide x 70 mm high print, 2 identical copies
+✔ Face 31–36 mm chin to crown
+✔ Plain white or light-coloured background, no shadows
+✔ Neutral expression, eyes open, mouth closed
+✔ Glasses only if eyes are clearly visible with no glare; no tinted lenses
 ✔ Taken in person by a commercial photographer within the last 6 months
-✔ Back of one photo carries the photographer's studio name, address, and date
-✔ Guarantor's signed declaration on the back, when your application requires one
-✔ Unaltered, unedited, and free of shadows or red-eye correction
+✔ Professionally printed. Not home-printed, not edited, no AI or background changes
+✔ Photographer's date, studio name and full address on the back of one photo
+✔ Guarantor declaration on the same photo if your application needs one (not for adult renewals)
+✔ Online renewal: original JPEG from the photographer, 1,200 x 1,800 px minimum, 200 KB–5 MB, head 45–50% of image height
 
-Following these canada passport photo guidelines before your photo session, rather than after a rejection letter, is the simplest way to keep your passport, PR card, or citizenship application moving on schedule.
+*Last reviewed 24 November 2026 against Canada.ca passport photo, online renewal and citizenship photo pages. PixPassport is not affiliated with IRCC or the Passport Program.*

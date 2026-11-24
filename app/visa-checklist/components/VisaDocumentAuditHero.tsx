@@ -233,15 +233,15 @@ export default function VisaDocumentAuditHero() {
       {/* Left: pitch */}
       <div>
         <p className="text-sm font-semibold text-lime-700 mb-4">
-          Pre-submission document &amp; photo check
+          Free visa document checklists · Updated for 2026
         </p>
 
         <h1 className="text-4xl sm:text-5xl font-bold text-slate-900 tracking-tight leading-[1.08] mb-5 text-balance">
-          Check your visa documents before you apply
+          Visa document checklist: what to prepare before you apply
         </h1>
 
         <p className="text-lg text-slate-600 leading-relaxed mb-8 max-w-xl text-pretty">
-          Find missing, unreadable, or incorrectly formatted files before they reach the embassy, not after.
+          The documents every visa application needs, with fees, processing times and photo specs by country. Then check your own files for anything missing or wrong before they reach the embassy.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3 mb-8">

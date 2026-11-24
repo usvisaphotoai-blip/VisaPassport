@@ -4,7 +4,7 @@ import Breadcrumbs from "../components/Breadcrumbs";
 
 export const metadata: Metadata = {
   title: "Contact Us",
-  description: "Contact PixPassport support team.",
+  description: "Contact PixPassport for help with your passport or visa photo, refunds under our 100% rejection guarantee, or privacy and data deletion requests.",
   alternates: {
     canonical: "https://www.pixpassport.com/contact",
     languages: {

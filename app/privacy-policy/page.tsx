@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
-  description: "PixPassport privacy policy. Learn how we handle your photos, data, and personal information. GDPR and CCPA compliant.",
+  description: "How PixPassport collects, uses, stores and deletes your photos and personal data, which providers process it, and your privacy rights.",
   alternates: {
     canonical: "https://www.pixpassport.com/privacy-policy",
     languages: {
@@ -19,7 +19,7 @@ export default function PrivacyPolicyPage() {
       <section className="bg-gray-50 border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
           <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900">Privacy Policy</h1>
-          <p className="mt-3 text-gray-500">Last updated: February 21, 2026</p>
+          <p className="mt-3 text-gray-500">Last updated: November 24, 2026</p>
         </div>
       </section>
 
@@ -39,21 +39,32 @@ export default function PrivacyPolicyPage() {
               <h2 className="text-xl font-bold text-slate-900 mb-3">2. Information We Collect</h2>
               <h3 className="text-base font-semibold text-slate-900 mt-4 mb-2">Photos You Upload</h3>
               <ul className="list-disc pl-5 space-y-1 text-sm text-gray-600">
-                <li>Photos are uploaded solely for validation and processing purposes</li>
-                <li>We analyze photos for compliance with official government specifications for over 50 countries (including US, UK, India, and Schengen)</li>
-                <li>Photos are never used for AI training, marketing, or any other purpose</li>
+                <li>Photos are uploaded only to check, crop and process them for the document you choose</li>
+                <li>We check photos against official government photo specifications for over 50 countries (including the US, UK, India and Schengen)</li>
+                <li>Photos are never used for AI training, marketing or any other purpose</li>
+              </ul>
+              <h3 className="text-base font-semibold text-slate-900 mt-4 mb-2">Account Information</h3>
+              <ul className="list-disc pl-5 space-y-1 text-sm text-gray-600">
+                <li>If you create an account: your name, email address and a securely hashed password</li>
+                <li>If you sign in with Google: your name, email address and profile picture from your Google account</li>
+              </ul>
+              <h3 className="text-base font-semibold text-slate-900 mt-4 mb-2">Orders and Invoices</h3>
+              <ul className="list-disc pl-5 space-y-1 text-sm text-gray-600">
+                <li>Your email address, country, the product you bought, the amount and currency, and the payment reference</li>
+                <li>We keep order, payment and invoice records after your photos are deleted, because we need them for accounting, tax, refunds and fraud prevention</li>
               </ul>
               <h3 className="text-base font-semibold text-slate-900 mt-4 mb-2">Payment Information</h3>
               <ul className="list-disc pl-5 space-y-1 text-sm text-gray-600">
-                <li>Payment processing is handled by our third-party payment processor</li>
+                <li>Payments are processed by Razorpay</li>
                 <li>We never store credit card numbers or full payment details on our servers</li>
                 <li>We receive only a transaction confirmation and payment status</li>
               </ul>
               <h3 className="text-base font-semibold text-slate-900 mt-4 mb-2">Usage Data</h3>
               <ul className="list-disc pl-5 space-y-1 text-sm text-gray-600">
-                <li>Browser type, device type, and operating system</li>
-                <li>Pages visited and features used (anonymized)</li>
-                <li>IP address (for security and fraud prevention only)</li>
+                <li>Browser type, device type and operating system</li>
+                <li>Pages visited and features used</li>
+                <li>IP address and approximate country, used for analytics, local pricing, security and fraud prevention</li>
+                <li>Feedback and reviews you choose to send us</li>
               </ul>
             </div>
 
@@ -61,12 +72,12 @@ export default function PrivacyPolicyPage() {
             <div>
               <h2 className="text-xl font-bold text-slate-900 mb-3">3. Photo Handling &amp; Retention</h2>
               <div className="bg-lime-50 border border-lime-200 rounded-xl p-5 mb-4">
-                <p className="text-sm font-semibold text-lime-800 mb-2">Our Photo Privacy Guarantees:</p>
+                <p className="text-sm font-semibold text-lime-800 mb-2">How long we keep your photos:</p>
                 <ul className="list-disc pl-5 space-y-1 text-sm text-lime-700">
-                  <li><strong>Auto-deletion:</strong> All original uploaded photos are automatically and permanently deleted after 24 hours</li>
-                  <li><strong>Expiring links:</strong> Download URLs are signed and expire after 1 hour</li>
-                  <li><strong>No permanent storage:</strong> Processed images are not stored after download</li>
-                  <li><strong>No sharing:</strong> Photos are never shared with third parties</li>
+                  <li><strong>Automatic deletion:</strong> Uploaded and processed photos are deleted by an automatic daily job once they are more than 24 hours old, so they are normally gone within 48 hours</li>
+                  <li><strong>Download window:</strong> Your download link stops working 24 hours after you create the photo, so download it promptly</li>
+                  <li><strong>Expert Edit orders:</strong> If you order an Expert Edit, a member of our team views and edits your photos. These photos are kept for 30 days so we can complete and fix the order, then deleted automatically</li>
+                  <li><strong>No selling:</strong> Photos are never sold, and are shared only with the service providers listed below that store or deliver them for us</li>
                   <li><strong>No AI training:</strong> Photos are never used for machine learning or AI training</li>
                 </ul>
               </div>
@@ -76,7 +87,7 @@ export default function PrivacyPolicyPage() {
             <div>
               <h2 className="text-xl font-bold text-slate-900 mb-3">4. Cookies</h2>
               <p className="text-sm text-gray-600 leading-relaxed">
-                We use essential cookies to maintain session state and process your photos. We may also use analytics cookies (such as Google Analytics) to understand how our service is used. You can disable non-essential cookies in your browser settings.
+                We use essential cookies to keep you signed in and to process your photos. We also use Google Analytics and Microsoft Clarity to understand how the site is used. Microsoft Clarity records how visitors interact with pages (such as clicks and scrolling) to help us find problems. You can block non-essential cookies in your browser settings.
               </p>
             </div>
 
@@ -88,7 +99,7 @@ export default function PrivacyPolicyPage() {
               </p>
               <ul className="list-disc pl-5 space-y-1 text-sm text-gray-600">
                 <li><strong>Access:</strong> Request a copy of any personal data we hold about you</li>
-                <li><strong>Deletion:</strong> Request immediate and complete deletion of all your data</li>
+                <li><strong>Deletion:</strong> Request deletion of your photos, account and personal data. We may keep order and invoice records where the law requires it</li>
                 <li><strong>Portability:</strong> Receive your data in a machine-readable format</li>
                 <li><strong>Objection:</strong> Object to any processing of your personal data</li>
                 <li><strong>Correction:</strong> Request correction of inaccurate personal data</li>
@@ -99,7 +110,7 @@ export default function PrivacyPolicyPage() {
             <div>
               <h2 className="text-xl font-bold text-slate-900 mb-3">6. Data Security</h2>
               <p className="text-sm text-gray-600 leading-relaxed">
-                We use industry-standard security measures including encrypted connections (TLS/SSL), secure cloud infrastructure, and access controls. All photo transfers are encrypted in transit and at rest.
+                We use encrypted HTTPS connections for all uploads and downloads, store data with cloud providers that encrypt it at rest, and limit who on our team can access it. No online service can be completely secure, but we work to protect your data and delete photos quickly.
               </p>
             </div>
 
@@ -107,7 +118,19 @@ export default function PrivacyPolicyPage() {
             <div>
               <h2 className="text-xl font-bold text-slate-900 mb-3">7. Third-Party Services</h2>
               <p className="text-sm text-gray-600 leading-relaxed">
-                We use the following third-party services that may process limited data on our behalf: payment processors (for transaction processing), cloud hosting providers (for photo processing), and analytics services (for anonymous usage statistics). All third-party providers are GDPR-compliant.
+                We use these service providers, and share with each only the data it needs to do its job:
+              </p>
+              <ul className="list-disc pl-5 space-y-1 text-sm text-gray-600 mt-2">
+                <li><strong>Razorpay:</strong> payment processing</li>
+                <li><strong>Cloudinary:</strong> storing and delivering photos until they are deleted</li>
+                <li><strong>MongoDB Atlas:</strong> our database for accounts, orders and photo records</li>
+                <li><strong>Vercel:</strong> website hosting</li>
+                <li><strong>Resend:</strong> sending emails such as receipts, invoices and your photos</li>
+                <li><strong>Google:</strong> Google sign-in and Google Analytics</li>
+                <li><strong>Microsoft Clarity:</strong> site usage analytics</li>
+              </ul>
+              <p className="text-sm text-gray-600 leading-relaxed mt-2">
+                Some of these providers process data outside your country, including in the United States and India.
               </p>
             </div>
 
@@ -134,7 +157,7 @@ export default function PrivacyPolicyPage() {
                 For privacy-related questions, data deletion requests, or GDPR/CCPA inquiries, contact us at <a href="mailto:support@pixpassport.com" className="font-semibold text-slate-900 underline">support@pixpassport.com</a>.
               </p>
               <p className="text-sm text-gray-600 leading-relaxed mt-2">
-                Business Address: Varanasi, Uttar Pradesh, India
+                Business address: Khadda, Kushinagar, Uttar Pradesh, India 274802
               </p>
             </div>
           </div>

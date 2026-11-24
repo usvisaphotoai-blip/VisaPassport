@@ -744,10 +744,10 @@ export default function SupportHubClient() {
                 <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
                   <div className="flex items-center gap-2 mb-2">
                     <span className="text-base">💳</span>
-                    <h3 className="text-xs font-bold text-slate-900">Stripe PCI-DSS Level 1</h3>
+                    <h3 className="text-xs font-bold text-slate-900">Razorpay PCI-DSS Level 1</h3>
                   </div>
                   <p className="text-xs text-slate-600 leading-relaxed">
-                    We never touch or store credit card numbers. All payments are processed securely via Stripe tokenized payment gateways.
+                    We never touch or store credit card numbers. All payments are processed securely by Razorpay.
                   </p>
                 </div>
 
