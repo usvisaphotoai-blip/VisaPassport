@@ -1,9 +1,9 @@
 ---
-title: "Canada Passport Photo Requirements 2026: 50 x 70 mm Print & Online Renewal Specs"
-description: "Official Canadian passport photo rules: 50 x 70 mm print, 31–36 mm chin to crown, photographer stamp on the back, guarantor signature, glasses, and the digital photo specs for online renewal (open to all eligible adults since July 2026)."
+title: "Canada Passport Photo Requirements 2026: Size & Rules"
+description: "Canadian passport photo rules for 2026: 50 x 70 mm prints, a 31–36 mm head, the photographer stamp, glasses, and digital specs for online renewal."
 slug: "canada-passport-photo-requirements"
 h1: "Canada Passport Photo Requirements: Size, Rules & Online Renewal Specs"
-date: "2026-11-24"
+date: "2026-08-19"
 updatedAt: "2026-11-24"
 author: "PixPassport Canada Team"
 category: "Canadian Passport & Citizenship"

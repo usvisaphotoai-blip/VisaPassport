@@ -1,97 +1,129 @@
 ---
-title: "Canada Passport Size Photo vs Visa Photo: 50x70 vs 35x45 mm (2026)"
-description: "Canada passport size photo is 50x70 mm; a visa photo needs at least 35x45 mm. Compare passport photo requirements in Canada with IRCC visa photo rules."
+title: "Canada Visa Photo Requirements 2026: IRCC Size & Specs"
+description: "IRCC visa photos need a frame of at least 35 x 45 mm and a 31–36 mm head. See when biometrics replace photos and how to prepare a digital upload."
 slug: "canada-visa-photo-requirements"
-h1: "Canada Passport Size Photo and Visa Photo Size: 50×70 mm vs 35×45 mm"
+h1: "Canada Visa Photo Requirements: IRCC Photo Size, Digital Upload and Biometrics"
 date: "2026-11-09"
+updatedAt: "2026-11-24"
 author: "PixPassport Canada Team"
 category: "Canadian Visa & Immigration"
-readingTime: "5 Min."
+readingTime: "8 Min."
 defaultDoc: "canada-visa"
-keywords: "canada passport size photo, passport photo requirements canada, canadian passport picture specifications, canada passport photo specs, canada visa photo size, canada visa photo requirements, ircc visa photo"
+toolTitle: "Canada Visa Photo Maker (IRCC 35 × 45 mm)"
+toolSubtitle: "Upload a photo to check head size, centring and background against the IRCC visa photo frame."
+keywords: "canada visa photo requirements, canada visa photo size, ircc photo requirements, ircc photo specifications, canada visitor visa photo, canada study permit photo, canada work permit photo, ircc digital photo upload, temporary resident visa photo, canada visa photo 35x45"
 faq:
-  - question: "What is the Canada passport size photo?"
-    answer: "A Canadian passport photo is 50 mm wide by 70 mm high (2 × 2¾ inches), with the face measuring 31–36 mm from chin to crown. It is taller than the 35 × 45 mm size used in many other countries."
-  - question: "What are the passport photo requirements in Canada?"
-    answer: "Two identical, unaltered photos taken by a commercial photographer within the last 6 months, professionally printed, on a plain white or light-coloured background. Your face must be neutral, centred and square to the camera, with no shadows or glare. Online renewals use a digital photo instead."
   - question: "What size is a Canada visa photo?"
-    answer: "For a temporary resident visa, IRCC asks for a frame of at least 35 × 45 mm, showing the full front of the head and the top of the shoulders, with the head measuring 31–36 mm from chin to crown."
-  - question: "Can I use my Canadian passport photo for a visa application?"
-    answer: "The head size range is the same (31–36 mm), and the visa rule is a minimum frame of 35 × 45 mm, so the size is not the problem by itself. What matters is the checklist for your specific application, including whether you upload a digital file or send prints. Follow that checklist rather than assuming a passport photo will be accepted."
-  - question: "What background is required for Canadian passport and visa photos?"
-    answer: "Both ask for a plain white or light-coloured background with a clear difference between your face and the background, and no shadows."
-  - question: "Are glasses allowed?"
-    answer: "Yes for both, if your eyes are clearly visible and there is no glare on the lenses. Sunglasses and tinted lenses are not accepted, even prescription ones."
-  - question: "How recent must the photo be?"
-    answer: "No more than 6 months before the date you submit your application, for both a Canadian passport and a visa."
-  - question: "Can I make my own photo at home?"
-    answer: "For a Canadian passport, no: it must be taken by a commercial photographer, printed professionally and left unedited. For a visa, IRCC says digital photos must not be altered in any way and prints must be on quality photographic paper. Practise the framing at home, then use a studio for the photo you submit."
+    answer: "IRCC's Temporary Resident Visa photo specifications ask for a frame of at least 35 mm x 45 mm (1 3/8 in x 1 3/4 in). The head, from chin to crown, must measure between 31 mm and 36 mm, with the face centred and the top of the shoulders showing."
+  - question: "Do I need a photo if I am giving biometrics?"
+    answer: "IRCC's visitor visa guide says that if you must give biometrics (fingerprints and photo), you do not need to include paper photos with your application. Your photo is taken at the biometrics appointment instead. Your online application checklist may still ask you to upload a digital photo, so follow what your checklist shows."
+  - question: "Who has to give biometrics for a Canadian visa, study permit or work permit?"
+    answer: "In most cases, people applying for temporary residence give biometrics. IRCC lists exceptions, including US nationals, children aged 13 or under, and applicants aged 80 or over when they apply (unless they are claiming asylum). Your biometric instruction letter confirms whether you need to give them."
+  - question: "What are the IRCC digital photo requirements for an online visa application?"
+    answer: "IRCC's visa photo specifications page does not list pixel or file-size limits. It only says digital photos must not be altered in any way. Check the photo item on your own online checklist. IRCC's online citizenship specifications, for example, ask for a JPEG of at least 420 x 540 pixels and no more than 4 MB, which shows the kind of file IRCC expects."
+  - question: "Can I wear glasses in a Canada visa photo?"
+    answer: "Yes, if they are non-tinted prescription glasses, both eyes are clearly visible and the frames do not cover any part of your eyes. Sunglasses are not accepted."
+  - question: "Can I wear a head covering or hijab?"
+    answer: "Yes, if you wear it for religious reasons and your full facial features are not hidden. The crown is measured at the point where the top of your head would be under the covering."
+  - question: "How recent must my Canada visa photo be?"
+    answer: "IRCC asks for photos taken within the last six months. If you send prints, the two photos must be identical."
+  - question: "Is a Canada visa photo the same as a Canadian passport photo?"
+    answer: "No. A Canadian passport photo is 50 x 70 mm, while a visa photo frame is at least 35 x 45 mm. The head size range (31–36 mm) is the same, but the frame and submission rules differ, so don't reuse one for the other without checking the specifications."
 ---
 
-People often search for a "Canada passport size photo" and end up with the wrong format, because the size you need depends on the document. A Canadian passport photo is **50 × 70 mm**. A visa photo has a **minimum frame of 35 × 45 mm**. This guide puts the two side by side, then covers the visa rules in detail.
+Applying for a Canadian visitor visa, study permit or work permit? This guide covers the photo rules from **Immigration, Refugees and Citizenship Canada (IRCC)**: the print size, what to do about the digital upload, and when your biometrics appointment replaces the photo. All specifications below come from canada.ca and are linked so you can check the current wording yourself.
 
-## Canada passport size photo and visa photo at a glance
+**Short answer:** IRCC's [Temporary Resident Visa photo specifications](https://www.canada.ca/en/immigration-refugees-citizenship/services/application/application-forms-guides/temporary-resident-visa-application-photograph-specifications.html) ask for a frame of **at least 35 × 45 mm**, with the head **31–36 mm from chin to crown**, on a plain white or light-coloured background, taken within the last **6 months**.
 
-**Canadian passport photo**
+[Make your Canada visa photo](/passport-photo-online) online, or use the [visa photo tool on this page](#ca-tool) to check your framing first.
 
-- **Size:** 50 mm wide × 70 mm high
-- **Face height:** 31–36 mm, chin to crown
-- **Copies:** 2 identical photos
+## IRCC visa photo specifications: print vs digital
 
-**Visa photo (temporary resident visa)**
+| Specification | Printed photo | Digital photo (online application) |
+| --- | --- | --- |
+| Size | Frame at least 35 × 45 mm (1 3/8 × 1 3/4 in) | Not stated on the visa photo page. Follow your online checklist |
+| Head size | 31–36 mm, chin to crown | Same proportions as the print |
+| Framing | Full front view of the head, face centred, top of shoulders included | Same |
+| Number | 2 identical photos | Usually 1 file, if your checklist asks for one |
+| Age of photo | Taken within the last 6 months | Taken within the last 6 months |
+| Colour | Colour or black and white | Colour or black and white |
+| Background | Plain white or light-coloured | Plain white or light-coloured |
+| Paper / editing | Quality photographic paper | Must not be altered in any way |
 
-- **Size:** frame of at least 35 × 45 mm
-- **Face height:** 31–36 mm, chin to crown
-- **Copies:** 2 identical photos for a paper application
+Sources: [IRCC Temporary Resident Visa photo specifications](https://www.canada.ca/en/immigration-refugees-citizenship/services/application/application-forms-guides/temporary-resident-visa-application-photograph-specifications.html). "Crown" means the top of the head, or where it would be if hair or a head covering hides it.
 
-Both want a plain white or light-coloured background, a neutral expression, and a photo taken within the last 6 months. The head size range is the same, so the main difference is the frame around it.
+## Which applications need which photo
 
-## Passport photo requirements in Canada
+Most temporary residence applications are now made online. IRCC's [visitor visa guide](https://www.canada.ca/en/immigration-refugees-citizenship/services/application/application-forms-guides/guide-5256-applying-visitor-visa-temporary-resident-visa.html) says most people must apply online, and paper applications are for people who can't, such as some applicants with a disability or people travelling on certain refugee or stateless documents.
 
-These are the **Canada passport photo specs** from the Passport Program, for new adult passports and for renewals by mail or in person:
+- **Visitor visa (temporary resident visa):** 35 × 45 mm minimum frame. Paper applicants write their name and date of birth on the back of both photos, according to the visitor visa guide.
+- **Study permit and work permit:** These are temporary residence applications too, and the 35 × 45 mm visa specifications are the usual reference. Your online document checklist decides whether a photo upload is required, so check it before you start.
+- **Permanent residence and PR card:** These use different rules, including a 50 × 70 mm print. See our [Canada PR card photo requirements](/ca/canada-pr-card-photo-requirements) guide.
+- **Canadian passport:** Not an IRCC visa photo. See the comparison below.
 
-- **Size:** 50 × 70 mm, face 31–36 mm from chin to crown
-- **Copies:** 2 identical, unaltered photos
-- **Taken by:** a commercial photographer or photo studio
-- **Print:** professional, on plain high-quality photo paper. Home prints and heavyweight paper are not accepted
-- **Age:** no more than 6 months old
-- **Colour:** colour or black and white
-- **Background:** plain white or light-coloured, contrasting with your face
-- **Expression:** neutral, eyes open, mouth closed, no smile or frown
-- **Back of one photo:** the photographer's date, studio name and full address. A new adult passport also needs your guarantor's signed statement
+## Biometrics vs a visa photo
 
-If you renew online, the Passport Program asks for a digital photo instead. The Canadian passport picture specifications for it are: JPEG, 3:2 portrait ratio, between 1,200 × 1,800 and 3,000 × 4,500 pixels, 200 KB to 5 MB, with chin to crown at 45–50% of the photo height, saved straight from the photographer's original file.
+Most people applying for a visitor visa, study permit or work permit give **biometrics**: fingerprints plus a photo taken at an appointment. IRCC's [biometrics page](https://www.canada.ca/en/immigration-refugees-citizenship/services/biometrics/need-biometrics.html) says you need them in most cases when applying for temporary residence, except for US nationals. Among the other exceptions listed:
 
-For the full passport rules, read our [Canada passport photo requirements](/ca/canada-passport-photo-requirements) guide.
+- children aged **13 or under** when they apply
+- applicants aged **80 or over** when they apply (unless claiming asylum)
+- people whose biometrics were already given for a permanent residence application that is still in process
 
-## Canada visa photo size and requirements
+What this means for your photo: IRCC's visitor visa guide says that **if you must give biometrics, you don't need to include paper photos with your application**. The guide also notes you only give biometrics **once every 10 years** for a visa or permit. If you are exempt, for example a child aged 13 or under, follow the photo instructions in your checklist. Your **biometric instruction letter** confirms whether you need an appointment.
 
-For a temporary resident visa, IRCC's photograph specifications ask for:
+## Background, expression, glasses and head coverings
 
-- **Frame:** at least 35 × 45 mm
-- **Framing:** the full front view of the head, face in the middle, with the top of the shoulders included
-- **Head size:** 31–36 mm from chin to crown. "Crown" means the top of the head, or where it would be if hair or a head covering hides it
-- **Copies:** two identical photos
-- **Age:** taken within the last 6 months
-- **Colour:** colour or black and white
-- **Background:** plain white or light-coloured, with a clear, well-defined image
-- **Paper:** printed on quality photographic paper
-- **Digital photos:** must not be altered in any way
+From IRCC's visa photo specifications:
 
-Study and work permits are usually filed online, and the digital file rules (pixel size, file size, format) are listed in the checklist for your specific application. They vary by application type, so read yours before you upload.
+- **Background:** plain white or light-coloured, and the photo must be clear and well defined
+- **Pose:** face the camera squarely, with a neutral expression and mouth closed
+- **Glasses:** non-tinted prescription glasses are fine if both eyes are clearly visible and the frames don't cover any part of them. Sunglasses are not accepted
+- **Head coverings:** allowed for religious reasons if your full facial features are not hidden
+- **Hairpieces and cosmetic accessories:** allowed if they don't disguise your normal appearance
 
-## Posture, expression and lighting
+Practical tips that help meet those rules: use even light from the front so there are no shadows on your face or the wall behind you, keep your hair off your eyes, and leave space above your head so the crown is in the frame.
 
-Face the camera straight on with your head level and shoulders square. Keep a neutral expression, neither smiling nor frowning, with your mouth closed. Use even light from the front so there are no shadows on your face or the wall behind you, and keep your whole head in the frame.
+## Photos for children
 
-## Glasses, hairpieces and head coverings
+IRCC's visa photo page doesn't publish separate rules for children, so the same frame, head size, background and expression rules apply. For babies, lay them on a plain white sheet or seat them in front of a white wall and photograph from straight above or in front, with no hands or toys in the shot. Children aged 13 or under don't give biometrics, so check whether their application needs photos.
 
-- **Glasses:** non-tinted prescription glasses are fine if your eyes are clearly visible and the frame does not cover any part of them. Sunglasses are not accepted
-- **Head coverings:** allowed for religious reasons if your full facial features stay visible
-- **Hairpieces and cosmetic accessories:** allowed if they do not disguise your normal appearance
+## Common reasons IRCC asks for new photos
 
-## Practise the framing before you book a photo
+IRCC says that if your photos don't meet the specifications, you'll have to provide new ones before your application can be processed. The usual problems match the specification list:
 
-Use the tool on this page to see how your face size and centring compare with the 31–36 mm range and each frame size. Treat the result as practice. Both the Passport Program and IRCC say photos must be unaltered, so cropping or swapping the background of the file you submit can get an application returned. Book a studio for the final photo, ask for the document you are applying for by name, and compare the result with the latest instructions on the [IRCC photo specifications](https://www.canada.ca/en/immigration-refugees-citizenship/services/application/application-forms-guides/temporary-resident-visa-application-photograph-specifications.html) and [passport photo requirements](https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-passports/photos.html) pages.
+- Head too small or too large for the 31–36 mm range, or the crown cut off
+- Face not centred, or shoulders missing from the frame
+- Background patterned, dark or shadowed
+- Smiling, open mouth or tilted head
+- Tinted glasses, sunglasses or glare that hides the eyes
+- Photo older than 6 months, or two prints that aren't identical
+- A digital file that was edited (retouched, filtered or with the background replaced)
+- A low-quality print on ordinary paper instead of photographic paper
 
-Applying for permanent residence instead? Those photos have their own rules. See our [Canada PR card photo requirements](/ca/canada-pr-card-photo-requirements) guide.
+## How to make your Canada visa digital photo
+
+1. **Read your checklist.** Open the photo item in your online application and note any file type, pixel or size limits shown there.
+2. **Take a straight-on photo** against a plain light wall, in even daylight, with the camera at eye level and about 1–1.5 m away.
+3. **Check the framing.** Use the [tool on this page](#ca-tool) to compare your head size and centring with the 35 × 45 mm frame and the 31–36 mm head range.
+4. **Save as a JPEG.** IRCC's visa page doesn't give digital limits. For reference, IRCC's [online citizenship photo specifications](https://www.canada.ca/en/immigration-refugees-citizenship/services/application/application-forms-guides/citizenship-application-photograph-specifications/grant-online.html) ask for a JPEG of at least 420 × 540 pixels, around 240 KB and no more than 4 MB. Those limits are for citizenship, so use your own checklist if it says something different.
+5. **Don't alter it.** IRCC says digital photos must not be altered in any way. Keep the original file from the camera, and if you need a different background, retake the photo rather than editing it.
+
+Ready? [Make your Canada visa photo](/passport-photo-online) with our online tool, then compare it with the official specifications before you upload.
+
+## Canada visa photo vs Canadian passport photo
+
+| | Visa photo (IRCC) | Canadian passport photo |
+| --- | --- | --- |
+| Size | Frame at least 35 × 45 mm | 50 × 70 mm |
+| Head size | 31–36 mm | 31–36 mm |
+| Taken by | Not specified on the visa page | Commercial photographer |
+
+The head size is the same, but the frame and submission rules are not, so don't assume one works for the other. For passport details, including the online renewal photo, read our [Canada passport photo requirements](/ca/canada-passport-photo-requirements) guide.
+
+## Official sources
+
+- [IRCC: Temporary Resident Visa photo specifications](https://www.canada.ca/en/immigration-refugees-citizenship/services/application/application-forms-guides/temporary-resident-visa-application-photograph-specifications.html)
+- [IRCC: Guide 5256, applying for a visitor visa](https://www.canada.ca/en/immigration-refugees-citizenship/services/application/application-forms-guides/guide-5256-applying-visitor-visa-temporary-resident-visa.html)
+- [IRCC: Find out if you need to give biometrics](https://www.canada.ca/en/immigration-refugees-citizenship/services/biometrics/need-biometrics.html)
+
+More Canadian photo guides: [all Canada photo tools and guides](/ca).

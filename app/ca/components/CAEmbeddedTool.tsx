@@ -33,7 +33,7 @@ const STAGES = [
 const TRUST = [
   { icon: "🔒", text: "Deleted after 24h" },
   { icon: "✅", text: "30+ checks" },
-  { icon: "🇨🇦", text: "IRCC & Passport Program ready" },
+  { icon: "🇨🇦", text: "Checked against IRCC & passport rules" },
 ];
 
 interface CAEmbeddedToolProps {

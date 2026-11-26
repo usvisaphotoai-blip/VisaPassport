@@ -3,17 +3,24 @@ import Link from "next/link";
 import { getAllCAPages } from "@/lib/ca-content";
 import CAEmbeddedTool from "./components/CAEmbeddedTool";
 import CABeforeAfterSlider from "./components/CABeforeAfterSlider";
+import { getLocalPrice } from "@/lib/currency";
 
 /* ------------------------------------------------------------------ */
 /*  SEO                                                                */
-/*  Primary:   canada passport photo                                   */
-/*  Secondary: canada passport photo specification / specs,            */
-/*             canada passport pic, photo for canada visa              */
+/*  Intent:    transactional / tool hub. The informational             */
+/*             "requirements" intent belongs to                        */
+/*             /ca/canada-passport-photo-requirements.                 */
+/*  Primary:   canada passport photo online                            */
+/*  Secondary: canadian passport photo maker / checker / app,          */
+/*             canada passport photo at home                           */
 /* ------------------------------------------------------------------ */
+const PAGE_UPDATED_ISO = "2026-11-24";
+const PAGE_UPDATED_LABEL = "November 2026";
+
 export const metadata: Metadata = {
-  title: "Canada Passport Photo: 50x70 mm Specs & Online Tool | PixPassport",
+  title: "Canada Passport Photo Online: Checker & Maker | PixPassport",
   description:
-    "Canada passport photo size, specifications and a free online checker. See the 50x70 mm rules, face-size range and what to know about a photo for a Canada visa.",
+    "Check a Canada passport photo online before the studio or an upload. 50x70 mm specs, online renewal rules, and visa, PR card and citizenship guides.",
   alternates: {
     canonical: "https://www.pixpassport.com/ca",
     languages: {
@@ -23,18 +30,18 @@ export const metadata: Metadata = {
     },
   },
   keywords:
-    "canada passport photo, canada passport photo specification, canada passport photo specs, canada passport pic, photo for canada visa, canada passport photo size 50x70mm",
+    "canada passport photo online, canadian passport photo maker, canada passport photo checker, canada passport photo app, canada passport photo at home, canada passport photo size 50x70mm",
   twitter: {
     card: "summary_large_image",
-    title: "Canada Passport Photo: Size, Specs & Online Tool | PixPassport",
+    title: "Canada Passport Photo Online: Checker & Maker | PixPassport",
     description:
-      "Check your Canada passport photo size and specs, or prepare a photo for a Canada visa.",
+      "Check your Canada passport photo online before the studio or an online renewal upload.",
     images: ["https://www.pixpassport.com/og-image.jpg"],
   },
   openGraph: {
-    title: "Canada Passport Photo: Size, Specs & Online Tool | PixPassport",
+    title: "Canada Passport Photo Online: Checker & Maker | PixPassport",
     description:
-      "Canada passport photo size (50x70 mm), specifications and a photo for Canada visa applications, explained in plain language.",
+      "Check framing, head size (31–36 mm) and background for a 50x70 mm Canada passport photo online, then find the right guide for passport, visa, PR card or citizenship.",
     url: "https://www.pixpassport.com/ca",
     siteName: "PixPassport Canada",
     locale: "en_CA",
@@ -64,8 +71,14 @@ const specRows = [
   {
     item: "Photo size",
     passport: "50 mm wide × 70 mm high",
-    digital: "At least 1,200 × 1,800 px, 3:2 portrait",
+    digital: "1,200 × 1,800 px to 3,000 × 4,500 px, 3:2 portrait",
     visa: "Frame at least 35 × 45 mm",
+  },
+  {
+    item: "Who takes it",
+    passport: "Commercial photographer or studio, in person",
+    digital: "Commercial photographer, in person (no selfies or scans)",
+    visa: "Follow your application checklist",
   },
   {
     item: "Face height (chin to crown)",
@@ -94,9 +107,81 @@ const specRows = [
   {
     item: "File / print",
     passport: "Professional print on photo paper",
-    digital: "JPG, 200 KB – 5 MB, straight from the camera",
+    digital: "JPG, 200 KB – 5 MB, original file from the photographer",
     visa: "Print on quality photo paper",
   },
+  {
+    item: "Back of photo",
+    passport: "Studio name, address and date taken (one photo)",
+    digital: "Studio name, address and date entered in the form",
+    visa: "As your application checklist asks",
+  },
+];
+
+/* Which Canada photo do you need? (hub router to the guides) */
+const photoTypes = [
+  {
+    name: "Canadian passport (mail or in person)",
+    size: "50 × 70 mm print, head 31–36 mm",
+    who: "Commercial photographer, 2 identical prints, stamp or details on the back",
+    href: "/ca/canada-passport-photo-requirements",
+    cta: "Passport photo requirements",
+    external: false,
+  },
+  {
+    name: "Passport online renewal (adults)",
+    size: "JPEG, 1,200 × 1,800 px or more, head 45–50% of height",
+    who: "Digital file from a commercial photographer, not a selfie or a scan",
+    href: "/ca/canada-passport-photo-requirements",
+    cta: "Online renewal photo rules",
+    external: false,
+  },
+  {
+    name: "Visa, study or work permit (IRCC)",
+    size: "Frame at least 35 × 45 mm, head 31–36 mm",
+    who: "Follow the photo instructions in your application checklist",
+    href: "/ca/canada-visa-photo-requirements",
+    cta: "Canada visa photo guide",
+    external: false,
+  },
+  {
+    name: "PR card",
+    size: "50 × 70 mm print, or 715 × 1000 to 2000 × 2800 px online",
+    who: "Commercial photographer; online uploads accept a scan of the professional print",
+    href: "/ca/canada-pr-card-photo-requirements",
+    cta: "PR card photo guide",
+    external: false,
+  },
+  {
+    name: "Citizenship (online grant)",
+    size: "50 × 70 mm, at least 420 × 540 px, max 4 MB",
+    who: "Commercial photographer; a digital file straight from them is safest",
+    href: "https://www.canada.ca/en/immigration-refugees-citizenship/services/application/application-forms-guides/citizenship-application-photograph-specifications/grant-online.html",
+    cta: "Official citizenship photo specs",
+    external: true,
+  },
+];
+
+const canDo = [
+  "Practise at home: check framing, head size, centring and background before you book a studio.",
+  "Check a photographer's digital file for head size, centring and background before you upload the original.",
+  "See your photo laid out at 50 × 70 mm, or at 35 × 45 mm for IRCC visa and permit forms.",
+  "Prepare photos for applications whose checklist lets you supply your own photo.",
+];
+
+const cantDo = [
+  "Replace the commercial photographer the Passport Program, PR card and citizenship rules ask for.",
+  "Make an edited photo acceptable for a passport: cropping, background changes and AI edits are all rejected.",
+  "Guarantee approval. Only the government office reviewing your file decides.",
+];
+
+const renewOnline = [
+  "You got your current passport at age 16 or older.",
+  "It is a standard blue 5- or 10-year passport issued in the last 15 years.",
+  "It expires within 6 months or has already expired.",
+  "Your home and mailing address are in Canada.",
+  "Your name, date and place of birth and gender identifier are unchanged.",
+  "You are not travelling in the next 20 business days.",
 ];
 
 const steps = [
@@ -119,10 +204,10 @@ const steps = [
     alt: "Passport photo cropped to 50x70 mm",
   },
   {
-    title: "Download or print",
-    text: "Save a digital file or a print sheet for the lab.",
+    title: "Fix it, then submit the right way",
+    text: "Retake if needed, then go to a studio for passport, PR card or citizenship photos.",
     img: "https://res.cloudinary.com/dipzpwbbk/image/upload/v1786118129/final_result_vzs9an.jpg",
-    alt: "Print-ready photo sheet",
+    alt: "Checked photo layout ready to compare with the studio photo",
   },
 ];
 
@@ -154,8 +239,16 @@ const faqs = [
     a: "Beyond size, the photo must be sharp, evenly lit and shadow-free, with a plain white or light-coloured background, a neutral expression and your face centred and square to the camera. It must be no more than 6 months old, and you submit 2 identical copies.",
   },
   {
-    q: "Can I take my own Canada passport pic at home?",
-    a: "For a standard passport application, the Passport Program says the photo must be taken by a commercial photographer or studio and printed professionally. It also rejects photos that have been edited in any way, including cropping, background changes and AI tools. Use PixPassport to learn the framing and check your shot, then have the final photo taken by a studio.",
+    q: "Can I take my own Canada passport photo at home or with an app?",
+    a: "Not for the photo you submit. The Passport Program says passport photos, printed or digital, must be taken in person by a commercial photographer or studio, and it rejects photos edited in any way, including cropping, background changes and AI tools. Use PixPassport at home to practise the framing and check your shot, then have the final photo taken by a studio.",
+  },
+  {
+    q: "Can I renew my Canadian passport online with a digital photo?",
+    a: "Yes, if you are eligible. Online renewal is open to eligible adults whose home and mailing address are in Canada and whose passport expires within 6 months or has expired. The digital photo must still be taken in person by a commercial photographer within the last 6 months, and it cannot be a scan of a printed photo. It must be a JPEG in a 3:2 portrait ratio, 1,200 × 1,800 to 3,000 × 4,500 pixels, 200 KB to 5 MB, with your head 45–50% of the photo height.",
+  },
+  {
+    q: "What does the PixPassport Canada photo tool do?",
+    a: "It checks a photo against Canada's size, head-height and background rules and shows it laid out at 50 × 70 mm or 35 × 45 mm. Use it to practise before a studio visit, to check the framing of a photographer's digital file before you upload the original, or for applications whose checklist lets you supply your own photo. It cannot replace a commercial photographer where one is required, and no tool can guarantee approval.",
   },
   {
     q: "What photo do I need for a Canada visa?",
@@ -163,7 +256,11 @@ const faqs = [
   },
   {
     q: "Does the passport photo have to be printed?",
-    a: "For in-person and mail applications, yes: two professionally printed photos on plain, high-quality photo paper. Home printing is not accepted. A digital photo is only needed if you renew your passport online.",
+    a: "For in-person and mail applications, yes: two identical, professionally printed photos on plain, high-quality photo paper, with the studio's name, address and the date taken on the back of one. Home printing is not accepted. A digital photo is only needed if you renew your passport online, and Canada.ca suggests asking the studio for both.",
+  },
+  {
+    q: "What photo do I need for a PR card or citizenship?",
+    a: "Both use a 50 × 70 mm photo with a 31–36 mm head, taken by a commercial photographer. For an online PR card application you upload one photo between 715 × 1000 and 2000 × 2800 pixels, up to 4 MB, and a scan of the professional print is accepted. For an online citizenship grant, the photo must be at least 420 × 540 pixels, up to 4 MB, and taken no more than 6 months before you apply.",
   },
   {
     q: "Can I wear glasses or a head covering?",
@@ -177,6 +274,24 @@ const officialSources = [
     title: "Passport photo requirements",
     url: "https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-passports/photos.html",
     note: "Size, quality, expression and digital photo rules.",
+  },
+  {
+    badge: "Passport Program",
+    title: "Renew a passport online",
+    url: "https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-passports/renew-adult-passport/submit-form-fees/renew-online.html",
+    note: "Who can renew online and the digital photo needed.",
+  },
+  {
+    badge: "IRCC",
+    title: "Permanent resident card photos",
+    url: "https://www.canada.ca/en/immigration-refugees-citizenship/services/permanent-residents/card/photos.html",
+    note: "Print and upload rules for PR card applications.",
+  },
+  {
+    badge: "IRCC",
+    title: "Citizenship grant online photo specs",
+    url: "https://www.canada.ca/en/immigration-refugees-citizenship/services/application/application-forms-guides/citizenship-application-photograph-specifications/grant-online.html",
+    note: "Digital photo rules for online citizenship applications.",
   },
   {
     badge: "IRCC",
@@ -195,10 +310,20 @@ const officialSources = [
 /* ------------------------------------------------------------------ */
 /*  Page                                                               */
 /* ------------------------------------------------------------------ */
-export default function CAIndexPage() {
+export default async function CAIndexPage() {
+  // Static page: force CAD so the schema price matches what Canadian visitors are charged
+  const cadPrice = await getLocalPrice(6.99, "CAD", false, true);
   const pages = getAllCAPages();
 
   const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      name: "Canada Passport Photo Online: Checker & Maker",
+      url: "https://www.pixpassport.com/ca",
+      inLanguage: "en-CA",
+      dateModified: PAGE_UPDATED_ISO,
+    },
     {
       "@context": "https://schema.org",
       "@type": "SoftwareApplication",
@@ -206,7 +331,7 @@ export default function CAIndexPage() {
       url: "https://www.pixpassport.com/ca",
       applicationCategory: "UtilitiesApplication",
       operatingSystem: "All",
-      offers: { "@type": "Offer", price: "9.99", priceCurrency: "CAD" },
+      offers: { "@type": "Offer", price: cadPrice.amount.toFixed(2), priceCurrency: cadPrice.currency },
     },
     {
       "@context": "https://schema.org",
@@ -241,12 +366,17 @@ export default function CAIndexPage() {
           <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
             <div className="flex-1 w-full">
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 leading-[1.1] tracking-tight">
-                Canada passport photo: size, specs and an online checker
+                Check your Canada passport photo online, before the studio or the upload
               </h1>
+              <p className="mt-3 text-sm text-slate-500">
+                Updated <time dateTime={PAGE_UPDATED_ISO}>{PAGE_UPDATED_LABEL}</time> · Checked
+                against Canada.ca photo pages
+              </p>
               <p className="mt-4 text-base sm:text-lg text-slate-600 leading-relaxed max-w-xl">
-                Canada uses a taller 50×70 mm photo than most countries. Upload yours to see
-                whether the framing, face size and background are on track, or read the full
-                Canada passport photo specifications below.
+                Canada uses a taller 50×70 mm photo than most countries. Take a practice shot at
+                home with your phone and see whether the framing, head size and background are on
+                track, or check a photographer&apos;s digital file before you renew online. Then
+                pick the right guide for a passport, visa, PR card or citizenship photo.
               </p>
 
               <div className="mt-6 flex flex-col sm:flex-row gap-3">
@@ -257,12 +387,17 @@ export default function CAIndexPage() {
                   Check my photo
                 </a>
                 <a
-                  href="#specs"
+                  href="#which-photo"
                   className="inline-flex items-center justify-center rounded-lg border border-slate-300 bg-white px-6 py-3 text-base font-bold text-slate-800 hover:border-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 transition-colors"
                 >
-                  See photo specifications
+                  Which photo do I need?
                 </a>
               </div>
+              <p className="mt-3 text-sm text-slate-600">
+                <a href="#specs" className="underline underline-offset-4 hover:text-slate-900">
+                  See all photo specifications
+                </a>
+              </p>
 
               <dl className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-x-6 gap-y-4 border-t border-stone-200 pt-6">
                 {quickFacts.map((f) => (
@@ -289,10 +424,11 @@ export default function CAIndexPage() {
         >
           <p className="font-bold">Applying for a Canadian passport? Read this first.</p>
           <p className="mt-1">
-            The Passport Program requires photos taken in person by a commercial photographer
-            and professionally printed. It does not accept edited photos, including cropping,
-            background changes or AI tools. Use this page to learn the specs and check your
-            framing, then have the final photo taken by a studio.{" "}
+            The Passport Program requires photos taken in person by a commercial photographer,
+            for printed photos and for the digital photo used in online renewal. It does not
+            accept edited photos, including cropping, background changes or AI tools. Use this
+            page to learn the specs and check your framing, then have the final photo taken by
+            a studio.{" "}
             <Link href="/ca/canada-passport-photo-requirements" className="font-bold underline">
               Read the full requirements
             </Link>
@@ -303,6 +439,141 @@ export default function CAIndexPage() {
       {/* ───────── TOOL ───────── */}
       <section id="ca-tool" className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6 py-8 scroll-mt-6">
         <CAEmbeddedTool />
+        <p className="mt-3 text-center text-sm text-slate-600">
+          Need a photo for another country or document?{" "}
+          <Link href="/passport-photo-online" className="font-bold text-red-700 underline underline-offset-4 hover:text-red-800">
+            Open the full passport photo tool
+          </Link>
+        </p>
+      </section>
+
+      {/* ───────── WHICH PHOTO (HUB ROUTER) ───────── */}
+      <section id="which-photo" className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 scroll-mt-6">
+        <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
+          Which Canada photo do you need?
+        </h2>
+        <p className="mt-2 text-slate-600 max-w-2xl">
+          Canada has different photo rules for passports, online renewal, IRCC visas, PR cards
+          and citizenship. Find your application, then open the guide for the full rules.
+        </p>
+        <ul className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          {photoTypes.map((t) => (
+            <li key={t.name} className="flex flex-col justify-between rounded-xl border border-stone-200 bg-white p-4">
+              <div>
+                <h3 className="text-base font-bold text-slate-900">{t.name}</h3>
+                <p className="mt-1 text-sm font-semibold text-slate-800">{t.size}</p>
+                <p className="mt-1 text-sm text-slate-600">{t.who}</p>
+              </div>
+              {t.external ? (
+                <a
+                  href={t.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-4 text-sm font-bold text-red-700 underline underline-offset-4 hover:text-red-800"
+                >
+                  {t.cta} (Canada.ca)
+                </a>
+              ) : (
+                <Link
+                  href={t.href}
+                  className="mt-4 text-sm font-bold text-red-700 underline underline-offset-4 hover:text-red-800"
+                >
+                  {t.cta}
+                </Link>
+              )}
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      {/* ───────── WHAT THE TOOL CAN AND CAN'T DO ───────── */}
+      <section className="border-t border-stone-200 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
+            Canada passport photo at home: what an online checker can and can&apos;t do
+          </h2>
+          <p className="mt-2 text-slate-600 max-w-2xl">
+            Most passport photo apps say you can do everything from home. For Canadian
+            passports, PR cards and citizenship, the official rules say otherwise, so here is
+            where our tool helps.
+          </p>
+          <div className="mt-6 grid md:grid-cols-2 gap-5">
+            <div className="rounded-xl border border-stone-200 bg-white p-5">
+              <h3 className="text-lg font-bold text-slate-900">Use it to</h3>
+              <ul className="mt-3 space-y-2 text-sm text-slate-700">
+                {canDo.map((t) => (
+                  <li key={t} className="flex gap-2">
+                    <span aria-hidden="true" className="font-bold text-emerald-700">✓</span>
+                    <span>{t}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="rounded-xl border border-stone-200 bg-white p-5">
+              <h3 className="text-lg font-bold text-slate-900">It can&apos;t</h3>
+              <ul className="mt-3 space-y-2 text-sm text-slate-700">
+                {cantDo.map((t) => (
+                  <li key={t} className="flex gap-2">
+                    <span aria-hidden="true" className="font-bold text-red-700">✕</span>
+                    <span>{t}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <div className="mt-8 grid lg:grid-cols-2 gap-8 items-start">
+            <div>
+              <h3 className="text-xl font-bold text-slate-900">
+                Renewing your passport online in 2026
+              </h3>
+              <p className="mt-2 text-sm text-slate-600 leading-relaxed">
+                Since July 2026, online renewal is open to all eligible adults. You can renew
+                online if:
+              </p>
+              <ul className="mt-3 list-disc pl-5 space-y-1 text-sm text-slate-700">
+                {renewOnline.map((t) => (
+                  <li key={t}>{t}</li>
+                ))}
+              </ul>
+              <p className="mt-3 text-sm text-slate-600 leading-relaxed">
+                Ask the studio for a digital copy and a printed copy. If online renewal does not
+                work out, you can still apply by mail or in person with the prints.
+              </p>
+            </div>
+            <div className="rounded-xl border border-stone-200 bg-white p-5">
+              <h3 className="text-lg font-bold text-slate-900">Digital photo checklist for online renewal</h3>
+              <dl className="mt-3 space-y-3 text-sm">
+                <div className="flex justify-between gap-4 border-b border-stone-200 pb-2">
+                  <dt className="text-slate-600">Format</dt>
+                  <dd className="font-bold text-slate-900 text-right">JPEG, original file</dd>
+                </div>
+                <div className="flex justify-between gap-4 border-b border-stone-200 pb-2">
+                  <dt className="text-slate-600">Pixels</dt>
+                  <dd className="font-bold text-slate-900 text-right">1,200 × 1,800 to 3,000 × 4,500</dd>
+                </div>
+                <div className="flex justify-between gap-4 border-b border-stone-200 pb-2">
+                  <dt className="text-slate-600">File size</dt>
+                  <dd className="font-bold text-slate-900 text-right">200 KB – 5 MB</dd>
+                </div>
+                <div className="flex justify-between gap-4 border-b border-stone-200 pb-2">
+                  <dt className="text-slate-600">Head height</dt>
+                  <dd className="font-bold text-slate-900 text-right">45–50% of photo height</dd>
+                </div>
+                <div className="flex justify-between gap-4">
+                  <dt className="text-slate-600">Taken by</dt>
+                  <dd className="font-bold text-slate-900 text-right">Commercial photographer, last 6 months</dd>
+                </div>
+              </dl>
+              <a
+                href="#ca-tool"
+                className="mt-5 inline-flex items-center justify-center rounded-lg bg-red-700 px-5 py-2.5 text-sm font-bold text-white shadow-sm hover:bg-red-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-700 focus-visible:ring-offset-2 transition-colors"
+              >
+                Check my photo
+              </a>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* ───────── HOW IT WORKS ───────── */}
@@ -424,12 +695,20 @@ export default function CAIndexPage() {
               tops of your shoulders showing and a plain white or light background behind you.
               Digital photos must not be altered.
             </p>
-            <Link
-              href="/ca/canada-passport-photo-requirements"
-              className="mt-5 inline-flex font-bold text-red-700 hover:text-red-800 underline underline-offset-4"
-            >
-              Visa and PR photo guide
-            </Link>
+            <div className="mt-5 flex flex-wrap gap-x-6 gap-y-2">
+              <Link
+                href="/ca/canada-visa-photo-requirements"
+                className="inline-flex font-bold text-red-700 hover:text-red-800 underline underline-offset-4"
+              >
+                Canada visa photo guide
+              </Link>
+              <Link
+                href="/ca/canada-pr-card-photo-requirements"
+                className="inline-flex font-bold text-red-700 hover:text-red-800 underline underline-offset-4"
+              >
+                PR card photo guide
+              </Link>
+            </div>
           </div>
           <div className="rounded-xl bg-stone-50 border border-stone-200 p-5">
             <h3 className="text-lg font-bold text-slate-900">Passport vs visa photo</h3>
@@ -520,6 +799,20 @@ export default function CAIndexPage() {
               </span>
             </Link>
           ))}
+        </div>
+        <div className="mt-8 flex flex-col sm:flex-row gap-3">
+          <a
+            href="#ca-tool"
+            className="inline-flex items-center justify-center rounded-lg bg-red-700 px-6 py-3 text-base font-bold text-white shadow-sm hover:bg-red-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-700 focus-visible:ring-offset-2 transition-colors"
+          >
+            Check my Canada photo
+          </a>
+          <Link
+            href="/passport-photo-online"
+            className="inline-flex items-center justify-center rounded-lg border border-slate-300 bg-white px-6 py-3 text-base font-bold text-slate-800 hover:border-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 transition-colors"
+          >
+            Open the full photo tool
+          </Link>
         </div>
         <p className="mt-6 text-sm">
           <Link href="/passport-photos" className="text-slate-600 underline underline-offset-4 hover:text-slate-900">

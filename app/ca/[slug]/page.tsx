@@ -5,6 +5,22 @@ import { getAllCAPageSlugs, getCAPageBySlug } from "@/lib/ca-content";
 import CAEmbeddedTool from "../components/CAEmbeddedTool";
 import Breadcrumbs from "@/app/components/Breadcrumbs";
 import CABeforeAfterSlider from "../components/CABeforeAfterSlider";
+import { getLocalPrice } from "@/lib/currency";
+
+/** Second hero button: point to the most useful sibling guide, never to the page itself */
+const SIBLING_GUIDE: Record<string, { href: string; label: string }> = {
+  "canada-passport-photo-requirements": { href: "/ca/canada-visa-photo-requirements", label: "Canada Visa Photo Guide" },
+  "canada-visa-photo-requirements": { href: "/ca/canada-passport-photo-requirements", label: "Canada Passport Photo Guide" },
+  "canada-pr-card-photo-requirements": { href: "/ca/canada-passport-photo-requirements", label: "Canada Passport Photo Guide" },
+};
+const DEFAULT_SIBLING = { href: "/ca", label: "All Canada Photo Guides" };
+
+function formatDate(iso: string): string {
+  const d = new Date(`${iso}T00:00:00Z`);
+  return Number.isNaN(d.getTime())
+    ? iso
+    : d.toLocaleDateString("en-CA", { year: "numeric", month: "long", day: "numeric", timeZone: "UTC" });
+}
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -77,6 +93,11 @@ export default async function CASlugPage({ params }: PageProps) {
     notFound();
   }
 
+  // Static page: force CAD so the schema price matches what Canadian visitors are charged
+  const cadPrice = await getLocalPrice(6.99, "CAD", false, true);
+  const sibling = SIBLING_GUIDE[page.slug] ?? DEFAULT_SIBLING;
+  const modified = page.updatedAt || page.date;
+
   const softwareSchema = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
@@ -88,8 +109,8 @@ export default async function CASlugPage({ params }: PageProps) {
     operatingSystem: "All",
     offers: {
       "@type": "Offer",
-      price: "6.99",
-      priceCurrency: "CAD",
+      price: cadPrice.amount.toFixed(2),
+      priceCurrency: cadPrice.currency,
     },
   };
 
@@ -197,7 +218,7 @@ export default async function CASlugPage({ params }: PageProps) {
               <div className="inline-flex items-center gap-2 bg-lime-50 border border-lime-200 rounded-full px-3 py-1 mb-4">
                 <span className="w-2 h-2 rounded-full bg-lime-700 animate-pulse" />
                 <span className="text-xs font-extrabold text-lime-800 tracking-wide uppercase">
-                  Canada Biometric Photo Tool · IRCC &amp; Service Canada Compliant
+                  Canada Photo Tool · Checked Against IRCC &amp; Passport Rules
                 </span>
               </div>
 
@@ -218,10 +239,10 @@ export default async function CASlugPage({ params }: PageProps) {
                   <span>Upload &amp; Create Photo</span>
                 </a>
                 <a
-                  href="/ca/canada-passport-photo-requirements"
+                  href={sibling.href}
                   className="inline-flex items-center justify-center bg-white border-2 border-slate-300 hover:border-lime-600 hover:text-lime-700 text-slate-800 text-sm sm:text-base font-bold px-4 py-3 rounded-xl transition-all active:scale-95 gap-2"
                 >
-                  <span>Canada Visa Photo Guide</span>
+                  <span>{sibling.label}</span>
                 </a>
               </div>
 
@@ -231,7 +252,7 @@ export default async function CASlugPage({ params }: PageProps) {
                   By {page.author}
                 </span>
                 <span className="bg-slate-100 px-3 py-1 rounded-full">
-                  Updated {page.date}
+                  Updated <time dateTime={modified}>{formatDate(modified)}</time>
                 </span>
               </div>
             </div>
@@ -283,7 +304,7 @@ export default async function CASlugPage({ params }: PageProps) {
 
                 <div className="mt-6 pt-4 border-t border-slate-100 text-[11px] space-y-2 font-medium text-slate-500">
                   <div className="flex items-center gap-1.5 text-lime-700 font-bold">
-                    <span>✅</span> IRCC &amp; Passport Program Compliant
+                    <span>✅</span> Checked Against IRCC &amp; Passport Rules
                   </div>
                   <div className="flex items-center gap-1.5 text-lime-700 font-bold">
                     <span>⚡</span> 30-Second Result
@@ -297,7 +318,7 @@ export default async function CASlugPage({ params }: PageProps) {
           )}
 
           {/* Rendered Markdown Article */}
-          <main
+          <div
             className={page.toc.length > 0 ? "lg:col-span-3" : "lg:col-span-4"}
           >
             <article className="bg-white p-6 sm:p-10 rounded-2xl border border-slate-200 shadow-xs prose prose-slate max-w-none prose-headings:font-black prose-headings:text-slate-900 prose-a:text-lime-700 prose-a:font-bold">
@@ -343,7 +364,7 @@ export default async function CASlugPage({ params }: PageProps) {
                 ← Explore All Canada Passport &amp; Visa Guides
               </Link>
             </div>
-          </main>
+          </div>
         </div>
       </div>
     </div>

@@ -1,109 +1,141 @@
 ---
-title: "Canada Permanent Resident Photo Requirements & PR Card Size (2026)"
-description: "Canada permanent resident photo requirements: 50x70 mm print size, 31–36 mm head size, 12-month rule and digital upload specs for a PR card application."
+title: "PR Card Photo Requirements Canada: Size & Online Upload"
+description: "IRCC's PR card photo rules: two 50 x 70 mm prints for paper or one JPEG for online, taken by a commercial photographer within the last 12 months."
 slug: "canada-pr-card-photo-requirements"
-h1: "Canada Permanent Resident Photo Requirements: PR Card Photo Size and Specs"
+h1: "Canada PR Card Photo Size and Requirements for Print and Online Applications"
 date: "2026-11-09"
+updatedAt: "2026-11-24"
 author: "PixPassport Canada Team"
 category: "Canadian Visa & Immigration"
-readingTime: "5 Min."
+readingTime: "7 Min."
 defaultDoc: "canada-pr-card"
-keywords: "canada permanent resident photo requirements, canada pr card photo, canada permanent resident card photo, canada permanent resident card photo size, canada permanent resident card photo specifications, canada permanent resident photo"
+keywords: "pr card photo requirements, canada pr card photo size, permanent resident card photo, pr card renewal photo, ircc pr card online photo upload, confirmation of pr photo, canada permanent resident photo requirements"
 faq:
-  - question: "What are the Canada permanent resident photo requirements?"
-    answer: "IRCC asks for a sharp, evenly lit photo of you on a plain white background, with a neutral expression, face and shoulders centred, taken by a commercial photographer within the last 12 months. A paper application needs 2 identical prints; an online application needs 1 digital photo."
-  - question: "What size is a Canada permanent resident card photo?"
-    answer: "A printed photo is 50 mm wide by 70 mm high, with your head measuring 31–36 mm from chin to crown. A digital photo is judged in pixels instead: between 715 x 1000 and 2000 x 2800, in JPEG format, at 4 MB or less."
-  - question: "How old can my PR card photo be?"
-    answer: "No more than 12 months old on the day you apply. This is longer than the 6-month limit for a Canadian passport photo."
-  - question: "Do I need a guarantor to sign my PR card photo?"
-    answer: "No. IRCC says you do not need to sign the back of a permanent resident photo or have a guarantor sign it."
+  - question: "What are the PR card photo requirements in Canada?"
+    answer: "IRCC asks for a sharp, evenly lit, unaltered photo on a plain white background, with a neutral expression and your face and shoulders centred and square to the camera. It must be taken by a commercial photographer or studio no more than 12 months before you apply. Paper applications need 2 identical prints; online applications need 1 digital photo."
+  - question: "What size is a Canada PR card photo?"
+    answer: "A printed PR card photo is 50 mm wide by 70 mm high (2 x 2¾ inches), with the head measuring 31–36 mm from chin to crown, not counting hair. A digital photo for an online application is measured in pixels instead: between 715 x 1000 and 2000 x 2800, 4 MB or less, as a .jpeg or .jpg file."
+  - question: "How old can a PR card photo be?"
+    answer: "IRCC says the photo must be taken no more than 12 months before you apply. That is longer than the 6-month limit for a Canadian passport or visitor visa photo, so do not assume the rules match."
+  - question: "Do I need a photographer for the online PR card application?"
+    answer: "Yes. IRCC asks for a commercial photographer or studio for both digital and printed photos. Online, you upload either the studio's digital file or a scan of a professional print. A phone or camera picture of a printed photo is not accepted, and neither is a self-taken photo."
   - question: "What goes on the back of a PR card photo?"
-    answer: "One printed photo needs your name and date of birth, the date it was taken, and the studio's name and full address, written or stamped by the photographer. Stick-on labels are not accepted."
-  - question: "Can I take my PR card photo at home?"
-    answer: "Not for the final photo. IRCC asks you to use a commercial photographer or studio, does not accept home-printed photos, and rejects photos that have been altered in any way, including cropping or changing the background. You can still practise the framing at home first."
-  - question: "What background should a permanent resident photo have?"
-    answer: "A plain, untextured white background that clearly contrasts with your face and clothing. A light colour that is not white does not meet the PR photo rules."
+    answer: "For paper applications, the back of one print must show your name and date of birth, the date the photo was taken, and the studio's name and complete address, stamped or handwritten. Stick-on labels are not accepted. If you upload the studio's digital file, upload a document with the same details plus a studio confirmation such as a receipt."
+  - question: "Does a guarantor need to sign my PR card photo?"
+    answer: "No. IRCC says neither you nor a guarantor needs to sign a permanent resident photo. The guarantor rule applies to some Canadian passport applications, not to PR cards."
+  - question: "Which photo is used for my first PR card after confirmation of PR?"
+    answer: "IRCC uses the digital photo you upload when you confirm your permanent residence in the Permanent Residence Portal. It must meet the same PR photo specifications, and once you submit your documents in the portal the photo can no longer be changed."
+  - question: "Why was my PR card photo returned?"
+    answer: "IRCC lists these reasons: the photo is too dark, the background is not white, facial features are not visible, there is glare, the pixel dimensions are outside 715 x 1000 to 2000 x 2800, or the file is larger than 4 MB. Edited photos, including cropped ones or ones with a replaced background, also fail the rules."
 ---
 
-A permanent resident photo has to meet IRCC's own specifications, and they are not identical to the passport rules. The frame size is the same as a Canadian passport photo, but the age limit, background and back-of-photo details are different. This guide covers the **Canada permanent resident photo requirements** for both paper and online applications, so you know what to ask your photographer for.
+A PR card photo follows IRCC's own permanent resident photo rules. The print size matches a Canadian passport photo, but the age limit, the back-of-photo details and the online upload rules are different. This guide sets out the **PR card photo requirements** for paper and online applications, using IRCC's [Permanent resident photos](https://www.canada.ca/en/immigration-refugees-citizenship/services/permanent-residents/card/photos.html) page (last modified 2026-03-26) as the source.
 
-## Which Canada PR card photo rules apply to you?
+**Check your PR card photo framing:** use the [online photo maker](/passport-photo-online) or the [tool on this page](#ca-tool) to compare your framing with the 50 × 70 mm and 31–36 mm guide. Read the photographer section below first, because IRCC expects the photo you submit to come from a commercial studio.
 
-IRCC publishes one set of rules for paper applications and another for online ones. Check how you are filing before you book a studio.
+## PR card photo requirements at a glance
 
-- **Paper application:** 2 identical printed photos.
-- **Online application (Permanent Residence Portal):** 1 digital photo, uploaded with your form.
+IRCC publishes one set of specs for printed photos and another for digital photos. Which one applies depends on how you apply.
 
-Either way, IRCC wants the photo taken by a **commercial photographer or studio**. The simplest request to a studio is: "an IRCC permanent resident card photo, printed and as a digital file, with a receipt."
+| Requirement | Online application (Permanent Residence Portal) | Paper application |
+|---|---|---|
+| Number of photos | 1 digital photo | 2 identical prints |
+| Size | 715 × 1000 to 2000 × 2800 pixels | 50 mm wide × 70 mm high (2 × 2¾ in) |
+| Head size | No mm rule given for digital | 31–36 mm, chin to crown, not counting hair |
+| File / paper | .jpeg or .jpg, 4 MB or less | Professionally printed on plain, high-quality photo paper |
+| Who takes it | Commercial photographer or studio | Commercial photographer or studio |
+| How recent | No more than 12 months before you apply | No more than 12 months before you apply |
+| Colour | Colour or black and white | Colour or black and white |
+| Back-of-photo details | Uploaded document plus studio confirmation, or a scan showing the back of the print | Written or stamped on the back of one print |
+| Signature or guarantor | Not needed | Not needed |
 
-## Canada permanent resident card photo size and specifications
+Source: [IRCC, Permanent resident photos](https://www.canada.ca/en/immigration-refugees-citizenship/services/permanent-residents/card/photos.html).
 
-### Printed photo (paper application)
+One small inconsistency: IRCC's digital spec lists .jpeg or .jpg, while its upload troubleshooting section mentions "JPEG or PNG". Use a JPEG to be safe.
 
-- **Photo size:** 50 mm wide × 70 mm high (2 × 2¾ inches)
-- **Head size:** 31–36 mm from the bottom of the chin to the top of the head, not counting hair
-- **Position:** head centred in the frame
-- **Copies:** 2 identical photos
-- **Paper:** professionally printed on plain, high-quality photo paper. Home prints and heavyweight paper are not accepted
-- **Colour:** colour or black and white
+## Do you need a commercial photographer?
 
-### Digital photo (online application)
+Yes, for both routes. IRCC asks for a photo taken by a **commercial photographer or studio**, whether you send prints or upload online. For an online application you can upload:
 
-- **Dimensions:** between 715 × 1000 and 2000 × 2800 pixels
-- **File size:** 4 MB or less
-- **Format:** .jpeg or .jpg
-- **Source:** a professional digital photo, or a scan of a professional print. A phone picture of a paper photo is not accepted
-- **Copies:** 1 photo
+- the professional digital file from the studio, or
+- a scan of a professional print.
 
-The portal gives you its own crop-and-position step, and it turns your photo black and white after upload. IRCC says that is normal.
+A photo of a printed picture taken with a phone or camera is not accepted. Home-printed photos and heavyweight paper are not accepted for paper applications. IRCC also rejects photos that have been altered in any way, including colour, brightness or contrast corrections, cropping and background changes.
 
-## How your PR card photo should look
-
-- **Background:** plain, untextured and white
-- **Expression:** neutral, eyes open, mouth closed, looking straight at the camera
-- **Posture:** face and shoulders centred and square to the camera, with no head tilt
-- **Lighting:** even, with no shadows, glare or flash reflections
-- **Age:** taken no more than 12 months before you apply
-- **Skin tone:** natural, not edited
-- **Glasses:** allowed if your eyes are clear and there is no glare on the lenses
-- **Head coverings:** allowed if worn daily for religious or medical reasons, as long as your face, ears and shoulders are fully visible and no shadows fall on them
-
-IRCC also suggests avoiding white clothing, since it blends into the background, and turtlenecks or bulky tops that hide the outline of your face. Remove facial jewellery around the mouth and eyes.
+When you book, ask the studio for "a permanent resident card photo to IRCC specifications, as a digital file and a print, with a receipt." The receipt helps with the online upload described below.
 
 ## What to put on the back of a PR card photo
 
-One of the two printed photos must show:
+**Paper application.** The back of one of the two prints must show:
 
 - your name and date of birth
 - the date the photo was taken
 - the studio's name and complete address
 
-The photographer can write it by hand or use a stamp. Stick-on labels are not accepted, and no guarantor signature is needed.
+The details can be stamped or handwritten. Stick-on labels are not accepted.
 
-If you apply online and your photographer gives you a digital file, upload a document that lists the same details plus a confirmation from the studio, such as a receipt. If you scanned a print, the scan must show the back of the photo.
+**Online application.**
 
-## Why PR card photos get returned
+- If you upload the studio's **digital file**, also upload a document with your name and date of birth, the date taken, and the studio's name and complete address, plus a confirmation from the studio such as a receipt.
+- If you upload a **scan of a print**, the back of the photo must show the same details.
 
-IRCC lists these common reasons:
+You do not need to sign the photo, and you do not need a guarantor.
 
-- The photo is too dark
-- The background is not white
-- Facial features are not visible
-- There is too much glare
-- Digital dimensions fall outside 715 × 1000 to 2000 × 2800 pixels
-- The file is larger than 4 MB
+## Pose, background, glasses and head coverings
 
-Other frequent problems are the wrong print size (for example a 35 × 45 mm visa-size photo), a head that is too big or too small, and any edit, filter or background swap. IRCC treats cropping around the head and pasting yourself onto a white background as an alteration.
+These rules apply to both printed and digital PR card photos:
 
-If you upload online and the photo checker shows a warning, you can still submit. An officer reviews it and tells you if you need a new one.
+- **Background:** plain, untextured and white, with clear contrast against your face and clothing
+- **Expression:** neutral, mouth closed, eyes open, looking at the camera
+- **Posture:** face and shoulders centred and square to the camera
+- **Lighting:** even, with no shadows, glare or flash reflections; sharp focus
+- **Hair:** off the face
+- **Glasses:** allowed if your eyes are clearly visible and there is no glare on the lenses; avoid sunglasses and tinted prescription glasses
+- **Head coverings:** allowed if worn daily for religious or medical reasons, as long as your face, ears and shoulders are clearly visible
+- **Clothing and jewellery:** remove facial jewellery, and avoid turtlenecks or bulky clothing that hide the outline of your face
+
+**Medical considerations.** If you use a wheelchair, place a plain white blanket over the back of the chair behind your head. Headwear or a nasal cannula worn for medical reasons is allowed if your eyes stay clearly visible. IRCC recommends including a signed explanation and may ask for a doctor's letter.
 
 ## Photos of children and newborns
 
-Child photos follow the same rules. They should show only the head and shoulders, with no hands (yours or the child's) and no hair accessories. A newborn can be photographed in a car seat with a plain white blanket behind the head and no shadows on the face, ears or background. A range of expressions is accepted for newborns.
+Children's photos follow the same specs. The photo should show only the head and shoulders, with no hands (the parent's or the child's) and no hair accessories. A newborn can be photographed in a car seat with a white blanket behind the head, as long as there are no shadows on the face, shoulders, ears or background.
 
-## Practise your framing before the studio visit
+## First PR card, renewal or replacement: which photo rule applies?
 
-You can use the tool on this page to see how your face size and centring compare with the 50 × 70 mm and 31–36 mm range. Treat it as practice. IRCC expects an original, unedited photo from a commercial photographer, so book a studio for the photo you actually submit, and read the official [Permanent resident photos](https://www.canada.ca/en/immigration-refugees-citizenship/services/permanent-residents/card/photos.html) page before you go.
+The photo rules are the same. What changes is where and when you submit the photo. See IRCC's [Get, renew or replace a PR card](https://www.canada.ca/en/immigration-refugees-citizenship/services/permanent-residents/card/apply.html) page for the full process.
 
-Need a passport photo too? The size matches, but the rules differ, so read our [Canada passport photo requirements](/ca/canada-passport-photo-requirements) guide separately.
+- **First PR card (confirmation of PR).** Most new permanent residents do not apply for a first card. IRCC sends it if you give a Canadian mailing address and a photo within 180 days of becoming a permanent resident. If you confirm your PR in the [Permanent Residence Portal](https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/pr-confirmation-portal.html), you upload a digital photo there, and IRCC uses it for your first card. You can replace the photo until you click "Submit documents". After that it can't be changed.
+- **PR card renewal or replacement.** You apply in the Permanent Residence Portal with form IMM 5444, upload one digital photo, and pay the fee online. IRCC says to apply for a renewal when your card expires in less than 9 months or has already expired.
+- **Reissue because of a photo problem.** If you request a free reissue by mail, two printed photos are required.
+- **Permanent resident travel document (PRTD).** A PRTD is a separate application for returning to Canada without a valid PR card. IRCC's [PRTD guide](https://www.canada.ca/en/immigration-refugees-citizenship/services/application/application-forms-guides/guide-5529-applying-permanent-resident-travel-document.html) does not repeat the photo specs, so follow the document checklist for that application rather than assuming the PR card instructions.
+
+## IRCC PR card online photo upload: what to expect
+
+- Fill in form IMM 5444 in the portal before uploading the photo.
+- After upload the photo appears in **black and white**. IRCC says this is normal and not a technical error.
+- You can replace the photo until you submit the application.
+- If the portal's photo checker shows a warning, you can still submit. An officer reviews the photo and contacts you if you need a new one.
+
+## Why PR card photos get returned
+
+IRCC lists these reasons:
+
+- the photo is too dark
+- the background is not white
+- facial features are not visible
+- there is glare on the photo
+- the pixel dimensions are outside 715 × 1000 to 2000 × 2800
+- the file is larger than 4 MB
+- the photo does not otherwise meet the requirements
+
+In practice, other common problems include a print in the wrong size (such as a 35 × 45 mm visa-size photo), a head that is too big or too small for the 31–36 mm range, and any edit, filter or background swap.
+
+## Check your framing before the studio visit
+
+The [PixPassport photo maker](/passport-photo-online) and the [embedded tool on this page](#ca-tool) show how your face size and centring compare with the 50 × 70 mm frame and the 31–36 mm head range. Use them to practise and to spot problems early. Because IRCC asks for an unaltered photo from a commercial photographer, the photo you actually submit should come from a studio.
+
+## Related Canada photo guides
+
+- [Canada passport photo requirements](/ca/canada-passport-photo-requirements): same 50 × 70 mm size, but a 6-month limit and different back-of-photo and guarantor rules.
+- [Canada visa photo requirements](/ca/canada-visa-photo-requirements): the 35 × 45 mm minimum frame for a temporary resident (visitor) visa.
+- [All Canada photo tools and guides](/ca)
